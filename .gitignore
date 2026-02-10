@@ -43,3 +43,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Screenshots (except public)
+*.png
+!public/*.png
+
+# Dev logs
+dev-server.log
