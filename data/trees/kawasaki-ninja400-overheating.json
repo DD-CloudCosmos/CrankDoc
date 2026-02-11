@@ -1,0 +1,256 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Overheating",
+  "description": "Diagnose overheating and cooling system issues on the Kawasaki Ninja 400.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When does the overheating occur?",
+        "safety": "yellow",
+        "warning": "Never open the radiator cap on a hot engine. Allow 30+ minutes of cooling. Hot coolant under pressure can cause severe burns.",
+        "options": [
+          { "text": "Overheats in traffic or at idle", "next": "check_fan" },
+          { "text": "Overheats while riding at speed", "next": "check_coolant" },
+          { "text": "Temperature gauge goes to red zone quickly after starting", "next": "check_coolant" },
+          { "text": "Coolant leaking or reservoir overflowing", "next": "find_leak" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Check radiator fan operation",
+        "safety": "yellow",
+        "warning": "The fan can start suddenly. Keep hands and clothing away from the fan blades.",
+        "instructions": "Let the engine idle until the temperature gauge rises to the fan activation point (approximately 104°C / 220°F on the Ninja 400). The fan should turn on automatically. If it does not, check the fan fuse (10A) in the fuse box. You can test the fan motor by jumping it directly to the battery (disconnect the fan connector first, then touch the fan wires to battery positive and negative).",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Does the fan work?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan does not turn on at all", "next": "check_fan_electrical" },
+          { "text": "Fan works but bike still overheats", "next": "check_coolant" },
+          { "text": "Fan works and temperature stabilizes", "next": "solution_normal_heat" }
+        ]
+      },
+      {
+        "id": "check_fan_electrical",
+        "type": "check",
+        "text": "Diagnose fan electrical circuit",
+        "safety": "yellow",
+        "warning": "Disconnect battery before probing wiring.",
+        "instructions": "Check: (1) Fan fuse (10A) — replace if blown, (2) Direct-test the fan motor with battery power — if it spins, the motor is good and the issue is in the control circuit, (3) Check the fan relay (if applicable) by swapping with an identical relay, (4) Check the coolant temperature sensor connector for corrosion.",
+        "next": "fan_electrical_result"
+      },
+      {
+        "id": "fan_electrical_result",
+        "type": "question",
+        "text": "What did the electrical test reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown fuse", "next": "solution_fan_fuse" },
+          { "text": "Fan motor is dead", "next": "solution_fan_motor" },
+          { "text": "Motor works on direct power — control circuit issue", "next": "solution_fan_control" }
+        ]
+      },
+      {
+        "id": "check_coolant",
+        "type": "check",
+        "text": "Check coolant level and condition",
+        "safety": "yellow",
+        "warning": "Only check when the engine is completely cool.",
+        "instructions": "Check the coolant reservoir on the right side — level should be between LOW and FULL marks. Also carefully remove the radiator cap (cold engine only) and verify the radiator is full to the neck. Check coolant color — it should be clean green or blue, not brown or murky. The Ninja 400 total cooling system capacity is approximately 1.8 liters.",
+        "next": "coolant_result"
+      },
+      {
+        "id": "coolant_result",
+        "type": "question",
+        "text": "What is the coolant level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or empty", "next": "find_leak" },
+          { "text": "Dirty or discolored", "next": "solution_flush" },
+          { "text": "Level and condition look good", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "find_leak",
+        "type": "check",
+        "text": "Locate coolant leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to pets and slippery on surfaces.",
+        "instructions": "Inspect these common Ninja 400 leak points with the engine cold: (1) Radiator hose connections and clamps, (2) Water pump (left side of engine — look for the weep hole dripping), (3) Radiator core and tanks (check for road damage from debris), (4) Thermostat housing gasket, (5) Coolant reservoir hose. Look for white residue or colored staining around joints.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Where is the coolant leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator hose or clamp", "next": "solution_hose" },
+          { "text": "Water pump weep hole", "next": "solution_water_pump" },
+          { "text": "Radiator is damaged", "next": "solution_radiator" },
+          { "text": "No visible external leak", "next": "check_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Test the thermostat",
+        "safety": "yellow",
+        "warning": "The radiator hose gets hot when the thermostat opens. Wear gloves.",
+        "instructions": "From a cold start, feel the upper radiator hose. It should remain cool until the thermostat opens (approximately 75-80°C / 167-176°F on the Ninja 400). Then it should get warm as coolant flows to the radiator. If the hose stays cold even when the gauge shows hot, the thermostat is stuck closed and coolant is not circulating.",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "Is the thermostat working?",
+        "safety": "green",
+        "options": [
+          { "text": "Hose stays cold when engine is hot — stuck closed", "next": "solution_thermostat" },
+          { "text": "Thermostat opens normally", "next": "check_radiator_blocked" }
+        ]
+      },
+      {
+        "id": "check_radiator_blocked",
+        "type": "check",
+        "text": "Check radiator for blockage",
+        "safety": "green",
+        "instructions": "Inspect the radiator fins from the front. The Ninja 400 has partial fairing coverage, but the radiator is still exposed to debris. Check for: bugs, mud, bent fins, or objects blocking airflow. You may need to remove the lower fairing for a complete inspection. Also check that the gap between the radiator and engine is clear of debris.",
+        "next": "radiator_blocked_result"
+      },
+      {
+        "id": "radiator_blocked_result",
+        "type": "question",
+        "text": "Is the radiator blocked?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — debris or bent fins blocking airflow", "next": "solution_clean_radiator" },
+          { "text": "No — radiator is clear", "next": "solution_flush" }
+        ]
+      },
+      {
+        "id": "check_head_gasket",
+        "type": "check",
+        "text": "Check for head gasket failure",
+        "safety": "yellow",
+        "warning": "If head gasket failure is suspected, stop riding until confirmed and repaired.",
+        "instructions": "Check for head gasket failure signs: (1) White sweet-smelling exhaust smoke, (2) Milky oil on the oil filler cap or sight glass, (3) Bubbles in the coolant reservoir with the engine running, (4) Oil film on the coolant surface. Use a combustion leak tester (block tester) for a definitive diagnosis.",
+        "next": "head_gasket_result"
+      },
+      {
+        "id": "head_gasket_result",
+        "type": "question",
+        "text": "Are there signs of head gasket failure?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — signs of internal coolant/oil mixing", "next": "solution_head_gasket" },
+          { "text": "No signs of head gasket failure", "next": "solution_flush" }
+        ]
+      },
+      {
+        "id": "solution_normal_heat",
+        "type": "solution",
+        "text": "Normal Operating Temperature",
+        "safety": "green",
+        "action": "The cooling system is working normally.",
+        "details": "The Ninja 400 runs warm in heavy traffic — this is normal. The fan keeps the temperature controlled. As long as the temperature does not reach the red zone and the fan cycles on and off, the system is functioning correctly. In extreme heat or prolonged traffic, pull over briefly if the gauge approaches the red zone."
+      },
+      {
+        "id": "solution_fan_fuse",
+        "type": "solution",
+        "text": "Replace Fan Fuse",
+        "safety": "green",
+        "action": "Replace the blown 10A fan fuse.",
+        "details": "Replace with a 10A fuse. If it blows again, there is a short in the fan circuit. Check the fan motor wiring for damage."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace Fan Motor",
+        "safety": "green",
+        "action": "Replace the faulty radiator fan motor.",
+        "details": "Disconnect the battery. Unbolt the fan shroud from the radiator. Disconnect the fan wiring. Remove and replace the fan motor or entire assembly. Reconnect and verify operation."
+      },
+      {
+        "id": "solution_fan_control",
+        "type": "solution",
+        "text": "Repair Fan Control Circuit",
+        "safety": "yellow",
+        "warning": "Electrical diagnosis requires care. Disconnect the battery first.",
+        "action": "Check and repair the fan relay, temperature sensor, or ECU control circuit.",
+        "details": "The Ninja 400 fan is ECU-controlled. Check the fan relay by swapping with an identical relay. Check the coolant temperature sensor and its connector for corrosion. If the relay and sensor test good, the issue may be in the ECU or wiring harness — professional diagnosis is recommended."
+      },
+      {
+        "id": "solution_hose",
+        "type": "solution",
+        "text": "Repair or Replace Radiator Hose",
+        "safety": "green",
+        "action": "Tighten the hose clamp or replace the hose.",
+        "details": "Tighten the hose clamp. If the hose is cracked or damaged, replace it with OEM or quality silicone hose. After repair, top off coolant and bleed the system."
+      },
+      {
+        "id": "solution_water_pump",
+        "type": "solution",
+        "text": "Replace Water Pump Seal",
+        "safety": "yellow",
+        "warning": "Drain coolant before water pump service.",
+        "action": "Replace the water pump mechanical seal.",
+        "details": "A weeping weep hole indicates the pump seal has failed. Drain the coolant, remove the water pump cover, and replace the seal and gasket. If the impeller is damaged, replace the entire pump. Refill and bleed the cooling system."
+      },
+      {
+        "id": "solution_radiator",
+        "type": "solution",
+        "text": "Repair or Replace Radiator",
+        "safety": "yellow",
+        "warning": "Do not ride with a damaged radiator.",
+        "action": "Have the radiator repaired or replace it.",
+        "details": "Minor damage can sometimes be repaired by a radiator specialist. For major damage, replace the radiator. The Ninja 400 radiator is relatively affordable compared to larger bikes. After installation, fill with proper coolant and bleed thoroughly."
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant before removing the thermostat housing.",
+        "action": "Replace the stuck thermostat.",
+        "details": "Drain the coolant. Remove the thermostat housing, replace the thermostat and gasket. Do not run the engine without a thermostat. Refill and bleed the cooling system."
+      },
+      {
+        "id": "solution_clean_radiator",
+        "type": "solution",
+        "text": "Clean Radiator",
+        "safety": "green",
+        "action": "Clean debris from the radiator fins.",
+        "details": "Use compressed air (blowing from engine side outward) or a gentle water spray to remove debris. Straighten bent fins with a fin comb. Remove the lower fairing for better access. Reassemble and test ride to verify temperature returns to normal."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush and Replace Coolant",
+        "safety": "yellow",
+        "warning": "Dispose of old coolant properly — it is toxic.",
+        "action": "Flush the cooling system and fill with fresh coolant.",
+        "details": "Drain old coolant. Flush with distilled water (fill, run briefly, drain). Repeat until water runs clear. Refill with 50/50 ethylene glycol and distilled water mix. Total Ninja 400 capacity: approximately 1.8 liters. Bleed air by running the engine with the radiator cap off and squeezing hoses. Top off as air escapes. Coolant should be replaced every 2-3 years."
+      },
+      {
+        "id": "solution_head_gasket",
+        "type": "solution",
+        "text": "Head Gasket Replacement — Professional Service",
+        "safety": "red",
+        "warning": "Do not ride with a blown head gasket. Engine damage will result.",
+        "action": "Have the head gasket replaced by a qualified mechanic.",
+        "details": "Head gasket replacement on the Ninja 400 parallel twin requires removing the cylinder head. This is a major engine job requiring special tools, precise torque sequences, and valve clearance checking. Typical cost: $500-$1000 including parts and labor. Do not continue riding — coolant in the oil will destroy bearings, and combustion gases in the coolant will cause rapid overheating."
+      }
+    ]
+  }
+}

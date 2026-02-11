@@ -1,0 +1,193 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Battery / Charging Problems",
+  "description": "Diagnose battery drain, charging system issues, and electrical problems on the Yamaha MT-07.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What battery or electrical symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "Disconnect the battery negative terminal before working on any electrical components.",
+        "options": [
+          { "text": "Battery is dead after the bike sits for a few days", "next": "check_battery_age" },
+          { "text": "Battery dies while riding or lights dim", "next": "test_charging_output" },
+          { "text": "Starter cranks slowly even with a charged battery", "next": "check_battery_terminals" },
+          { "text": "Battery light or warning on the dash", "next": "test_charging_output" }
+        ]
+      },
+      {
+        "id": "check_battery_age",
+        "type": "question",
+        "text": "How old is the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "Less than 2 years old", "next": "check_parasitic_draw" },
+          { "text": "2-4 years old", "next": "test_battery_health" },
+          { "text": "Over 4 years old or unknown age", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "check_parasitic_draw",
+        "type": "check",
+        "text": "Test for parasitic battery drain",
+        "safety": "yellow",
+        "warning": "Do not start the engine with the multimeter connected in the current measurement circuit.",
+        "instructions": "With everything off, disconnect the battery negative cable. Set your multimeter to DC milliamps (mA). Connect the meter between the negative cable and the negative battery terminal. Normal parasitic draw is less than 3-5mA. Higher draw means something is staying on. Common MT-07 drain sources: aftermarket USB chargers, phone mounts with built-in chargers, or aftermarket LED lights wired to constant power instead of switched power.",
+        "next": "parasitic_draw_result"
+      },
+      {
+        "id": "parasitic_draw_result",
+        "type": "question",
+        "text": "What is the parasitic draw reading?",
+        "safety": "green",
+        "options": [
+          { "text": "Less than 5mA — normal draw", "next": "test_battery_health" },
+          { "text": "High draw — something is draining the battery", "next": "solution_find_drain" },
+          { "text": "I cannot test this / do not have a multimeter", "next": "test_battery_health" }
+        ]
+      },
+      {
+        "id": "test_battery_health",
+        "type": "check",
+        "text": "Test battery health",
+        "safety": "green",
+        "instructions": "Fully charge the battery with a motorcycle battery charger (1-2 amp setting). After charging, let the battery rest for 1 hour, then measure the voltage. A healthy battery shows 12.6-12.8V after resting. If the voltage drops below 12.4V within a few hours of resting (no load), the battery has a bad cell and cannot be saved. The MT-07 uses a YTZ8V (or equivalent) battery.",
+        "next": "battery_health_result"
+      },
+      {
+        "id": "battery_health_result",
+        "type": "question",
+        "text": "What voltage does the battery hold after charging and resting?",
+        "safety": "green",
+        "options": [
+          { "text": "Holds 12.6V or higher — battery is good", "next": "test_charging_output" },
+          { "text": "Drops below 12.4V — battery is failing", "next": "solution_replace_battery" },
+          { "text": "Will not charge at all", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "test_charging_output",
+        "type": "check",
+        "text": "Test the charging system voltage",
+        "safety": "yellow",
+        "warning": "Keep meter leads and hands away from moving parts while the engine is running.",
+        "instructions": "Connect a multimeter (DC volts) to the battery terminals. Note the resting voltage with the engine off. Start the engine and increase RPM to 3,000-5,000. The voltage should increase to 13.5-14.5V, indicating the charging system is working. Below 13.5V = not charging sufficiently. Above 15.0V = overcharging (regulator/rectifier likely failing).",
+        "next": "charging_output_result"
+      },
+      {
+        "id": "charging_output_result",
+        "type": "question",
+        "text": "What voltage do you read at 3,000-5,000 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "13.5-14.5V — charging normally", "next": "check_battery_terminals" },
+          { "text": "Below 13.5V — undercharging", "next": "test_stator_output" },
+          { "text": "Above 15.0V — overcharging", "next": "solution_reg_rect" }
+        ]
+      },
+      {
+        "id": "test_stator_output",
+        "type": "check",
+        "text": "Test the stator AC output",
+        "safety": "yellow",
+        "warning": "Test with engine running — keep leads clear of moving parts.",
+        "instructions": "The MT-07 stator has a 3-phase output with 3 yellow wires. Locate the stator connector (typically on the left side, behind the front sprocket cover area). Disconnect it. Set your multimeter to AC volts. Measure between each pair of yellow wires with the engine at 3,000 RPM (3 measurements). All three should read above 40V AC and be roughly equal to each other.",
+        "next": "stator_output_result"
+      },
+      {
+        "id": "stator_output_result",
+        "type": "question",
+        "text": "What did the stator test show?",
+        "safety": "green",
+        "options": [
+          { "text": "All three readings are similar and above 40V — stator is good", "next": "solution_reg_rect" },
+          { "text": "One or more readings are very low or zero — stator is bad", "next": "solution_stator" },
+          { "text": "I cannot test the stator myself", "next": "solution_professional_electrical" }
+        ]
+      },
+      {
+        "id": "check_battery_terminals",
+        "type": "check",
+        "text": "Inspect battery terminals and ground connections",
+        "safety": "green",
+        "instructions": "Check the battery terminals for corrosion (white or green buildup), looseness, or poor contact. Also check the main ground wire where it bolts to the frame — a corroded or loose ground causes all sorts of electrical symptoms. Wiggle the battery cables while the engine is running and watch for voltage drops or flickering lights.",
+        "next": "terminal_result"
+      },
+      {
+        "id": "terminal_result",
+        "type": "question",
+        "text": "What is the terminal and ground condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminals are corroded or loose", "next": "solution_clean_terminals" },
+          { "text": "Ground wire is loose or corroded", "next": "solution_ground_wire" },
+          { "text": "All connections are clean and tight", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the Battery",
+        "safety": "green",
+        "action": "Replace the battery with a new YTZ8V or equivalent.",
+        "details": "Motorcycle batteries typically last 3-5 years. The MT-07 uses a YTZ8V. Popular options include Yuasa (OEM quality), Shorai or Antigravity (lithium, lighter weight). When installing, connect positive first, then negative. Clean the battery tray and terminals. Consider using a battery tender during storage to extend battery life."
+      },
+      {
+        "id": "solution_find_drain",
+        "type": "solution",
+        "text": "Find and Fix Parasitic Drain",
+        "safety": "yellow",
+        "warning": "Disconnect battery before modifying any wiring.",
+        "action": "Identify the circuit causing the drain and repair it.",
+        "details": "With the multimeter still reading the parasitic draw, pull fuses one at a time. When the draw drops to normal, you have found the circuit. Common MT-07 drain sources: (1) Aftermarket USB chargers wired to constant battery power instead of switched ignition power, (2) Aftermarket LED lights left on, (3) GPS trackers or alarm systems. The fix is usually rewiring the accessory through a switched power source (one that turns off with the ignition) or adding a manual cutoff switch."
+      },
+      {
+        "id": "solution_reg_rect",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "A failing regulator/rectifier can overcharge and damage the battery or boil the electrolyte.",
+        "action": "Replace the regulator/rectifier unit.",
+        "details": "The MT-07 regulator/rectifier is located under the seat or near the battery area. Replace with an OEM unit or a quality aftermarket MOSFET-type regulator/rectifier (runs cooler and lasts longer). When replacing, also inspect the connector for melted or burned pins — repair or replace the connector if damaged. After installation, verify charging voltage is 13.5-14.5V at 3,000 RPM."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Stator replacement requires draining oil and removing the left engine cover.",
+        "action": "Replace the failed stator.",
+        "details": "The MT-07 stator is behind the left engine cover. Drain the engine oil, remove the cover, and unbolt the old stator. Install the new stator, ensuring the wires route through the grommet properly. Replace the cover gasket and refill with oil. Quality aftermarket stators from Rick's Motorsport or ElectroSport are available. It is recommended to replace the regulator/rectifier at the same time to protect the new stator."
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Clean Battery Terminals",
+        "safety": "green",
+        "action": "Clean the battery terminals and reconnect securely.",
+        "details": "Disconnect negative first, then positive. Clean both terminals and cable ends with a wire brush or battery terminal cleaner tool. Apply dielectric grease or battery terminal protector spray to prevent future corrosion. Reconnect positive first, then negative. Tighten securely."
+      },
+      {
+        "id": "solution_ground_wire",
+        "type": "solution",
+        "text": "Clean and Resecure Ground Wire",
+        "safety": "green",
+        "action": "Clean the ground connection and retighten.",
+        "details": "Remove the ground wire bolt from the frame. Sand the contact area on both the wire terminal and frame to expose bare, clean metal. Reattach and tighten securely. Apply dielectric grease to prevent corrosion. A poor ground is one of the most common and overlooked causes of electrical issues on any motorcycle."
+      },
+      {
+        "id": "solution_professional_electrical",
+        "type": "solution",
+        "text": "Professional Electrical Diagnosis",
+        "safety": "green",
+        "action": "Have the charging system diagnosed by a motorcycle mechanic or auto-electrician.",
+        "details": "If you do not have a multimeter or are uncomfortable testing electrical components, a shop can diagnose the entire charging system (battery, stator, regulator/rectifier, wiring) in about 30 minutes. Typical diagnostic cost: $50-$100. They can also load-test the battery to determine if it needs replacement."
+      }
+    ]
+  }
+}

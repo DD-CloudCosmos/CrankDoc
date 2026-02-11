@@ -1,0 +1,258 @@
+{
+  "title": "Brake Problems",
+  "description": "Diagnose common motorcycle brake issues including spongy feel, squealing, pulsating, pulling, and poor stopping power. Covers disc and drum brakes.",
+  "category": "brakes",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake problem are you experiencing?",
+        "safety": "red",
+        "warning": "Brakes are critical safety components. If you are unsure about any brake repair, have a professional do the work. Never ride with brakes you are not confident in.",
+        "options": [
+          { "text": "Brake lever/pedal feels spongy or goes to the grip/floor", "next": "spongy_brakes" },
+          { "text": "Squealing, squeaking, or grinding noise when braking", "next": "brake_noise" },
+          { "text": "Pulsating or vibration in the brake lever/pedal", "next": "brake_pulsation" },
+          { "text": "Bike pulls to one side when braking", "next": "brake_pulling" },
+          { "text": "Brakes feel weak — poor stopping power", "next": "weak_brakes" }
+        ]
+      },
+      {
+        "id": "spongy_brakes",
+        "type": "check",
+        "text": "Check the brake fluid level and condition.",
+        "safety": "red",
+        "warning": "Brake fluid is corrosive and will damage paint and plastic. Wipe up spills immediately. Use only the brake fluid type specified on the reservoir cap (DOT 4 or DOT 5.1 for most motorcycles). Never use DOT 5 (silicone) unless specifically called for.",
+        "instructions": "Locate the brake fluid reservoir (on the handlebar for front brakes, usually on the frame near the rear master cylinder for rear brakes). Check the fluid level — it should be between the MIN and MAX lines. Check the fluid color: fresh fluid is clear to light amber. Dark brown or black fluid is old and degraded. If the level is very low, there may be a leak or the brake pads may be worn down.",
+        "next": "spongy_fluid_result"
+      },
+      {
+        "id": "spongy_fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Very low or empty", "next": "check_brake_leak" },
+          { "text": "Dark/old fluid but level is OK", "next": "solution_bleed_brakes" },
+          { "text": "Fluid level and color look fine", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "check_brake_leak",
+        "type": "check",
+        "text": "Inspect the brake system for leaks.",
+        "safety": "red",
+        "warning": "Do not ride the motorcycle if there is a brake fluid leak. This is a critical safety issue.",
+        "instructions": "Follow the brake line from the master cylinder (lever/pedal) to the caliper(s). Look for wet spots, drips, or stains of brake fluid along the lines, at the banjo bolt connections (where the hose meets the caliper and master cylinder), at the caliper piston seals, and at the master cylinder itself. Also check for cracked, swollen, or damaged brake hoses.",
+        "next": "brake_leak_result"
+      },
+      {
+        "id": "brake_leak_result",
+        "type": "question",
+        "text": "Did you find any signs of brake fluid leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leak found at hose, caliper, or master cylinder", "next": "solution_brake_leak" },
+          { "text": "No visible leaks", "next": "check_pad_thickness" }
+        ]
+      },
+      {
+        "id": "solution_brake_leak",
+        "type": "solution",
+        "text": "There is a brake fluid leak that must be repaired immediately.",
+        "safety": "red",
+        "warning": "Do NOT ride the motorcycle until the brake leak is repaired. Tow or transport it to a shop.",
+        "action": "Repair the brake fluid leak and bleed the system",
+        "details": "Brake leaks are commonly caused by: deteriorated rubber brake hoses (replace with new OEM or braided stainless steel lines), loose or damaged banjo bolts (tighten or replace with new crush washers), worn caliper piston seals (caliper rebuild kit needed), or a failing master cylinder (rebuild or replace). After any brake repair, the system must be bled to remove all air. Use fresh brake fluid of the correct type. If you are not experienced with brake work, have a professional do this repair — brakes are not something to learn on."
+      },
+      {
+        "id": "check_pad_thickness",
+        "type": "check",
+        "text": "Check the brake pad thickness.",
+        "safety": "yellow",
+        "warning": "If pads are metal-on-metal (no friction material remaining), do not ride. The brake disc will be damaged.",
+        "instructions": "Look at the brake caliper — most calipers have an opening where you can see the brake pads and disc. Check the thickness of the friction material on the pads. Most pads have a wear indicator groove — if the groove is no longer visible, the pads need replacement. Minimum pad thickness is typically 1-2mm of friction material. As pads wear, the brake fluid level in the reservoir drops (fluid fills the space behind the extending caliper piston).",
+        "next": "pad_thickness_result"
+      },
+      {
+        "id": "pad_thickness_result",
+        "type": "question",
+        "text": "How much friction material is left on the brake pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are thin or wear indicator is gone", "next": "solution_replace_pads" },
+          { "text": "Pads have plenty of material left", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "The brake pads are worn and need replacement.",
+        "safety": "red",
+        "warning": "Always replace brake pads in pairs (both pads in a caliper). Never replace just one pad. After installing new pads, bed them in gently — avoid hard braking for the first 50-100 miles.",
+        "action": "Replace the brake pads",
+        "details": "Replace the pads with the correct type for your bike (check your service manual for the part number or dimensions). When pushing the caliper pistons back to fit new pads, open the brake fluid reservoir cap slightly so fluid can flow back in. Top off the brake fluid after installation. New pads will restore the fluid level and braking performance. After installation, pump the brake lever several times before riding to ensure the pads contact the disc. Bed in new pads with gentle stops for the first 50-100 miles."
+      },
+      {
+        "id": "solution_bleed_brakes",
+        "type": "solution",
+        "text": "Air in the brake lines is causing the spongy feel.",
+        "safety": "red",
+        "warning": "Proper brake bleeding is critical. If done incorrectly, you may have no brakes. If you are not confident, have a professional bleed the brakes.",
+        "action": "Bleed the brake system and replace old fluid",
+        "details": "Air bubbles in the brake fluid cause a spongy lever. Bleed the brakes to remove all air: attach a clear hose to the caliper bleed nipple, submerge the other end in a container with some brake fluid. Pump the brake lever, hold it in, crack open the bleed nipple, close the nipple, release the lever. Repeat until no air bubbles come out. Keep the reservoir topped up during bleeding — never let it run dry. Use fresh brake fluid of the correct type. Brake fluid should be replaced every 2 years regardless, as it absorbs moisture over time."
+      },
+      {
+        "id": "brake_noise",
+        "type": "question",
+        "text": "What type of noise are the brakes making?",
+        "safety": "green",
+        "options": [
+          { "text": "High-pitched squealing or squeaking", "next": "check_pad_glazing" },
+          { "text": "Grinding or metal-on-metal sound", "next": "solution_pads_gone" }
+        ]
+      },
+      {
+        "id": "check_pad_glazing",
+        "type": "check",
+        "text": "Inspect the brake pads and disc surface.",
+        "safety": "yellow",
+        "warning": "The brake disc may be hot after riding. Wait for it to cool before touching.",
+        "instructions": "Remove the brake pads and inspect them. Glazed pads have a smooth, shiny surface instead of a slightly rough texture. Check the disc surface for scoring (deep grooves) or a shiny, polished appearance. Light squealing with new pads is sometimes normal during break-in. Squealing can also be caused by dust, dirt, or moisture on the pads or disc.",
+        "next": "pad_glazing_result"
+      },
+      {
+        "id": "pad_glazing_result",
+        "type": "question",
+        "text": "What condition are the pads and disc in?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are glazed (smooth, shiny surface)", "next": "solution_glazed_pads" },
+          { "text": "Disc is scored or grooved", "next": "solution_scored_disc" },
+          { "text": "Everything looks normal", "next": "solution_brake_squeal_normal" }
+        ]
+      },
+      {
+        "id": "solution_glazed_pads",
+        "type": "solution",
+        "text": "The brake pads have become glazed.",
+        "safety": "yellow",
+        "warning": "Glazed pads also have reduced stopping power. Replace them if scuffing does not resolve the issue.",
+        "action": "Scuff the pads or replace them",
+        "details": "Glazed pads can sometimes be saved by scuffing the friction surface with medium-grit sandpaper (120-180 grit) to restore the rough texture. Also lightly sand the disc surface if it is very smooth. If the pads are also thin, just replace them. Glazing is often caused by overheating (riding the brakes down a hill, dragging brakes in traffic) or using incorrect pad compounds. Ensure you use pads rated for your riding style."
+      },
+      {
+        "id": "solution_scored_disc",
+        "type": "solution",
+        "text": "The brake disc is scored or grooved.",
+        "safety": "red",
+        "warning": "A severely scored disc can cause brake failure. Measure disc thickness — if it is below the minimum (stamped on the disc), it must be replaced.",
+        "action": "Replace the brake disc if it is scored or below minimum thickness",
+        "details": "Light scoring is normal and usually causes no issues. Deep grooves mean the disc has been worn by pads that wore past the friction material to the metal backing plate. Check the disc thickness with a micrometer or caliper — the minimum thickness is usually stamped or engraved on the disc. If the disc is below minimum thickness or has deep grooves, it must be replaced. Always install new brake pads with a new disc."
+      },
+      {
+        "id": "solution_pads_gone",
+        "type": "solution",
+        "text": "The brake pads are completely worn — metal is grinding on the disc.",
+        "safety": "red",
+        "warning": "STOP RIDING IMMEDIATELY. Metal-on-metal braking means you have minimal stopping power and the disc is being damaged.",
+        "action": "Replace brake pads immediately and inspect the disc for damage",
+        "details": "The grinding sound means the friction material on the pads is completely gone and the metal backing plates are grinding against the brake disc. This is dangerous and damages the disc. Replace the pads immediately and inspect the disc — measure its thickness (minimum thickness is usually stamped on the disc) and check for deep grooves or warping. The disc may need replacement as well. Do not ride the motorcycle until the brakes are repaired."
+      },
+      {
+        "id": "solution_brake_squeal_normal",
+        "type": "solution",
+        "text": "Some brake squeal is normal, especially with certain pad compounds.",
+        "safety": "green",
+        "action": "Monitor the noise — it may resolve on its own",
+        "details": "Some brake squeal is normal, particularly with semi-metallic or sintered pads, in wet or cold conditions, or with new pads that haven't been bedded in yet. If the braking performance is fine and the pads have plenty of material, the squeal is usually cosmetic. Applying a thin layer of brake anti-squeal compound to the back of the pads (not the friction surface) can help. Ensure the caliper mounting bolts are properly torqued and the caliper slides freely."
+      },
+      {
+        "id": "brake_pulsation",
+        "type": "check",
+        "text": "Check for brake disc warping.",
+        "safety": "yellow",
+        "warning": "Support the bike securely on a stand before spinning the wheel.",
+        "instructions": "Elevate the wheel so it can spin freely. Spin the wheel and watch the gap between the brake disc and the pads (or hold a fixed reference point near the disc edge). If the disc wobbles or the gap changes as the wheel rotates, the disc is warped. You can also feel for pulsation by slowly spinning the wheel while lightly applying the brake.",
+        "next": "disc_warp_result"
+      },
+      {
+        "id": "disc_warp_result",
+        "type": "question",
+        "text": "Is the brake disc warped (wobbling as it spins)?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — disc is visibly warped", "next": "solution_warped_disc" },
+          { "text": "No — disc appears straight", "next": "solution_wheel_bearing" }
+        ]
+      },
+      {
+        "id": "solution_warped_disc",
+        "type": "solution",
+        "text": "The brake disc is warped, causing pulsation.",
+        "safety": "red",
+        "warning": "A warped disc reduces braking effectiveness. Replace it — do not attempt to straighten it.",
+        "action": "Replace the warped brake disc",
+        "details": "Brake discs warp from excessive heat (prolonged hard braking, dragging brakes) or from tightening the wheel with the brake applied. Replace the disc with a new one — do not machine or attempt to straighten motorcycle brake discs. Install new brake pads at the same time. To prevent future warping: avoid resting your foot on the rear brake pedal, don't hose down hot discs with cold water after riding, and use proper braking technique (firm progressive braking rather than light prolonged dragging)."
+      },
+      {
+        "id": "solution_wheel_bearing",
+        "type": "solution",
+        "text": "Pulsation without disc warping may indicate a wheel bearing issue.",
+        "safety": "yellow",
+        "warning": "A failing wheel bearing is a safety concern. Have it inspected promptly.",
+        "action": "Check wheel bearings for play or roughness",
+        "details": "With the wheel off the ground, try to rock the wheel side to side (grabbing the tire at 3 and 9 o'clock). Any looseness or clunking indicates worn wheel bearings. Also spin the wheel and listen for grinding or roughness from the bearing area. Worn wheel bearings allow the wheel (and disc) to move slightly, creating a pulsation sensation at the brake lever. Wheel bearings should be replaced in pairs and by someone experienced with pressing bearings."
+      },
+      {
+        "id": "brake_pulling",
+        "type": "check",
+        "text": "Check for a stuck or seized caliper piston.",
+        "safety": "red",
+        "warning": "A seized caliper can cause uneven braking and is a safety hazard. Do not ride if the bike pulls severely under braking.",
+        "instructions": "Elevate the wheel and spin it by hand. The wheel should spin freely with only slight pad drag. If the wheel is hard to spin or you can feel one brake grabbing more than the other, a caliper piston may be seized. Check if the brake disc is hotter on one side than the other after a short ride — a seized caliper generates excess heat.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "Is one brake dragging more than the other?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — one side is dragging or disc is much hotter", "next": "solution_seized_caliper" },
+          { "text": "Both sides seem equal", "next": "solution_alignment" }
+        ]
+      },
+      {
+        "id": "solution_seized_caliper",
+        "type": "solution",
+        "text": "A brake caliper piston is seized or sticking.",
+        "safety": "red",
+        "warning": "A seized caliper can overheat the brake fluid and cause brake failure. Do not ride until repaired.",
+        "action": "Rebuild or replace the seized caliper",
+        "details": "A caliper piston can seize from corrosion, dirt, or old brake fluid damaging the piston seal. The caliper needs to be removed, disassembled, cleaned, and rebuilt with a new seal kit. If the piston bore is corroded or scored, the caliper must be replaced. After rebuilding, flush and bleed the entire brake circuit with fresh fluid. To prevent future seizure, change brake fluid every 2 years and exercise the pistons during regular maintenance."
+      },
+      {
+        "id": "solution_alignment",
+        "type": "solution",
+        "text": "Brakes may be pulling due to tire, suspension, or alignment issues.",
+        "safety": "yellow",
+        "warning": "A motorcycle that pulls under braking is unpredictable and dangerous.",
+        "action": "Check tire condition, pressure, and wheel alignment",
+        "details": "If the brakes themselves appear to be working evenly, pulling under braking can be caused by: uneven tire wear or different tire pressures front-to-back, misaligned front forks (one fork leg higher than the other), a bent front axle, or a twisted frame. Check tire pressures and inspect tires for uneven wear. Verify the front fork legs are even. If the issue persists, have a professional inspect the chassis alignment."
+      },
+      {
+        "id": "weak_brakes",
+        "type": "question",
+        "text": "Do the brakes feel weak with a firm lever/pedal, or is the lever/pedal itself soft?",
+        "safety": "green",
+        "options": [
+          { "text": "Lever/pedal is firm but stopping power is poor", "next": "check_pad_glazing" },
+          { "text": "Lever/pedal is soft or spongy", "next": "spongy_brakes" }
+        ]
+      }
+    ]
+  }
+}

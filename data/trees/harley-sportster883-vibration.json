@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Excessive Vibration",
+  "description": "Diagnose abnormal vibration on the Sportster 883 beyond the normal V-twin character vibration.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Sportsters vibrate by nature — but excessive vibration is a sign of trouble. When does the vibration occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Vibration at idle only", "next": "idle_vibration" },
+          { "text": "Vibration at a specific RPM or speed", "next": "rpm_vibration" },
+          { "text": "Vibration during acceleration", "next": "accel_vibration" },
+          { "text": "Vibration is constant — worse than it used to be", "next": "constant_vibration" }
+        ]
+      },
+      {
+        "id": "idle_vibration",
+        "type": "question",
+        "text": "Does the bike run rough at idle, or is the vibration more of a physical shaking of the handlebars/frame?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine runs rough — misfiring or uneven", "next": "check_idle_tune" },
+          { "text": "Physical shaking — engine sounds fine", "next": "check_motor_mounts" }
+        ]
+      },
+      {
+        "id": "check_idle_tune",
+        "type": "check",
+        "text": "Check idle speed and basic tune-up items",
+        "safety": "green",
+        "instructions": "Warm up the engine fully (10 minutes of riding or idling). Check the idle speed — Sportster 883 should idle at 950-1050 RPM. If the idle is too low, the engine will shake more. Check spark plugs for fouling or wear. On fuel-injected models, check for any error codes using a diagnostic scanner.",
+        "next": "idle_tune_result"
+      },
+      {
+        "id": "idle_tune_result",
+        "type": "question",
+        "text": "Is the idle speed within spec and are spark plugs in good condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Idle was low — adjusted it", "next": "solution_idle_adjusted" },
+          { "text": "Spark plugs were fouled — replaced them", "next": "solution_plugs_replaced" },
+          { "text": "Everything checks out — still rough", "next": "solution_intake_leak" }
+        ]
+      },
+      {
+        "id": "solution_idle_adjusted",
+        "type": "solution",
+        "text": "Idle speed adjusted",
+        "safety": "green",
+        "action": "Idle speed set to specification",
+        "details": "The idle speed was below the recommended 950-1050 RPM, causing excessive vibration. On carbureted models, adjust the idle screw on the carburetor. On fuel-injected models, the ECM controls idle — if it keeps dropping, check for intake leaks or a dirty throttle body. A properly set idle greatly reduces perceived vibration."
+      },
+      {
+        "id": "solution_plugs_replaced",
+        "type": "solution",
+        "text": "Spark plugs replaced",
+        "safety": "green",
+        "action": "Install new spark plugs",
+        "details": "Fouled or worn spark plugs cause misfires that feel like excessive vibration. Use the recommended plugs for the Sportster 883 (typically Harley 6R12 or equivalent). Gap to 0.038-0.043 inches. Replace every 10,000 miles or sooner if the bike runs rich or has been sitting."
+      },
+      {
+        "id": "solution_intake_leak",
+        "type": "solution",
+        "text": "Check for intake manifold air leak",
+        "safety": "yellow",
+        "warning": "Use caution when spraying near a hot engine. Do not use flammable sprays near the exhaust.",
+        "action": "Test for intake manifold leak",
+        "details": "An intake leak causes a lean condition on one cylinder, causing rough idle and vibration. (1) Start the engine and let it idle. (2) Spray carburetor cleaner or WD-40 around the intake manifold seals where they connect to each cylinder head. (3) If the idle speed changes (rises or smooths out) when spraying a particular area, you've found the leak. (4) Replace the intake manifold seals — this is very common on Sportsters. The rubber manifold seals harden with heat cycles and age."
+      },
+      {
+        "id": "check_motor_mounts",
+        "type": "check",
+        "text": "Inspect engine motor mounts",
+        "safety": "yellow",
+        "warning": "Support the motorcycle securely on a lift or center stand before checking motor mounts. The engine is heavy.",
+        "instructions": "Inspect the Sportster 883 motor mounts (front, rear, and top). Look for cracked or collapsed rubber isolators. Try to wiggle the engine by hand — there should be very little movement. Check the motor mount bolt torque: front mount 60-65 ft-lbs, rear mount 55-65 ft-lbs. Worn motor mount isolators transmit more vibration to the frame.",
+        "next": "motor_mount_result"
+      },
+      {
+        "id": "motor_mount_result",
+        "type": "question",
+        "text": "Are the motor mounts worn or loose?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — mounts are worn or bolts are loose", "next": "solution_motor_mounts" },
+          { "text": "No — mounts look fine", "next": "rpm_vibration" }
+        ]
+      },
+      {
+        "id": "solution_motor_mounts",
+        "type": "solution",
+        "text": "Replace or tighten motor mounts",
+        "safety": "yellow",
+        "warning": "Properly support the engine before removing motor mount bolts. Dropping the engine can cause serious injury and damage.",
+        "action": "Replace worn motor mount isolators",
+        "details": "Worn rubber motor mount isolators allow the engine to vibrate more against the frame. (1) Support the engine from below with a jack. (2) Remove one mount at a time. (3) Replace worn rubber isolators. (4) Torque to spec (front 60-65 ft-lbs, rear 55-65 ft-lbs). (5) Test ride. Aftermarket polyurethane motor mount isolators are available for a more solid feel, but they transmit slightly more vibration intentionally — stick with rubber OEM-style if vibration reduction is the goal."
+      },
+      {
+        "id": "rpm_vibration",
+        "type": "question",
+        "text": "At what RPM or speed does the vibration occur?",
+        "safety": "green",
+        "options": [
+          { "text": "At a specific RPM (resonance — gets better above and below)", "next": "solution_resonance" },
+          { "text": "Above 3500 RPM — gets worse with speed", "next": "check_wheel_balance" },
+          { "text": "At highway speed (55-70 mph)", "next": "check_wheel_balance" }
+        ]
+      },
+      {
+        "id": "solution_resonance",
+        "type": "solution",
+        "text": "Resonance vibration at specific RPM",
+        "safety": "green",
+        "action": "Identify and mitigate resonance",
+        "details": "A vibration that peaks at a specific RPM and improves above or below is resonance — a natural harmonic of the V-twin. Common fixes: (1) Check that all bolts are tight — exhaust, engine guards, accessories. (2) Loose heat shields on exhaust pipes are a common buzz source. (3) Bar-end weights can reduce handlebar vibration. (4) Rubber-mounted handlebar risers can help. (5) Some RPM ranges just vibrate more on Sportsters — this is characteristic of the 45-degree V-twin. Adjusting your cruising RPM slightly can make a big difference."
+      },
+      {
+        "id": "check_wheel_balance",
+        "type": "check",
+        "text": "Check wheel balance and tire condition",
+        "safety": "green",
+        "instructions": "Inspect both tires for flat spots, cupping, uneven wear, or objects embedded in the tread. Check wheel balance — an unbalanced wheel causes speed-dependent vibration. Lift the rear wheel and spin it — it should rotate freely and come to rest at different positions (a heavy spot always goes to the bottom). Also check spoke tightness if applicable.",
+        "next": "wheel_result"
+      },
+      {
+        "id": "wheel_result",
+        "type": "question",
+        "text": "Are the wheels balanced and tires in good condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Tire is cupped or unevenly worn", "next": "solution_tires" },
+          { "text": "Wheel seems unbalanced", "next": "solution_wheel_balance" },
+          { "text": "Tires and wheels look fine", "next": "check_drivetrain" }
+        ]
+      },
+      {
+        "id": "solution_tires",
+        "type": "solution",
+        "text": "Replace worn or damaged tires",
+        "safety": "green",
+        "action": "Replace the worn tire(s)",
+        "details": "Cupped or unevenly worn tires cause vibration that increases with speed. Replace the tire and investigate the cause of uneven wear — it could be low tire pressure, worn wheel bearings, or misaligned wheels. The Sportster 883 rear tire is typically a 150/80-16 and front is 100/90-19. Always replace in pairs if both are worn."
+      },
+      {
+        "id": "solution_wheel_balance",
+        "type": "solution",
+        "text": "Balance the wheels",
+        "safety": "green",
+        "action": "Have the wheels balanced",
+        "details": "An unbalanced wheel causes vibration that increases with speed. Take the wheels to a motorcycle shop for dynamic balancing. If you recently changed tires, the balance weights may have fallen off. Check that all existing balance weights are still attached. Clip-on weights can vibrate loose on Sportsters."
+      },
+      {
+        "id": "check_drivetrain",
+        "type": "check",
+        "text": "Check the chain drive (Sportster 883 uses chain final drive)",
+        "safety": "yellow",
+        "warning": "Never check chain slack with the engine running. Keep fingers clear of the sprocket teeth.",
+        "instructions": "Check the drive chain slack — should be 5/8 to 7/8 inch of free play at the tightest point. Rotate the wheel and check at several points, as chains wear unevenly. Also check sprocket teeth for hooking or wear. A tight spot in the chain can cause a rhythmic vibration at certain speeds.",
+        "next": "drivetrain_result"
+      },
+      {
+        "id": "drivetrain_result",
+        "type": "question",
+        "text": "Is the chain properly adjusted with no tight spots?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain needs adjustment", "next": "solution_chain_adjust" },
+          { "text": "Chain or sprockets are worn", "next": "solution_chain_sprockets" },
+          { "text": "Chain is fine", "next": "solution_further_inspect" }
+        ]
+      },
+      {
+        "id": "solution_chain_adjust",
+        "type": "solution",
+        "text": "Adjust the drive chain",
+        "safety": "green",
+        "action": "Adjust chain to proper slack",
+        "details": "Loosen the rear axle nut and adjust the chain adjusters evenly on both sides to achieve 5/8 to 7/8 inch of free play at the tightest point. Ensure both adjusters are at the same mark for proper wheel alignment. Retorque the axle nut to 60-65 ft-lbs. Lubricate the chain after adjustment."
+      },
+      {
+        "id": "solution_chain_sprockets",
+        "type": "solution",
+        "text": "Replace chain and sprockets",
+        "safety": "yellow",
+        "warning": "Always replace the chain and both sprockets as a set. A new chain on worn sprockets will wear rapidly.",
+        "action": "Replace the chain and sprocket set",
+        "details": "Worn chain and sprockets cause vibration and can be dangerous. Replace the front sprocket, rear sprocket, and chain as a complete set. The Sportster 883 uses a 530 chain. Use a quality chain (D.I.D., RK, or EK) and OEM or aftermarket sprockets. Proper chain tension after installation is critical."
+      },
+      {
+        "id": "solution_further_inspect",
+        "type": "solution",
+        "text": "Further inspection needed",
+        "safety": "green",
+        "action": "Inspect wheel bearings and steering head bearings",
+        "details": "If tires, wheels, chain, and mounts all check out, investigate: (1) Wheel bearings — grab the wheel and try to wiggle it side to side. Any play means worn bearings. (2) Steering head bearings — with the front wheel off the ground, turn the bars side to side. They should move smoothly with no notchiness or looseness. (3) Swingarm bearings — grab the rear wheel and try to move it side to side. (4) Compensator sprocket — a worn compensator can cause a clunk and vibration under load. Any of these can cause vibration that increases with speed."
+      },
+      {
+        "id": "accel_vibration",
+        "type": "question",
+        "text": "Does the vibration happen under acceleration in all gears, or only specific gears?",
+        "safety": "green",
+        "options": [
+          { "text": "All gears — worse under hard acceleration", "next": "check_drivetrain" },
+          { "text": "Specific gear only", "next": "solution_transmission" },
+          { "text": "Only when the clutch is engaged/released", "next": "solution_compensator" }
+        ]
+      },
+      {
+        "id": "solution_transmission",
+        "type": "solution",
+        "text": "Possible transmission issue",
+        "safety": "yellow",
+        "warning": "Transmission problems can worsen quickly. If you hear grinding or the bike jumps out of gear, stop riding and have it inspected.",
+        "action": "Have the transmission inspected",
+        "details": "Vibration in a specific gear may indicate worn gear teeth or a bent shift fork. This requires opening the transmission for inspection. On the Sportster 883, the transmission is part of the crankcase (unit construction). This is a shop-level repair requiring specialized tools and knowledge. If the bike also pops out of gear, the shift forks are likely bent."
+      },
+      {
+        "id": "solution_compensator",
+        "type": "solution",
+        "text": "Compensator sprocket issue",
+        "safety": "yellow",
+        "warning": "A failing compensator can cause sudden drivetrain engagement issues. Have it inspected promptly.",
+        "action": "Inspect the compensator sprocket assembly",
+        "details": "The compensator sprocket absorbs drivetrain shock between the engine and primary chain. When worn, it causes a clunk or vibration on acceleration and deceleration. This is common on Sportsters with higher mileage. The compensator is behind the primary cover. Replacement requires removing the primary cover, clutch, and primary chain. Aftermarket locking compensator eliminators are available if you want a more direct connection (more vibration but no clunk)."
+      },
+      {
+        "id": "constant_vibration",
+        "type": "check",
+        "text": "Check basic items for increased overall vibration",
+        "safety": "green",
+        "instructions": "When the overall vibration level increases over time, check: (1) Motor mount bolts — all tight? (2) Exhaust pipe mounting bolts — loose exhaust magnifies vibration. (3) Any aftermarket accessories that have loosened. (4) Handlebar clamp bolts. (5) Footpeg mounts. Walk around the bike and check every visible bolt connection. Vibration from the V-twin loosens things over time.",
+        "next": "constant_check_result"
+      },
+      {
+        "id": "constant_check_result",
+        "type": "question",
+        "text": "Did you find any loose bolts or fasteners?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — tightened several bolts", "next": "solution_bolts_tightened" },
+          { "text": "No — everything is tight", "next": "check_motor_mounts" }
+        ]
+      },
+      {
+        "id": "solution_bolts_tightened",
+        "type": "solution",
+        "text": "Loose bolts found and tightened",
+        "safety": "green",
+        "action": "Tightened loose bolts throughout the motorcycle",
+        "details": "V-twin vibration gradually loosens bolts over time. This is normal for Sportsters. Consider using blue threadlocker (Loctite 242) on non-critical fasteners that keep loosening. Check all fasteners every 2,500 miles as part of routine maintenance. Pay special attention to exhaust, motor mounts, handlebars, and accessory mounts."
+      }
+    ]
+  }
+}

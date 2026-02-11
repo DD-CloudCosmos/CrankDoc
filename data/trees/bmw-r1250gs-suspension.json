@@ -1,0 +1,187 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "ESA Suspension Issues",
+  "description": "Diagnose Electronic Suspension Adjustment (ESA) problems on the R1250GS, including ESA faults, sagging, harsh ride, and manual suspension issues.",
+  "category": "suspension",
+  "difficulty": "advanced",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Does your R1250GS have ESA (Electronic Suspension Adjustment)?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — ESA equipped", "next": "esa_symptoms" },
+          { "text": "No — standard (manual) suspension", "next": "manual_symptoms" },
+          { "text": "Not sure", "next": "check_esa" }
+        ]
+      },
+      {
+        "id": "check_esa",
+        "type": "check",
+        "text": "Check if your GS has ESA",
+        "safety": "green",
+        "instructions": "Check the TFT display menu: go to Settings > Vehicle > Suspension. If you see options for Comfort, Road, Dynamic, and rider/luggage preload settings, your bike has ESA. If there are no suspension settings in the menu, your bike has standard manual suspension. Also look at the rear shock — ESA shocks have an electronic actuator motor on them. Standard shocks have a manual preload adjuster (spanner wrench ring).",
+        "next": "esa_check_result"
+      },
+      {
+        "id": "esa_check_result",
+        "type": "question",
+        "text": "Does your bike have ESA?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — ESA confirmed", "next": "esa_symptoms" },
+          { "text": "No — manual suspension", "next": "manual_symptoms" }
+        ]
+      },
+      {
+        "id": "esa_symptoms",
+        "type": "question",
+        "text": "What ESA suspension issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "ESA fault warning on TFT display", "next": "esa_fault" },
+          { "text": "Suspension feels wrong despite ESA settings", "next": "esa_feels_wrong" },
+          { "text": "ESA not adjusting — stuck in one mode", "next": "esa_stuck" },
+          { "text": "Suspension leaking fluid", "next": "esa_leak" }
+        ]
+      },
+      {
+        "id": "esa_fault",
+        "type": "check",
+        "text": "Check battery voltage and scan for ESA fault codes",
+        "safety": "green",
+        "instructions": "ESA faults are commonly caused by low battery voltage — the ESA motors need adequate power to operate. (1) Check battery voltage — must be 12.4V+ for ESA to function. (2) Try cycling the ignition: OFF for 30 seconds, then ON. (3) Check the TFT for a specific fault message. (4) Use a GS-911 to read ESA-specific fault codes. (5) Common ESA fault causes: low battery, actuator motor fault, position sensor fault, wiring issue.",
+        "next": "esa_fault_result"
+      },
+      {
+        "id": "esa_fault_result",
+        "type": "question",
+        "text": "Did the fault clear after cycling the ignition?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — fault cleared", "next": "solution_esa_transient" },
+          { "text": "No — fault persists", "next": "solution_esa_diagnose" }
+        ]
+      },
+      {
+        "id": "solution_esa_transient",
+        "type": "solution",
+        "text": "Transient ESA fault — cleared",
+        "safety": "green",
+        "action": "Monitor for recurrence",
+        "details": "Transient ESA faults are common and often caused by: (1) Momentary voltage drop during startup. (2) A bump or vibration that briefly disrupted a sensor signal. (3) Temperature-related — cold weather can affect actuator response time. If the fault clears and doesn't return, no action is needed. If it recurs: (1) Check the battery health. (2) Check ESA connector pins for corrosion. (3) Scan for stored fault codes — even cleared faults are logged."
+      },
+      {
+        "id": "solution_esa_diagnose",
+        "type": "solution",
+        "text": "Persistent ESA fault — requires diagnosis",
+        "safety": "yellow",
+        "warning": "When ESA has a fault, the suspension defaults to a medium damping setting. The bike is still rideable but not optimized. Ride cautiously until repaired.",
+        "action": "Professional ESA diagnosis needed",
+        "details": "Persistent ESA faults require professional diagnosis: (1) A GS-911 can read specific ESA fault codes and test actuator motors. (2) Common ESA failures: front fork ESA actuator motor (located on top of the left fork leg), rear shock ESA actuator, position sensors, wiring harness damage. (3) ESA components are expensive — the front fork actuator alone can cost $800-1200. (4) Check for BMW service bulletins — some ESA issues have been addressed under warranty. (5) BMW dealers can perform ESA actuator tests and calibration using ISTA. (6) Some independent BMW motorcycle shops (like Max BMW, Bob's BMW) specialize in ESA service at lower cost."
+      },
+      {
+        "id": "esa_feels_wrong",
+        "type": "question",
+        "text": "How does the suspension feel wrong?",
+        "safety": "green",
+        "options": [
+          { "text": "Too soft — bottoming out", "next": "solution_esa_preload" },
+          { "text": "Too harsh — feeling every bump", "next": "solution_esa_mode" },
+          { "text": "Front and rear feel different / unbalanced", "next": "solution_esa_calibration" }
+        ]
+      },
+      {
+        "id": "solution_esa_preload",
+        "type": "solution",
+        "text": "Adjust ESA preload settings",
+        "safety": "green",
+        "action": "Set the correct ESA preload for your load",
+        "details": "The R1250GS ESA has rider/passenger/luggage preload settings in the TFT menu: (1) Go to Vehicle > Suspension settings. (2) Set the preload to match your actual load: solo rider, rider + luggage, rider + passenger, or rider + passenger + luggage. (3) Each setting adjusts the spring preload electronically. (4) If bottoming out with correct preload settings: the shocks may be worn and need servicing. (5) ESA shocks have a service life and should be serviced every 30,000-40,000 miles. (6) Dynamic mode provides the stiffest damping — try it for aggressive riding."
+      },
+      {
+        "id": "solution_esa_mode",
+        "type": "solution",
+        "text": "Change ESA damping mode",
+        "safety": "green",
+        "action": "Select a more comfortable ESA mode",
+        "details": "The R1250GS ESA offers multiple damping modes: (1) Comfort — softest damping, best for rough roads and long touring. (2) Road — balanced damping for normal riding. (3) Dynamic — firmest damping for aggressive riding and smooth roads. (4) If the ride is too harsh: switch to Comfort mode from the TFT menu. (5) Also check tire pressure — overinflated tires combined with firm suspension amplify harshness. (6) If Comfort mode still feels harsh, the ESA shocks may need servicing — the damping oil degrades over time."
+      },
+      {
+        "id": "solution_esa_calibration",
+        "type": "solution",
+        "text": "ESA calibration needed",
+        "safety": "green",
+        "action": "Have the ESA system recalibrated",
+        "details": "An unbalanced feel between front and rear suggests the ESA needs calibration: (1) ESA calibration requires BMW ISTA software at a dealer. (2) The calibration sets the baseline for each actuator's range of motion. (3) Calibration is needed after: shock replacement, fork service, wheel or tire changes, or any suspension component work. (4) A GS-911 can perform some ESA calibration functions. (5) If one end was serviced and the other wasn't, the damping characteristics may not match — service both ends at the same time for best results."
+      },
+      {
+        "id": "esa_stuck",
+        "type": "solution",
+        "text": "ESA stuck in one mode",
+        "safety": "yellow",
+        "warning": "If ESA is stuck in a very stiff or very soft setting, ride cautiously — the suspension is not optimized for all conditions.",
+        "action": "Diagnose stuck ESA actuator",
+        "details": "If ESA won't change modes when selected: (1) The actuator motor may be stuck or failed. Try cycling through all modes rapidly — sometimes this frees a stuck actuator. (2) Check for an ESA fault code — a failed actuator will usually throw a code. (3) Listen at the fork tops and rear shock for the actuator motor sound when changing modes — a humming/whirring should be audible. (4) The front fork ESA valve on top of the left fork leg is the most common failure point. (5) Replacement actuators must be coded to the bike. (6) In the meantime, the suspension will operate at whatever damping level it's stuck in."
+      },
+      {
+        "id": "esa_leak",
+        "type": "solution",
+        "text": "ESA suspension fluid leak",
+        "safety": "yellow",
+        "warning": "A leaking ESA shock or fork will not provide correct damping. Have it serviced promptly — compromised suspension affects handling and safety.",
+        "action": "Service or replace the leaking ESA component",
+        "details": "ESA shocks and forks can leak fluid just like conventional suspension: (1) Front forks: check the fork seals (below the ESA actuator on the fork tube). Fork seal replacement is similar to standard forks but the ESA actuator must be carefully handled. (2) Rear shock: a leaking rear shock body needs professional rebuild or replacement. (3) ESA shocks can be serviced by specialists (Ohlins, Touratech Suspension Center, or BMW dealer). (4) Rebuild service is typically $300-500 per unit and restores like-new performance. (5) New ESA shocks from BMW are expensive ($1500-2500+). (6) Service interval for ESA shocks: every 30,000-40,000 miles or when performance degrades."
+      },
+      {
+        "id": "manual_symptoms",
+        "type": "question",
+        "text": "What suspension issue are you experiencing with the manual suspension?",
+        "safety": "green",
+        "options": [
+          { "text": "Front fork leaking oil", "next": "solution_fork_leak" },
+          { "text": "Ride is too soft / bottoming out", "next": "solution_manual_soft" },
+          { "text": "Ride is too harsh", "next": "solution_manual_harsh" },
+          { "text": "Steering head wobble or looseness", "next": "solution_steering_head" }
+        ]
+      },
+      {
+        "id": "solution_fork_leak",
+        "type": "solution",
+        "text": "Front fork seal leak (manual suspension)",
+        "safety": "yellow",
+        "warning": "Fork oil is messy and slippery. Leaking fork oil can drip onto the front tire and brake rotor, reducing braking and traction.",
+        "action": "Replace front fork seals",
+        "details": "Fork seal replacement on the R1250GS (non-ESA): (1) Remove the front wheel and fender. (2) Remove the fork legs from the triple clamps. (3) Disassemble the forks. (4) Replace the seals and dust covers. (5) Use the correct fork oil weight (typically 7.5W or 10W per BMW spec). (6) Fill to the specified oil level. (7) Before replacing seals, try a fork seal cleaning tool (Seal Mate) — it can remove debris from the seal lip and stop minor weeping. (8) Check the fork tubes for scratches — damaged tubes destroy new seals."
+      },
+      {
+        "id": "solution_manual_soft",
+        "type": "solution",
+        "text": "Suspension too soft (manual)",
+        "safety": "green",
+        "action": "Increase preload and consider spring upgrade",
+        "details": "For the manual suspension R1250GS: (1) Front forks: increase preload by adjusting the preload adjuster on top of the fork caps (if equipped). (2) Rear shock: increase preload using the spanner wrench on the spring collar. (3) If at maximum preload and still soft: the springs are inadequate for your weight and load. (4) Aftermarket spring upgrades: Ohlins, Hyperpro, or Touratech springs matched to your weight. (5) Fork oil weight can be increased (e.g., from 7.5W to 10W) for more damping. (6) Rebound damping adjusters (if equipped) — turn clockwise to slow the rebound."
+      },
+      {
+        "id": "solution_manual_harsh",
+        "type": "solution",
+        "text": "Suspension too harsh (manual)",
+        "safety": "green",
+        "action": "Soften suspension settings",
+        "details": "For a harsh ride on the manual suspension GS: (1) Reduce preload — the spring may be set too stiff for your weight. (2) Reduce rebound damping (turn adjuster counter-clockwise if equipped). (3) Fork oil may be too heavy — consider a lighter weight. (4) Check tire pressure — overinflated tires make the ride harsher. Front: 2.5 bar, Rear: 2.9 bar (standard). (5) If the shock is old, it may have lost its damping oil charge — have it rebuilt or replaced. (6) For long-distance touring comfort, aftermarket comfort-oriented shocks (Touratech Expedition, Ohlins Touring) are popular upgrades."
+      },
+      {
+        "id": "solution_steering_head",
+        "type": "solution",
+        "text": "Steering head bearing issue",
+        "safety": "yellow",
+        "warning": "Loose steering head bearings can cause dangerous wobble at speed. Do not ride if the steering feels loose or notchy.",
+        "action": "Adjust or replace steering head bearings",
+        "details": "The R1250GS is a heavy bike (550+ lbs) and steering head bearings take a lot of stress: (1) Check by lifting the front wheel and rocking the forks fore and aft — any clunking is loose bearings. (2) Turn the bars slowly — notchiness means the bearings are damaged (brinelling). (3) If just loose: loosen the upper triple clamp pinch bolt, adjust the steering stem nut until play is gone but bars turn freely, then retighten the pinch bolt. (4) If notchy: the bearings need replacement. The R1250GS uses tapered roller bearings. (5) Proper bearing preload is critical on the GS — too tight and the steering will be heavy, too loose and it will wobble. (6) This is a moderately involved job — many GS owners have their dealer or specialist handle it."
+      }
+    ]
+  }
+}

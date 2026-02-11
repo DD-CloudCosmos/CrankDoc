@@ -1,0 +1,269 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Fuel System / Poor Fuel Economy",
+  "description": "Diagnose fuel system issues and poor fuel economy on the Kawasaki Ninja 400.",
+  "category": "fuel",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What fuel system issue are you experiencing?",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Work in a well-ventilated area away from sparks and open flames.",
+        "options": [
+          { "text": "Poor fuel economy", "next": "check_economy_baseline" },
+          { "text": "Fuel smell from the bike", "next": "check_fuel_smell" },
+          { "text": "Engine hesitates or bogs during acceleration", "next": "check_air_filter" },
+          { "text": "FI warning light is on", "next": "check_fi_light" }
+        ]
+      },
+      {
+        "id": "check_economy_baseline",
+        "type": "question",
+        "text": "What fuel economy are you getting?",
+        "safety": "green",
+        "options": [
+          { "text": "Less than 20 km/L (47 mpg) in mixed riding", "next": "check_riding_factors" },
+          { "text": "Economy has dropped noticeably from what it used to be", "next": "check_maintenance" },
+          { "text": "20-25 km/L (47-59 mpg) — is this normal?", "next": "solution_normal_economy" }
+        ]
+      },
+      {
+        "id": "check_riding_factors",
+        "type": "question",
+        "text": "What is your typical riding style?",
+        "safety": "green",
+        "options": [
+          { "text": "Mostly city riding with frequent stops", "next": "check_maintenance" },
+          { "text": "Aggressive riding / high RPM", "next": "solution_aggressive_riding" },
+          { "text": "Normal highway riding", "next": "check_maintenance" }
+        ]
+      },
+      {
+        "id": "check_maintenance",
+        "type": "check",
+        "text": "Check maintenance-related economy factors",
+        "safety": "green",
+        "instructions": "Several maintenance items directly affect fuel economy. Check: (1) Tire pressure — Front 200 kPa (29 psi), Rear 225 kPa (33 psi) for the Ninja 400. Low pressure wastes fuel. (2) Air filter — a dirty filter restricts airflow and causes rich running. (3) Chain tension — too tight creates drag. Spec: 20-30mm slack. (4) Brake drag — spin each wheel to check if brakes are rubbing. (5) Spark plugs — worn plugs reduce combustion efficiency.",
+        "next": "maintenance_result"
+      },
+      {
+        "id": "maintenance_result",
+        "type": "question",
+        "text": "Which maintenance items were out of spec?",
+        "safety": "green",
+        "options": [
+          { "text": "Tire pressure was low", "next": "solution_tire_pressure" },
+          { "text": "Air filter is dirty", "next": "solution_air_filter" },
+          { "text": "Chain too tight or brakes dragging", "next": "solution_mechanical_drag" },
+          { "text": "Everything checks out — still poor economy", "next": "check_fuel_injectors" }
+        ]
+      },
+      {
+        "id": "check_fuel_smell",
+        "type": "check",
+        "text": "Locate the fuel smell source",
+        "safety": "red",
+        "warning": "A fuel leak is a fire hazard. Do not start the engine until the leak is found and repaired.",
+        "instructions": "Inspect for fuel leaks: (1) Fuel hose connections at the tank and fuel rail, (2) Fuel injector O-rings (wetness around injector base), (3) Fuel tank cap seal, (4) Fuel pump assembly (under the tank), (5) Check the EVAP system charcoal canister and hoses. A fuel smell without a visible leak may be from the EVAP system, especially if you habitually overfill the tank.",
+        "next": "fuel_smell_result"
+      },
+      {
+        "id": "fuel_smell_result",
+        "type": "question",
+        "text": "Where is the fuel smell coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel hose or connection leak", "next": "solution_fuel_hose" },
+          { "text": "Fuel injector O-ring leak", "next": "solution_injector_oring" },
+          { "text": "Fuel cap area", "next": "solution_fuel_cap" },
+          { "text": "No visible leak — smell only", "next": "solution_evap_system" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "The Ninja 400 air filter is in the airbox under the fuel tank. Remove the tank (or prop it up) and the airbox cover to inspect the filter. A dirty or clogged air filter restricts airflow, causing the ECU to run the engine rich (too much fuel for the air available), resulting in hesitation and poor economy. Replace the filter if it is visibly dirty or if it has not been replaced in 12,000+ km.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the air filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Air filter is dirty or clogged", "next": "solution_air_filter" },
+          { "text": "Air filter is clean", "next": "check_fuel_injectors" }
+        ]
+      },
+      {
+        "id": "check_fi_light",
+        "type": "check",
+        "text": "Read FI fault codes",
+        "safety": "green",
+        "instructions": "The FI light indicates a fault code stored in the ECU. Enter dealer mode to read the code: Turn ignition off, hold SELECT + ENTER buttons, turn ignition on while holding, release buttons. The dash will display stored codes. Write down the code number(s). Common fuel-related codes on the Ninja 400: O2 sensor, TPS, fuel injector circuit, and coolant temperature sensor.",
+        "next": "fi_light_result"
+      },
+      {
+        "id": "fi_light_result",
+        "type": "question",
+        "text": "Were you able to read fault codes?",
+        "safety": "green",
+        "options": [
+          { "text": "O2 sensor code", "next": "solution_o2_sensor" },
+          { "text": "TPS (throttle position sensor) code", "next": "solution_tps" },
+          { "text": "Injector circuit code", "next": "solution_injector_circuit" },
+          { "text": "Other code or cannot read codes", "next": "solution_professional_diag" }
+        ]
+      },
+      {
+        "id": "check_fuel_injectors",
+        "type": "check",
+        "text": "Check fuel injector operation",
+        "safety": "yellow",
+        "warning": "Do not disconnect injectors with the engine running.",
+        "instructions": "The Ninja 400 has two fuel injectors. Check for even operation by comparing exhaust header temperatures after the engine has warmed up. Both headers should be roughly the same temperature. A significantly cooler header suggests that cylinder is not getting enough fuel (clogged injector). You can also listen to each injector with a mechanic's stethoscope — they should click steadily and evenly at idle.",
+        "next": "injector_result"
+      },
+      {
+        "id": "injector_result",
+        "type": "question",
+        "text": "Are the injectors working evenly?",
+        "safety": "green",
+        "options": [
+          { "text": "One header is significantly cooler — possible clogged injector", "next": "solution_clean_injectors" },
+          { "text": "Both seem even", "next": "solution_throttle_body_sync" }
+        ]
+      },
+      {
+        "id": "solution_normal_economy",
+        "type": "solution",
+        "text": "Normal Ninja 400 Fuel Economy",
+        "safety": "green",
+        "action": "Your fuel economy is within the normal range for the Ninja 400.",
+        "details": "The Kawasaki Ninja 400 typically achieves: City: 22-28 km/L (52-66 mpg), Highway: 28-33 km/L (66-78 mpg), Mixed: 24-30 km/L (56-71 mpg). The Ninja 400 is one of the most fuel-efficient sport bikes available. If your economy falls within these ranges, the bike is operating normally."
+      },
+      {
+        "id": "solution_aggressive_riding",
+        "type": "solution",
+        "text": "Fuel Economy Impact of Aggressive Riding",
+        "safety": "green",
+        "action": "Aggressive riding significantly reduces fuel economy — this is expected behavior.",
+        "details": "High-RPM riding and frequent hard acceleration can reduce the Ninja 400 fuel economy by 20-30%. To improve economy: ride at lower RPMs (the twin produces good torque at 4,000-6,000 RPM), use smooth throttle inputs, and anticipate stops to reduce hard braking/acceleration cycles."
+      },
+      {
+        "id": "solution_tire_pressure",
+        "type": "solution",
+        "text": "Correct Tire Pressure",
+        "safety": "green",
+        "action": "Set tires to the correct pressure.",
+        "details": "Ninja 400 tire pressures (solo rider): Front 200 kPa (29 psi), Rear 225 kPa (33 psi). Check cold. Low tire pressure increases rolling resistance and can reduce economy by 10-15%. Check monthly."
+      },
+      {
+        "id": "solution_air_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Replace the dirty air filter.",
+        "details": "Replace with OEM Kawasaki air filter. The Ninja 400 air filter should be replaced every 12,000 km or sooner in dusty conditions. A clean air filter restores proper air/fuel ratio and improves both economy and performance."
+      },
+      {
+        "id": "solution_mechanical_drag",
+        "type": "solution",
+        "text": "Fix Mechanical Drag Source",
+        "safety": "green",
+        "action": "Adjust chain tension and fix brake drag.",
+        "details": "Chain: Adjust to 20-30mm slack. Brakes: If a wheel does not spin freely, remove the caliper and clean/push back the piston. Mechanical drag wastes energy and fuel."
+      },
+      {
+        "id": "solution_fuel_hose",
+        "type": "solution",
+        "text": "Repair Fuel Hose Leak",
+        "safety": "red",
+        "warning": "A fuel leak is a fire hazard. Repair before riding.",
+        "action": "Tighten the connection or replace the fuel hose.",
+        "details": "Use only fuel-rated hose and EFI-compatible clamps. After repair, turn the ignition on (to pressurize the fuel system) and verify no leaks before starting the engine."
+      },
+      {
+        "id": "solution_injector_oring",
+        "type": "solution",
+        "text": "Replace Fuel Injector O-Rings",
+        "safety": "yellow",
+        "warning": "Relieve fuel pressure before disconnecting injectors.",
+        "action": "Replace the leaking injector O-ring seals.",
+        "details": "Remove the fuel rail, pull the injector, replace both O-rings with fuel-compatible replacements. Apply a thin film of clean oil to new O-rings. Reassemble and check for leaks."
+      },
+      {
+        "id": "solution_fuel_cap",
+        "type": "solution",
+        "text": "Replace Fuel Cap Seal",
+        "safety": "green",
+        "action": "Replace the fuel cap O-ring or the entire cap.",
+        "details": "A worn fuel cap seal allows fuel vapor to escape, causing a fuel smell. Replace the O-ring seal or the entire cap. After replacement, fill the tank and verify no fuel weeping."
+      },
+      {
+        "id": "solution_evap_system",
+        "type": "solution",
+        "text": "Check EVAP System",
+        "safety": "green",
+        "action": "Inspect the EVAP charcoal canister and hoses.",
+        "details": "The EVAP system captures fuel vapors. If the canister is saturated (from overfilling the tank past the first click) or hoses are kinked, fuel smell can occur. Check hose routing and connections. Stop filling the tank at the first pump nozzle click to avoid saturating the canister."
+      },
+      {
+        "id": "solution_o2_sensor",
+        "type": "solution",
+        "text": "Replace O2 Sensor",
+        "safety": "green",
+        "action": "Replace the O2 (oxygen) sensor.",
+        "details": "The O2 sensor monitors exhaust gases for the ECU to adjust fuel mixture. A faulty sensor causes incorrect fuel mixture, affecting economy and emissions. The Ninja 400 O2 sensor is in the exhaust header. Replace with an OEM sensor and clear the fault code."
+      },
+      {
+        "id": "solution_tps",
+        "type": "solution",
+        "text": "Check Throttle Position Sensor",
+        "safety": "green",
+        "action": "Check and replace or adjust the TPS.",
+        "details": "The TPS tells the ECU how far the throttle is open. A faulty TPS causes incorrect fueling. On the Ninja 400, the TPS may need adjustment (verify initial position voltage with a multimeter per service manual spec) or replacement. Clear the fault code after repair."
+      },
+      {
+        "id": "solution_injector_circuit",
+        "type": "solution",
+        "text": "Check Fuel Injector Circuit",
+        "safety": "yellow",
+        "warning": "Do not probe injector connectors with the engine running.",
+        "action": "Check injector wiring and connectors.",
+        "details": "An injector circuit code indicates a wiring or connector issue rather than a clogged injector. Check the injector connector for corrosion, bent pins, or loose connection. Test injector resistance with a multimeter (disconnect injector, measure between the two pins — should be approximately 12-16 ohms). If resistance is out of spec, replace the injector."
+      },
+      {
+        "id": "solution_clean_injectors",
+        "type": "solution",
+        "text": "Clean Fuel Injectors",
+        "safety": "yellow",
+        "warning": "Work with fuel system in a ventilated area.",
+        "action": "Have injectors professionally cleaned or use fuel system cleaner.",
+        "details": "For mild clogging, run a tank of fuel with Techron or similar injector cleaner. For persistent issues, have the injectors professionally ultrasonically cleaned ($30-$50 per injector). If cleaning does not restore proper spray pattern, replace the injector."
+      },
+      {
+        "id": "solution_throttle_body_sync",
+        "type": "solution",
+        "text": "Throttle Body Synchronization",
+        "safety": "green",
+        "action": "Have the throttle bodies synchronized.",
+        "details": "If the two throttle bodies are out of sync, one cylinder runs differently from the other, causing poor economy and rough running. Synchronization requires vacuum gauges and adjustment of the balance screw between the throttle bodies. Cost at a shop: $50-$100. This service should be done after any throttle body removal or major engine service."
+      },
+      {
+        "id": "solution_professional_diag",
+        "type": "solution",
+        "text": "Professional Fuel System Diagnosis",
+        "safety": "green",
+        "action": "Have the fuel system diagnosed professionally.",
+        "details": "A Kawasaki dealer can use KDS (Kawasaki Diagnostic System) to read detailed fault codes, live sensor data, and injector pulse width. This provides precise diagnosis. Typical cost: $50-$100 for diagnosis."
+      }
+    ]
+  }
+}

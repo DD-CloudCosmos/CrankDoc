@@ -1,0 +1,292 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Overheating",
+  "description": "Diagnose overheating and cooling system issues on the Yamaha MT-07.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What overheating symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "Never open the radiator cap on a hot engine. Allow the bike to cool for at least 30 minutes before inspecting the cooling system. Hot coolant can cause severe burns.",
+        "options": [
+          { "text": "Temperature gauge reads high in traffic / at idle", "next": "check_fan_operation" },
+          { "text": "Temperature gauge reads high while riding at speed", "next": "check_coolant_level" },
+          { "text": "Coolant is leaking or the reservoir is overflowing", "next": "check_coolant_level" },
+          { "text": "Temperature gauge fluctuates wildly", "next": "check_temp_sensor" }
+        ]
+      },
+      {
+        "id": "check_fan_operation",
+        "type": "check",
+        "text": "Check radiator fan operation",
+        "safety": "yellow",
+        "warning": "Keep hands and loose clothing away from the radiator fan — it can start suddenly.",
+        "instructions": "The MT-07 radiator fan should activate at approximately 103°C (217°F). In traffic or at idle, the fan is the primary cooling method since there is minimal airflow. Let the engine idle and watch the temperature gauge — the fan should kick on before the gauge reaches the red zone. Listen for the fan spinning. If the fan does not activate, check the fan fuse (10A) under the seat.",
+        "next": "fan_operation_result"
+      },
+      {
+        "id": "fan_operation_result",
+        "type": "question",
+        "text": "Does the radiator fan turn on?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan never turns on", "next": "check_fan_circuit" },
+          { "text": "Fan runs but bike still overheats in traffic", "next": "check_coolant_level" },
+          { "text": "Fan works and temperature stabilizes", "next": "solution_normal_traffic_heat" }
+        ]
+      },
+      {
+        "id": "check_fan_circuit",
+        "type": "check",
+        "text": "Test the fan circuit",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before probing electrical connections.",
+        "instructions": "Check the fan fuse (10A). If the fuse is good, locate the fan connector and check for 12V when the engine is at operating temperature. If voltage is present but the fan does not spin, the fan motor is faulty. If no voltage, the temperature switch or ECU control circuit is faulty. You can test the fan motor directly by connecting it to the battery — it should spin.",
+        "next": "fan_circuit_result"
+      },
+      {
+        "id": "fan_circuit_result",
+        "type": "question",
+        "text": "What did the fan circuit test reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown fuse", "next": "solution_fan_fuse" },
+          { "text": "Fan motor is dead — no spin with direct power", "next": "solution_fan_motor" },
+          { "text": "No voltage at connector — sensor/wiring issue", "next": "solution_temp_switch" }
+        ]
+      },
+      {
+        "id": "check_coolant_level",
+        "type": "check",
+        "text": "Check coolant level and condition",
+        "safety": "yellow",
+        "warning": "Only open the radiator cap or reservoir when the engine is completely cool.",
+        "instructions": "The MT-07 coolant reservoir is on the right side of the bike. With the engine cool, check that the level is between the LOW and FULL marks. Also remove the radiator cap (engine cold only) and check the coolant level in the radiator itself — it should be full to the cap neck. Check the coolant color: it should be the color of the coolant type used (typically blue or green). Brown or rusty coolant needs replacement.",
+        "next": "coolant_level_result"
+      },
+      {
+        "id": "coolant_level_result",
+        "type": "question",
+        "text": "What is the coolant level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Coolant is low or empty", "next": "check_leak_source" },
+          { "text": "Coolant is dirty, brown, or rusty", "next": "solution_flush_coolant" },
+          { "text": "Coolant level and condition are fine", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "check_leak_source",
+        "type": "check",
+        "text": "Find the coolant leak source",
+        "safety": "yellow",
+        "warning": "Coolant is toxic and slippery. Clean up any spills.",
+        "instructions": "With the engine cool, inspect for coolant leaks at: (1) Radiator hose connections (upper and lower), (2) Water pump area (left side of engine), (3) Radiator core and tanks for cracks or road damage, (4) Thermostat housing, (5) Coolant reservoir and its hose. Look for white crystalline deposits or colored staining that indicates a dried leak.",
+        "next": "leak_source_result"
+      },
+      {
+        "id": "leak_source_result",
+        "type": "question",
+        "text": "Where is the coolant leaking from?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator hose or clamp", "next": "solution_hose_repair" },
+          { "text": "Water pump weep hole", "next": "solution_water_pump" },
+          { "text": "Radiator is damaged", "next": "solution_radiator" },
+          { "text": "No external leak found — coolant disappearing internally", "next": "check_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Test thermostat operation",
+        "safety": "yellow",
+        "warning": "The upper radiator hose gets hot when the thermostat opens. Use gloves.",
+        "instructions": "Start the engine from cold. Feel the upper radiator hose — it should stay cool until the thermostat opens (approximately 70-80°C / 158-176°F), then get warm as coolant flows. If the hose stays cold even as the temperature gauge rises, the thermostat is stuck closed. If the hose gets warm immediately on a cold engine, the thermostat is stuck open (this causes slow warm-up but not overheating).",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "How does the thermostat appear to be working?",
+        "safety": "green",
+        "options": [
+          { "text": "Hose stays cold when engine is hot — stuck closed", "next": "solution_thermostat" },
+          { "text": "Thermostat seems to work — hose warms up at the right time", "next": "check_radiator_blockage" }
+        ]
+      },
+      {
+        "id": "check_radiator_blockage",
+        "type": "check",
+        "text": "Inspect radiator for external blockage",
+        "safety": "green",
+        "instructions": "Check the radiator fins for debris, bugs, mud, or bent fins that block airflow. The MT-07 radiator is exposed and catches road debris. Also check for anything between the radiator and the engine that could block airflow (plastic bags, leaves). Bent fins can be straightened with a radiator fin comb.",
+        "next": "radiator_blockage_result"
+      },
+      {
+        "id": "radiator_blockage_result",
+        "type": "question",
+        "text": "Is the radiator blocked?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — significant debris or bent fins", "next": "solution_clean_radiator" },
+          { "text": "No — radiator is clear", "next": "solution_flush_coolant" }
+        ]
+      },
+      {
+        "id": "check_head_gasket",
+        "type": "check",
+        "text": "Check for head gasket failure",
+        "safety": "yellow",
+        "warning": "Head gasket failure is a serious issue. Do not continue riding if suspected.",
+        "instructions": "Signs of head gasket failure on the MT-07: (1) White sweet-smelling smoke from the exhaust (coolant burning), (2) Milky residue on the oil filler cap or in the sight glass, (3) Bubbles in the coolant reservoir with the engine running, (4) Oil in the coolant. A combustion leak tester kit can definitively confirm head gasket failure by detecting exhaust gases in the coolant.",
+        "next": "head_gasket_result"
+      },
+      {
+        "id": "head_gasket_result",
+        "type": "question",
+        "text": "Are there signs of head gasket failure?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — white smoke, milky oil, or bubbles in coolant", "next": "solution_head_gasket" },
+          { "text": "No signs of head gasket failure", "next": "solution_flush_coolant" }
+        ]
+      },
+      {
+        "id": "check_temp_sensor",
+        "type": "check",
+        "text": "Check coolant temperature sensor",
+        "safety": "green",
+        "instructions": "A faulty coolant temperature sensor can give erratic readings on the gauge. Check the sensor connector for corrosion or loose pins. The sensor is typically near the thermostat housing. You can test the sensor with a multimeter — its resistance changes with temperature (lower resistance = higher temperature). Refer to the service manual for the MT-07 temperature/resistance chart.",
+        "next": "temp_sensor_result"
+      },
+      {
+        "id": "temp_sensor_result",
+        "type": "question",
+        "text": "Does the temperature sensor seem faulty?",
+        "safety": "green",
+        "options": [
+          { "text": "Connector is corroded or loose", "next": "solution_sensor_connector" },
+          { "text": "Sensor resistance does not match spec", "next": "solution_temp_sensor" },
+          { "text": "Sensor seems OK — may be actual temperature fluctuation", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "solution_normal_traffic_heat",
+        "type": "solution",
+        "text": "Normal Operating Temperature in Traffic",
+        "safety": "green",
+        "action": "The MT-07 cooling system is working normally. High temperatures in traffic are expected.",
+        "details": "The MT-07 runs warm in heavy traffic and at idle — this is normal for a liquid-cooled twin with a relatively small radiator. The fan keeps the temperature in check. If the temperature gauge is staying below the red zone and the fan is cycling on and off, the cooling system is working as designed. In very hot weather or extended traffic, you can pull over and let the engine cool if the gauge approaches the red zone."
+      },
+      {
+        "id": "solution_fan_fuse",
+        "type": "solution",
+        "text": "Replace Fan Fuse",
+        "safety": "green",
+        "action": "Replace the blown 10A radiator fan fuse.",
+        "details": "Replace with a 10A fuse. If it blows again immediately, there is a short in the fan circuit wiring. Check the fan motor wiring for chafing or exposed wires. Do not install a higher-rated fuse."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace Radiator Fan Motor",
+        "safety": "green",
+        "action": "Replace the faulty radiator fan motor.",
+        "details": "The fan motor is attached to the radiator shroud. Disconnect the wiring, unbolt the fan shroud, and replace the motor or the entire fan assembly. Reconnect and verify operation."
+      },
+      {
+        "id": "solution_temp_switch",
+        "type": "solution",
+        "text": "Replace Fan Temperature Switch or Check ECU Control",
+        "safety": "yellow",
+        "warning": "Some coolant will drain when removing the temperature switch.",
+        "action": "Replace the fan control temperature switch or have the ECU circuit checked.",
+        "details": "The MT-07 fan is ECU-controlled via the coolant temperature sensor. If the fan relay is good (swap with an identical relay to test), the issue may be in the ECU or wiring. Check the temperature sensor and its connector. If everything tests good but the fan still does not activate, professional ECU diagnosis is needed."
+      },
+      {
+        "id": "solution_hose_repair",
+        "type": "solution",
+        "text": "Replace or Tighten Radiator Hose",
+        "safety": "green",
+        "action": "Tighten the hose clamp or replace the leaking hose.",
+        "details": "Tighten the hose clamp at the leak point. If the hose is cracked, swollen, or hard, replace it. Use OEM or quality silicone replacement hoses. After repair, top off the coolant and bleed the system by running the engine with the radiator cap off until bubbles stop."
+      },
+      {
+        "id": "solution_water_pump",
+        "type": "solution",
+        "text": "Replace Water Pump Seal",
+        "safety": "yellow",
+        "warning": "Drain the coolant before water pump service.",
+        "action": "Replace the water pump mechanical seal.",
+        "details": "A leaking weep hole indicates the water pump seal has failed. Drain the coolant, remove the water pump cover, and replace the mechanical seal and gasket. If the impeller shows signs of corrosion, replace the entire pump. Refill and bleed the cooling system."
+      },
+      {
+        "id": "solution_radiator",
+        "type": "solution",
+        "text": "Repair or Replace Radiator",
+        "safety": "yellow",
+        "warning": "Do not ride with a leaking radiator.",
+        "action": "Have the radiator repaired or replace it.",
+        "details": "The MT-07 radiator is exposed and vulnerable to road debris damage. Minor damage can be repaired by a radiator specialist. For major damage, replace with OEM or aftermarket. After installation, fill with proper coolant mix and bleed thoroughly."
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant before removing the thermostat housing.",
+        "action": "Replace the stuck thermostat.",
+        "details": "Drain the coolant. Remove the thermostat housing and replace the thermostat and its gasket. The MT-07 thermostat opens at approximately 70-80°C. Refill with coolant and bleed the air from the system."
+      },
+      {
+        "id": "solution_clean_radiator",
+        "type": "solution",
+        "text": "Clean Radiator Fins",
+        "safety": "green",
+        "action": "Clean debris from the radiator.",
+        "details": "Use compressed air (from the engine side blowing outward) or a gentle water spray to clean the radiator fins. Use a soft brush for stubborn debris. Straighten bent fins with a fin comb. The MT-07 does not have fairings blocking radiator access, making cleaning straightforward."
+      },
+      {
+        "id": "solution_flush_coolant",
+        "type": "solution",
+        "text": "Flush and Replace Coolant",
+        "safety": "yellow",
+        "warning": "Dispose of old coolant properly — it is toxic.",
+        "action": "Flush the cooling system and fill with fresh coolant.",
+        "details": "Drain the old coolant from the radiator drain and engine drain (if accessible). Flush with distilled water by filling, running briefly, and draining until clear. Refill with a 50/50 mix of ethylene glycol and distilled water, or use Yamaha premixed coolant. Total MT-07 cooling system capacity is approximately 1.6 liters. Bleed air by running the engine with the radiator cap off."
+      },
+      {
+        "id": "solution_head_gasket",
+        "type": "solution",
+        "text": "Head Gasket Replacement — Professional Service Required",
+        "safety": "red",
+        "warning": "Do not continue riding with a blown head gasket. This can cause catastrophic engine damage.",
+        "action": "Have the head gasket replaced by a qualified mechanic.",
+        "details": "Head gasket replacement on the MT-07 CP2 twin requires removing the cylinder head, which involves camshaft, cam chain, and valve work. This is a major engine job best left to a professional. Typical cost: $600-$1200 including parts and labor. The MT-07 head gasket is generally reliable, so a failure may indicate a previous overheating event."
+      },
+      {
+        "id": "solution_sensor_connector",
+        "type": "solution",
+        "text": "Clean Temperature Sensor Connector",
+        "safety": "green",
+        "action": "Clean and reseat the coolant temperature sensor connector.",
+        "details": "Disconnect the sensor connector, clean the pins with electrical contact cleaner, and apply dielectric grease to prevent future corrosion. Reconnect firmly. If the connector housing is damaged, replace the connector."
+      },
+      {
+        "id": "solution_temp_sensor",
+        "type": "solution",
+        "text": "Replace Coolant Temperature Sensor",
+        "safety": "yellow",
+        "warning": "Some coolant will drain when removing the sensor. Have a catch pan ready.",
+        "action": "Replace the faulty coolant temperature sensor.",
+        "details": "Drain enough coolant to bring the level below the sensor. Remove the old sensor and install the new one with the proper seal. Refill the coolant and check for leaks. After replacement, the temperature gauge should read accurately."
+      }
+    ]
+  }
+}

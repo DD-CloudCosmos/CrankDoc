@@ -1,0 +1,182 @@
+{
+  "title": "Battery Draining / Won't Hold Charge",
+  "description": "Diagnose a motorcycle battery that keeps dying, won't hold a charge, or drains overnight. Covers battery health, charging system, and parasitic draw.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How quickly is the battery losing charge?",
+        "safety": "green",
+        "options": [
+          { "text": "Dead after sitting overnight or a few days", "next": "check_battery_age" },
+          { "text": "Dies while riding or shortly after starting", "next": "check_charging_system" },
+          { "text": "Needs a jump every time after sitting a week or more", "next": "check_battery_age" },
+          { "text": "Brand new battery but it still dies", "next": "check_parasitic_draw" }
+        ]
+      },
+      {
+        "id": "check_battery_age",
+        "type": "question",
+        "text": "How old is the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "More than 3 years old", "next": "solution_replace_battery" },
+          { "text": "Less than 3 years old or I'm not sure", "next": "check_battery_health" }
+        ]
+      },
+      {
+        "id": "check_battery_health",
+        "type": "check",
+        "text": "Test the battery's resting voltage.",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working with batteries. Do not short the terminals together.",
+        "instructions": "With the ignition OFF, use a multimeter set to DC volts and measure across the battery terminals (red probe on +, black probe on -). A fully charged 12V motorcycle battery should read 12.6V or higher. 12.4V means about 75% charged. 12.2V is about 50%. Below 12.0V, the battery is significantly discharged. If the reading is below 10V, the battery likely has a dead cell and needs replacement.",
+        "next": "battery_health_result"
+      },
+      {
+        "id": "battery_health_result",
+        "type": "question",
+        "text": "What is the resting voltage of the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 10V — very low", "next": "solution_replace_battery" },
+          { "text": "10V-12.3V — somewhat low", "next": "charge_and_test" },
+          { "text": "12.4V or higher — seems OK", "next": "check_parasitic_draw" }
+        ]
+      },
+      {
+        "id": "charge_and_test",
+        "type": "check",
+        "text": "Charge the battery fully and retest.",
+        "safety": "yellow",
+        "warning": "Use a motorcycle-compatible smart charger. Automotive chargers may overcharge small motorcycle batteries. Charge in a well-ventilated area.",
+        "instructions": "Connect a smart charger or battery tender to the battery and charge until the charger shows fully charged (this may take several hours). After charging, disconnect the charger and let the battery sit for 1 hour, then recheck the voltage. A healthy battery should hold 12.6V or above. If it drops back below 12.4V within an hour of disconnecting the charger, the battery cannot hold a charge.",
+        "next": "charge_test_result"
+      },
+      {
+        "id": "charge_test_result",
+        "type": "question",
+        "text": "After a full charge, did the battery hold 12.4V or above for an hour?",
+        "safety": "green",
+        "options": [
+          { "text": "No — voltage dropped back down quickly", "next": "solution_replace_battery" },
+          { "text": "Yes — it holds charge but still dies on the bike", "next": "check_parasitic_draw" }
+        ]
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "The battery is worn out or has a dead cell.",
+        "safety": "yellow",
+        "warning": "Dispose of old batteries properly — return them to an auto parts store or recycling center. Battery acid is corrosive.",
+        "action": "Replace the battery",
+        "details": "Motorcycle batteries typically last 2-5 years. Replace the battery with the correct type (conventional, AGM, or lithium) and size specified in your service manual. After installing the new battery, check that the charging system is working properly (see charging system tests) — a faulty charging system will kill a new battery too. If using a conventional battery, fill with electrolyte and charge before installation per the battery manufacturer's instructions."
+      },
+      {
+        "id": "check_parasitic_draw",
+        "type": "check",
+        "text": "Test for parasitic battery drain.",
+        "safety": "yellow",
+        "warning": "Do not start the engine or turn on the ignition while the multimeter is connected in the current (amps) circuit — this can blow the multimeter's fuse or damage it.",
+        "instructions": "Turn off all electrical accessories and the ignition. Disconnect the negative battery cable. Set your multimeter to DC amps (start with the highest amp range). Connect the multimeter in series between the negative battery cable and the negative battery terminal. The reading shows how much current the bike is drawing with everything off. Normal parasitic draw is typically 1-5 milliamps (0.001-0.005A). Anything above 30 milliamps (0.030A) is excessive.",
+        "next": "parasitic_draw_result"
+      },
+      {
+        "id": "parasitic_draw_result",
+        "type": "question",
+        "text": "How much current is the bike drawing with everything off?",
+        "safety": "green",
+        "options": [
+          { "text": "Less than 30 milliamps — normal", "next": "check_charging_system" },
+          { "text": "More than 30 milliamps — excessive draw", "next": "find_parasitic_draw" }
+        ]
+      },
+      {
+        "id": "find_parasitic_draw",
+        "type": "check",
+        "text": "Locate the source of the parasitic draw.",
+        "safety": "yellow",
+        "warning": "Do not pull fuses with the engine running. Keep the multimeter connected in series during this test.",
+        "instructions": "With the multimeter still connected and showing the excessive draw, start pulling fuses one at a time from the fuse box. When you pull a fuse and the reading drops to normal, you have found the circuit causing the drain. Note which circuit that fuse protects (the fuse box cover or your service manual will list this). Common culprits: aftermarket accessories (alarms, GPS trackers, USB chargers, heated grips), a stuck relay, or a faulty voltage regulator/rectifier.",
+        "next": "parasitic_source_result"
+      },
+      {
+        "id": "parasitic_source_result",
+        "type": "question",
+        "text": "Were you able to identify the circuit causing the drain?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found the problem circuit", "next": "solution_parasitic_draw" },
+          { "text": "No — draw persists even with all fuses pulled", "next": "solution_wiring_issue" }
+        ]
+      },
+      {
+        "id": "solution_parasitic_draw",
+        "type": "solution",
+        "text": "A specific circuit is draining the battery.",
+        "safety": "yellow",
+        "warning": "If the problem is with an aftermarket alarm or immobilizer, consult the installer before disconnecting it.",
+        "action": "Repair or disconnect the circuit causing the parasitic draw",
+        "details": "Now that you know which circuit is drawing power, inspect the components on that circuit. Common fixes: aftermarket accessories that are always-on should be wired through a switched circuit (one that turns off with the ignition). A stuck relay can often be felt vibrating or heard clicking — replace it. A short circuit in the wiring requires tracing the wires on that circuit for damage, chafing, or exposed wiring that is touching the frame. If it is a factory component (like the ECU or clock), check your service manual for the expected standby draw — some draw is normal."
+      },
+      {
+        "id": "solution_wiring_issue",
+        "type": "solution",
+        "text": "The parasitic draw may be from a wiring issue or the regulator/rectifier.",
+        "safety": "yellow",
+        "warning": "Wiring faults can cause fires. If you find damaged or melted wiring, do not ride until it is repaired.",
+        "action": "Have the wiring and regulator/rectifier inspected professionally",
+        "details": "If the parasitic draw persists with all fuses pulled, the drain may be coming from a circuit that is not fused (such as the main power feed to the fuse box or the regulator/rectifier). A failed regulator/rectifier can drain the battery even with the engine off in some failure modes. Check the main wiring harness for damage, chafing, or melted insulation. This type of diagnosis often requires a professional with a wiring diagram and experience tracing electrical faults."
+      },
+      {
+        "id": "check_charging_system",
+        "type": "check",
+        "text": "Test the charging system output.",
+        "safety": "yellow",
+        "warning": "Keep multimeter probes and loose wires away from rotating parts while the engine is running.",
+        "instructions": "Start the engine and let it warm up. Set your multimeter to DC volts and measure across the battery terminals with the engine running at about 3,000-4,000 RPM. The voltage should read between 13.5V and 14.8V. This means the alternator/stator and regulator/rectifier are charging the battery. Below 13.0V means the system is not charging. Above 15.0V means the system is overcharging.",
+        "next": "charging_result"
+      },
+      {
+        "id": "charging_result",
+        "type": "question",
+        "text": "What voltage do you see at the battery with the engine running at 3,000-4,000 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V — not charging", "next": "solution_no_charge" },
+          { "text": "13.5V-14.8V — normal charging", "next": "solution_charging_ok" },
+          { "text": "Above 15.0V — overcharging", "next": "solution_overcharging" }
+        ]
+      },
+      {
+        "id": "solution_no_charge",
+        "type": "solution",
+        "text": "The charging system is not producing enough voltage.",
+        "safety": "yellow",
+        "warning": "Do not continue riding without a working charging system — the battery will die and the engine will stop.",
+        "action": "Test the stator and regulator/rectifier; replace the faulty component",
+        "details": "A charging system that produces less than 13V at the battery has either a faulty stator (generator), a faulty regulator/rectifier, or a bad connection between them. Testing procedure: disconnect the stator connector and measure the AC voltage output from the stator at 3,000 RPM (refer to your service manual for the expected voltage — usually 20-80V AC per phase). If the stator output is good, the regulator/rectifier is likely the problem. If the stator output is low, the stator needs replacement. Also check all ground connections and the wiring between components."
+      },
+      {
+        "id": "solution_overcharging",
+        "type": "solution",
+        "text": "The charging system is overcharging the battery.",
+        "safety": "yellow",
+        "warning": "Overcharging can cause the battery to overheat, swell, vent gases, or even explode in extreme cases. Stop riding and address this immediately.",
+        "action": "Replace the regulator/rectifier",
+        "details": "Voltage above 15V at the battery means the regulator/rectifier is failing to limit the charging voltage. This will boil the electrolyte out of the battery, dramatically shortening its life, and can damage other electrical components. Replace the regulator/rectifier. After replacing it, also replace or recharge the battery, as overcharging likely damaged it. Check that the regulator/rectifier has a good ground connection — a poor ground can cause overcharging."
+      },
+      {
+        "id": "solution_charging_ok",
+        "type": "solution",
+        "text": "The charging system is working correctly.",
+        "safety": "green",
+        "action": "The issue is likely the battery itself or a parasitic draw",
+        "details": "Since the charging system is producing the correct voltage, the battery should be charging while you ride. If the battery still dies, either the battery itself is faulty (won't hold a charge — replace it) or there is a parasitic draw draining it when the bike is off. If you haven't already, perform a parasitic draw test to check for excessive current drain with the ignition off. Also consider your riding habits — very short rides may not charge the battery sufficiently. A battery tender for when the bike is parked can help."
+      }
+    ]
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Oil Leak Detection",
+  "description": "Identify and diagnose common oil leak locations on the Sportster 1200 V-twin engine, including rocker boxes, primary cover, cam cover, and base gaskets.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where is the oil leak? Place clean cardboard under the bike overnight and check the drip pattern.",
+        "safety": "green",
+        "options": [
+          { "text": "Top of engine / cylinder heads area", "next": "top_leak" },
+          { "text": "Left side — primary cover area", "next": "primary_leak" },
+          { "text": "Right side — cam/gearcase cover area", "next": "cam_leak" },
+          { "text": "Bottom of engine", "next": "bottom_leak" },
+          { "text": "Rear of engine / transmission area", "next": "rear_leak" },
+          { "text": "Oil is everywhere — can't pinpoint", "next": "clean_first" }
+        ]
+      },
+      {
+        "id": "clean_first",
+        "type": "check",
+        "text": "Clean the engine to identify the leak source",
+        "safety": "green",
+        "instructions": "Spray the engine with degreaser, rinse with low-pressure water (avoid electrical connectors), dry thoroughly. Ride for 20-30 minutes, then inspect with a flashlight. Fresh oil will be wet at the highest point of the leak — that's the source. For precise identification, add UV dye to the oil and use a UV flashlight after riding.",
+        "next": "start"
+      },
+      {
+        "id": "top_leak",
+        "type": "question",
+        "text": "Is the oil leaking from the rocker box gasket seam, the pushrod tubes, or the rocker box breather bolts?",
+        "safety": "green",
+        "options": [
+          { "text": "Rocker box gasket seam (where cover meets head)", "next": "check_rocker_bolts" },
+          { "text": "Pushrod tubes (tubes between heads and crankcase)", "next": "solution_pushrod_seals" },
+          { "text": "Rocker box breather bolts (top of rocker boxes)", "next": "solution_breather_bolts" }
+        ]
+      },
+      {
+        "id": "check_rocker_bolts",
+        "type": "check",
+        "text": "Check rocker box bolt torque",
+        "safety": "yellow",
+        "warning": "Only check torque on a cold engine. Over-torquing can crack or warp the aluminum rocker box covers.",
+        "instructions": "Using a torque wrench, check all rocker box bolts on both cylinders. Torque specification is 15-18 ft-lbs in a cross pattern. If any bolt is loose, re-torque and clean the area. Monitor for continued leaking over 50-100 miles.",
+        "next": "rocker_bolt_result"
+      },
+      {
+        "id": "rocker_bolt_result",
+        "type": "question",
+        "text": "Were any rocker box bolts loose? Did re-torquing fix the leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Bolts were loose — re-torqued, will monitor", "next": "solution_rocker_retorqued" },
+          { "text": "Bolts are at spec — still leaking", "next": "solution_rocker_gaskets" }
+        ]
+      },
+      {
+        "id": "solution_rocker_retorqued",
+        "type": "solution",
+        "text": "Rocker box bolts re-torqued",
+        "safety": "green",
+        "action": "Monitor after re-torquing rocker box bolts",
+        "details": "Clean the area and ride 50-100 miles. If the leak stops, the V-twin vibration had loosened the bolts. Use blue Loctite on the bolts to prevent future loosening. If the leak returns, the gaskets need replacement."
+      },
+      {
+        "id": "solution_rocker_gaskets",
+        "type": "solution",
+        "text": "Replace rocker box gaskets",
+        "safety": "yellow",
+        "warning": "Mark and organize pushrods if removing them — they must return to the same location. Work on a cold engine.",
+        "action": "Replace the rocker box cover gaskets",
+        "details": "Rocker box gasket leaks are the most common oil leak on Sportster 1200s. (1) Remove the 4 rocker box bolts per cover. (2) Lift off the rocker box cover carefully. (3) Remove the old gasket — clean both surfaces with a gasket scraper (do not gouge the aluminum). (4) Install a new gasket (James Gaskets or OEM). (5) Reinstall and torque to 15-18 ft-lbs in a cross pattern. (6) Start the engine and check for leaks. Do both sides at the same time — if one is leaking, the other is close behind."
+      },
+      {
+        "id": "solution_pushrod_seals",
+        "type": "solution",
+        "text": "Replace pushrod tube seals",
+        "safety": "yellow",
+        "warning": "Incorrect pushrod tube installation can cause oil starvation to the rocker arms. Follow the service manual procedure.",
+        "action": "Replace pushrod tube O-rings",
+        "details": "The pushrod tubes connect the crankcase to the cylinder heads. Each tube has upper and lower O-ring seals that harden with heat and age. (1) Remove rocker boxes. (2) Collapse or remove the pushrod tubes (varies by model year). (3) Replace all upper and lower O-rings. (4) Use a pushrod tube seal installation tool for proper seating. (5) Reassemble in correct order. This is a very common Sportster 1200 repair. Consider the adjustable pushrod tube kit for easier future service."
+      },
+      {
+        "id": "solution_breather_bolts",
+        "type": "solution",
+        "text": "Rocker box breather bolt seepage",
+        "safety": "green",
+        "action": "Check the crankcase breather system",
+        "details": "Minor oil mist from the breather bolts is normal on Sportsters. Excessive oil indicates: (1) Clogged breather passages — clean the breather element and passages through the heads. (2) Excessive crankcase pressure from worn piston rings (blow-by) — perform a compression test. (3) Overfilled oil — check the level and drain excess if needed. (4) Blocked crankcase vent hose. The breather system on EVO Sportsters routes through the cylinder heads — ensure all internal passages are clear."
+      },
+      {
+        "id": "primary_leak",
+        "type": "question",
+        "text": "Where on the left side / primary area is the leak coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Outer primary cover gasket seam", "next": "solution_primary_gasket" },
+          { "text": "Derby cover (round inspection cover)", "next": "solution_derby_oring" },
+          { "text": "Shifter shaft seal", "next": "solution_shifter_seal" },
+          { "text": "Between engine and primary (inner primary)", "next": "solution_inner_primary_seal" }
+        ]
+      },
+      {
+        "id": "solution_primary_gasket",
+        "type": "solution",
+        "text": "Replace outer primary cover gasket",
+        "safety": "yellow",
+        "warning": "Drain the oil before removing the primary cover. The Sportster 1200 is common sump — engine and primary share oil.",
+        "action": "Replace the outer primary cover gasket",
+        "details": "Drain the oil (common sump — approximately 3 quarts). Remove primary cover bolts (torqued at 84-108 in-lbs). Carefully remove the cover. Clean both gasket surfaces thoroughly. Inspect the cover for warping (common from over-torquing). Install new gasket. Reinstall cover and torque in a star pattern to 84-108 in-lbs. Do not over-torque — the thin aluminum cover warps easily. Refill with 20W-50 motorcycle oil."
+      },
+      {
+        "id": "solution_derby_oring",
+        "type": "solution",
+        "text": "Replace derby cover O-ring",
+        "safety": "green",
+        "action": "Replace the derby cover seal",
+        "details": "The derby cover (round primary inspection cover) uses an O-ring that dries out over time. (1) Remove the 5 derby cover screws. (2) Remove the cover and old O-ring. (3) Install a new O-ring (available at any Harley dealer or online). (4) Reinstall and torque screws to 84-108 in-lbs. This is a 10-minute fix."
+      },
+      {
+        "id": "solution_shifter_seal",
+        "type": "solution",
+        "text": "Replace shifter shaft seal",
+        "safety": "yellow",
+        "warning": "The shifter shaft seal can be replaced without removing the primary cover on most models, but care is needed.",
+        "action": "Replace the shifter shaft oil seal",
+        "details": "The shifter shaft passes through the primary cover and uses an oil seal. When this seal wears, oil leaks around the shift lever. (1) Remove the shift lever. (2) Carefully pry out the old seal with a pick (do not score the bore). (3) Press in the new seal flush with the cover surface. (4) Reinstall the shift lever. Clean the area and verify the leak is stopped."
+      },
+      {
+        "id": "solution_inner_primary_seal",
+        "type": "solution",
+        "text": "Inner primary / mainshaft seal leak",
+        "safety": "yellow",
+        "warning": "This is a more involved repair requiring removal of the clutch, primary chain, and compensator.",
+        "action": "Replace the mainshaft seal and inner primary gasket",
+        "details": "A leak between the engine and primary indicates the mainshaft oil seal or inner primary gasket is failing. This requires: (1) Remove outer primary cover. (2) Remove the clutch assembly. (3) Remove the primary chain and compensator sprocket (requires a compensator nut tool). (4) Replace the mainshaft seal. (5) Replace the inner primary gasket/O-ring. (6) Reassemble in reverse order. This is intermediate-level work — consider a shop if you're not comfortable with the compensator and clutch."
+      },
+      {
+        "id": "cam_leak",
+        "type": "question",
+        "text": "Is the leak coming from the cam/gearcase cover gasket or the tappet block area?",
+        "safety": "green",
+        "options": [
+          { "text": "Cam cover gasket seam", "next": "solution_cam_gasket" },
+          { "text": "Tappet block / lifter area", "next": "solution_tappet_orings" }
+        ]
+      },
+      {
+        "id": "solution_cam_gasket",
+        "type": "solution",
+        "text": "Replace cam cover gasket",
+        "safety": "yellow",
+        "warning": "Do not let debris fall into the cam chest. Cover the opening if you need to step away.",
+        "action": "Replace the cam/gearcase cover gasket",
+        "details": "Remove the cam cover bolts and carefully remove the cover. Clean both gasket surfaces — remove all old gasket material. Install new gasket (James Gaskets or OEM). Reinstall and torque to 84-108 in-lbs. Straightforward repair with minimal tools."
+      },
+      {
+        "id": "solution_tappet_orings",
+        "type": "solution",
+        "text": "Replace tappet block O-rings",
+        "safety": "yellow",
+        "warning": "Tappet block removal involves the cam timing system. If you're not familiar with cam timing, have a technician perform this work.",
+        "action": "Replace the tappet block seals/O-rings",
+        "details": "The tappet blocks (lifter blocks) are sealed to the crankcase with O-rings. Over time these harden and leak. (1) Remove the cam cover. (2) Note the cam timing marks. (3) Carefully remove the tappet blocks. (4) Replace all O-rings. (5) Reinstall in the correct orientation. (6) Verify cam timing before starting. This is a common higher-mileage leak point."
+      },
+      {
+        "id": "bottom_leak",
+        "type": "question",
+        "text": "Where on the bottom of the engine is the leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil drain plug", "next": "solution_drain_plug" },
+          { "text": "Oil filter area", "next": "solution_oil_filter" },
+          { "text": "Base gasket (cylinder-to-case joint)", "next": "solution_base_gasket" }
+        ]
+      },
+      {
+        "id": "solution_drain_plug",
+        "type": "solution",
+        "text": "Oil drain plug leak",
+        "safety": "green",
+        "action": "Reseal the oil drain plug",
+        "details": "Check drain plug torque (14-21 ft-lbs). If tight but leaking: (1) Drain the oil. (2) Remove the plug and inspect the O-ring or washer. (3) Replace with a new O-ring/washer. (4) Clean threads and reinstall. (5) Refill with oil. If threads are stripped, use a magnetic drain plug with a fresh O-ring or install a thread repair kit."
+      },
+      {
+        "id": "solution_oil_filter",
+        "type": "solution",
+        "text": "Oil filter leak",
+        "safety": "green",
+        "action": "Check and reseat the oil filter",
+        "details": "Common oil filter leak causes: (1) Double gasket — the old O-ring stuck to the filter mount when the old filter was removed, and the new filter's O-ring stacked on top. Always verify the old gasket is removed. (2) Filter not tight enough — hand-tighten plus 1/2 to 3/4 turn. (3) Damaged filter O-ring. (4) Damaged filter mount surface. Remove the filter, inspect the mounting surface, clean it, and reinstall with a new filter. Apply a thin film of clean oil to the new filter's O-ring before installation."
+      },
+      {
+        "id": "solution_base_gasket",
+        "type": "solution",
+        "text": "Base gasket leak — major repair",
+        "safety": "yellow",
+        "warning": "Base gasket replacement is a major engine repair requiring top-end disassembly. Consider having a shop perform this work.",
+        "action": "Replace the cylinder base gaskets",
+        "details": "A base gasket leak (cylinder-to-crankcase joint) requires removing the rocker boxes, heads, cylinders, and pistons to access the gaskets. This is the most involved leak repair on the Sportster 1200. While doable for a skilled home mechanic, it's time-consuming (full day). Use quality gaskets (Cometic or James Gaskets). This is a good opportunity to inspect the cylinders, pistons, and rings while the top end is apart."
+      },
+      {
+        "id": "rear_leak",
+        "type": "solution",
+        "text": "Rear engine / transmission area leak",
+        "safety": "yellow",
+        "warning": "Some leaks in the transmission area require special tools and expertise to repair.",
+        "action": "Inspect the transmission and rear engine seals",
+        "details": "Leaks from the rear of the engine/transmission area can be: (1) Transmission mainshaft seal — where the output shaft exits for the belt drive. (2) Transmission top cover gasket — check bolt torque. (3) Speedometer drive seal. (4) Oil traveling from a leak higher up on the engine — clean everything and re-identify the source. The Sportster 1200 uses a belt final drive, and the output shaft seal is a common leak point at higher mileage."
+      }
+    ]
+  }
+}

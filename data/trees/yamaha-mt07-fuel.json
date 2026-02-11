@@ -1,0 +1,298 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Fuel System Issues",
+  "description": "Diagnose fuel system problems including poor fuel economy, fuel smell, hesitation, and fuel pump issues on the Yamaha MT-07.",
+  "category": "fuel",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What fuel system symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Work in a well-ventilated area, away from sparks and open flames. Do not smoke while working on the fuel system.",
+        "options": [
+          { "text": "Poor fuel economy (less than 18 km/L or 42 mpg)", "next": "check_riding_style" },
+          { "text": "Fuel smell from the bike", "next": "check_fuel_leak" },
+          { "text": "Engine hesitates or stumbles during acceleration", "next": "check_fuel_pump_prime" },
+          { "text": "Engine surges or runs unevenly", "next": "check_injectors" }
+        ]
+      },
+      {
+        "id": "check_riding_style",
+        "type": "question",
+        "text": "What is your typical riding style and conditions?",
+        "safety": "green",
+        "options": [
+          { "text": "Mostly city/stop-and-go traffic", "next": "solution_city_economy" },
+          { "text": "Highway riding at steady speeds", "next": "check_tire_pressure_economy" },
+          { "text": "Aggressive/spirited riding", "next": "solution_aggressive_economy" },
+          { "text": "Economy has recently gotten worse compared to before", "next": "check_tire_pressure_economy" }
+        ]
+      },
+      {
+        "id": "check_tire_pressure_economy",
+        "type": "check",
+        "text": "Check tire pressure and maintenance items",
+        "safety": "green",
+        "instructions": "Low tire pressure is the most common cause of poor fuel economy. Check both tires cold: Front 250 kPa (36 psi), Rear 290 kPa (42 psi). Also check: (1) Air filter condition — a dirty air filter reduces efficiency, (2) Chain tension and lubrication — a tight or dry chain creates drag, (3) Brake drag — spin each wheel freely to check if brakes are dragging.",
+        "next": "maintenance_economy_result"
+      },
+      {
+        "id": "maintenance_economy_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Tire pressure was low", "next": "solution_tire_pressure" },
+          { "text": "Air filter is dirty", "next": "solution_air_filter" },
+          { "text": "Chain was tight/dry or brakes are dragging", "next": "solution_drag_sources" },
+          { "text": "Everything checks out — still poor economy", "next": "check_injectors" }
+        ]
+      },
+      {
+        "id": "check_fuel_leak",
+        "type": "check",
+        "text": "Locate the fuel leak",
+        "safety": "red",
+        "warning": "A fuel leak is a fire hazard. Do not start the engine until the leak is identified and repaired. Keep a fire extinguisher nearby.",
+        "instructions": "With the ignition off, visually inspect: (1) Fuel tank for cracks or damage, (2) Fuel hose connections at the tank and fuel rail, (3) Fuel injector O-rings (look for wetness around the injector base), (4) Fuel cap seal — does fuel weep when the tank is full? (5) Fuel pump area inside the tank (access through the pump access plate under the seat/tank). The fuel smell may also come from the charcoal canister or EVAP system.",
+        "next": "fuel_leak_result"
+      },
+      {
+        "id": "fuel_leak_result",
+        "type": "question",
+        "text": "Where is the fuel leak or smell coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel hose connection is loose or cracked", "next": "solution_fuel_hose" },
+          { "text": "Fuel injector O-ring is leaking", "next": "solution_injector_oring" },
+          { "text": "Fuel cap seal is bad — weeps when full", "next": "solution_fuel_cap" },
+          { "text": "Smell but no visible leak — possible EVAP system", "next": "solution_evap" },
+          { "text": "Fuel tank is cracked or damaged", "next": "solution_fuel_tank" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump_prime",
+        "type": "check",
+        "text": "Check fuel pump operation",
+        "safety": "green",
+        "instructions": "Turn the ignition key to ON without pressing the start button. You should hear the fuel pump prime (a whirring/humming sound for about 2 seconds, coming from under the fuel tank). If the pump does not prime, check the fuel pump fuse (15A). If the pump primes but the engine still hesitates, the pump may be delivering insufficient pressure. The MT-07 fuel pressure specification is approximately 294 kPa (43 psi).",
+        "next": "fuel_pump_result"
+      },
+      {
+        "id": "fuel_pump_result",
+        "type": "question",
+        "text": "Does the fuel pump prime properly?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound at all", "next": "check_fuel_pump_fuse" },
+          { "text": "Pump primes but engine still hesitates", "next": "check_injectors" },
+          { "text": "Pump makes unusual noise (grinding, whining loudly)", "next": "solution_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump_fuse",
+        "type": "check",
+        "text": "Check the fuel pump fuse",
+        "safety": "green",
+        "instructions": "Locate the fuse box under the seat. Find the fuel pump fuse (15A). Inspect it visually — a blown fuse will have a broken wire visible through the clear plastic. Replace with the same amperage fuse if blown. If the new fuse blows immediately, there is a short circuit in the fuel pump wiring that needs professional diagnosis.",
+        "next": "fuel_pump_fuse_result"
+      },
+      {
+        "id": "fuel_pump_fuse_result",
+        "type": "question",
+        "text": "What did the fuse check reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuse was blown — replaced and pump now works", "next": "solution_fuse_replaced" },
+          { "text": "Fuse is good but pump still does not run", "next": "solution_fuel_pump" },
+          { "text": "New fuse blows immediately", "next": "solution_fuel_pump_wiring" }
+        ]
+      },
+      {
+        "id": "check_injectors",
+        "type": "check",
+        "text": "Check fuel injector operation",
+        "safety": "yellow",
+        "warning": "Do not disconnect fuel injectors while the engine is running — fuel will spray out under pressure.",
+        "instructions": "The MT-07 has two fuel injectors (one per cylinder). With the engine running, you can check for even operation by carefully feeling the exhaust pipe temperature on each header after the engine warms up. Both headers should be roughly the same temperature. A significantly cooler header suggests that cylinder's injector is not delivering enough fuel. You can also use a mechanic's stethoscope on each injector — you should hear a steady clicking at idle.",
+        "next": "injector_result"
+      },
+      {
+        "id": "injector_result",
+        "type": "question",
+        "text": "What did the injector check reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "One header is significantly cooler — possible clogged injector", "next": "solution_clean_injectors" },
+          { "text": "Both injectors seem to be working evenly", "next": "check_throttle_body_mt07" },
+          { "text": "Cannot determine — need professional diagnosis", "next": "solution_professional_diag" }
+        ]
+      },
+      {
+        "id": "check_throttle_body_mt07",
+        "type": "check",
+        "text": "Check throttle body and sensors",
+        "safety": "green",
+        "instructions": "The MT-07 throttle body controls air intake. Check: (1) Is the air filter clean and properly seated? (2) Is the throttle cable moving the throttle plate fully when you twist the grip? (3) Does the throttle snap back to closed when released? A sticking throttle cable or dirty throttle body can cause surge and hesitation. Also check for fault codes — the MT-07 Check Engine Light will illuminate for sensor faults.",
+        "next": "throttle_body_mt07_result"
+      },
+      {
+        "id": "throttle_body_mt07_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Throttle cable is sticking or not returning", "next": "solution_throttle_cable" },
+          { "text": "Check Engine Light is on", "next": "solution_fault_codes" },
+          { "text": "Everything seems normal", "next": "solution_professional_diag" }
+        ]
+      },
+      {
+        "id": "solution_city_economy",
+        "type": "solution",
+        "text": "Normal City Riding Fuel Economy",
+        "safety": "green",
+        "action": "City fuel economy of 16-20 km/L (38-47 mpg) is typical for the MT-07.",
+        "details": "The MT-07 in city riding with frequent stops typically achieves 16-20 km/L (38-47 mpg). Highway economy is better at 22-26 km/L (52-61 mpg). If your economy is within these ranges, the bike is operating normally. To improve city economy: (1) Avoid hard acceleration from stops, (2) Use engine braking rather than heavy brake use, (3) Keep the engine in the mid-RPM range (3,000-5,000)."
+      },
+      {
+        "id": "solution_aggressive_economy",
+        "type": "solution",
+        "text": "Fuel Economy Impact of Aggressive Riding",
+        "safety": "green",
+        "action": "Aggressive riding significantly increases fuel consumption — this is expected.",
+        "details": "Spirited riding with frequent hard acceleration and high-RPM riding can drop fuel economy to 14-16 km/L (33-38 mpg) or lower. This is normal. The MT-07 engine management enriches the fuel mixture during hard acceleration for performance. If you want better economy, ride at lower RPMs and use smooth throttle inputs."
+      },
+      {
+        "id": "solution_tire_pressure",
+        "type": "solution",
+        "text": "Correct Tire Pressure",
+        "safety": "green",
+        "action": "Inflate tires to the correct pressure.",
+        "details": "Set tire pressures cold to: Front 250 kPa (36 psi), Rear 290 kPa (42 psi). Low tire pressure increases rolling resistance and can reduce fuel economy by 10-15%. Check pressures at least monthly and before long rides. Under-inflated tires also cause uneven wear and reduced handling."
+      },
+      {
+        "id": "solution_air_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Replace the dirty air filter.",
+        "details": "The MT-07 air filter is in the airbox under the fuel tank. Replace with an OEM Yamaha air filter (recommended every 20,000 km or sooner in dusty conditions). A clogged air filter restricts airflow, causing the engine to run rich and waste fuel. If using a reusable filter (K&N), clean and re-oil per manufacturer instructions."
+      },
+      {
+        "id": "solution_drag_sources",
+        "type": "solution",
+        "text": "Address Mechanical Drag Sources",
+        "safety": "green",
+        "action": "Fix the chain tension, lubrication, or brake drag.",
+        "details": "Chain: Adjust slack to 30-40mm and lubricate with chain lube. Brakes: If a wheel does not spin freely, the brake caliper may need cleaning — push the pistons back and clean with brake cleaner. These drag sources waste energy and reduce fuel economy. A properly maintained drivetrain makes a noticeable difference."
+      },
+      {
+        "id": "solution_fuel_hose",
+        "type": "solution",
+        "text": "Repair or Replace Fuel Hose",
+        "safety": "red",
+        "warning": "A fuel leak is a fire hazard. Repair before riding.",
+        "action": "Tighten the fuel hose connection or replace the hose.",
+        "details": "If the hose clamp is loose, tighten it. If the hose is cracked, hardened, or damaged, replace it with OEM fuel-rated hose. Do not use generic rubber hose — it must be rated for fuel and EFI pressure. After repair, turn the ignition on (fuel pump will pressurize the system) and check for leaks before starting the engine."
+      },
+      {
+        "id": "solution_injector_oring",
+        "type": "solution",
+        "text": "Replace Fuel Injector O-Rings",
+        "safety": "yellow",
+        "warning": "Relieve fuel pressure before removing injectors. Fuel will spray when disconnected if pressurized.",
+        "action": "Replace the leaking fuel injector O-ring seals.",
+        "details": "Remove the fuel rail and carefully pull the injector out. Replace both O-rings (top and bottom) with new fuel-system-compatible O-rings. Apply a thin film of clean engine oil to the new O-rings before reinstalling. Push the injector firmly into the fuel rail and cylinder head port. Reattach the fuel rail and verify no leaks."
+      },
+      {
+        "id": "solution_fuel_cap",
+        "type": "solution",
+        "text": "Replace Fuel Cap Seal",
+        "safety": "green",
+        "action": "Replace the fuel cap O-ring or the entire fuel cap.",
+        "details": "The fuel cap seal can harden and crack over time, allowing fuel vapors or liquid fuel to weep out when the tank is full. Replace the cap O-ring seal (if available separately) or the entire fuel cap. After replacement, fill the tank and check for any weeping around the cap."
+      },
+      {
+        "id": "solution_evap",
+        "type": "solution",
+        "text": "Check EVAP / Charcoal Canister System",
+        "safety": "green",
+        "action": "Inspect the EVAP system for proper operation.",
+        "details": "The MT-07 has an evaporative emissions system with a charcoal canister that captures fuel vapors. If the canister is saturated (from overfilling the tank) or the vent hose is blocked, you may smell fuel. Check the canister hoses for kinks or disconnections. Avoid overfilling the fuel tank — stop at the first click of the pump nozzle. If the canister is saturated, it may need replacement."
+      },
+      {
+        "id": "solution_fuel_tank",
+        "type": "solution",
+        "text": "Repair or Replace Fuel Tank",
+        "safety": "red",
+        "warning": "A cracked fuel tank is a serious fire hazard. Do not ride until repaired.",
+        "action": "Have the fuel tank professionally repaired or replace it.",
+        "details": "The MT-07 has a steel fuel tank that can crack from impact damage. Small cracks can sometimes be repaired by a professional fuel tank repair specialist using epoxy or welding (tank must be completely purged of fuel vapors before welding). For significant damage, replace the tank. Drain all fuel before removing the tank."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Replace Fuel Pump",
+        "safety": "yellow",
+        "warning": "Drain the fuel tank before removing the fuel pump assembly.",
+        "action": "Replace the fuel pump.",
+        "details": "The MT-07 fuel pump is inside the fuel tank, accessed through a plate under the seat/tank. Drain the tank, disconnect the wiring and fuel line, and remove the pump assembly. Replace with an OEM pump unit. After installation, turn the ignition on and listen for the pump to prime. Check for fuel leaks before starting the engine."
+      },
+      {
+        "id": "solution_fuse_replaced",
+        "type": "solution",
+        "text": "Fuel Pump Fuse Replaced",
+        "safety": "green",
+        "action": "The blown fuse has been replaced and the fuel pump is working.",
+        "details": "Monitor for recurring fuse failures. If the fuse blows again, there is a wiring issue or a failing fuel pump drawing excessive current. A single blown fuse can be a one-time event from a voltage spike, but repeated failures indicate an underlying problem."
+      },
+      {
+        "id": "solution_fuel_pump_wiring",
+        "type": "solution",
+        "text": "Fuel Pump Wiring Short — Professional Service Required",
+        "safety": "red",
+        "warning": "A short circuit in the fuel system wiring is a fire hazard. Professional diagnosis is strongly recommended.",
+        "action": "Have the fuel pump wiring inspected and repaired by a professional.",
+        "details": "A fuse that blows immediately indicates a short circuit in the fuel pump wiring. This could be from chafed wiring, a damaged connector, or a seized pump motor drawing excessive current. Tracing the short requires electrical diagnostic experience. Do not increase the fuse amperage — this risks a fire."
+      },
+      {
+        "id": "solution_clean_injectors",
+        "type": "solution",
+        "text": "Clean or Replace Fuel Injectors",
+        "safety": "yellow",
+        "warning": "Fuel injector service involves the fuel system. Work in a ventilated area.",
+        "action": "Have the fuel injectors professionally cleaned or replace the clogged injector.",
+        "details": "Professional ultrasonic injector cleaning costs approximately $30-$50 per injector and is the most effective method. Alternatively, running a tank of fuel with a quality fuel system cleaner (Techron, Gumout) can help with minor clogging. If cleaning does not restore proper spray pattern, replace the injector. For the MT-07 with only two injectors, it is practical to replace both."
+      },
+      {
+        "id": "solution_throttle_cable",
+        "type": "solution",
+        "text": "Lubricate or Replace Throttle Cable",
+        "safety": "green",
+        "action": "Lubricate or replace the sticking throttle cable.",
+        "details": "Lubricate the throttle cable with cable lubricant using a cable luber tool. If the cable is frayed, kinked, or still sticks after lubrication, replace it. The throttle must snap back to closed when released — a sticking throttle is a safety hazard. Also check the throttle housing for dirt or debris and clean it."
+      },
+      {
+        "id": "solution_fault_codes",
+        "type": "solution",
+        "text": "Read and Address Fault Codes",
+        "safety": "green",
+        "action": "Read the diagnostic fault codes from the ECU.",
+        "details": "The MT-07 stores fault codes that can be read with a Yamaha diagnostic tool or by counting the flashes of the Check Engine Light using the dealer mode diagnostic procedure. Common codes related to fuel issues include TPS (throttle position sensor), ISC (idle speed control), and O2 sensor faults. Address the specific fault indicated by the code. If you cannot read the codes yourself, a Yamaha dealer can scan the ECU."
+      },
+      {
+        "id": "solution_professional_diag",
+        "type": "solution",
+        "text": "Professional Fuel System Diagnosis Recommended",
+        "safety": "green",
+        "action": "Have the fuel system diagnosed by a qualified motorcycle mechanic.",
+        "details": "If basic checks have not identified the problem, professional diagnosis with proper equipment (fuel pressure gauge, injector flow testing, ECU scan) is recommended. A mechanic can measure fuel pressure, test injector spray patterns, check sensor outputs, and read ECU fault codes. Typical diagnostic cost: $50-$100."
+      }
+    ]
+  }
+}

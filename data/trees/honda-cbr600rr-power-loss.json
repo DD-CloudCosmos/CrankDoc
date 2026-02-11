@@ -1,0 +1,234 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Power Loss at High RPM",
+  "description": "Diagnose loss of power, hesitation, or cutting out at high RPM on the Honda CBR600RR.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When does the power loss occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Power cuts out suddenly at high RPM", "next": "check_rev_limiter" },
+          { "text": "Gradual power loss / feels sluggish above mid-range", "next": "check_air_filter" },
+          { "text": "Engine hesitates or stumbles during hard acceleration", "next": "check_fuel_delivery" },
+          { "text": "Power is fine initially but fades on long rides", "next": "check_fuel_tank_vent" }
+        ]
+      },
+      {
+        "id": "check_rev_limiter",
+        "type": "question",
+        "text": "At what RPM does the power cut out?",
+        "safety": "green",
+        "options": [
+          { "text": "Cuts out around 14,000-15,000 RPM (near redline)", "next": "solution_rev_limiter" },
+          { "text": "Cuts out well below redline (under 12,000 RPM)", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "Remove the seat and fuel tank (or lift the tank on its hinge). The air filter is inside the airbox. Remove the airbox cover to access the filter. Inspect the filter element — it should be clean and free of excessive dirt, oil, or debris. A clogged air filter restricts airflow and causes power loss, especially at high RPM where the engine demands the most air.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the condition of the air filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Air filter is dirty or clogged", "next": "solution_air_filter" },
+          { "text": "Air filter looks clean", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Inspect the exhaust system",
+        "safety": "yellow",
+        "warning": "The exhaust system gets extremely hot during operation. Allow the bike to cool completely before inspection.",
+        "instructions": "Inspect the exhaust headers and muffler for damage, dents, or obstructions. Check the catalytic converter (EXUP valve on CBR600RR) — a clogged cat will cause significant power loss. Listen for unusual exhaust sounds that might indicate a blockage. If the bike has an aftermarket exhaust, ensure it was properly tuned (fuel mapping adjusted).",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "What did you find with the exhaust system?",
+        "safety": "green",
+        "options": [
+          { "text": "EXUP valve seems stuck or exhaust is blocked", "next": "solution_exup" },
+          { "text": "Aftermarket exhaust installed without fuel controller", "next": "solution_fuel_map" },
+          { "text": "Exhaust system looks fine", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Check fuel delivery components",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Work in a well-ventilated area away from ignition sources. Do not smoke.",
+        "instructions": "Listen to the fuel pump — when you turn the ignition on (before starting), you should hear the fuel pump prime for about 2 seconds. Check fuel pressure if you have a gauge (spec: approximately 294 kPa / 43 psi). Also check that the fuel injectors are not clogged by looking for uneven exhaust coloring across the four headers (one cooler header suggests a weak injector).",
+        "next": "fuel_delivery_result"
+      },
+      {
+        "id": "fuel_delivery_result",
+        "type": "question",
+        "text": "What did you find with the fuel delivery check?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel pump does not prime or sounds weak", "next": "solution_fuel_pump" },
+          { "text": "One or more injectors may be clogged (uneven header temperatures)", "next": "solution_injectors" },
+          { "text": "Fuel delivery seems normal", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_fuel_tank_vent",
+        "type": "check",
+        "text": "Check fuel tank ventilation",
+        "safety": "yellow",
+        "warning": "Work in a well-ventilated area when dealing with fuel system components.",
+        "instructions": "A blocked fuel tank vent creates a vacuum that starves the fuel pump. Try riding with the fuel cap slightly loose (not recommended long-term). If power returns, the tank vent hose is blocked. Check the vent hose routing from the fuel cap area — it should be clear and not kinked or pinched.",
+        "next": "fuel_tank_vent_result"
+      },
+      {
+        "id": "fuel_tank_vent_result",
+        "type": "question",
+        "text": "Did loosening the fuel cap restore power?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — power returns with cap loose", "next": "solution_tank_vent" },
+          { "text": "No — same power loss with cap loose", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_spark_plugs",
+        "type": "check",
+        "text": "Inspect the spark plugs",
+        "safety": "green",
+        "instructions": "Remove the fuel tank and ignition coils to access the spark plugs. Use a 10mm spark plug socket. The CBR600RR uses NGK IMR9C-9HES (or equivalent iridium plugs). Inspect each plug: (1) Gap should be 0.80-0.90mm, (2) Electrode should not be worn or rounded, (3) Color should be light tan/gray — black sooty plugs indicate rich running, white plugs indicate lean. Replace if over 16,000 km or visibly worn.",
+        "next": "spark_plug_result"
+      },
+      {
+        "id": "spark_plug_result",
+        "type": "question",
+        "text": "What is the condition of the spark plugs?",
+        "safety": "green",
+        "options": [
+          { "text": "Plugs are worn, fouled, or incorrectly gapped", "next": "solution_spark_plugs" },
+          { "text": "Plugs look good", "next": "check_valve_clearance" }
+        ]
+      },
+      {
+        "id": "check_valve_clearance",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Valve clearance checks require the engine to be completely cold. This is a precise measurement task.",
+        "instructions": "Valve clearances on the CBR600RR should be checked every 24,000 km. Tight valves (especially exhaust) are the most common cause of power loss on high-mileage CBR600RRs. Specs: Intake 0.16-0.19mm, Exhaust 0.22-0.27mm. This requires removing the cam covers, rotating the engine to TDC for each cylinder, and using feeler gauges. If you are not comfortable with this, have a shop perform the check.",
+        "next": "valve_clearance_result"
+      },
+      {
+        "id": "valve_clearance_result",
+        "type": "question",
+        "text": "Are the valve clearances within spec?",
+        "safety": "green",
+        "options": [
+          { "text": "One or more valves are tight or out of spec", "next": "solution_valve_adjustment" },
+          { "text": "All valves are within spec", "next": "solution_ecu_diag" },
+          { "text": "I cannot check this myself", "next": "solution_valve_adjustment" }
+        ]
+      },
+      {
+        "id": "solution_rev_limiter",
+        "type": "solution",
+        "text": "Normal Rev Limiter Operation",
+        "safety": "green",
+        "action": "No repair needed — this is the factory rev limiter protecting the engine.",
+        "details": "The CBR600RR rev limiter activates at approximately 15,000 RPM. This is a safety feature that cuts ignition to prevent engine damage. If you feel the rev limiter is activating too early, ensure the engine is at full operating temperature and all sensors are functioning correctly. Shift to the next gear before reaching the limiter for maximum performance."
+      },
+      {
+        "id": "solution_air_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Replace the air filter with a new OEM or quality aftermarket filter.",
+        "details": "Replace with Honda OEM air filter (part 17210-MEE-000 or equivalent for your model year). If using a reusable performance filter (K&N, DNA, etc.), clean and re-oil it according to the manufacturer's instructions. The CBR600RR air filter should be replaced every 16,000 km or more frequently in dusty conditions. After replacement, ensure the airbox is sealed properly — air leaks past the filter cause dirt ingestion and engine damage."
+      },
+      {
+        "id": "solution_exup",
+        "type": "solution",
+        "text": "Service EXUP Valve / Exhaust",
+        "safety": "yellow",
+        "warning": "EXUP valve service requires working near hot exhaust components.",
+        "action": "Inspect and service the EXUP (Exhaust Ultimate Power) valve.",
+        "details": "The CBR600RR EXUP valve controls exhaust backpressure for optimal power across the RPM range. A stuck valve causes power loss, especially at high RPM. Check the EXUP servo motor and cable for proper operation. The valve should open progressively as RPM increases. Common issues include corroded cables, seized valve bearings, or a faulty servo motor. Professional diagnosis with Honda HDS diagnostic tool is recommended to read EXUP-related fault codes."
+      },
+      {
+        "id": "solution_fuel_map",
+        "type": "solution",
+        "text": "Install Fuel Controller / ECU Reflash",
+        "safety": "green",
+        "action": "Install a fuel controller or get an ECU reflash to match the aftermarket exhaust.",
+        "details": "An aftermarket exhaust changes the air/fuel ratio, usually causing a lean condition. Install a fuel controller (Power Commander, Bazzaz, etc.) with a map matched to your exhaust. Alternatively, have the ECU reflashed by a specialist. Without proper fueling, you risk power loss, hesitation, and potential engine damage from running lean at high RPM."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Replace Fuel Pump",
+        "safety": "yellow",
+        "warning": "Fuel pump replacement involves working with the fuel system. Ensure no ignition sources are nearby.",
+        "action": "Replace the fuel pump or fuel pump relay.",
+        "details": "The CBR600RR fuel pump is inside the fuel tank. A weak or failing pump cannot deliver sufficient fuel at high RPM demand. First check the fuel pump relay and fuse. If those are good, the pump itself needs replacement. Drain the fuel tank, remove the pump assembly, and replace with an OEM or quality aftermarket unit. Ensure all O-rings and seals are replaced."
+      },
+      {
+        "id": "solution_injectors",
+        "type": "solution",
+        "text": "Clean or Replace Fuel Injectors",
+        "safety": "yellow",
+        "warning": "Fuel injector work involves the fuel system. Work in a well-ventilated area.",
+        "action": "Have the fuel injectors professionally cleaned or replace clogged injectors.",
+        "details": "Clogged fuel injectors cause uneven fueling and power loss. Professional ultrasonic cleaning is the most effective method and typically costs $30-50 per injector. If cleaning does not restore proper spray pattern, replace the affected injector(s). After any injector service, verify proper operation by checking that all four headers reach similar temperatures."
+      },
+      {
+        "id": "solution_tank_vent",
+        "type": "solution",
+        "text": "Clear Fuel Tank Vent",
+        "safety": "yellow",
+        "warning": "Work with fuel system in a well-ventilated area.",
+        "action": "Clear or replace the fuel tank vent hose.",
+        "details": "Trace the fuel tank vent hose from the fuel cap area and ensure it is not kinked, blocked, or routed incorrectly. Blow through the hose with compressed air to clear any blockage. If the fuel cap vent valve is integrated into the cap, try replacing the fuel cap. A proper vent allows air to enter the tank as fuel is consumed, preventing a vacuum from starving the fuel pump."
+      },
+      {
+        "id": "solution_spark_plugs",
+        "type": "solution",
+        "text": "Replace Spark Plugs",
+        "safety": "green",
+        "action": "Replace all four spark plugs with the correct OEM specification.",
+        "details": "Replace with NGK IMR9C-9HES (or the correct plug for your model year). Gap to 0.80-0.90mm. Apply a small amount of anti-seize to the threads and torque to 12 Nm (9 ft-lb). Do NOT over-tighten — the CBR600RR has an aluminum cylinder head. Replace all four plugs at the same time for consistent performance."
+      },
+      {
+        "id": "solution_valve_adjustment",
+        "type": "solution",
+        "text": "Valve Clearance Adjustment — Professional Service Recommended",
+        "safety": "red",
+        "warning": "Valve adjustment on an inline-4 requires precision tools and experience. Incorrect adjustment can cause engine damage.",
+        "action": "Have valve clearances checked and adjusted by a qualified motorcycle mechanic.",
+        "details": "Valve clearance adjustment on the CBR600RR uses shim-under-bucket design, requiring removal of camshafts to change shims. This is a labor-intensive job (3-5 hours shop time). Tight exhaust valves are the most common cause of high-RPM power loss on these engines. Typical cost: $300-$600 for check and adjustment. Specs: Intake 0.16-0.19mm, Exhaust 0.22-0.27mm."
+      },
+      {
+        "id": "solution_ecu_diag",
+        "type": "solution",
+        "text": "ECU Diagnostic Scan Recommended",
+        "safety": "green",
+        "action": "Have the ECU scanned for fault codes using Honda HDS or compatible diagnostic tool.",
+        "details": "If all mechanical checks pass but power loss persists, an ECU diagnostic scan can reveal sensor faults (TPS, MAP, O2 sensor, cam position) that affect fueling and ignition at high RPM. Common CBR600RR sensor issues include the throttle position sensor (TPS) drifting and the MAP sensor failing. A Honda dealer or specialist can read and clear fault codes with Honda HDS diagnostic software."
+      }
+    ]
+  }
+}

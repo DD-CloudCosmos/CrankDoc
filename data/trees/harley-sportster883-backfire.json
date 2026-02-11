@@ -1,0 +1,229 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Exhaust Pop / Backfire",
+  "description": "Diagnose exhaust popping, backfiring, and afterfire on the Sportster 883, including deceleration pops and acceleration backfires.",
+  "category": "fuel",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When does the popping or backfire occur?",
+        "safety": "green",
+        "options": [
+          { "text": "On deceleration (letting off the throttle)", "next": "decel_pop" },
+          { "text": "On acceleration (rolling on throttle)", "next": "accel_backfire" },
+          { "text": "At idle", "next": "idle_backfire" },
+          { "text": "On startup or shutdown", "next": "startup_backfire" }
+        ]
+      },
+      {
+        "id": "decel_pop",
+        "type": "question",
+        "text": "Deceleration popping is very common on Sportsters, especially with aftermarket exhaust. Have you modified the exhaust system?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — aftermarket pipes or removed baffles", "next": "check_exhaust_leaks" },
+          { "text": "No — stock exhaust system", "next": "check_exhaust_leaks" },
+          { "text": "Not sure", "next": "check_exhaust_leaks" }
+        ]
+      },
+      {
+        "id": "check_exhaust_leaks",
+        "type": "check",
+        "text": "Check for exhaust leaks",
+        "safety": "yellow",
+        "warning": "The exhaust gets extremely hot during operation. Perform this check on a cold engine, or wear heat-resistant gloves if the engine is warm. Do not touch the exhaust pipes with bare hands.",
+        "instructions": "Inspect the exhaust header pipe connections at the cylinder heads. Look for black soot marks around the flanges — this indicates an exhaust leak. Start the engine and feel (carefully) for air pulsing from the joints. Tighten exhaust flange nuts to 10-20 ft-lbs. Also check where the head pipe meets the muffler — aftermarket slip-on mufflers may not seal tightly.",
+        "next": "exhaust_leak_result"
+      },
+      {
+        "id": "exhaust_leak_result",
+        "type": "question",
+        "text": "Did you find any exhaust leaks?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leaking at the header flanges", "next": "solution_exhaust_leak" },
+          { "text": "No leaks found", "next": "check_fuel_mixture" }
+        ]
+      },
+      {
+        "id": "solution_exhaust_leak",
+        "type": "solution",
+        "text": "Repair exhaust leak",
+        "safety": "yellow",
+        "warning": "Work on a cold exhaust system. Exhaust pipes retain heat for a long time after the engine is shut off.",
+        "action": "Seal the exhaust leaks",
+        "details": "Exhaust leaks allow fresh air to enter the exhaust, causing raw fuel to ignite and pop. (1) Tighten exhaust flange nuts to 10-20 ft-lbs. (2) If the flanges are warped or pitted, replace the exhaust gaskets (crush rings). (3) Use new OEM-style exhaust port gaskets. (4) For aftermarket slip-on connections, ensure exhaust clamps are tight and consider using high-temp exhaust sealant. (5) Re-check after a heat cycle (ride, let cool, re-tighten)."
+      },
+      {
+        "id": "check_fuel_mixture",
+        "type": "question",
+        "text": "Has the air/fuel mixture been adjusted for any exhaust or air cleaner modifications?",
+        "safety": "green",
+        "options": [
+          { "text": "Aftermarket exhaust installed without fuel tuning", "next": "solution_fuel_tune" },
+          { "text": "Aftermarket air cleaner without fuel tuning", "next": "solution_fuel_tune" },
+          { "text": "Everything is stock or already tuned", "next": "check_air_leak" }
+        ]
+      },
+      {
+        "id": "solution_fuel_tune",
+        "type": "solution",
+        "text": "Fuel tuning needed for exhaust/intake modifications",
+        "safety": "green",
+        "action": "Retune the fuel system to match modifications",
+        "details": "Aftermarket exhaust or air cleaner changes the air/fuel ratio. Without retuning, the mixture runs lean, causing deceleration popping and potential engine damage. For fuel-injected Sportsters (2007+): (1) Install a fuel tuner/programmer (Vance & Hines FP4, Dynojet Power Vision, or ThunderMax). (2) Load a map matched to your exhaust and air cleaner combination. (3) A dyno tune gives the best results. For carbureted Sportsters (pre-2007): (1) Re-jet the carburetor — typically go up 1-2 sizes on main and pilot jets. (2) Adjust the mixture screw. (3) Test ride and fine-tune."
+      },
+      {
+        "id": "check_air_leak",
+        "type": "check",
+        "text": "Check for intake air leaks",
+        "safety": "yellow",
+        "warning": "Do not spray flammable substances near a hot exhaust or running engine near open flame.",
+        "instructions": "A lean condition from an intake air leak causes popping. With the engine idling, spray carburetor cleaner around: (1) Intake manifold seals (where the manifold connects to each cylinder head). (2) Throttle body boots. (3) Air cleaner backing plate seal. (4) Vacuum line connections. If the idle speed changes when spraying a specific area, you've found the leak.",
+        "next": "air_leak_result"
+      },
+      {
+        "id": "air_leak_result",
+        "type": "question",
+        "text": "Did you find an intake air leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found a leak", "next": "solution_intake_seal" },
+          { "text": "No leaks found", "next": "solution_decel_normal" }
+        ]
+      },
+      {
+        "id": "solution_intake_seal",
+        "type": "solution",
+        "text": "Repair intake air leak",
+        "safety": "yellow",
+        "warning": "Allow the engine to cool before replacing intake seals. Fuel vapor may be present.",
+        "action": "Replace the leaking intake seal",
+        "details": "Intake manifold seal leaks are extremely common on Sportsters. The rubber seals between the manifold and cylinder heads harden from heat cycles. (1) Remove the air cleaner and throttle body/carburetor. (2) Remove the intake manifold. (3) Replace both intake manifold seals (always replace both — the James Gaskets kit includes both). (4) Inspect the manifold for cracks. (5) Reassemble and torque the manifold bolts to 15-18 ft-lbs. (6) Test ride — the popping should be gone or greatly reduced."
+      },
+      {
+        "id": "solution_decel_normal",
+        "type": "solution",
+        "text": "Some deceleration popping is normal",
+        "safety": "green",
+        "action": "Minor deceleration popping may be normal",
+        "details": "If no exhaust leaks, intake leaks, or fuel mixture issues are found, some mild deceleration popping is normal on Sportster 883s — especially with aftermarket exhaust. It's caused by unburned fuel igniting in the hot exhaust. To minimize it: (1) Don't chop the throttle suddenly — roll off gradually. (2) Consider adding or adjusting the Idle Air Control (IAC) on EFI models. (3) A fuel tuner can add fuel on deceleration to reduce popping. If the popping is excessive and accompanied by loss of power, have the bike professionally diagnosed."
+      },
+      {
+        "id": "accel_backfire",
+        "type": "question",
+        "text": "Backfiring on acceleration is more concerning. Does it happen under light throttle, heavy throttle, or both?",
+        "safety": "green",
+        "options": [
+          { "text": "Light to moderate throttle", "next": "check_spark_plugs" },
+          { "text": "Heavy / wide-open throttle", "next": "check_fuel_delivery" },
+          { "text": "Both", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_spark_plugs",
+        "type": "check",
+        "text": "Inspect the spark plugs",
+        "safety": "yellow",
+        "warning": "Remove spark plugs only when the engine is cool to avoid stripping the aluminum threads in the cylinder heads.",
+        "instructions": "Remove both spark plugs and inspect them. (1) Light tan/gray electrode — good mixture. (2) Black, sooty electrode — running rich. (3) White, blistered electrode — running lean (dangerous). (4) Wet with fuel — fouled plug or flooding. Check the spark plug gap (0.038-0.043 inch) and replace if worn, cracked, or heavily fouled. Mismatched plug colors between cylinders indicate a problem specific to one cylinder.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "What do the spark plugs look like?",
+        "safety": "green",
+        "options": [
+          { "text": "White/blistered — running lean", "next": "solution_lean_condition" },
+          { "text": "Black/sooty — running rich", "next": "solution_rich_condition" },
+          { "text": "Plugs look normal", "next": "check_fuel_delivery" }
+        ]
+      },
+      {
+        "id": "solution_lean_condition",
+        "type": "solution",
+        "text": "Lean fuel condition",
+        "safety": "yellow",
+        "warning": "A lean condition can cause engine overheating and piston damage. Do not ride extensively until resolved.",
+        "action": "Correct the lean fuel condition",
+        "details": "A lean mixture causes backfiring, overheating, and potential engine damage. Common causes on the Sportster 883: (1) Intake manifold air leak — check and replace seals. (2) Clogged fuel injectors — use quality fuel injector cleaner or have them professionally cleaned. (3) Aftermarket exhaust/air cleaner without re-tuning. (4) Faulty O2 sensors (EFI models). (5) Restricted fuel flow — check fuel filter and fuel pump pressure. Address the lean condition before continuing to ride."
+      },
+      {
+        "id": "solution_rich_condition",
+        "type": "solution",
+        "text": "Rich fuel condition",
+        "safety": "green",
+        "action": "Correct the rich fuel condition",
+        "details": "A rich mixture causes black exhaust, reduced power, and fouled plugs. Common causes: (1) Dirty or clogged air filter — inspect and replace if needed. (2) Over-fueling from a fuel tuner — review the fuel map settings. (3) Stuck or leaking fuel injector — have injectors tested. (4) On carbureted models: stuck float, incorrect jet sizes, or choke not fully opening. (5) Faulty engine temperature sensor (EFI models) — the ECM may think the engine is cold and over-fuel."
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Check fuel delivery system",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work in a well-ventilated area away from ignition sources. Wear safety glasses.",
+        "instructions": "For EFI models: Turn the ignition ON (don't start). Listen for the fuel pump priming (2-3 second whir). If no sound, check the fuel pump fuse and relay. For carbureted models: Check the petcock and fuel flow. Also check: (1) Fuel filter condition. (2) Fuel line connections for leaks. (3) Fuel quality — old gas can cause backfiring. If the fuel is more than 3 months old, drain and replace with fresh fuel.",
+        "next": "fuel_delivery_result"
+      },
+      {
+        "id": "fuel_delivery_result",
+        "type": "question",
+        "text": "Is the fuel delivery system working properly?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel pump not priming or fuel flow is restricted", "next": "solution_fuel_delivery" },
+          { "text": "Old or stale fuel in the tank", "next": "solution_old_fuel" },
+          { "text": "Fuel system seems fine", "next": "solution_ignition_timing" }
+        ]
+      },
+      {
+        "id": "solution_fuel_delivery",
+        "type": "solution",
+        "text": "Fuel delivery problem",
+        "safety": "yellow",
+        "warning": "Work carefully with the fuel system. Catch any fuel spills and clean them immediately.",
+        "action": "Repair fuel delivery issues",
+        "details": "Restricted fuel delivery causes lean backfiring under load. (1) Check and replace the fuel filter. (2) Verify the fuel pump is operating (EFI models). (3) Check fuel line connections. (4) On carbureted models, clean or rebuild the carburetor, paying attention to the main jet and float level. (5) Ensure the tank vent is not clogged (creates vacuum that restricts fuel flow)."
+      },
+      {
+        "id": "solution_old_fuel",
+        "type": "solution",
+        "text": "Replace old/stale fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly — do not dump it. Many auto parts stores accept waste fuel.",
+        "action": "Drain and replace stale fuel",
+        "details": "Fuel older than 3 months degrades, especially if untreated. Old fuel causes hard starting, backfiring, and poor running. (1) Drain the tank completely. (2) Refill with fresh premium fuel. (3) Add fuel stabilizer for future storage. (4) Run the engine and note improvement. If the bike sat for a long time, the fuel injectors or carburetor may also need cleaning."
+      },
+      {
+        "id": "solution_ignition_timing",
+        "type": "solution",
+        "text": "Ignition system check",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch ignition components while the engine is running.",
+        "action": "Check the ignition system",
+        "details": "If fuel delivery is good but backfiring persists: (1) Check spark plug wires for damage, cracks, or arcing to ground. (2) Measure coil resistance (primary: 3-5 ohms, secondary: 10,000-15,000 ohms). (3) Check for cross-firing between spark plug wires (wires too close together). (4) On EFI models, scan for diagnostic trouble codes. (5) Check the cam position sensor — a failing sensor can cause timing errors and backfiring. (6) If the bike has been recently worked on, verify the spark plug wires are on the correct cylinders."
+      },
+      {
+        "id": "idle_backfire",
+        "type": "solution",
+        "text": "Backfire at idle",
+        "safety": "green",
+        "action": "Diagnose idle backfiring",
+        "details": "Backfiring at idle typically indicates: (1) Intake manifold leak — the number one cause on Sportsters. Test by spraying carb cleaner around the intake seals while idling. (2) Idle mixture too lean — on carbureted models, adjust the mixture screw (turn out 1/4 turn at a time). (3) Vacuum leak from a disconnected or cracked vacuum line. (4) Incorrect idle speed — adjust to 950-1050 RPM. (5) Fouled or failing spark plug — replace both plugs. Start with the intake seal check, as this is by far the most common cause on Sportster 883s."
+      },
+      {
+        "id": "startup_backfire",
+        "type": "solution",
+        "text": "Backfire on startup or shutdown",
+        "safety": "green",
+        "action": "Diagnose startup/shutdown backfire",
+        "details": "A single loud backfire on startup or shutdown is usually caused by: (1) Unburned fuel in the exhaust igniting — common with aftermarket exhaust. (2) Enrichener/choke not engaging properly on startup (carbureted models). (3) Fuel injector leaking fuel into the cylinder when the bike is off (EFI models) — this is called 'hot soak' and may indicate a leaking injector. (4) On shutdown: the engine may fire one last time from residual fuel — this is mostly cosmetic but can be reduced by killing the engine with the kill switch rather than the key. If it happens every time, check the injectors or carburetor float for leaks."
+      }
+    ]
+  }
+}

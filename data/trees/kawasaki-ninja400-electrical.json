@@ -1,0 +1,407 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Electrical Faults",
+  "description": "Diagnose electrical faults including lighting issues, charging problems, and sensor failures on the Kawasaki Ninja 400.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue are you experiencing?",
+        "safety": "yellow",
+        "warning": "Disconnect the battery negative terminal before working on electrical components to avoid shorts.",
+        "options": [
+          { "text": "Lights are dim or flickering", "next": "check_battery_charging" },
+          { "text": "Dashboard warning light is on", "next": "check_warning_light" },
+          { "text": "A specific light or component is not working", "next": "check_specific_component" },
+          { "text": "Fuses keep blowing", "next": "check_fuse_circuit" },
+          { "text": "Intermittent electrical issues (random failures)", "next": "check_grounds" }
+        ]
+      },
+      {
+        "id": "check_battery_charging",
+        "type": "check",
+        "text": "Test battery and charging system",
+        "safety": "yellow",
+        "warning": "Keep hands away from moving parts while testing with the engine running.",
+        "instructions": "Dim or flickering lights usually indicate a charging system issue. With the engine off, measure battery voltage (should be 12.6-12.8V). Start the engine and measure at 3,000 RPM — should read 13.5-14.5V. Below 13.5V = undercharging. Above 15.0V = overcharging. Also check battery terminal connections for looseness or corrosion.",
+        "next": "charging_result"
+      },
+      {
+        "id": "charging_result",
+        "type": "question",
+        "text": "What does the charging test show?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery voltage is low (under 12.4V engine off)", "next": "solution_battery" },
+          { "text": "Not charging (under 13.5V at RPM)", "next": "check_stator" },
+          { "text": "Overcharging (over 15.0V)", "next": "solution_reg_rect" },
+          { "text": "Charging is normal — loose connections found", "next": "solution_connections" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test the stator",
+        "safety": "yellow",
+        "warning": "Test with engine running — keep clear of moving parts.",
+        "instructions": "Locate the stator connector (3 yellow wires, near the left side of the engine). Disconnect it. With the engine at 3,000 RPM, measure AC voltage between each pair of yellow wires (3 measurements). All readings should be above 40V AC and roughly equal. If one is significantly lower, that stator winding is damaged.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What did the stator test show?",
+        "safety": "green",
+        "options": [
+          { "text": "All readings are above 40V and equal — stator is good", "next": "solution_reg_rect" },
+          { "text": "One or more readings are low or zero — stator is bad", "next": "solution_stator" }
+        ]
+      },
+      {
+        "id": "check_warning_light",
+        "type": "question",
+        "text": "Which warning light is on?",
+        "safety": "green",
+        "options": [
+          { "text": "FI (Fuel Injection) light / Check Engine", "next": "check_fi_codes" },
+          { "text": "Oil pressure light while engine is running", "next": "check_oil_pressure" },
+          { "text": "Temperature warning", "next": "solution_overheating" },
+          { "text": "ABS light (if equipped)", "next": "solution_abs" }
+        ]
+      },
+      {
+        "id": "check_fi_codes",
+        "type": "check",
+        "text": "Read FI fault codes",
+        "safety": "green",
+        "instructions": "The Ninja 400 stores fault codes that can be read via the dealer mode diagnostic procedure. To enter dealer mode: (1) Turn the ignition off, (2) Hold down the SELECT and ENTER buttons on the dash simultaneously, (3) Turn the ignition on while still holding the buttons, (4) Release the buttons — the dash will show diagnostic information. Navigate to view stored codes. Common codes relate to O2 sensor, TPS (throttle position sensor), and ISC (idle speed control). Write down any code numbers.",
+        "next": "fi_codes_result"
+      },
+      {
+        "id": "fi_codes_result",
+        "type": "question",
+        "text": "Were you able to read any fault codes?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — I have a code number", "next": "solution_fi_code" },
+          { "text": "No codes stored — FI light may be intermittent", "next": "solution_intermittent_fi" },
+          { "text": "Cannot enter dealer mode", "next": "solution_professional_diag" }
+        ]
+      },
+      {
+        "id": "check_oil_pressure",
+        "type": "check",
+        "text": "Check oil level immediately",
+        "safety": "red",
+        "warning": "An oil pressure warning with the engine running is critical. Stop the engine immediately if the light comes on while riding.",
+        "instructions": "Check the oil level via the sight glass on the right side of the engine (bike upright, engine warm). If the oil level is below the lower mark, add oil immediately. If the level is OK, the oil pressure switch may be faulty, or there is an internal engine oil pressure problem. Do not continue running the engine until verified.",
+        "next": "oil_pressure_result"
+      },
+      {
+        "id": "oil_pressure_result",
+        "type": "question",
+        "text": "What is the oil level?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil is low", "next": "solution_add_oil" },
+          { "text": "Oil level is fine", "next": "solution_oil_switch" }
+        ]
+      },
+      {
+        "id": "check_specific_component",
+        "type": "question",
+        "text": "Which component is not working?",
+        "safety": "green",
+        "options": [
+          { "text": "Headlight", "next": "check_headlight" },
+          { "text": "Turn signals", "next": "check_turn_signals" },
+          { "text": "Tail light / brake light", "next": "check_tail_light" },
+          { "text": "Horn", "next": "solution_horn" }
+        ]
+      },
+      {
+        "id": "check_headlight",
+        "type": "check",
+        "text": "Check headlight circuit",
+        "safety": "green",
+        "instructions": "The Ninja 400 uses an LED headlight (on most model years). Check: (1) Is the headlight fuse (15A) intact? (2) Is the headlight connector properly seated? (3) For halogen-equipped models, check the bulb (H4 type). LED headlights do not have replaceable bulbs — if the LED fails, the entire unit is replaced.",
+        "next": "headlight_result"
+      },
+      {
+        "id": "headlight_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown fuse", "next": "solution_replace_fuse" },
+          { "text": "Loose connector", "next": "solution_connections" },
+          { "text": "Bulb is burnt (halogen model)", "next": "solution_headlight_bulb" },
+          { "text": "LED unit is dead", "next": "solution_led_headlight" }
+        ]
+      },
+      {
+        "id": "check_turn_signals",
+        "type": "check",
+        "text": "Diagnose turn signal issue",
+        "safety": "green",
+        "instructions": "Check: (1) Is it one turn signal or all of them? One dead signal = bulb or connector. All dead signals = fuse or flasher relay. (2) Do the signals flash too fast (hyperflash)? This usually means a bulb is burnt out and the flasher detects reduced load. (3) Check the turn signal fuse. The Ninja 400 may use LED turn signals on some models, which require LED-compatible flasher relays if replacing OEM bulbs with LEDs.",
+        "next": "turn_signal_result"
+      },
+      {
+        "id": "turn_signal_result",
+        "type": "question",
+        "text": "What is the turn signal issue?",
+        "safety": "green",
+        "options": [
+          { "text": "One signal is dead", "next": "solution_turn_signal_bulb" },
+          { "text": "All signals are dead", "next": "solution_replace_fuse" },
+          { "text": "Signals hyperflash (flash too fast)", "next": "solution_turn_signal_bulb" }
+        ]
+      },
+      {
+        "id": "check_tail_light",
+        "type": "check",
+        "text": "Check tail light and brake light",
+        "safety": "green",
+        "instructions": "The Ninja 400 tail light is LED on most models. Check: (1) Does the tail light illuminate (running light)? (2) Does it get brighter when you press the front brake lever or rear brake pedal? (3) Check the tail light fuse. (4) If the brake light portion does not work, check the brake light switches — there is one on the front brake lever and one on the rear brake pedal.",
+        "next": "tail_light_result"
+      },
+      {
+        "id": "tail_light_result",
+        "type": "question",
+        "text": "What is the tail/brake light issue?",
+        "safety": "green",
+        "options": [
+          { "text": "No tail light at all — check fuse", "next": "solution_replace_fuse" },
+          { "text": "Tail light on but no brake light", "next": "solution_brake_switch" },
+          { "text": "LED unit is dead", "next": "solution_led_tail" }
+        ]
+      },
+      {
+        "id": "check_fuse_circuit",
+        "type": "check",
+        "text": "Identify the circuit blowing fuses",
+        "safety": "yellow",
+        "warning": "Repeated blown fuses indicate a short circuit. Do not increase fuse size — this risks fire.",
+        "instructions": "Note which fuse keeps blowing and what circuit it controls (labeled on the fuse box cover). Replace the fuse and see if it blows immediately (dead short) or after turning something on (fault in that component). Inspect the wiring in that circuit for: chafed wires, pinched wires under the seat or tank, exposed conductors touching the frame. Also check for water damage to connectors if the bike has been ridden in rain or washed recently.",
+        "next": "fuse_circuit_result"
+      },
+      {
+        "id": "fuse_circuit_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Found chafed or damaged wiring", "next": "solution_repair_wiring" },
+          { "text": "Fuse blows when a specific component is turned on", "next": "solution_faulty_component" },
+          { "text": "Cannot find the source of the short", "next": "solution_professional_diag" }
+        ]
+      },
+      {
+        "id": "check_grounds",
+        "type": "check",
+        "text": "Inspect ground connections",
+        "safety": "green",
+        "instructions": "Intermittent electrical issues are frequently caused by poor ground connections. Check: (1) Main ground wire — black wire from battery negative to the frame, (2) Engine ground — wire from engine to frame, (3) Subframe ground points. Look for corrosion, loose bolts, or painted surfaces preventing good contact. Clean all ground points to bare metal and retighten.",
+        "next": "grounds_result"
+      },
+      {
+        "id": "grounds_result",
+        "type": "question",
+        "text": "Did you find any poor ground connections?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found corroded or loose grounds", "next": "solution_grounds" },
+          { "text": "All grounds look fine", "next": "solution_connector_check" }
+        ]
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Charge or Replace Battery",
+        "safety": "green",
+        "action": "Charge the battery or replace if it will not hold a charge.",
+        "details": "Charge with a motorcycle battery charger. If the battery will not hold 12.6V after charging and resting for an hour, replace it. The Ninja 400 uses a YTX9-BS battery."
+      },
+      {
+        "id": "solution_reg_rect",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "An overcharging R/R can damage the battery and electronics.",
+        "action": "Replace the regulator/rectifier.",
+        "details": "The Ninja 400 R/R is under the seat area. Replace with OEM or a MOSFET-type upgrade for improved reliability. Also check the connector for melted pins. After replacement, verify charging voltage is 13.5-14.5V at 3,000 RPM."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Stator replacement requires draining engine oil.",
+        "action": "Replace the stator.",
+        "details": "The Ninja 400 stator is behind the left engine cover. Drain oil, remove the cover, unbolt the stator, and install the new one. Replace the cover gasket. Refill oil. Consider replacing the R/R at the same time."
+      },
+      {
+        "id": "solution_connections",
+        "type": "solution",
+        "text": "Clean and Reseat Electrical Connections",
+        "safety": "green",
+        "action": "Clean and reconnect the loose or corroded connections.",
+        "details": "Disconnect, clean with electrical contact cleaner, apply dielectric grease, and reconnect firmly. Check that connector locking tabs are engaged."
+      },
+      {
+        "id": "solution_fi_code",
+        "type": "solution",
+        "text": "Address the Specific Fault Code",
+        "safety": "green",
+        "action": "Look up the specific code and address the indicated component.",
+        "details": "Common Ninja 400 FI codes: O2 sensor fault (sensor replacement), TPS fault (throttle position sensor adjustment or replacement), ISC fault (idle speed control valve cleaning). For the specific code you read, consult the Ninja 400 service manual or have a Kawasaki dealer diagnose with KDS (Kawasaki Diagnostic System). Some codes clear themselves after the issue is fixed and the ECU resets."
+      },
+      {
+        "id": "solution_intermittent_fi",
+        "type": "solution",
+        "text": "Monitor Intermittent FI Light",
+        "safety": "green",
+        "action": "Monitor the FI light and check for loose sensor connectors.",
+        "details": "An FI light that comes on briefly and goes away can be caused by a loose sensor connector (vibration causes momentary disconnection). Check all sensor connectors: O2 sensor, TPS, coolant temperature sensor, crank position sensor. Reseat each connector and apply dielectric grease. If the light returns, note the conditions (speed, temperature, gear) to help narrow down the cause."
+      },
+      {
+        "id": "solution_professional_diag",
+        "type": "solution",
+        "text": "Professional Electrical Diagnosis",
+        "safety": "green",
+        "action": "Have the electrical system diagnosed by a qualified motorcycle electrician.",
+        "details": "Electrical shorts and intermittent faults can be difficult to trace without proper equipment and experience. A shop can use KDS (Kawasaki Diagnostic System) for deep ECU diagnosis and wiring diagram-guided troubleshooting. Typical electrical diagnostic cost: $50-$100."
+      },
+      {
+        "id": "solution_add_oil",
+        "type": "solution",
+        "text": "Add Engine Oil Immediately",
+        "safety": "red",
+        "warning": "Running with low oil pressure causes rapid engine wear. Do not start the engine until oil is added.",
+        "action": "Add the correct engine oil to the proper level.",
+        "details": "Add Kawasaki recommended 10W-40 JASO MA/MA2 motorcycle oil through the filler cap. Check the sight glass and fill between the marks with the bike upright and engine warm. If oil was severely low, investigate for leaks."
+      },
+      {
+        "id": "solution_oil_switch",
+        "type": "solution",
+        "text": "Check Oil Pressure Switch",
+        "safety": "yellow",
+        "warning": "If you are unsure whether oil pressure is actually low, do not ride. Have it checked professionally.",
+        "action": "Test or replace the oil pressure switch.",
+        "details": "If the oil level is correct but the light is on, the oil pressure switch may be faulty. It is a single-wire sensor on the engine case. You can test it with a multimeter (should show continuity to ground with no oil pressure, open circuit with oil pressure). If faulty, replace it. If the switch tests good, there may be an actual oil pressure problem — have a mechanic verify with a mechanical oil pressure gauge."
+      },
+      {
+        "id": "solution_overheating",
+        "type": "solution",
+        "text": "Address Overheating Issue",
+        "safety": "yellow",
+        "warning": "Overheating can cause engine damage.",
+        "action": "Check the cooling system — coolant level, fan operation, and thermostat.",
+        "details": "See the dedicated Overheating diagnostic tree for detailed steps. Quick checks: verify coolant level, ensure the radiator fan is working, and check for coolant leaks."
+      },
+      {
+        "id": "solution_abs",
+        "type": "solution",
+        "text": "ABS Warning Light",
+        "safety": "yellow",
+        "warning": "ABS faults mean ABS may not activate in an emergency. The brakes still work but without ABS assistance.",
+        "action": "Have the ABS system diagnosed at a Kawasaki dealer.",
+        "details": "ABS faults on the Ninja 400 are typically caused by: wheel speed sensor issues (dirty sensor or damaged tone ring), ABS module faults, or wiring issues. ABS diagnosis requires KDS or compatible diagnostic tool. The ABS light staying on after startup means the ABS system has detected a fault and is disabled. Normal brakes still function, but without ABS assistance."
+      },
+      {
+        "id": "solution_replace_fuse",
+        "type": "solution",
+        "text": "Replace the Blown Fuse",
+        "safety": "green",
+        "action": "Replace the fuse with the correct amperage.",
+        "details": "Replace with the same amperage fuse. Spare fuses are in the fuse box. If it blows again, there is a short circuit that must be found and repaired."
+      },
+      {
+        "id": "solution_headlight_bulb",
+        "type": "solution",
+        "text": "Replace Headlight Bulb",
+        "safety": "green",
+        "action": "Replace the burnt headlight bulb.",
+        "details": "The Ninja 400 halogen models use an H4 bulb. Access the bulb from behind the headlight housing. Remove the connector, rubber boot, and spring clip. Install the new bulb without touching the glass (oils from your fingers cause hot spots). Reconnect and test."
+      },
+      {
+        "id": "solution_led_headlight",
+        "type": "solution",
+        "text": "Replace LED Headlight Unit",
+        "safety": "green",
+        "action": "Replace the failed LED headlight assembly.",
+        "details": "LED headlights on the Ninja 400 are not bulb-replaceable — the entire LED module must be replaced. This is an OEM part. Aftermarket LED headlight assemblies are also available."
+      },
+      {
+        "id": "solution_turn_signal_bulb",
+        "type": "solution",
+        "text": "Replace Turn Signal Bulb",
+        "safety": "green",
+        "action": "Replace the burnt turn signal bulb.",
+        "details": "Replace with the same wattage bulb. If converting to LED turn signals, you may need an LED-compatible flasher relay to prevent hyperflash. Check the connector and socket for corrosion while the bulb is out."
+      },
+      {
+        "id": "solution_brake_switch",
+        "type": "solution",
+        "text": "Check and Replace Brake Light Switch",
+        "safety": "green",
+        "action": "Test and replace the faulty brake light switch.",
+        "details": "There are two brake light switches — one on the front brake lever and one on the rear brake pedal. Test each by having someone watch the brake light while you activate each brake independently. The faulty switch is the one that does not illuminate the brake light. Replace the switch — they are inexpensive and easy to install."
+      },
+      {
+        "id": "solution_led_tail",
+        "type": "solution",
+        "text": "Replace LED Tail Light Unit",
+        "safety": "green",
+        "action": "Replace the failed LED tail light assembly.",
+        "details": "The LED tail light is not bulb-replaceable. Replace the entire tail light unit. OEM and aftermarket integrated tail lights are available."
+      },
+      {
+        "id": "solution_horn",
+        "type": "solution",
+        "text": "Check and Replace Horn",
+        "safety": "green",
+        "action": "Check the horn circuit and replace if faulty.",
+        "details": "Check the horn fuse. If the fuse is good, test for 12V at the horn connector when the horn button is pressed. If voltage is present but the horn does not sound, replace the horn. If no voltage, check the horn button and wiring. The horn is a safety device — repair promptly."
+      },
+      {
+        "id": "solution_repair_wiring",
+        "type": "solution",
+        "text": "Repair Damaged Wiring",
+        "safety": "yellow",
+        "warning": "Improper wiring repairs can cause fires. Use proper connections, not just electrical tape.",
+        "action": "Repair the damaged wiring with proper connections.",
+        "details": "Cut out the damaged section and splice with proper butt connectors or solder and heat shrink tubing. Route the repaired wire away from sharp edges and heat sources. Secure with zip ties to prevent future chafing. Consider using split loom to protect exposed wire runs."
+      },
+      {
+        "id": "solution_faulty_component",
+        "type": "solution",
+        "text": "Replace the Faulty Component",
+        "safety": "green",
+        "action": "Replace the component that is causing the fuse to blow.",
+        "details": "If the fuse blows only when a specific component is activated, that component has an internal short. Replace it with an OEM or quality aftermarket part. After replacement, install a new fuse and verify it holds."
+      },
+      {
+        "id": "solution_grounds",
+        "type": "solution",
+        "text": "Clean and Resecure Ground Connections",
+        "safety": "green",
+        "action": "Clean all ground points to bare metal and retighten.",
+        "details": "Remove each ground wire bolt. Sand the contact area on both the terminal and frame/engine to expose clean bare metal. Reattach and tighten securely. Apply dielectric grease to prevent future corrosion. Poor grounds are the number one cause of weird intermittent electrical issues."
+      },
+      {
+        "id": "solution_connector_check",
+        "type": "solution",
+        "text": "Check All Major Connectors",
+        "safety": "green",
+        "action": "Inspect and reseat all major wiring harness connectors.",
+        "details": "Vibration can loosen connectors over time. Go through the main harness connectors under the seat, under the tank, and at the headlight. Disconnect each one, inspect for corrosion or bent pins, apply dielectric grease, and reconnect. Ensure all locking tabs are fully engaged. This systematic approach often resolves intermittent electrical issues."
+      }
+    ]
+  }
+}

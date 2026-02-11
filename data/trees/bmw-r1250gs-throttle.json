@@ -1,0 +1,207 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Throttle Response / Ride-by-Wire Issues",
+  "description": "Diagnose throttle response problems on the R1250GS ride-by-wire system including hesitation, surging, and throttle faults.",
+  "category": "fuel",
+  "difficulty": "advanced",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What throttle issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Hesitation or dead spot when opening throttle", "next": "hesitation" },
+          { "text": "Throttle surging at constant speed", "next": "surging" },
+          { "text": "Jerky on-off throttle transitions", "next": "jerky_throttle" },
+          { "text": "Throttle warning or error message on TFT", "next": "throttle_error" },
+          { "text": "Engine loses power or goes into limp mode", "next": "limp_mode" }
+        ]
+      },
+      {
+        "id": "hesitation",
+        "type": "check",
+        "text": "Check for a dirty throttle body",
+        "safety": "yellow",
+        "warning": "The R1250GS uses ride-by-wire — do not manually force the throttle bodies open. The butterfly valves are motor-driven.",
+        "instructions": "Carbon buildup on the throttle body butterfly valves causes hesitation at small throttle openings. (1) Remove the air filter cover to access the throttle bodies (located on each side of the boxer engine). (2) With the ignition OFF, visually inspect the throttle body bore and butterfly valve edge for carbon buildup. (3) You can also check while someone slowly rotates the throttle — watch for uneven movement. Note: On the R1250GS, cleaning the throttle bodies may require throttle body re-synchronization afterward.",
+        "next": "throttle_body_result"
+      },
+      {
+        "id": "throttle_body_result",
+        "type": "question",
+        "text": "Is there visible carbon buildup on the throttle bodies?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — carbon buildup visible", "next": "solution_clean_throttle" },
+          { "text": "No buildup — throttle bodies look clean", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "solution_clean_throttle",
+        "type": "solution",
+        "text": "Clean the throttle bodies",
+        "safety": "yellow",
+        "warning": "Use only throttle body cleaner — not carburetor cleaner. Do not spray directly into sensors or electrical connections. The ride-by-wire motor is sensitive to solvents.",
+        "action": "Clean the throttle body butterflies and bore",
+        "details": "Cleaning the R1250GS throttle bodies: (1) Remove the air filter assembly. (2) With ignition OFF, spray throttle body cleaner onto a clean rag. (3) Wipe the butterfly valve edges and bore with the rag — do not spray directly into the throttle body. (4) Repeat until clean. (5) Reassemble. (6) IMPORTANT: After cleaning, a throttle body synchronization (TBS) should be performed using a GS-911 tool or at a BMW dealer. The ECU may need to relearn the idle position. (7) A test ride with the adaptive learning will also help — ride normally for 30 minutes to let the ECU adapt."
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "A clogged air filter restricts airflow and causes hesitation. On the R1250GS: (1) Remove the air filter cover (under the tank, above the engine). (2) Pull out the air filter element. (3) Hold it up to light — you should see light through the filter media. (4) Check for debris, insects, or water damage. The R1250GS air filter should be replaced every 12,000 miles or more frequently in dusty conditions.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "Is the air filter clean?",
+        "safety": "green",
+        "options": [
+          { "text": "Air filter is dirty or clogged", "next": "solution_replace_filter" },
+          { "text": "Air filter is clean", "next": "solution_throttle_sync" }
+        ]
+      },
+      {
+        "id": "solution_replace_filter",
+        "type": "solution",
+        "text": "Replace the air filter",
+        "safety": "green",
+        "action": "Install a new air filter",
+        "details": "Replace the clogged air filter with a new OEM filter or quality aftermarket (K&N, BMC, DNA). On the R1250GS, the air filter is critical because the ride-by-wire system compensates for airflow changes — a slowly clogging filter causes the ECU to adapt in ways that may not be optimal. After replacement, the ECU may take a few rides to readapt to the improved airflow. If using a reusable K&N filter, follow the oiling instructions precisely — over-oiled filters can contaminate the MAF sensor."
+      },
+      {
+        "id": "solution_throttle_sync",
+        "type": "solution",
+        "text": "Perform throttle body synchronization",
+        "safety": "yellow",
+        "warning": "Throttle body sync requires specialized tools. Incorrect synchronization can cause poor running.",
+        "action": "Synchronize the throttle bodies",
+        "details": "The R1250GS boxer engine has two throttle bodies that must be synchronized. Out-of-sync throttle bodies cause hesitation, uneven running, and poor fuel economy. (1) A GS-911 diagnostic tool can guide the electronic TBS procedure. (2) You can also use a twin vacuum gauge (TwinMax or mercury manometer) connected to the vacuum ports on each throttle body. (3) With the engine at normal operating temperature and idle, adjust the sync screw until both cylinders show equal vacuum. (4) BMW recommends TBS at every major service (12,000 miles). (5) This is one of the most impactful maintenance items on the boxer engine."
+      },
+      {
+        "id": "surging",
+        "type": "question",
+        "text": "Does the surging happen at a specific RPM or speed, or is it random?",
+        "safety": "green",
+        "options": [
+          { "text": "At a specific speed or RPM (like cruise control hunting)", "next": "solution_o2_sensor" },
+          { "text": "Random surging — inconsistent", "next": "check_sensor_faults" },
+          { "text": "Only at idle", "next": "solution_idle_surge" }
+        ]
+      },
+      {
+        "id": "solution_o2_sensor",
+        "type": "solution",
+        "text": "Oxygen sensor or fuel trim issue",
+        "safety": "green",
+        "action": "Check the oxygen sensors and fuel trims",
+        "details": "The R1250GS uses lambda (oxygen) sensors in each exhaust pipe to continuously adjust the air/fuel ratio. Surging at steady speed suggests the sensors are hunting for the correct mixture. (1) Scan for O2 sensor fault codes using GS-911. (2) Check the O2 sensor wiring for damage. (3) O2 sensors degrade over time — replace at 30,000-40,000 miles as preventive maintenance. (4) Aftermarket exhaust without proper remapping can cause surging — the ECU can't correct beyond its adaptation range. (5) A fuel map reflash or aftermarket ECU tuner (such as BoosterPlug or RapidBike) can address surging on modified bikes."
+      },
+      {
+        "id": "check_sensor_faults",
+        "type": "check",
+        "text": "Scan for sensor fault codes",
+        "safety": "green",
+        "instructions": "Random surging on the R1250GS is often caused by a failing sensor providing intermittent bad data to the ECU. Connect a GS-911 diagnostic tool and check for: (1) Stored fault codes in the DME (engine management). (2) Throttle position sensor (TPS) values. (3) Intake air temperature sensor readings. (4) Engine temperature sensor readings. (5) MAP sensor (manifold absolute pressure). Even intermittent faults are logged — check the fault history.",
+        "next": "sensor_fault_result"
+      },
+      {
+        "id": "sensor_fault_result",
+        "type": "question",
+        "text": "Were any fault codes found?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — specific sensor fault found", "next": "solution_replace_sensor" },
+          { "text": "No codes stored", "next": "solution_throttle_sync" }
+        ]
+      },
+      {
+        "id": "solution_replace_sensor",
+        "type": "solution",
+        "text": "Replace the faulty sensor",
+        "safety": "yellow",
+        "warning": "Use only OEM or OEM-equivalent sensors on the R1250GS. Generic sensors may not be compatible with the CAN bus system.",
+        "action": "Replace the sensor identified by the fault code",
+        "details": "Replace the sensor that is generating fault codes. On the R1250GS, common failing sensors: (1) Throttle position sensor (integrated into the throttle body — may require throttle body replacement or dealer coding). (2) Intake air temperature sensor — relatively simple replacement. (3) Engine coolant temperature sensor. (4) MAP sensor — located on the airbox. (5) Camshaft position sensor (ShiftCam specific). After replacement, clear the fault codes and perform a test ride. The ECU will need time to relearn with the new sensor."
+      },
+      {
+        "id": "solution_idle_surge",
+        "type": "solution",
+        "text": "Idle surging diagnosis",
+        "safety": "green",
+        "action": "Diagnose idle surging",
+        "details": "Idle surging on the R1250GS is typically caused by: (1) Throttle bodies out of sync — perform a TBS (most common fix). (2) Dirty throttle bodies — carbon buildup causes uneven airflow. (3) Intake air leak — check the rubber boots between the air filter and throttle bodies for cracks. (4) Failing idle actuator in the ride-by-wire system. (5) Stale fuel — especially after winter storage. (6) Incorrect valve clearances — the R1250GS valve service interval is 12,000 miles. Tight valves can cause idle issues."
+      },
+      {
+        "id": "jerky_throttle",
+        "type": "question",
+        "text": "Is the jerky feeling at low speed / in traffic, or at all speeds?",
+        "safety": "green",
+        "options": [
+          { "text": "Only at low speed / in traffic", "next": "solution_low_speed_jerk" },
+          { "text": "At all speeds — on/off transitions", "next": "solution_throttle_mapping" }
+        ]
+      },
+      {
+        "id": "solution_low_speed_jerk",
+        "type": "solution",
+        "text": "Low-speed throttle jerkiness",
+        "safety": "green",
+        "action": "Address low-speed ride-by-wire jerkiness",
+        "details": "The R1250GS ride-by-wire is known for being slightly jerky at very low throttle openings — this is partly by design (emissions compliance). Solutions: (1) Select Rain riding mode — it has the smoothest throttle response for low-speed riding. (2) A BoosterPlug or RapidBike module smooths throttle response by enriching the fuel mixture slightly. (3) Throttle body sync (TBS) improves low-speed smoothness. (4) Practice smooth, progressive throttle application — the ride-by-wire amplifies abrupt inputs. (5) Some riders adjust the throttle cable free play at the grip for more gradual engagement. (6) BMW has released software updates for some model years that improve low-speed throttle response — check with your dealer."
+      },
+      {
+        "id": "solution_throttle_mapping",
+        "type": "solution",
+        "text": "Throttle mapping and on/off transitions",
+        "safety": "green",
+        "action": "Improve throttle transitions",
+        "details": "Jerky on/off throttle transitions on the R1250GS: (1) Throttle body sync — the most important maintenance item for smooth transitions on the boxer. (2) Check the O2 sensors — a slow-responding sensor causes the ECU to over-correct. (3) Try different riding modes — Dynamic has the most aggressive throttle map, Rain is the smoothest. (4) The ShiftCam system transitions between the partial and full cam at certain RPMs — if this feels jerky, it may be a cam timing issue (dealer diagnosis). (5) Aftermarket solutions: BoosterPlug, RapidBike, or a custom ECU flash can smooth transitions. (6) Check for recalls or service bulletins — BMW has addressed throttle mapping in software updates."
+      },
+      {
+        "id": "throttle_error",
+        "type": "question",
+        "text": "What does the TFT display show?",
+        "safety": "yellow",
+        "warning": "A throttle fault message means the ride-by-wire system has detected a problem. The ECU may limit power to protect the engine and rider.",
+        "options": [
+          { "text": "Throttle grip sensor error", "next": "solution_grip_sensor" },
+          { "text": "Throttle body motor error", "next": "solution_tb_motor" },
+          { "text": "General engine management fault", "next": "limp_mode" }
+        ]
+      },
+      {
+        "id": "solution_grip_sensor",
+        "type": "solution",
+        "text": "Throttle grip sensor fault",
+        "safety": "yellow",
+        "warning": "Do not attempt to disassemble the throttle grip sensor assembly. It contains precision components that require calibration.",
+        "action": "Diagnose the throttle grip position sensor",
+        "details": "The R1250GS throttle grip contains dual position sensors (redundant for safety). (1) Check the throttle grip cable/connector — unplug and inspect for corrosion or damage. (2) Ensure the throttle grip rotates freely and returns to closed. (3) Check for water intrusion in the grip assembly (common after pressure washing). (4) The grip sensor is a dealer-replaceable item — it requires coding to the ECU after installation. (5) Try cycling the ignition and performing a throttle zero-position reset (turn ignition on, do not touch throttle, wait 10 seconds, turn off). (6) A GS-911 can read the actual sensor values for diagnosis."
+      },
+      {
+        "id": "solution_tb_motor",
+        "type": "solution",
+        "text": "Throttle body motor fault",
+        "safety": "yellow",
+        "warning": "A throttle body motor fault will likely put the bike into limp mode. Reduced power is a safety feature — ride cautiously to a shop.",
+        "action": "Diagnose the throttle body actuator motor",
+        "details": "Each throttle body on the R1250GS has an electric motor that controls the butterfly valve. If the motor fails: (1) The ECU will enter limp mode with reduced power. (2) Check the electrical connector at the throttle body motor for corrosion or looseness. (3) The motor itself is integrated into the throttle body — replacement means a new throttle body assembly. (4) This is a dealer-level repair requiring coding and TBS. (5) Check if the issue is related to a software bug — BMW has issued updates. (6) A GS-911 can read throttle body position values to confirm the motor is the issue."
+      },
+      {
+        "id": "limp_mode",
+        "type": "solution",
+        "text": "Engine in limp mode / reduced power",
+        "safety": "yellow",
+        "warning": "Limp mode is a safety feature. The engine limits power to prevent damage. Do not try to override it — ride carefully to a safe location or service facility.",
+        "action": "Diagnose and resolve limp mode",
+        "details": "The R1250GS enters limp mode when a critical fault is detected. Common causes: (1) Throttle body fault — ride-by-wire detects a mismatch between grip position and butterfly position. (2) CAN bus communication error — a module is not communicating. (3) Engine temperature — severe overheating triggers power reduction. (4) Sensor failure — critical sensor providing implausible data. (5) Steps: Turn the engine off, wait 2 minutes, restart — some faults are transient and will clear. (6) Scan for fault codes with GS-911. (7) If limp mode recurs, the underlying fault must be repaired. (8) BMW dealer or experienced GS technician with diagnostic tools is recommended for persistent limp mode."
+      }
+    ]
+  }
+}

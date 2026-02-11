@@ -1,0 +1,185 @@
+{
+  "title": "Chain and Sprocket Issues",
+  "description": "Diagnose and troubleshoot chain drive problems including incorrect tension, wear, noise, and sprocket inspection. Applicable to all chain-driven motorcycles.",
+  "category": "drivetrain",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What chain or sprocket issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is noisy (clicking, grinding, or rattling)", "next": "check_chain_tension" },
+          { "text": "Chain appears loose or tight", "next": "check_chain_tension" },
+          { "text": "Chain or sprocket looks worn", "next": "check_chain_wear" },
+          { "text": "Chain keeps getting tight and loose in spots", "next": "check_tight_spots" },
+          { "text": "Routine maintenance — want to check everything", "next": "check_chain_tension" }
+        ]
+      },
+      {
+        "id": "check_chain_tension",
+        "type": "check",
+        "text": "Check the chain tension (slack).",
+        "safety": "green",
+        "instructions": "Put the bike on its side stand or a rear stand. Find the midpoint of the lower chain run (between the front and rear sprockets). Push the chain up and down and measure the total vertical movement. Check your service manual for the correct slack specification — it is typically 25-35mm (1-1.4 inches) but varies by bike. Measure at the tightest point of the chain by rolling the bike forward and rechecking in several positions. Also check that the chain is not rubbing on the swingarm or chain guard.",
+        "next": "chain_tension_result"
+      },
+      {
+        "id": "chain_tension_result",
+        "type": "question",
+        "text": "How is the chain tension?",
+        "safety": "green",
+        "options": [
+          { "text": "Too loose — more slack than specified", "next": "solution_adjust_chain" },
+          { "text": "Too tight — less slack than specified", "next": "solution_chain_tight" },
+          { "text": "Correct tension — within spec", "next": "check_chain_condition" }
+        ]
+      },
+      {
+        "id": "solution_adjust_chain",
+        "type": "solution",
+        "text": "The chain needs to be tightened.",
+        "safety": "green",
+        "action": "Adjust the chain to the correct tension",
+        "details": "Loosen the rear axle nut (do not remove it). Use the chain adjusters on both sides of the swingarm to move the rear wheel back evenly, tightening the chain. Use the alignment marks on the swingarm to ensure both sides are adjusted equally — this keeps the rear wheel aligned. Once the slack is within specification at the tightest point, tighten the axle nut to the torque specified in your service manual. Recheck the slack after tightening. Lubricate the chain after adjustment."
+      },
+      {
+        "id": "solution_chain_tight",
+        "type": "solution",
+        "text": "The chain is too tight.",
+        "safety": "yellow",
+        "warning": "A chain that is too tight puts excessive load on the output shaft bearing, wheel bearing, and chain itself. It can also snap under load.",
+        "action": "Loosen the chain to the correct tension",
+        "details": "An overly tight chain causes accelerated wear of the chain, sprockets, and bearings. It can also cause a harsh, jerky ride and may snap under hard acceleration. Loosen the rear axle nut and use the chain adjusters to move the rear wheel forward slightly until the slack is within specification. Ensure both adjusters are set equally using the swingarm alignment marks. Retighten the axle nut to spec. If the chain has tight spots even when the overall tension is correct, the chain needs replacement."
+      },
+      {
+        "id": "check_chain_condition",
+        "type": "check",
+        "text": "Inspect the chain for wear and lubrication.",
+        "safety": "green",
+        "instructions": "Examine the chain closely: look for rust, stiff links (links that don't bend freely), damaged or missing O-rings/X-rings (small rubber seals between the plates), and kinked or bent links. Check if the chain looks dry or has adequate lubrication. Pull the chain away from the rear of the rear sprocket — if you can see more than half of a sprocket tooth, the chain is stretched and worn.",
+        "next": "chain_condition_result"
+      },
+      {
+        "id": "chain_condition_result",
+        "type": "question",
+        "text": "What is the condition of the chain?",
+        "safety": "green",
+        "options": [
+          { "text": "Rusty, stiff links, or damaged O-rings", "next": "solution_replace_chain" },
+          { "text": "Dry but otherwise OK", "next": "solution_lubricate_chain" },
+          { "text": "Chain pulls far from rear sprocket (stretched)", "next": "check_chain_wear" },
+          { "text": "Chain looks good", "next": "check_sprockets" }
+        ]
+      },
+      {
+        "id": "solution_lubricate_chain",
+        "type": "solution",
+        "text": "The chain needs lubrication.",
+        "safety": "green",
+        "action": "Clean and lubricate the chain",
+        "details": "Clean the chain with a dedicated chain cleaner or kerosene (not harsh solvents like gasoline or brake cleaner, which damage O-rings). Use a soft brush to remove dirt and grime. After cleaning, apply a motorcycle-specific chain lubricant to the inside of the lower chain run while slowly rolling the wheel forward. Let the lubricant soak in for a few minutes before riding. Chain should be lubricated every 300-600 miles or after riding in wet or dirty conditions. A well-maintained chain lasts significantly longer."
+      },
+      {
+        "id": "check_chain_wear",
+        "type": "check",
+        "text": "Measure the chain for stretch/elongation.",
+        "safety": "green",
+        "instructions": "The most accurate way to measure chain wear is to measure a length of chain and compare it to the new specification. Count 20 pins (the rivets in the links) and measure the distance from the center of pin 1 to the center of pin 20. For a standard 520 chain, this should be 12.5 inches (317.5mm) when new. For a 530 chain, it should be 12.5 inches as well. If the measurement is more than 2% longer than new (about 1/4 inch over 20 pins), the chain is worn and should be replaced.",
+        "next": "chain_wear_result"
+      },
+      {
+        "id": "chain_wear_result",
+        "type": "question",
+        "text": "Is the chain stretched beyond the service limit?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — chain is stretched beyond limit", "next": "solution_replace_chain" },
+          { "text": "No — within acceptable range", "next": "check_sprockets" },
+          { "text": "Cannot adjust chain any further — out of adjustment range", "next": "solution_replace_chain" }
+        ]
+      },
+      {
+        "id": "solution_replace_chain",
+        "type": "solution",
+        "text": "The chain is worn and needs replacement.",
+        "safety": "yellow",
+        "warning": "Always replace the chain AND both sprockets together as a set. A new chain on worn sprockets (or vice versa) will wear out very quickly.",
+        "action": "Replace the chain and both sprockets as a complete set",
+        "details": "Purchase a chain and sprocket kit for your specific motorcycle. The kit should include the correct chain size (e.g., 520, 525, 530), correct number of links, and both front and rear sprockets. If using a clip-type master link, ensure the closed end faces the direction of travel. If using a rivet-type master link, use a proper chain tool to rivet it. After installation, adjust the chain tension to specification and lubricate. A worn chain that is not replaced can snap while riding — this is extremely dangerous."
+      },
+      {
+        "id": "check_sprockets",
+        "type": "check",
+        "text": "Inspect the front and rear sprockets for wear.",
+        "safety": "green",
+        "instructions": "Examine the teeth on both sprockets. New sprocket teeth are symmetrical with flat tops. Worn teeth become hooked, pointed, or shark-fin shaped (the leading edge of each tooth gets curved). Also look for broken, chipped, or missing teeth. The front (countershaft) sprocket wears faster than the rear — check it carefully. You may need to remove a cover to see the front sprocket.",
+        "next": "sprocket_result"
+      },
+      {
+        "id": "sprocket_result",
+        "type": "question",
+        "text": "What do the sprocket teeth look like?",
+        "safety": "green",
+        "options": [
+          { "text": "Teeth are hooked, pointed, or shark-finned", "next": "solution_replace_chain" },
+          { "text": "Teeth look normal and symmetrical", "next": "check_chain_alignment" }
+        ]
+      },
+      {
+        "id": "check_chain_alignment",
+        "type": "check",
+        "text": "Check the chain alignment.",
+        "safety": "green",
+        "instructions": "Look at the chain from directly behind the motorcycle. The chain should run in a straight line from the front sprocket to the rear sprocket. Misalignment causes the chain to ride on the edges of the sprocket teeth, increasing wear and noise. The alignment marks on both sides of the swingarm should be at the same position. You can also use a straight edge or laser alignment tool for precision.",
+        "next": "alignment_result"
+      },
+      {
+        "id": "alignment_result",
+        "type": "question",
+        "text": "Is the chain running straight between the sprockets?",
+        "safety": "green",
+        "options": [
+          { "text": "No — chain appears misaligned", "next": "solution_alignment" },
+          { "text": "Yes — alignment looks good", "next": "solution_chain_good" }
+        ]
+      },
+      {
+        "id": "solution_alignment",
+        "type": "solution",
+        "text": "The chain is misaligned.",
+        "safety": "green",
+        "action": "Realign the rear wheel using the swingarm adjusters",
+        "details": "Loosen the rear axle nut. Adjust the chain adjusters so that both sides of the swingarm show the same alignment mark position. Note: the cast alignment marks on swingarms are not always perfectly accurate. For best results, use a string line along the chain or a laser chain alignment tool. After alignment, recheck chain tension and retighten the axle nut to the torque specified in your service manual. Persistent misalignment despite correct adjuster settings could indicate a bent swingarm."
+      },
+      {
+        "id": "check_tight_spots",
+        "type": "check",
+        "text": "Check for tight spots in the chain.",
+        "safety": "green",
+        "instructions": "Roll the motorcycle forward slowly and check the chain tension at multiple points around the full rotation of the chain. If some spots are tight and others are loose, the chain has 'tight spots.' This is caused by uneven chain wear or a damaged/kinked link.",
+        "next": "tight_spots_result"
+      },
+      {
+        "id": "tight_spots_result",
+        "type": "question",
+        "text": "Does the chain have tight spots (tension varies as you roll the bike)?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — tension varies significantly around the chain", "next": "solution_replace_chain" },
+          { "text": "No — tension is consistent", "next": "solution_adjust_chain" }
+        ]
+      },
+      {
+        "id": "solution_chain_good",
+        "type": "solution",
+        "text": "The chain and sprockets are in good condition.",
+        "safety": "green",
+        "action": "Continue regular maintenance",
+        "details": "Your chain and sprockets appear to be in good condition. To maximize their lifespan: lubricate the chain every 300-600 miles with motorcycle chain lubricant, clean the chain regularly (especially after wet or dirty rides), check and adjust tension every 500-1000 miles, and always adjust to the tightest point of the chain. A properly maintained chain and sprocket set can last 15,000-25,000 miles or more. Inspect them as part of your regular pre-ride checks."
+      }
+    ]
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "title": "Suspension Problems",
+  "description": "Diagnose motorcycle suspension issues including forks and rear shock. Covers too soft, too stiff, bottoming out, leaking forks, and rear shock problems.",
+  "category": "suspension",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What suspension problem are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Front forks are leaking oil", "next": "check_fork_seal_leak" },
+          { "text": "Suspension feels too soft or bottoms out", "next": "too_soft_location" },
+          { "text": "Suspension feels too stiff or harsh", "next": "too_stiff_location" },
+          { "text": "Bike wallows, weaves, or feels unstable", "next": "instability_check" },
+          { "text": "Clunking or knocking from the suspension", "next": "suspension_noise" }
+        ]
+      },
+      {
+        "id": "check_fork_seal_leak",
+        "type": "check",
+        "text": "Inspect the fork seals for oil leakage.",
+        "safety": "green",
+        "instructions": "Look at the fork tubes (the shiny chrome or coated tubes) where they slide into the lower fork legs. Run your finger around the seal area. If there is oil residue, the fork seals are leaking. A small amount of moisture is normal, but visible oil running down the fork tube or collecting on the fork dust cover indicates a failed seal. Check both fork legs — one may leak while the other is fine.",
+        "next": "fork_seal_result"
+      },
+      {
+        "id": "fork_seal_result",
+        "type": "question",
+        "text": "Are the fork seals leaking oil?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil is visible on one or both fork tubes", "next": "check_fork_tube_condition" },
+          { "text": "No — forks are dry", "next": "start" }
+        ]
+      },
+      {
+        "id": "check_fork_tube_condition",
+        "type": "check",
+        "text": "Inspect the fork tube surface for damage.",
+        "safety": "green",
+        "instructions": "Run your fingertips along the exposed portion of the fork tube (the shiny upper portion that slides in and out). Feel for any pitting, nicks, scratches, or rough spots. Even tiny imperfections on the fork tube surface will cut through new seals quickly. Rust pitting is common on chrome fork tubes that are not wiped down regularly.",
+        "next": "fork_tube_result"
+      },
+      {
+        "id": "fork_tube_result",
+        "type": "question",
+        "text": "Is the fork tube surface smooth and undamaged?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — surface is smooth", "next": "solution_fork_seals" },
+          { "text": "No — there are pits, scratches, or rust spots", "next": "solution_fork_tubes" }
+        ]
+      },
+      {
+        "id": "solution_fork_seals",
+        "type": "solution",
+        "text": "The fork seals need replacement.",
+        "safety": "yellow",
+        "warning": "Fork seal replacement requires removing the forks from the bike and using a seal driver tool. Improper installation can cause immediate re-leaking.",
+        "action": "Replace the fork seals (and dust seals) on the affected fork(s)",
+        "details": "Fork seals harden and wear over time, eventually allowing oil to seep past. Replace both the oil seal and the dust seal (the outer rubber seal that keeps dirt out). While the forks are apart, replace the fork oil with fresh oil of the correct weight specified in your service manual. Measure the oil level precisely — incorrect oil level dramatically affects fork performance. Before reassembly, make sure the fork tube and seal bore are spotlessly clean. If you are not experienced with fork service, have a shop do it — it is a moderate-difficulty job."
+      },
+      {
+        "id": "solution_fork_tubes",
+        "type": "solution",
+        "text": "The fork tubes are damaged and need attention before seal replacement.",
+        "safety": "yellow",
+        "warning": "Installing new seals on damaged fork tubes is a waste — they will leak again immediately.",
+        "action": "Repair or replace the fork tubes before installing new seals",
+        "details": "Minor surface imperfections can sometimes be polished out with very fine emery cloth (1500-2000 grit) or a fork tube polishing tool. For rust pitting, the tubes may be resurfaced by a specialist or need replacement. New fork tubes are available from the manufacturer or aftermarket. Once the tube surface is smooth and free of imperfections, new fork seals can be installed. Consider applying a fork tube protector (a thin adhesive film) after repair to prevent future stone chips and corrosion."
+      },
+      {
+        "id": "too_soft_location",
+        "type": "question",
+        "text": "Which end of the bike feels too soft or is bottoming out?",
+        "safety": "green",
+        "options": [
+          { "text": "Front forks — diving too much under braking", "next": "check_front_preload" },
+          { "text": "Rear suspension — sagging too much or bottoming", "next": "check_rear_preload" },
+          { "text": "Both ends feel too soft", "next": "check_front_preload" }
+        ]
+      },
+      {
+        "id": "check_front_preload",
+        "type": "check",
+        "text": "Check and adjust the front fork preload and damping.",
+        "safety": "green",
+        "instructions": "Check if your forks have adjustable preload (a flat-blade adjuster on top of the fork caps or a threaded collar). Also check for compression and rebound damping adjusters (usually small clicker screws on the top or bottom of the forks). If your forks are adjustable, try increasing the preload (turning the adjuster clockwise or adding spacers). If they have compression damping adjusters, increase the compression damping. Refer to your service manual for the standard settings and adjustment range.",
+        "next": "front_adjustment_result"
+      },
+      {
+        "id": "front_adjustment_result",
+        "type": "question",
+        "text": "Are your front forks adjustable?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — and adjusting helped", "next": "solution_front_adjusted" },
+          { "text": "Yes — but adjusting didn't help enough", "next": "solution_fork_springs" },
+          { "text": "No — forks are non-adjustable", "next": "solution_fork_springs" }
+        ]
+      },
+      {
+        "id": "solution_front_adjusted",
+        "type": "solution",
+        "text": "Fork adjustment has improved the feel.",
+        "safety": "green",
+        "action": "Fine-tune the settings for your weight and riding style",
+        "details": "Start with the manufacturer's recommended baseline settings (in your service manual) and adjust from there. Preload adjusts how much the bike sags under your weight — more preload means less sag. Compression damping controls how fast the forks compress — more damping slows the compression. Rebound damping controls how fast the forks extend after compressing. Adjust one setting at a time and ride to feel the difference. Keep a note of your settings. The correct sag is typically 25-33% of total fork travel for street riding."
+      },
+      {
+        "id": "solution_fork_springs",
+        "type": "solution",
+        "text": "The fork springs may be too soft for your weight or riding style.",
+        "safety": "yellow",
+        "warning": "Fork spring replacement requires removing and disassembling the forks. This is a good time to also replace fork oil and seals.",
+        "action": "Upgrade to stiffer fork springs and fresh fork oil",
+        "details": "Stock fork springs are designed for an average-weight rider. If you are heavier than average, carry luggage, or ride aggressively, stiffer springs may be needed. Aftermarket progressive or straight-rate springs are available for most bikes. When changing springs, also replace the fork oil with the correct weight and level. Heavier fork oil (higher viscosity number) provides more damping. This is a common upgrade that dramatically improves handling. Consult a suspension specialist for spring rate recommendations based on your weight, riding style, and bike model."
+      },
+      {
+        "id": "check_rear_preload",
+        "type": "check",
+        "text": "Check and adjust the rear suspension preload.",
+        "safety": "green",
+        "instructions": "Most motorcycles have adjustable rear preload — look for a threaded collar with a spanner wrench fitting on the shock spring, or a remote hydraulic preload adjuster (a knob connected by a hose). Increasing preload (tightening the collar or turning the adjuster) raises the rear of the bike and reduces sag. Set the sag by measuring: have someone hold the bike upright while you sit on it in riding position. Measure how much the rear sinks. This 'rider sag' should be about 25-33% of total rear suspension travel.",
+        "next": "rear_adjustment_result"
+      },
+      {
+        "id": "rear_adjustment_result",
+        "type": "question",
+        "text": "Were you able to adjust the rear preload?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — and the sag is now in the correct range", "next": "solution_rear_adjusted" },
+          { "text": "Preload is at maximum and it still sags too much", "next": "solution_rear_spring" },
+          { "text": "Shock has no adjustment", "next": "solution_rear_upgrade" }
+        ]
+      },
+      {
+        "id": "solution_rear_adjusted",
+        "type": "solution",
+        "text": "Rear preload is now set correctly.",
+        "safety": "green",
+        "action": "Ride and fine-tune if needed",
+        "details": "With the correct rider sag set (25-33% of total travel), the rear suspension should be working in its designed range. If the rear also has rebound and compression damping adjusters, start with the manufacturer's baseline settings and adjust from there. If the rear still bottoms out over big bumps even with correct sag, the shock may need more compression damping, or the shock itself may be worn (gas charge depleted, valving worn out). Shocks have a service life and do wear out."
+      },
+      {
+        "id": "solution_rear_spring",
+        "type": "solution",
+        "text": "The rear spring is too soft for your weight.",
+        "safety": "green",
+        "action": "Replace the rear spring or shock with one suited to your weight",
+        "details": "If the preload adjuster is at its maximum and sag is still excessive, the spring rate is too low for your weight. Options: replace just the spring with a higher-rate aftermarket spring (if the shock body is in good condition), or replace the entire shock with one suited to your weight. Many aftermarket shock manufacturers offer custom-sprung units based on your weight, bike model, and riding style. This is one of the best upgrades you can make for handling and comfort."
+      },
+      {
+        "id": "solution_rear_upgrade",
+        "type": "solution",
+        "text": "Consider upgrading to an adjustable rear shock.",
+        "safety": "green",
+        "action": "Replace the non-adjustable shock with an adjustable aftermarket unit",
+        "details": "Non-adjustable rear shocks (common on entry-level bikes) are designed for an average rider and offer no tuning capability. If the suspension performance does not suit your weight or riding style, an aftermarket adjustable shock is one of the most effective upgrades available. Look for a shock with at least preload and rebound damping adjustment. Many manufacturers offer direct-fit replacements. Have the shock set up by a suspension specialist for best results."
+      },
+      {
+        "id": "too_stiff_location",
+        "type": "question",
+        "text": "Which end feels too stiff or harsh?",
+        "safety": "green",
+        "options": [
+          { "text": "Front forks — harsh over bumps", "next": "solution_reduce_front_damping" },
+          { "text": "Rear shock — harsh over bumps", "next": "solution_reduce_rear_damping" },
+          { "text": "Both ends feel harsh", "next": "check_tire_pressure" }
+        ]
+      },
+      {
+        "id": "check_tire_pressure",
+        "type": "check",
+        "text": "Check tire pressures before adjusting suspension.",
+        "safety": "green",
+        "instructions": "Overinflated tires are a very common cause of a harsh ride. Check both tire pressures when the tires are cold (before riding). Compare to the specification on the label inside the swingarm, on the frame, or in your service manual. Tire pressures significantly affect ride quality — even 5 PSI over specification can make the ride noticeably harsh.",
+        "next": "tire_pressure_result"
+      },
+      {
+        "id": "tire_pressure_result",
+        "type": "question",
+        "text": "Are the tire pressures correct?",
+        "safety": "green",
+        "options": [
+          { "text": "Tires were overinflated — corrected now", "next": "solution_tire_pressure_fixed" },
+          { "text": "Tire pressures are correct", "next": "solution_reduce_front_damping" }
+        ]
+      },
+      {
+        "id": "solution_tire_pressure_fixed",
+        "type": "solution",
+        "text": "Tire pressures were too high, causing the harsh ride.",
+        "safety": "green",
+        "action": "Maintain correct tire pressures",
+        "details": "Set tire pressures to the specification for your bike and load. Check pressures when tires are cold — riding heats the air inside and increases pressure readings. Pressures should be checked weekly or before every ride. The correct pressure depends on your load: solo riding may use one pressure, while riding with a passenger or luggage may require higher pressure. Check the sticker on the bike or your service manual for both solo and laden specifications."
+      },
+      {
+        "id": "solution_reduce_front_damping",
+        "type": "solution",
+        "text": "Reduce front fork damping or preload to soften the ride.",
+        "safety": "green",
+        "action": "Decrease compression damping and/or reduce preload",
+        "details": "If the forks have compression damping adjusters, turn them counterclockwise (toward the minus or softer setting) a few clicks at a time. If the forks are harsh but also top out (extend fully) with a clunk, the rebound damping may be too low — increase rebound slightly. If the forks have preload adjusters, reducing preload will lower the front slightly and make it softer. If the forks have no adjusters, you can try a lighter-weight fork oil to reduce damping, but this requires disassembling the forks. Start with the manufacturer's baseline settings and work from there."
+      },
+      {
+        "id": "solution_reduce_rear_damping",
+        "type": "solution",
+        "text": "Reduce rear shock damping or preload to soften the ride.",
+        "safety": "green",
+        "action": "Decrease compression damping and/or reduce preload on the rear shock",
+        "details": "If the rear shock has damping adjusters, reduce compression damping by a few clicks (counterclockwise, toward minus/softer). Reduce preload if the rear sits too high with no rider on it. The goal is rider sag of 25-33% of total travel. If the shock has no adjusters and the ride is uncomfortably stiff, consider an aftermarket shock with adjustable damping. Some bikes also have linkage-style rear suspension where worn linkage bearings can cause the shock to feel harsh — have the linkage inspected and greased if it hasn't been serviced."
+      },
+      {
+        "id": "instability_check",
+        "type": "question",
+        "text": "When does the instability occur?",
+        "safety": "yellow",
+        "warning": "Motorcycle instability is a safety concern. Ride cautiously until the problem is identified and fixed.",
+        "options": [
+          { "text": "At high speed — wobble or weave", "next": "solution_high_speed_instability" },
+          { "text": "Under braking", "next": "solution_braking_instability" },
+          { "text": "Over bumps or uneven surfaces", "next": "solution_damping_worn" }
+        ]
+      },
+      {
+        "id": "solution_high_speed_instability",
+        "type": "solution",
+        "text": "High-speed wobble or weave can have several causes.",
+        "safety": "red",
+        "warning": "High-speed instability is very dangerous. Reduce speed and identify the cause before riding at highway speeds.",
+        "action": "Check steering head bearings, wheel bearings, tire condition, and wheel balance",
+        "details": "Common causes of high-speed wobble or weave: worn steering head bearings (check by grabbing the fork legs with the front wheel off the ground and trying to push/pull forward and back — any play indicates worn bearings), worn or unevenly worn tires, unbalanced wheels (especially after a tire change), worn wheel bearings (check by grabbing the wheel and rocking it side to side), loose axle nuts, or incorrect tire pressure. Frame damage or misalignment can also cause instability. Address all of these items before riding at speed."
+      },
+      {
+        "id": "solution_braking_instability",
+        "type": "solution",
+        "text": "Instability under braking may be a fork or steering issue.",
+        "safety": "yellow",
+        "warning": "Do not perform hard braking tests until the issue is resolved.",
+        "action": "Check fork alignment, steering head bearings, and tire condition",
+        "details": "If the bike feels unstable or pulls to one side under braking: check that the front wheel is properly seated in the fork legs (loosen the axle, pump the forks a few times, then retighten to allow the forks to align). Check the steering head bearings for looseness. Ensure the fork legs are at equal height in the triple clamp. Check for a warped brake disc which can cause the front end to pulse. Check front tire condition — uneven wear or flat spots cause braking instability."
+      },
+      {
+        "id": "solution_damping_worn",
+        "type": "solution",
+        "text": "The suspension damping may be worn out.",
+        "safety": "yellow",
+        "warning": "Worn suspension reduces control and increases stopping distance. Address it before it becomes unsafe.",
+        "action": "Service or replace the worn suspension components",
+        "details": "Suspension components wear out over time. Fork oil degrades and loses viscosity, internal valving wears, and shock absorbers lose their gas charge. If the bike wallows over bumps and the suspension feels like it has no control, the damping may be worn out. Forks can be serviced with new oil, seals, and bushings. Rear shocks can sometimes be rebuilt by a specialty service, or they may need replacement. As a general rule, fork oil should be changed every 10,000-15,000 miles, and shocks should be inspected or rebuilt every 20,000-30,000 miles."
+      },
+      {
+        "id": "suspension_noise",
+        "type": "question",
+        "text": "Where is the clunking or knocking coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "From the front end — steering or forks", "next": "solution_steering_bearings" },
+          { "text": "From the rear — shock or swingarm area", "next": "solution_rear_linkage" }
+        ]
+      },
+      {
+        "id": "solution_steering_bearings",
+        "type": "solution",
+        "text": "The steering head bearings may be loose or worn.",
+        "safety": "yellow",
+        "warning": "Severely worn steering head bearings can cause a dangerous front-end wobble.",
+        "action": "Inspect and adjust or replace the steering head bearings",
+        "details": "With the front wheel off the ground, grab the bottom of the fork legs and try to push and pull them forward and back. Any clunking or play indicates loose or worn steering head bearings. If they are tapered roller bearings, they may just need adjustment (tightening the bearing preload nut). If they are ball bearings, they may need replacement. When the bearings are properly adjusted, the steering should turn smoothly with no tight spots or play. Worn bearings should be replaced rather than just tightened — over-tightening worn bearings causes a notch in the straight-ahead position."
+      },
+      {
+        "id": "solution_rear_linkage",
+        "type": "solution",
+        "text": "The rear suspension linkage or swingarm pivot bearings may be worn.",
+        "safety": "yellow",
+        "warning": "Worn swingarm or linkage bearings affect handling and stability.",
+        "action": "Inspect and grease the swingarm pivot and suspension linkage bearings",
+        "details": "With the bike on a rear stand, try pushing and pulling the swingarm side to side. Any play indicates worn swingarm pivot bearings. For bikes with linkage-type rear suspension, also check the linkage bearings by disconnecting the shock and moving the linkage by hand — it should move smoothly with no binding or play. These bearings should be greased at the intervals specified in your service manual (typically every 10,000-15,000 miles). If they are worn past specification, they need to be pressed out and replaced."
+      }
+    ]
+  }
+}

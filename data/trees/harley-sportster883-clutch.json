@@ -1,0 +1,229 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Clutch Issues / Adjustment",
+  "description": "Diagnose clutch problems on the Sportster 883 including slipping, dragging, hard pull, and adjustment.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What clutch symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch is slipping (RPMs rise but bike doesn't accelerate)", "next": "clutch_slipping" },
+          { "text": "Clutch is dragging (hard to shift into neutral, creeps in gear)", "next": "clutch_dragging" },
+          { "text": "Clutch lever is very hard to pull", "next": "hard_pull" },
+          { "text": "Clutch makes noise (rattle, chatter, or grinding)", "next": "clutch_noise" }
+        ]
+      },
+      {
+        "id": "clutch_slipping",
+        "type": "check",
+        "text": "Check clutch cable free play",
+        "safety": "green",
+        "instructions": "Check the clutch cable free play at the lever. There should be 1/16 to 1/8 inch of free play at the lever tip before you feel resistance. If there is no free play, the clutch is being partially disengaged at all times, which causes slipping. Adjust the cable at the midpoint adjuster (on the cable near the frame) or at the clutch lever perch.",
+        "next": "slipping_freeplay_result"
+      },
+      {
+        "id": "slipping_freeplay_result",
+        "type": "question",
+        "text": "Is the clutch cable free play within spec (1/16 to 1/8 inch)?",
+        "safety": "green",
+        "options": [
+          { "text": "No free play — cable was too tight", "next": "solution_cable_adjusted" },
+          { "text": "Free play is correct — still slipping", "next": "check_oil_type" }
+        ]
+      },
+      {
+        "id": "solution_cable_adjusted",
+        "type": "solution",
+        "text": "Clutch cable adjusted",
+        "safety": "green",
+        "action": "Adjust the clutch cable to proper free play",
+        "details": "The clutch cable was too tight, causing the clutch to partially disengage. Adjust to 1/16 to 1/8 inch of free play at the lever tip. Use the midpoint adjuster on the cable first, then fine-tune with the lever perch adjuster. After adjustment, test ride and verify the clutch fully engages (no slipping under load) and fully disengages (shifts into neutral cleanly)."
+      },
+      {
+        "id": "check_oil_type",
+        "type": "question",
+        "text": "The Sportster 883 has a wet clutch sharing oil with the engine. What oil are you using?",
+        "safety": "green",
+        "options": [
+          { "text": "Automotive oil or oil labeled 'Energy Conserving'", "next": "solution_wrong_oil" },
+          { "text": "Motorcycle-specific oil (JASO MA rated) or Harley formula+", "next": "solution_clutch_plates" }
+        ]
+      },
+      {
+        "id": "solution_wrong_oil",
+        "type": "solution",
+        "text": "Wrong oil type causing clutch slip",
+        "safety": "green",
+        "action": "Change to motorcycle-specific oil",
+        "details": "Automotive oils with 'Energy Conserving' or 'Resource Conserving' friction modifiers cause wet clutch slipping. The Sportster 883 requires motorcycle-specific oil rated JASO MA or MA2, or Harley-Davidson Formula+ 20W-50. Drain and refill with the correct oil immediately. The clutch should stop slipping within a few miles of riding on proper oil. Capacity is approximately 2.8 quarts (common sump)."
+      },
+      {
+        "id": "solution_clutch_plates",
+        "type": "solution",
+        "text": "Clutch plates worn — replacement needed",
+        "safety": "yellow",
+        "warning": "Clutch plate replacement requires removing the primary/derby cover and working with the clutch spring pressure plate. Wear eye protection.",
+        "action": "Replace clutch friction and steel plates",
+        "details": "If the cable is adjusted correctly and proper oil is being used, the clutch friction plates are worn. (1) Remove the derby cover (5 bolts). (2) Remove the clutch spring and pressure plate. (3) Remove all friction plates and steel plates. (4) Measure friction plate thickness — they should be 0.145 inch minimum. (5) Check steel plates for warping on a flat surface — maximum 0.005 inch. (6) Replace the complete clutch pack (friction plates, steel plates, and clutch spring). (7) Use Barnett, Energy One, or OEM clutch kit. (8) Reinstall and adjust cable free play."
+      },
+      {
+        "id": "clutch_dragging",
+        "type": "check",
+        "text": "Check clutch cable adjustment for dragging",
+        "safety": "green",
+        "instructions": "A dragging clutch doesn't fully disengage. Check cable free play — there should be 1/16 to 1/8 inch. If there is too much free play, the clutch won't fully disengage when you pull the lever. Also check the clutch cable routing — ensure it's not kinked, frayed, or binding. Pull the lever and feel for smooth, consistent movement throughout the range.",
+        "next": "dragging_freeplay_result"
+      },
+      {
+        "id": "dragging_freeplay_result",
+        "type": "question",
+        "text": "Is the cable free play correct and does the cable move freely?",
+        "safety": "green",
+        "options": [
+          { "text": "Too much free play — adjusted it", "next": "solution_drag_cable_fixed" },
+          { "text": "Cable is stiff or binding", "next": "solution_cable_replace" },
+          { "text": "Cable is fine — still dragging", "next": "check_clutch_adjustment" }
+        ]
+      },
+      {
+        "id": "solution_drag_cable_fixed",
+        "type": "solution",
+        "text": "Clutch cable adjusted for dragging",
+        "safety": "green",
+        "action": "Adjust clutch cable to reduce excess free play",
+        "details": "Excess cable free play prevented the clutch from fully disengaging. Adjust to 1/16 to 1/8 inch of free play. Test by shifting between gears — the clutch should disengage cleanly without grinding. Finding neutral should be easy with the bike stopped."
+      },
+      {
+        "id": "solution_cable_replace",
+        "type": "solution",
+        "text": "Replace the clutch cable",
+        "safety": "green",
+        "action": "Replace the clutch cable",
+        "details": "A stiff or binding clutch cable prevents smooth clutch operation. Replace with a new cable — route it exactly as the original, avoiding sharp bends or kinks. Lubricate the new cable with cable lube before installation. After installation, adjust free play to 1/16 to 1/8 inch. Motion Pro and Barnett make quality aftermarket cables."
+      },
+      {
+        "id": "check_clutch_adjustment",
+        "type": "check",
+        "text": "Adjust the clutch release mechanism",
+        "safety": "yellow",
+        "warning": "Work on a cold engine. The primary cover area can be hot after riding.",
+        "instructions": "The Sportster 883 uses a cable-actuated clutch with an internal adjustment screw. (1) Remove the derby cover (5 bolts on the round cover on the primary). (2) Loosen the locknut on the clutch adjusting screw (center of the pressure plate). (3) Turn the adjusting screw IN (clockwise) until you feel it lightly seat against the pushrod. (4) Back it out 1/2 to 1 full turn. (5) Hold the screw and tighten the locknut. (6) Replace derby cover. (7) Re-adjust cable free play at the lever.",
+        "next": "clutch_adj_result"
+      },
+      {
+        "id": "clutch_adj_result",
+        "type": "question",
+        "text": "Did the internal clutch adjustment fix the dragging?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — clutch disengages cleanly now", "next": "solution_internal_adj_fixed" },
+          { "text": "No — still dragging", "next": "solution_clutch_hub" }
+        ]
+      },
+      {
+        "id": "solution_internal_adj_fixed",
+        "type": "solution",
+        "text": "Internal clutch adjustment resolved dragging",
+        "safety": "green",
+        "action": "Internal clutch adjustment completed",
+        "details": "The internal clutch adjusting screw was out of spec, preventing full disengagement. This is a maintenance item — check it whenever you change the oil or notice clutch behavior changes. Ensure the cable free play is also correct (1/16 to 1/8 inch) after the internal adjustment."
+      },
+      {
+        "id": "solution_clutch_hub",
+        "type": "solution",
+        "text": "Clutch hub or basket inspection needed",
+        "safety": "yellow",
+        "warning": "Clutch hub/basket work requires removing the primary cover and is a more involved repair.",
+        "action": "Inspect clutch hub and basket for notching",
+        "details": "If the clutch still drags after proper adjustment, the clutch hub or basket likely has notches worn into the fingers where the plates ride. These notches prevent the plates from separating cleanly. (1) Remove the primary cover. (2) Remove the clutch assembly. (3) Inspect the inner hub and outer basket for grooves/notches. (4) Light notching can be filed smooth with a fine flat file. (5) Severe notching requires replacement of the hub and/or basket. (6) Also check for warped steel plates which can cause dragging."
+      },
+      {
+        "id": "hard_pull",
+        "type": "question",
+        "text": "Is the clutch lever pull gradually getting harder, or was it sudden?",
+        "safety": "green",
+        "options": [
+          { "text": "Gradually gotten harder over time", "next": "solution_cable_lube" },
+          { "text": "Suddenly much harder", "next": "check_cable_routing" }
+        ]
+      },
+      {
+        "id": "solution_cable_lube",
+        "type": "solution",
+        "text": "Lubricate or replace the clutch cable",
+        "safety": "green",
+        "action": "Lubricate the clutch cable",
+        "details": "A gradually stiffening clutch lever is usually a dry or corroding cable. (1) Get a cable luber tool and cable lube (or light oil). (2) Disconnect the cable at the lever end. (3) Attach the cable luber and spray lube through the cable until it drips out the other end. (4) Work the cable back and forth to distribute the lube. (5) Reconnect and adjust free play. If lubing doesn't help, replace the cable — internal corrosion can't always be resolved with lube. Consider upgrading to a braided stainless cable for smoother action."
+      },
+      {
+        "id": "check_cable_routing",
+        "type": "check",
+        "text": "Check cable routing and pivot points",
+        "safety": "green",
+        "instructions": "Follow the clutch cable from the lever to the primary cover. Check for: (1) Sharp bends or kinks. (2) Cable pinched by the tank, frame, or accessories. (3) Binding at the lever pivot — clean and lube the pivot. (4) Frayed cable visible at either end. A sudden increase in pull effort usually means the cable is binding somewhere or the lever pivot is seized.",
+        "next": "cable_routing_result"
+      },
+      {
+        "id": "cable_routing_result",
+        "type": "question",
+        "text": "Did you find a cable routing problem?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — cable was pinched or kinked", "next": "solution_reroute_cable" },
+          { "text": "Cable frayed — needs replacement", "next": "solution_cable_replace" },
+          { "text": "No routing issues found", "next": "solution_heavy_spring" }
+        ]
+      },
+      {
+        "id": "solution_reroute_cable",
+        "type": "solution",
+        "text": "Cable rerouted",
+        "safety": "green",
+        "action": "Correct the clutch cable routing",
+        "details": "The clutch cable was pinched or kinked, causing resistance. Re-route the cable following the factory routing — ensure smooth, gradual bends and nothing pressing against the cable. If the cable housing is bent permanently, replace the cable. Check that handlebar rotation doesn't pull or pinch the cable at any point in the steering range."
+      },
+      {
+        "id": "solution_heavy_spring",
+        "type": "solution",
+        "text": "Clutch spring tension too high",
+        "safety": "green",
+        "action": "Check or replace clutch spring",
+        "details": "If the cable is in good condition and routed properly, the clutch spring may be excessively strong (aftermarket heavy-duty spring) or the clutch is assembled incorrectly. The stock Sportster 883 clutch spring should provide a manageable lever pull. If someone installed an aftermarket heavy spring (for a stage 1 or 2 clutch kit), you may want to swap back to a stock spring. Also check the clutch lever — some aftermarket levers have less mechanical advantage than stock."
+      },
+      {
+        "id": "clutch_noise",
+        "type": "question",
+        "text": "Describe the noise you hear from the clutch area.",
+        "safety": "green",
+        "options": [
+          { "text": "Rattle at idle that goes away when I pull the clutch lever", "next": "solution_primary_chain" },
+          { "text": "Chatter or vibration when releasing the clutch", "next": "solution_clutch_chatter" },
+          { "text": "Grinding when shifting gears", "next": "clutch_dragging" }
+        ]
+      },
+      {
+        "id": "solution_primary_chain",
+        "type": "solution",
+        "text": "Primary chain slack causing rattle",
+        "safety": "yellow",
+        "warning": "Check primary chain tension with the engine OFF. Do not reach into the primary with the engine running.",
+        "action": "Adjust the primary chain tension",
+        "details": "A rattle from the primary cover area at idle that disappears when pulling the clutch lever is usually a loose primary chain. (1) Remove the derby cover and the primary chain inspection cover. (2) Check chain slack — should be 5/8 to 7/8 inch of deflection at the tightest point. (3) To adjust: loosen the rear primary chain adjuster bolt and turn it to take up slack. (4) Recheck tension and tighten the lock nut. (5) Replace covers. Note: Some primary chain noise is normal on Sportsters. If the chain and shoe are severely worn, replace both."
+      },
+      {
+        "id": "solution_clutch_chatter",
+        "type": "solution",
+        "text": "Clutch chatter on engagement",
+        "safety": "green",
+        "action": "Diagnose clutch chatter",
+        "details": "Clutch chatter (judder) when releasing the lever is caused by: (1) Glazed friction plates — can sometimes be fixed by scuffing with sandpaper, but replacement is more reliable. (2) Warped steel plates — check on a flat surface, replace if warped more than 0.005 inch. (3) Weak clutch spring — replace the spring. (4) Oil contamination — if non-motorcycle oil was used, change to JASO MA rated oil. (5) Worn compensator — a worn compensator can feel like clutch chatter. Try different RPM engagement points — chatter that's consistent regardless of RPM points to the clutch plates."
+      }
+    ]
+  }
+}

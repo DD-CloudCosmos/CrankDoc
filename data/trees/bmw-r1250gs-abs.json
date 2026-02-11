@@ -1,0 +1,208 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "ABS Warning Light / Issues",
+  "description": "Diagnose ABS warning light activation and ABS brake system issues on the BMW R1250GS, including sensor faults, modulator problems, and wheel speed sensor issues.",
+  "category": "brakes",
+  "difficulty": "advanced",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What ABS symptom are you experiencing?",
+        "safety": "red",
+        "warning": "ABS is a critical safety system. When the ABS warning light is on, ABS is disabled — brakes still work but without anti-lock function. Exercise extra caution when braking. Do not ride in conditions that require ABS (wet, gravel) until the system is repaired.",
+        "options": [
+          { "text": "ABS warning light on at startup and stays on", "next": "abs_stays_on" },
+          { "text": "ABS warning light comes on while riding", "next": "abs_during_ride" },
+          { "text": "ABS activates too early (on dry pavement)", "next": "abs_too_sensitive" },
+          { "text": "ABS doesn't seem to work at all", "next": "abs_not_working" }
+        ]
+      },
+      {
+        "id": "abs_stays_on",
+        "type": "check",
+        "text": "Check battery voltage and initial conditions",
+        "safety": "green",
+        "instructions": "The R1250GS ABS system requires adequate battery voltage to initialize. (1) Check battery voltage — must be at least 12.0V for ABS self-test to complete. (2) The ABS performs a self-test during startup — the light should come on, then go off after a few seconds and the first time you exceed about 3 mph. (3) If the light flashes a pattern, count the flashes — this is an error code. (4) Check if the TFT display shows a specific ABS fault message.",
+        "next": "abs_startup_result"
+      },
+      {
+        "id": "abs_startup_result",
+        "type": "question",
+        "text": "Does the ABS light go off after you start riding, or does it stay on?",
+        "safety": "green",
+        "options": [
+          { "text": "Goes off after reaching 3+ mph — normal operation", "next": "solution_abs_normal" },
+          { "text": "Stays on no matter what", "next": "check_wheel_sensors" },
+          { "text": "Battery is low — charging first", "next": "solution_charge_first" }
+        ]
+      },
+      {
+        "id": "solution_abs_normal",
+        "type": "solution",
+        "text": "ABS is operating normally",
+        "safety": "green",
+        "action": "ABS self-test completed successfully",
+        "details": "The R1250GS ABS light is on at startup and goes off after the bike reaches approximately 3 mph — this is the normal ABS self-test procedure. The system checks the wheel speed sensors during initial movement. If the light goes off, ABS is fully functional. If you're concerned about ABS performance, test in a safe area: ride at 20 mph on a clean, dry surface and apply the front brake firmly. You should feel the ABS pulsating the brake lever."
+      },
+      {
+        "id": "solution_charge_first",
+        "type": "solution",
+        "text": "Charge battery before ABS diagnosis",
+        "safety": "green",
+        "action": "Fully charge the battery first",
+        "details": "Low battery voltage is the most common cause of ABS faults on the R1250GS. The ABS module requires stable voltage to initialize. (1) Charge the battery fully. (2) Start the bike and ride — the ABS should complete its self-test. (3) If the light clears after charging, the battery was the issue. (4) If it persists after charging, proceed with sensor and module diagnosis. (5) If the battery keeps going low, check the charging system."
+      },
+      {
+        "id": "check_wheel_sensors",
+        "type": "check",
+        "text": "Inspect the wheel speed sensors",
+        "safety": "yellow",
+        "warning": "The ABS wheel speed sensors are located near the brake rotors. Be careful of hot brake components after riding.",
+        "instructions": "Each wheel has an ABS speed sensor that reads a tone ring (pulse wheel) on the rotor. (1) Locate the front sensor — mounted on the fork lower, aimed at the tone ring on the brake rotor. (2) Locate the rear sensor — mounted near the rear brake caliper. (3) Check sensor gaps — the sensor should be close to the tone ring but not touching (typical gap: 0.5-1.5mm). (4) Check sensor wiring — look for damaged, chafed, or disconnected wires. (5) Check the tone ring on the rotor for damage, debris, or missing teeth. (6) Clean the sensor tip with a clean rag — metal debris can accumulate on the magnetic sensor tip.",
+        "next": "sensor_check_result"
+      },
+      {
+        "id": "sensor_check_result",
+        "type": "question",
+        "text": "What did you find with the wheel speed sensors?",
+        "safety": "green",
+        "options": [
+          { "text": "Sensor wire damaged or disconnected", "next": "solution_sensor_wire" },
+          { "text": "Sensor covered in debris or gap too large", "next": "solution_sensor_clean" },
+          { "text": "Tone ring damaged or has debris", "next": "solution_tone_ring" },
+          { "text": "Sensors and wiring look fine", "next": "solution_scan_abs" }
+        ]
+      },
+      {
+        "id": "solution_sensor_wire",
+        "type": "solution",
+        "text": "Repair ABS sensor wiring",
+        "safety": "yellow",
+        "warning": "Use proper automotive wiring repair techniques — solder and heat-shrink, not twist-and-tape. ABS wiring carries critical sensor signals.",
+        "action": "Repair or replace the damaged ABS sensor wire",
+        "details": "Damaged ABS sensor wiring is common on the R1250GS, especially the front sensor, which is exposed to road debris and water. (1) If the wire is chafed but not broken: repair with heat-shrink tubing or split loom. (2) If the wire is broken: solder and heat-shrink the connection. (3) If the connector is corroded: clean with electrical contact cleaner or replace the connector. (4) Route the repaired wire away from heat sources and moving parts. (5) If the wire is severely damaged, replace the entire sensor assembly — BMW P/N varies by year. (6) After repair, clear the ABS fault code and test ride."
+      },
+      {
+        "id": "solution_sensor_clean",
+        "type": "solution",
+        "text": "Clean ABS sensor and adjust gap",
+        "safety": "green",
+        "action": "Clean the sensor and verify the gap",
+        "details": "The ABS sensor is magnetic and attracts metal particles from brake pad and rotor wear. (1) Clean the sensor tip with a clean cloth — remove all metal debris. (2) Check the gap between the sensor and the tone ring — it should be 0.5-1.5mm. (3) If the gap is too large (wheel bearing wear can increase the gap), the sensor may not read properly. (4) Adjust the sensor position if the mounting allows it. (5) After cleaning, clear any stored fault codes using a GS-911 or have them cleared at a dealer. (6) Test ride to verify the ABS light goes off."
+      },
+      {
+        "id": "solution_tone_ring",
+        "type": "solution",
+        "text": "Tone ring / pulse wheel issue",
+        "safety": "yellow",
+        "warning": "Do not ride with a damaged tone ring — ABS will not function correctly and may activate unexpectedly.",
+        "action": "Inspect and repair the ABS tone ring",
+        "details": "The tone ring (pulse wheel) is part of the brake rotor and has teeth that the sensor reads. (1) Clean the tone ring — remove any debris, rust, or contamination between the teeth. (2) Inspect for bent, cracked, or missing teeth — any damage prevents accurate speed reading. (3) If the tone ring is damaged, the brake rotor assembly needs replacement (the tone ring is integral to the rotor on the R1250GS). (4) A damaged tone ring can cause the ABS to activate unexpectedly or not at all."
+      },
+      {
+        "id": "solution_scan_abs",
+        "type": "solution",
+        "text": "Scan ABS fault codes",
+        "safety": "green",
+        "action": "Read ABS fault codes with a diagnostic tool",
+        "details": "If sensors and wiring appear fine, the ABS module or internal components may be at fault. (1) Use a GS-911 diagnostic tool to read ABS-specific fault codes. (2) Common faults: wheel speed sensor signal error, ABS modulator valve fault, pump motor fault, CAN bus communication error. (3) Some faults can be cleared and the system retested. (4) If the fault is internal to the ABS modulator (hydraulic unit), this typically requires BMW dealer repair or a specialist. (5) The ABS modulator is located under the tank and is a complex, expensive component. (6) Companies like BBA Reman and Beemer Boneyard offer rebuilt ABS modulators at lower cost than new."
+      },
+      {
+        "id": "abs_during_ride",
+        "type": "question",
+        "text": "When during the ride does the ABS light come on?",
+        "safety": "green",
+        "options": [
+          { "text": "During heavy braking", "next": "solution_abs_during_braking" },
+          { "text": "At random times — no pattern", "next": "solution_intermittent_abs" },
+          { "text": "When hitting a bump or pothole", "next": "solution_sensor_connection" }
+        ]
+      },
+      {
+        "id": "solution_abs_during_braking",
+        "type": "solution",
+        "text": "ABS fault during braking events",
+        "safety": "red",
+        "warning": "If ABS faults occur during braking, the system is not reliable. Have it diagnosed before riding in conditions requiring ABS.",
+        "action": "Diagnose ABS activation faults",
+        "details": "ABS faulting during braking may indicate: (1) Low brake fluid — check both front and rear reservoirs. Low fluid can trigger the ABS pressure sensors. (2) Air in the ABS hydraulic lines — the system needs bleeding using the BMW-specific ABS bleed procedure (requires cycling the ABS pump with a diagnostic tool). (3) Worn brake pads — the ABS piston travels further, changing system behavior. (4) ABS modulator pump failing — it cannot maintain pressure. (5) Scan for specific fault codes — they will pinpoint the hydraulic or electrical component at fault."
+      },
+      {
+        "id": "solution_intermittent_abs",
+        "type": "solution",
+        "text": "Intermittent ABS warning",
+        "safety": "yellow",
+        "warning": "Intermittent electrical faults are the hardest to diagnose. Document when the fault occurs (speed, conditions, temperature) to help with diagnosis.",
+        "action": "Diagnose intermittent ABS fault",
+        "details": "Intermittent ABS warnings on the R1250GS are often caused by: (1) Loose sensor connector — the vibration from the boxer twin can work connectors loose. Check and reseat all ABS sensor connectors. (2) CAN bus communication error — check all CAN bus connectors for corrosion (especially under the seat and tank). (3) Battery voltage dropping — check the charging system. (4) Marginal sensor gap — the wheel bearing may be worn slightly, causing the sensor gap to change with load. (5) Scan for stored fault codes — even intermittent faults are logged with a freeze frame of conditions."
+      },
+      {
+        "id": "solution_sensor_connection",
+        "type": "solution",
+        "text": "ABS fault triggered by bumps",
+        "safety": "yellow",
+        "warning": "A loose sensor or wire can cause unpredictable ABS behavior. Fix before riding.",
+        "action": "Check sensor mounting and connections for looseness",
+        "details": "If bumps trigger the ABS warning, vibration is causing an intermittent connection. (1) Check the ABS sensor mounting bolt — it may be loose, allowing the sensor to move. Tighten securely. (2) Check the sensor wire routing — is it sagging or loose where it could be caught or pulled by suspension movement? Secure with zip ties along the factory routing. (3) Check the connector — unplug and inspect for corrosion or loose pins. Apply dielectric grease and reconnect firmly. (4) Check wheel bearings — excess play allows the tone ring gap to change over bumps."
+      },
+      {
+        "id": "abs_too_sensitive",
+        "type": "check",
+        "text": "Verify ABS is actually activating incorrectly",
+        "safety": "red",
+        "warning": "Do not disable or tamper with the ABS system. It is a critical safety feature, especially on a heavy adventure bike like the R1250GS.",
+        "instructions": "The R1250GS ABS is designed to activate when wheel lock-up is detected. On dry pavement with good tires, ABS should only activate under very hard braking. If ABS activates too easily: (1) Check tire tread depth — worn tires have less grip, triggering ABS sooner. (2) Check tire pressure — overinflated tires have a smaller contact patch. (3) Check the riding mode — Road, Rain, Dynamic, and Enduro modes have different ABS sensitivity settings. Rain mode triggers ABS earlier.",
+        "next": "abs_sensitivity_result"
+      },
+      {
+        "id": "abs_sensitivity_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Tires are worn or pressure is wrong", "next": "solution_tire_issue" },
+          { "text": "Riding mode was set to Rain", "next": "solution_riding_mode" },
+          { "text": "Tires and mode are correct — still too sensitive", "next": "solution_abs_calibration" }
+        ]
+      },
+      {
+        "id": "solution_tire_issue",
+        "type": "solution",
+        "text": "Tire condition affecting ABS",
+        "safety": "red",
+        "warning": "Worn tires significantly increase stopping distance, with or without ABS. Replace worn tires immediately.",
+        "action": "Address tire condition",
+        "details": "ABS activating early on dry pavement with tires in question: (1) Replace worn tires — the R1250GS requires adequate tread for the ABS to work as designed. (2) Correct tire pressure: Front: 2.5 bar (36 PSI), Rear: 2.9 bar (42 PSI) for standard riding. Adjust for load per the owner's manual. (3) If tires are new, they need a break-in period (100 miles) — the release agent on new tires reduces grip temporarily."
+      },
+      {
+        "id": "solution_riding_mode",
+        "type": "solution",
+        "text": "Adjust the riding mode",
+        "safety": "green",
+        "action": "Change the riding mode to match conditions",
+        "details": "The R1250GS riding modes change ABS sensitivity: (1) Road mode — standard ABS intervention. (2) Rain mode — earlier ABS intervention for reduced grip surfaces. (3) Dynamic mode — allows more wheel lock before intervention (sportier feel). (4) Enduro / Enduro Pro (if equipped) — rear ABS can be disabled for off-road sliding. Change the riding mode using the TFT display controls on the left handlebar. Use Road or Dynamic mode on dry pavement for less intrusive ABS."
+      },
+      {
+        "id": "solution_abs_calibration",
+        "type": "solution",
+        "text": "ABS system calibration needed",
+        "safety": "yellow",
+        "warning": "ABS calibration and steering angle sensor calibration should only be done with proper diagnostic tools.",
+        "action": "Have the ABS system calibrated",
+        "details": "If ABS activates too early with good tires and correct riding mode: (1) The wheel speed sensor gap may need adjustment. (2) The ABS system may need recalibration after wheel or tire changes. (3) After replacing the ABS modulator, sensors, or wheel bearings, recalibration is required. (4) A GS-911 tool can perform ABS bleeding and some calibration functions. (5) Full ABS calibration and throttle body sync require BMW ISTA software at a dealer. (6) Check for stored fault codes that may indicate a sensor reading incorrectly."
+      },
+      {
+        "id": "abs_not_working",
+        "type": "solution",
+        "text": "ABS not functioning",
+        "safety": "red",
+        "warning": "If ABS is not functioning and the warning light is NOT on, this is a serious safety issue. The system should warn you when ABS is disabled. Have the system inspected immediately.",
+        "action": "Diagnose non-functioning ABS system",
+        "details": "If ABS is not activating when it should (hard braking causes wheel lock-up without ABS intervention): (1) Check if the ABS warning light is on — if it is, ABS is disabled. Diagnose the warning light first. (2) If the warning light is OFF but ABS isn't working, the ABS modulator or pump may be failing silently. This is a serious safety concern. (3) Use a GS-911 or dealer diagnostic to test the ABS pump and valves. (4) Check brake fluid level in both circuits. (5) The ABS system may need bleeding using the BMW-specific procedure (standard brake bleeding doesn't cycle the ABS valves). (6) Do not ride in demanding conditions until ABS is verified functional."
+      }
+    ]
+  }
+}

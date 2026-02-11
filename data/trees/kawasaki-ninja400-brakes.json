@@ -1,0 +1,225 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Brake Problems",
+  "description": "Diagnose brake noise, poor stopping power, soft lever, and other brake system issues on the Kawasaki Ninja 400.",
+  "category": "brakes",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue are you experiencing?",
+        "safety": "red",
+        "warning": "Brakes are critical safety components. If you are unsure about any brake repair, have it inspected by a professional. Never ride with compromised brakes.",
+        "options": [
+          { "text": "Brakes are squealing or making noise", "next": "check_pads" },
+          { "text": "Brake lever feels soft or spongy", "next": "check_fluid" },
+          { "text": "Poor stopping power", "next": "check_pads" },
+          { "text": "Brake lever pulsates or vibrates", "next": "check_rotor" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Inspect brake pad thickness",
+        "safety": "yellow",
+        "warning": "Brake dust can be harmful. Avoid breathing it. Use brake cleaner, not compressed air.",
+        "instructions": "Look at the brake pads through the caliper opening. The Ninja 400 has a single front caliper (2-piston) and a single rear caliper (1-piston). Measure or visually estimate the pad material thickness. Minimum pad thickness is 1mm. If the wear groove on the pad surface is barely visible or gone, the pads need replacement. A grinding sound means pads are completely gone and metal is contacting the rotor.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "What is the brake pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are thin or wear groove is gone", "next": "solution_replace_pads" },
+          { "text": "Metal-on-metal grinding", "next": "solution_pads_rotor" },
+          { "text": "Pads have plenty of material", "next": "check_pad_surface" }
+        ]
+      },
+      {
+        "id": "check_pad_surface",
+        "type": "check",
+        "text": "Inspect pad surface for glazing or contamination",
+        "safety": "green",
+        "instructions": "Remove the brake pads from the caliper. The Ninja 400 caliper uses pin-slide bolts — remove the lower caliper bolt and swing the caliper up to access the pads. Check the pad friction surface: (1) Glazed — smooth, shiny surface instead of rough texture. Caused by overheating. (2) Contaminated — oil, chain lube, or brake fluid on the surface causes poor braking and noise. (3) Uneven wear — may indicate a sticking caliper piston.",
+        "next": "pad_surface_result"
+      },
+      {
+        "id": "pad_surface_result",
+        "type": "question",
+        "text": "What do the pad surfaces look like?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed (smooth and shiny)", "next": "solution_deglaze" },
+          { "text": "Contaminated with oil or fluid", "next": "solution_replace_pads" },
+          { "text": "Uneven wear pattern", "next": "solution_caliper_service" },
+          { "text": "Pad surfaces look normal", "next": "check_rotor" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Check brake fluid level and condition",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive to paint and plastics. Handle carefully.",
+        "instructions": "Check the front master cylinder reservoir (right handlebar) and rear master cylinder (right side near foot peg). Fluid level should be between MIN and MAX marks. Check the fluid color — fresh DOT4 fluid is clear/light yellow. Dark brown or black fluid is old and has absorbed moisture, reducing its boiling point. The Ninja 400 uses DOT4 brake fluid. Kawasaki recommends replacement every 2 years.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fluid is low", "next": "check_brake_leak" },
+          { "text": "Fluid is dark/old but level is OK", "next": "solution_bleed" },
+          { "text": "Fluid is fine — still spongy lever", "next": "check_air_in_system" }
+        ]
+      },
+      {
+        "id": "check_brake_leak",
+        "type": "check",
+        "text": "Check for brake fluid leaks",
+        "safety": "red",
+        "warning": "A brake fluid leak is a critical safety issue. Do not ride until repaired.",
+        "instructions": "Inspect the entire brake system: (1) Master cylinder — check around the lever pivot and reservoir, (2) Brake hose — check the full length for cracks, bulging, or wetness, (3) Banjo bolt connections — where hoses connect to master cylinder and caliper, (4) Caliper — look for fluid weeping around the piston seal area.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Did you find a brake fluid leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Leaking banjo bolt", "next": "solution_banjo" },
+          { "text": "Leaking caliper piston", "next": "solution_caliper_rebuild" },
+          { "text": "Damaged brake hose", "next": "solution_brake_hose" },
+          { "text": "No visible leak — fluid may be low from pad wear", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_air_in_system",
+        "type": "question",
+        "text": "Does the lever firm up with repeated pumping?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — firms up with pumping, then goes soft again", "next": "solution_bleed" },
+          { "text": "No — always soft regardless of pumping", "next": "solution_master_cylinder" }
+        ]
+      },
+      {
+        "id": "check_rotor",
+        "type": "check",
+        "text": "Check brake rotors",
+        "safety": "green",
+        "instructions": "Spin the wheel and look at the rotor as it passes through the caliper. A warped rotor will visibly wobble. For precision, use a dial indicator — maximum runout is 0.3mm. Also check rotor thickness with a micrometer or caliper — the minimum thickness is stamped on the rotor. Deep grooves from worn pads also warrant rotor replacement.",
+        "next": "rotor_result"
+      },
+      {
+        "id": "rotor_result",
+        "type": "question",
+        "text": "What is the rotor condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Rotor is warped (visible wobble)", "next": "solution_rotor" },
+          { "text": "Rotor is below minimum thickness or deeply grooved", "next": "solution_rotor" },
+          { "text": "Rotor looks straight and in good condition", "next": "solution_caliper_service" }
+        ]
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "Replace Brake Pads",
+        "safety": "red",
+        "warning": "Ensure new pads are properly seated in the caliper. Pump the lever before riding to take up the slack.",
+        "action": "Replace worn or contaminated brake pads.",
+        "details": "The Ninja 400 front caliper is a sliding pin design. Remove the lower caliper bolt and swing the caliper up. Remove the old pads. Push the caliper piston back with a C-clamp or piston tool (open the reservoir cap to relieve pressure). Install new pads — OEM Kawasaki or quality aftermarket (EBC, Vesrah, SBS). Reinstall the caliper and torque the bolt. Pump the brake lever until it is firm before riding. Bed in new pads with 20-30 gentle stops."
+      },
+      {
+        "id": "solution_pads_rotor",
+        "type": "solution",
+        "text": "Replace Pads and Inspect Rotor",
+        "safety": "red",
+        "warning": "Metal-on-metal contact is extremely dangerous. Do not ride until repaired.",
+        "action": "Replace brake pads immediately and inspect the rotor for damage.",
+        "details": "Metal-on-metal braking has likely scored the rotor. Replace the pads and measure the rotor thickness — if below the minimum spec stamped on the rotor, replace it too. Deep scoring grooves also warrant replacement. After installing new pads and/or rotor, bed in carefully with gentle stops."
+      },
+      {
+        "id": "solution_deglaze",
+        "type": "solution",
+        "text": "Deglaze Brake Pads",
+        "safety": "yellow",
+        "warning": "Wear a dust mask when sanding brake pads.",
+        "action": "Sand the pad surface to remove glazing.",
+        "details": "Lightly sand the pad friction surface with 120-grit sandpaper in a cross-hatch pattern to remove the glaze. Also lightly scuff the rotor surface. If glazing keeps recurring, consider switching to a different pad compound better suited to your riding style (sintered for aggressive braking, organic for commuting)."
+      },
+      {
+        "id": "solution_caliper_service",
+        "type": "solution",
+        "text": "Clean and Lubricate Caliper",
+        "safety": "yellow",
+        "warning": "Only use brake-specific lubricant. Never use general grease.",
+        "action": "Clean the caliper slide pins and piston.",
+        "details": "The Ninja 400 uses sliding pin calipers. Remove the caliper, extract the slide pins, clean them with brake cleaner, and apply silicone brake grease. Also push the piston in and out (gently, using the brake lever with pads removed) to check for sticking. Clean the piston face with brake cleaner. A sticking caliper or slide pin causes uneven pad wear, noise, and poor braking."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Brake System",
+        "safety": "red",
+        "warning": "Air in the brake system means reduced braking. Bleed carefully and verify firm lever feel before riding.",
+        "action": "Bleed the brakes to remove air and replace old fluid.",
+        "details": "Use DOT4 brake fluid. Attach a clear tube to the caliper bleed nipple. Have an assistant pump the lever 3-4 times and hold. Open the nipple to release fluid and air, close it, then release the lever. Repeat until no bubbles appear. Keep the reservoir topped off during bleeding. On the Ninja 400 with its single-caliper front brake, bleeding is straightforward. Replace the fluid every 2 years as Kawasaki recommends."
+      },
+      {
+        "id": "solution_banjo",
+        "type": "solution",
+        "text": "Replace Banjo Bolt Crush Washers",
+        "safety": "red",
+        "warning": "Brake line connections are safety-critical. Torque to spec and verify no leaks.",
+        "action": "Replace the crush washers and retorque the banjo bolt.",
+        "details": "Replace both copper crush washers on the leaking banjo bolt. Torque to specification. After tightening, bleed the brake system and check for leaks by pumping the lever firmly."
+      },
+      {
+        "id": "solution_caliper_rebuild",
+        "type": "solution",
+        "text": "Rebuild Brake Caliper",
+        "safety": "red",
+        "warning": "Caliper rebuilds must be done correctly to maintain braking safety.",
+        "action": "Rebuild the caliper with new piston seals.",
+        "details": "A leaking caliper piston seal requires a rebuild. Caliper rebuild kits include new piston seals and dust boots. Remove the caliper, push out the piston with compressed air (gently), clean the bore, inspect for scoring, and install new seals. If the bore is scored, replace the entire caliper. Bleed the system thoroughly after rebuilding."
+      },
+      {
+        "id": "solution_brake_hose",
+        "type": "solution",
+        "text": "Replace Brake Hose",
+        "safety": "red",
+        "warning": "A damaged brake hose can fail under pressure. Replace immediately.",
+        "action": "Replace the damaged brake hose.",
+        "details": "Replace with an OEM rubber hose or upgrade to stainless steel braided lines (Galfer, HEL, Goodridge) for improved feel and durability. Route the new hose correctly and secure with clips. Bleed the entire brake system after hose replacement."
+      },
+      {
+        "id": "solution_master_cylinder",
+        "type": "solution",
+        "text": "Replace or Rebuild Master Cylinder",
+        "safety": "red",
+        "warning": "A faulty master cylinder means unreliable braking. Professional service recommended if unsure.",
+        "action": "Rebuild or replace the brake master cylinder.",
+        "details": "Internal master cylinder seal wear allows fluid to bypass, causing a permanently soft lever even after thorough bleeding. Rebuild kits are available but require precision. For the Ninja 400, replacing the entire master cylinder unit may be more practical. After replacement, bleed the system and verify firm lever feel."
+      },
+      {
+        "id": "solution_rotor",
+        "type": "solution",
+        "text": "Replace Brake Rotor",
+        "safety": "red",
+        "warning": "Never ride with a warped or undersize rotor.",
+        "action": "Replace the warped or worn brake rotor.",
+        "details": "The Ninja 400 front rotor is bolted to the wheel. Remove the caliper, then the wheel, and unbolt the rotor. Install the new rotor with thread-locking compound on the bolts. OEM or quality aftermarket rotors (EBC, Galfer) are available. Bed in new pads with the new rotor — avoid hard braking for the first 100 km."
+      }
+    ]
+  }
+}

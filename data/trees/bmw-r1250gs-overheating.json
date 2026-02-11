@@ -1,0 +1,237 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Overheating / Cooling Fan Issues",
+  "description": "Diagnose overheating and cooling system problems on the liquid-cooled R1250GS boxer engine, including cooling fan, thermostat, and coolant issues.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What overheating symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "If the temperature gauge is in the red zone, stop riding immediately and let the engine cool. Continued operation when overheated can warp cylinder heads and damage the engine.",
+        "options": [
+          { "text": "Temperature gauge in the red / warning on TFT", "next": "temp_warning" },
+          { "text": "Cooling fan never comes on", "next": "check_fan" },
+          { "text": "Cooling fan runs constantly", "next": "fan_always_on" },
+          { "text": "Coolant loss / low coolant warning", "next": "coolant_loss" }
+        ]
+      },
+      {
+        "id": "temp_warning",
+        "type": "check",
+        "text": "Stop and let the engine cool — then check the coolant level",
+        "safety": "red",
+        "warning": "NEVER open the coolant reservoir cap when the engine is hot. The pressurized system can spray boiling coolant and cause severe burns. Wait at least 30 minutes.",
+        "instructions": "After letting the engine cool for 30+ minutes: (1) Locate the coolant overflow reservoir (on the right side of the bike, near the cylinder). (2) Check the coolant level — it should be between the MIN and MAX marks. (3) If low, top off with BMW-recommended coolant (BMW Anti-Freeze/Anti-Corrosion or equivalent long-life OAT coolant, pre-mixed 50/50). (4) Also check for visible coolant leaks — look under the bike, around hoses, and at the water pump area.",
+        "next": "temp_coolant_result"
+      },
+      {
+        "id": "temp_coolant_result",
+        "type": "question",
+        "text": "What is the coolant level?",
+        "safety": "green",
+        "options": [
+          { "text": "Coolant is very low or empty", "next": "coolant_loss" },
+          { "text": "Coolant level is OK", "next": "check_fan" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Test the cooling fan operation",
+        "safety": "yellow",
+        "warning": "The cooling fan can start suddenly when the engine reaches temperature. Keep hands and hair away from the fan area.",
+        "instructions": "The R1250GS cooling fan is located behind the cylinder heads / oil cooler area. (1) Start the engine and let it idle (in a well-ventilated area). (2) Watch the temperature gauge on the TFT. (3) The fan should activate at approximately 105-110°C (220-230°F). (4) This may take 10-15 minutes of idling — be patient. (5) Listen for the fan starting — it's clearly audible. (6) If the temperature reaches 115°C+ and the fan hasn't activated, the fan circuit has a problem.",
+        "next": "fan_test_result"
+      },
+      {
+        "id": "fan_test_result",
+        "type": "question",
+        "text": "Does the cooling fan come on when the engine gets hot?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan does not come on — engine overheating", "next": "check_fan_circuit" },
+          { "text": "Fan comes on but engine still overheats", "next": "check_thermostat" },
+          { "text": "Fan works and temperature is stable", "next": "solution_fan_normal" }
+        ]
+      },
+      {
+        "id": "solution_fan_normal",
+        "type": "solution",
+        "text": "Cooling system operating normally",
+        "safety": "green",
+        "action": "Cooling system is functioning correctly",
+        "details": "The R1250GS liquid cooling system is working as designed. Temperature notes: (1) Normal operating temperature: 80-105°C. (2) Fan activation: 105-110°C — this is normal, especially in traffic. (3) The temperature will rise in slow traffic or idling — this is expected. (4) At highway speed, the fan rarely activates because airflow provides adequate cooling. (5) The R1250GS does run warmer than some bikes due to the ShiftCam engine's higher output. (6) If you're concerned about running hot in traffic, ensure the coolant is at the correct level and the system has been serviced per schedule."
+      },
+      {
+        "id": "check_fan_circuit",
+        "type": "check",
+        "text": "Check the cooling fan fuse and relay",
+        "safety": "yellow",
+        "warning": "The cooling fan fuse protects against short circuits. If a new fuse blows immediately, there is a wiring short — do not keep replacing fuses.",
+        "instructions": "Check the cooling fan fuse in the fuse box (under the seat). The R1250GS uses fuse F13 or similar for the cooling fan (check your model year's fuse diagram). Also check the fan relay (if separate from the ECU control). If the fuse is good: (1) Check the fan motor connector for corrosion. (2) Apply 12V directly to the fan motor connector (with a jumper wire from the battery) to test the motor. If the fan spins with direct power, the control circuit is the issue.",
+        "next": "fan_circuit_result"
+      },
+      {
+        "id": "fan_circuit_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuse is blown", "next": "solution_fan_fuse" },
+          { "text": "Fan works with direct power — control circuit issue", "next": "solution_fan_control" },
+          { "text": "Fan doesn't spin even with direct power", "next": "solution_fan_motor" }
+        ]
+      },
+      {
+        "id": "solution_fan_fuse",
+        "type": "solution",
+        "text": "Replace the cooling fan fuse",
+        "safety": "yellow",
+        "warning": "If the fuse blows again immediately, do not keep replacing it — there is a short circuit that needs repair.",
+        "action": "Replace the cooling fan fuse",
+        "details": "Replace the blown fuse with the correct amperage (typically 15A or 20A). If it holds: monitor the fan operation. If it blows again: (1) Check the fan motor wiring for chafing or damage — especially where it routes near the engine or frame. (2) The fan motor itself may be shorting — disconnect the motor and replace the fuse. If it holds, the motor is the problem. (3) A seized fan motor draws excessive current and blows the fuse."
+      },
+      {
+        "id": "solution_fan_control",
+        "type": "solution",
+        "text": "Fan control circuit issue",
+        "safety": "green",
+        "action": "Diagnose the fan control circuit",
+        "details": "The fan motor works but the ECU/control isn't activating it. (1) The R1250GS fan is controlled by the ECU based on coolant temperature sensor input. (2) If the coolant temperature sensor is faulty, it may not signal the ECU to activate the fan. (3) Scan for fault codes — a temperature sensor fault will be stored. (4) Check the temperature sensor connector for corrosion. (5) The fan relay (controlled by the ECU via CAN bus) may be faulty — swap with another relay of the same type to test. (6) A GS-911 tool can command the fan to run as a test — this verifies the wiring from the ECU."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace the cooling fan motor",
+        "safety": "green",
+        "action": "Replace the failed cooling fan motor",
+        "details": "The fan motor does not spin even with direct power — it has failed. (1) Check if the fan blade is physically blocked by debris first. (2) If unblocked and still won't spin: replace the fan motor assembly. (3) On the R1250GS, the fan is accessible from behind the front cylinders. (4) Disconnect the electrical connector and remove the mounting bolts. (5) Install the new fan and reconnect. (6) Test by idling until operating temperature — verify the fan activates. OEM or Spal aftermarket fans are available."
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Check the thermostat operation",
+        "safety": "yellow",
+        "warning": "The thermostat housing contains hot coolant. Only inspect when the engine is cool.",
+        "instructions": "If the fan runs but the engine still overheats, the thermostat may be stuck closed (not allowing coolant to circulate through the radiator). (1) Start the engine cold and feel the upper radiator hose. (2) As the engine warms, the hose should remain cool initially (thermostat closed). (3) When the engine reaches approximately 80-85°C, the thermostat should open and the hose will become hot. (4) If the hose never gets hot, the thermostat is stuck closed. (5) If the hose is hot from the start, the thermostat is stuck open (engine won't reach proper operating temperature, but won't overheat).",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "Does the upper radiator hose get hot when the engine warms up?",
+        "safety": "green",
+        "options": [
+          { "text": "No — hose stays cool (thermostat stuck closed)", "next": "solution_thermostat" },
+          { "text": "Yes — hose gets hot", "next": "check_radiator" }
+        ]
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace the thermostat",
+        "safety": "yellow",
+        "warning": "Drain the coolant before removing the thermostat. Do not open the cooling system when hot.",
+        "action": "Replace the stuck thermostat",
+        "details": "A thermostat stuck closed prevents coolant from reaching the radiator, causing rapid overheating. (1) Drain the coolant from the drain valve or lower radiator hose. (2) Locate the thermostat housing (follows the upper radiator hose to the engine). (3) Remove the housing bolts and old thermostat. (4) Install the new thermostat — note the orientation (the sensing element faces the engine side). (5) Install with a new housing gasket. (6) Refill the cooling system with BMW-recommended coolant (50/50 pre-mix). (7) Bleed the system — the R1250GS has a bleed screw on the thermostat housing. Open it while filling until coolant flows without air bubbles. (8) Run the engine and verify proper temperature."
+      },
+      {
+        "id": "check_radiator",
+        "type": "check",
+        "text": "Inspect the radiator and cooling system",
+        "safety": "green",
+        "instructions": "If the thermostat is opening and the fan is working but the engine still overheats: (1) Inspect the radiator for blocked fins — bugs, mud, and debris reduce cooling. (2) Check for a kinked or collapsed coolant hose. (3) Check the water pump — if the engine overheats rapidly, the water pump impeller may be damaged or the drive may have failed. (4) Check for air trapped in the cooling system (air pocket prevents circulation).",
+        "next": "radiator_result"
+      },
+      {
+        "id": "radiator_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator is blocked with debris", "next": "solution_clean_radiator" },
+          { "text": "Coolant hose is damaged", "next": "solution_hose_replace" },
+          { "text": "Everything looks OK — still overheating", "next": "solution_water_pump" }
+        ]
+      },
+      {
+        "id": "solution_clean_radiator",
+        "type": "solution",
+        "text": "Clean the radiator",
+        "safety": "green",
+        "action": "Clean the radiator fins",
+        "details": "Blocked radiator fins significantly reduce cooling capacity. (1) Use a garden hose with moderate pressure — spray from the back side (engine side) to push debris OUT through the front. (2) Do not use a pressure washer directly on the radiator fins — they are delicate aluminum and bend easily. (3) For stubborn debris: use a soft brush to gently loosen bugs and mud. (4) After cleaning, check for bent fins — use a fin comb to straighten them. (5) On the R1250GS, the radiator is partially hidden behind the engine guard — remove the guard for thorough cleaning. (6) Clean the radiator every major service or after off-road riding."
+      },
+      {
+        "id": "solution_hose_replace",
+        "type": "solution",
+        "text": "Replace damaged coolant hose",
+        "safety": "yellow",
+        "warning": "Drain the cooling system before replacing hoses. Use only BMW-compatible coolant hoses rated for the system pressure.",
+        "action": "Replace the damaged coolant hose",
+        "details": "A kinked, collapsed, or cracked coolant hose restricts flow: (1) Drain the coolant. (2) Remove the hose clamps and old hose. (3) Install the new hose — use OEM hoses for proper fit and routing. (4) Secure with proper clamps. (5) Refill and bleed the cooling system. (6) Check all other hoses while you're at it — if one has failed, others are likely near the end of their life. Replace all coolant hoses every 5-7 years as preventive maintenance."
+      },
+      {
+        "id": "solution_water_pump",
+        "type": "solution",
+        "text": "Water pump inspection",
+        "safety": "yellow",
+        "warning": "Water pump failure can cause rapid overheating and engine damage. Do not ride if the water pump is suspected of failing.",
+        "action": "Have the water pump inspected",
+        "details": "If the cooling system is intact but the engine overheats: (1) The water pump is driven off the engine and is located behind the front cylinder on the R1250GS. (2) Check for coolant weeping from the water pump weep hole — this indicates the pump seal is failing. (3) The pump impeller can fail or the drive can strip, preventing coolant circulation. (4) Water pump replacement requires draining the coolant and removing the pump housing. (5) Replace the mechanical seal, O-rings, and impeller as a kit. (6) This is a moderate repair — many GS owners handle it themselves, or it can be done at a BMW service."
+      },
+      {
+        "id": "fan_always_on",
+        "type": "solution",
+        "text": "Cooling fan runs constantly",
+        "safety": "green",
+        "action": "Diagnose constant fan operation",
+        "details": "If the fan runs from startup and never stops: (1) Check the coolant temperature on the TFT — is the engine actually hot? If so, the fan is doing its job. (2) If the engine is cold but the fan runs: the coolant temperature sensor may be faulty, sending a false 'hot' signal to the ECU. (3) The fan relay may be stuck closed — swap or replace the relay. (4) The ECU may be commanding the fan due to a stored fault code — scan for codes. (5) Wiring short: the fan power wire may be shorted to 12V, bypassing the relay — check wiring. (6) A constantly running fan isn't immediately dangerous but will increase battery drain and noise. Diagnose and repair promptly."
+      },
+      {
+        "id": "coolant_loss",
+        "type": "check",
+        "text": "Find the coolant leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to animals and slippery on pavement. Clean up any spills immediately. Dispose of old coolant properly.",
+        "instructions": "Check for coolant leaks: (1) Under the bike — look for green or pink fluid puddles. (2) Radiator — check for damage to the core (stone impact). (3) Coolant hoses — squeeze each hose and look for cracks, soft spots, or weeping at the connections. (4) Water pump weep hole — a small hole on the bottom of the pump housing. Coolant here means the pump seal is failing. (5) Radiator cap / pressure cap — if it's not holding pressure, coolant can boil and vent. (6) Head gasket — white, sweet-smelling exhaust smoke and/or oil that looks like a milkshake indicates a blown head gasket.",
+        "next": "leak_found_result"
+      },
+      {
+        "id": "leak_found_result",
+        "type": "question",
+        "text": "Where is the coolant leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator is damaged", "next": "solution_radiator_replace" },
+          { "text": "Hose connection or hose itself", "next": "solution_hose_replace" },
+          { "text": "Water pump weep hole", "next": "solution_water_pump" },
+          { "text": "No visible leak — coolant just disappears", "next": "solution_head_gasket_check" }
+        ]
+      },
+      {
+        "id": "solution_radiator_replace",
+        "type": "solution",
+        "text": "Replace the damaged radiator",
+        "safety": "yellow",
+        "warning": "Drain the coolant before removing the radiator. A radiator repair shop may be able to repair minor damage for less cost than replacement.",
+        "action": "Replace or repair the damaged radiator",
+        "details": "A damaged radiator core (from stone impact or crash) needs replacement or professional repair. (1) Drain the coolant. (2) Remove the radiator hoses and fan connector. (3) Remove the radiator mounting bolts. (4) Install the new radiator. (5) Reconnect hoses and fan. (6) Refill and bleed the coolant. (7) For stone damage prevention: install a radiator guard (Touratech, AltRider, or BMW OEM). This is especially important for off-road riding. OEM radiators are available, and aftermarket options from Fluidyne or Mishimoto may offer improved cooling."
+      },
+      {
+        "id": "solution_head_gasket_check",
+        "type": "solution",
+        "text": "Check for internal coolant leak (head gasket)",
+        "safety": "red",
+        "warning": "A blown head gasket is a serious engine issue. Continued operation can cause severe engine damage. If suspected, stop riding and have it diagnosed.",
+        "action": "Test for a blown head gasket",
+        "details": "If coolant disappears with no external leak: (1) Check the exhaust for white, sweet-smelling smoke — coolant entering the combustion chamber. (2) Check the oil for contamination — milky, frothy oil on the dipstick indicates coolant mixing with oil. (3) Use a combustion leak test kit (block tester) — it detects exhaust gases in the coolant, confirming a head gasket leak. (4) A blown head gasket on the R1250GS requires removing the cylinder heads — this is a major repair. (5) Check BMW service bulletins — some boxer engines have had head gasket issues addressed. (6) This is strictly a BMW dealer or specialist repair due to the ShiftCam system complexity."
+      }
+    ]
+  }
+}

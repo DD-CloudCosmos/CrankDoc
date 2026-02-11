@@ -1,0 +1,199 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Starting System Problems",
+  "description": "Diagnose starting system issues on the Sportster 883 including slow cranking, clicking, grinding, and starter motor failure.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the starter button?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow, labored cranking", "next": "slow_crank" },
+          { "text": "Single click — nothing else", "next": "single_click" },
+          { "text": "Rapid clicking", "next": "rapid_click" },
+          { "text": "Grinding or whirring noise", "next": "grinding" },
+          { "text": "Starter spins but engine doesn't turn", "next": "starter_clutch" }
+        ]
+      },
+      {
+        "id": "slow_crank",
+        "type": "check",
+        "text": "Test the battery under load",
+        "safety": "yellow",
+        "warning": "Wear safety glasses when working near the battery. Do not short the battery terminals with tools.",
+        "instructions": "A slow crank almost always points to a weak battery. Measure battery voltage with a multimeter: (1) Key OFF: should read 12.6V+. (2) While cranking: voltage should not drop below 9.5V. If voltage drops below 9.5V while cranking, the battery cannot supply enough current. Also check battery cable connections — corrosion or loose cables increase resistance and reduce current flow to the starter.",
+        "next": "battery_load_result"
+      },
+      {
+        "id": "battery_load_result",
+        "type": "question",
+        "text": "What is the battery voltage while cranking?",
+        "safety": "green",
+        "options": [
+          { "text": "Drops below 9.5V", "next": "solution_weak_battery" },
+          { "text": "Stays above 9.5V — still cranks slowly", "next": "check_starter_cables" }
+        ]
+      },
+      {
+        "id": "solution_weak_battery",
+        "type": "solution",
+        "text": "Battery too weak to crank",
+        "safety": "green",
+        "action": "Charge or replace the battery",
+        "details": "The battery cannot deliver enough cranking amps. (1) Fully charge the battery with a smart charger. (2) After charging, if it still reads below 12.6V or drops under 9.5V while cranking, the battery is worn out. (3) Replace with a YTX14-BS or equivalent AGM battery. (4) After installing a new battery, test the charging system — if the stator or regulator is failing, the new battery will also die. Expected battery life on a Sportster is 3-5 years."
+      },
+      {
+        "id": "check_starter_cables",
+        "type": "check",
+        "text": "Inspect the starter motor cables and connections",
+        "safety": "yellow",
+        "warning": "The starter cable carries very high current. Disconnect the battery negative terminal before inspecting starter connections to prevent accidental short circuits.",
+        "instructions": "Follow the positive battery cable to the starter relay, and from the relay to the starter motor. (1) Check for corroded or loose connections at every point. (2) Feel the cables — a cable that gets hot during cranking has high internal resistance and needs replacement. (3) Check the ground cable from battery negative to the frame/engine. (4) Clean all connections with a wire brush and apply dielectric grease.",
+        "next": "starter_cables_result"
+      },
+      {
+        "id": "starter_cables_result",
+        "type": "question",
+        "text": "Did you find any bad connections or damaged cables?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found corrosion or loose connections", "next": "solution_cable_connections" },
+          { "text": "Cables and connections are clean and tight", "next": "solution_starter_motor_drag" }
+        ]
+      },
+      {
+        "id": "solution_cable_connections",
+        "type": "solution",
+        "text": "Repair starter cable connections",
+        "safety": "yellow",
+        "warning": "Reconnect the negative battery cable last to avoid sparks.",
+        "action": "Clean and secure all starter circuit connections",
+        "details": "Corroded or loose connections in the starter circuit cause voltage drops that slow cranking. (1) Disconnect the battery negative cable. (2) Clean all connections with a wire brush or sandpaper to bare metal. (3) Tighten all connections securely. (4) Apply dielectric grease to prevent future corrosion. (5) Replace any damaged cables — use the same gauge or heavier. (6) Reconnect the battery (positive first, then negative) and test."
+      },
+      {
+        "id": "solution_starter_motor_drag",
+        "type": "solution",
+        "text": "Starter motor internal issue",
+        "safety": "yellow",
+        "warning": "A failing starter motor can draw excessive current, potentially overheating cables and connections.",
+        "action": "Rebuild or replace the starter motor",
+        "details": "If the battery is strong and all connections are clean but cranking is still slow, the starter motor has internal drag. Common causes: (1) Worn brushes — most common, brushes wear down and lose contact. (2) Dirty commutator. (3) Bad bearings creating friction. (4) Internal short in the armature windings. The Sportster 883 starter can be rebuilt (brush kit, bearings) or replaced. A rebuilt starter is often more cost-effective than a new one. Quality aftermarket starters from Drag Specialties or Mid-USA work well."
+      },
+      {
+        "id": "single_click",
+        "type": "check",
+        "text": "A single click usually points to the starter relay or solenoid",
+        "safety": "yellow",
+        "warning": "The starter relay/solenoid handles high current. Do not bypass it with a screwdriver unless you understand the risks of the engine suddenly cranking.",
+        "instructions": "Locate the starter relay (near the battery, usually under the left side cover). (1) With the key ON and in gear with clutch pulled (or in neutral), press the start button. (2) The click comes from the relay. (3) Check the relay's input voltage with a multimeter while pressing the start button — you should see 12V on the small trigger wire. (4) Check the heavy cables on the relay for corrosion. (5) Tap the relay firmly while pressing the start button — if the starter engages, the relay contacts are worn.",
+        "next": "single_click_result"
+      },
+      {
+        "id": "single_click_result",
+        "type": "question",
+        "text": "Did tapping the relay make the starter engage?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — tapping helped it start", "next": "solution_replace_relay" },
+          { "text": "No — still just clicks", "next": "check_starter_direct" }
+        ]
+      },
+      {
+        "id": "solution_replace_relay",
+        "type": "solution",
+        "text": "Replace the starter relay/solenoid",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the starter relay. Note which wires go where before disconnecting.",
+        "action": "Replace the starter relay",
+        "details": "The starter relay contacts are burned or worn, preventing full current flow to the starter motor. (1) Disconnect the battery negative cable. (2) Label and disconnect all wires from the old relay. (3) Remove the mounting hardware. (4) Install the new relay in the same position. (5) Reconnect wires in the correct positions. (6) Reconnect the battery and test. Use a genuine Harley relay (P/N 31506-79B) or a quality aftermarket equivalent."
+      },
+      {
+        "id": "check_starter_direct",
+        "type": "check",
+        "text": "Test the starter motor directly",
+        "safety": "yellow",
+        "warning": "This test bypasses the relay and sends full battery power to the starter. The engine will crank suddenly. Ensure the bike is in neutral, on a stand, and clear of people. Wear safety glasses.",
+        "instructions": "Using a heavy jumper wire or cable: (1) Connect one end to the battery positive terminal. (2) Briefly touch the other end to the starter motor input terminal (the heavy cable connection on the starter). (3) The starter should spin and crank the engine. (4) If the starter doesn't spin, the starter motor itself is faulty. (5) If it does spin, the relay or its trigger circuit is the problem.",
+        "next": "direct_test_result"
+      },
+      {
+        "id": "direct_test_result",
+        "type": "question",
+        "text": "Did the starter motor spin with direct power?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — starter works with direct power", "next": "solution_relay_circuit" },
+          { "text": "No — starter doesn't spin even with direct power", "next": "solution_replace_starter" }
+        ]
+      },
+      {
+        "id": "solution_relay_circuit",
+        "type": "solution",
+        "text": "Starter relay trigger circuit problem",
+        "safety": "yellow",
+        "warning": "Trace wiring carefully. Check the wiring diagram for your specific model year.",
+        "action": "Diagnose the starter relay trigger circuit",
+        "details": "The starter motor works but the relay isn't sending power to it. Check: (1) Starter button — clean the contacts inside the right handlebar switch housing. (2) Clutch safety switch — the starter won't engage unless the clutch is pulled or the bike is in neutral. Test by bypassing the clutch switch. (3) Neutral safety switch — test by shifting to neutral. (4) Kickstand safety switch — ensure the kickstand is fully up. (5) Tip-over sensor (if equipped) — reset by cycling the ignition. (6) Bank angle sensor. Any of these switches in the starter circuit can prevent the relay from triggering."
+      },
+      {
+        "id": "solution_replace_starter",
+        "type": "solution",
+        "text": "Replace the starter motor",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before removing the starter motor. The starter is mounted to the engine case.",
+        "action": "Replace or rebuild the starter motor",
+        "details": "The starter motor has failed internally. (1) Disconnect the battery. (2) Remove the starter cable from the starter. (3) Remove the starter mounting bolts (typically 2 bolts). (4) Slide the starter out — note the jackshaft gear engagement. (5) Install the new or rebuilt starter. (6) Torque mounting bolts to spec. (7) Reconnect the cable. (8) Test. OEM Harley starters, Drag Specialties, or rebuilt units from a reputable source all work well."
+      },
+      {
+        "id": "rapid_click",
+        "type": "solution",
+        "text": "Rapid clicking — battery voltage too low",
+        "safety": "green",
+        "action": "Charge or replace the battery",
+        "details": "Rapid clicking when pressing the start button means the battery has enough voltage to activate the relay but not enough current to spin the starter. The relay rapidly cycles open and closed. (1) Charge the battery fully with a smart charger. (2) If it won't hold a charge, replace it (YTX14-BS or equivalent). (3) Check battery cable connections for corrosion. (4) If this keeps happening with a good battery, test the charging system — the stator or regulator may be failing."
+      },
+      {
+        "id": "grinding",
+        "type": "question",
+        "text": "Describe the grinding noise more specifically.",
+        "safety": "green",
+        "options": [
+          { "text": "Metal-on-metal grinding when pressing start", "next": "solution_ring_gear" },
+          { "text": "Whirring/spinning sound but engine doesn't turn", "next": "starter_clutch" },
+          { "text": "Brief grind then engages normally", "next": "solution_starter_engagement" }
+        ]
+      },
+      {
+        "id": "solution_ring_gear",
+        "type": "solution",
+        "text": "Starter ring gear or jackshaft problem",
+        "safety": "yellow",
+        "warning": "Do not repeatedly engage a grinding starter — it will damage the ring gear further, making repair more expensive.",
+        "action": "Inspect the starter ring gear and jackshaft",
+        "details": "A metal grinding sound indicates the starter gear is not meshing properly with the ring gear on the flywheel. (1) Remove the starter and inspect the starter gear (pinion) teeth. (2) Inspect the ring gear through the starter opening — look for chipped, worn, or missing teeth. (3) If the ring gear is damaged, it must be replaced — this requires significant engine disassembly (splitting the cases on the Sportster). (4) Check the starter jackshaft gear and bearing. This is a more serious repair — consult a Harley technician."
+      },
+      {
+        "id": "starter_clutch",
+        "type": "solution",
+        "text": "Starter clutch (sprag bearing) failure",
+        "safety": "yellow",
+        "warning": "A failing starter clutch can damage the starter and ring gear if not addressed.",
+        "action": "Replace the starter clutch assembly",
+        "details": "If the starter spins but the engine doesn't turn over, the starter clutch (one-way sprag bearing) is slipping. This component allows the starter to engage the engine for cranking but freewheel once the engine starts. (1) The starter clutch is located inside the primary cover on the Sportster. (2) Replacement requires removing the primary cover, clutch, compensator, and primary chain. (3) Replace the starter clutch assembly (Big Bearing starter clutch kits are a popular upgrade). (4) This is an intermediate-level repair requiring specialty tools for the compensator nut."
+      },
+      {
+        "id": "solution_starter_engagement",
+        "type": "solution",
+        "text": "Intermittent starter engagement issue",
+        "safety": "green",
+        "action": "Monitor and inspect the starter drive mechanism",
+        "details": "A brief grind before engaging could indicate: (1) Weak battery — the starter doesn't spin fast enough to mesh cleanly. Fully charge or replace the battery. (2) Worn starter gear teeth — early wear that will worsen over time. (3) Slightly worn ring gear teeth in one spot — the engine stops at a position where teeth are worn. Try bumping the bike forward slightly in gear before starting. If this becomes more frequent, inspect the starter and ring gear before it worsens."
+      }
+    ]
+  }
+}

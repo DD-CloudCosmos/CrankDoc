@@ -1,0 +1,213 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Stalling / Rough Idle",
+  "description": "Diagnose stalling, rough idle, and poor low-speed running on the Kawasaki Ninja 400.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle/stalling issue present?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine stalls when coming to a stop", "next": "check_idle_speed" },
+          { "text": "Engine idles rough and vibrates excessively", "next": "check_idle_speed" },
+          { "text": "Idle speed hunts up and down (surging)", "next": "check_air_leak" },
+          { "text": "Engine stalls when the engine is cold but runs fine when warm", "next": "check_coolant_temp" }
+        ]
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check the idle speed",
+        "safety": "green",
+        "instructions": "Start the engine and let it warm up fully (at least 5 minutes, until the temperature gauge is in the normal range). Check the tachometer — the Ninja 400 should idle at 1,300 RPM plus or minus 100. The idle speed is controlled electronically by the ISC (Idle Speed Control) valve — there is no manual idle adjuster knob on the Ninja 400. If idle is too low, the issue is with the ISC or a related sensor.",
+        "next": "idle_speed_result"
+      },
+      {
+        "id": "idle_speed_result",
+        "type": "question",
+        "text": "What is the idle speed when fully warmed up?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 1,200 RPM — too low", "next": "check_air_leak" },
+          { "text": "Around 1,300 RPM but still rough", "next": "check_spark_plugs" },
+          { "text": "Idle is unstable — keeps changing", "next": "check_air_leak" }
+        ]
+      },
+      {
+        "id": "check_air_leak",
+        "type": "check",
+        "text": "Check for intake air leaks",
+        "safety": "yellow",
+        "warning": "Use contact cleaner sparingly near a hot engine — it is flammable.",
+        "instructions": "Air leaks in the intake system cause lean running and idle problems. With the engine idling, carefully spray a small amount of contact cleaner around: (1) Throttle body to intake port boot joints, (2) Vacuum hose connections, (3) Any cracked rubber intake boots. If the idle speed changes when you spray a specific area, you have found a leak. The Ninja 400 intake boots can harden and crack with age and heat.",
+        "next": "air_leak_result"
+      },
+      {
+        "id": "air_leak_result",
+        "type": "question",
+        "text": "Did you find an air leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle changes when spraying near an intake boot", "next": "solution_intake_boot" },
+          { "text": "Yes — a vacuum hose is loose or cracked", "next": "solution_vacuum_hose" },
+          { "text": "No air leaks found", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_spark_plugs",
+        "type": "check",
+        "text": "Inspect the spark plugs",
+        "safety": "green",
+        "instructions": "The Ninja 400 has two spark plugs (one per cylinder). Remove and inspect both: (1) Color — should be light tan/gray. Black sooty plugs indicate rich running. White plugs indicate lean. (2) Electrode condition — should not be worn, rounded, or damaged. (3) Gap — should be 0.8-0.9mm. The Ninja 400 uses NGK CR8EIA-9 iridium plugs. Replace if over 12,000 km or visibly worn.",
+        "next": "spark_plug_result"
+      },
+      {
+        "id": "spark_plug_result",
+        "type": "question",
+        "text": "What is the spark plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "One or both plugs are fouled, worn, or incorrectly gapped", "next": "solution_spark_plugs" },
+          { "text": "Spark plugs look fine", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality and age",
+        "safety": "yellow",
+        "warning": "Handle fuel in a ventilated area away from ignition sources.",
+        "instructions": "Poor fuel quality is a common cause of rough idle on the Ninja 400: (1) How old is the fuel? Over 60 days is considered stale. (2) What octane are you using? The Ninja 400 requires 87 octane minimum. (3) Did you recently fill up at a different gas station? Contaminated fuel can cause immediate idle issues. (4) Is there water in the fuel? Check for a fuel smell that is off or for condensation issues (common in winter).",
+        "next": "fuel_quality_result"
+      },
+      {
+        "id": "fuel_quality_result",
+        "type": "question",
+        "text": "What is the fuel quality?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is old (over 2 months) or smells stale", "next": "solution_fresh_fuel" },
+          { "text": "Fuel may be contaminated or water-laden", "next": "solution_drain_fuel" },
+          { "text": "Fuel is fresh and normal", "next": "check_throttle_body" }
+        ]
+      },
+      {
+        "id": "check_coolant_temp",
+        "type": "check",
+        "text": "Check cold-start enrichment behavior",
+        "safety": "green",
+        "instructions": "The Ninja 400 ECU provides cold-start enrichment (extra fuel) based on coolant temperature. If the bike stalls only when cold, the coolant temperature sensor may be providing incorrect readings, causing the ECU to use wrong fueling. Check: (1) Does the temperature gauge read correctly? It should start cold and gradually rise. (2) Does the fast idle (slightly elevated RPM when cold) work? The Ninja 400 should idle slightly higher when cold and gradually settle to 1,300 RPM as it warms up.",
+        "next": "cold_start_result"
+      },
+      {
+        "id": "cold_start_result",
+        "type": "question",
+        "text": "How does the cold-start behavior look?",
+        "safety": "green",
+        "options": [
+          { "text": "Temperature gauge reads incorrectly or erratically", "next": "solution_coolant_sensor" },
+          { "text": "No fast idle when cold — drops straight to low RPM", "next": "solution_isc_valve" },
+          { "text": "Cold start behavior seems normal but still stalls", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_throttle_body",
+        "type": "check",
+        "text": "Inspect throttle body for carbon buildup",
+        "safety": "green",
+        "instructions": "Remove the air intake duct from the throttle body. Look inside with a flashlight. Carbon buildup on the throttle plate edges and bore prevents proper sealing when closed, causing erratic idle. The Ninja 400 throttle body can accumulate carbon over 15,000-20,000 km, especially with mostly short-trip riding.",
+        "next": "throttle_body_result"
+      },
+      {
+        "id": "throttle_body_result",
+        "type": "question",
+        "text": "Is there carbon buildup in the throttle body?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — significant carbon deposits visible", "next": "solution_clean_throttle_body" },
+          { "text": "No — throttle body looks clean", "next": "solution_throttle_sync" }
+        ]
+      },
+      {
+        "id": "solution_intake_boot",
+        "type": "solution",
+        "text": "Replace Intake Boot",
+        "safety": "green",
+        "action": "Replace the cracked or hardened intake boot.",
+        "details": "The intake boots (connecting throttle body to cylinder head) are rubber and harden with age and heat exposure. Replace with OEM Kawasaki parts for proper fit. After replacement, check that all clamps are tight and the boot is fully seated on both ends. The Ninja 400 intake boots should be inspected every 20,000 km."
+      },
+      {
+        "id": "solution_vacuum_hose",
+        "type": "solution",
+        "text": "Replace or Reconnect Vacuum Hose",
+        "safety": "green",
+        "action": "Replace the cracked hose or reconnect the loose hose.",
+        "details": "Replace any cracked vacuum hoses with the correct diameter hose. Ensure all connections are fully seated and clamped. The Ninja 400 has vacuum hoses for the fuel pressure regulator and PAIR system. Take a photo of the hose routing before removing anything."
+      },
+      {
+        "id": "solution_spark_plugs",
+        "type": "solution",
+        "text": "Replace Spark Plugs",
+        "safety": "green",
+        "action": "Replace both spark plugs.",
+        "details": "Replace with NGK CR8EIA-9 iridium plugs. Gap to 0.8-0.9mm. Apply a small amount of anti-seize to the threads and torque to 12 Nm. Replace both plugs at the same time. After replacement, the idle should improve immediately if the plugs were the issue."
+      },
+      {
+        "id": "solution_fresh_fuel",
+        "type": "solution",
+        "text": "Replace with Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly.",
+        "action": "Drain stale fuel and refill with fresh gasoline.",
+        "details": "Drain the old fuel from the tank. Fill with fresh 87+ octane gasoline. Add a fuel system cleaner (Techron or similar) to the first tank to clean any varnish from the injectors. For future storage, always add fuel stabilizer before parking the bike for more than a few weeks."
+      },
+      {
+        "id": "solution_drain_fuel",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Contaminated fuel is a fire hazard. Handle carefully.",
+        "action": "Drain all fuel and refill with clean gasoline.",
+        "details": "Drain the tank completely. Water in fuel causes misfires and poor idle. After draining, add fresh fuel with fuel system cleaner. If the problem recurs, check the fuel cap seal for water intrusion and ensure the tank vent is clear."
+      },
+      {
+        "id": "solution_coolant_sensor",
+        "type": "solution",
+        "text": "Replace Coolant Temperature Sensor",
+        "safety": "yellow",
+        "warning": "Some coolant will drain when removing the sensor.",
+        "action": "Replace the faulty coolant temperature sensor.",
+        "details": "The coolant temperature sensor tells the ECU the engine temperature for fuel mixture calculations. A faulty sensor can cause poor cold-start performance and stalling. Replace with an OEM sensor. After replacement, top off coolant and check for leaks."
+      },
+      {
+        "id": "solution_isc_valve",
+        "type": "solution",
+        "text": "Clean or Replace ISC (Idle Speed Control) Valve",
+        "safety": "green",
+        "action": "Clean or replace the ISC valve.",
+        "details": "The Ninja 400 ISC valve controls the bypass air around the throttle plate to maintain idle speed. A dirty or stuck ISC valve causes idle problems, especially during cold starts. Remove the ISC valve, clean with throttle body cleaner, and reinstall. If cleaning does not help, replace the ISC valve with an OEM unit. After any ISC service, the ECU may need a few minutes of idling to relearn the idle parameters."
+      },
+      {
+        "id": "solution_clean_throttle_body",
+        "type": "solution",
+        "text": "Clean Throttle Body",
+        "safety": "green",
+        "action": "Clean the throttle body bore and plate.",
+        "details": "Spray throttle body cleaner on a clean rag and wipe the throttle plate and bore area. Do not spray large amounts directly into the throttle body. Work the throttle open and closed to clean the plate edges. Clean both throttle bores on the Ninja 400. After cleaning, the ECU may need a few idle minutes to relearn. Check for fault codes and clear them if present."
+      },
+      {
+        "id": "solution_throttle_sync",
+        "type": "solution",
+        "text": "Throttle Body Synchronization",
+        "safety": "green",
+        "action": "Have the throttle bodies synchronized.",
+        "details": "If the two throttle bodies are not synchronized, one cylinder will run differently from the other, causing rough idle and vibration. Synchronization requires a vacuum gauge set connected to the vacuum ports on each throttle body. The adjustment screw between the two throttle bodies is used to balance the vacuum readings. This is typically done at a shop ($50-$100) or at home with a set of vacuum gauges ($30-$50 for the gauges). The Ninja 400 twin should have matching vacuum readings within 2 cmHg."
+      }
+    ]
+  }
+}

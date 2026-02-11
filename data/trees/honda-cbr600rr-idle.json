@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Rough Idle / Stalling",
+  "description": "Diagnose rough idle, stalling, and poor low-speed running on the Honda CBR600RR.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine idles rough and shakes", "next": "check_idle_speed" },
+          { "text": "Engine stalls when coming to a stop", "next": "check_idle_speed" },
+          { "text": "Idle speed hunts up and down (surging)", "next": "check_vacuum_leaks" },
+          { "text": "Engine only runs with the choke on (or fast idle lever)", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check and adjust the idle speed",
+        "safety": "green",
+        "instructions": "Warm the engine to operating temperature (fan should cycle at least once). Check the idle speed on the tachometer — the CBR600RR should idle at 1,300 RPM (plus or minus 100). The idle speed adjuster is a knob on the left side of the throttle body assembly. Turn it clockwise to increase idle speed, counterclockwise to decrease. If the idle will not stay stable even when set to the correct speed, further diagnosis is needed.",
+        "next": "idle_speed_result"
+      },
+      {
+        "id": "idle_speed_result",
+        "type": "question",
+        "text": "Were you able to set a stable idle at 1,300 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle is now stable at the correct speed", "next": "solution_idle_adjusted" },
+          { "text": "No — idle is still rough or unstable even after adjusting", "next": "check_vacuum_leaks" },
+          { "text": "Idle keeps dropping and engine stalls", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_vacuum_leaks",
+        "type": "check",
+        "text": "Check for intake vacuum leaks",
+        "safety": "yellow",
+        "warning": "Do not spray flammable carburetor cleaner near a hot engine. Use only safe leak detection methods.",
+        "instructions": "Vacuum leaks cause lean running and rough/surging idle. With the engine running at idle, spray a small amount of contact cleaner or carb cleaner around the intake boot joints (where the throttle bodies connect to the engine). If the idle speed changes when you spray a certain area, you have found a leak. Check: (1) Throttle body to cylinder head intake boots, (2) Vacuum hose connections, (3) PAIR valve hoses, (4) Any cracked or loose rubber boots.",
+        "next": "vacuum_leak_result"
+      },
+      {
+        "id": "vacuum_leak_result",
+        "type": "question",
+        "text": "Did you find a vacuum leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle changes when spraying a specific area", "next": "solution_vacuum_leak" },
+          { "text": "No vacuum leak found", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check the Idle Air Control Valve (IACV)",
+        "safety": "green",
+        "instructions": "The CBR600RR uses an Idle Air Control Valve (IACV) to maintain idle speed. It is an electronic valve controlled by the ECU. Listen for a clicking sound from the IACV when you turn the ignition on — this indicates it is receiving power. If the IACV is stuck or clogged with carbon deposits, it cannot regulate airflow at idle. Cleaning it with throttle body cleaner often resolves idle issues.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "Does the IACV seem to be functioning?",
+        "safety": "green",
+        "options": [
+          { "text": "IACV does not click or respond", "next": "solution_iacv_replace" },
+          { "text": "IACV clicks but idle is still poor", "next": "solution_iacv_clean" },
+          { "text": "Not sure / cannot locate the IACV", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality and age",
+        "safety": "yellow",
+        "warning": "Gasoline is highly flammable. Do not inspect fuel near open flames or ignition sources.",
+        "instructions": "Old or contaminated fuel is a common cause of rough idle, especially if the bike has been sitting. Check: (1) How old is the fuel? Gasoline degrades after 30-60 days, (2) Does the fuel smell like varnish or stale? (3) Is there water in the fuel (visible as a separate layer at the bottom of the tank)? If the bike has been sitting for more than 2 months with fuel, the fuel is likely stale.",
+        "next": "fuel_quality_result"
+      },
+      {
+        "id": "fuel_quality_result",
+        "type": "question",
+        "text": "What is the fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is old (over 2 months) or smells stale", "next": "solution_fresh_fuel" },
+          { "text": "Water in fuel", "next": "solution_drain_fuel" },
+          { "text": "Fuel is fresh and smells normal", "next": "check_throttle_body" }
+        ]
+      },
+      {
+        "id": "check_throttle_body",
+        "type": "check",
+        "text": "Inspect throttle body for carbon buildup",
+        "safety": "green",
+        "instructions": "Remove the air intake from the throttle bodies. Visually inspect the throttle plate area and the inside of the throttle body bore. Carbon buildup on the throttle plate edges and bore can prevent the throttle from closing completely, causing erratic idle. Use a flashlight to look at all four throttle bores on the CBR600RR.",
+        "next": "throttle_body_result"
+      },
+      {
+        "id": "throttle_body_result",
+        "type": "question",
+        "text": "Is there carbon buildup in the throttle bodies?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — significant carbon deposits visible", "next": "solution_clean_throttle_body" },
+          { "text": "No — throttle bodies look clean", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "check_spark_plugs",
+        "type": "check",
+        "text": "Inspect the spark plugs",
+        "safety": "green",
+        "instructions": "Remove and inspect all four spark plugs. Look for: (1) Fouled plugs (black, sooty) — indicates rich running, (2) Worn electrodes, (3) Incorrect gap — should be 0.80-0.90mm. A single fouled plug on an inline-4 will cause noticeable rough idle. Compare all four plugs — they should look similar. The CBR600RR uses NGK IMR9C-9HES iridium plugs.",
+        "next": "spark_plug_result"
+      },
+      {
+        "id": "spark_plug_result",
+        "type": "question",
+        "text": "What is the condition of the spark plugs?",
+        "safety": "green",
+        "options": [
+          { "text": "One or more plugs are fouled or worn", "next": "solution_spark_plugs" },
+          { "text": "All plugs look fine", "next": "solution_throttle_sync" }
+        ]
+      },
+      {
+        "id": "solution_idle_adjusted",
+        "type": "solution",
+        "text": "Idle Speed Adjusted Successfully",
+        "safety": "green",
+        "action": "Idle speed is now set correctly.",
+        "details": "The idle speed adjuster may drift over time or after throttle body service. The correct idle speed for the CBR600RR is 1,300 RPM (plus or minus 100) when fully warmed up. If the idle speed drifts again quickly, there may be an underlying issue with the IACV or throttle body that should be investigated."
+      },
+      {
+        "id": "solution_vacuum_leak",
+        "type": "solution",
+        "text": "Repair Vacuum Leak",
+        "safety": "green",
+        "action": "Replace the leaking intake boot, hose, or gasket.",
+        "details": "Replace the cracked or damaged intake boot or hose. The CBR600RR intake boots (throttle body to head) are rubber and harden with age and heat — replace them if they are cracked or no longer pliable. Tighten all hose clamps to spec. If the PAIR system hoses are leaking, you can replace them or install PAIR valve block-off plates (which also slightly improves throttle response). After repair, reset the idle speed and verify smooth operation."
+      },
+      {
+        "id": "solution_iacv_clean",
+        "type": "solution",
+        "text": "Clean the Idle Air Control Valve",
+        "safety": "green",
+        "action": "Remove and clean the IACV with throttle body cleaner.",
+        "details": "Remove the IACV from the throttle body assembly. Spray the valve passages and plunger with throttle body cleaner (not carburetor cleaner, which is too aggressive for electronic components). Let it soak for a few minutes, then spray again until clean. Let it dry completely before reinstalling. Reset the idle speed after cleaning. This maintenance should be done every 20,000 km or whenever idle issues develop."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace the Idle Air Control Valve",
+        "safety": "green",
+        "action": "Replace the faulty IACV.",
+        "details": "If the IACV does not respond to power and cleaning does not help, replace it. Use an OEM Honda IACV — aftermarket units are sometimes unreliable. After installation, the ECU may need a few minutes of idling to relearn the idle position. Reset the idle speed as needed."
+      },
+      {
+        "id": "solution_fresh_fuel",
+        "type": "solution",
+        "text": "Replace with Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly — do not pour it down drains. Take it to a hazardous waste facility or use it in small amounts mixed with fresh fuel in a car.",
+        "action": "Drain the old fuel and refill with fresh premium gasoline.",
+        "details": "Drain the fuel tank completely. If the fuel is very old (6+ months), the fuel injectors may also be gummed up — add a fuel injector cleaner (like Techron) to the first tank of fresh fuel. The CBR600RR requires 91+ octane (premium) gasoline. After refueling, start the engine and let it run for a few minutes to flush old fuel from the fuel lines and injectors."
+      },
+      {
+        "id": "solution_drain_fuel",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Water-contaminated fuel can cause engine damage. Drain completely before refueling.",
+        "action": "Drain all fuel from the tank and fuel system, then refill with fresh fuel.",
+        "details": "Water in fuel causes misfires, rough idle, and can damage fuel system components. Drain the tank completely. Disconnect the fuel line at the fuel rail and turn the ignition on briefly to flush old fuel from the pump and lines (catch it in a container). Refill with fresh premium fuel. If the problem recurs, check the fuel cap seal and tank vent for water entry points."
+      },
+      {
+        "id": "solution_clean_throttle_body",
+        "type": "solution",
+        "text": "Clean Throttle Bodies",
+        "safety": "green",
+        "action": "Clean the throttle bodies with throttle body cleaner.",
+        "details": "With the air filter removed, spray throttle body cleaner onto a rag and wipe the throttle plate and bore area. Do not spray directly into the throttle bodies in large amounts. Work the throttle open and closed to clean the plate edges. Clean all four throttle bores on the CBR600RR. After cleaning, reset the idle speed and consider a throttle body synchronization if idle remains uneven."
+      },
+      {
+        "id": "solution_spark_plugs",
+        "type": "solution",
+        "text": "Replace Spark Plugs",
+        "safety": "green",
+        "action": "Replace all four spark plugs.",
+        "details": "Replace with NGK IMR9C-9HES (or correct specification for your model year). Gap to 0.80-0.90mm. Install hand-tight, then torque to 12 Nm. If one plug was significantly more fouled than the others, that cylinder may have an additional issue (leaking injector, valve seal, or compression problem) worth monitoring."
+      },
+      {
+        "id": "solution_throttle_sync",
+        "type": "solution",
+        "text": "Throttle Body Synchronization Recommended",
+        "safety": "green",
+        "action": "Have the throttle bodies synchronized using vacuum gauges.",
+        "details": "If all other checks pass but the idle is still rough, the throttle bodies may be out of sync. Throttle body synchronization requires a set of vacuum gauges (or a mercury manometer) connected to the vacuum ports on each throttle body. The idle vacuum on each cylinder is adjusted via screws on the throttle body linkage until all four readings match. This is typically done at a shop ($50-$100) but can be done at home with the right tools. The CBR600RR should have matching vacuum readings (within 2 cmHg) across all four cylinders."
+      }
+    ]
+  }
+}

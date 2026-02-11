@@ -1,0 +1,290 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Brake Issues",
+  "description": "Diagnose brake problems on the Sportster 883 including spongy lever, squealing, reduced stopping power, and brake drag.",
+  "category": "brakes",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake symptom are you experiencing?",
+        "safety": "red",
+        "warning": "Brakes are critical safety components. If you are unsure about any brake repair, have a qualified mechanic perform the work. Do not ride with compromised brakes.",
+        "options": [
+          { "text": "Spongy or soft brake lever/pedal", "next": "spongy_brake" },
+          { "text": "Squealing or grinding noise when braking", "next": "brake_noise" },
+          { "text": "Reduced stopping power — have to pull/press harder", "next": "reduced_power" },
+          { "text": "Brake is dragging (wheel doesn't spin freely)", "next": "brake_drag" },
+          { "text": "Brake fluid leaking", "next": "fluid_leak" }
+        ]
+      },
+      {
+        "id": "spongy_brake",
+        "type": "check",
+        "text": "Check brake fluid level and condition",
+        "safety": "red",
+        "warning": "Brake fluid is corrosive and damages paint and plastic. Wipe up spills immediately. Use only DOT 4 brake fluid for the Sportster 883.",
+        "instructions": "Check the brake fluid reservoir (front: on the right handlebar master cylinder. Rear: on the right side frame near the rear brake pedal). (1) The fluid level should be above the MIN line. (2) Fluid should be clear to light amber. Dark brown or black fluid is old and contaminated. (3) Check for air bubbles in the reservoir — this indicates air in the system.",
+        "next": "fluid_check_result"
+      },
+      {
+        "id": "fluid_check_result",
+        "type": "question",
+        "text": "What is the brake fluid condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fluid is low — below the MIN line", "next": "check_pad_wear" },
+          { "text": "Fluid is dark and contaminated", "next": "solution_flush_fluid" },
+          { "text": "Fluid level and condition are OK — still spongy", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "check_pad_wear",
+        "type": "check",
+        "text": "Inspect brake pad thickness",
+        "safety": "red",
+        "warning": "Never ride with brake pads worn to the metal backing plate. This will score the brake rotor and greatly reduce braking ability.",
+        "instructions": "Look through the caliper opening to see the brake pads. The friction material should be at least 1/16 inch (1.5mm) thick. If you can see the metal backing plate, the pads are completely worn and must be replaced immediately. Low brake fluid combined with thin pads is normal — the caliper pistons extend further as pads wear, using more fluid from the reservoir.",
+        "next": "pad_wear_result"
+      },
+      {
+        "id": "pad_wear_result",
+        "type": "question",
+        "text": "How thick are the brake pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are worn thin (less than 1/16 inch)", "next": "solution_replace_pads" },
+          { "text": "Pads have good thickness — still low on fluid", "next": "fluid_leak" }
+        ]
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "Replace brake pads",
+        "safety": "red",
+        "warning": "After replacing brake pads, pump the brake lever/pedal several times before riding to seat the pads against the rotor. Test brakes at low speed first. New pads need a break-in period — avoid hard braking for the first 100 miles.",
+        "action": "Replace the worn brake pads",
+        "details": "Replace brake pads when friction material is less than 1/16 inch. (1) Remove the caliper bolts (2 bolts, typically 3/8\" or 10mm). (2) Slide the caliper off the rotor. (3) Remove old pads — note the orientation. (4) Push the caliper piston(s) back in using a C-clamp or brake piston tool (open the reservoir cap first to prevent pressure buildup). (5) Install new pads with the friction material facing the rotor. (6) Reinstall the caliper and torque bolts to 28-38 ft-lbs. (7) Top off the brake fluid reservoir. (8) Pump the lever/pedal until firm before riding. Use EBC, Lyndall Racing, or OEM pads."
+      },
+      {
+        "id": "solution_flush_fluid",
+        "type": "solution",
+        "text": "Flush and replace brake fluid",
+        "safety": "red",
+        "warning": "Use only DOT 4 brake fluid. Never mix DOT types. Brake fluid absorbs moisture over time, which lowers its boiling point and can cause brake fade. Flush every 2 years.",
+        "action": "Flush the brake system and replace fluid",
+        "details": "Old, contaminated brake fluid causes spongy brakes due to moisture absorption. (1) Attach a clear tube to the caliper bleed valve and route it into a catch container. (2) Open the bleed valve 1/4 turn. (3) Slowly pump the brake lever — you'll see old dark fluid flow out. (4) Keep the reservoir topped off with fresh DOT 4 fluid — never let it run dry. (5) Continue until clear, fresh fluid flows through. (6) Close the bleed valve and pump the lever until firm. (7) Check the fluid level and cap the reservoir. Repeat for front and rear brakes."
+      },
+      {
+        "id": "solution_bleed_brakes",
+        "type": "solution",
+        "text": "Bleed the brake system",
+        "safety": "red",
+        "warning": "If you cannot get a firm brake lever after bleeding, do not ride the motorcycle. Have it towed to a shop. Air in the brake lines means severely compromised braking.",
+        "action": "Bleed air from the brake system",
+        "details": "Air in the brake lines causes a spongy feel. (1) Start at the caliper farthest from the master cylinder. (2) Attach a clear tube to the bleed valve. (3) Fill the reservoir with fresh DOT 4 fluid. (4) Have a helper slowly pull the brake lever, hold it, then open the bleed valve briefly. Close the valve before releasing the lever. (5) Repeat until no air bubbles are seen in the tube. (6) Keep the reservoir topped off throughout. (7) For stubborn air: try gravity bleeding — open the bleed valve and let fluid drip through on its own. (8) A vacuum bleeder or pressure bleeder makes this easier. After bleeding, the lever should feel firm and solid."
+      },
+      {
+        "id": "brake_noise",
+        "type": "question",
+        "text": "Describe the noise when braking.",
+        "safety": "green",
+        "options": [
+          { "text": "High-pitched squeal", "next": "check_pad_glaze" },
+          { "text": "Metal-on-metal grinding", "next": "solution_pads_gone" },
+          { "text": "Intermittent scraping", "next": "check_rotor" }
+        ]
+      },
+      {
+        "id": "check_pad_glaze",
+        "type": "check",
+        "text": "Inspect brake pads for glazing",
+        "safety": "red",
+        "warning": "Do not ride with glazed brake pads for extended periods — glazing reduces braking effectiveness.",
+        "instructions": "Remove the brake pads and inspect the friction surface. Glazed pads have a shiny, glass-like surface instead of the normal matte texture. This is caused by overheating, light constant braking, or contamination (brake cleaner, oil). Also check the rotor surface — it should have a matte gray appearance with fine cross-hatch marks, not a polished mirror finish.",
+        "next": "pad_glaze_result"
+      },
+      {
+        "id": "pad_glaze_result",
+        "type": "question",
+        "text": "Are the brake pads glazed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — pads are shiny/glazed", "next": "solution_deglaze_pads" },
+          { "text": "No — pads look normal", "next": "solution_anti_squeal" }
+        ]
+      },
+      {
+        "id": "solution_deglaze_pads",
+        "type": "solution",
+        "text": "De-glaze or replace brake pads",
+        "safety": "red",
+        "warning": "Brake dust may contain harmful particles. Work in a ventilated area and wear a dust mask.",
+        "action": "De-glaze the brake pads and rotor",
+        "details": "Lightly sand the pad friction surfaces with 120-grit sandpaper to remove the glazed layer. Also sand the rotor surface lightly. Clean everything with brake cleaner spray (not carburetor cleaner). Reinstall the pads and bed them in: perform 10-15 moderate stops from 30 mph, allowing 30 seconds of cooling between stops. If glazing returns quickly, the pads may be low quality — consider upgrading to EBC or Lyndall pads."
+      },
+      {
+        "id": "solution_anti_squeal",
+        "type": "solution",
+        "text": "Apply anti-squeal treatment",
+        "safety": "red",
+        "warning": "Never apply any lubricant to the friction surface of the pads or rotor.",
+        "action": "Apply anti-squeal compound to pad backing plates",
+        "details": "Some brake squeal is caused by vibration between the pad backing plate and the caliper piston. (1) Remove the pads. (2) Apply a thin coat of brake anti-squeal compound (Permatex Disc Brake Quiet or similar) to the BACK of the pads (the metal backing plate only — never on the friction surface). (3) Let it dry per the product instructions. (4) Reinstall the pads. Also check that caliper mounting bolts are properly torqued and caliper slides move freely."
+      },
+      {
+        "id": "solution_pads_gone",
+        "type": "solution",
+        "text": "Brake pads completely worn — metal on metal",
+        "safety": "red",
+        "warning": "STOP RIDING IMMEDIATELY. Metal-on-metal braking will score and damage the brake rotor, and braking distance is drastically increased. This is dangerous.",
+        "action": "Replace brake pads and inspect the rotor",
+        "details": "The brake pads are worn through to the metal backing plate. (1) Do not ride — tow or push the bike. (2) Replace the pads immediately. (3) Inspect the brake rotor for scoring — deep grooves mean the rotor needs replacement or resurfacing. (4) Minimum rotor thickness is stamped on the rotor — measure with a micrometer. (5) If the rotor is below minimum thickness, replace it. (6) After installing new pads and/or rotor, bed in the brakes with 10-15 moderate stops. Check brakes regularly to prevent this from happening again."
+      },
+      {
+        "id": "check_rotor",
+        "type": "check",
+        "text": "Inspect the brake rotor",
+        "safety": "red",
+        "warning": "A warped or cracked rotor must be replaced. Do not ride with a damaged brake rotor.",
+        "instructions": "Spin the wheel and watch the rotor pass through the caliper. (1) The rotor should be flat — if it wobbles visibly, it's warped. (2) Look for scoring, deep grooves, or cracks. (3) Measure rotor thickness with a micrometer at several points — uneven thickness indicates wear. (4) Check rotor runout with a dial indicator — maximum is typically 0.005 inch (0.13mm). (5) Check that rotor mounting bolts are tight.",
+        "next": "rotor_result"
+      },
+      {
+        "id": "rotor_result",
+        "type": "question",
+        "text": "Is the brake rotor in good condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Rotor is warped or scored", "next": "solution_replace_rotor" },
+          { "text": "Rotor looks fine — noise is intermittent", "next": "solution_debris" }
+        ]
+      },
+      {
+        "id": "solution_replace_rotor",
+        "type": "solution",
+        "text": "Replace the brake rotor",
+        "safety": "red",
+        "warning": "Always install new brake pads with a new rotor. Used pads will not seat properly on a new rotor surface.",
+        "action": "Replace the warped or scored brake rotor",
+        "details": "A warped or severely scored rotor cannot be safely used. (1) Remove the wheel. (2) Remove the rotor bolts (typically 5 bolts, use thread locker on reinstallation). (3) Install the new rotor — torque bolts to 16-24 ft-lbs with blue Loctite. (4) Install new brake pads. (5) Reinstall the wheel. (6) Bed in the new pads and rotor with gentle stops. EBC, Galfer, or OEM rotors are good choices for the Sportster 883."
+      },
+      {
+        "id": "solution_debris",
+        "type": "solution",
+        "text": "Debris or contamination causing intermittent noise",
+        "safety": "green",
+        "action": "Clean the brake assembly",
+        "details": "Intermittent scraping can be caused by: (1) Small stones or debris caught between the pad and rotor — inspect and remove. (2) Rust buildup on the rotor from sitting (especially in humid climates) — this clears after a few brake applications. (3) Dust shield (if equipped) slightly bent and touching the rotor — carefully bend it away. (4) Caliper not centered on the rotor — loosen caliper mounting bolts, squeeze the brake lever to center the caliper, then retighten while holding the lever."
+      },
+      {
+        "id": "reduced_power",
+        "type": "check",
+        "text": "Check brake pad thickness and fluid level",
+        "safety": "red",
+        "warning": "Reduced braking power is a serious safety concern. Diagnose and fix immediately.",
+        "instructions": "Check: (1) Brake pad thickness — must be over 1/16 inch of friction material. (2) Brake fluid level — above MIN line. (3) Brake fluid condition — should be clear, not dark. (4) Brake lever travel — if it pulls all the way to the bar, there's a serious issue (air, leak, or master cylinder failure). (5) Squeeze the lever and hold — if it slowly sinks to the bar, the master cylinder has an internal leak.",
+        "next": "reduced_power_result"
+      },
+      {
+        "id": "reduced_power_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are thin", "next": "solution_replace_pads" },
+          { "text": "Fluid is low or contaminated", "next": "solution_flush_fluid" },
+          { "text": "Lever sinks slowly when held", "next": "solution_master_cylinder" },
+          { "text": "Everything looks OK — still weak braking", "next": "solution_caliper_service" }
+        ]
+      },
+      {
+        "id": "solution_master_cylinder",
+        "type": "solution",
+        "text": "Master cylinder rebuild or replacement",
+        "safety": "red",
+        "warning": "A leaking master cylinder means the brake can fail completely. Do not ride until repaired.",
+        "action": "Rebuild or replace the master cylinder",
+        "details": "A brake lever that slowly sinks to the handlebar indicates the master cylinder internal seals are leaking. (1) Purchase a master cylinder rebuild kit (includes new piston, seals, and spring) for the specific Sportster 883 model year. (2) Remove the master cylinder from the handlebar. (3) Disassemble, clean, and replace the internal components. (4) Reassemble, install, and bleed the system thoroughly. (5) If the cylinder bore is scored or pitted, replace the entire master cylinder assembly."
+      },
+      {
+        "id": "solution_caliper_service",
+        "type": "solution",
+        "text": "Service the brake caliper",
+        "safety": "red",
+        "warning": "Caliper service requires proper tools and technique. Incorrectly assembled calipers can fail. If unsure, have a professional perform this work.",
+        "action": "Clean and rebuild the brake caliper",
+        "details": "Sticky or corroded caliper pistons reduce braking force. (1) Remove the caliper from the bike. (2) Remove the pads. (3) Carefully push the piston(s) out using gentle air pressure or brake fluid pressure (cover with a rag — pistons can pop out). (4) Clean the piston and bore with brake cleaner. (5) Inspect the piston and bore for scoring or corrosion. (6) Replace the caliper piston seal(s) and dust boot(s). (7) Lightly coat the new seals with clean brake fluid. (8) Reassemble, install new pads, and bleed the system."
+      },
+      {
+        "id": "brake_drag",
+        "type": "check",
+        "text": "Identify which brake is dragging",
+        "safety": "red",
+        "warning": "A dragging brake generates heat that can boil brake fluid, warp rotors, and cause brake failure. Address immediately.",
+        "instructions": "Lift each wheel off the ground and spin it by hand. A freely spinning wheel should coast for several rotations. If a wheel barely spins or stops quickly, that brake is dragging. Feel the rotor after a short ride — a dragging brake rotor will be noticeably hotter than normal. Be careful — it can burn you.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which brake is dragging?",
+        "safety": "green",
+        "options": [
+          { "text": "Front brake", "next": "solution_front_drag" },
+          { "text": "Rear brake", "next": "solution_rear_drag" }
+        ]
+      },
+      {
+        "id": "solution_front_drag",
+        "type": "solution",
+        "text": "Front brake dragging",
+        "safety": "red",
+        "warning": "Do not ride with a dragging front brake. The rotor can warp from heat, and brake fluid can boil causing sudden brake loss.",
+        "action": "Diagnose and fix front brake drag",
+        "details": "Common causes of front brake drag: (1) Sticking caliper piston — remove, clean, and rebuild the caliper (replace seals). (2) Clogged return port in the master cylinder — the small hole in the master cylinder bore that allows fluid to return when you release the lever. Clean with a thin wire. (3) Swollen brake hose — the internal rubber can swell and act as a check valve, holding pressure. Replace the brake hose. (4) Lever free play — ensure there is slight free play at the lever before it contacts the master cylinder piston."
+      },
+      {
+        "id": "solution_rear_drag",
+        "type": "solution",
+        "text": "Rear brake dragging",
+        "safety": "red",
+        "warning": "Do not ride with a dragging rear brake. Overheating can cause brake fade and brake fluid boil.",
+        "action": "Diagnose and fix rear brake drag",
+        "details": "Common causes of rear brake drag: (1) Rear brake pedal adjustment — the pedal may be adjusted too high, keeping slight pressure on the master cylinder. Adjust the pedal height so there is free play before it engages the master cylinder. (2) Sticking rear caliper piston — rebuild the caliper. (3) Swollen rear brake hose — replace it. (4) Rear master cylinder return port clogged — clean or rebuild. (5) On the Sportster 883, also check the brake light switch adjustment — an incorrectly adjusted switch can indicate braking issues even when the brake is fine."
+      },
+      {
+        "id": "fluid_leak",
+        "type": "check",
+        "text": "Locate the brake fluid leak",
+        "safety": "red",
+        "warning": "Brake fluid leaks mean reduced or no braking ability. Do not ride until the leak is repaired and the system is bled. Brake fluid damages paint — wipe immediately.",
+        "instructions": "Inspect the entire brake system: (1) Master cylinder — look for wetness around the reservoir, lever pivot, and banjo fitting. (2) Brake line — inspect the entire length for wet spots, cracks, or bulges. (3) Caliper — check around the bleed valve, banjo fitting, and caliper piston seal area. (4) Fittings — check all banjo bolt connections. Brake fluid is clear to amber and feels oily between your fingers.",
+        "next": "leak_location"
+      },
+      {
+        "id": "leak_location",
+        "type": "question",
+        "text": "Where is the brake fluid leaking from?",
+        "safety": "green",
+        "options": [
+          { "text": "Master cylinder area", "next": "solution_master_cylinder" },
+          { "text": "Brake line or fitting", "next": "solution_line_leak" },
+          { "text": "Caliper area", "next": "solution_caliper_service" }
+        ]
+      },
+      {
+        "id": "solution_line_leak",
+        "type": "solution",
+        "text": "Brake line or fitting leak",
+        "safety": "red",
+        "warning": "A leaking brake line can fail completely under pressure. Do not ride. Replace the line before riding.",
+        "action": "Replace the brake line or repair the fitting",
+        "details": "If the rubber brake hose is cracked, swollen, or leaking: replace it with a new DOT-approved brake hose. Braided stainless steel lines (Goodridge, Russell) are a popular upgrade — they give better lever feel and last longer than rubber. (1) Remove the old line. (2) Install the new line with new crush washers on the banjo fittings. (3) Torque banjo bolts to 25 ft-lbs. (4) Fill and bleed the system thoroughly. (5) Check for leaks before riding."
+      }
+    ]
+  }
+}

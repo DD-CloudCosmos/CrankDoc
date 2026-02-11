@@ -1,0 +1,251 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Engine Won't Start",
+  "description": "Diagnose a no-start condition on the Yamaha MT-07, covering electrical, fuel, and mechanical causes.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — no sound, no lights, completely dead", "next": "check_kill_switch" },
+          { "text": "Lights come on but starter does not crank", "next": "check_starter_circuit" },
+          { "text": "Starter cranks but engine does not fire", "next": "check_fuel" },
+          { "text": "Starter cranks slowly or weakly", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check basic electrical prerequisites",
+        "safety": "green",
+        "instructions": "Before diving into diagnostics, verify the basics: (1) Kill switch is in the RUN position (right handlebar), (2) Key is in the ON position, (3) Side stand is UP or the bike is in neutral (the MT-07 has a side stand cutoff switch that prevents starting in gear with the stand down), (4) Main fuse (30A) under the seat is not blown. Check that the instrument cluster lights up when the key is turned on.",
+        "next": "basics_result"
+      },
+      {
+        "id": "basics_result",
+        "type": "question",
+        "text": "Are all the basic checks good?",
+        "safety": "green",
+        "options": [
+          { "text": "Kill switch was off — that was the problem", "next": "solution_kill_switch" },
+          { "text": "Side stand was down in gear — that was it", "next": "solution_side_stand" },
+          { "text": "Main fuse is blown", "next": "solution_main_fuse" },
+          { "text": "All basics check out but still completely dead", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "check_battery_voltage",
+        "type": "check",
+        "text": "Test battery voltage",
+        "safety": "green",
+        "instructions": "Set your multimeter to DC volts. Measure across the battery terminals. A healthy battery reads 12.6-12.8V. Below 12.4V indicates the battery needs charging. Below 12.0V means the battery is deeply discharged and may be damaged. The MT-07 uses a YTZ8V (or equivalent) battery, located under the seat on the right side.",
+        "next": "battery_voltage_result"
+      },
+      {
+        "id": "battery_voltage_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "12.6V or higher — battery is charged", "next": "check_starter_circuit" },
+          { "text": "12.0-12.5V — battery is low", "next": "solution_charge_battery" },
+          { "text": "Below 12.0V — battery is dead", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "check_starter_circuit",
+        "type": "check",
+        "text": "Check the starter circuit components",
+        "safety": "yellow",
+        "warning": "The starter relay handles high current. Do not short the relay terminals with metal tools.",
+        "instructions": "With the key on and kill switch in RUN, listen for a click from the starter relay when you press the start button. The starter relay is located under the seat. If you hear a click but the starter does not crank, the starter motor or its connection may be faulty. If no click is heard, check the starter relay, clutch safety switch (MT-07 requires clutch pulled to start), and wiring to the start button.",
+        "next": "starter_circuit_result"
+      },
+      {
+        "id": "starter_circuit_result",
+        "type": "question",
+        "text": "Do you hear a click from the starter relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Click heard but starter does not crank", "next": "solution_starter_motor" },
+          { "text": "No click at all", "next": "check_clutch_switch" },
+          { "text": "Rapid clicking sound", "next": "solution_charge_battery" }
+        ]
+      },
+      {
+        "id": "check_clutch_switch",
+        "type": "check",
+        "text": "Test the clutch safety switch",
+        "safety": "green",
+        "instructions": "The MT-07 requires the clutch lever to be pulled in to engage the starter (unless in neutral). Check if the neutral light on the dash is on. If in neutral, the clutch switch is bypassed. If in gear, pull the clutch fully and try again. The clutch switch is on the left handlebar perch — you can test it by disconnecting the two-wire connector and jumping the wires together. If the starter now works with the wires jumped, the clutch switch is faulty.",
+        "next": "clutch_switch_result"
+      },
+      {
+        "id": "clutch_switch_result",
+        "type": "question",
+        "text": "Did bypassing the clutch switch help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — starter works with switch bypassed", "next": "solution_clutch_switch" },
+          { "text": "No — still no click from starter relay", "next": "solution_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Verify fuel delivery",
+        "safety": "yellow",
+        "warning": "Do not inspect fuel near ignition sources. Fuel vapors are highly flammable.",
+        "instructions": "Check these fuel-related items: (1) Is there fuel in the tank? The MT-07 fuel gauge can be inaccurate when nearly empty, (2) When you turn the key on, do you hear the fuel pump prime for about 2 seconds? (a whining/humming sound from under the tank), (3) Has the bike been sitting for more than 30 days? Old fuel can prevent starting. If the fuel pump does not prime, check the fuel pump fuse.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "What did you find with the fuel checks?",
+        "safety": "green",
+        "options": [
+          { "text": "Tank is empty", "next": "solution_add_fuel" },
+          { "text": "Fuel pump does not prime (no sound)", "next": "solution_fuel_pump" },
+          { "text": "Bike has been sitting for months with old fuel", "next": "solution_stale_fuel" },
+          { "text": "Fuel seems fine — pump primes, tank has fuel", "next": "check_spark" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch spark plug wires while cranking.",
+        "instructions": "Remove one spark plug (the MT-07 has two cylinders). Reconnect the spark plug wire/coil to the plug. Ground the spark plug against the engine (hold the plug thread against a clean, unpainted metal surface on the engine). Have someone crank the engine while you watch for a blue spark at the plug gap. A strong blue spark is good. A weak yellow/orange spark or no spark indicates an ignition problem. The MT-07 uses NGK LMAR8A-9 spark plugs.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Did you see a spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark — ignition is good", "next": "solution_compression" },
+          { "text": "Weak or no spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_kill_switch",
+        "type": "solution",
+        "text": "Kill Switch Was Off",
+        "safety": "green",
+        "action": "Ensure the kill switch is in the RUN position before starting.",
+        "details": "The kill switch on the right handlebar must be in the RUN position for the engine to start. This is a very common oversight, especially for new riders. The kill switch cuts all ignition and fuel pump power. Make it a habit to check the kill switch as part of your pre-ride routine."
+      },
+      {
+        "id": "solution_side_stand",
+        "type": "solution",
+        "text": "Side Stand Safety Switch Activated",
+        "safety": "green",
+        "action": "Retract the side stand or put the bike in neutral to start.",
+        "details": "The MT-07 has a side stand cutoff switch that prevents starting (or kills the engine) when the side stand is down and the transmission is in gear. Either put the stand up or shift to neutral. If the side stand switch is malfunctioning (engine dies randomly when riding), the switch can be tested and replaced. It is located on the side stand pivot."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Replace Main Fuse",
+        "safety": "yellow",
+        "warning": "If the main fuse blows again immediately after replacement, there is a short circuit that must be found before replacing the fuse again.",
+        "action": "Replace the 30A main fuse.",
+        "details": "The main fuse on the MT-07 is located under the seat near the battery. Replace with a 30A fuse of the same type. A blown main fuse causes a completely dead bike — no lights, no dash, nothing. If the fuse blows again, check for shorts in the main wiring harness, starter relay, or any aftermarket accessories."
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge the Battery",
+        "safety": "green",
+        "action": "Charge the battery with a motorcycle battery charger.",
+        "details": "Use a smart charger designed for motorcycle batteries (Battery Tender, NOCO, Optimate). Charge at 1-2 amps until fully charged. A rapid clicking sound when pressing the start button is a classic sign of a low battery — there is enough power for the relay but not enough to turn the starter. After charging, if the battery will not hold 12.6V, it needs replacement. The MT-07 uses a YTZ8V battery."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the Battery",
+        "safety": "green",
+        "action": "Replace the dead battery.",
+        "details": "A battery below 12.0V is likely sulfated and will not recover properly even with charging. Replace with a YTZ8V or equivalent. Yuasa, Shorai (lithium), and Antigravity are popular choices. Install the new battery with positive terminal first, then negative. If the bike has been sitting for a long time, charge the new battery fully before installing."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Check Starter Motor and Connections",
+        "safety": "yellow",
+        "warning": "The starter motor cable carries very high current. Disconnect the battery before working on starter connections.",
+        "action": "Inspect starter motor connections or replace the starter motor.",
+        "details": "If the relay clicks but the starter does not crank, check the heavy cable connection at the starter motor for corrosion or looseness. Clean the terminals and retighten. If the connection is good, the starter motor itself may be seized or worn. You can test the starter by applying 12V directly to the motor terminal (with the engine in neutral) — it should spin. If it does not, the starter motor needs rebuilding or replacement."
+      },
+      {
+        "id": "solution_clutch_switch",
+        "type": "solution",
+        "text": "Replace Clutch Safety Switch",
+        "safety": "green",
+        "action": "Replace the faulty clutch lever safety switch.",
+        "details": "The clutch switch is a simple two-wire switch on the clutch lever perch. Unscrew the old switch, disconnect the connector, and install the new one. Adjust so that it activates (closes the circuit) when the clutch lever is fully pulled. Test by trying to start the engine with and without the clutch pulled."
+      },
+      {
+        "id": "solution_starter_relay",
+        "type": "solution",
+        "text": "Replace Starter Relay",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the starter relay.",
+        "action": "Replace the starter relay (solenoid).",
+        "details": "The starter relay on the MT-07 is under the seat. It has two small wires (trigger circuit from the start button) and two large wires (battery and starter motor). If it does not click when the start button is pressed (and the trigger circuit is good), replace it. OEM and aftermarket relays are available and inexpensive ($15-$30)."
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Fill the tank with fresh premium gasoline.",
+        "details": "The MT-07 fuel gauge can read inaccurately near empty. The tank holds 14 liters. Fill up with 91+ octane premium gasoline. After adding fuel, you may need to crank the engine a few extra seconds for the fuel pump to pressurize the system."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Check Fuel Pump Circuit",
+        "safety": "yellow",
+        "warning": "Work with the fuel system in a ventilated area away from ignition sources.",
+        "action": "Check the fuel pump fuse and relay, then test the fuel pump.",
+        "details": "Check the fuel pump fuse in the fuse box under the seat. If the fuse is good, check for 12V at the fuel pump connector when the ignition is turned on (the pump should receive power for about 2 seconds during priming). If voltage is present but the pump does not run, the fuel pump is faulty and needs replacement. The MT-07 fuel pump is inside the fuel tank."
+      },
+      {
+        "id": "solution_stale_fuel",
+        "type": "solution",
+        "text": "Drain and Replace Stale Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel safely. Do not pour it down drains.",
+        "action": "Drain the old fuel and refill with fresh gasoline.",
+        "details": "Stale fuel (over 30-60 days old) can varnish and clog fuel injectors. Drain the tank, add fresh premium fuel with fuel injector cleaner (Techron or similar). If the bike still will not start after fresh fuel, the injectors may need professional cleaning. For future storage, add fuel stabilizer (Sta-Bil) before parking the bike for extended periods."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression Test Recommended",
+        "safety": "green",
+        "action": "If spark and fuel are confirmed good, perform a compression test.",
+        "details": "With spark and fuel confirmed, the issue may be mechanical — low compression from worn rings, leaking valves, or a timing chain issue. A compression test requires a compression gauge screwed into the spark plug hole while cranking the engine. The MT-07 (CP2 engine) should read approximately 1,200-1,400 kPa (175-200 psi) on both cylinders, with less than 10% difference between them. Low compression requires professional diagnosis and repair."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Diagnose Ignition System",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Use insulated tools and do not touch coil outputs while cranking.",
+        "action": "Check ignition coils, spark plugs, and related sensors.",
+        "details": "Replace the spark plugs first (NGK LMAR8A-9, gapped to 0.8-0.9mm) — they are the most common ignition failure point. If new plugs do not resolve it, check the ignition coils by measuring primary resistance (should be approximately 2-4 ohms between the two pins). The MT-07 has two stick-type coils, one per cylinder. Also check for fault codes — the MT-07 ECU stores codes accessible via the diagnostic connector or by counting dash warning light flashes."
+      }
+    ]
+  }
+}

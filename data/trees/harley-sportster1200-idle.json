@@ -1,0 +1,223 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Rough Idle / Stalling",
+  "description": "Diagnose rough idle, stalling, and idle surging on the Sportster 1200, covering fuel, air, ignition, and sensor issues.",
+  "category": "fuel",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the idle behaving?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine stalls at idle after warming up", "next": "warm_stall" },
+          { "text": "Idle surges up and down (hunting)", "next": "idle_surge" },
+          { "text": "Rough/shaking idle but doesn't stall", "next": "rough_idle" },
+          { "text": "Engine stalls when coming to a stop", "next": "decel_stall" },
+          { "text": "Won't idle at all — dies immediately", "next": "no_idle" }
+        ]
+      },
+      {
+        "id": "warm_stall",
+        "type": "check",
+        "text": "Check idle speed and basic settings",
+        "safety": "green",
+        "instructions": "Let the engine warm up fully (10 minutes of riding or idling). The idle speed should be 950-1050 RPM on the Sportster 1200. If it's set too low, the engine will stall. On EFI models (2007+): the ECM controls idle via the Idle Air Control (IAC) valve. On carbureted models: adjust the idle screw on the carburetor.",
+        "next": "idle_speed_result"
+      },
+      {
+        "id": "idle_speed_result",
+        "type": "question",
+        "text": "Is the idle speed within spec (950-1050 RPM)?",
+        "safety": "green",
+        "options": [
+          { "text": "Idle was too low — adjusted it up", "next": "solution_idle_adjusted" },
+          { "text": "Idle speed is correct but still stalls", "next": "check_intake_leak" }
+        ]
+      },
+      {
+        "id": "solution_idle_adjusted",
+        "type": "solution",
+        "text": "Idle speed adjusted",
+        "safety": "green",
+        "action": "Set the idle speed to 950-1050 RPM",
+        "details": "On EFI Sportster 1200s: the idle is set via a screw on the throttle body that limits minimum throttle plate opening. The ECM uses the IAC valve to fine-tune idle. If the idle keeps dropping, the IAC valve may need cleaning. On carbureted models: turn the idle screw clockwise to increase idle speed. A half-turn at a time, checking RPM with a tachometer."
+      },
+      {
+        "id": "check_intake_leak",
+        "type": "check",
+        "text": "Test for intake manifold air leaks",
+        "safety": "yellow",
+        "warning": "Use caution when spraying near a hot engine. Avoid using highly flammable sprays near the exhaust.",
+        "instructions": "An intake leak is the most common cause of idle problems on Sportsters. With the engine idling: (1) Spray carburetor cleaner or WD-40 around the intake manifold seals (where the manifold connects to each cylinder head). (2) Spray around the throttle body/carburetor base. (3) Spray around vacuum line connections. (4) If the idle speed changes (rises or smooths out) when spraying a specific area, you've found a leak.",
+        "next": "intake_leak_result"
+      },
+      {
+        "id": "intake_leak_result",
+        "type": "question",
+        "text": "Did you find an intake air leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle changed when spraying a spot", "next": "solution_intake_leak" },
+          { "text": "No leak found", "next": "check_iac_valve" }
+        ]
+      },
+      {
+        "id": "solution_intake_leak",
+        "type": "solution",
+        "text": "Repair the intake manifold air leak",
+        "safety": "yellow",
+        "warning": "Allow the engine to cool before replacing intake seals.",
+        "action": "Replace the intake manifold seals",
+        "details": "Intake leaks are extremely common on the Sportster 1200 because the rubber seals harden from heat. (1) Remove the air cleaner and throttle body/carburetor. (2) Remove the intake manifold. (3) Replace both manifold-to-head seals (always do both — use James Gaskets or OEM). (4) Inspect the manifold for cracks. (5) Reassemble and torque the manifold bolts to 15-18 ft-lbs. (6) Also check the throttle body/carburetor-to-manifold seal. This is often the single fix that solves all idle problems."
+      },
+      {
+        "id": "check_iac_valve",
+        "type": "check",
+        "text": "Clean the Idle Air Control (IAC) valve (EFI models)",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before removing the IAC valve. Use only throttle body cleaner, not carburetor cleaner, on EFI components.",
+        "instructions": "The IAC valve is on the throttle body and controls idle airflow. On EFI Sportster 1200s: (1) Locate the IAC valve on the throttle body (usually 2 bolts and an electrical connector). (2) Disconnect the electrical connector. (3) Remove the IAC and its gasket. (4) Clean the IAC pintle and passage with throttle body cleaner. (5) Clean the throttle body bore while it's accessible. (6) Reinstall with a new gasket. Carbon buildup on the IAC is a common cause of idle problems.",
+        "next": "iac_result"
+      },
+      {
+        "id": "iac_result",
+        "type": "question",
+        "text": "Did cleaning the IAC valve improve the idle? (Or if carbureted, skip to the next option.)",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle is stable now", "next": "solution_iac_cleaned" },
+          { "text": "No improvement — or bike is carbureted", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "solution_iac_cleaned",
+        "type": "solution",
+        "text": "IAC valve cleaned successfully",
+        "safety": "green",
+        "action": "IAC valve cleaned and reinstalled",
+        "details": "Carbon buildup on the IAC valve was restricting the idle air bypass, causing stalling. Clean the IAC every 10,000-15,000 miles as preventive maintenance. Also consider cleaning the throttle body plates at the same time. If the IAC fails again quickly, the valve motor itself may be failing — replacement IAC valves are available from Harley or aftermarket."
+      },
+      {
+        "id": "check_spark_plugs",
+        "type": "check",
+        "text": "Inspect spark plugs",
+        "safety": "yellow",
+        "warning": "Remove spark plugs only on a cold engine to protect the aluminum head threads.",
+        "instructions": "Remove both spark plugs and inspect: (1) Gap should be 0.038-0.043 inches. (2) Color should be light tan (good mixture). (3) Black soot = too rich. (4) White = too lean. (5) Wet with fuel = fouled. (6) Check for cracked insulators. (7) Compare both plugs — if one is different from the other, the problem is specific to that cylinder.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "What condition are the spark plugs in?",
+        "safety": "green",
+        "options": [
+          { "text": "Fouled or worn — replacing them", "next": "solution_new_plugs" },
+          { "text": "One plug different from the other", "next": "solution_single_cyl" },
+          { "text": "Both plugs look fine", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "solution_new_plugs",
+        "type": "solution",
+        "text": "Replace spark plugs",
+        "safety": "green",
+        "action": "Install new spark plugs",
+        "details": "Install new plugs gapped to 0.038-0.043 inches. Use the recommended plug type for your Sportster 1200 year model. Torque to 11-18 ft-lbs in the aluminum heads. Anti-seize on the threads is optional — some mechanics use it, others don't (follow your service manual recommendation). Replace every 10,000 miles."
+      },
+      {
+        "id": "solution_single_cyl",
+        "type": "solution",
+        "text": "Single cylinder issue",
+        "safety": "yellow",
+        "warning": "A persistently fouled plug on one cylinder may indicate a more serious issue — valve seal, injector, or compression problem.",
+        "action": "Diagnose the problem cylinder",
+        "details": "If one plug is different: (1) Swap the plugs and see if the problem follows the plug (plug issue) or stays with the cylinder (cylinder issue). (2) For a consistently fouled plug: check the fuel injector for that cylinder (EFI) — it may be leaking or stuck open. (3) Check compression on both cylinders — they should be within 10% of each other. (4) Check the spark plug wire/coil for that cylinder — weak spark causes fouling. The rear cylinder on the Sportster 1200 often runs slightly differently due to heat."
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "question",
+        "text": "How old is the fuel in the tank? Has the bike been sitting?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is fresh (less than 1 month)", "next": "solution_advanced_diag" },
+          { "text": "Fuel is older than 3 months or bike was stored", "next": "solution_old_fuel" }
+        ]
+      },
+      {
+        "id": "solution_old_fuel",
+        "type": "solution",
+        "text": "Replace old fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly — many auto parts stores accept it.",
+        "action": "Drain and replace stale fuel",
+        "details": "Fuel degrades after 30-60 days without stabilizer, especially ethanol-blended fuel. (1) Drain the tank completely. (2) Refill with fresh premium fuel (91+ octane for the 1200). (3) If the bike sat for months, the fuel injectors or carburetor may also need cleaning — stale fuel leaves varnish deposits. (4) Add fuel stabilizer for future storage. (5) Run the engine and note improvement."
+      },
+      {
+        "id": "solution_advanced_diag",
+        "type": "solution",
+        "text": "Advanced idle diagnostics needed",
+        "safety": "green",
+        "action": "Perform advanced diagnostics",
+        "details": "If basic checks (intake leaks, IAC, plugs, fuel quality) don't resolve the idle issue: (1) Scan for diagnostic trouble codes (EFI models) using a Harley diagnostic tool. (2) Check the engine temperature sensor — a faulty sensor tells the ECM the wrong temperature, causing incorrect fueling. (3) Check the throttle position sensor (TPS) — should read 0% at closed throttle. (4) Check compression on both cylinders. (5) Check valve clearances — tight intake valves won't close fully, causing a rough idle. (6) Consider a professional diagnostic session."
+      },
+      {
+        "id": "idle_surge",
+        "type": "question",
+        "text": "Does the idle surge rhythmically (up and down) or erratically?",
+        "safety": "green",
+        "options": [
+          { "text": "Rhythmic — RPM cycles up and down smoothly", "next": "check_intake_leak" },
+          { "text": "Erratic — random RPM changes", "next": "solution_sensor_issue" }
+        ]
+      },
+      {
+        "id": "solution_sensor_issue",
+        "type": "solution",
+        "text": "Sensor or electrical issue causing erratic idle",
+        "safety": "green",
+        "action": "Check sensors and electrical connections",
+        "details": "Erratic idle often points to: (1) Loose or corroded wiring connector on the ECM or sensors. (2) Failing MAP sensor (manifold absolute pressure). (3) Faulty TPS (throttle position sensor). (4) Engine temperature sensor sending incorrect readings. (5) Check all connectors for corrosion — unplug, spray with electrical contact cleaner, and reconnect. (6) Scan for diagnostic trouble codes. (7) A loose ground wire can also cause erratic ECM behavior."
+      },
+      {
+        "id": "rough_idle",
+        "type": "question",
+        "text": "Is the rough idle accompanied by other symptoms?",
+        "safety": "green",
+        "options": [
+          { "text": "Exhaust popping or backfiring at idle", "next": "check_intake_leak" },
+          { "text": "Blue smoke from the exhaust", "next": "solution_oil_burning" },
+          { "text": "No other symptoms — just rough", "next": "check_spark_plugs" }
+        ]
+      },
+      {
+        "id": "solution_oil_burning",
+        "type": "solution",
+        "text": "Oil burning at idle",
+        "safety": "green",
+        "action": "Investigate oil burning",
+        "details": "Blue smoke at idle indicates oil entering the combustion chamber. Common causes on the Sportster 1200: (1) Worn valve guide seals — oil seeps past the seals when the bike is idling (intake manifold vacuum pulls oil down). This is the most common cause. (2) Worn piston rings — perform a compression test. (3) Excessive oil in the crankcase — check and correct the oil level. Valve guide seal replacement requires removing the heads. Ring replacement requires a full top-end rebuild. If the bike only smokes at startup or idle but runs clean at speed, it's likely valve seals."
+      },
+      {
+        "id": "decel_stall",
+        "type": "solution",
+        "text": "Engine stalls when coming to a stop",
+        "safety": "green",
+        "action": "Diagnose deceleration stalling",
+        "details": "Stalling when decelerating to a stop is usually: (1) Idle speed set too low — raise to 950-1050 RPM. (2) Intake manifold air leak — very common cause (see intake leak diagnosis). (3) Dirty IAC valve (EFI) — clean it. (4) On carbureted models: pilot jet clogged or idle mixture screw needs adjustment. (5) Stale fuel. (6) Tip: blip the throttle slightly as you come to a stop to prevent stalling until you can diagnose the root cause."
+      },
+      {
+        "id": "no_idle",
+        "type": "solution",
+        "text": "Engine dies immediately when throttle is released",
+        "safety": "green",
+        "action": "Diagnose no-idle condition",
+        "details": "If the engine starts and runs at throttle but dies the instant you release: (1) Check idle speed adjustment — it may be set to zero. Turn the idle screw clockwise (in) to raise idle. (2) Major intake leak — the engine can't maintain idle with a large air leak. (3) IAC valve completely stuck closed (EFI models). (4) On carbureted models: clogged pilot circuit — the pilot jet provides fuel at idle. Clean or rebuild the carburetor. (5) Throttle cable adjusted too tight — ensure free play at the throttle grip. Start with the idle screw — it's the simplest fix."
+      }
+    ]
+  }
+}

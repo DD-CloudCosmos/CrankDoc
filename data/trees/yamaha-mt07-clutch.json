@@ -1,0 +1,228 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Clutch Slipping / Hard Shifting",
+  "description": "Diagnose clutch slipping, hard shifting, and transmission issues on the Yamaha MT-07.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What drivetrain symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch slips under acceleration (RPM rises without matching speed increase)", "next": "check_clutch_cable" },
+          { "text": "Shifting is hard or clunky", "next": "check_oil_level" },
+          { "text": "Difficulty finding neutral", "next": "check_oil_level" },
+          { "text": "Clutch drags (bike creeps forward with clutch pulled in)", "next": "check_clutch_freeplay" }
+        ]
+      },
+      {
+        "id": "check_clutch_cable",
+        "type": "check",
+        "text": "Check clutch cable freeplay",
+        "safety": "green",
+        "instructions": "The MT-07 uses a cable-operated clutch. Check the freeplay at the lever — there should be 10-15mm (about 0.4-0.6 inches) of freeplay before you feel resistance. Too little freeplay means the clutch is not fully engaging, which causes slipping. Adjust at the lever adjuster first (loosen locknut, turn adjuster). If the lever adjuster is at its limit, use the lower adjuster at the engine-side clutch cable bracket.",
+        "next": "cable_freeplay_result"
+      },
+      {
+        "id": "cable_freeplay_result",
+        "type": "question",
+        "text": "Is the clutch cable freeplay correct?",
+        "safety": "green",
+        "options": [
+          { "text": "Freeplay was too tight — adjusted and problem is fixed", "next": "solution_cable_adjusted" },
+          { "text": "Freeplay is correct but clutch still slips", "next": "check_oil_type" },
+          { "text": "Cable is frayed or sticking", "next": "solution_replace_cable" }
+        ]
+      },
+      {
+        "id": "check_oil_type",
+        "type": "check",
+        "text": "Check engine oil type and level",
+        "safety": "green",
+        "instructions": "The MT-07 uses a wet clutch — the clutch operates in engine oil. Using the wrong oil can cause clutch slipping. Check: (1) What oil is in the engine? It MUST be JASO MA or MA2 rated motorcycle-specific oil. Automotive oils with friction modifiers (especially those labeled 'Energy Conserving') will cause clutch slipping. (2) Is the oil level correct? Check the sight glass on the right side with the bike upright and the engine warm.",
+        "next": "oil_type_result"
+      },
+      {
+        "id": "oil_type_result",
+        "type": "question",
+        "text": "What oil is in the engine?",
+        "safety": "green",
+        "options": [
+          { "text": "Automotive oil or oil not labeled JASO MA/MA2", "next": "solution_change_oil" },
+          { "text": "Oil level is very high (overfilled)", "next": "solution_oil_level" },
+          { "text": "Correct motorcycle oil (JASO MA) and level is good", "next": "check_clutch_plates" }
+        ]
+      },
+      {
+        "id": "check_clutch_plates",
+        "type": "question",
+        "text": "How many miles/km are on the bike and has the clutch been abused?",
+        "safety": "green",
+        "options": [
+          { "text": "High mileage (over 40,000 km) or heavy city/traffic riding", "next": "solution_clutch_plates" },
+          { "text": "Low mileage but clutch was slipping from new or after a mod", "next": "check_clutch_springs" },
+          { "text": "Not sure — want to inspect the clutch", "next": "solution_clutch_plates" }
+        ]
+      },
+      {
+        "id": "check_clutch_springs",
+        "type": "check",
+        "text": "Check clutch spring tension",
+        "safety": "green",
+        "instructions": "Weak clutch springs cannot keep the friction plates pressed together under load, causing slipping. This is especially common if aftermarket clutch springs or a lighter spring kit was installed. Also occurs if the bike has been modified with a power commander or ECU flash that increases horsepower beyond the stock clutch spring capacity. Measure the clutch spring free length — replace if shorter than the service limit in the manual.",
+        "next": "clutch_spring_result"
+      },
+      {
+        "id": "clutch_spring_result",
+        "type": "question",
+        "text": "What is the clutch spring condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Springs are weak or shorter than service limit", "next": "solution_clutch_springs" },
+          { "text": "Springs look OK", "next": "solution_clutch_plates" }
+        ]
+      },
+      {
+        "id": "check_oil_level",
+        "type": "check",
+        "text": "Check engine oil level and condition",
+        "safety": "green",
+        "instructions": "The MT-07 transmission shares oil with the engine (wet sump). Low oil level or degraded oil directly affects shifting quality. Check the oil level via the sight glass on the right side of the engine — the bike should be upright and the engine warm. The oil should be between the upper and lower marks. Also check the oil condition — dark, dirty oil or oil that smells burnt needs changing. The MT-07 takes approximately 3.0 liters at oil change.",
+        "next": "oil_level_result"
+      },
+      {
+        "id": "oil_level_result",
+        "type": "question",
+        "text": "What is the oil level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil is low", "next": "solution_top_off_oil" },
+          { "text": "Oil is dark, dirty, or burnt", "next": "solution_change_oil" },
+          { "text": "Oil level and condition are fine", "next": "check_shift_linkage" }
+        ]
+      },
+      {
+        "id": "check_shift_linkage",
+        "type": "check",
+        "text": "Inspect the shift linkage",
+        "safety": "green",
+        "instructions": "Check the shift linkage for worn or loose connections. The MT-07 shift linkage consists of the shift lever, a linkage rod, and the shift shaft on the engine. Check: (1) Shift lever bolt is tight, (2) Linkage rod ends are not worn or loose, (3) Shift lever is not bent. Also check the shift lever height — it should be positioned so you can shift without over-extending your foot. Adjust by loosening the linkage rod lock nuts and threading the rod in or out.",
+        "next": "shift_linkage_result"
+      },
+      {
+        "id": "shift_linkage_result",
+        "type": "question",
+        "text": "What did you find with the shift linkage?",
+        "safety": "green",
+        "options": [
+          { "text": "Shift linkage is loose, worn, or bent", "next": "solution_shift_linkage" },
+          { "text": "Shift linkage is fine", "next": "solution_shift_technique" }
+        ]
+      },
+      {
+        "id": "check_clutch_freeplay",
+        "type": "check",
+        "text": "Adjust clutch cable for drag",
+        "safety": "green",
+        "instructions": "A dragging clutch (bike creeps with clutch pulled in) is often caused by too much cable freeplay. The clutch is not fully disengaging. Reduce the freeplay at the lever adjuster — you want 10-15mm of freeplay at the lever tip. If reducing freeplay does not stop the drag, the clutch plates may be warped or the clutch basket may have notches preventing the plates from moving freely.",
+        "next": "clutch_drag_result"
+      },
+      {
+        "id": "clutch_drag_result",
+        "type": "question",
+        "text": "Did adjusting the cable freeplay fix the dragging?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — bike no longer creeps with clutch in", "next": "solution_cable_adjusted" },
+          { "text": "No — clutch still drags after adjustment", "next": "solution_warped_plates" }
+        ]
+      },
+      {
+        "id": "solution_cable_adjusted",
+        "type": "solution",
+        "text": "Clutch Cable Freeplay Adjusted",
+        "safety": "green",
+        "action": "Clutch cable freeplay is now set correctly.",
+        "details": "The correct clutch lever freeplay for the MT-07 is 10-15mm at the lever tip. Check and adjust the freeplay periodically as the cable stretches over time. Lubricate the clutch cable every 5,000 km with cable lubricant to keep it operating smoothly."
+      },
+      {
+        "id": "solution_replace_cable",
+        "type": "solution",
+        "text": "Replace Clutch Cable",
+        "safety": "green",
+        "action": "Replace the frayed or sticky clutch cable.",
+        "details": "A frayed or kinked clutch cable will not operate smoothly and can snap without warning. Route the new cable exactly as the original — avoid sharp bends. Lubricate the new cable before installation. Adjust the freeplay to 10-15mm after installation. OEM Yamaha cables are recommended for proper fit and routing."
+      },
+      {
+        "id": "solution_change_oil",
+        "type": "solution",
+        "text": "Change Engine Oil with Correct Specification",
+        "safety": "green",
+        "action": "Drain and replace with the correct JASO MA/MA2 motorcycle oil.",
+        "details": "Drain the old oil (warm engine first for faster draining). Replace the drain plug crush washer. Install a new oil filter. Fill with approximately 3.0 liters of JASO MA or MA2 rated motorcycle oil. Yamaha recommends Yamalube 10W-40 or equivalent. The JASO MA rating ensures the oil does not contain friction modifiers that cause wet clutch slipping. After filling, run the engine for a minute, then recheck the level."
+      },
+      {
+        "id": "solution_oil_level",
+        "type": "solution",
+        "text": "Correct the Oil Level",
+        "safety": "green",
+        "action": "Drain excess oil to bring the level to the correct mark.",
+        "details": "Overfilled oil can cause clutch slipping due to excess oil pressure on the clutch pack, and can also cause oil to be pushed out the breather or seals. Remove the drain plug briefly to drain excess oil, or use a syringe through the filler hole. Target the level between the upper and lower marks on the sight glass with the bike upright and the engine warm."
+      },
+      {
+        "id": "solution_clutch_plates",
+        "type": "solution",
+        "text": "Replace Clutch Friction and Steel Plates",
+        "safety": "yellow",
+        "warning": "Drain the oil before removing the clutch cover. Take photos of the plate order before removal.",
+        "action": "Replace the clutch friction plates and steel plates.",
+        "details": "Drain the engine oil. Remove the right-side clutch cover (or the outer clutch access cover on some model years). Remove the clutch springs (6 bolts), pressure plate, and pull out all the friction and steel plates. Measure the friction plate thickness — replace if below 2.8mm (service limit). Check the steel plates for warping on a flat surface. Replace as a complete set for best results. Soak new friction plates in oil for 30 minutes before installation. Reassemble in the correct order, torque spring bolts evenly, and refill with oil."
+      },
+      {
+        "id": "solution_clutch_springs",
+        "type": "solution",
+        "text": "Replace Clutch Springs",
+        "safety": "green",
+        "action": "Replace the clutch springs with OEM or heavy-duty springs.",
+        "details": "Remove the clutch access cover and the 6 spring bolts. Replace all 6 springs as a set. If the bike has been modified for more power, consider heavy-duty springs (Barnett, EBC) that provide stronger clamping force. Torque the spring bolts evenly to spec (10 Nm). Refill oil if any was lost."
+      },
+      {
+        "id": "solution_top_off_oil",
+        "type": "solution",
+        "text": "Top Off Engine Oil",
+        "safety": "green",
+        "action": "Add engine oil to bring the level to the correct mark.",
+        "details": "Add JASO MA/MA2 rated 10W-40 motorcycle oil through the filler cap. Add slowly and check the level frequently — the sight glass on the MT-07 shows level changes quickly. Do not overfill. If the oil level is dropping rapidly, investigate for leaks."
+      },
+      {
+        "id": "solution_shift_linkage",
+        "type": "solution",
+        "text": "Repair or Adjust Shift Linkage",
+        "safety": "green",
+        "action": "Tighten, adjust, or replace the worn shift linkage components.",
+        "details": "Tighten the shift lever bolt (check for stripped threads). If the linkage rod ends are worn, replace the rod or the rod end joints. If the shift lever is bent (from a drop or boot contact), straighten or replace it. After any linkage work, adjust the shift lever height for comfortable operation and verify smooth shifting through all gears."
+      },
+      {
+        "id": "solution_shift_technique",
+        "type": "solution",
+        "text": "Normal MT-07 Shifting Characteristics",
+        "safety": "green",
+        "action": "The MT-07 gearbox has firm shifting characteristics that are normal for this model.",
+        "details": "The MT-07 CP2 engine gearbox is known for being slightly clunky, especially when shifting into first from neutral. This is a characteristic of the gearbox design, not a defect. Tips for smoother shifting: (1) Ensure the engine is fully warmed up, (2) Use firm, decisive shift inputs rather than gentle nudges, (3) Match engine speed to road speed when downshifting (blip the throttle), (4) Fresh, clean oil makes a noticeable difference in shift quality on the MT-07."
+      },
+      {
+        "id": "solution_warped_plates",
+        "type": "solution",
+        "text": "Inspect Clutch for Warped Plates or Notched Basket",
+        "safety": "yellow",
+        "warning": "Drain oil before opening the clutch cover.",
+        "action": "Inspect the clutch plates and basket for damage causing clutch drag.",
+        "details": "Remove the clutch plates and inspect: (1) Steel plates — place on a flat surface and check for warping (use a feeler gauge, max 0.10mm), (2) Clutch basket — check the fingers for notches worn by the friction plate tabs. Deep notches prevent plates from moving freely, causing drag. Notches can be filed smooth as a temporary fix, but the basket should be replaced if notches are deep. Also check the clutch boss (inner hub) for similar notching."
+      }
+    ]
+  }
+}

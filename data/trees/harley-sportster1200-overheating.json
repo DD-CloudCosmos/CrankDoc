@@ -1,0 +1,235 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Overheating (Air-Cooled Specific)",
+  "description": "Diagnose overheating issues on the air-cooled Sportster 1200, including heat management in traffic, oil temperature, and cooling system checks.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "The Sportster 1200 is air-cooled and runs hot by nature. When do you notice the overheating?",
+        "safety": "yellow",
+        "warning": "An overheated engine can cause burns, oil breakdown, and engine damage. If the engine is overheating severely, shut it down and let it cool before inspecting.",
+        "options": [
+          { "text": "In slow traffic or at stoplights", "next": "traffic_heat" },
+          { "text": "During normal highway riding", "next": "highway_heat" },
+          { "text": "Oil temperature gauge reads very high", "next": "check_oil" },
+          { "text": "Engine is pinging / knocking under load", "next": "detonation" }
+        ]
+      },
+      {
+        "id": "traffic_heat",
+        "type": "question",
+        "text": "Air-cooled engines rely on airflow. In traffic, there's minimal airflow. Is this a new problem, or has it always run hot in traffic?",
+        "safety": "green",
+        "options": [
+          { "text": "Always been hot in traffic — just seems worse lately", "next": "check_oil" },
+          { "text": "New problem — used to be OK in traffic", "next": "check_oil" },
+          { "text": "First summer riding — not sure what's normal", "next": "solution_normal_heat" }
+        ]
+      },
+      {
+        "id": "solution_normal_heat",
+        "type": "solution",
+        "text": "Normal air-cooled engine heat management",
+        "safety": "green",
+        "action": "Understand normal operating temperature for air-cooled V-twins",
+        "details": "The Sportster 1200 runs hot by design — especially in summer traffic. The rear cylinder runs hotter than the front. Normal oil temperature is 200-250°F. Above 300°F is too hot. To manage heat: (1) Avoid prolonged idling — shut the engine off in long traffic stops. (2) Use synthetic 20W-50 motorcycle oil — it handles heat better. (3) Keep the engine properly tuned — a lean mixture runs hotter. (4) Ensure the air cleaner is clean. (5) Consider an oil cooler kit for chronic heat issues. (6) Riding in summer heat with a 1200cc air-cooled V-twin between your legs is inherently warm — this is normal."
+      },
+      {
+        "id": "check_oil",
+        "type": "check",
+        "text": "Check the engine oil level and condition",
+        "safety": "yellow",
+        "warning": "Check oil level on a warm engine parked on level ground. Hot oil can burn — do not remove the oil fill cap on a very hot engine.",
+        "instructions": "The Sportster 1200 uses a common sump (engine and primary share oil). Check the oil level at the primary chain inspection window on the left side of the engine or via the dipstick (model-dependent). Oil should be between the marks. Also check oil condition: (1) Dark black = overdue for change. (2) Milky/white = coolant or water contamination. (3) Metal flakes = internal wear. The Sportster 1200 holds approximately 2.8-3.0 quarts.",
+        "next": "oil_result"
+      },
+      {
+        "id": "oil_result",
+        "type": "question",
+        "text": "What is the oil level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil is low", "next": "solution_low_oil" },
+          { "text": "Oil is old and very dark", "next": "solution_oil_change" },
+          { "text": "Oil level and condition are fine", "next": "check_cooling_fins" }
+        ]
+      },
+      {
+        "id": "solution_low_oil",
+        "type": "solution",
+        "text": "Low engine oil causing overheating",
+        "safety": "yellow",
+        "warning": "Running an engine with low oil causes accelerated wear and can lead to seizure. Top off immediately.",
+        "action": "Top off and investigate the oil loss",
+        "details": "Low oil reduces the engine's ability to transfer heat. (1) Top off with the correct oil — 20W-50 motorcycle-specific oil (JASO MA or MA2 rated). (2) Investigate where the oil went — check for leaks (rocker boxes, primary cover, cam cover are common on Sportsters). (3) Some oil consumption is normal — up to 1 quart per 1,000 miles on older Sportsters. (4) Blue exhaust smoke indicates oil burning past the rings or valve seals. (5) Change the oil and filter if overdue."
+      },
+      {
+        "id": "solution_oil_change",
+        "type": "solution",
+        "text": "Change the engine oil and filter",
+        "safety": "green",
+        "action": "Perform an oil and filter change",
+        "details": "Old oil loses its ability to lubricate and transfer heat effectively. (1) Warm the engine for 5 minutes (warm oil drains better). (2) Remove the drain plug and drain completely. (3) Replace the oil filter. (4) Install the drain plug with a new O-ring. (5) Refill with 2.8-3.0 quarts of 20W-50 motorcycle oil (Mobil 1 V-Twin, Amsoil, or Harley Formula+). (6) Run the engine for a minute, shut off, and recheck the level. Consider upgrading to full synthetic for better heat protection."
+      },
+      {
+        "id": "check_cooling_fins",
+        "type": "check",
+        "text": "Inspect the cylinder cooling fins and airflow",
+        "safety": "green",
+        "instructions": "The Sportster 1200's primary cooling comes from air flowing over the engine fins. Inspect: (1) Are the cylinder and head cooling fins clean? Road grime, oil buildup, and bug debris insulate the fins and reduce cooling. (2) Are any fins broken or cracked? (3) Is there anything blocking airflow to the engine (saddlebags, aftermarket parts, crash bars positioned too close)? (4) Is the engine guard or highway bar deflecting air away from the rear cylinder?",
+        "next": "fins_result"
+      },
+      {
+        "id": "fins_result",
+        "type": "question",
+        "text": "Are the cooling fins clean and airflow unobstructed?",
+        "safety": "green",
+        "options": [
+          { "text": "Fins are dirty or clogged", "next": "solution_clean_fins" },
+          { "text": "Something is blocking airflow", "next": "solution_airflow_block" },
+          { "text": "Fins are clean, airflow is good", "next": "check_fuel_mixture" }
+        ]
+      },
+      {
+        "id": "solution_clean_fins",
+        "type": "solution",
+        "text": "Clean the cooling fins",
+        "safety": "green",
+        "action": "Clean the engine cooling fins",
+        "details": "Dirty fins significantly reduce cooling efficiency. (1) Let the engine cool completely. (2) Apply engine degreaser (Simple Green) to all finned surfaces. (3) Use a soft brush to scrub between the fins — a parts cleaning brush or old toothbrush works. (4) Rinse with low-pressure water (avoid blasting electrical connectors). (5) Dry thoroughly. (6) Clean the fins every few oil changes or more often in dusty conditions. Clean fins can lower engine temperature by 20-30°F."
+      },
+      {
+        "id": "solution_airflow_block",
+        "type": "solution",
+        "text": "Remove airflow obstructions",
+        "safety": "green",
+        "action": "Improve airflow to the engine",
+        "details": "Air-cooled engines need unobstructed airflow. Common issues: (1) Saddlebags or luggage blocking the rear cylinder — reposition or use spacers. (2) Engine guards or crash bars redirecting air — ensure they don't block the cylinder fins. (3) Full fairing or windshield redirecting air over the engine rather than through it. (4) Aftermarket parts (like large air cleaner covers) that block airflow. Consider adding an oil cooler if airflow cannot be adequately improved."
+      },
+      {
+        "id": "check_fuel_mixture",
+        "type": "check",
+        "text": "Check for a lean fuel condition",
+        "safety": "yellow",
+        "warning": "A lean-running engine overheats and can cause piston damage. Do not ignore signs of lean operation.",
+        "instructions": "A lean air/fuel mixture makes the engine run hotter. Check: (1) Inspect spark plugs — white or blistered electrodes indicate lean running. (2) Has the exhaust or air cleaner been changed without re-tuning? (3) On EFI models, check for diagnostic trouble codes. (4) Listen for deceleration popping — a sign of lean mixture. (5) Check for intake manifold air leaks — spray carb cleaner around the intake seals with the engine idling.",
+        "next": "mixture_result"
+      },
+      {
+        "id": "mixture_result",
+        "type": "question",
+        "text": "Are there signs of a lean fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — white plugs, popping, or intake leak", "next": "solution_lean_fix" },
+          { "text": "No — mixture seems OK", "next": "solution_oil_cooler" }
+        ]
+      },
+      {
+        "id": "solution_lean_fix",
+        "type": "solution",
+        "text": "Correct the lean fuel condition",
+        "safety": "yellow",
+        "warning": "A lean condition can cause catastrophic engine damage (burned pistons, scored cylinders). Fix promptly.",
+        "action": "Richen the fuel mixture",
+        "details": "Fix the lean condition to reduce engine temperature: (1) Replace cracked or hardened intake manifold seals — this is the most common cause on Sportsters. (2) If aftermarket exhaust or air cleaner was installed, install a fuel tuner (FP4, Power Vision, or ThunderMax) and load an appropriate fuel map. (3) On carbureted models, re-jet the carburetor (go up 1-2 main jet sizes). (4) Replace the air filter if clogged. (5) Check and replace O2 sensors if faulty (EFI models). After correcting, plugs should read light tan after riding."
+      },
+      {
+        "id": "solution_oil_cooler",
+        "type": "solution",
+        "text": "Install an oil cooler",
+        "safety": "green",
+        "action": "Install an aftermarket oil cooler",
+        "details": "If the Sportster 1200 runs hot despite good oil, clean fins, and correct fuel mixture, an oil cooler is the best upgrade. (1) Jagg, LowMount, or Harley OEM oil cooler kits are popular for Sportsters. (2) The cooler mounts in front of the engine where it gets maximum airflow. (3) Oil lines tap into the oil filter adapter. (4) Typical temperature reduction: 20-40°F. (5) This is especially recommended for riders in hot climates, frequent stop-and-go traffic, or spirited riding. (6) Use synthetic oil in conjunction with the cooler for maximum heat protection."
+      },
+      {
+        "id": "highway_heat",
+        "type": "question",
+        "text": "Overheating during highway riding (with good airflow) is unusual. What symptoms do you notice?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil temperature very high (over 280°F)", "next": "check_oil" },
+          { "text": "Loss of power at high temperature", "next": "detonation" },
+          { "text": "Burning smell", "next": "check_oil_leak_burn" }
+        ]
+      },
+      {
+        "id": "check_oil_leak_burn",
+        "type": "check",
+        "text": "Check for oil leaking onto the exhaust",
+        "safety": "yellow",
+        "warning": "Oil on hot exhaust pipes is a fire hazard. If you see smoke from the exhaust area, stop and investigate immediately.",
+        "instructions": "A burning oil smell during riding often means oil is leaking onto the hot exhaust pipes. (1) Stop and let the engine cool. (2) Inspect the exhaust pipes and heat shields for oil residue. (3) Check the most common leak points: rocker box gaskets, pushrod tube seals, and the oil filter. (4) Trace any oil trail back to its highest point — that's the source.",
+        "next": "oil_leak_burn_result"
+      },
+      {
+        "id": "oil_leak_burn_result",
+        "type": "question",
+        "text": "Did you find oil on the exhaust?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil leaking onto pipes", "next": "solution_oil_on_exhaust" },
+          { "text": "No oil leak — smell is from something else", "next": "solution_other_smell" }
+        ]
+      },
+      {
+        "id": "solution_oil_on_exhaust",
+        "type": "solution",
+        "text": "Oil leaking onto exhaust pipes",
+        "safety": "yellow",
+        "warning": "Oil on hot exhaust is a fire risk. Fix the leak as soon as possible.",
+        "action": "Identify and repair the oil leak",
+        "details": "The burning smell is oil hitting the hot exhaust. Common leak sources that drip onto the exhaust: (1) Rocker box gaskets — very common on the 1200. (2) Pushrod tube seals — oil seeps down and hits the exhaust. (3) Oil filter — check that it's tight and not double-gasketed. (4) Tappet block seals. See the Oil Leak diagnostic tree for detailed diagnosis. The exhaust can be cleaned with brake cleaner once the leak is fixed."
+      },
+      {
+        "id": "solution_other_smell",
+        "type": "solution",
+        "text": "Investigate other burning smells",
+        "safety": "green",
+        "action": "Check for other heat-related issues",
+        "details": "If no oil leak, the burning smell could be: (1) Brake drag — feel the brake rotors after riding (carefully!). A dragging brake gets very hot. (2) Clutch slipping — burning friction material smell, especially uphill or under load. (3) Electrical issue — melting wire insulation smells acrid/chemical. Check wiring near the engine and exhaust. (4) Debris caught on the exhaust — plastic bag, leaf, or rubber melting on the pipes."
+      },
+      {
+        "id": "detonation",
+        "type": "check",
+        "text": "Check for detonation (pinging/knocking)",
+        "safety": "yellow",
+        "warning": "Detonation (pinging) under load can destroy pistons and bearings. If you hear persistent knocking, reduce load immediately and investigate.",
+        "instructions": "Detonation sounds like marbles or rocks rattling inside the engine, especially under load (acceleration, uphill). Check: (1) What octane fuel are you using? The Sportster 1200 requires 91+ octane premium fuel. (2) Is the engine very hot when it pings? (3) Does it only happen under heavy load?",
+        "next": "detonation_result"
+      },
+      {
+        "id": "detonation_result",
+        "type": "question",
+        "text": "What fuel octane are you using?",
+        "safety": "green",
+        "options": [
+          { "text": "Regular (87 octane)", "next": "solution_wrong_fuel" },
+          { "text": "Premium (91+ octane) — still pinging", "next": "solution_detonation_cause" }
+        ]
+      },
+      {
+        "id": "solution_wrong_fuel",
+        "type": "solution",
+        "text": "Switch to premium fuel",
+        "safety": "green",
+        "action": "Use 91+ octane premium fuel only",
+        "details": "The Sportster 1200 with its higher compression ratio requires premium fuel (91+ octane). Regular 87 octane fuel causes detonation, especially in hot conditions and under load. (1) Fill up with premium fuel as soon as possible. (2) The detonation should stop once you burn through the regular fuel. (3) Always use premium — the cost difference is minimal and it protects your engine. (4) Avoid ethanol-blended fuel if possible, as it can cause additional issues."
+      },
+      {
+        "id": "solution_detonation_cause",
+        "type": "solution",
+        "text": "Diagnose detonation with correct fuel",
+        "safety": "yellow",
+        "warning": "Continued detonation with correct fuel indicates a mechanical problem. Do not ignore — it causes severe engine damage.",
+        "action": "Investigate detonation causes beyond fuel",
+        "details": "If using premium fuel and still getting detonation: (1) Excessive carbon buildup — carbon deposits increase compression ratio and create hot spots. Consider a top-end carbon cleaning. (2) Lean fuel mixture — check for intake leaks and proper fueling (see lean condition diagnosis). (3) Incorrect ignition timing — on models with adjustable timing. (4) EGR or decel device malfunction (if equipped). (5) Overheating in general — address the root cause of overheating. (6) Have a qualified technician scan for trouble codes and check base timing."
+      }
+    ]
+  }
+}

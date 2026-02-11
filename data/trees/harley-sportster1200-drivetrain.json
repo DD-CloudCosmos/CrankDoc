@@ -1,0 +1,178 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Belt Drive Issues",
+  "description": "Diagnose belt drive problems on the Sportster 1200 including belt wear, tension, alignment, and noise.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What belt drive symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt squealing or chirping noise", "next": "belt_noise" },
+          { "text": "Belt appears cracked, frayed, or damaged", "next": "check_belt_condition" },
+          { "text": "Belt feels loose or slipping", "next": "check_belt_tension" },
+          { "text": "Vibration or jerky power delivery", "next": "check_belt_alignment" },
+          { "text": "Belt came off the pulleys", "next": "belt_off" }
+        ]
+      },
+      {
+        "id": "belt_noise",
+        "type": "check",
+        "text": "Inspect the belt for contamination and tension",
+        "safety": "green",
+        "instructions": "Belt noise is usually caused by contamination or improper tension. (1) Visually inspect the belt for oil, grease, or debris contamination. (2) Check belt tension — press on the belt at the midpoint between the pulleys. Deflection should be 1/4 to 3/8 inch (6-10mm) with 10 lbs of force on the top run. (3) Check for stones, debris, or rubber buildup in the pulley teeth. (4) Check both pulleys for damage or contamination.",
+        "next": "noise_result"
+      },
+      {
+        "id": "noise_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is contaminated (oil, grease)", "next": "solution_clean_belt" },
+          { "text": "Belt tension is incorrect", "next": "solution_adjust_tension" },
+          { "text": "Debris in the pulley teeth", "next": "solution_clean_pulleys" },
+          { "text": "Everything looks clean — still noisy", "next": "check_belt_alignment" }
+        ]
+      },
+      {
+        "id": "solution_clean_belt",
+        "type": "solution",
+        "text": "Clean the contaminated belt",
+        "safety": "green",
+        "action": "Clean the drive belt and pulleys",
+        "details": "Oil or grease on the belt causes slipping and noise. (1) Clean the belt with warm soapy water and a soft brush — do NOT use solvents, petroleum products, or WD-40 as they damage the rubber. (2) Clean both pulleys the same way. (3) Dry thoroughly. (4) Investigate the contamination source — oil leak from the primary or transmission dripping onto the belt? Fix the leak to prevent recurrence. If the belt is severely oil-soaked, it may need replacement as the oil weakens the rubber."
+      },
+      {
+        "id": "solution_clean_pulleys",
+        "type": "solution",
+        "text": "Clean debris from pulleys",
+        "safety": "green",
+        "action": "Remove debris from the belt pulleys",
+        "details": "Small stones, road debris, or rubber buildup in the pulley teeth cause noise and accelerate belt wear. (1) Rotate the rear wheel to expose each section of the pulleys. (2) Pick out any stones or debris with a blunt tool (do not use sharp objects that could cut the belt). (3) Use a stiff brush to clean rubber buildup from the pulley teeth. (4) Inspect the belt for cuts or damage from the debris. (5) Riding on gravel or dirt roads accelerates this — check after off-road excursions."
+      },
+      {
+        "id": "check_belt_condition",
+        "type": "check",
+        "text": "Inspect the belt for damage",
+        "safety": "green",
+        "instructions": "Slowly rotate the rear wheel and inspect the entire belt. Look for: (1) Cracks in the belt teeth or backing. (2) Fraying or peeling at the edges. (3) Missing teeth. (4) Cuts or punctures. (5) Excessive wear — teeth should be squared off, not rounded. (6) Cord exposure (the reinforcing cords inside the belt). Any of these conditions mean the belt should be replaced.",
+        "next": "belt_condition_result"
+      },
+      {
+        "id": "belt_condition_result",
+        "type": "question",
+        "text": "Is the belt damaged?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — cracked, frayed, or missing teeth", "next": "solution_replace_belt" },
+          { "text": "Minor surface wear but no damage", "next": "solution_belt_ok" }
+        ]
+      },
+      {
+        "id": "solution_replace_belt",
+        "type": "solution",
+        "text": "Replace the drive belt",
+        "safety": "yellow",
+        "warning": "A worn or damaged belt can break while riding, leaving you stranded. Replace promptly. Do not ride with a visibly damaged belt.",
+        "action": "Replace the drive belt",
+        "details": "The Sportster 1200 drive belt should be replaced if damaged or showing significant wear. (1) Remove the rear axle nut and loosen the axle adjusters fully. (2) Remove the rear wheel. (3) Slide the old belt off the rear pulley. (4) On some models, the belt guard and/or swingarm spacers must be removed. (5) Route the new belt around both pulleys. (6) Reinstall the rear wheel. (7) Adjust belt tension to 1/4-3/8 inch deflection. (8) Align the rear wheel using the axle adjuster marks. (9) Torque the axle nut to spec (60-65 ft-lbs). Harley belts typically last 50,000-100,000 miles with proper tension."
+      },
+      {
+        "id": "solution_belt_ok",
+        "type": "solution",
+        "text": "Belt is in serviceable condition",
+        "safety": "green",
+        "action": "Monitor belt condition",
+        "details": "The belt shows normal wear but is still serviceable. Continue to inspect the belt regularly — every oil change or 5,000 miles. Keep the belt clean and properly tensioned. Belt life is typically 50,000-100,000 miles on the Sportster 1200. Replace if you notice any cracking, fraying, or missing teeth."
+      },
+      {
+        "id": "check_belt_tension",
+        "type": "check",
+        "text": "Check and adjust belt tension",
+        "safety": "green",
+        "instructions": "Use a belt tension tool or the manual method. (1) With the bike on a stand and one person sitting on it (to load the suspension): press on the top run of the belt midway between the pulleys with approximately 10 lbs of force. (2) Measure the deflection — it should be 1/4 to 3/8 inch (6-10mm). (3) If too loose: the belt can jump teeth. If too tight: premature belt and bearing wear. A Gates Krikit belt tension gauge gives more accurate readings.",
+        "next": "tension_result"
+      },
+      {
+        "id": "tension_result",
+        "type": "question",
+        "text": "What is the belt deflection?",
+        "safety": "green",
+        "options": [
+          { "text": "More than 3/8 inch — too loose", "next": "solution_adjust_tension" },
+          { "text": "Less than 1/4 inch — too tight", "next": "solution_adjust_tension" },
+          { "text": "Within spec (1/4 to 3/8 inch)", "next": "check_belt_alignment" }
+        ]
+      },
+      {
+        "id": "solution_adjust_tension",
+        "type": "solution",
+        "text": "Adjust belt tension",
+        "safety": "green",
+        "action": "Set the belt tension to specification",
+        "details": "To adjust belt tension on the Sportster 1200: (1) Loosen the rear axle nut. (2) Turn the axle adjusters evenly on both sides. Clockwise moves the wheel back (tightens the belt). Counter-clockwise moves it forward (loosens). (3) Adjust until deflection is 1/4-3/8 inch with 10 lbs of force on the top run. (4) Ensure both axle adjuster marks are equal on both sides (wheel alignment). (5) Torque the axle nut to 60-65 ft-lbs. (6) Recheck tension after torquing — it may change slightly. (7) Ride a short distance and recheck."
+      },
+      {
+        "id": "check_belt_alignment",
+        "type": "check",
+        "text": "Check belt and pulley alignment",
+        "safety": "green",
+        "instructions": "Misalignment causes uneven belt wear, edge fraying, and noise. (1) Look down the belt from behind the bike — the belt should run straight between the front and rear pulleys without an angle. (2) Check the axle adjuster marks on both sides — they should be at the same position. (3) Look for wear patterns on the belt edges — wear on one side only indicates misalignment. (4) Check that the rear pulley is not wobbling (bent axle or loose pulley bolts).",
+        "next": "alignment_result"
+      },
+      {
+        "id": "alignment_result",
+        "type": "question",
+        "text": "Is the belt properly aligned?",
+        "safety": "green",
+        "options": [
+          { "text": "Axle adjusters are not equal — misaligned", "next": "solution_align_belt" },
+          { "text": "Belt wears on one edge only", "next": "solution_align_belt" },
+          { "text": "Rear pulley is wobbling", "next": "solution_pulley_issue" },
+          { "text": "Alignment looks correct", "next": "solution_compensator_check" }
+        ]
+      },
+      {
+        "id": "solution_align_belt",
+        "type": "solution",
+        "text": "Align the rear wheel and belt",
+        "safety": "green",
+        "action": "Correct the rear wheel alignment",
+        "details": "Misalignment causes accelerated belt wear and noise. (1) Loosen the axle nut. (2) Adjust the axle adjusters so both sides show the same mark/measurement. (3) Use a straight edge along the rear wheel to verify alignment with the frame. (4) Retighten the axle nut to 60-65 ft-lbs. (5) Recheck belt tension. (6) If edge wear has already occurred, inspect the belt for damage and replace if the reinforcing cords are exposed."
+      },
+      {
+        "id": "solution_pulley_issue",
+        "type": "solution",
+        "text": "Rear pulley or axle problem",
+        "safety": "yellow",
+        "warning": "A wobbling pulley can cause the belt to jump off. Do not ride until fixed.",
+        "action": "Inspect the rear pulley and axle",
+        "details": "A wobbling rear pulley can be caused by: (1) Loose pulley mounting bolts — check and torque to spec. (2) Bent rear axle — measure runout with a dial indicator or replace if obviously bent. (3) Worn rear wheel bearings — check for play by grabbing the wheel and rocking side to side. (4) Cracked or damaged pulley — inspect for cracks. Replace any damaged components. A wobbling pulley will rapidly destroy the belt."
+      },
+      {
+        "id": "solution_compensator_check",
+        "type": "solution",
+        "text": "Check the compensator sprocket",
+        "safety": "yellow",
+        "warning": "A failing compensator can cause sudden jerky power delivery and drivetrain noise.",
+        "action": "Inspect the compensator sprocket assembly",
+        "details": "If belt tension and alignment are correct but you have jerky power delivery or a clunk on acceleration/deceleration, the compensator sprocket may be worn. The compensator is in the primary cover and absorbs drivetrain shock. A worn compensator allows excessive free play that feels like belt issues. (1) Remove the derby cover. (2) Grab the primary chain and check for excessive slack. (3) A clunking sound when blipping the throttle in neutral is a classic compensator symptom. Replacement requires removing the primary cover, clutch, and primary chain. Some riders opt for a compensator eliminator sprocket for a more direct feel."
+      },
+      {
+        "id": "belt_off",
+        "type": "solution",
+        "text": "Belt came off the pulleys",
+        "safety": "yellow",
+        "warning": "Do not ride with the belt off. Inspect everything before attempting to reinstall the belt.",
+        "action": "Investigate why the belt came off and reinstall",
+        "details": "A belt coming off the pulleys is a serious issue. Before reinstalling, check: (1) Belt tension — was it too loose? This is the most common cause. (2) Pulley alignment — are both pulleys in the same plane? (3) Rear axle — is it tight? A loose axle nut lets the wheel shift. (4) Missing or damaged belt guard — the guard prevents the belt from climbing off the pulleys. (5) Inspect the belt for damage — a belt that came off likely has damaged edges and should be replaced. (6) Check both pulleys for damage. After fixing the root cause, reinstall the belt and set proper tension."
+      }
+    ]
+  }
+}

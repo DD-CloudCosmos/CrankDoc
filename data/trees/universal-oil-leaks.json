@@ -1,0 +1,205 @@
+{
+  "title": "Oil Leak Diagnosis",
+  "description": "Locate and diagnose motorcycle oil leaks. Identify the source, assess severity, and determine the correct repair approach.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How are you noticing the oil leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil spots on the ground where the bike is parked", "next": "check_leak_location" },
+          { "text": "Oil level dropping between oil changes", "next": "check_consumption_vs_leak" },
+          { "text": "Visible oil on the engine or parts of the bike", "next": "check_leak_location" },
+          { "text": "Burning oil smell while riding", "next": "check_dripping_on_exhaust" }
+        ]
+      },
+      {
+        "id": "check_leak_location",
+        "type": "check",
+        "text": "Locate the source of the oil leak.",
+        "safety": "green",
+        "instructions": "Clean the engine thoroughly with degreaser and let it dry. Then run the engine for 10-15 minutes and carefully inspect the engine for fresh oil. Oil always flows downward and backward (from wind), so trace the oil trail upward to find the highest wet point — this is closest to the source. Check these common areas: valve cover gasket, cylinder base gasket, oil pan gasket, front sprocket area, oil filter, drain plug, and any external oil lines.",
+        "next": "leak_location_result"
+      },
+      {
+        "id": "leak_location_result",
+        "type": "question",
+        "text": "Where is the oil leak coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Top of engine — valve cover area", "next": "solution_valve_cover" },
+          { "text": "Middle of engine — cylinder or case mating surfaces", "next": "solution_case_gasket" },
+          { "text": "Bottom of engine — oil pan, drain plug, or oil filter", "next": "check_drain_and_filter" },
+          { "text": "Front of engine — behind sprocket cover", "next": "solution_countershaft_seal" },
+          { "text": "I cannot pinpoint the source", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "solution_valve_cover",
+        "type": "solution",
+        "text": "The valve cover gasket is leaking.",
+        "safety": "yellow",
+        "warning": "Ensure the engine is cool before removing the valve cover. Do not overtighten valve cover bolts — they thread into soft aluminum.",
+        "action": "Replace the valve cover gasket",
+        "details": "Remove the valve cover, clean the mating surfaces on both the cover and the cylinder head thoroughly (remove all old gasket material without gouging the aluminum). Install a new gasket (use the OEM gasket for your bike). Tighten the valve cover bolts in the correct sequence and to the torque specified in your service manual — overtightening can warp the cover or strip threads in the head. Some bikes use rubber O-ring type gaskets that can be reused if still in good condition, while others use paper or rubber sheet gaskets that should always be replaced."
+      },
+      {
+        "id": "solution_case_gasket",
+        "type": "solution",
+        "text": "A case or cylinder gasket is leaking.",
+        "safety": "yellow",
+        "warning": "Case gasket replacement may require significant engine disassembly. Consult your service manual for the procedure.",
+        "action": "Replace the leaking gasket — consider professional help for major case gaskets",
+        "details": "Leaks from cylinder base gaskets, crankcase mating surfaces, or other major gaskets require varying levels of disassembly depending on the specific gasket. Some external cover gaskets (clutch cover, stator cover, oil pump cover) can be replaced relatively easily. Major gaskets like the cylinder base gasket require removing the cylinder, which is a more involved job. Clean all mating surfaces carefully when replacing gaskets — never use a metal scraper on aluminum surfaces. Use a plastic scraper or gasket remover chemical. Torque all bolts to specification in the correct sequence."
+      },
+      {
+        "id": "check_drain_and_filter",
+        "type": "check",
+        "text": "Check the oil drain plug and oil filter.",
+        "safety": "green",
+        "instructions": "Inspect the oil drain plug — is it tight? Is the crush washer (sealing washer) in place and in good condition? The crush washer should be replaced at every oil change. Check the oil filter — is it tight? Is the O-ring or gasket on the filter seating properly? If the engine has an external oil filter with a removable cover, check the cover O-ring as well. Wipe the area clean and watch for fresh oil.",
+        "next": "drain_filter_result"
+      },
+      {
+        "id": "drain_filter_result",
+        "type": "question",
+        "text": "What did you find at the drain plug and oil filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug is loose or crush washer is damaged", "next": "solution_drain_plug" },
+          { "text": "Oil filter is loose or its gasket is pinched", "next": "solution_oil_filter" },
+          { "text": "Both are tight and sealed properly", "next": "solution_oil_pan_gasket" }
+        ]
+      },
+      {
+        "id": "solution_drain_plug",
+        "type": "solution",
+        "text": "The drain plug or its crush washer is causing the leak.",
+        "safety": "green",
+        "action": "Tighten the drain plug and replace the crush washer",
+        "details": "Replace the drain plug crush washer (also called a sealing washer) with a new one — these are meant to be replaced at every oil change as they deform to create a seal. Tighten the drain plug to the torque specified in your service manual. Do not overtighten — the drain plug threads into the aluminum oil pan and the threads can be stripped with excessive force. If the threads are already damaged, a thread repair kit (like a Helicoil) may be needed, or the oil pan may need replacement in severe cases."
+      },
+      {
+        "id": "solution_oil_filter",
+        "type": "solution",
+        "text": "The oil filter is leaking.",
+        "safety": "green",
+        "action": "Reseat or replace the oil filter",
+        "details": "For spin-on filters: ensure the old filter gasket was removed when the filter was last changed (a double gasket will always leak). Apply a thin film of clean oil to the new filter gasket before installation. Tighten the filter hand-tight plus about 3/4 turn — do not use a filter wrench to tighten, only to remove. For cartridge-style filters with a removable cover: replace the cover O-ring with a new one (usually included with the filter), clean the O-ring groove, lightly oil the new O-ring, and tighten the cover to the specified torque."
+      },
+      {
+        "id": "solution_oil_pan_gasket",
+        "type": "solution",
+        "text": "The oil pan gasket may be leaking.",
+        "safety": "yellow",
+        "warning": "Oil pan removal may require engine support or partial removal from the frame on some bikes.",
+        "action": "Replace the oil pan gasket",
+        "details": "If oil is seeping from the oil pan mating surface but the drain plug and filter are fine, the oil pan gasket needs replacement. Remove the oil pan bolts in a crisscross pattern, drop the pan, clean both mating surfaces thoroughly, install a new gasket, and reassemble. Tighten bolts in the sequence and to the torque specified in your service manual. Some bikes use liquid gasket maker (RTV sealant) instead of a cut gasket — if so, use the type specified by the manufacturer and apply a thin, even bead."
+      },
+      {
+        "id": "solution_countershaft_seal",
+        "type": "solution",
+        "text": "The countershaft (output shaft) seal is leaking.",
+        "safety": "yellow",
+        "warning": "Oil leaking onto the front sprocket and chain will fling oil everywhere and can contaminate the rear brake.",
+        "action": "Replace the countershaft oil seal",
+        "details": "The countershaft seal (where the output shaft exits the engine to drive the front sprocket) is a common leak point. Remove the front sprocket cover and the front sprocket. The seal is pressed into the engine case behind the sprocket. Use a seal pick or small pry tool to carefully remove the old seal without scoring the shaft or the bore in the case. Clean the area, apply a thin film of oil to the lip of the new seal, and press or tap it in evenly. Reinstall the sprocket and cover. Also check the chain and rear brake disc/drum for oil contamination and clean if needed."
+      },
+      {
+        "id": "check_consumption_vs_leak",
+        "type": "question",
+        "text": "Is the oil actually leaking externally, or is the engine consuming (burning) oil?",
+        "safety": "green",
+        "options": [
+          { "text": "I see oil spots or wetness on the engine/ground", "next": "check_leak_location" },
+          { "text": "No visible leaks but oil level keeps dropping", "next": "check_oil_burning" }
+        ]
+      },
+      {
+        "id": "check_oil_burning",
+        "type": "check",
+        "text": "Check for signs of oil burning.",
+        "safety": "green",
+        "instructions": "Start the engine and let it idle. Watch the exhaust — blue or gray smoke from the exhaust indicates oil burning. This may be more noticeable on cold starts or when blipping the throttle after idling for a while. Also check the spark plugs — oily, wet plugs or heavy dark deposits suggest oil is getting into the combustion chamber.",
+        "next": "oil_burning_result"
+      },
+      {
+        "id": "oil_burning_result",
+        "type": "question",
+        "text": "Is the engine producing blue/gray exhaust smoke?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — blue smoke, especially on startup or deceleration", "next": "solution_valve_seals" },
+          { "text": "Yes — blue smoke at all times", "next": "solution_piston_rings" },
+          { "text": "No smoke visible", "next": "solution_slow_external_leak" }
+        ]
+      },
+      {
+        "id": "solution_valve_seals",
+        "type": "solution",
+        "text": "Oil is likely leaking past worn valve stem seals.",
+        "safety": "yellow",
+        "warning": "Valve stem seal replacement requires removing the valve cover and possibly the camshafts. This is an intermediate-level repair.",
+        "action": "Replace the valve stem seals",
+        "details": "Blue smoke on cold startup that clears after warming up, or a puff of blue smoke when blipping the throttle after idling, typically indicates worn valve stem seals. Oil seeps past the worn seals and collects in the combustion chamber while the bike sits, then burns off on startup. The seals harden and shrink with age and heat. Replacing valve stem seals can sometimes be done without removing the cylinder head (using a special tool to hold the valves up with compressed air), but it depends on the engine design. Consult your service manual or have a professional do the repair."
+      },
+      {
+        "id": "solution_piston_rings",
+        "type": "solution",
+        "text": "Worn piston rings are allowing oil into the combustion chamber.",
+        "safety": "red",
+        "warning": "Piston ring replacement is a major engine repair requiring complete top-end disassembly.",
+        "action": "Have the engine top end rebuilt — piston rings and possibly pistons need replacement",
+        "details": "Constant blue smoke under all conditions indicates oil is getting past the piston rings into the combustion chamber. A compression test and leak-down test will confirm this — low compression and high leak-down rates indicate ring wear. The engine will need a top-end rebuild: new piston rings at minimum, and possibly new pistons if the cylinder bore is worn beyond specification. The cylinder bores may need to be honed or rebored. This is a significant repair best done by an experienced mechanic."
+      },
+      {
+        "id": "solution_slow_external_leak",
+        "type": "solution",
+        "text": "There may be a slow external leak that is hard to see.",
+        "safety": "green",
+        "action": "Use UV dye or thorough cleaning to find the slow leak",
+        "details": "A small oil consumption rate (less than 0.5 quarts per 1,000 miles) can be normal for some engines, especially older or high-mileage ones. However, if consumption is excessive, there is likely a slow external leak. Some oil may be seeping and evaporating on hot engine surfaces before dripping. Clean the engine thoroughly, add UV leak detection dye to the oil, ride for a few hundred miles, then inspect with a UV/black light — the dye will fluoresce at the leak point. This is the most reliable way to find slow leaks."
+      },
+      {
+        "id": "check_dripping_on_exhaust",
+        "type": "check",
+        "text": "Check for oil dripping onto the exhaust system.",
+        "safety": "yellow",
+        "warning": "Oil on hot exhaust components is a fire risk. Find and fix the leak promptly.",
+        "instructions": "A burning oil smell while riding usually means oil is dripping onto the hot exhaust pipes or headers. With the engine cool, look for oil residue on the exhaust pipes, especially where they pass closest to the engine. Trace the oil upward to find where it is dripping from. Also check if the oil is actually dripping from the engine, or if it might be chain lubricant spray or other fluids.",
+        "next": "drip_on_exhaust_result"
+      },
+      {
+        "id": "drip_on_exhaust_result",
+        "type": "question",
+        "text": "Did you find oil on the exhaust pipes?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil is dripping from the engine onto the exhaust", "next": "check_leak_location" },
+          { "text": "It's chain lube spray, not engine oil", "next": "solution_chain_lube" },
+          { "text": "No oil found on exhaust", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "solution_chain_lube",
+        "type": "solution",
+        "text": "The smell is from excess chain lubricant being flung onto the exhaust.",
+        "safety": "green",
+        "action": "Apply chain lube more carefully and wipe off excess",
+        "details": "Excess chain lubricant gets flung off by centrifugal force as the chain spins, and some inevitably lands on the exhaust or other hot components, causing a burning smell. This is not an engine oil leak. To minimize this: apply chain lube to the inside of the lower chain run, let it soak in for a few minutes, then wipe off any excess with a rag before riding. Apply lube after a ride when the chain is warm (it penetrates better) rather than before a ride."
+      },
+      {
+        "id": "solution_uv_dye",
+        "type": "solution",
+        "text": "Use UV dye to pinpoint the leak source.",
+        "safety": "green",
+        "action": "Add UV leak detection dye to the engine oil",
+        "details": "UV leak detection dye is the most effective way to find hard-to-locate oil leaks. Add the correct amount of UV dye to the engine oil (follow the product directions). Run the engine or ride normally for a few hundred miles. Then inspect the entire engine with a UV/black light (available at auto parts stores) in a dark area. The dye will glow brightly at the leak source, making even very small leaks visible. Once found, you can determine the correct repair. UV dye is safe for the engine and does not affect oil properties."
+      }
+    ]
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Engine Won't Start",
+  "description": "Diagnose why your Sportster 883 won't start, from battery issues to fuel and ignition problems.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When you press the starter button, what happens?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no lights, no sound", "next": "check_battery" },
+          { "text": "Lights come on but engine doesn't crank", "next": "check_starter_relay" },
+          { "text": "Engine cranks but won't fire up", "next": "cranks_no_start" },
+          { "text": "Clicking sound only", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check the battery connections",
+        "safety": "green",
+        "instructions": "Inspect both battery terminals. Look for corrosion (white/green buildup), loose connections, or broken cables. The Sportster 883 battery is located under the seat on the left side. Remove the seat by unbolting the rear bolt and lifting.",
+        "next": "battery_connections_result"
+      },
+      {
+        "id": "battery_connections_result",
+        "type": "question",
+        "text": "Are the battery terminals clean and tight?",
+        "safety": "green",
+        "options": [
+          { "text": "No — terminals are corroded or loose", "next": "solution_clean_terminals" },
+          { "text": "Yes — connections look good", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Clean and tighten battery terminals",
+        "safety": "green",
+        "action": "Clean battery terminals and secure connections",
+        "details": "Remove the negative (-) cable first, then positive (+). Clean terminals with a wire brush or battery terminal cleaner and a baking soda/water solution. Apply dielectric grease to prevent future corrosion. Reconnect positive first, then negative. Torque to 60-80 in-lbs."
+      },
+      {
+        "id": "check_battery_voltage",
+        "type": "check",
+        "text": "Measure battery voltage with a multimeter",
+        "safety": "yellow",
+        "warning": "Ensure the ignition is OFF before connecting the multimeter. Keep metal tools away from battery terminals to avoid short circuits.",
+        "instructions": "Set your multimeter to DC voltage (20V range). Connect the red probe to the positive (+) terminal and the black probe to the negative (-) terminal. A healthy battery should read 12.6V or higher. Below 12.4V indicates the battery needs charging. Below 12.0V means the battery is likely dead or failing.",
+        "next": "battery_voltage_result"
+      },
+      {
+        "id": "battery_voltage_result",
+        "type": "question",
+        "text": "What is the battery voltage reading?",
+        "safety": "green",
+        "options": [
+          { "text": "12.6V or higher", "next": "check_starter_relay" },
+          { "text": "12.0V - 12.5V (low)", "next": "solution_charge_battery" },
+          { "text": "Below 12.0V", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge the battery",
+        "safety": "green",
+        "action": "Charge the battery using a smart charger",
+        "details": "Use a motorcycle-specific smart charger (Battery Tender or similar) rated for 12V batteries. Connect positive first, then negative. Allow it to fully charge (may take 4-8 hours). If the battery won't hold a charge after a full cycle, it needs replacement. The Sportster 883 uses a YTX14-BS or equivalent AGM battery."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the battery",
+        "safety": "green",
+        "action": "Replace the battery",
+        "details": "The battery is severely discharged or dead. Replace with a YTX14-BS (or equivalent AGM battery). Remove the negative cable first, then positive. Install the new battery by connecting positive first, then negative. Torque terminal bolts to 60-80 in-lbs. If the new battery also dies quickly, investigate the charging system."
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check the starter relay",
+        "safety": "yellow",
+        "warning": "The starter relay carries high current. Do not bridge terminals unless you understand the risk of sparks near the battery.",
+        "instructions": "Locate the starter relay — on the Sportster 883 it's typically near the battery under the left side cover. Listen for a click when pressing the start button. If no click, check the relay fuse (usually a 15A or 20A fuse in the fuse block under the left side cover). Check if the kill switch is in the RUN position, not STOP.",
+        "next": "starter_relay_result"
+      },
+      {
+        "id": "starter_relay_result",
+        "type": "question",
+        "text": "Does the starter relay click when you press the start button?",
+        "safety": "green",
+        "options": [
+          { "text": "No click — relay is silent", "next": "check_kill_switch" },
+          { "text": "Yes — relay clicks but starter doesn't spin", "next": "solution_starter_motor" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "question",
+        "text": "Is the kill switch in the RUN position and the kickstand up (or in neutral)?",
+        "safety": "green",
+        "options": [
+          { "text": "Kill switch was on STOP — fixed it", "next": "solution_kill_switch" },
+          { "text": "Kickstand was down in gear — fixed it", "next": "solution_kickstand" },
+          { "text": "Everything is correct, still no click", "next": "solution_check_relay_fuse" }
+        ]
+      },
+      {
+        "id": "solution_kill_switch",
+        "type": "solution",
+        "text": "Kill switch was off",
+        "safety": "green",
+        "action": "Set the kill switch to RUN",
+        "details": "The engine kill switch on the right handlebar was in the STOP/OFF position. Flip it to RUN and try starting again. This is one of the most common reasons a Harley won't start."
+      },
+      {
+        "id": "solution_kickstand",
+        "type": "solution",
+        "text": "Kickstand safety switch engaged",
+        "safety": "green",
+        "action": "Retract the kickstand or shift to neutral",
+        "details": "The Sportster 883 has a kickstand safety switch that prevents starting when the kickstand is down and the transmission is in gear. Either fully retract the kickstand or shift to neutral before starting."
+      },
+      {
+        "id": "solution_check_relay_fuse",
+        "type": "solution",
+        "text": "Check and replace starter relay or fuse",
+        "safety": "yellow",
+        "warning": "Work carefully around the fuse block. Replace fuses only with the correct amperage rating.",
+        "action": "Inspect the starter relay fuse and relay",
+        "details": "Check the fuse block under the left side cover. Look for the starter fuse (typically 15A). If blown, replace with the same rating. If the fuse is good, the starter relay itself may be faulty. You can test by swapping it with an identical relay from elsewhere on the bike if available. A failed relay will need replacement — Harley P/N 31506-79B or equivalent."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Starter motor issue",
+        "safety": "yellow",
+        "warning": "Do not repeatedly crank a failing starter — it can overheat and cause further damage.",
+        "action": "Inspect or replace the starter motor",
+        "details": "The relay clicks but the starter motor doesn't engage. This could be a faulty starter motor, bad starter solenoid, or a seized engine. Try tapping the starter motor gently with a wrench while someone presses the start button — if it spins, the brushes are worn. If the engine feels locked, check for hydro-lock (remove spark plugs and try cranking). A starter motor replacement on the Sportster 883 is a common repair."
+      },
+      {
+        "id": "cranks_no_start",
+        "type": "question",
+        "text": "The engine cranks — let's check fuel and spark. Do you smell fuel when cranking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — I can smell fuel", "next": "check_spark" },
+          { "text": "No fuel smell at all", "next": "check_fuel_supply" }
+        ]
+      },
+      {
+        "id": "check_fuel_supply",
+        "type": "check",
+        "text": "Check fuel supply",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Do not smoke or use open flames near the fuel system. Work in a well-ventilated area.",
+        "instructions": "First verify there's fuel in the tank (rock the bike and listen for sloshing). On fuel-injected Sportsters (2007+), turn the ignition ON and listen for the fuel pump priming — you should hear a brief whirring sound from the fuel tank. If carbureted (pre-2007), check that the petcock is in the ON or RESERVE position and fuel is flowing.",
+        "next": "fuel_supply_result"
+      },
+      {
+        "id": "fuel_supply_result",
+        "type": "question",
+        "text": "Is fuel reaching the engine?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel pump sound / no fuel flow", "next": "solution_fuel_pump" },
+          { "text": "Fuel pump primes / fuel is flowing", "next": "check_spark" }
+        ]
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel delivery problem",
+        "safety": "yellow",
+        "warning": "Do not attempt to bypass the fuel pump. Fuel leaks are a fire hazard.",
+        "action": "Diagnose the fuel delivery system",
+        "details": "If fuel-injected: Check the fuel pump fuse in the fuse block. Listen for the pump priming (2-3 second whir) when ignition is turned ON. If no sound, the fuel pump relay or pump itself may be faulty. Check wiring connections at the fuel pump. If carbureted: Ensure the petcock is open and fuel flows freely. Clean or rebuild the carburetor if fuel is stale or the bike has been sitting."
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark at the spark plugs",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch spark plug wires or coil while cranking. Ensure no fuel vapors are present when testing spark.",
+        "instructions": "Remove one spark plug (use a 5/8\" spark plug socket). Reconnect the spark plug wire to the plug. Hold the plug's threads against a good engine ground (cylinder head bolt). Have someone crank the engine and observe the spark plug gap — you should see a bright blue spark. A weak orange/yellow spark or no spark indicates an ignition problem.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Do you see a strong blue spark?",
+        "safety": "green",
+        "options": [
+          { "text": "No spark or weak orange spark", "next": "solution_ignition" },
+          { "text": "Yes — strong blue spark", "next": "solution_further_diag" }
+        ]
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition system problem",
+        "safety": "yellow",
+        "warning": "Ignition coils and modules carry high voltage. Disconnect the battery before working on ignition components.",
+        "action": "Diagnose the ignition system",
+        "details": "No spark indicates a problem with the ignition system. Check: (1) Spark plugs — replace if fouled, worn, or damaged (use Harley-recommended plugs, gap at 0.038-0.043\"). (2) Spark plug wires — check for cracks or damage. (3) Ignition coil — measure primary resistance (3-5 ohms) and secondary resistance (10,000-15,000 ohms). (4) Ignition module / ECM — if all else checks out, the ignition module may be faulty. Check the tip-over sensor if equipped."
+      },
+      {
+        "id": "solution_further_diag",
+        "type": "solution",
+        "text": "Engine has fuel and spark but won't start",
+        "safety": "green",
+        "action": "Check timing and compression",
+        "details": "If you have fuel delivery and good spark but the engine still won't start, the issue may be: (1) Incorrect timing — if any recent work was done on the engine. (2) Low compression — perform a compression test (should be 120-160 PSI on a healthy Sportster 883). (3) Clogged air filter — inspect and replace if excessively dirty. (4) Flooded engine — hold throttle wide open and crank for 10 seconds to clear excess fuel. If compression is low, further engine inspection is needed."
+      }
+    ]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Chain Issues / Adjustment",
+  "description": "Diagnose and fix chain noise, tension problems, and sprocket wear on the Kawasaki Ninja 400.",
+  "category": "drivetrain",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What chain issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is making noise", "next": "check_slack" },
+          { "text": "Chain feels loose or tight", "next": "check_slack" },
+          { "text": "Chain or sprockets look worn", "next": "inspect_chain_wear" },
+          { "text": "Chain keeps going out of adjustment", "next": "inspect_chain_wear" }
+        ]
+      },
+      {
+        "id": "check_slack",
+        "type": "check",
+        "text": "Measure chain slack",
+        "safety": "green",
+        "instructions": "Put the bike on a rear stand or have someone hold it upright. Find the midpoint of the lower chain run between the sprockets. Push the chain up and then down and measure the total vertical movement. The Ninja 400 chain slack specification is 20-30mm (0.8-1.2 inches). Rotate the rear wheel slowly and check slack at several positions — it will vary if the chain has a tight spot.",
+        "next": "slack_result"
+      },
+      {
+        "id": "slack_result",
+        "type": "question",
+        "text": "What is the chain slack?",
+        "safety": "green",
+        "options": [
+          { "text": "Too loose (more than 30mm)", "next": "adjust_chain" },
+          { "text": "Too tight (less than 20mm)", "next": "adjust_chain" },
+          { "text": "Within spec but chain is noisy", "next": "check_lube" },
+          { "text": "Varies greatly when rotating the wheel (tight spot)", "next": "inspect_chain_wear" }
+        ]
+      },
+      {
+        "id": "check_lube",
+        "type": "check",
+        "text": "Check chain lubrication and O-ring condition",
+        "safety": "green",
+        "instructions": "Inspect the chain closely: (1) Is the chain dry? It should have a light film of lubricant. (2) Are the O-rings (or X-rings) between the side plates intact? Damaged or missing O-rings mean the chain needs replacement. (3) Is there rust on the rollers or side plates? The Ninja 400 uses a 520 O-ring chain.",
+        "next": "lube_result"
+      },
+      {
+        "id": "lube_result",
+        "type": "question",
+        "text": "What is the chain lubrication condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is dry or rusty", "next": "solution_lube_chain" },
+          { "text": "O-rings are damaged or missing", "next": "inspect_chain_wear" },
+          { "text": "Chain is well-lubed but still noisy", "next": "check_alignment" }
+        ]
+      },
+      {
+        "id": "inspect_chain_wear",
+        "type": "check",
+        "text": "Inspect chain and sprocket wear",
+        "safety": "green",
+        "instructions": "Check for chain wear: pull the chain away from the rear sprocket at the 3 o'clock position. If you can see more than half a tooth between the chain and sprocket, the chain is stretched. Check sprockets: (1) Front sprocket — look for hooked, pointed, or thinned teeth. The front sprocket wears faster. (2) Rear sprocket — check for the same wear patterns. Worn sprockets have teeth that lean in the direction of rotation (shark-fin shape).",
+        "next": "wear_result"
+      },
+      {
+        "id": "wear_result",
+        "type": "question",
+        "text": "What is the wear condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is stretched and sprockets are worn", "next": "solution_replace_set" },
+          { "text": "Chain is worn but sprockets look OK", "next": "solution_replace_chain" },
+          { "text": "Only the front sprocket is worn", "next": "solution_replace_set" },
+          { "text": "Everything looks fine — chain just needs adjustment", "next": "adjust_chain" }
+        ]
+      },
+      {
+        "id": "check_alignment",
+        "type": "check",
+        "text": "Check chain alignment",
+        "safety": "green",
+        "instructions": "Verify that the rear axle is aligned by checking the adjustment marks on both sides of the swingarm. Both sides should be on the same mark. Misalignment causes chain noise, uneven wear, and handling issues. For a more precise check, use a chain alignment tool or a straight edge along the chain.",
+        "next": "alignment_result"
+      },
+      {
+        "id": "alignment_result",
+        "type": "question",
+        "text": "Is the chain alignment correct?",
+        "safety": "green",
+        "options": [
+          { "text": "Alignment marks do not match", "next": "solution_realign" },
+          { "text": "Alignment is correct", "next": "check_chain_guide" }
+        ]
+      },
+      {
+        "id": "check_chain_guide",
+        "type": "check",
+        "text": "Check chain guide and slider",
+        "safety": "green",
+        "instructions": "The Ninja 400 has a chain slider on the swingarm and a chain guide near the front sprocket. Check if these rubber/plastic pieces are worn through. If the slider is gone, the chain contacts the swingarm directly, causing noise and swingarm damage.",
+        "next": "chain_guide_result"
+      },
+      {
+        "id": "chain_guide_result",
+        "type": "question",
+        "text": "What is the chain guide/slider condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Slider or guide is worn through", "next": "solution_replace_slider" },
+          { "text": "Slider and guide are fine", "next": "solution_front_sprocket_cover" }
+        ]
+      },
+      {
+        "id": "adjust_chain",
+        "type": "check",
+        "text": "Adjust chain tension",
+        "safety": "green",
+        "instructions": "To adjust the Ninja 400 chain: (1) Loosen the rear axle nut (24mm) — do not remove, just enough for the wheel to slide. (2) Turn the chain adjuster bolts on both sides of the swingarm equally — clockwise to tighten the chain, counterclockwise to loosen. (3) Keep both sides even by matching the alignment marks. (4) Target 20-30mm slack at the tightest point. (5) Re-torque the rear axle nut to 108 Nm (80 ft-lb). (6) Recheck slack after tightening the axle.",
+        "next": "adjust_result"
+      },
+      {
+        "id": "adjust_result",
+        "type": "question",
+        "text": "Were you able to adjust the chain correctly?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — slack is now 20-30mm", "next": "solution_adjusted" },
+          { "text": "Adjusters are maxed out and chain is still loose", "next": "solution_replace_set" }
+        ]
+      },
+      {
+        "id": "solution_lube_chain",
+        "type": "solution",
+        "text": "Clean and Lubricate Chain",
+        "safety": "green",
+        "action": "Clean and lubricate the chain.",
+        "details": "Use a motorcycle-specific chain cleaner (NOT WD-40, brake cleaner, or engine degreaser — these damage O-rings). Spray the cleaner on the chain, scrub with a chain brush, and wipe clean. Let dry, then apply chain lubricant to the inside of the lower run while slowly rotating the wheel. The Ninja 400 uses a 520 O-ring chain. Lubricate every 500-800 km or after riding in rain."
+      },
+      {
+        "id": "solution_replace_set",
+        "type": "solution",
+        "text": "Replace Chain and Sprocket Set",
+        "safety": "yellow",
+        "warning": "Always replace chain and both sprockets together. A new chain on worn sprockets wears rapidly.",
+        "action": "Replace the chain, front sprocket, and rear sprocket as a set.",
+        "details": "The Ninja 400 uses a 520-pitch chain. OEM size: 14T front, 45T rear, 108 links (verify for your model year). Quality options: DID or RK chains, JT or Sunstar sprockets. Use a rivet-type master link (not clip type) for safety. You will need a chain breaker/riveting tool. After installation, adjust slack to 20-30mm, verify alignment, and lubricate. Check slack again after 200 km of break-in."
+      },
+      {
+        "id": "solution_replace_chain",
+        "type": "solution",
+        "text": "Replace Chain Only",
+        "safety": "green",
+        "action": "Replace the worn chain.",
+        "details": "If sprockets are in good condition, you can replace just the chain. Use a 520-pitch O-ring or X-ring chain. Install with a rivet-type master link. Adjust slack to 20-30mm and lubricate before riding."
+      },
+      {
+        "id": "solution_realign",
+        "type": "solution",
+        "text": "Realign Rear Wheel",
+        "safety": "green",
+        "action": "Adjust the rear axle for proper chain alignment.",
+        "details": "Loosen the rear axle nut. Adjust the chain adjusters until both sides match the same alignment mark. Retighten the axle nut to 108 Nm. Verify chain slack is still within spec (20-30mm) and recheck alignment by spinning the wheel."
+      },
+      {
+        "id": "solution_replace_slider",
+        "type": "solution",
+        "text": "Replace Chain Slider/Guide",
+        "safety": "green",
+        "action": "Replace the worn chain slider or guide.",
+        "details": "The swingarm chain slider and front sprocket chain guide are wear items. Replace with OEM Kawasaki parts. The slider prevents chain contact with the aluminum swingarm. A worn-through slider will eventually damage the swingarm, which is a much more expensive fix."
+      },
+      {
+        "id": "solution_front_sprocket_cover",
+        "type": "solution",
+        "text": "Check Front Sprocket Cover",
+        "safety": "green",
+        "action": "Ensure the front sprocket cover is secure.",
+        "details": "A loose front sprocket cover can rattle and sound like a chain issue. Check that all bolts are tight. Also check that the front sprocket nut is properly torqued and the sprocket is not wobbling on the shaft."
+      },
+      {
+        "id": "solution_adjusted",
+        "type": "solution",
+        "text": "Chain Adjustment Complete",
+        "safety": "green",
+        "action": "Chain tension is now correct.",
+        "details": "The chain is adjusted to the correct 20-30mm slack. Apply chain lube and test ride to verify the noise is gone. Check chain slack regularly (every 500-1000 km) and lubricate at the same interval. A properly maintained chain on the Ninja 400 should last 20,000-30,000 km."
+      }
+    ]
+  }
+}

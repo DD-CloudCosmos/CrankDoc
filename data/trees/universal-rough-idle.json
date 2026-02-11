@@ -1,0 +1,246 @@
+{
+  "title": "Rough Idle / Stalling",
+  "description": "Diagnose a motorcycle that idles rough, surges, hunts, or stalls at idle. Covers air, fuel, ignition, and sensor-related causes.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How would you describe the idle problem?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine stalls immediately or shortly after starting", "next": "stalls_quickly" },
+          { "text": "Engine runs but idle is rough, shaky, or uneven", "next": "rough_running" },
+          { "text": "Idle speed hunts up and down (surging)", "next": "idle_surging" },
+          { "text": "Idle is too high — engine revs too fast at idle", "next": "high_idle" }
+        ]
+      },
+      {
+        "id": "stalls_quickly",
+        "type": "question",
+        "text": "Does the engine stall only when cold, or also when warm?",
+        "safety": "green",
+        "options": [
+          { "text": "Only when cold — runs fine once warmed up", "next": "check_choke" },
+          { "text": "Stalls when warm too, or gets worse when warm", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_choke",
+        "type": "check",
+        "text": "Check the choke or fast idle system.",
+        "safety": "green",
+        "instructions": "For carbureted bikes: make sure the choke lever is pulled ON when starting cold, then gradually push it off as the engine warms up. For fuel-injected bikes: the ECU handles cold starting automatically, but check for error codes using the bike's diagnostic system. A faulty coolant temperature sensor can cause poor cold running on fuel-injected bikes.",
+        "next": "choke_result"
+      },
+      {
+        "id": "choke_result",
+        "type": "question",
+        "text": "Did using the choke correctly solve the problem?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — runs fine now with proper choke use", "next": "solution_choke" },
+          { "text": "No — still stalls even with choke on", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "solution_choke",
+        "type": "solution",
+        "text": "The choke/enrichment system was not being used correctly.",
+        "safety": "green",
+        "action": "Use proper cold-start procedure",
+        "details": "Carbureted motorcycles need the choke engaged for cold starts. Pull the choke on, start the engine, and let it warm up for 1-3 minutes. Gradually push the choke off as the engine warms. If the choke cable is stiff or the plunger is sticky, clean and lubricate it. For fuel-injected bikes that struggle when cold, have the coolant temperature sensor checked — a faulty sensor can make the ECU deliver the wrong fuel mixture."
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Assess the fuel quality and age.",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work in a well-ventilated area away from ignition sources.",
+        "instructions": "How old is the fuel in the tank? Gasoline starts to degrade after about 30 days and can go stale in 3-6 months. Smell the fuel — stale fuel has a sour, varnish-like odor compared to the sharp smell of fresh gasoline. Check if the fuel has any water contamination (water droplets or a cloudy appearance).",
+        "next": "fuel_quality_result"
+      },
+      {
+        "id": "fuel_quality_result",
+        "type": "question",
+        "text": "Is the fuel fresh and clean?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is old (more than 2-3 months) or smells off", "next": "solution_bad_fuel" },
+          { "text": "Fuel is fresh and seems fine", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "solution_bad_fuel",
+        "type": "solution",
+        "text": "The fuel has gone stale or is contaminated.",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly — do not pour it down drains. Take it to an auto parts store or recycling center.",
+        "action": "Drain old fuel and refill with fresh gasoline",
+        "details": "Drain the old fuel from the tank. For carbureted bikes, also drain the carburetor float bowls (there is usually a drain screw at the bottom of each bowl). Refill with fresh, high-quality gasoline of the octane rating specified in your service manual. If the bike has been sitting with old fuel for a long time, the carburetors may need professional cleaning to remove varnish deposits from the jets."
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter.",
+        "safety": "green",
+        "instructions": "Locate the air filter (usually in an airbox under the seat or tank — check your service manual). Remove the air filter and inspect it. Hold it up to a light — you should be able to see some light through a paper filter. Check for dirt, debris, oil contamination, or damage. A severely clogged air filter restricts airflow and causes rich running.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What condition is the air filter in?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty, clogged, or damaged", "next": "solution_air_filter" },
+          { "text": "Clean or recently replaced", "next": "check_vacuum_leaks" }
+        ]
+      },
+      {
+        "id": "solution_air_filter",
+        "type": "solution",
+        "text": "The air filter is dirty or clogged.",
+        "safety": "green",
+        "action": "Replace or clean the air filter",
+        "details": "If you have a paper/disposable filter, replace it with a new one of the correct part number. If you have a reusable filter (like K&N), clean it per the manufacturer's instructions and re-oil it. A clogged air filter restricts airflow, causing a rich fuel mixture that leads to rough idle, poor performance, and increased fuel consumption. Replace air filters at the intervals specified in your service manual."
+      },
+      {
+        "id": "check_vacuum_leaks",
+        "type": "check",
+        "text": "Check for vacuum or intake leaks.",
+        "safety": "yellow",
+        "warning": "Do not use flammable sprays near a hot engine. The engine can backfire through the intake.",
+        "instructions": "With the engine idling, listen for hissing sounds around the intake manifold boots (the rubber connectors between the carburetors/throttle bodies and the engine). Inspect the boots visually for cracks, tears, or loose clamps. You can carefully spray a small amount of carburetor cleaner around the intake boots — if the idle speed changes, you have found a leak.",
+        "next": "vacuum_leak_result"
+      },
+      {
+        "id": "vacuum_leak_result",
+        "type": "question",
+        "text": "Did you find any intake or vacuum leaks?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — cracked boots or hissing found", "next": "solution_vacuum_leak" },
+          { "text": "No leaks found", "next": "check_idle_speed" }
+        ]
+      },
+      {
+        "id": "solution_vacuum_leak",
+        "type": "solution",
+        "text": "There is an intake or vacuum leak causing rough idle.",
+        "safety": "yellow",
+        "warning": "Ensure all intake boots are properly sealed before running the engine — unmetered air causes lean conditions that can damage the engine over time.",
+        "action": "Replace cracked intake boots or tighten clamps",
+        "details": "Replace any cracked, hardened, or torn intake manifold boots. Tighten all clamps securely. Also check any vacuum lines connected to fuel petcocks, emission systems, or sensors — cracked or disconnected vacuum lines cause the same symptoms. After repairs, the idle may need to be re-adjusted. Consult your service manual for the correct idle speed specification."
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check and adjust the idle speed.",
+        "safety": "green",
+        "instructions": "Start the engine and let it warm up fully (at least 5 minutes of running, or until the cooling fan cycles on for liquid-cooled bikes). Check the idle speed — most motorcycles idle between 1,000-1,300 RPM (check your service manual for the exact spec). Locate the idle speed adjustment knob or screw (usually near the throttle bodies or carburetor bank).",
+        "next": "idle_speed_result"
+      },
+      {
+        "id": "idle_speed_result",
+        "type": "question",
+        "text": "Is the idle speed within specification when the engine is warm?",
+        "safety": "green",
+        "options": [
+          { "text": "No — idle is too low or irregular", "next": "solution_adjust_idle" },
+          { "text": "Yes — idle speed is within spec but still rough", "next": "solution_deeper_diagnosis" }
+        ]
+      },
+      {
+        "id": "solution_adjust_idle",
+        "type": "solution",
+        "text": "The idle speed needs adjustment.",
+        "safety": "green",
+        "action": "Adjust the idle speed to specification",
+        "details": "With the engine fully warm, use the idle speed adjustment knob or screw to set the idle to the RPM specified in your service manual (typically 1,000-1,300 RPM). Turn the adjuster slowly and wait a few seconds for the RPM to stabilize after each adjustment. For carbureted multi-cylinder bikes, the carburetors may also need synchronization (balancing) — this requires vacuum gauges and is best done by someone experienced."
+      },
+      {
+        "id": "rough_running",
+        "type": "check",
+        "text": "Check the spark plugs for clues about combustion.",
+        "safety": "green",
+        "instructions": "Remove the spark plugs and examine their tips. The color tells you a lot: light tan/gray is ideal, black and sooty means too rich (too much fuel), white and blistered means too lean (not enough fuel), wet and oily may indicate engine wear. Also check the plug gap against your service manual spec.",
+        "next": "spark_plug_condition"
+      },
+      {
+        "id": "spark_plug_condition",
+        "type": "question",
+        "text": "What do the spark plugs look like?",
+        "safety": "green",
+        "options": [
+          { "text": "Black and sooty (rich condition)", "next": "check_air_filter" },
+          { "text": "White and blistered (lean condition)", "next": "check_vacuum_leaks" },
+          { "text": "Oily or wet with fuel", "next": "solution_deeper_diagnosis" },
+          { "text": "Normal color but old or worn", "next": "solution_replace_plugs" }
+        ]
+      },
+      {
+        "id": "solution_replace_plugs",
+        "type": "solution",
+        "text": "The spark plugs are worn and should be replaced.",
+        "safety": "green",
+        "action": "Replace spark plugs with the correct type",
+        "details": "Replace all spark plugs at once with the exact type and heat range specified in your service manual. Gap them to the specified distance using a spark plug gap tool. Worn or fouled spark plugs cause inconsistent spark, leading to rough idle and poor performance. Most motorcycle spark plugs should be replaced every 8,000-12,000 miles, or as specified in your maintenance schedule."
+      },
+      {
+        "id": "idle_surging",
+        "type": "question",
+        "text": "The idle is hunting up and down. Is this a carbureted or fuel-injected bike?",
+        "safety": "green",
+        "options": [
+          { "text": "Carbureted", "next": "check_vacuum_leaks" },
+          { "text": "Fuel-injected", "next": "solution_fi_surging" }
+        ]
+      },
+      {
+        "id": "solution_fi_surging",
+        "type": "solution",
+        "text": "Idle surging on a fuel-injected bike indicates a sensor or idle control issue.",
+        "safety": "green",
+        "action": "Check for error codes and inspect the idle air control system",
+        "details": "Idle surging on FI bikes is commonly caused by: a dirty or faulty idle air control valve (IACV) or idle speed control (ISC) motor, a failing throttle position sensor (TPS), a vacuum leak in the intake system, or a dirty throttle body. Start by checking for stored error codes using the bike's built-in diagnostic system (check your service manual for the procedure). Clean the throttle body with throttle body cleaner. If the problem persists, have a professional check the TPS and IACV."
+      },
+      {
+        "id": "high_idle",
+        "type": "check",
+        "text": "Check the throttle cables and grip for binding.",
+        "safety": "green",
+        "instructions": "With the engine OFF, twist the throttle grip and release it. It should snap closed smoothly and completely. Check the throttle cables for kinks, tight routing, or fraying. Turn the handlebars fully left and right — the idle should not change with handlebar position. Check that the throttle cable has the correct amount of free play (usually 2-3mm at the grip).",
+        "next": "throttle_cable_result"
+      },
+      {
+        "id": "throttle_cable_result",
+        "type": "question",
+        "text": "Does the throttle move freely and snap closed?",
+        "safety": "green",
+        "options": [
+          { "text": "No — throttle is sticky or doesn't fully close", "next": "solution_throttle_cable" },
+          { "text": "Yes — throttle operates smoothly", "next": "check_idle_speed" }
+        ]
+      },
+      {
+        "id": "solution_throttle_cable",
+        "type": "solution",
+        "text": "The throttle cable is binding or not fully closing.",
+        "safety": "green",
+        "action": "Lubricate or replace throttle cables and adjust free play",
+        "details": "Lubricate the throttle cables using a cable lubrication tool or by removing them and applying cable lubricant. Check the cable routing — make sure cables are not kinked, pinched, or routed too tightly around corners. Adjust the free play at the throttle grip adjuster to the specification in your service manual (typically 2-3mm). If the cables are frayed or the inner wire is corroded, replace them. A sticking throttle is both a performance issue and a safety hazard."
+      },
+      {
+        "id": "solution_deeper_diagnosis",
+        "type": "solution",
+        "text": "The basic checks have not identified the problem. Further diagnosis is needed.",
+        "safety": "green",
+        "action": "Perform advanced diagnostics or seek professional help",
+        "details": "If basic checks (air filter, fuel, spark plugs, vacuum leaks, idle adjustment) have not resolved the rough idle, the issue may require advanced diagnosis. Possible causes include: dirty or clogged fuel injectors, worn valve seals causing oil consumption, incorrect valve clearances, carburetor synchronization issues (multi-cylinder bikes), failing sensors (O2 sensor, MAP sensor, TPS), or internal engine issues. A compression test is a good next step. Consider having a professional diagnose the bike with proper diagnostic tools."
+      }
+    ]
+  }
+}

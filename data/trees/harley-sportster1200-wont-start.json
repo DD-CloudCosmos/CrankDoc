@@ -1,0 +1,244 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Engine Won't Start",
+  "description": "Diagnose why your Sportster 1200 won't start, from battery and starter issues to fuel and ignition problems.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When you press the starter button, what happens?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no lights, no sound", "next": "check_battery" },
+          { "text": "Lights come on but engine doesn't crank", "next": "check_safety_switches" },
+          { "text": "Engine cranks but won't fire up", "next": "cranks_no_start" },
+          { "text": "Clicking sound only", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check the battery connections",
+        "safety": "green",
+        "instructions": "Inspect both battery terminals. The Sportster 1200 battery is under the seat on the left side. Remove the seat by unbolting the rear bolt. Look for corrosion (white/green buildup), loose connections, or broken cables at both terminals. Check that the main fuse (usually 40A) is intact — it's typically near the battery or on the starter relay.",
+        "next": "battery_connections_result"
+      },
+      {
+        "id": "battery_connections_result",
+        "type": "question",
+        "text": "Are the battery terminals clean and tight, and is the main fuse good?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminals corroded or loose — cleaned/tightened them", "next": "solution_terminals_fixed" },
+          { "text": "Main fuse is blown", "next": "solution_main_fuse" },
+          { "text": "Everything looks good — still dead", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "solution_terminals_fixed",
+        "type": "solution",
+        "text": "Battery terminals cleaned and secured",
+        "safety": "green",
+        "action": "Clean and tighten battery terminal connections",
+        "details": "Remove the negative (-) cable first, then positive (+). Clean terminals with a wire brush and baking soda solution. Apply dielectric grease to prevent future corrosion. Reconnect positive first, then negative. Torque to 60-80 in-lbs. The 1200 Sportster's V-twin vibration works connections loose over time — check them every oil change."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Replace the main fuse",
+        "safety": "yellow",
+        "warning": "A blown main fuse may indicate a serious short circuit. If the replacement fuse blows immediately, do not keep replacing it — find the short first.",
+        "action": "Replace the main fuse and investigate the cause",
+        "details": "Replace the main fuse with the correct amperage (typically 40A). If it holds, monitor closely. If it blows again immediately, there is a short circuit in the main wiring. Common causes: chafed wire against the frame, damaged starter cable, or a failed component. Have the wiring inspected before riding."
+      },
+      {
+        "id": "check_battery_voltage",
+        "type": "check",
+        "text": "Measure battery voltage",
+        "safety": "yellow",
+        "warning": "Keep metal tools away from battery terminals to avoid short circuits. Wear safety glasses.",
+        "instructions": "Set your multimeter to DC voltage (20V range). Connect red to positive (+), black to negative (-). A healthy battery reads 12.6V or higher. Below 12.4V means it needs charging. Below 12.0V means the battery is dead or failing. Also test while cranking — voltage should stay above 9.5V.",
+        "next": "battery_voltage_result"
+      },
+      {
+        "id": "battery_voltage_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "12.6V or higher", "next": "check_safety_switches" },
+          { "text": "12.0V - 12.5V", "next": "solution_charge_battery" },
+          { "text": "Below 12.0V", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge the battery",
+        "safety": "green",
+        "action": "Fully charge the battery with a smart charger",
+        "details": "Use a motorcycle smart charger (Battery Tender, Optimate, or similar) rated for 12V batteries. Connect positive first, then negative. Allow full charge cycle (4-8 hours). After charging, if it reads 12.6V+ and holds the charge, the battery is likely OK — but investigate why it discharged. Check the charging system. The Sportster 1200 uses a YTX20L-BS or equivalent AGM battery."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the battery",
+        "safety": "green",
+        "action": "Replace the dead battery",
+        "details": "The battery is severely discharged or dead. Replace with a YTX20L-BS or equivalent AGM battery. Remove negative cable first, then positive. Install new battery: positive first, then negative. Torque terminals to 60-80 in-lbs. After installing, test the charging system — if the stator or regulator is failing, the new battery will die too."
+      },
+      {
+        "id": "check_safety_switches",
+        "type": "question",
+        "text": "Let's check the safety interlocks. The Sportster 1200 won't start unless all safety conditions are met.",
+        "safety": "green",
+        "options": [
+          { "text": "Kill switch might be on STOP", "next": "solution_kill_switch" },
+          { "text": "Kickstand is down while in gear", "next": "solution_kickstand" },
+          { "text": "Clutch lever is not pulled in", "next": "solution_clutch_switch" },
+          { "text": "All switches are correct — still won't crank", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "solution_kill_switch",
+        "type": "solution",
+        "text": "Kill switch in STOP position",
+        "safety": "green",
+        "action": "Set the kill switch to RUN",
+        "details": "The engine kill switch on the right handlebar was in the STOP/OFF position. Flip it to RUN and try starting. This is the most common 'no start' cause — especially after fueling or parking."
+      },
+      {
+        "id": "solution_kickstand",
+        "type": "solution",
+        "text": "Kickstand safety switch engaged",
+        "safety": "green",
+        "action": "Retract the kickstand or shift to neutral",
+        "details": "The Sportster 1200 has a kickstand safety switch that prevents starting when the stand is down and the transmission is in gear. Either retract the kickstand fully or shift to neutral. If the switch is faulty (bike won't start even with stand up), the switch can be bypassed temporarily — but replace it soon for safety."
+      },
+      {
+        "id": "solution_clutch_switch",
+        "type": "solution",
+        "text": "Clutch safety switch",
+        "safety": "green",
+        "action": "Pull the clutch lever fully to the handlebar",
+        "details": "The Sportster 1200 requires the clutch lever to be pulled in to start (unless in neutral). Pull the lever all the way to the bar and try again. If the clutch switch is failing, the bike may not recognize the lever is pulled — you can try starting in neutral instead. A faulty clutch switch can be tested by bypassing the two wires at the clutch perch connector."
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check the starter relay and fuses",
+        "safety": "yellow",
+        "warning": "The starter relay carries high current. Do not short the heavy terminals together.",
+        "instructions": "Locate the starter relay near the battery. Press the start button and listen for a click from the relay. If no click: check the starter fuse (15A or 20A) in the fuse block. If the relay clicks but the starter doesn't spin: the relay contacts or starter motor may be faulty. Try gently tapping the relay while pressing the start button.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Does the starter relay click?",
+        "safety": "green",
+        "options": [
+          { "text": "No click — relay is silent", "next": "solution_starter_fuse" },
+          { "text": "Click but starter doesn't spin", "next": "solution_starter_relay" },
+          { "text": "Tapping the relay made it work", "next": "solution_starter_relay" }
+        ]
+      },
+      {
+        "id": "solution_starter_fuse",
+        "type": "solution",
+        "text": "Check starter fuse and trigger circuit",
+        "safety": "yellow",
+        "warning": "Replace fuses only with the correct amperage rating.",
+        "action": "Replace the starter fuse and check the trigger circuit",
+        "details": "If the starter fuse is blown, replace it. If it blows again, there's a short in the starter circuit. If the fuse is good and the relay doesn't click: the starter button, clutch switch, neutral switch, or kickstand switch circuit has a break. Check continuity through each switch in the starter trigger circuit using a wiring diagram."
+      },
+      {
+        "id": "solution_starter_relay",
+        "type": "solution",
+        "text": "Replace the starter relay",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the relay.",
+        "action": "Replace the starter relay/solenoid",
+        "details": "The relay contacts are worn or burned. (1) Disconnect the battery. (2) Label and remove all wires from the relay. (3) Install the new relay (Harley P/N 31506-79B or equivalent). (4) Reconnect wires. (5) Reconnect battery and test."
+      },
+      {
+        "id": "cranks_no_start",
+        "type": "question",
+        "text": "The engine cranks but won't fire. Let's check fuel and spark. Do you smell fuel when cranking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — strong fuel smell", "next": "check_spark" },
+          { "text": "No fuel smell", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Verify fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Work in a ventilated area with no ignition sources.",
+        "instructions": "Verify there is fuel in the tank. On EFI Sportster 1200s (2007+): turn the ignition ON and listen for the fuel pump priming — a 2-3 second whir from the tank. No sound means the fuel pump or its fuse/relay has failed. On carbureted models: check that the petcock is ON and fuel flows from the line.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Is fuel reaching the engine?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel pump prime / no fuel flow", "next": "solution_fuel_pump" },
+          { "text": "Fuel is flowing", "next": "check_spark" }
+        ]
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel pump or fuel delivery failure",
+        "safety": "yellow",
+        "warning": "Do not bypass fuel system safety devices.",
+        "action": "Diagnose the fuel pump circuit",
+        "details": "Check: (1) Fuel pump fuse in the fuse block. (2) Fuel pump relay. (3) Wiring connections at the fuel pump (inside the tank). (4) If the pump has power but doesn't run, it needs replacement. (5) On carbureted models: clean or rebuild the carburetor if fuel is stale. Ensure the tank vent is clear — a blocked vent creates vacuum that stops fuel flow."
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "Ignition produces high voltage. Do not touch spark plug wires while cranking. Keep fuel vapors away from the spark test area.",
+        "instructions": "Remove a spark plug (5/8\" socket). Reconnect the plug wire. Hold the plug threads against a cylinder head bolt for ground. Crank the engine and look for a strong blue spark at the plug gap. No spark or weak orange spark indicates ignition failure.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Do you see a strong blue spark?",
+        "safety": "green",
+        "options": [
+          { "text": "No spark or weak spark", "next": "solution_ignition" },
+          { "text": "Good spark — still won't start", "next": "solution_compression" }
+        ]
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition system failure",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before working on ignition components.",
+        "action": "Diagnose and repair the ignition system",
+        "details": "Check in order: (1) Spark plugs — replace if fouled or worn (gap: 0.038-0.043 inches). (2) Spark plug wires — inspect for cracks, arcing, or damage. (3) Ignition coil — measure primary resistance (3-5 ohms) and secondary (10,000-15,000 ohms). (4) Crank position sensor — on EFI models, a failing sensor prevents spark. (5) Ignition module/ECM — if all else tests OK. (6) Check the tip-over sensor — it cuts ignition if the bike falls over. Reset by cycling the ignition."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Check compression and timing",
+        "safety": "green",
+        "action": "Perform a compression test",
+        "details": "With fuel and spark confirmed, check: (1) Compression — thread a compression gauge into each spark plug hole, hold throttle open, and crank 5-6 times. The Sportster 1200 should have 140-170 PSI. Both cylinders should be within 10% of each other. Low compression indicates worn rings, leaking valves, or blown head gasket. (2) Air filter — inspect and replace if clogged. (3) Try holding the throttle wide open and cranking to clear a flooded engine. If compression is low, further engine teardown is needed."
+      }
+    ]
+  }
+}

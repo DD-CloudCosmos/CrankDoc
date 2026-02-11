@@ -1,0 +1,236 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Oil Leak Detection",
+  "description": "Identify and diagnose oil leaks on the Kawasaki Ninja 400 engine and related components.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where do you see oil?",
+        "safety": "yellow",
+        "warning": "Oil on the tires or brakes is extremely dangerous. If oil has reached your tires, do not ride until cleaned and the leak is fixed.",
+        "options": [
+          { "text": "Oil spots on the ground under the bike", "next": "check_oil_level" },
+          { "text": "Oil residue on the engine", "next": "clean_and_find" },
+          { "text": "Oil spray on the chain and rear wheel area", "next": "check_countershaft_seal" },
+          { "text": "Burning oil smell or smoke from the engine", "next": "check_valve_cover" }
+        ]
+      },
+      {
+        "id": "check_oil_level",
+        "type": "check",
+        "text": "Check engine oil level",
+        "safety": "green",
+        "instructions": "With the engine warm and the bike upright on level ground, check the oil level through the sight glass on the right side of the engine. The level should be between the upper and lower marks. If the level is dropping between oil changes faster than expected, you have a significant leak or the engine is burning oil. The Ninja 400 holds approximately 2.8 liters of oil.",
+        "next": "oil_level_result"
+      },
+      {
+        "id": "oil_level_result",
+        "type": "question",
+        "text": "How quickly is oil being lost?",
+        "safety": "green",
+        "options": [
+          { "text": "Noticeable drop within a few hundred km", "next": "clean_and_find" },
+          { "text": "Very slight drop over thousands of km", "next": "solution_normal_consumption" },
+          { "text": "Oil level is stable but I see oil on the ground", "next": "clean_and_find" }
+        ]
+      },
+      {
+        "id": "clean_and_find",
+        "type": "check",
+        "text": "Clean the engine and locate the leak",
+        "safety": "yellow",
+        "warning": "Do not spray degreaser on a hot engine. Allow it to cool completely first.",
+        "instructions": "Clean the engine thoroughly with degreaser to remove old oil residue. Run the engine for 10-15 minutes, then inspect for fresh oil. Common Ninja 400 oil leak locations: (1) Valve cover gasket (top of engine), (2) Oil filter area (front of engine), (3) Drain plug (bottom of engine), (4) Clutch cover gasket (right side), (5) Countershaft seal (left side, behind front sprocket), (6) Cam chain tensioner area.",
+        "next": "leak_location"
+      },
+      {
+        "id": "leak_location",
+        "type": "question",
+        "text": "Where is the fresh oil appearing?",
+        "safety": "green",
+        "options": [
+          { "text": "Top of engine — valve cover area", "next": "check_valve_cover" },
+          { "text": "Around the oil filter", "next": "check_oil_filter" },
+          { "text": "Bottom — drain plug area", "next": "check_drain_plug" },
+          { "text": "Right side — clutch cover", "next": "solution_clutch_cover_gasket" },
+          { "text": "Left side — behind front sprocket", "next": "check_countershaft_seal" },
+          { "text": "Cannot pinpoint — oil is everywhere", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "check_valve_cover",
+        "type": "check",
+        "text": "Inspect valve cover gasket",
+        "safety": "yellow",
+        "warning": "The valve cover area is near the exhaust headers and gets very hot. Inspect when cold.",
+        "instructions": "Look for oil seeping from the joint between the valve cover and the cylinder head. The Ninja 400 has a single valve cover for its parallel-twin engine. Feel around the gasket edge and cover bolts for dampness. Oil from the valve cover will run down the engine and can look like it is coming from elsewhere — trace it upward to the source.",
+        "next": "valve_cover_result"
+      },
+      {
+        "id": "valve_cover_result",
+        "type": "question",
+        "text": "Is the valve cover area leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil seeping from valve cover gasket", "next": "solution_valve_cover_gasket" },
+          { "text": "Oil in spark plug wells", "next": "solution_plug_well_seals" },
+          { "text": "Valve cover area is dry — oil is from elsewhere", "next": "clean_and_find" }
+        ]
+      },
+      {
+        "id": "check_oil_filter",
+        "type": "check",
+        "text": "Inspect the oil filter area",
+        "safety": "green",
+        "instructions": "The Ninja 400 oil filter is on the front-right of the engine. Check: (1) Is the filter hand-tight plus 3/4 turn? A loose filter leaks. (2) Is there only one O-ring gasket? Sometimes the old gasket sticks to the engine, and the new filter adds a second — this double-gasket situation leaks badly. (3) Is the filter housing cracked or the threads stripped?",
+        "next": "oil_filter_result"
+      },
+      {
+        "id": "oil_filter_result",
+        "type": "question",
+        "text": "What did you find at the oil filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is loose", "next": "solution_tighten_filter" },
+          { "text": "Double O-ring gasket", "next": "solution_double_gasket" },
+          { "text": "Oil filter area looks fine", "next": "clean_and_find" }
+        ]
+      },
+      {
+        "id": "check_drain_plug",
+        "type": "check",
+        "text": "Inspect the drain plug",
+        "safety": "green",
+        "instructions": "Check the oil drain plug on the bottom of the engine. Look for oil weeping around the plug and washer. The Ninja 400 drain plug uses an aluminum crush washer that should be replaced at every oil change. Check for: (1) Loose plug, (2) Damaged or reused crush washer, (3) Stripped threads from over-tightening or cross-threading.",
+        "next": "drain_plug_result"
+      },
+      {
+        "id": "drain_plug_result",
+        "type": "question",
+        "text": "What is the drain plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Plug is loose or washer is worn", "next": "solution_drain_plug_washer" },
+          { "text": "Threads are stripped", "next": "solution_stripped_drain" },
+          { "text": "Drain plug looks fine", "next": "clean_and_find" }
+        ]
+      },
+      {
+        "id": "check_countershaft_seal",
+        "type": "check",
+        "text": "Check countershaft (output shaft) seal",
+        "safety": "green",
+        "instructions": "The countershaft seal is behind the front sprocket. Remove the front sprocket cover (left side of engine, 2-3 bolts). Look for oil around the shaft where it exits the engine case. Oil from this seal gets flung onto the chain and rear wheel by the spinning sprocket, so the leak may look like it is coming from the chain area when it is actually the engine seal.",
+        "next": "countershaft_result"
+      },
+      {
+        "id": "countershaft_result",
+        "type": "question",
+        "text": "Is the countershaft seal leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil around the front sprocket shaft", "next": "solution_countershaft_seal" },
+          { "text": "No — shaft area is dry, oil is just excess chain lube", "next": "solution_excess_chain_lube" }
+        ]
+      },
+      {
+        "id": "solution_normal_consumption",
+        "type": "solution",
+        "text": "Normal Oil Consumption",
+        "safety": "green",
+        "action": "Monitor and top off — some oil consumption is normal.",
+        "details": "The Ninja 400 may consume a small amount of oil between changes, especially during high-RPM riding. Kawasaki considers up to 1 liter per 5,000 km acceptable. Check the oil level before every ride and top off as needed with the recommended 10W-40 JASO MA/MA2 motorcycle oil. If consumption increases significantly, have the valve stem seals and piston rings inspected."
+      },
+      {
+        "id": "solution_valve_cover_gasket",
+        "type": "solution",
+        "text": "Replace Valve Cover Gasket",
+        "safety": "yellow",
+        "warning": "Keep debris out of the engine when the valve cover is removed.",
+        "action": "Replace the valve cover gasket.",
+        "details": "Remove the valve cover bolts in the reverse of the tightening sequence. Lift the cover and remove the old gasket. Clean both mating surfaces thoroughly (use a plastic scraper to avoid gouging aluminum). Install the new OEM gasket (no sealant needed). Torque cover bolts evenly to specification. Do not over-torque — the aluminum cover warps easily."
+      },
+      {
+        "id": "solution_plug_well_seals",
+        "type": "solution",
+        "text": "Replace Spark Plug Well Seals",
+        "safety": "yellow",
+        "warning": "Oil in spark plug wells can cause misfires.",
+        "action": "Replace the spark plug tube seals.",
+        "details": "The spark plug well seals are typically included in the valve cover gasket kit. Replace them when doing the valve cover gasket. Clean any oil from the spark plug wells before reinstalling the ignition coils and plugs."
+      },
+      {
+        "id": "solution_tighten_filter",
+        "type": "solution",
+        "text": "Tighten Oil Filter",
+        "safety": "green",
+        "action": "Tighten the oil filter to the correct specification.",
+        "details": "Hand-tighten until the gasket contacts the engine surface, then turn 3/4 turn more. Do not use a filter wrench to tighten. Wipe the area clean and verify the leak has stopped after running the engine briefly."
+      },
+      {
+        "id": "solution_double_gasket",
+        "type": "solution",
+        "text": "Remove Old Filter O-Ring",
+        "safety": "green",
+        "action": "Remove the stuck old O-ring and reinstall the filter correctly.",
+        "details": "Remove the oil filter. Find and peel off the old O-ring stuck to the engine surface. Clean the area, lightly oil the new filter's O-ring, and reinstall (hand-tight plus 3/4 turn). This is a very common cause of sudden oil loss after an oil change. Always check that the old O-ring comes off with the old filter."
+      },
+      {
+        "id": "solution_clutch_cover_gasket",
+        "type": "solution",
+        "text": "Replace Clutch Cover Gasket",
+        "safety": "yellow",
+        "warning": "Drain the engine oil before removing the clutch cover.",
+        "action": "Replace the clutch cover gasket.",
+        "details": "Drain the oil, remove the clutch cover bolts, and carefully remove the cover. Clean both surfaces of old gasket material (use a plastic scraper). Install a new OEM gasket. Reassemble, refill oil to the correct level. Torque cover bolts evenly to spec."
+      },
+      {
+        "id": "solution_drain_plug_washer",
+        "type": "solution",
+        "text": "Replace Drain Plug Crush Washer",
+        "safety": "green",
+        "action": "Replace the crush washer and re-torque the drain plug.",
+        "details": "Remove the drain plug, replace the aluminum crush washer with a new one. Reinstall and torque to 30 Nm (22 ft-lb). The crush washer should be replaced at every oil change — this is the most common cause of drain plug leaks. Never reuse old crush washers."
+      },
+      {
+        "id": "solution_stripped_drain",
+        "type": "solution",
+        "text": "Repair Stripped Drain Plug Threads",
+        "safety": "yellow",
+        "warning": "A leaking drain plug risks complete oil loss while riding.",
+        "action": "Repair the threads with a thread insert or oversize plug.",
+        "details": "Best fix: Install a TimeSert or HeliCoil thread repair insert — this restores the original thread size permanently ($50-$100 at a shop). Alternative: use an oversize drain plug (requires tapping to a larger thread). Do not use a self-tapping plug as a long-term solution. For the Ninja 400 with an aluminum engine case, thread inserts are the recommended repair."
+      },
+      {
+        "id": "solution_countershaft_seal",
+        "type": "solution",
+        "text": "Replace Countershaft Seal",
+        "safety": "yellow",
+        "warning": "Install the new seal squarely to avoid future leaks.",
+        "action": "Replace the countershaft output shaft oil seal.",
+        "details": "Remove the front sprocket and nut. Carefully pry out the old seal (do not scratch the shaft). Drive in the new seal with the lip facing inward using a seal driver or appropriately-sized socket. Apply a thin film of oil to the seal lip. Reinstall the sprocket and nut. This seal typically needs replacement every 30,000-50,000 km."
+      },
+      {
+        "id": "solution_excess_chain_lube",
+        "type": "solution",
+        "text": "Excess Chain Lubricant — Not an Oil Leak",
+        "safety": "green",
+        "action": "Clean up excess chain lube.",
+        "details": "Oil on the chain and rear wheel area is often just excess chain lubricant being flung off at speed, not an engine oil leak. Apply chain lube sparingly to the inner side of the lower chain run. Let the lube set for 5-10 minutes before riding so it can penetrate the rollers and O-rings without being flung off."
+      },
+      {
+        "id": "solution_uv_dye",
+        "type": "solution",
+        "text": "Use UV Dye to Locate the Leak",
+        "safety": "green",
+        "action": "Add UV dye to the engine oil to trace the leak source.",
+        "details": "If you cannot visually locate the leak after cleaning the engine, add UV oil leak detection dye to the engine oil (follow the dye instructions for dosage). Ride the bike for 20-30 minutes, then inspect with a UV flashlight in a dark area. The dye fluoresces brightly at the leak source, making even small seeps clearly visible. This is the most reliable method for finding hard-to-locate oil leaks."
+      }
+    ]
+  }
+}

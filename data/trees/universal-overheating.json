@@ -1,0 +1,221 @@
+{
+  "title": "Engine Overheating",
+  "description": "Diagnose a motorcycle that is running hot, showing a high temperature warning, or overheating. Covers both liquid-cooled and air-cooled motorcycles.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Is your motorcycle liquid-cooled or air-cooled?",
+        "safety": "green",
+        "options": [
+          { "text": "Liquid-cooled (has a radiator and coolant)", "next": "lc_check_coolant" },
+          { "text": "Air-cooled (no radiator, relies on airflow)", "next": "ac_check_conditions" },
+          { "text": "I'm not sure", "next": "check_cooling_type" }
+        ]
+      },
+      {
+        "id": "check_cooling_type",
+        "type": "check",
+        "text": "Determine your cooling system type.",
+        "safety": "green",
+        "instructions": "Look at the front of your motorcycle, behind the front wheel. If you see a radiator (a finned metal panel with hoses running to it), your bike is liquid-cooled. If there is no radiator and the engine cylinders have large, exposed cooling fins, your bike is air-cooled. Some bikes are oil-cooled — they have an oil cooler (small radiator) but no coolant. Check your service manual if unsure.",
+        "next": "start"
+      },
+      {
+        "id": "lc_check_coolant",
+        "type": "check",
+        "text": "Check the coolant level.",
+        "safety": "yellow",
+        "warning": "NEVER open the radiator cap on a hot engine. Pressurized coolant can cause severe burns. Wait until the engine is completely cool before checking.",
+        "instructions": "With the engine COOL, check the coolant overflow/expansion tank level — it should be between the LOW and FULL marks. If the overflow tank is empty, carefully open the radiator cap (engine must be cold) and check if the radiator is full. Check under the bike for any signs of coolant leaking (green, orange, or pink fluid).",
+        "next": "coolant_level_result"
+      },
+      {
+        "id": "coolant_level_result",
+        "type": "question",
+        "text": "What is the coolant level?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or empty", "next": "check_coolant_leak" },
+          { "text": "Full — coolant level is fine", "next": "lc_check_fan" }
+        ]
+      },
+      {
+        "id": "check_coolant_leak",
+        "type": "check",
+        "text": "Look for coolant leaks.",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to animals. Clean up any spills immediately.",
+        "instructions": "With the engine cool, top off the coolant and inspect the entire cooling system for leaks. Check: radiator hoses for cracks, swelling, or loose clamps; radiator for damage or corrosion (especially the bottom); water pump area for weeping; the water pump weep hole (a small hole on the pump — dripping here means the seal is failing); and the overflow hose. After filling and running the engine, check for steam or drips.",
+        "next": "coolant_leak_result"
+      },
+      {
+        "id": "coolant_leak_result",
+        "type": "question",
+        "text": "Did you find any coolant leaks?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — visible leak found", "next": "solution_coolant_leak" },
+          { "text": "No visible leaks, but coolant keeps disappearing", "next": "solution_internal_leak" },
+          { "text": "No leaks — coolant was just low", "next": "solution_top_off_coolant" }
+        ]
+      },
+      {
+        "id": "solution_coolant_leak",
+        "type": "solution",
+        "text": "There is an external coolant leak.",
+        "safety": "yellow",
+        "warning": "Do not ride with low coolant — severe overheating can cause permanent engine damage.",
+        "action": "Repair the coolant leak",
+        "details": "Depending on where the leak is: replace cracked or swollen radiator hoses and tighten clamps. If the radiator is leaking, it may need to be repaired or replaced. If the water pump weep hole is dripping, the water pump seal is failing and the pump needs to be serviced or replaced. Use only the coolant type specified in your service manual (usually a 50/50 mix of motorcycle-specific coolant and distilled water). Never use straight water — it provides no corrosion protection and can freeze."
+      },
+      {
+        "id": "solution_internal_leak",
+        "type": "solution",
+        "text": "Coolant may be leaking internally — possible head gasket issue.",
+        "safety": "red",
+        "warning": "An internal coolant leak (blown head gasket) can cause severe engine damage if not addressed. Do not continue riding.",
+        "action": "Have the head gasket and cylinder head inspected by a professional",
+        "details": "If coolant is disappearing with no external leaks, it may be leaking internally past the head gasket into the combustion chamber or oil. Signs of a blown head gasket include: white smoke/steam from the exhaust, milky or foamy oil on the dipstick or sight glass, bubbles in the coolant overflow tank when running, or coolant smell in the exhaust. A professional can perform a compression test or combustion leak test to confirm. This is a serious repair that should not be delayed."
+      },
+      {
+        "id": "solution_top_off_coolant",
+        "type": "solution",
+        "text": "The coolant was low. Top off and monitor.",
+        "safety": "yellow",
+        "warning": "Use the coolant type specified in your service manual. Do not mix different coolant types.",
+        "action": "Top off coolant and monitor the level",
+        "details": "Fill the coolant to the proper level with the specified coolant type (check your service manual). Use a 50/50 mix of motorcycle-specific coolant and distilled water, or use pre-mixed coolant. After topping off, ride the bike and monitor the temperature and coolant level for the next few rides. If the level drops again, there is likely a slow leak that needs to be found."
+      },
+      {
+        "id": "lc_check_fan",
+        "type": "check",
+        "text": "Check if the radiator cooling fan is working.",
+        "safety": "yellow",
+        "warning": "Keep fingers, hair, and loose clothing away from the fan area. The fan can start automatically without warning.",
+        "instructions": "Start the engine and let it idle until it reaches operating temperature. Watch the temperature gauge. The radiator fan should turn on automatically when the engine reaches a specific temperature (usually around 200-220°F / 95-105°C). If the fan does not come on and the temperature keeps rising, turn off the engine immediately.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Does the radiator fan turn on when the engine gets hot?",
+        "safety": "green",
+        "options": [
+          { "text": "No — fan never comes on", "next": "solution_fan" },
+          { "text": "Yes — fan runs but engine still overheats", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "solution_fan",
+        "type": "solution",
+        "text": "The radiator fan is not working.",
+        "safety": "yellow",
+        "warning": "Do not ride in stop-and-go traffic without a working fan — the engine will overheat rapidly when airflow is low.",
+        "action": "Check the fan circuit and replace if needed",
+        "details": "Check the fan fuse first — replace if blown. Test the fan by connecting it directly to the battery (briefly) — if it spins, the motor is good and the problem is in the circuit (temperature switch/sensor, relay, or wiring). If the fan does not spin when connected directly to the battery, the fan motor is faulty and needs replacement. Also check the coolant temperature sensor/switch that triggers the fan — consult your service manual for its location and testing procedure."
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Check the thermostat operation.",
+        "safety": "yellow",
+        "warning": "The thermostat is inside the engine cooling system. Only access it when the engine is cold.",
+        "instructions": "With the engine cold, start it and feel the upper radiator hose. As the engine warms up, the hose should go from cold to hot once the thermostat opens (usually around 180°F / 82°C). If the hose stays cold even after the engine is hot, the thermostat may be stuck closed. If the hose gets hot immediately, the thermostat may be stuck open (causing slow warm-up but not overheating).",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "Is the upper radiator hose getting hot as the engine warms up?",
+        "safety": "green",
+        "options": [
+          { "text": "No — hose stays cold even when engine is hot", "next": "solution_thermostat" },
+          { "text": "Yes — hose gets hot normally", "next": "solution_radiator_blocked" }
+        ]
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "The thermostat is stuck closed, blocking coolant flow.",
+        "safety": "yellow",
+        "warning": "Do not ride with a stuck-closed thermostat — the engine will overheat rapidly and can be severely damaged.",
+        "action": "Replace the thermostat",
+        "details": "A stuck-closed thermostat prevents coolant from circulating through the radiator. The thermostat must be replaced. Drain enough coolant to access the thermostat housing (usually on the cylinder head or engine block — check your service manual). Replace with a new thermostat of the correct temperature rating. Refill the cooling system and bleed any air. Thermostats are inexpensive parts but critical to proper cooling."
+      },
+      {
+        "id": "solution_radiator_blocked",
+        "type": "solution",
+        "text": "The radiator may be blocked or the system may have flow issues.",
+        "safety": "green",
+        "action": "Clean the radiator and flush the cooling system",
+        "details": "If the thermostat, fan, and coolant level are all fine but the engine still overheats: check the radiator fins for blockage (bugs, mud, debris) and clean with compressed air or a gentle water stream (front to back). The cooling system may have internal corrosion or scale buildup — flush it with a radiator flush product per the product directions, then refill with fresh coolant. Also check that the water pump is functioning — at high RPM, coolant should be visibly circulating if you open the radiator cap (engine cold). If the water pump impeller is damaged, the pump needs replacement."
+      },
+      {
+        "id": "ac_check_conditions",
+        "type": "question",
+        "text": "When does your air-cooled bike overheat?",
+        "safety": "green",
+        "options": [
+          { "text": "In stop-and-go traffic or at idle", "next": "solution_ac_traffic" },
+          { "text": "During normal riding at speed", "next": "ac_check_oil" },
+          { "text": "On very hot days", "next": "solution_ac_hot_days" }
+        ]
+      },
+      {
+        "id": "solution_ac_traffic",
+        "type": "solution",
+        "text": "Air-cooled bikes naturally run hot in traffic — this is expected behavior.",
+        "safety": "green",
+        "action": "Minimize extended idling and improve airflow",
+        "details": "Air-cooled engines rely on moving air for cooling. In stop-and-go traffic, there is insufficient airflow to cool the engine. This is normal behavior, not a malfunction. To manage it: avoid prolonged idling, turn off the engine at long red lights, find routes with less stop-and-go traffic, and keep the engine properly tuned (a lean-running engine runs hotter). If your bike has an oil cooler, make sure it is clean and unobstructed. Some riders add aftermarket oil coolers to air-cooled bikes used heavily in traffic."
+      },
+      {
+        "id": "ac_check_oil",
+        "type": "check",
+        "text": "Check the engine oil level and condition.",
+        "safety": "green",
+        "instructions": "Oil is critical for cooling in air-cooled engines — it carries a significant portion of the heat away from the engine internals. Check the oil level using the dipstick or sight glass. The oil should be at the proper level and a clean amber/brown color. Very dark, black, or gritty oil is overdue for a change.",
+        "next": "ac_oil_result"
+      },
+      {
+        "id": "ac_oil_result",
+        "type": "question",
+        "text": "What is the oil level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or very dirty/old", "next": "solution_ac_oil" },
+          { "text": "Oil level and condition are good", "next": "solution_ac_advanced" }
+        ]
+      },
+      {
+        "id": "solution_ac_oil",
+        "type": "solution",
+        "text": "Low or degraded oil is reducing the engine's ability to cool itself.",
+        "safety": "green",
+        "action": "Change the oil and filter using the correct type and weight",
+        "details": "In air-cooled engines, oil plays a major role in cooling. Low oil means less heat capacity, and old/degraded oil loses its ability to transfer heat effectively. Change the oil and filter immediately using the oil type and weight specified in your service manual. Do not overfill — this can cause other problems. If the bike is used in very hot conditions, consider using an oil weight recommended for high temperatures (check your service manual's oil chart for temperature ranges)."
+      },
+      {
+        "id": "solution_ac_hot_days",
+        "type": "solution",
+        "text": "Air-cooled bikes run hotter on hot days — manage riding conditions.",
+        "safety": "green",
+        "action": "Adjust riding habits for hot weather",
+        "details": "On very hot days, air-cooled engines can run at the upper end of their temperature range. This is more pronounced in traffic. Tips: ride during cooler parts of the day, take breaks to let the engine cool on long rides, avoid lugging the engine in high gear at low speeds (higher RPM means more oil circulation), keep the oil fresh and at the correct level, and make sure the engine fins are clean for maximum heat dissipation. If your bike has an oil cooler, ensure it is unobstructed."
+      },
+      {
+        "id": "solution_ac_advanced",
+        "type": "solution",
+        "text": "If oil is good and the bike overheats during normal riding, further diagnosis is needed.",
+        "safety": "yellow",
+        "warning": "Persistent overheating in an air-cooled engine during normal riding can lead to engine seizure.",
+        "action": "Check engine tune and seek professional diagnosis",
+        "details": "If the oil is good and the bike still overheats during normal riding at speed, possible causes include: lean fuel mixture (improperly jetted carburetors, vacuum leak, or faulty fuel injection), incorrect ignition timing, carbon buildup in the combustion chamber (increases compression and heat), worn piston rings (reducing compression and efficiency), or a slipping clutch (engine works harder than it should). Have a professional check the fuel mixture, ignition timing, and perform a compression test."
+      }
+    ]
+  }
+}

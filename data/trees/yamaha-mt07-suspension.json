@@ -1,0 +1,205 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Suspension Adjustment Issues",
+  "description": "Diagnose and adjust suspension settings, identify suspension problems, and improve ride quality on the Yamaha MT-07.",
+  "category": "suspension",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What suspension issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Ride is too harsh / feels every bump", "next": "check_preload_harsh" },
+          { "text": "Ride is too soft / bottoms out easily", "next": "check_preload_soft" },
+          { "text": "Front end dives excessively under braking", "next": "check_fork_oil" },
+          { "text": "Bike feels unstable or wallows in corners", "next": "check_sag" },
+          { "text": "Suspension is leaking oil", "next": "check_leak_location" }
+        ]
+      },
+      {
+        "id": "check_preload_harsh",
+        "type": "check",
+        "text": "Check rear preload setting",
+        "safety": "green",
+        "instructions": "The MT-07 rear shock has a preload adjuster (ring or knob near the top of the shock, accessed from the left side). If the preload is set too high for your weight, the ride will feel harsh. Check the current setting. The MT-07 has 7 preload positions. A lighter rider (under 75 kg / 165 lbs) should use positions 1-3. A heavier rider (over 85 kg / 187 lbs) should use positions 4-7. Note: the MT-07 stock forks do NOT have adjustable preload or damping.",
+        "next": "preload_harsh_result"
+      },
+      {
+        "id": "preload_harsh_result",
+        "type": "question",
+        "text": "Is the rear preload set too high for your weight?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — preload was too high, I reduced it", "next": "solution_preload_adjusted" },
+          { "text": "Preload is appropriate but ride is still harsh", "next": "check_tire_pressure_harsh" }
+        ]
+      },
+      {
+        "id": "check_tire_pressure_harsh",
+        "type": "check",
+        "text": "Check tire pressure",
+        "safety": "green",
+        "instructions": "Overinflated tires make the ride significantly harsher. Check both tires cold. MT-07 specification: Front 250 kPa (36 psi), Rear 290 kPa (42 psi). If either tire is more than 5 psi over spec, it will feel harsh over bumps.",
+        "next": "tire_pressure_harsh_result"
+      },
+      {
+        "id": "tire_pressure_harsh_result",
+        "type": "question",
+        "text": "Were the tire pressures too high?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — corrected the pressure", "next": "solution_tire_pressure_corrected" },
+          { "text": "Pressures were correct — still harsh", "next": "solution_suspension_upgrade" }
+        ]
+      },
+      {
+        "id": "check_preload_soft",
+        "type": "check",
+        "text": "Adjust rear preload for soft/bottoming ride",
+        "safety": "green",
+        "instructions": "If the suspension bottoms out (hits the stop) over bumps or with a passenger, increase the rear shock preload. Use the preload adjuster to increase it by 1-2 positions. The ideal preload gives you approximately 30-35mm of rider sag (measured from fully extended to your normal seated position). Also check that you are not exceeding the maximum load capacity.",
+        "next": "preload_soft_result"
+      },
+      {
+        "id": "preload_soft_result",
+        "type": "question",
+        "text": "Did increasing preload help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — bike no longer bottoms out", "next": "solution_preload_adjusted" },
+          { "text": "Preload is at maximum and still bottoms out", "next": "check_shock_condition" }
+        ]
+      },
+      {
+        "id": "check_shock_condition",
+        "type": "check",
+        "text": "Inspect the rear shock for wear",
+        "safety": "green",
+        "instructions": "Check the rear shock for signs of failure: (1) Oil leaking from the shock body or shaft seal, (2) The shock feels dead — no rebound control when you push down on the seat and release (it should return slowly, not bounce), (3) The bike bottoms out at maximum preload with just the rider. A worn shock has lost its damping oil or gas charge and needs replacement.",
+        "next": "shock_condition_result"
+      },
+      {
+        "id": "shock_condition_result",
+        "type": "question",
+        "text": "What is the shock condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Shock is leaking oil", "next": "solution_replace_shock" },
+          { "text": "Shock has no rebound control (bounces freely)", "next": "solution_replace_shock" },
+          { "text": "Shock seems OK but not enough for my weight/riding", "next": "solution_suspension_upgrade" }
+        ]
+      },
+      {
+        "id": "check_fork_oil",
+        "type": "check",
+        "text": "Check fork condition and oil",
+        "safety": "green",
+        "instructions": "The MT-07 stock forks are non-adjustable conventional forks. Excessive front dive under braking can be caused by: (1) Old fork oil that has lost its viscosity (replace every 20,000-30,000 km), (2) Fork seals leaking (look for oil residue on the fork tubes above the dust seals), (3) Low oil level in the forks. Push down on the front end and release — the front should return smoothly and not bounce excessively.",
+        "next": "fork_oil_result"
+      },
+      {
+        "id": "fork_oil_result",
+        "type": "question",
+        "text": "What did you find with the forks?",
+        "safety": "green",
+        "options": [
+          { "text": "Fork seals are leaking (oil on the tubes)", "next": "solution_fork_seals" },
+          { "text": "Fork oil has not been changed in a long time", "next": "solution_fork_oil_change" },
+          { "text": "Forks seem fine — just want less dive", "next": "solution_fork_upgrade" }
+        ]
+      },
+      {
+        "id": "check_sag",
+        "type": "check",
+        "text": "Measure static and rider sag",
+        "safety": "green",
+        "instructions": "Suspension sag determines how much the suspension compresses under your weight alone. To measure rear sag: (1) Fully extend the suspension (lift the rear wheel off the ground) and measure from the axle to a fixed point on the frame/subframe. (2) Let the bike down and sit on it in your normal riding position. Measure again. The difference is your rider sag. Ideal sag for the MT-07: 30-35mm (about 30% of total travel). If sag is more than 40mm, increase preload. If less than 25mm, decrease preload.",
+        "next": "sag_result"
+      },
+      {
+        "id": "sag_result",
+        "type": "question",
+        "text": "What is your rider sag measurement?",
+        "safety": "green",
+        "options": [
+          { "text": "Sag is too much (over 40mm) — not enough preload", "next": "check_preload_soft" },
+          { "text": "Sag is too little (under 25mm) — too much preload", "next": "check_preload_harsh" },
+          { "text": "Sag is correct (30-35mm) but bike still feels unstable", "next": "solution_suspension_upgrade" }
+        ]
+      },
+      {
+        "id": "check_leak_location",
+        "type": "question",
+        "text": "Where is the suspension leaking oil?",
+        "safety": "yellow",
+        "warning": "Leaking suspension components affect braking and handling. Repair before riding.",
+        "options": [
+          { "text": "Front fork tubes have oil residue", "next": "solution_fork_seals" },
+          { "text": "Rear shock is leaking oil", "next": "solution_replace_shock" }
+        ]
+      },
+      {
+        "id": "solution_preload_adjusted",
+        "type": "solution",
+        "text": "Preload Adjusted Successfully",
+        "safety": "green",
+        "action": "Rear preload is now set correctly for your weight.",
+        "details": "Take a test ride to evaluate the new setting. Fine-tune by adjusting one position at a time. Remember to re-adjust if you carry a passenger or luggage. The ideal setup has about 30-35mm of rider sag on the rear."
+      },
+      {
+        "id": "solution_tire_pressure_corrected",
+        "type": "solution",
+        "text": "Tire Pressure Corrected",
+        "safety": "green",
+        "action": "Tire pressures are now at the correct specification.",
+        "details": "Check tire pressure regularly — at least monthly and before every long ride. Pressures should be checked cold (before riding). The MT-07 specification is Front 250 kPa (36 psi), Rear 290 kPa (42 psi). You can adjust slightly based on preference: +/- 3 psi for comfort vs. handling balance."
+      },
+      {
+        "id": "solution_suspension_upgrade",
+        "type": "solution",
+        "text": "Consider Suspension Upgrade",
+        "safety": "green",
+        "action": "The MT-07 stock suspension is basic and benefits significantly from aftermarket upgrades.",
+        "details": "The MT-07 is widely known for having budget suspension. Popular upgrade options: (1) Rear shock: YSS, Ohlins STX36, Nitron — adds adjustable damping and better control ($300-$800), (2) Fork cartridge kit: Andreani, Race Tech — adds adjustable compression and rebound damping to the stock forks ($350-$600), (3) Fork springs: Race Tech progressive springs — a budget improvement ($100 + fork oil change), (4) Heavier fork oil (15w instead of stock 10w) — budget mod to reduce dive ($20). Start with fork springs and a quality rear shock for the biggest improvement."
+      },
+      {
+        "id": "solution_replace_shock",
+        "type": "solution",
+        "text": "Replace Rear Shock",
+        "safety": "yellow",
+        "warning": "The rear shock supports the weight of the bike. Use a proper jack or stand when replacing.",
+        "action": "Replace the worn or leaking rear shock absorber.",
+        "details": "A leaking or blown shock must be replaced — they are not serviceable on the MT-07 stock shock. This is a good opportunity to upgrade to an adjustable aftermarket shock (YSS, Ohlins, Nitron). Installation requires supporting the frame, removing the upper and lower shock mounting bolts, and installing the new shock. Torque mounting bolts to specification. Set initial preload based on your weight and measure sag."
+      },
+      {
+        "id": "solution_fork_seals",
+        "type": "solution",
+        "text": "Replace Fork Seals",
+        "safety": "yellow",
+        "warning": "Fork seal replacement requires special tools and careful reassembly. Consider professional service if unfamiliar.",
+        "action": "Replace the leaking fork seals.",
+        "details": "Leaking fork seals allow oil to escape, reducing damping performance and potentially contaminating the brake rotor. Fork seal replacement requires: removing the forks from the bike, disassembling them, replacing the dust seal and oil seal, and refilling with the correct amount of fork oil (MT-07 stock: 10W fork oil, approximately 440ml per leg). Special tools needed: seal driver, fork oil level gauge. Many shops charge $150-$250 for fork seal replacement. Consider upgrading the fork springs at the same time since the forks are already apart."
+      },
+      {
+        "id": "solution_fork_oil_change",
+        "type": "solution",
+        "text": "Change Fork Oil",
+        "safety": "green",
+        "action": "Drain and replace the fork oil.",
+        "details": "Fork oil degrades over time, losing its damping properties. Replace every 20,000-30,000 km. This requires removing the forks, draining the old oil, and refilling with fresh fork oil to the correct level. MT-07 stock specification: 10W fork oil, approximately 440ml per leg. Consider using slightly heavier oil (15W) if you want to reduce front dive, or lighter oil (5W) for a softer front end. Set the oil level with a fork oil level gauge for consistency between both legs."
+      },
+      {
+        "id": "solution_fork_upgrade",
+        "type": "solution",
+        "text": "Fork Upgrade Options to Reduce Dive",
+        "safety": "green",
+        "action": "Upgrade fork internals to reduce brake dive.",
+        "details": "Budget options: (1) Use heavier fork oil (15W instead of 10W) — reduces dive but also makes the fork stiffer over bumps, (2) Install stiffer fork springs (Race Tech or similar) — better control with minimal compromise. Mid-range: Install a cartridge emulator (Race Tech Gold Valve) — adds adjustable compression damping to the stock forks ($200 + installation). Premium: Full cartridge kit (Andreani Misano) — replaces the stock damping rod with a fully adjustable cartridge ($400-$600 + installation)."
+      }
+    ]
+  }
+}

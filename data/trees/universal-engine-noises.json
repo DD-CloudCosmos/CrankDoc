@@ -1,0 +1,266 @@
+{
+  "title": "Unusual Engine Noises",
+  "description": "Diagnose unusual engine sounds including knocking, ticking, rattling, and whining. Helps identify the source and severity of the noise.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What type of noise is the engine making?",
+        "safety": "green",
+        "options": [
+          { "text": "Ticking or tapping sound", "next": "ticking_location" },
+          { "text": "Knocking or hammering sound", "next": "knocking_assessment" },
+          { "text": "Rattling or clattering sound", "next": "rattling_assessment" },
+          { "text": "Whining, whistling, or squealing", "next": "whining_assessment" },
+          { "text": "Grinding sound", "next": "grinding_assessment" }
+        ]
+      },
+      {
+        "id": "ticking_location",
+        "type": "question",
+        "text": "Where does the ticking sound seem to come from, and when does it occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Top of the engine — constant light ticking", "next": "check_valve_clearance" },
+          { "text": "Top of engine — ticking only when cold, goes away when warm", "next": "solution_normal_cold_tick" },
+          { "text": "Lower engine area or exhaust — ticking with RPM", "next": "check_exhaust_leak" }
+        ]
+      },
+      {
+        "id": "check_valve_clearance",
+        "type": "check",
+        "text": "The ticking may be from valve clearances that need adjustment.",
+        "safety": "yellow",
+        "warning": "Valve clearance checks require specific tools and knowledge. If you are unfamiliar with this procedure, have a professional do it.",
+        "instructions": "Valve train noise from the top of the engine (cylinder head area) that persists when warm often indicates loose valve clearances. Check your service manual for the valve clearance check and adjustment procedure. This typically involves removing the valve cover, turning the engine to top dead center for each cylinder, and measuring the gap between the cam lobe and the valve follower/bucket with feeler gauges. This is a scheduled maintenance item on most motorcycles.",
+        "next": "valve_clearance_result"
+      },
+      {
+        "id": "valve_clearance_result",
+        "type": "question",
+        "text": "Are the valve clearances within specification?",
+        "safety": "green",
+        "options": [
+          { "text": "No — clearances are too loose", "next": "solution_adjust_valves" },
+          { "text": "Yes — clearances are within spec", "next": "solution_cam_chain" },
+          { "text": "I cannot check them myself", "next": "solution_have_valves_checked" }
+        ]
+      },
+      {
+        "id": "solution_adjust_valves",
+        "type": "solution",
+        "text": "Valve clearances are out of specification.",
+        "safety": "yellow",
+        "warning": "Incorrect valve clearance adjustment can cause poor running, valve damage, or engine damage. Follow your service manual precisely.",
+        "action": "Adjust valve clearances to specification",
+        "details": "Adjust the valve clearances to the values specified in your service manual. On bikes with screw-and-locknut adjusters, loosen the locknut, adjust the screw until the feeler gauge slides with slight resistance, then tighten the locknut while holding the screw. Recheck after tightening. On bikes with shim-over-bucket or shim-under-bucket systems, you will need to measure the existing shim, calculate the correct shim size, and replace the shim. This requires specific shim sets and tools. Consult your service manual for the complete procedure."
+      },
+      {
+        "id": "solution_cam_chain",
+        "type": "solution",
+        "text": "The cam chain (timing chain) may be loose or the tensioner may be worn.",
+        "safety": "yellow",
+        "warning": "A severely loose cam chain can skip teeth and cause catastrophic engine damage. Address this promptly.",
+        "action": "Check and adjust the cam chain tensioner",
+        "details": "The cam chain (timing chain) connects the crankshaft to the camshaft(s). It has a tensioner that keeps it tight. Over time, the chain stretches and the tensioner wears. Many bikes have an automatic tensioner — check that it is functioning by locating it (consult your service manual) and ensuring the spring mechanism is not jammed. Some bikes have manual tensioners that require periodic adjustment. If the tensioner is at its limit of adjustment and the chain is still noisy, the chain and tensioner need replacement — this is typically a professional job."
+      },
+      {
+        "id": "solution_have_valves_checked",
+        "type": "solution",
+        "text": "Have the valves checked by a professional.",
+        "safety": "green",
+        "action": "Schedule a valve clearance check and adjustment",
+        "details": "Valve clearance checking is a scheduled maintenance item (typically every 12,000-26,000 miles depending on the bike — check your service manual). A constant ticking from the top of the engine when warm is the classic sign that clearances are out of spec. While slightly loose clearances mainly cause noise, tight clearances are more serious as they can prevent the valve from fully closing, leading to valve burning and compression loss. Have a qualified mechanic check and adjust them."
+      },
+      {
+        "id": "solution_normal_cold_tick",
+        "type": "solution",
+        "text": "Slight ticking when cold that disappears when warm is often normal.",
+        "safety": "green",
+        "action": "Monitor the noise — this is likely normal thermal clearance",
+        "details": "Many motorcycle engines produce a light ticking when cold that goes away as the engine warms up and parts expand to their operating clearances. This is generally normal and not a cause for concern. The noise comes from slightly looser valve clearances when cold, hydraulic lifters that haven't fully pumped up yet, or cam chain tensioners that haven't fully extended. If the ticking goes away within the first few minutes of running and does not return, it is likely normal. If it persists or gets worse over time, have the valves and cam chain checked."
+      },
+      {
+        "id": "check_exhaust_leak",
+        "type": "check",
+        "text": "Check for an exhaust leak.",
+        "safety": "yellow",
+        "warning": "The exhaust system gets extremely hot. Do not touch the exhaust pipes or headers while the engine is running or recently run.",
+        "instructions": "With the engine running, carefully listen near the exhaust header-to-cylinder connections and any pipe joints. An exhaust leak produces a sharp ticking or popping sound that increases with RPM. You may also see soot marks or discoloration around the leak point. With the engine off and cold, check that the header bolts/nuts are tight and that the gaskets are not blown.",
+        "next": "exhaust_leak_result"
+      },
+      {
+        "id": "exhaust_leak_result",
+        "type": "question",
+        "text": "Did you find evidence of an exhaust leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leak at header or pipe joint", "next": "solution_exhaust_leak" },
+          { "text": "No exhaust leak found", "next": "check_valve_clearance" }
+        ]
+      },
+      {
+        "id": "solution_exhaust_leak",
+        "type": "solution",
+        "text": "There is an exhaust leak causing the ticking sound.",
+        "safety": "yellow",
+        "warning": "Allow the exhaust to cool completely before working on it. Exhaust bolts may be corroded and can break if forced.",
+        "action": "Seal the exhaust leak by tightening or replacing gaskets",
+        "details": "If the leak is at the header-to-cylinder connection, the header bolts/studs may need tightening or the exhaust gasket may need replacement. Apply penetrating oil to the studs/bolts and let it soak before attempting to tighten — these fasteners are exposed to extreme heat and corrosion. If a stud is broken, it will need to be extracted. For leaks at pipe joints further downstream, check clamps and gaskets. Replace any damaged gaskets with new ones. Do not use generic silicone sealant — use exhaust-specific gaskets or paste."
+      },
+      {
+        "id": "knocking_assessment",
+        "type": "question",
+        "text": "When does the knocking occur, and does it change with RPM?",
+        "safety": "yellow",
+        "warning": "A persistent heavy knocking sound may indicate serious internal engine damage. Continuing to run the engine could make the damage worse.",
+        "options": [
+          { "text": "Heavy knocking that gets louder with RPM", "next": "solution_bottom_end_knock" },
+          { "text": "Knocking under load (accelerating) but not at idle", "next": "solution_detonation" },
+          { "text": "Light knocking or pinging at low RPM", "next": "solution_detonation" }
+        ]
+      },
+      {
+        "id": "solution_bottom_end_knock",
+        "type": "solution",
+        "text": "Heavy knocking that increases with RPM suggests bottom-end bearing damage.",
+        "safety": "red",
+        "warning": "STOP RUNNING THE ENGINE. Continued operation with a bottom-end knock can cause catastrophic failure including connecting rod breakage.",
+        "action": "Have the engine professionally inspected — do not ride",
+        "details": "A deep, heavy knocking that increases with RPM and is present at all times typically indicates worn or damaged crankshaft bearings (big-end or main bearings), or damaged connecting rod bearings. This is serious internal engine damage that requires the engine to be disassembled for diagnosis and repair. Do not continue running the engine — the bearing material can break apart and cause further damage to the crankshaft, cylinder walls, and other components. The engine will need to be professionally rebuilt or replaced."
+      },
+      {
+        "id": "solution_detonation",
+        "type": "solution",
+        "text": "The engine may be experiencing detonation (pre-ignition or knock).",
+        "safety": "yellow",
+        "warning": "Persistent detonation can damage pistons, rings, and head gaskets. Address the cause promptly.",
+        "action": "Check fuel octane, engine tune, and cooling system",
+        "details": "Detonation (pinging or knocking under load) is caused by the fuel-air mixture igniting uncontrollably rather than burning smoothly. Common causes: using fuel with an octane rating lower than specified in your service manual, an engine that is running too hot (check cooling system), carbon deposits in the combustion chamber (increases compression ratio), incorrect ignition timing (if adjustable), or a lean fuel mixture. Try using higher-octane fuel first. If the problem persists, have the engine inspected for carbon buildup and check that the fuel and ignition systems are in proper tune."
+      },
+      {
+        "id": "rattling_assessment",
+        "type": "question",
+        "text": "Where does the rattling seem to come from?",
+        "safety": "green",
+        "options": [
+          { "text": "From inside the engine — sounds internal", "next": "solution_cam_chain" },
+          { "text": "From outside the engine — heat shields, covers, or accessories", "next": "check_loose_parts" },
+          { "text": "From the clutch area — rattling at idle that goes away when clutch is pulled", "next": "solution_clutch_rattle" }
+        ]
+      },
+      {
+        "id": "check_loose_parts",
+        "type": "check",
+        "text": "Check for loose external parts.",
+        "safety": "green",
+        "instructions": "With the engine off, check for loose heat shields on the exhaust, loose engine covers or bolts, loose fairings or bodywork, loose mirrors, and any aftermarket accessories that may have vibrated loose. Tap on suspected parts — a loose part will buzz or rattle differently than a secured one. Start the engine at idle and try to locate the rattle by touching (carefully, avoiding hot parts) different components to see which one stops rattling.",
+        "next": "loose_parts_result"
+      },
+      {
+        "id": "loose_parts_result",
+        "type": "question",
+        "text": "Did you find any loose parts causing the rattle?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found the loose part", "next": "solution_tighten_parts" },
+          { "text": "No — rattle source is unclear", "next": "solution_cam_chain" }
+        ]
+      },
+      {
+        "id": "solution_tighten_parts",
+        "type": "solution",
+        "text": "A loose external part is causing the rattle.",
+        "safety": "green",
+        "action": "Tighten or secure the loose part",
+        "details": "Tighten the loose bolt, screw, or fastener. If the fastener keeps vibrating loose, apply a small amount of medium-strength threadlocker (blue Loctite) to the threads before tightening. For heat shields that rattle, you can also add a high-temperature hose clamp or replace the mounting hardware. Check all nearby fasteners as well — if one has loosened, others nearby may have too. Consider adding a post-ride check for loose fasteners to your routine, especially for older bikes."
+      },
+      {
+        "id": "solution_clutch_rattle",
+        "type": "solution",
+        "text": "Clutch basket or gear rattle at idle is common and usually harmless.",
+        "safety": "green",
+        "action": "Monitor the noise — clutch rattle at idle is often normal",
+        "details": "Many motorcycles produce a rattling or chattering sound from the clutch area at idle that disappears when the clutch lever is pulled in. This is caused by the clutch basket, primary gears, or gear backlash vibrating at idle speed. It is generally normal and does not indicate a problem, especially on bikes with straight-cut primary drive gears. However, if the noise is new, getting louder, or accompanied by clutch slipping or difficulty shifting, the clutch basket may have worn grooves (notching) in the fingers where the friction plates sit. Inspect the clutch basket for notching if the noise is getting worse."
+      },
+      {
+        "id": "whining_assessment",
+        "type": "question",
+        "text": "When does the whining or whistling occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Whining that changes pitch with engine speed", "next": "solution_bearing_whine" },
+          { "text": "Whistling or hissing at idle or under load", "next": "solution_intake_leak" },
+          { "text": "Squealing when starting the engine", "next": "solution_starter_squeal" }
+        ]
+      },
+      {
+        "id": "solution_bearing_whine",
+        "type": "solution",
+        "text": "A whine that changes with engine speed suggests a bearing or gear issue.",
+        "safety": "yellow",
+        "warning": "Bearing noise tends to get progressively worse. Address it before the bearing fails.",
+        "action": "Have the engine and transmission bearings inspected",
+        "details": "A whining sound that changes pitch directly with engine RPM can come from: a worn alternator/generator bearing, worn transmission bearings (especially noticeable in specific gears), a worn water pump bearing (on liquid-cooled bikes), or worn cam chain tensioner rollers. Note when the sound is most pronounced — does it change with gear selection? If it changes between gears, it is likely transmission-related. If it is constant regardless of gear, it may be an accessory drive bearing. Professional diagnosis is recommended to pinpoint the source before the bearing fails."
+      },
+      {
+        "id": "solution_intake_leak",
+        "type": "solution",
+        "text": "A hissing or whistling sound may be an intake or vacuum leak.",
+        "safety": "green",
+        "action": "Inspect intake boots, vacuum lines, and airbox for leaks",
+        "details": "A hissing or whistling sound, especially at idle, often indicates air being sucked in through a gap or crack in the intake system. Check the rubber intake boots between the throttle bodies/carburetors and the cylinder head for cracks. Check all vacuum hoses for cracks or disconnections. Ensure the airbox is properly sealed and the air filter is seated correctly. An intake leak also causes a lean fuel condition, which leads to rough idle, high idle, or hesitation. Replace any cracked boots or hoses."
+      },
+      {
+        "id": "solution_starter_squeal",
+        "type": "solution",
+        "text": "Squealing during starting is likely the starter clutch or drive gear.",
+        "safety": "green",
+        "action": "Have the starter clutch mechanism inspected",
+        "details": "A brief squeal or grinding during engine starting that stops once the engine fires is typically caused by the starter clutch (sprag clutch or one-way clutch) not disengaging cleanly, or starter drive gear wear. If this only happens occasionally and the engine starts fine, it may be early wear. If it happens every time or is getting worse, the starter clutch mechanism needs inspection and likely replacement. This is an internal engine component and is best serviced by a professional."
+      },
+      {
+        "id": "grinding_assessment",
+        "type": "question",
+        "text": "When does the grinding sound occur?",
+        "safety": "yellow",
+        "warning": "Grinding sounds often indicate metal-on-metal contact, which causes rapid damage. Identify the source promptly.",
+        "options": [
+          { "text": "When shifting gears", "next": "solution_shift_grinding" },
+          { "text": "Constant grinding when engine is running", "next": "solution_internal_grinding" },
+          { "text": "Only when applying brakes", "next": "solution_brake_grinding" }
+        ]
+      },
+      {
+        "id": "solution_shift_grinding",
+        "type": "solution",
+        "text": "Grinding when shifting gears may indicate clutch or transmission issues.",
+        "safety": "yellow",
+        "warning": "Persistent grinding during shifts can damage gear teeth and shift forks.",
+        "action": "Check clutch adjustment and oil level; seek professional help if it persists",
+        "details": "Grinding or crunching when shifting can be caused by: incorrect clutch cable adjustment (clutch not fully disengaging — adjust free play), low or incorrect engine oil (motorcycle transmissions are lubricated by engine oil in most cases), worn clutch plates (clutch dragging), or worn shift forks or gear dogs inside the transmission. Start with the simple fixes: adjust the clutch cable free play and check/change the engine oil using the correct type (motorcycle-specific oil with the correct JASO rating — car oil may cause clutch slipping). If the problem persists, the transmission or clutch internals need professional inspection."
+      },
+      {
+        "id": "solution_internal_grinding",
+        "type": "solution",
+        "text": "Constant grinding suggests serious internal wear.",
+        "safety": "red",
+        "warning": "Stop the engine and do not ride. Continued operation will cause further damage.",
+        "action": "Do not ride — have the engine professionally diagnosed",
+        "details": "A constant grinding sound from inside the engine with no relation to shifting or braking is a serious concern. It could indicate: a failing bearing (crankshaft, camshaft, or balancer shaft), damaged gears in the primary drive or valve train, a loose or broken internal component, or severely low oil level causing metal-to-metal contact. Check the oil level immediately — if it is critically low, do not run the engine until it is filled. If oil level is fine, the engine needs professional teardown and diagnosis. Tow the bike to a shop."
+      },
+      {
+        "id": "solution_brake_grinding",
+        "type": "solution",
+        "text": "Grinding from the brakes means brake pads are completely worn.",
+        "safety": "red",
+        "warning": "Metal-on-metal braking is extremely dangerous. Stop riding and replace brake pads immediately.",
+        "action": "Replace brake pads and inspect discs for damage",
+        "details": "Grinding from the brakes means the friction material on the brake pads has worn away completely and the metal backing plates are grinding against the brake disc. This is dangerous — you have significantly reduced stopping power. Do not ride the motorcycle. Replace the brake pads immediately and inspect the brake disc for scoring and minimum thickness (check the specification stamped on the disc). A severely scored disc must also be replaced. Always replace pads in pairs."
+      }
+    ]
+  }
+}

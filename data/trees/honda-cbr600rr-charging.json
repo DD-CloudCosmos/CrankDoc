@@ -1,0 +1,204 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Charging System / Battery Drain",
+  "description": "Diagnose charging system failures, battery drain, and electrical issues on the Honda CBR600RR.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "Disconnect the battery negative terminal before working on electrical components to prevent shorts and sparks.",
+        "options": [
+          { "text": "Battery goes dead after sitting for a few days", "next": "check_parasitic_drain" },
+          { "text": "Battery dies while riding / lights dim at idle", "next": "check_charging_voltage" },
+          { "text": "Battery will not hold a charge even after charging", "next": "test_battery" },
+          { "text": "Electrical components flickering or intermittent", "next": "check_connections" }
+        ]
+      },
+      {
+        "id": "check_parasitic_drain",
+        "type": "check",
+        "text": "Test for parasitic battery drain",
+        "safety": "yellow",
+        "warning": "Use caution when connecting the multimeter in series — do not start the engine with the meter in the current measurement circuit.",
+        "instructions": "With the ignition off and all accessories off, disconnect the battery negative terminal. Set your multimeter to DC amps (mA range). Connect the meter in series between the negative battery cable and the negative battery terminal. A normal parasitic draw is less than 5mA. If the draw is higher, start pulling fuses one at a time to identify which circuit is draining the battery. Common CBR600RR drain sources: stuck relay, aftermarket accessories (USB charger, alarm), or a faulty regulator/rectifier.",
+        "next": "parasitic_result"
+      },
+      {
+        "id": "parasitic_result",
+        "type": "question",
+        "text": "What is the parasitic drain reading?",
+        "safety": "green",
+        "options": [
+          { "text": "Draw is less than 5mA — normal", "next": "test_battery" },
+          { "text": "Draw is high and drops when a specific fuse is pulled", "next": "solution_parasitic_circuit" },
+          { "text": "Draw is high but does not change with any fuse", "next": "solution_reg_rect" }
+        ]
+      },
+      {
+        "id": "check_charging_voltage",
+        "type": "check",
+        "text": "Test the charging system output voltage",
+        "safety": "yellow",
+        "warning": "Keep hands, clothing, and meter leads away from moving engine parts during testing.",
+        "instructions": "Set your multimeter to DC volts. Connect the leads to the battery terminals (red to positive, black to negative). With the engine off, note the battery resting voltage (should be 12.6-12.8V for a fully charged battery). Start the engine and check voltage at 3,000-5,000 RPM. The charging system should produce 13.5-15.0V. Below 13.5V means the charging system is not charging properly. Above 15.5V indicates an overcharging condition (likely a bad regulator/rectifier).",
+        "next": "charging_voltage_result"
+      },
+      {
+        "id": "charging_voltage_result",
+        "type": "question",
+        "text": "What voltage do you read at 3,000-5,000 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.5V — not charging enough", "next": "check_stator" },
+          { "text": "13.5-15.0V — charging normally", "next": "test_battery" },
+          { "text": "Above 15.5V — overcharging", "next": "solution_reg_rect" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test the stator output",
+        "safety": "yellow",
+        "warning": "The stator connector is near the engine and can be hot. Test with the engine running — keep leads clear of moving parts.",
+        "instructions": "Locate the stator connector (3-wire yellow connector, typically on the left side of the engine near the front sprocket area). Disconnect it. Set your multimeter to AC volts. With the engine running at 3,000 RPM, measure voltage between each pair of the three yellow wires (3 measurements: wire 1-2, wire 2-3, wire 1-3). All three readings should be roughly equal and above 50V AC at 3,000 RPM. If one or more readings are significantly lower, the stator has a bad winding.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What were the stator AC voltage readings?",
+        "safety": "green",
+        "options": [
+          { "text": "All three readings are similar and above 50V AC — stator is good", "next": "solution_reg_rect" },
+          { "text": "One or more readings are very low or zero — stator is bad", "next": "solution_stator" },
+          { "text": "All readings are low — possible stator or connection issue", "next": "check_stator_resistance" }
+        ]
+      },
+      {
+        "id": "check_stator_resistance",
+        "type": "check",
+        "text": "Test stator winding resistance",
+        "safety": "green",
+        "instructions": "With the engine off and stator disconnected, set your multimeter to ohms. Measure resistance between each pair of yellow wires. The CBR600RR stator winding resistance should be 0.1-1.0 ohms between any two wires. Also measure from each yellow wire to engine ground — you should see infinite resistance (OL on the meter). If any wire shows continuity to ground, the stator has a shorted winding.",
+        "next": "stator_resistance_result"
+      },
+      {
+        "id": "stator_resistance_result",
+        "type": "question",
+        "text": "What did the resistance tests show?",
+        "safety": "green",
+        "options": [
+          { "text": "Resistance between wires is within spec and no continuity to ground", "next": "check_connections" },
+          { "text": "Open circuit (infinite resistance) between wires — broken winding", "next": "solution_stator" },
+          { "text": "Continuity to ground on one or more wires — shorted winding", "next": "solution_stator" }
+        ]
+      },
+      {
+        "id": "test_battery",
+        "type": "check",
+        "text": "Test the battery condition",
+        "safety": "green",
+        "instructions": "A fully charged battery should read 12.6-12.8V DC with the engine off. If the voltage is below 12.4V, charge the battery fully with a motorcycle battery charger. After charging, let it sit for 1 hour and recheck voltage. If it drops below 12.4V within an hour, the battery has a dead cell and needs replacement. The CBR600RR uses a YTZ10S (or equivalent) battery. Typical battery life is 3-5 years.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "What is the battery's condition after charging?",
+        "safety": "green",
+        "options": [
+          { "text": "Voltage holds at 12.6V+ after charging — battery is good", "next": "check_connections" },
+          { "text": "Voltage drops below 12.4V quickly — bad battery", "next": "solution_battery" },
+          { "text": "Battery will not accept a charge at all", "next": "solution_battery" }
+        ]
+      },
+      {
+        "id": "check_connections",
+        "type": "check",
+        "text": "Inspect electrical connections and grounds",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before cleaning or tightening electrical connections.",
+        "instructions": "Inspect the following connections: (1) Battery terminals — clean, tight, no corrosion, (2) Main ground wire (black wire bolted to the frame near the battery), (3) Stator connector (3 yellow wires) — look for melting, burning, or corrosion, (4) Regulator/rectifier connector — check for melted pins (very common on CBR600RR). Melted or corroded connectors cause voltage drops and intermittent charging.",
+        "next": "connection_result"
+      },
+      {
+        "id": "connection_result",
+        "type": "question",
+        "text": "What did you find with the connections?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery terminals are corroded or loose", "next": "solution_clean_terminals" },
+          { "text": "Stator or R/R connector is melted or burned", "next": "solution_connector_repair" },
+          { "text": "Ground wire is loose or corroded", "next": "solution_ground" },
+          { "text": "All connections look clean and tight", "next": "solution_reg_rect" }
+        ]
+      },
+      {
+        "id": "solution_parasitic_circuit",
+        "type": "solution",
+        "text": "Fix Parasitic Drain on Identified Circuit",
+        "safety": "yellow",
+        "warning": "When working on electrical circuits, always disconnect the battery first.",
+        "action": "Investigate and repair the circuit causing the parasitic drain.",
+        "details": "The fuse you pulled identifies the draining circuit. Check all components on that circuit for stuck relays, aftermarket accessories left on, or shorted wiring. Common CBR600RR drains include: aftermarket USB chargers wired directly (not switched), stuck fuel pump relay, or a faulty tail light circuit. Aftermarket accessories should be wired through a switched power source so they turn off with the ignition."
+      },
+      {
+        "id": "solution_reg_rect",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "A failing regulator/rectifier can overcharge and damage the battery. Replace promptly.",
+        "action": "Replace the regulator/rectifier unit.",
+        "details": "The CBR600RR (especially 2003-2006 models) is known for regulator/rectifier failures. The OEM R/R runs hot and fails prematurely. A popular upgrade is the FH020AA MOSFET-style regulator/rectifier (from the Honda SH series), which runs much cooler and is more reliable. The R/R is located under the rear seat area. When replacing, also inspect and repair any melted connector pins. Consider upgrading to a sealed connector for better reliability."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Stator replacement requires draining engine oil and removing the left engine cover. This is a moderately involved job.",
+        "action": "Replace the stator (generator) assembly.",
+        "details": "The stator is behind the left engine cover (magneto cover). Drain the engine oil, remove the cover, and unbolt the stator from inside the cover. Install the new stator, route the wires through the grommet, and reconnect. Replace the cover gasket. Refill with oil. OEM and aftermarket stators are available — Rick's Motorsport Electrics and ElectroSport are quality aftermarket options. When replacing the stator, it is recommended to also replace the regulator/rectifier to avoid the new stator being damaged by a failing R/R."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Replace Battery",
+        "safety": "green",
+        "action": "Replace the battery with a new one.",
+        "details": "The CBR600RR uses a YTZ10S battery (or equivalent: Yuasa, Shorai lithium, Antigravity). When installing a new battery, clean the terminals and apply dielectric grease or terminal protector spray to prevent corrosion. Connect the positive terminal first, then the negative. If the bike has been sitting with a dead battery, the ECU may need to relearn idle — let the engine idle for 5-10 minutes after installation. Consider using a battery tender when the bike is stored."
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Clean and Tighten Battery Terminals",
+        "safety": "green",
+        "action": "Clean the battery terminals and reconnect securely.",
+        "details": "Disconnect the negative terminal first, then the positive. Clean the terminals and cable ends with a wire brush or battery terminal cleaner. Apply dielectric grease or battery terminal protector to prevent future corrosion. Reconnect positive first, then negative. Tighten securely but do not over-torque — battery terminal bolts are small and strip easily."
+      },
+      {
+        "id": "solution_connector_repair",
+        "type": "solution",
+        "text": "Repair Melted Stator/R/R Connector",
+        "safety": "yellow",
+        "warning": "Use proper crimped connections, not just electrical tape. Poor connections cause fires.",
+        "action": "Repair or replace the melted connector.",
+        "details": "This is a very common issue on the CBR600RR. The OEM bullet connectors cannot handle the high current from the stator and melt over time. The best fix is to cut out the melted connector and either (1) solder the wires directly together (if the stator and R/R are in permanent positions), or (2) install heavy-duty sealed connectors rated for the current. Many CBR600RR owners use Anderson Powerpole connectors or similar high-current connectors. Always use heat shrink tubing for insulation."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Clean and Secure Ground Connection",
+        "safety": "green",
+        "action": "Clean the ground wire connection point and re-secure it.",
+        "details": "Remove the ground wire bolt from the frame. Clean the wire terminal and the frame mounting point with sandpaper to remove corrosion and ensure bare metal contact. Reinstall the bolt and tighten securely. Apply dielectric grease to the connection to prevent future corrosion. A poor ground connection causes all sorts of weird electrical symptoms — flickering lights, intermittent starting, and charging issues."
+      }
+    ]
+  }
+}

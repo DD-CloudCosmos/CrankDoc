@@ -1,0 +1,255 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Oil Leak Detection",
+  "description": "Identify and diagnose oil leaks on the Honda CBR600RR engine and related components.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where do you notice the oil leak?",
+        "safety": "yellow",
+        "warning": "Oil on tires or brakes is extremely dangerous. If oil is reaching your tires, do not ride until the leak is fixed and tires are cleaned.",
+        "options": [
+          { "text": "Oil dripping on the ground when parked", "next": "check_oil_level" },
+          { "text": "Oil residue on the engine cases", "next": "clean_and_locate" },
+          { "text": "Oil spray on the chain/rear wheel area", "next": "check_countershaft" },
+          { "text": "Oil visible on or around the exhaust", "next": "check_valve_cover" }
+        ]
+      },
+      {
+        "id": "check_oil_level",
+        "type": "check",
+        "text": "Check the engine oil level",
+        "safety": "green",
+        "instructions": "With the engine warm and the bike upright (not on the side stand), check the oil level through the sight glass on the right side of the engine. The oil level should be between the upper and lower marks. If the oil level is dropping noticeably between oil changes, you have a significant leak or the engine is burning oil. Note: the CBR600RR does not have a dipstick — it uses a sight glass.",
+        "next": "oil_level_result"
+      },
+      {
+        "id": "oil_level_result",
+        "type": "question",
+        "text": "How quickly is the oil level dropping?",
+        "safety": "green",
+        "options": [
+          { "text": "Noticeable drop within a few rides", "next": "clean_and_locate" },
+          { "text": "Slight drop over many miles — probably normal consumption", "next": "solution_normal_consumption" },
+          { "text": "Oil level is not dropping but I see a leak", "next": "clean_and_locate" }
+        ]
+      },
+      {
+        "id": "clean_and_locate",
+        "type": "check",
+        "text": "Clean the engine and locate the leak source",
+        "safety": "yellow",
+        "warning": "Do not spray degreaser on hot engine or exhaust. Allow the bike to cool first.",
+        "instructions": "The best way to find an oil leak is to clean everything first and then watch for fresh oil. Spray the engine with a degreaser (Simple Green or similar), let it sit for 5 minutes, then rinse gently with water. Dry the engine, then run the bike for 10-15 minutes and inspect for fresh oil. Pay close attention to these common CBR600RR leak points: (1) Valve cover gasket, (2) Oil filter housing, (3) Clutch cover gasket, (4) Shift shaft seal, (5) Oil pan gasket, (6) Drain plug.",
+        "next": "leak_source"
+      },
+      {
+        "id": "leak_source",
+        "type": "question",
+        "text": "Where is the fresh oil appearing?",
+        "safety": "green",
+        "options": [
+          { "text": "Top of the engine — valve cover area", "next": "check_valve_cover" },
+          { "text": "Around the oil filter", "next": "check_oil_filter" },
+          { "text": "Right side — clutch cover area", "next": "solution_clutch_cover" },
+          { "text": "Bottom — oil pan or drain plug", "next": "check_drain_plug" },
+          { "text": "Left side — near the shift lever", "next": "solution_shift_shaft" },
+          { "text": "Cannot pinpoint the source", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "check_valve_cover",
+        "type": "check",
+        "text": "Inspect the valve cover gasket area",
+        "safety": "yellow",
+        "warning": "The valve cover area is near the exhaust — it gets very hot. Inspect when cool.",
+        "instructions": "Look for oil seeping from the joint between the valve cover and the cylinder head. On the CBR600RR, the valve cover is the top part of the engine. Check the gasket edge for oil residue. Also check the spark plug tube seals — oil leaking into the spark plug wells can cause misfires. Feel around the valve cover bolts for dampness.",
+        "next": "valve_cover_result"
+      },
+      {
+        "id": "valve_cover_result",
+        "type": "question",
+        "text": "Is the valve cover area leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil seeping from the valve cover gasket", "next": "solution_valve_cover_gasket" },
+          { "text": "Oil in spark plug wells", "next": "solution_spark_plug_seals" },
+          { "text": "Valve cover area is dry", "next": "clean_and_locate" }
+        ]
+      },
+      {
+        "id": "check_oil_filter",
+        "type": "check",
+        "text": "Inspect the oil filter area",
+        "safety": "green",
+        "instructions": "The CBR600RR oil filter is on the front of the engine, below the cylinders. Check that the oil filter is properly tightened (hand-tight plus 3/4 turn). Look for oil around the filter seal. If the filter was recently changed, the old O-ring may have stuck to the engine and is now double-gasketted (a common mistake that causes leaks).",
+        "next": "oil_filter_result"
+      },
+      {
+        "id": "oil_filter_result",
+        "type": "question",
+        "text": "What did you find at the oil filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil filter is loose", "next": "solution_tighten_filter" },
+          { "text": "Double O-ring (old gasket stuck to engine)", "next": "solution_double_gasket" },
+          { "text": "Oil filter housing is cracked or stripped", "next": "solution_filter_housing" },
+          { "text": "Oil filter area looks fine", "next": "clean_and_locate" }
+        ]
+      },
+      {
+        "id": "check_drain_plug",
+        "type": "check",
+        "text": "Inspect the oil drain plug",
+        "safety": "green",
+        "instructions": "Check the oil drain plug (bottom of the engine) for tightness and condition. Look for oil weeping around the drain plug washer. The CBR600RR drain plug uses a crush washer that should be replaced at every oil change. Also check the drain plug threads — cross-threading or overtightening can strip the aluminum case threads.",
+        "next": "drain_plug_result"
+      },
+      {
+        "id": "drain_plug_result",
+        "type": "question",
+        "text": "What is the drain plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug is loose or crush washer is worn", "next": "solution_drain_plug" },
+          { "text": "Drain plug threads are stripped", "next": "solution_stripped_threads" },
+          { "text": "Drain plug area is dry", "next": "clean_and_locate" }
+        ]
+      },
+      {
+        "id": "check_countershaft",
+        "type": "check",
+        "text": "Inspect the countershaft (output shaft) seal",
+        "safety": "green",
+        "instructions": "The countershaft seal is behind the front sprocket on the left side of the engine. Oil leaking from this seal will fling onto the chain and rear wheel as the sprocket spins. Remove the front sprocket cover and look for oil around the shaft where it exits the engine case. This is a common leak point on high-mileage CBR600RRs.",
+        "next": "countershaft_result"
+      },
+      {
+        "id": "countershaft_result",
+        "type": "question",
+        "text": "Is the countershaft seal leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil around the front sprocket shaft", "next": "solution_countershaft_seal" },
+          { "text": "No — countershaft area is dry", "next": "solution_chain_lube_excess" }
+        ]
+      },
+      {
+        "id": "solution_normal_consumption",
+        "type": "solution",
+        "text": "Normal Oil Consumption",
+        "safety": "green",
+        "action": "Monitor oil level and top off as needed — some oil consumption is normal.",
+        "details": "The CBR600RR, especially at high RPM, can consume a small amount of oil. Honda considers up to 1 liter per 5,000 km acceptable on a high-performance engine. Check oil before every ride and top off as needed. Use Honda GN4 10W-30 or equivalent motorcycle-specific oil that meets JASO MA specifications. If consumption exceeds this rate, have the valve stem seals and piston rings inspected."
+      },
+      {
+        "id": "solution_valve_cover_gasket",
+        "type": "solution",
+        "text": "Replace Valve Cover Gasket",
+        "safety": "yellow",
+        "warning": "Be careful not to drop debris into the engine when removing the valve cover.",
+        "action": "Replace the valve cover gasket.",
+        "details": "Remove the valve cover bolts in reverse order of the tightening sequence. Lift the valve cover and remove the old gasket. Clean both mating surfaces. Install the new gasket (no sealant needed if using OEM gasket). Torque the valve cover bolts to 12 Nm (9 ft-lb) in the specified sequence. Do not over-torque — the aluminum cover warps easily."
+      },
+      {
+        "id": "solution_spark_plug_seals",
+        "type": "solution",
+        "text": "Replace Spark Plug Tube Seals",
+        "safety": "yellow",
+        "warning": "Oil in spark plug wells can cause misfires. Clean the wells thoroughly after replacing seals.",
+        "action": "Replace the spark plug tube seals (part of the valve cover gasket set).",
+        "details": "The spark plug tube seals are typically included in the valve cover gasket kit. Remove the valve cover, replace the tube seals (press them into the cover), and reinstall with a new valve cover gasket. Clean any oil from the spark plug wells before reinstalling the coils and plugs."
+      },
+      {
+        "id": "solution_clutch_cover",
+        "type": "solution",
+        "text": "Replace Clutch Cover Gasket",
+        "safety": "yellow",
+        "warning": "Drain the oil before removing the clutch cover to avoid a large spill.",
+        "action": "Replace the clutch cover gasket.",
+        "details": "Drain the engine oil. Remove the clutch cover bolts and carefully remove the cover. Scrape off the old gasket material from both surfaces (use a plastic scraper to avoid damaging the aluminum). Install a new OEM gasket. Reassemble and refill with the correct amount of oil (3.4 liters after drain, 3.7 liters after filter change). Torque cover bolts to 12 Nm."
+      },
+      {
+        "id": "solution_shift_shaft",
+        "type": "solution",
+        "text": "Replace Shift Shaft Seal",
+        "safety": "yellow",
+        "warning": "This seal replacement requires care to avoid damaging the shaft or case.",
+        "action": "Replace the shift shaft oil seal.",
+        "details": "The shift shaft seal is on the left side of the engine where the shift shaft exits the case. Carefully pry out the old seal with a pick or small screwdriver (avoid scratching the shaft or bore). Press in the new seal with the lip facing inward (toward the engine). A socket that matches the seal outer diameter works well as an installation tool. Apply a thin coat of oil to the new seal lip before installation."
+      },
+      {
+        "id": "solution_tighten_filter",
+        "type": "solution",
+        "text": "Tighten Oil Filter",
+        "safety": "green",
+        "action": "Tighten the oil filter to the correct specification.",
+        "details": "Hand-tighten the oil filter until the gasket contacts the engine surface, then turn an additional 3/4 turn. Do not use a filter wrench to tighten — over-tightening damages the gasket and makes future removal difficult. Wipe away any leaked oil, start the engine, and verify the leak has stopped."
+      },
+      {
+        "id": "solution_double_gasket",
+        "type": "solution",
+        "text": "Remove Old Filter Gasket and Reinstall",
+        "safety": "green",
+        "action": "Remove the stuck old O-ring and reinstall the oil filter properly.",
+        "details": "Remove the oil filter. Inspect the engine surface where the filter seats — you will see the old rubber O-ring stuck to the surface. Carefully peel it off. Clean the surface, apply a light film of oil to the new filter O-ring, and reinstall the filter (hand-tight plus 3/4 turn). This double-gasket situation is a common cause of sudden oil loss after an oil change."
+      },
+      {
+        "id": "solution_filter_housing",
+        "type": "solution",
+        "text": "Repair or Replace Oil Filter Housing — Professional Service",
+        "safety": "red",
+        "warning": "A cracked filter housing can cause rapid oil loss. Do not ride until repaired.",
+        "action": "Have the oil filter housing inspected and repaired by a professional.",
+        "details": "A cracked or stripped oil filter housing is a serious issue on the CBR600RR. This typically requires professional service. If the threads are stripped, a helicoil repair may be possible. If the housing is cracked, it may need to be welded or the engine case replaced. This is not a common failure unless the filter was cross-threaded or severely over-tightened."
+      },
+      {
+        "id": "solution_drain_plug",
+        "type": "solution",
+        "text": "Replace Drain Plug Crush Washer",
+        "safety": "green",
+        "action": "Replace the drain plug crush washer and re-torque the plug.",
+        "details": "Remove the drain plug, replace the aluminum crush washer with a new one (Honda part or M12 aluminum washer). Reinstall the plug and torque to 30 Nm (22 ft-lb). The crush washer should be replaced at every oil change — reusing old washers is the most common cause of drain plug leaks. Clean up any spilled oil."
+      },
+      {
+        "id": "solution_stripped_threads",
+        "type": "solution",
+        "text": "Repair Stripped Drain Plug Threads",
+        "safety": "yellow",
+        "warning": "Riding with a leaking drain plug risks engine damage from oil loss.",
+        "action": "Repair the stripped threads with a helicoil or oversize drain plug.",
+        "details": "Options for stripped drain plug threads: (1) Install a TimeSert or HeliCoil thread repair insert — this restores the original thread size and is the best permanent fix. (2) Use an oversize drain plug (M14 instead of M12) — this requires tapping the hole to the larger size. (3) Use a self-tapping drain plug as a temporary fix. For the most reliable repair, a TimeSert insert is recommended. A shop can do this for $50-$100."
+      },
+      {
+        "id": "solution_countershaft_seal",
+        "type": "solution",
+        "text": "Replace Countershaft (Output Shaft) Seal",
+        "safety": "yellow",
+        "warning": "Improper seal installation can cause a persistent leak. Take care to install the seal square and at the correct depth.",
+        "action": "Replace the countershaft oil seal.",
+        "details": "Remove the front sprocket and sprocket nut. Pry out the old seal carefully (do not scratch the shaft). Drive in the new seal using a seal driver or appropriately-sized socket, with the seal lip facing inward. Apply a thin film of oil to the seal lip. Reinstall the sprocket and nut. This is a common maintenance item on the CBR600RR, especially beyond 30,000 km."
+      },
+      {
+        "id": "solution_chain_lube_excess",
+        "type": "solution",
+        "text": "Excess Chain Lubricant — Not an Oil Leak",
+        "safety": "green",
+        "action": "Clean up excess chain lube — this is not an engine oil leak.",
+        "details": "Oil spray on the chain and rear wheel area is often caused by excess chain lubricant being flung off at speed. This is not an engine oil leak. Clean the area and apply chain lube more sparingly — a light coat on the inner side of the chain is sufficient. Let the lube set for 5-10 minutes after application before riding."
+      },
+      {
+        "id": "solution_uv_dye",
+        "type": "solution",
+        "text": "Use UV Dye to Find the Leak",
+        "safety": "green",
+        "action": "Add UV dye to the engine oil to pinpoint the leak source.",
+        "details": "If you cannot visually locate the leak, add UV oil leak detection dye to the engine oil (follow the dye manufacturer's dosage instructions). Ride the bike for 20-30 minutes, then use a UV flashlight in a dark area to inspect the engine. The dye will glow brightly at the leak source, making even small seeps visible. This is the most reliable method for finding elusive oil leaks."
+      }
+    ]
+  }
+}

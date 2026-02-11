@@ -1,0 +1,233 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Suspension Problems",
+  "description": "Diagnose front and rear suspension issues on the Sportster 1200 including fork leaks, harsh ride, bottoming out, and sagging.",
+  "category": "suspension",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Which suspension is giving you trouble?",
+        "safety": "green",
+        "options": [
+          { "text": "Front forks", "next": "front_forks" },
+          { "text": "Rear shocks", "next": "rear_shocks" },
+          { "text": "Both front and rear", "next": "front_forks" }
+        ]
+      },
+      {
+        "id": "front_forks",
+        "type": "question",
+        "text": "What front fork symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil leaking from fork seals", "next": "check_fork_seals" },
+          { "text": "Front end dives too much under braking", "next": "fork_dive" },
+          { "text": "Ride is harsh — feels every bump", "next": "harsh_front" },
+          { "text": "Front end feels loose or wobbles", "next": "front_wobble" }
+        ]
+      },
+      {
+        "id": "check_fork_seals",
+        "type": "check",
+        "text": "Inspect the fork seals for leaks",
+        "safety": "green",
+        "instructions": "Push the rubber dust cover up on each fork leg to expose the fork seal area. Look for oil residue below the seal. Push down on the front of the bike several times to cycle the forks — this may cause more oil to weep if the seal is bad. A light film of oil is not necessarily a failed seal, but visible dripping or a ring of oil around the fork tube indicates seal failure. Also check for scratches or pitting on the chrome fork tubes — damaged tubes will destroy new seals quickly.",
+        "next": "fork_seal_result"
+      },
+      {
+        "id": "fork_seal_result",
+        "type": "question",
+        "text": "Are the fork seals leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — visible oil leaking from one or both seals", "next": "check_fork_tubes" },
+          { "text": "Light film only — not dripping", "next": "solution_seal_saver" },
+          { "text": "Seals are dry — no leak", "next": "fork_dive" }
+        ]
+      },
+      {
+        "id": "solution_seal_saver",
+        "type": "solution",
+        "text": "Try a fork seal cleaning tool first",
+        "safety": "green",
+        "action": "Clean the fork seals before replacing",
+        "details": "A light oil film may be caused by dirt or debris trapped under the seal lip. Before replacing the seals, try: (1) Push the dust cover up. (2) Slide a fork seal cleaning tool (Seal Mate or similar thin plastic strip) between the seal and the fork tube. (3) Work it around the entire circumference to dislodge dirt particles. (4) Wipe the fork tube clean. (5) Push the dust cover back down. (6) Test ride and monitor. This saves the seals about 50% of the time."
+      },
+      {
+        "id": "check_fork_tubes",
+        "type": "check",
+        "text": "Inspect the fork tubes for damage",
+        "safety": "green",
+        "instructions": "Run your fingers along the chrome fork tubes (stanchions) and feel for scratches, pitting, or corrosion. Even small imperfections in the chrome will cut through new seals quickly. Also check for stone chips and rock damage. Look at the tubes in good light at an angle — scratches will be visible as lines in the chrome.",
+        "next": "fork_tube_result"
+      },
+      {
+        "id": "fork_tube_result",
+        "type": "question",
+        "text": "Are the fork tubes smooth and undamaged?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — tubes are smooth", "next": "solution_replace_seals" },
+          { "text": "No — scratched, pitted, or corroded", "next": "solution_fork_tubes" }
+        ]
+      },
+      {
+        "id": "solution_replace_seals",
+        "type": "solution",
+        "text": "Replace the fork seals",
+        "safety": "yellow",
+        "warning": "Fork oil can be messy. Work in an area where spills can be cleaned easily. Wear safety glasses when removing the old seals.",
+        "action": "Replace the fork seals and fork oil",
+        "details": "Fork seal replacement on the Sportster 1200: (1) Remove the front wheel and fender. (2) Remove the fork legs from the triple clamps. (3) Drain the old fork oil. (4) Disassemble the fork legs. (5) Remove old seals and dust covers. (6) Clean everything thoroughly. (7) Install new seals using a fork seal driver (mandatory tool — do not hammer directly on the seal). (8) Reassemble and fill with the correct weight fork oil (typically 10W) to the specified level. (9) Reinstall on the bike. Always replace seals in pairs — if one side is leaking, the other is close behind."
+      },
+      {
+        "id": "solution_fork_tubes",
+        "type": "solution",
+        "text": "Replace or repair fork tubes",
+        "safety": "yellow",
+        "warning": "Riding with damaged fork tubes and leaking seals is dangerous — reduced braking control and potential fork failure.",
+        "action": "Replace the damaged fork tubes",
+        "details": "Scratched or pitted fork tubes will destroy any new seals installed. Options: (1) Replace with new fork tubes (OEM or aftermarket). (2) Have the tubes re-chromed by a specialist (cost-effective if the tubes aren't bent). (3) Some tubes can be polished if scratches are minor — use very fine sandpaper (2000 grit) and chrome polish. (4) Always install new seals when replacing or refinishing tubes. (5) Consider upgrading to hard-chrome or DLC (diamond-like carbon) coated tubes for longer life."
+      },
+      {
+        "id": "fork_dive",
+        "type": "question",
+        "text": "Does the front end dive excessively under braking or feel too soft?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — dives too deep under braking", "next": "solution_fork_oil" },
+          { "text": "Bottoms out over big bumps", "next": "solution_fork_springs" }
+        ]
+      },
+      {
+        "id": "solution_fork_oil",
+        "type": "solution",
+        "text": "Change fork oil and/or increase weight",
+        "safety": "green",
+        "action": "Replace fork oil with correct weight or upgrade",
+        "details": "Fork oil degrades over time and loses its damping properties. (1) Drain the old fork oil through the drain screw at the bottom of each fork leg (if equipped) or by removing the fork legs. (2) Refill with fresh fork oil to the specified level. (3) If dive is excessive with the correct oil: try one weight heavier (e.g., from 10W to 15W). (4) Oil level also affects damping — a higher oil level (less air space) provides more resistance to bottoming. Standard Sportster 1200 fork oil capacity is approximately 11.2 oz per leg. Change fork oil every 15,000-20,000 miles."
+      },
+      {
+        "id": "solution_fork_springs",
+        "type": "solution",
+        "text": "Upgrade fork springs",
+        "safety": "green",
+        "action": "Replace the fork springs with progressive or stiffer springs",
+        "details": "The stock Sportster 1200 fork springs are relatively soft, especially for heavier riders or those carrying luggage. (1) Progressive Suspension, Race Tech, or Ohlins offer drop-in spring kits for the Sportster. (2) Progressive springs get stiffer as they compress — soft over small bumps, firm over big hits. (3) Spring replacement is done during a fork oil change — remove the fork caps (with forks compressed or on the bike for safety), swap springs, and refill with oil. (4) For heavier riders (200+ lbs), consider stiffer springs plus 15W fork oil."
+      },
+      {
+        "id": "harsh_front",
+        "type": "solution",
+        "text": "Front end rides too harsh",
+        "safety": "green",
+        "action": "Soften the front suspension",
+        "details": "A harsh front end can be caused by: (1) Fork oil too heavy — drain and refill with lighter weight (e.g., from 15W to 10W). (2) Fork oil level too high — excess oil reduces air spring compliance. Measure and correct to spec. (3) Aftermarket springs too stiff for your weight and riding style. (4) Stiction in the fork legs — disassemble, clean, and re-lubricate the bushings. (5) Tire pressure too high — check and adjust to recommended PSI. (6) Fork tubes binding in the triple clamps — loosen the clamp bolts, cycle the forks, and retighten. This realigns the tubes."
+      },
+      {
+        "id": "front_wobble",
+        "type": "check",
+        "text": "Check the steering head bearings and front end components",
+        "safety": "yellow",
+        "warning": "A loose front end is a safety hazard. Do not ride until the cause is found and fixed.",
+        "instructions": "With the front wheel off the ground: (1) Grab the bottom of the fork legs and push/pull — any clunking means loose steering head bearings. (2) Turn the bars slowly side to side — they should move smoothly with no notchiness or rough spots. (3) Check the front axle nut — should be tight (50-55 ft-lbs). (4) Check the triple clamp pinch bolts. (5) Check wheel bearings — grab the tire top and bottom and rock it. Any play means worn bearings.",
+        "next": "wobble_result"
+      },
+      {
+        "id": "wobble_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Steering head bearings are loose or notchy", "next": "solution_steering_bearings" },
+          { "text": "Front wheel bearings have play", "next": "solution_wheel_bearings" },
+          { "text": "Triple clamp or axle bolts were loose", "next": "solution_bolts_loose" },
+          { "text": "Everything seems tight", "next": "solution_tire_check" }
+        ]
+      },
+      {
+        "id": "solution_steering_bearings",
+        "type": "solution",
+        "text": "Adjust or replace steering head bearings",
+        "safety": "yellow",
+        "warning": "Improperly adjusted steering head bearings can cause dangerous handling. If you're not confident, have a shop perform this work.",
+        "action": "Adjust or replace the steering head bearings",
+        "details": "Loose steering head bearings cause a wobble or weave, especially at speed. (1) If just loose: loosen the upper triple clamp pinch bolt, then tighten the steering stem nut until play is eliminated but bars still turn freely. Too tight causes notchiness. (2) If notchy or rough: the bearings need replacement. This requires removing the front end completely, pressing out old races, and installing new bearings. (3) Consider upgrading to tapered roller bearings — they last longer and are adjustable. (4) After adjustment, test ride at low speed first."
+      },
+      {
+        "id": "solution_wheel_bearings",
+        "type": "solution",
+        "text": "Replace front wheel bearings",
+        "safety": "yellow",
+        "warning": "Worn wheel bearings are a safety hazard. Replace immediately — they can seize during riding.",
+        "action": "Replace the front wheel bearings",
+        "details": "Front wheel bearings with play must be replaced. (1) Remove the front wheel. (2) Remove the old bearings (bearing puller or drift from the back side). (3) Clean the hub bearing seats. (4) Press in new bearings (never hammer directly on the bearing — use a proper press or bearing installation tool). (5) Install the spacer between bearings. (6) Reinstall the wheel and torque the axle. The front wheel should spin freely with no wobble."
+      },
+      {
+        "id": "solution_bolts_loose",
+        "type": "solution",
+        "text": "Front end bolts tightened",
+        "safety": "green",
+        "action": "Tighten triple clamp and axle bolts to spec",
+        "details": "Loose front end bolts cause instability and wobble. Torque values for the Sportster 1200: (1) Axle nut: 50-55 ft-lbs. (2) Lower triple clamp pinch bolts: 10-14 ft-lbs. (3) Upper triple clamp pinch bolt: 15-20 ft-lbs. (4) Fork cap bolts: 10-14 ft-lbs. Check these periodically — the V-twin vibration loosens them over time."
+      },
+      {
+        "id": "solution_tire_check",
+        "type": "solution",
+        "text": "Check tires and wheel balance",
+        "safety": "green",
+        "action": "Inspect tires and balance the wheels",
+        "details": "A front-end wobble or shimmy can also be caused by: (1) Tire wear — cupped or flat-spotted tires cause wobble. (2) Unbalanced front wheel — have it balanced. (3) Incorrect tire pressure — check and adjust. (4) Tire defect — a bulge or separation in the tire carcass causes a wobble. (5) Bent rim — spin the wheel and watch for side-to-side movement. If the tire is cupped or unevenly worn, investigate the root cause before installing a new tire."
+      },
+      {
+        "id": "rear_shocks",
+        "type": "question",
+        "text": "What rear suspension symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Rear end sags or bottoms out", "next": "solution_rear_sag" },
+          { "text": "Rear ride is harsh and bouncy", "next": "solution_rear_harsh" },
+          { "text": "Rear shocks are leaking oil", "next": "solution_rear_leak" },
+          { "text": "Clunking or knocking from the rear", "next": "solution_rear_clunk" }
+        ]
+      },
+      {
+        "id": "solution_rear_sag",
+        "type": "solution",
+        "text": "Rear suspension sagging or bottoming out",
+        "safety": "green",
+        "action": "Adjust or replace rear shocks",
+        "details": "Stock Sportster 1200 rear shocks are basic and relatively short (11-13 inches depending on model). (1) If adjustable: increase the preload by turning the spring collar (use a spanner wrench). (2) If at maximum preload and still sagging: the springs are worn out or the shocks need upgrading. (3) Aftermarket options: Progressive Suspension 412/422 series, Fox, or Ohlins. (4) Longer shocks (add 1-2 inches) improve ground clearance and ride quality. (5) For heavier riders or 2-up riding, choose shocks rated for your weight. (6) Stock shocks typically last 20,000-30,000 miles."
+      },
+      {
+        "id": "solution_rear_harsh",
+        "type": "solution",
+        "text": "Rear ride too harsh",
+        "safety": "green",
+        "action": "Adjust or replace rear shocks for comfort",
+        "details": "A harsh rear end can be caused by: (1) Preload set too high — reduce preload by turning the spring collar (use a spanner wrench). (2) Shock damping worn out — old shocks lose their oil charge and become either too soft or too harsh. (3) Aftermarket shocks that are too stiff for your weight. (4) Tire pressure too high — check and lower to spec (recommended: 36 PSI rear). (5) Rigid-mount models will always have a firmer ride. (6) If stock shocks are original and the bike has 20,000+ miles, replacement is recommended."
+      },
+      {
+        "id": "solution_rear_leak",
+        "type": "solution",
+        "text": "Replace leaking rear shocks",
+        "safety": "yellow",
+        "warning": "Leaking shocks have reduced damping. The rear end may bottom out unexpectedly, especially on bumps.",
+        "action": "Replace the leaking rear shocks",
+        "details": "Leaking oil from the rear shocks means they've lost their damping ability. Shocks cannot be practically repaired — replace them. (1) Support the bike on a lift or jack. (2) Remove the lower shock bolt first, then upper. (3) Install new shocks — upper bolt first, then lower. (4) Set preload appropriate to your weight. (5) Torque mounting bolts to spec. Always replace shocks in pairs. Popular upgrades: Progressive 412 or 422 series, Fox, or Ohlins."
+      },
+      {
+        "id": "solution_rear_clunk",
+        "type": "solution",
+        "text": "Rear clunking or knocking noise",
+        "safety": "yellow",
+        "warning": "A clunking rear end could indicate a loose or broken shock mount. Inspect before riding.",
+        "action": "Inspect rear suspension mounting and components",
+        "details": "Clunking from the rear can be: (1) Loose shock mounting bolts — check and torque. (2) Worn shock bushings — rubber bushings in the shock eyes deteriorate. Replace the shocks or bushings. (3) Worn swingarm bearings — grab the rear wheel and try to wiggle it side to side. Play means worn bearings. (4) Loose fender or seat hardware. (5) Loose battery or battery box. (6) On belt-drive models: loose rear pulley bolts. Check all fasteners in the rear end systematically."
+      }
+    ]
+  }
+}

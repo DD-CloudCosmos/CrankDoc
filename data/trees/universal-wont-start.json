@@ -1,0 +1,261 @@
+{
+  "title": "Engine Won't Start",
+  "description": "Comprehensive troubleshooting for a motorcycle that cranks but won't start, or won't crank at all. Covers battery, starter, fuel, spark, and safety switches.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no sound, no lights", "next": "check_battery_dead" },
+          { "text": "Lights come on but starter doesn't engage", "next": "check_kill_switch" },
+          { "text": "Starter clicks but engine doesn't turn over", "next": "check_battery_weak" },
+          { "text": "Engine cranks but won't fire up", "next": "cranks_no_start" }
+        ]
+      },
+      {
+        "id": "check_battery_dead",
+        "type": "check",
+        "text": "Check if the battery has any charge at all.",
+        "safety": "green",
+        "instructions": "Turn the ignition key to ON. Do the dashboard lights, headlight, or any indicator lights come on? Try the horn button. If absolutely nothing happens, the battery may be completely dead or disconnected.",
+        "next": "battery_dead_result"
+      },
+      {
+        "id": "battery_dead_result",
+        "type": "question",
+        "text": "Did any lights or electrical components work?",
+        "safety": "green",
+        "options": [
+          { "text": "No — completely dead, nothing works", "next": "check_battery_connections" },
+          { "text": "Yes — some lights come on dimly", "next": "check_battery_weak" }
+        ]
+      },
+      {
+        "id": "check_battery_connections",
+        "type": "check",
+        "text": "Inspect the battery terminals and connections.",
+        "safety": "yellow",
+        "warning": "Wear gloves and eye protection when working with batteries. Do not short the terminals together with tools.",
+        "instructions": "Locate the battery (check under the seat or side panel — refer to your service manual). Check that the positive (+) and negative (-) terminals are tight and free of corrosion. Look for white or green crusty buildup. Also check the main fuse, usually located near the battery.",
+        "next": "battery_connections_result"
+      },
+      {
+        "id": "battery_connections_result",
+        "type": "question",
+        "text": "What did you find at the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminals are loose or corroded", "next": "solution_clean_terminals" },
+          { "text": "Main fuse is blown", "next": "solution_replace_fuse" },
+          { "text": "Connections look fine and fuse is good", "next": "solution_charge_or_replace_battery" }
+        ]
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Clean and tighten the battery terminals.",
+        "safety": "yellow",
+        "warning": "Disconnect the negative terminal first, then positive. Reconnect in reverse order (positive first, then negative).",
+        "action": "Clean and secure battery connections",
+        "details": "Remove the battery terminals (negative first). Clean the terminals and battery posts with a wire brush or battery terminal cleaner. Remove all corrosion. Apply a thin layer of dielectric grease or battery terminal protector. Reconnect positive first, then negative. Tighten securely. Try starting again."
+      },
+      {
+        "id": "solution_replace_fuse",
+        "type": "solution",
+        "text": "Replace the blown main fuse.",
+        "safety": "yellow",
+        "warning": "Always replace fuses with the correct amperage rating. Using a higher-rated fuse can cause electrical fires.",
+        "action": "Replace the main fuse",
+        "details": "Replace the blown fuse with one of the exact same amperage rating (check your service manual for the correct rating). If the new fuse blows immediately, there is a short circuit somewhere in the electrical system — do not keep replacing fuses. Have a professional diagnose the short circuit."
+      },
+      {
+        "id": "solution_charge_or_replace_battery",
+        "type": "solution",
+        "text": "Charge or replace the battery.",
+        "safety": "yellow",
+        "warning": "Use a motorcycle-specific or smart battery charger. Automotive chargers can overcharge and damage motorcycle batteries.",
+        "action": "Charge the battery or replace if old",
+        "details": "If the battery is less than 2-3 years old, try charging it with a smart charger or battery tender. Charge for several hours and test. If the battery is older than 3 years or won't hold a charge after charging, replace it. Check your service manual for the correct battery type and specifications."
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check the engine kill switch and safety interlocks.",
+        "safety": "green",
+        "instructions": "Verify the engine kill switch (usually on the right handlebar) is in the RUN position, not STOP. Check that the kickstand is fully retracted (many bikes won't start with the kickstand down while in gear). Make sure the transmission is in neutral or the clutch lever is fully pulled in. Some bikes require the clutch to be pulled to start.",
+        "next": "kill_switch_result"
+      },
+      {
+        "id": "kill_switch_result",
+        "type": "question",
+        "text": "Was the kill switch off or a safety interlock engaged?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — fixed it, but still won't start", "next": "check_starter_relay" },
+          { "text": "No — everything was in the correct position", "next": "check_starter_relay" },
+          { "text": "Yes — fixed it and the bike starts now!", "next": "solution_kill_switch" }
+        ]
+      },
+      {
+        "id": "solution_kill_switch",
+        "type": "solution",
+        "text": "The kill switch or safety interlock was preventing the start.",
+        "safety": "green",
+        "action": "Ensure kill switch is set to RUN and safety interlocks are satisfied",
+        "details": "The engine kill switch was in the STOP position or a safety interlock (kickstand switch, clutch switch, neutral switch) was preventing the starter from engaging. This is the most common reason a bike won't start. Always check the kill switch first — it happens to everyone."
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Listen for the starter relay click.",
+        "safety": "green",
+        "instructions": "With the kill switch on RUN, ignition ON, bike in neutral or clutch pulled in, press the start button and listen carefully near the battery / relay area. You should hear a distinct click from the starter relay. The starter relay is usually a small black box near the battery.",
+        "next": "starter_relay_result"
+      },
+      {
+        "id": "starter_relay_result",
+        "type": "question",
+        "text": "Did you hear the starter relay click?",
+        "safety": "green",
+        "options": [
+          { "text": "No click at all", "next": "solution_starter_relay" },
+          { "text": "Yes, it clicks but starter motor doesn't spin", "next": "solution_starter_motor" }
+        ]
+      },
+      {
+        "id": "solution_starter_relay",
+        "type": "solution",
+        "text": "The starter relay may be faulty or not receiving power.",
+        "safety": "yellow",
+        "warning": "Do not bypass the starter relay by jumping terminals unless you are experienced — the engine could start unexpectedly.",
+        "action": "Test or replace the starter relay",
+        "details": "If the starter relay does not click, it may be faulty, or the signal from the start button may not be reaching it. Check the wiring from the start button to the relay. Check that the clutch switch, neutral switch, and kickstand switch are all functioning. If all switches test OK, the relay itself may need replacement. Consult your service manual for testing procedures or have a professional diagnose it."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "The starter motor may be faulty.",
+        "safety": "yellow",
+        "warning": "Do not attempt to remove or service the starter motor without consulting your service manual.",
+        "action": "Have the starter motor inspected or replaced",
+        "details": "If the relay clicks but the starter motor does not spin, the starter motor may be seized, have worn brushes, or have a bad connection. Try tapping the starter motor gently with a rubber mallet — sometimes this frees stuck brushes temporarily. If it starts after tapping, plan to replace or rebuild the starter motor soon. Check the heavy cable from the relay to the starter motor for damage or loose connections."
+      },
+      {
+        "id": "check_battery_weak",
+        "type": "check",
+        "text": "Test the battery voltage.",
+        "safety": "yellow",
+        "warning": "Wear gloves and eye protection when working around the battery.",
+        "instructions": "Using a multimeter, measure the voltage across the battery terminals with the ignition OFF. A healthy battery should read 12.4V or higher. Below 12.0V, the battery is significantly discharged. If you don't have a multimeter, observe: do the lights dim significantly when you press the start button? Does the starter sound slow or labored?",
+        "next": "battery_voltage_result"
+      },
+      {
+        "id": "battery_voltage_result",
+        "type": "question",
+        "text": "What is the battery voltage or condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V or lights dim significantly", "next": "solution_charge_or_replace_battery" },
+          { "text": "12.0-12.3V — slightly low", "next": "solution_charge_or_replace_battery" },
+          { "text": "12.4V or higher — battery seems fine", "next": "solution_starter_motor" }
+        ]
+      },
+      {
+        "id": "cranks_no_start",
+        "type": "question",
+        "text": "The engine is cranking but not firing. Let's check the basics. Does the bike have fuel?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel gauge shows empty or I'm not sure", "next": "solution_add_fuel" },
+          { "text": "Yes, there is fuel in the tank", "next": "check_spark" }
+        ]
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "The fuel tank may be empty.",
+        "safety": "green",
+        "action": "Add fresh fuel to the tank",
+        "details": "Fuel gauges can be inaccurate, especially on older bikes. Add at least a gallon of fresh fuel and try starting again. If the bike has been sitting for more than a few months, the fuel may have gone stale. In that case, drain the old fuel and add fresh fuel. For carbureted bikes, make sure the petcock (fuel valve) is in the ON or RESERVE position."
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark at the spark plugs.",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch spark plug wires or coils while the engine is cranking. Keep away from fuel while testing for spark.",
+        "instructions": "Remove a spark plug. Reconnect it to the spark plug wire/coil. Hold the spark plug body against a bare metal part of the engine (ground). Have someone press the start button while you watch the electrode end of the plug. You should see a bright blue spark. A weak orange/yellow spark or no spark indicates a problem.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Did you see a strong blue spark?",
+        "safety": "green",
+        "options": [
+          { "text": "No spark at all", "next": "solution_no_spark" },
+          { "text": "Weak or orange spark", "next": "solution_weak_spark" },
+          { "text": "Yes — good blue spark", "next": "check_fuel_delivery" }
+        ]
+      },
+      {
+        "id": "solution_no_spark",
+        "type": "solution",
+        "text": "No spark detected — ignition system problem.",
+        "safety": "yellow",
+        "warning": "Do not repeatedly crank the engine without spark — raw fuel can wash down cylinder walls and contaminate the oil.",
+        "action": "Diagnose the ignition system",
+        "details": "No spark could be caused by: faulty spark plugs (try replacing them first — they're cheap), bad ignition coil(s), faulty crankshaft position sensor, damaged pickup coil, or a wiring issue. Check for any error codes if the bike has a diagnostic system. Consult your service manual for ignition system testing procedures. If you've replaced plugs and still have no spark, professional diagnosis is recommended."
+      },
+      {
+        "id": "solution_weak_spark",
+        "type": "solution",
+        "text": "Weak spark detected — likely plug or coil issue.",
+        "safety": "green",
+        "action": "Replace spark plugs and check coils",
+        "details": "Start by replacing the spark plugs with the correct type and gap specified in your service manual. Old, fouled, or incorrect plugs are the most common cause of weak spark. If new plugs still produce weak spark, check the ignition coil(s) — measure their resistance per your service manual specifications. Also check the spark plug caps/boots for cracks or carbon tracking."
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Check for fuel delivery to the engine.",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Do not smoke or use open flames near the fuel system. Have a fire extinguisher nearby. Work in a well-ventilated area.",
+        "instructions": "For fuel-injected bikes: turn the ignition ON (don't start) and listen for the fuel pump priming — you should hear a brief buzzing/whirring from the fuel tank area for 2-3 seconds. For carbureted bikes: check that the petcock is ON and fuel is flowing to the carburetors. You can also remove a spark plug and smell it — it should smell of fuel if fuel is reaching the cylinders.",
+        "next": "fuel_delivery_result"
+      },
+      {
+        "id": "fuel_delivery_result",
+        "type": "question",
+        "text": "Is fuel reaching the engine?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel pump noise / no fuel flow", "next": "solution_fuel_delivery" },
+          { "text": "Yes — fuel seems to be reaching the engine", "next": "solution_other_causes" }
+        ]
+      },
+      {
+        "id": "solution_fuel_delivery",
+        "type": "solution",
+        "text": "Fuel is not reaching the engine.",
+        "safety": "yellow",
+        "warning": "Do not attempt to open fuel lines without proper tools and a well-ventilated workspace.",
+        "action": "Diagnose the fuel delivery system",
+        "details": "For fuel-injected bikes: check the fuel pump fuse first. If the fuse is good but the pump doesn't prime, the fuel pump or its relay may be faulty. Check for any error codes. For carbureted bikes: ensure the petcock valve is open, check for a clogged fuel filter, and verify fuel flows freely from the tank. If the bike has been sitting, the carburetor jets may be clogged with varnish — a carburetor cleaning or rebuild may be needed."
+      },
+      {
+        "id": "solution_other_causes",
+        "type": "solution",
+        "text": "You have spark and fuel but the engine still won't start.",
+        "safety": "green",
+        "action": "Check timing, compression, and sensors",
+        "details": "If you have confirmed both spark and fuel delivery, the issue may be: low compression (worn rings, leaking valves — a compression test will confirm), incorrect valve timing (timing chain/belt may have slipped), a faulty sensor sending bad data to the ECU (crankshaft position, camshaft position, coolant temperature), or a clogged exhaust. At this point, professional diagnosis with proper tools is recommended. Check your service manual for compression specifications and sensor testing procedures."
+      }
+    ]
+  }
+}

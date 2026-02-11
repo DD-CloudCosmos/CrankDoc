@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Engine Won't Start",
+  "description": "Diagnose no-start conditions on the BMW R1250GS, including battery, CAN bus, fuel system, and immobilizer issues.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When you press the starter button, what happens?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — dash is dark, no lights", "next": "check_battery" },
+          { "text": "Dash lights up but engine won't crank", "next": "check_immobilizer" },
+          { "text": "Engine cranks but won't fire", "next": "cranks_no_start" },
+          { "text": "Clicking sound from the starter relay area", "next": "check_battery_voltage" },
+          { "text": "Error message on the TFT display", "next": "check_error_message" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check the battery and main connections",
+        "safety": "green",
+        "instructions": "The R1250GS battery is located under the seat on the left side. Remove the seat (twist the key in the seat lock). Inspect both battery terminals for corrosion, loose connections, or damage. The R1250GS has a sophisticated CAN bus system that requires a minimum voltage to boot — even slightly low voltage can prevent all systems from activating.",
+        "next": "battery_check_result"
+      },
+      {
+        "id": "battery_check_result",
+        "type": "question",
+        "text": "Are the battery connections clean and tight?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminals corroded or loose — cleaned them", "next": "solution_terminals" },
+          { "text": "Connections look good", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Battery terminals cleaned",
+        "safety": "green",
+        "action": "Clean and secure battery terminal connections",
+        "details": "Clean both terminals with a wire brush. Apply dielectric grease to prevent future corrosion. The R1250GS CAN bus system is sensitive to voltage drops — even 0.5V lost at a corroded terminal can prevent the bike from powering up. Reconnect positive first, then negative. Try starting again."
+      },
+      {
+        "id": "check_battery_voltage",
+        "type": "check",
+        "text": "Measure battery voltage",
+        "safety": "yellow",
+        "warning": "The R1250GS has multiple electronic modules. Do not short the battery terminals — it can damage the CAN bus modules and ECU.",
+        "instructions": "Set multimeter to DC voltage (20V range). Measure at the battery terminals. The R1250GS requires at least 12.0V for the CAN bus to initialize properly. Ideal is 12.6V+. Below 12.0V: most functions will not work. Below 11.5V: the starter cannot crank the boxer engine. While cranking, voltage should not drop below 10.0V.",
+        "next": "battery_voltage_result"
+      },
+      {
+        "id": "battery_voltage_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "12.6V or higher — good", "next": "check_immobilizer" },
+          { "text": "12.0V - 12.5V — needs charging", "next": "solution_charge_battery" },
+          { "text": "Below 12.0V — very low", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge the battery",
+        "safety": "green",
+        "action": "Fully charge the battery using a compatible smart charger",
+        "details": "The R1250GS uses a YTZ14S AGM battery. (1) Use a smart charger designed for AGM batteries (CTEK, Optimate, or BMW-branded charger). (2) Connect to the battery or the BMW accessory charge socket (under the tank on the left side). (3) Allow full charge cycle. (4) The GS draws some parasitic current for the CAN bus modules — if the bike sits for more than 2 weeks without riding, connect to a maintainer. (5) If the battery won't hold a charge, it needs replacement."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the battery",
+        "safety": "yellow",
+        "warning": "The R1250GS requires battery registration (coding) after replacement on some model years. The new battery's capacity must be coded into the DME. A BMW dealer or GS-911 tool can perform this.",
+        "action": "Replace the dead battery",
+        "details": "Replace with a YTZ14S AGM battery or equivalent. (1) Disconnect negative first, then positive. (2) Remove the old battery. (3) Install the new battery — connect positive first, then negative. (4) On some R1250GS models, the battery type and capacity should be registered with the DME (engine management) using a GS-911 diagnostic tool or at a BMW dealer. This ensures correct charging behavior. (5) After installation, all clocks and settings may need resetting."
+      },
+      {
+        "id": "check_immobilizer",
+        "type": "question",
+        "text": "The R1250GS uses a key transponder immobilizer (EWS). Does the immobilizer warning indicator go out after turning the key?",
+        "safety": "green",
+        "options": [
+          { "text": "Immobilizer light stays on / key not recognized", "next": "solution_immobilizer" },
+          { "text": "No immobilizer light — dash is normal", "next": "check_safety_interlocks" },
+          { "text": "Not sure which light is the immobilizer", "next": "check_safety_interlocks" }
+        ]
+      },
+      {
+        "id": "solution_immobilizer",
+        "type": "solution",
+        "text": "Immobilizer not recognizing the key",
+        "safety": "green",
+        "action": "Troubleshoot the immobilizer/EWS system",
+        "details": "The R1250GS immobilizer must recognize the key transponder before the engine will crank. If the immobilizer light stays on: (1) Try the spare key — if it works, the primary key's transponder may be damaged. (2) Move the key closer to the ignition ring antenna. (3) Check for interference — aftermarket accessories near the ignition can block the signal. (4) If no key works: the EWS ring antenna or module may be faulty. This requires BMW diagnostic software (ISTA) to diagnose. (5) Key reprogramming requires a BMW dealer or locksmith with BMW coding capability."
+      },
+      {
+        "id": "check_safety_interlocks",
+        "type": "check",
+        "text": "Check the safety interlocks",
+        "safety": "green",
+        "instructions": "The R1250GS has several safety interlocks: (1) Kill switch — must be in RUN position. (2) Kickstand — must be up when in gear (down is OK in neutral). (3) Clutch lever — must be pulled to start. (4) The gear position indicator on the TFT should show the current gear. (5) Check that the handlebars are not at full lock — some models have a micro-switch on the steering lock. Verify all conditions and try starting again.",
+        "next": "interlock_result"
+      },
+      {
+        "id": "interlock_result",
+        "type": "question",
+        "text": "Are all safety interlocks satisfied?",
+        "safety": "green",
+        "options": [
+          { "text": "Found the issue — kill switch, kickstand, etc.", "next": "solution_interlock" },
+          { "text": "All interlocks OK — still won't crank", "next": "solution_starter_circuit" }
+        ]
+      },
+      {
+        "id": "solution_interlock",
+        "type": "solution",
+        "text": "Safety interlock resolved",
+        "safety": "green",
+        "action": "Correct the safety interlock condition",
+        "details": "The R1250GS safety system prevented starting. Common oversights: (1) Kill switch left on STOP — toggle to RUN. (2) Kickstand down while in gear — retract it or shift to neutral. (3) Clutch not fully pulled in — squeeze all the way to the bar. (4) The side stand switch can fail — if the bike won't start with stand up and in neutral, the switch may be faulty. Try disconnecting and jumping the side stand switch connector (2-wire plug near the stand pivot) to test."
+      },
+      {
+        "id": "solution_starter_circuit",
+        "type": "solution",
+        "text": "Starter motor or relay issue",
+        "safety": "yellow",
+        "warning": "The R1250GS starter motor is located behind the front cylinder. Do not short-circuit the starter — the CAN bus controls the starter relay electronically.",
+        "action": "Diagnose the starter circuit",
+        "details": "If all interlocks are satisfied and the battery is good but the engine won't crank: (1) Listen for the starter relay click when pressing the start button. (2) Check the starter fuse (in the fuse box under the seat). (3) A GS-911 or BMW ISTA diagnostic tool can read fault codes that prevent starting. (4) The starter motor on the R1250GS is very reliable but can fail — listen for any whirring sound. (5) A seized engine (rare) will prevent cranking — try bumping the bike in gear with the clutch out to check if the engine turns."
+      },
+      {
+        "id": "cranks_no_start",
+        "type": "check",
+        "text": "Check for fuel delivery",
+        "safety": "yellow",
+        "warning": "The R1250GS fuel system is pressurized. Do not open fuel line fittings without relieving pressure first.",
+        "instructions": "Turn the ignition ON (don't start). Listen for the fuel pump priming — you should hear a brief whirr from under the tank. The R1250GS uses an in-tank electric fuel pump. If no pump sound, the pump or its circuit may have failed. Also check: (1) Is there fuel in the tank? The R1250GS tank holds 5.3 gallons — the low fuel warning appears at approximately 1 gallon remaining. (2) Check the fuel level on the TFT display.",
+        "next": "fuel_check_result"
+      },
+      {
+        "id": "fuel_check_result",
+        "type": "question",
+        "text": "Does the fuel pump prime and is there fuel in the tank?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel pump sound", "next": "solution_fuel_pump" },
+          { "text": "Tank is empty", "next": "solution_refuel" },
+          { "text": "Pump primes and tank has fuel", "next": "check_ignition" }
+        ]
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel pump not operating",
+        "safety": "yellow",
+        "warning": "Do not attempt to hot-wire the fuel pump. The R1250GS fuel system operates through the CAN bus and ECU.",
+        "action": "Diagnose the fuel pump circuit",
+        "details": "If the fuel pump doesn't prime: (1) Check the fuel pump fuse under the seat. (2) Check the fuel pump relay. (3) A CAN bus fault may be preventing the ECU from commanding the pump — scan for fault codes using GS-911 or ISTA. (4) Check the wiring connector at the fuel pump (under the tank). (5) If the pump receives power but doesn't run, the pump motor has failed — replacement requires tank removal. (6) The R1250GS fuel pump is generally reliable but can fail after 50,000+ miles."
+      },
+      {
+        "id": "solution_refuel",
+        "type": "solution",
+        "text": "Tank is empty",
+        "safety": "green",
+        "action": "Refuel the motorcycle",
+        "details": "The R1250GS ran out of fuel. The reserve fuel warning gives approximately 30-50 miles of range, but this varies with riding style. After refueling: the engine may need a few extra cranking cycles to re-prime the fuel system. The R1250GS requires premium fuel (91+ octane, RON 95+). Avoid ethanol blends above E10 if possible."
+      },
+      {
+        "id": "check_ignition",
+        "type": "check",
+        "text": "Check the ignition system",
+        "safety": "yellow",
+        "warning": "The R1250GS uses individual coil-on-plug ignition. Do not pull plug wires while the engine is cranking — high voltage can shock you.",
+        "instructions": "The R1250GS has coil-on-plug ignition for each cylinder (one front, one rear on the boxer). Check: (1) Scan for fault codes — the most reliable way to diagnose ignition issues on this bike. (2) If no scanner available: remove the spark plugs (accessible on the sides of the boxer engine). Reconnect the coil packs and ground the plug threads to the engine while cranking. Look for blue spark. (3) Check spark plug condition — the R1250GS uses NGK plugs.",
+        "next": "ignition_result"
+      },
+      {
+        "id": "ignition_result",
+        "type": "question",
+        "text": "Is there spark at both cylinders?",
+        "safety": "green",
+        "options": [
+          { "text": "No spark on one or both cylinders", "next": "solution_ignition_failure" },
+          { "text": "Spark is present on both", "next": "solution_advanced_diag" }
+        ]
+      },
+      {
+        "id": "solution_ignition_failure",
+        "type": "solution",
+        "text": "Ignition system failure",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing coil packs or spark plugs.",
+        "action": "Diagnose and repair the ignition system",
+        "details": "No spark on the R1250GS: (1) Check spark plugs — replace if fouled or worn. The R1250GS uses NGK LMAR8D-J (iridium). Gap: 0.8mm. (2) Check the coil pack — swap coils between cylinders to test. If the fault follows the coil, replace it. (3) Check coil pack electrical connector for corrosion. (4) The crank position sensor is critical for ignition timing — a failing sensor prevents spark. (5) Scan for fault codes — BMW's ECU will store ignition-related faults. (6) The R1250GS ShiftCam system has camshaft position sensors — failure can also prevent starting."
+      },
+      {
+        "id": "solution_advanced_diag",
+        "type": "solution",
+        "text": "Advanced diagnostics needed",
+        "safety": "green",
+        "action": "Perform advanced diagnostics with a scanner",
+        "details": "The R1250GS has fuel and spark but won't start. This requires deeper diagnosis: (1) Scan for fault codes using GS-911 or BMW ISTA. (2) Check the camshaft position sensor (ShiftCam system). (3) Verify fuel pressure — should be approximately 3.5 bar (50 PSI). (4) Check for exhaust blockage — wasp nests in the exhaust are common on parked bikes. (5) Check the air filter — a severely clogged filter can prevent starting. (6) Verify the intake (throttle body) butterfly valves are opening. The R1250GS ride-by-wire throttle is entirely electronic — a throttle body fault can prevent fueling."
+      },
+      {
+        "id": "check_error_message",
+        "type": "question",
+        "text": "What does the error message on the TFT display say?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine management fault / check engine", "next": "solution_engine_fault" },
+          { "text": "ABS fault", "next": "solution_abs_no_start" },
+          { "text": "Throttle fault or ride-by-wire error", "next": "solution_throttle_fault" },
+          { "text": "Other or unreadable error", "next": "solution_scan_codes" }
+        ]
+      },
+      {
+        "id": "solution_engine_fault",
+        "type": "solution",
+        "text": "Engine management fault",
+        "safety": "green",
+        "action": "Scan and clear engine management fault codes",
+        "details": "An engine management fault can prevent starting. (1) Try cycling the ignition OFF for 30 seconds, then ON again — some faults are temporary and may clear. (2) Scan for specific fault codes using a GS-911 diagnostic tool. (3) Common causes: oxygen sensor fault, throttle position sensor, cam position sensor, intake air temperature sensor. (4) If the fault clears and the bike starts, monitor for recurrence. (5) If it won't clear, the underlying component needs attention. (6) A BMW dealer can perform a comprehensive diagnostic scan."
+      },
+      {
+        "id": "solution_abs_no_start",
+        "type": "solution",
+        "text": "ABS fault — usually doesn't prevent starting",
+        "safety": "green",
+        "action": "Note: ABS faults typically don't prevent starting",
+        "details": "ABS faults on the R1250GS usually don't prevent the engine from starting — they disable the ABS but allow riding. If the bike won't start AND has an ABS fault: (1) The battery may be too low for the ABS module to initialize, which can cascade to other CAN bus faults. Charge the battery fully. (2) Check for multiple fault codes — an ABS fault combined with other faults may indicate a CAN bus communication problem. (3) Try disconnecting the battery for 5 minutes, then reconnecting — this resets all modules."
+      },
+      {
+        "id": "solution_throttle_fault",
+        "type": "solution",
+        "text": "Throttle / ride-by-wire fault",
+        "safety": "yellow",
+        "warning": "Do not attempt to manually open the throttle bodies on the R1250GS — the ride-by-wire system controls them electronically.",
+        "action": "Diagnose the ride-by-wire throttle system",
+        "details": "The R1250GS uses electronic ride-by-wire throttle. A throttle fault will prevent starting as a safety measure. (1) Check the throttle grip — ensure it moves freely and returns to closed position. (2) Check the throttle grip cable (twist sensor cable) connector. (3) Cycle the ignition OFF and ON — sometimes a momentary sensor glitch triggers this. (4) Scan for specific fault codes. (5) The throttle body actuator motor or position sensor may be failing. (6) This typically requires a BMW dealer or experienced GS mechanic with diagnostic tools."
+      },
+      {
+        "id": "solution_scan_codes",
+        "type": "solution",
+        "text": "Scan fault codes for specific diagnosis",
+        "safety": "green",
+        "action": "Use a diagnostic scanner to read fault codes",
+        "details": "The R1250GS stores detailed fault codes in all electronic modules. (1) Use a GS-911 diagnostic tool (plugs into the OBD port under the seat on the left side) — this is the most popular aftermarket tool for BMW motorcycles. (2) BMW ISTA diagnostic software (dealer level). (3) Some OBD2 Bluetooth adapters with BMW motorcycle-compatible apps can read basic codes. (4) The fault code will point to the specific system and component. (5) Note the fault code number and description — this directs the repair. (6) If you don't have a scanner, a BMW dealer can perform a diagnostic scan."
+      }
+    ]
+  }
+}

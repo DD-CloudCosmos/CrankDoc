@@ -1,0 +1,224 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Shift Assist / Transmission Issues",
+  "description": "Diagnose shifting problems on the R1250GS including Shift Assistant Pro issues, hard shifting, false neutrals, and transmission noise.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What shifting issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Shift Assistant Pro (quickshifter) not working properly", "next": "shift_assist" },
+          { "text": "Hard or stiff shifting (with or without Shift Assistant)", "next": "hard_shifting" },
+          { "text": "False neutrals (gear slips out)", "next": "false_neutrals" },
+          { "text": "Grinding noise when shifting", "next": "grinding" },
+          { "text": "Won't shift into a specific gear", "next": "wont_shift" }
+        ]
+      },
+      {
+        "id": "shift_assist",
+        "type": "question",
+        "text": "What is the Shift Assistant Pro (quickshifter) doing?",
+        "safety": "green",
+        "options": [
+          { "text": "Upshifts don't work — have to use clutch", "next": "check_shift_sensor" },
+          { "text": "Downshifts are rough or clunky", "next": "downshift_rough" },
+          { "text": "Occasional missed shifts (clunk instead of smooth shift)", "next": "missed_shifts" },
+          { "text": "Shift Assistant warning on TFT", "next": "shift_assist_warning" }
+        ]
+      },
+      {
+        "id": "check_shift_sensor",
+        "type": "check",
+        "text": "Check the Shift Assistant sensor and conditions",
+        "safety": "green",
+        "instructions": "The R1250GS Shift Assistant Pro requires specific conditions to operate: (1) Engine RPM above approximately 2000 for upshifts. (2) Engine RPM within the correct range for downshifts (with auto-blip). (3) The shift lever sensor must detect force — check the sensor connector on the shift lever linkage. (4) Engine must be at operating temperature. (5) Check if the Shift Assistant is enabled in the TFT settings menu (Vehicle > Shift Assistant). (6) The system is deactivated in certain conditions: very low RPM, partially applied clutch, certain riding modes.",
+        "next": "shift_sensor_result"
+      },
+      {
+        "id": "shift_sensor_result",
+        "type": "question",
+        "text": "Is the Shift Assistant enabled and are conditions being met?",
+        "safety": "green",
+        "options": [
+          { "text": "Was disabled in settings — enabled it", "next": "solution_enabled" },
+          { "text": "RPM was too low — need to shift at higher RPM", "next": "solution_rpm_range" },
+          { "text": "Everything correct — still not working", "next": "solution_shift_sensor" }
+        ]
+      },
+      {
+        "id": "solution_enabled",
+        "type": "solution",
+        "text": "Shift Assistant enabled",
+        "safety": "green",
+        "action": "Enable the Shift Assistant in the TFT menu",
+        "details": "The Shift Assistant Pro was disabled in the settings. Navigate to Vehicle > Shift Assistant on the TFT display and enable it. The system will now allow clutchless upshifts and downshifts within the correct RPM range. Upshifts: apply firm, positive pressure to the shift lever above 2000 RPM. Downshifts: press down firmly on the shift lever — the system will auto-blip the throttle."
+      },
+      {
+        "id": "solution_rpm_range",
+        "type": "solution",
+        "text": "Shift within the correct RPM range",
+        "safety": "green",
+        "action": "Use the Shift Assistant within its operating range",
+        "details": "The Shift Assistant Pro has operating limits: (1) Upshifts: work best above 2000-2500 RPM. Below this, use the clutch. (2) Downshifts: work best when engine braking at moderate RPM. Very high RPM downshifts may be blocked for engine protection. (3) Shifts should be firm and decisive — a half-hearted shift input won't trigger the system. (4) The system briefly cuts ignition (upshift) or blips the throttle (downshift) — you'll feel a momentary change. (5) In low-speed traffic, use the clutch — the Shift Assistant is not designed for parking-lot speeds."
+      },
+      {
+        "id": "solution_shift_sensor",
+        "type": "solution",
+        "text": "Shift sensor or linkage issue",
+        "safety": "yellow",
+        "warning": "Do not adjust the shift sensor without understanding its calibration. Incorrect sensor position causes poor shift quality.",
+        "action": "Inspect the Shift Assistant sensor",
+        "details": "The Shift Assistant Pro sensor is a force sensor on the shift lever linkage. (1) Check the sensor connector — unplug, inspect for corrosion, apply dielectric grease, and reconnect. (2) Check the shift linkage for binding or excessive play — the sensor needs clean, positive force input. (3) Check the shift lever height adjustment — an incorrectly positioned lever changes the force angle on the sensor. (4) Scan for fault codes with GS-911 — the Shift Assistant module stores specific faults. (5) A failed sensor requires replacement — this is a dealer part that needs coding. (6) Check if a BMW software update is available — some early R1250GS models had Shift Assistant calibration updates."
+      },
+      {
+        "id": "downshift_rough",
+        "type": "solution",
+        "text": "Rough downshifts with Shift Assistant",
+        "safety": "green",
+        "action": "Improve downshift technique and check system",
+        "details": "The Shift Assistant Pro downshift (auto-blip) requires proper technique: (1) Close the throttle completely before downshifting — the system works best at closed throttle. (2) Apply firm, positive downward pressure on the shift lever. (3) Don't hold the lever down — quick, decisive input gives the best results. (4) If downshifts are clunky: the throttle body sync may be off, causing irregular blip timing. Perform a TBS. (5) Cold engine downshifts will be rougher — the transmission oil is thick when cold. (6) If persistently rough: scan for fault codes and check if a software update is available. Some early GS models had downshift calibration improvements released."
+      },
+      {
+        "id": "missed_shifts",
+        "type": "solution",
+        "text": "Occasional missed or clunky shifts",
+        "safety": "green",
+        "action": "Improve shift technique and check transmission oil",
+        "details": "Occasional missed shifts with the Shift Assistant: (1) Technique: apply firm, quick pressure — not gradual. The sensor needs a decisive input to trigger the ignition cut or throttle blip. (2) Check transmission oil level and condition — the R1250GS uses separate engine and transmission oil. Transmission oil: 75W-90 gear oil, approximately 0.8 liters. (3) Change transmission oil if due (every 12,000 miles or annually). (4) Aftermarket shift levers with longer throw can improve Shift Assistant response. (5) Check shift lever height — adjust for your boot size. The ideal position allows your toe to apply force with a natural foot position."
+      },
+      {
+        "id": "shift_assist_warning",
+        "type": "solution",
+        "text": "Shift Assistant fault on TFT",
+        "safety": "green",
+        "action": "Diagnose the Shift Assistant fault",
+        "details": "A Shift Assistant warning on the TFT means the system has disabled itself. (1) Try cycling the ignition — some faults are transient. (2) Check battery voltage — low voltage can cause CAN bus communication errors with the Shift Assistant module. (3) Scan for fault codes using GS-911. (4) Common faults: sensor signal out of range, CAN bus communication error, shift lever binding. (5) The bike will shift normally with the clutch — the Shift Assistant being disabled doesn't affect clutched shifting. (6) BMW dealer diagnosis may be needed for persistent faults — the sensor or module may need replacement and coding."
+      },
+      {
+        "id": "hard_shifting",
+        "type": "check",
+        "text": "Check transmission oil and clutch adjustment",
+        "safety": "green",
+        "instructions": "Hard shifting on the R1250GS can be caused by several factors: (1) Check the transmission oil level — the R1250GS has a separate transmission oil fill and drain plug (different from the engine oil). The oil should be at the correct level. (2) Check clutch cable adjustment (if cable-actuated) or hydraulic fluid level (if hydraulic clutch). (3) Try shifting with the engine off and bike in neutral — roll the bike and try clicking through gears. If it shifts smoothly, the issue is related to clutch engagement rather than the transmission itself.",
+        "next": "hard_shift_result"
+      },
+      {
+        "id": "hard_shift_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Transmission oil is low or old", "next": "solution_trans_oil" },
+          { "text": "Clutch not fully disengaging", "next": "solution_clutch_adj" },
+          { "text": "Shifts hard even with engine off", "next": "solution_internal_trans" }
+        ]
+      },
+      {
+        "id": "solution_trans_oil",
+        "type": "solution",
+        "text": "Change the transmission oil",
+        "safety": "green",
+        "action": "Drain and refill the transmission oil",
+        "details": "The R1250GS uses separate engine and transmission oil (unlike the Sportster's common sump). (1) Locate the transmission oil drain plug (bottom of the transmission). (2) Locate the fill/level plug (side of the transmission). (3) Warm the engine to operating temperature (warm oil drains better). (4) Remove the drain plug and drain completely. (5) Replace the drain plug with a new crush washer. (6) Fill with BMW-recommended transmission oil: 75W-90 synthetic gear oil, approximately 0.8 liters. (7) Fill until oil reaches the level plug hole. (8) Replace the fill plug. Transmission oil should be changed every 12,000 miles."
+      },
+      {
+        "id": "solution_clutch_adj",
+        "type": "solution",
+        "text": "Adjust the clutch",
+        "safety": "green",
+        "action": "Adjust the clutch for proper disengagement",
+        "details": "If the clutch isn't fully disengaging, shifting will be hard: (1) The R1250GS uses a hydraulic clutch — check the clutch fluid level in the reservoir on the left handlebar. (2) If fluid is low, top off with DOT 4 brake fluid. (3) Bleed the clutch hydraulic system if the lever feels spongy — air in the line prevents full disengagement. (4) The clutch master cylinder and slave cylinder can wear internally — if bleeding doesn't help, rebuild or replace. (5) Check the clutch lever free play — there should be a small amount of free play at the lever tip before resistance."
+      },
+      {
+        "id": "solution_internal_trans",
+        "type": "solution",
+        "text": "Internal transmission issue",
+        "safety": "yellow",
+        "warning": "Internal transmission problems require specialized tools and knowledge. This is a dealer or specialist repair.",
+        "action": "Have the transmission professionally inspected",
+        "details": "If shifting is hard even with the engine off and clutch disengaged, there's an internal transmission issue: (1) Bent shift fork — the shift fork guides the gear dogs into engagement. A bent fork makes shifting stiff or impossible in the affected gear. (2) Worn shift drum — the shift drum has grooves that position the forks. (3) Damaged gear dogs — rounded or worn engagement dogs make shifting difficult. (4) The R1250GS transmission is a separate unit from the engine — it can be removed and rebuilt without a full engine teardown. (5) BMW dealer or experienced BMW transmission specialist is recommended."
+      },
+      {
+        "id": "false_neutrals",
+        "type": "question",
+        "text": "Which gear(s) do you get false neutrals in?",
+        "safety": "yellow",
+        "warning": "False neutrals under acceleration can be dangerous — the engine suddenly unloads and revs freely. Reduce speed until the issue is diagnosed.",
+        "options": [
+          { "text": "Between specific gears (e.g., 2nd-3rd)", "next": "solution_false_neutral_specific" },
+          { "text": "Random — any gear", "next": "solution_false_neutral_random" }
+        ]
+      },
+      {
+        "id": "solution_false_neutral_specific",
+        "type": "solution",
+        "text": "False neutral between specific gears",
+        "safety": "yellow",
+        "warning": "Persistent false neutrals indicate worn internal parts. The condition will worsen over time.",
+        "action": "Diagnose gear-specific false neutrals",
+        "details": "False neutrals between specific gears indicate worn engagement dogs or shift fork wear in that particular gear: (1) The most common false neutral on BMW boxers is between 2nd and 3rd gear — this is a known issue on some model years. (2) Ensure you're completing the shift fully — firm, complete lever movement. (3) Check transmission oil level and condition — old oil increases the likelihood of false neutrals. (4) If persistent: the shift fork or gear dogs for that gear pair need inspection. (5) This requires transmission disassembly. (6) Check BMW service bulletins — some R1250GS models had transmission updates."
+      },
+      {
+        "id": "solution_false_neutral_random",
+        "type": "solution",
+        "text": "Random false neutrals",
+        "safety": "yellow",
+        "warning": "If false neutrals occur frequently and randomly, limit riding until the transmission is inspected.",
+        "action": "Diagnose random false neutrals",
+        "details": "Random false neutrals in any gear suggest: (1) Worn shift drum detent — the detent (star wheel and spring) doesn't hold gears positively. (2) Weak detent spring — the spring loses tension. (3) Shift linkage play — excessive free play in the shift linkage prevents complete gear engagement. Check and adjust linkage. (4) Clutch drag — if the clutch drags slightly, it can pop the transmission out of gear under load. (5) Transmission oil — fresh, correct-weight oil (75W-90) helps gear engagement. (6) A transmission inspection and detent spring replacement is the most common fix."
+      },
+      {
+        "id": "grinding",
+        "type": "question",
+        "text": "When does the grinding occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Only when shifting (crunching into gear)", "next": "solution_shift_grind" },
+          { "text": "Constant noise in a specific gear", "next": "solution_gear_noise" },
+          { "text": "Noise from the final drive / shaft area", "next": "solution_final_drive_noise" }
+        ]
+      },
+      {
+        "id": "solution_shift_grind",
+        "type": "solution",
+        "text": "Grinding when shifting gears",
+        "safety": "green",
+        "action": "Diagnose shift grinding",
+        "details": "A grinding or crunching when shifting indicates: (1) Clutch not fully disengaging — check clutch hydraulic system, bleed if needed. (2) Shift technique — on the R1250GS, firm and decisive shifts work better than slow, hesitant ones. (3) Cold transmission — thicker oil when cold makes shifts rougher. Let the bike warm up for a few minutes. (4) Transmission oil due for change. (5) If grinding persists when hot and clutch is good: internal gear dog wear. (6) The Shift Assistant Pro (if used without the clutch) may grind if the RPM is too low — upshift above 2500 RPM."
+      },
+      {
+        "id": "solution_gear_noise",
+        "type": "solution",
+        "text": "Constant noise in a specific gear",
+        "safety": "yellow",
+        "warning": "A noisy gear can indicate worn or chipped teeth. If the noise is severe, avoid riding in that gear if possible.",
+        "action": "Investigate gear noise",
+        "details": "A whine or grinding in a specific gear indicates: (1) Worn gear teeth — the gear pair for that ratio is wearing. (2) Gear bearing wear — each gear shaft rides on bearings. (3) Normal gear whine — some gear noise is normal on BMW transmissions, especially in 1st and 2nd gear. (4) If the noise has increased recently: change the transmission oil first. (5) If noise is accompanied by vibration: the gear or bearing may be failing. Have the transmission inspected before the damage spreads to other gears."
+      },
+      {
+        "id": "solution_final_drive_noise",
+        "type": "solution",
+        "text": "Final drive noise",
+        "safety": "yellow",
+        "warning": "Final drive failure while riding can lock the rear wheel. If you hear new, unusual noises from the final drive, inspect it promptly.",
+        "action": "Inspect the final drive (rear bevel gear)",
+        "details": "The R1250GS shaft drive final drive (rear hub) contains bevel gears: (1) Check the final drive oil level — remove the fill/level plug. Oil should be at the plug level. (2) If the oil is milky or has metal shavings: the final drive bearings or gears are failing. (3) Drain and inspect the oil — use a magnet to check for metal particles. (4) Top off with 75W-140 or BMW-recommended final drive oil (approximately 200ml). (5) A howling or whining that changes with speed is typical of final drive bearing wear. (6) Final drive replacement is expensive — some specialists offer rebuild services. (7) Regular oil changes (every 12,000 miles) extend final drive life significantly."
+      },
+      {
+        "id": "wont_shift",
+        "type": "solution",
+        "text": "Cannot shift into a specific gear",
+        "safety": "yellow",
+        "warning": "Forcing a stuck shift lever can damage internal components. If it won't shift, don't force it.",
+        "action": "Diagnose inability to shift",
+        "details": "If the transmission won't shift into a specific gear: (1) Rock the bike slightly while attempting to shift — this aligns the gear dogs. (2) Try shifting with the engine off and rolling the bike. (3) With the engine running: fully disengage the clutch, wait a beat, then shift. (4) If the shift lever is stuck: check the shift linkage for a broken or disconnected rod end. (5) The shift return spring may have broken — this prevents the shift mechanism from returning to center. (6) Internal: a broken shift fork, broken detent spring, or jammed shift drum. These require transmission removal. (7) If the bike is stuck in one gear, you can ride it home carefully using the clutch to stop (avoid the affected gear range)."
+      }
+    ]
+  }
+}

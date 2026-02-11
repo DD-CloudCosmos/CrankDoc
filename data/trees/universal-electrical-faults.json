@@ -1,0 +1,323 @@
+{
+  "title": "Electrical Faults",
+  "description": "Diagnose common motorcycle electrical problems including lights not working, blown fuses, charging issues, and wiring faults.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical problem are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "One or more lights are not working", "next": "lights_out" },
+          { "text": "A fuse keeps blowing", "next": "fuse_blowing" },
+          { "text": "Multiple electrical systems are failing", "next": "check_main_connections" },
+          { "text": "Intermittent electrical problems (things cut in and out)", "next": "intermittent_faults" },
+          { "text": "Instrument cluster or gauges not working", "next": "check_cluster" }
+        ]
+      },
+      {
+        "id": "lights_out",
+        "type": "question",
+        "text": "Which lights are not working?",
+        "safety": "green",
+        "options": [
+          { "text": "Headlight", "next": "check_headlight_bulb" },
+          { "text": "Tail light or brake light", "next": "check_tail_bulb" },
+          { "text": "Turn signals", "next": "check_turn_signals" },
+          { "text": "All lights are out", "next": "check_main_fuse" }
+        ]
+      },
+      {
+        "id": "check_headlight_bulb",
+        "type": "check",
+        "text": "Check the headlight bulb.",
+        "safety": "green",
+        "instructions": "Access the headlight bulb (usually from the back of the headlight housing — check your service manual for the procedure). Remove the bulb and inspect the filament. If the filament is broken, the bulb has burned out. Also check that the bulb connector is clean and making good contact. For LED headlights, the entire unit may need replacement if an individual LED fails.",
+        "next": "headlight_bulb_result"
+      },
+      {
+        "id": "headlight_bulb_result",
+        "type": "question",
+        "text": "Is the headlight bulb burned out?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — filament is broken", "next": "solution_replace_bulb" },
+          { "text": "No — bulb looks fine", "next": "check_light_fuse" }
+        ]
+      },
+      {
+        "id": "solution_replace_bulb",
+        "type": "solution",
+        "text": "The bulb has burned out.",
+        "safety": "green",
+        "action": "Replace the bulb with the correct type",
+        "details": "Replace the bulb with the exact type specified in your service manual (H4, H7, etc. for headlights; 1157, 7443, etc. for tail/brake lights). When handling halogen bulbs, do not touch the glass with bare fingers — oils from your skin create hot spots that shorten bulb life. Use a clean cloth or gloves. For turn signal bulbs, make sure you use the correct wattage — incorrect wattage will cause the turn signals to flash at the wrong rate."
+      },
+      {
+        "id": "check_light_fuse",
+        "type": "check",
+        "text": "Check the fuse for the affected light circuit.",
+        "safety": "green",
+        "instructions": "Locate the fuse box (check your service manual for the location — usually under the seat or behind a side panel). Find the fuse for the affected circuit (the fuse box cover or service manual will have a diagram). Pull the fuse and inspect it — look through the clear plastic body for a broken wire inside. You can also test the fuse with a multimeter set to continuity.",
+        "next": "light_fuse_result"
+      },
+      {
+        "id": "light_fuse_result",
+        "type": "question",
+        "text": "Is the fuse blown?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — fuse is blown", "next": "solution_replace_light_fuse" },
+          { "text": "No — fuse is good", "next": "check_light_switch" }
+        ]
+      },
+      {
+        "id": "solution_replace_light_fuse",
+        "type": "solution",
+        "text": "The fuse for the light circuit has blown.",
+        "safety": "yellow",
+        "warning": "Always replace a fuse with the exact same amperage rating. Never use a higher-rated fuse — this can cause wiring to overheat and start a fire.",
+        "action": "Replace the fuse and monitor for it blowing again",
+        "details": "Replace the blown fuse with one of the same amperage rating. If the new fuse blows immediately or soon after, there is a short circuit in that circuit. Do not keep replacing fuses — find and fix the short. Common causes of shorts: chafed wiring where it rubs on the frame or sharp edges, water intrusion into connectors, aftermarket accessories wired incorrectly, or a failed component. If the fuse does not blow again, the original may have failed from age or vibration."
+      },
+      {
+        "id": "check_light_switch",
+        "type": "check",
+        "text": "Check the light switch and wiring.",
+        "safety": "yellow",
+        "warning": "Do not probe wiring with the key on unless you are comfortable with basic electrical testing.",
+        "instructions": "For headlights, check the dimmer switch (high/low beam switch). For turn signals, check the turn signal switch. Toggle the switch — does it feel normal or loose/sticky? With the ignition on, use a multimeter or test light to check for voltage at the bulb socket. If there is no voltage at the socket, the problem is in the switch or wiring between the fuse and the socket.",
+        "next": "light_switch_result"
+      },
+      {
+        "id": "light_switch_result",
+        "type": "question",
+        "text": "Is voltage reaching the light socket?",
+        "safety": "green",
+        "options": [
+          { "text": "No voltage at the socket", "next": "solution_switch_or_wiring" },
+          { "text": "Yes — voltage is present but light still doesn't work", "next": "solution_ground_issue" }
+        ]
+      },
+      {
+        "id": "solution_switch_or_wiring",
+        "type": "solution",
+        "text": "The switch or wiring is faulty.",
+        "safety": "yellow",
+        "warning": "Electrical repairs require basic understanding of circuits. If unsure, have a professional do the work.",
+        "action": "Test the switch and trace the wiring for breaks or corrosion",
+        "details": "Test the switch by checking continuity through it in each position with a multimeter. If the switch does not pass current, it may be corroded internally or broken and needs replacement. If the switch tests OK, trace the wiring from the switch to the light socket. Look for corroded connectors (clean with electrical contact cleaner), broken wires, or damaged insulation. Motorcycle connectors, especially on exposed areas, are prone to water corrosion. Clean or replace connectors as needed."
+      },
+      {
+        "id": "solution_ground_issue",
+        "type": "solution",
+        "text": "The light likely has a bad ground connection.",
+        "safety": "green",
+        "action": "Clean and secure the ground connection for the light",
+        "details": "If power is reaching the bulb socket but the light does not work, the ground (negative) connection is likely faulty. Every light needs both a power supply and a ground return path. Locate the ground wire for the affected light — it usually connects to the frame or engine via a ring terminal and bolt. Remove the ground connection, clean both the wire terminal and the mounting surface (remove paint, rust, or corrosion), and securely reconnect it. Apply dielectric grease to prevent future corrosion."
+      },
+      {
+        "id": "check_tail_bulb",
+        "type": "check",
+        "text": "Check the tail light and brake light bulb.",
+        "safety": "green",
+        "instructions": "Remove the tail light lens or access the bulb from behind the housing. Most tail/brake lights use a dual-filament bulb — one filament for the tail light (dim) and one for the brake light (bright). Check both filaments. If only the brake light doesn't work, the brake light filament or switch may be faulty. Test the brake light switches — front brake lever switch and rear brake pedal switch.",
+        "next": "tail_bulb_result"
+      },
+      {
+        "id": "tail_bulb_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Bulb filament is broken", "next": "solution_replace_bulb" },
+          { "text": "Bulb is fine but brake light doesn't come on with lever/pedal", "next": "solution_brake_switch" },
+          { "text": "Bulb is fine and both functions should be working", "next": "check_light_fuse" }
+        ]
+      },
+      {
+        "id": "solution_brake_switch",
+        "type": "solution",
+        "text": "The brake light switch may be faulty or out of adjustment.",
+        "safety": "green",
+        "action": "Adjust or replace the brake light switch",
+        "details": "There are two brake light switches — one activated by the front brake lever (usually mounted on the lever perch) and one by the rear brake pedal (usually a spring-loaded plunger near the pedal pivot). If neither activates the brake light, check the fuse and wiring. If only one switch doesn't work, try adjusting it first — there is usually an adjustment nut or screw. If adjustment doesn't fix it, replace the switch. The brake light should come on just as the brake starts to engage, before the pads fully contact the disc."
+      },
+      {
+        "id": "check_turn_signals",
+        "type": "check",
+        "text": "Check the turn signal operation.",
+        "safety": "green",
+        "instructions": "Activate the left and right turn signals separately. Do any lights flash? Do they flash at the correct rate? A single burned-out bulb often causes the remaining turn signal on that side to flash very fast (hyper-flash). If no turn signals work at all, the flasher relay may be faulty.",
+        "next": "turn_signal_result"
+      },
+      {
+        "id": "turn_signal_result",
+        "type": "question",
+        "text": "What happens when you activate the turn signals?",
+        "safety": "green",
+        "options": [
+          { "text": "One side flashes too fast (hyper-flash)", "next": "solution_replace_bulb" },
+          { "text": "No turn signals work at all", "next": "solution_flasher_relay" },
+          { "text": "Turn signals stay on but don't flash", "next": "solution_flasher_relay" }
+        ]
+      },
+      {
+        "id": "solution_flasher_relay",
+        "type": "solution",
+        "text": "The turn signal flasher relay is likely faulty.",
+        "safety": "green",
+        "action": "Replace the turn signal flasher relay",
+        "details": "The flasher relay is a small electronic or electromechanical device that makes the turn signals flash on and off. It is usually located behind a panel or under the seat — check your service manual for the exact location. Replace it with a compatible unit. If you have switched to LED turn signal bulbs, you may need an LED-compatible flasher relay, as standard relays are designed for the higher current draw of incandescent bulbs and may not work correctly (or may cause hyper-flash) with LEDs."
+      },
+      {
+        "id": "fuse_blowing",
+        "type": "question",
+        "text": "Which fuse keeps blowing?",
+        "safety": "yellow",
+        "warning": "A repeatedly blowing fuse indicates a short circuit. Do not use a higher-rated fuse as a workaround — this can cause a fire.",
+        "options": [
+          { "text": "Main fuse", "next": "check_main_fuse" },
+          { "text": "A specific circuit fuse", "next": "solution_find_short" }
+        ]
+      },
+      {
+        "id": "check_main_fuse",
+        "type": "check",
+        "text": "Check the main fuse and battery connections.",
+        "safety": "yellow",
+        "warning": "The main fuse carries all electrical current. A short on the main circuit can cause sparks and heat.",
+        "instructions": "The main fuse is usually located near the battery or starter relay. It is often a higher rating than other fuses (typically 20-30A). Check if it is blown. If the main fuse is blown and you replace it but it blows again immediately, there is a major short circuit. Do not continue — seek professional help. Also check the battery terminal connections and the main wiring harness near the battery for damage.",
+        "next": "main_fuse_result"
+      },
+      {
+        "id": "main_fuse_result",
+        "type": "question",
+        "text": "What happened with the main fuse?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuse was blown — replaced and everything works", "next": "solution_main_fuse_ok" },
+          { "text": "Replacement fuse blows immediately", "next": "solution_major_short" },
+          { "text": "Main fuse is fine", "next": "check_main_connections" }
+        ]
+      },
+      {
+        "id": "solution_main_fuse_ok",
+        "type": "solution",
+        "text": "The main fuse blew but the replacement is holding.",
+        "safety": "green",
+        "action": "Monitor the system — the fuse may have blown from a one-time event",
+        "details": "Fuses can occasionally blow from a momentary surge or vibration. If the replacement fuse holds and everything works normally, ride the bike and monitor. Keep a spare main fuse with you. If the main fuse blows again, there is a short circuit that needs to be found and repaired. Common causes: chafed wiring near the battery or starter, a failing regulator/rectifier, or water intrusion into the wiring harness."
+      },
+      {
+        "id": "solution_major_short",
+        "type": "solution",
+        "text": "There is a major short circuit in the electrical system.",
+        "safety": "red",
+        "warning": "A short circuit can cause wiring to overheat and start a fire. Do not keep replacing fuses. Disconnect the battery until the short is found.",
+        "action": "Have a professional diagnose and repair the short circuit",
+        "details": "A main fuse that blows immediately upon replacement indicates a dead short — a wire carrying power is contacting ground (the frame) directly. This requires tracing the wiring harness looking for damaged insulation, pinched wires, or a failed component. Common locations for shorts: under the seat where wires get pinched, near the steering head where the harness flexes, at connectors that have corroded and bridged internally, or at aftermarket accessories that were poorly wired. Disconnect the battery until this is repaired."
+      },
+      {
+        "id": "solution_find_short",
+        "type": "solution",
+        "text": "A specific circuit fuse keeps blowing — there is a short in that circuit.",
+        "safety": "yellow",
+        "warning": "Do not repeatedly replace a blowing fuse. Find the root cause.",
+        "action": "Trace the affected circuit to find the short",
+        "details": "Note which circuit the blowing fuse protects (check the fuse box legend). Disconnect each component on that circuit one at a time and replace the fuse after each disconnection. When the fuse stops blowing, the last item you disconnected is the problem or the wiring to it has a short. Inspect that component and its wiring for damage. Common causes: chafed wires where the harness passes through frame holes or along sharp edges, corroded connectors, water intrusion, and failed components like switches or motors."
+      },
+      {
+        "id": "check_main_connections",
+        "type": "check",
+        "text": "Check main electrical connections and grounds.",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before cleaning or tightening electrical connections near the battery.",
+        "instructions": "Check the battery terminals for corrosion and tightness. Check the main ground wire(s) — these connect the battery negative terminal to the frame and/or engine. They must be clean and tight. Check the main wiring harness connector (often a large multi-pin connector under the tank or seat) for corrosion, bent pins, or moisture. A single bad ground can cause multiple electrical systems to malfunction.",
+        "next": "main_connections_result"
+      },
+      {
+        "id": "main_connections_result",
+        "type": "question",
+        "text": "Did you find any loose, corroded, or damaged connections?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found corroded or loose connections", "next": "solution_clean_connections" },
+          { "text": "No — all connections look good", "next": "solution_professional_electrical" }
+        ]
+      },
+      {
+        "id": "solution_clean_connections",
+        "type": "solution",
+        "text": "Corroded or loose connections are causing electrical problems.",
+        "safety": "green",
+        "action": "Clean and secure all corroded or loose connections",
+        "details": "Disconnect the battery. Clean corroded terminals and connectors with electrical contact cleaner and a small wire brush. For ring terminals and ground lugs, sand the contact surfaces until shiny. Apply dielectric grease to all connectors after cleaning to prevent future corrosion. Tighten all connections securely. Pay special attention to ground connections — a bad ground is the most common cause of mysterious electrical problems on motorcycles. Reconnect the battery (positive first, then negative)."
+      },
+      {
+        "id": "intermittent_faults",
+        "type": "check",
+        "text": "Try to reproduce the intermittent fault.",
+        "safety": "green",
+        "instructions": "Intermittent electrical problems are often caused by loose connections, chafed wires, or corroded connectors that make and break contact with vibration or movement. With the ignition on and the affected system active, try wiggling connectors, flexing the wiring harness, and turning the handlebars. Note if any of these actions cause the problem to appear or disappear. Also note if the problem is worse in wet conditions, which suggests water intrusion.",
+        "next": "intermittent_result"
+      },
+      {
+        "id": "intermittent_result",
+        "type": "question",
+        "text": "Could you reproduce the fault by wiggling wires or connectors?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found a sensitive area", "next": "solution_clean_connections" },
+          { "text": "Problem occurs in wet conditions", "next": "solution_water_intrusion" },
+          { "text": "Cannot reproduce — truly random", "next": "solution_professional_electrical" }
+        ]
+      },
+      {
+        "id": "solution_water_intrusion",
+        "type": "solution",
+        "text": "Water is likely getting into an electrical connector.",
+        "safety": "green",
+        "action": "Seal exposed connectors and protect from moisture",
+        "details": "Locate connectors in exposed areas (near the wheels, under the headlight, around the handlebars). Disconnect them, dry them thoroughly, apply electrical contact cleaner, then apply dielectric grease inside the connector before reconnecting. For connectors in particularly exposed locations, wrap them with self-fusing silicone tape or use heat-shrink with adhesive lining. Check that all rubber connector boots and seals are in place and intact. If the bike has aftermarket accessories, ensure their wiring connections are properly weatherproofed."
+      },
+      {
+        "id": "check_cluster",
+        "type": "check",
+        "text": "Check the instrument cluster connections.",
+        "safety": "green",
+        "instructions": "If the instrument cluster (speedometer, tachometer, warning lights) is not working, first check if the entire cluster is dead or just some gauges. If the entire cluster is dark, check the fuse for the instrument circuit and the connector at the back of the cluster. If only some gauges don't work, the individual sensors for those gauges may be faulty.",
+        "next": "cluster_result"
+      },
+      {
+        "id": "cluster_result",
+        "type": "question",
+        "text": "Is the entire cluster dead, or just some functions?",
+        "safety": "green",
+        "options": [
+          { "text": "Entire cluster is dead", "next": "check_light_fuse" },
+          { "text": "Some gauges work, others don't", "next": "solution_sensor_issue" }
+        ]
+      },
+      {
+        "id": "solution_sensor_issue",
+        "type": "solution",
+        "text": "Individual sensor(s) for the non-working gauges may be faulty.",
+        "safety": "green",
+        "action": "Check the sensors and wiring for the affected gauges",
+        "details": "Each gauge typically has a dedicated sensor: the speedometer uses a speed sensor (usually on the front wheel or transmission), the temperature gauge uses a coolant temperature sensor, the fuel gauge uses a fuel level sender in the tank. Check the connector at each sensor for the non-working gauges — disconnect, inspect for corrosion, clean, and reconnect. If the connector is clean, the sensor itself or the gauge in the cluster may be faulty. Consult your service manual for testing procedures specific to each sensor."
+      },
+      {
+        "id": "solution_professional_electrical",
+        "type": "solution",
+        "text": "The electrical issue requires professional diagnosis.",
+        "safety": "green",
+        "action": "Have a professional motorcycle electrician diagnose the problem",
+        "details": "Complex or intermittent electrical faults can be very difficult to diagnose without a wiring diagram, proper test equipment, and experience. A professional can use the bike's wiring diagram to systematically trace circuits, test components, and find faults that are not obvious by visual inspection. When taking the bike in, describe the symptoms as specifically as possible: what stops working, when it happens, what conditions trigger it, and any patterns you have noticed."
+      }
+    ]
+  }
+}

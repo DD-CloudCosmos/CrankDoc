@@ -1,0 +1,200 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Oil Leak (Boxer Engine Specific)",
+  "description": "Diagnose oil leaks on the R1250GS boxer twin engine, including valve cover gaskets, pushrod tube seals, and shaft drive seals.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where is the oil leak located? The boxer engine has unique leak points due to its horizontal cylinder layout.",
+        "safety": "green",
+        "options": [
+          { "text": "Side of the engine — valve cover / cylinder head area", "next": "valve_cover_area" },
+          { "text": "Between the cylinders and crankcase", "next": "pushrod_area" },
+          { "text": "Rear of the engine / transmission area", "next": "rear_leak" },
+          { "text": "Bottom of the engine / oil pan area", "next": "bottom_leak" },
+          { "text": "Oil mist or spray — can't pinpoint", "next": "clean_first" }
+        ]
+      },
+      {
+        "id": "clean_first",
+        "type": "check",
+        "text": "Clean the engine to identify the leak source",
+        "safety": "green",
+        "instructions": "The boxer engine layout makes oil leaks spread sideways rather than dripping straight down. (1) Degrease the entire engine with a suitable cleaner. (2) Rinse with low-pressure water — avoid direct spray on the TFT display, CAN bus connectors, and electrical modules. (3) Dry thoroughly (compressed air helps). (4) Ride for 30 minutes. (5) Inspect both sides of the engine with a flashlight — fresh oil will be at the highest/outermost point of the leak. (6) UV dye in the oil with a UV flashlight is very effective on the boxer because leaks spread.",
+        "next": "start"
+      },
+      {
+        "id": "valve_cover_area",
+        "type": "question",
+        "text": "The valve covers are on the left and right sides of the boxer engine. Which side is leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Left side valve cover", "next": "check_valve_cover" },
+          { "text": "Right side valve cover", "next": "check_valve_cover" },
+          { "text": "Both sides", "next": "check_valve_cover" }
+        ]
+      },
+      {
+        "id": "check_valve_cover",
+        "type": "check",
+        "text": "Inspect the valve cover gasket",
+        "safety": "green",
+        "instructions": "The R1250GS valve covers are aluminum and use a rubber gasket. (1) Look for oil seeping along the gasket line where the valve cover meets the cylinder head. (2) Check the valve cover bolts — the R1250GS uses Torx bolts (typically T30 or T40). (3) With the engine cold, check torque on the cover bolts — they should be 10 Nm (7.4 ft-lbs). (4) Do not over-torque — the gasket compresses and the aluminum can crack. (5) Also check the spark plug well seal — oil in the spark plug hole indicates a failed plug tube seal.",
+        "next": "valve_cover_result"
+      },
+      {
+        "id": "valve_cover_result",
+        "type": "question",
+        "text": "Where exactly is the oil coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover gasket seam", "next": "solution_valve_cover_gasket" },
+          { "text": "Spark plug hole / spark plug tube area", "next": "solution_plug_tube_seal" },
+          { "text": "Valve cover bolt was loose — re-torqued", "next": "solution_retorque_vc" }
+        ]
+      },
+      {
+        "id": "solution_valve_cover_gasket",
+        "type": "solution",
+        "text": "Replace the valve cover gasket",
+        "safety": "yellow",
+        "warning": "The R1250GS valve covers provide access to the ShiftCam valve train. Be careful not to disturb the cam timing components when removing the cover.",
+        "action": "Replace the valve cover gasket",
+        "details": "Valve cover gasket replacement on the R1250GS: (1) Remove the valve cover bolts (typically 4-6 Torx bolts). (2) Carefully lift the cover off — it may require gentle persuasion with a plastic pry tool. (3) Remove the old gasket from both surfaces. (4) Clean the gasket surfaces — no metal scrapers on aluminum (use a plastic scraper or gasket remover solvent). (5) Install the new gasket (BMW OEM gasket kit recommended due to the ShiftCam engine). (6) Reinstall and torque to 10 Nm in a cross pattern. (7) Run the engine and inspect for leaks. Replace both sides at the same time."
+      },
+      {
+        "id": "solution_plug_tube_seal",
+        "type": "solution",
+        "text": "Replace the spark plug tube seal",
+        "safety": "yellow",
+        "warning": "Oil in the spark plug well can foul the plug and potentially cause a misfire or ignition failure.",
+        "action": "Replace the spark plug tube O-ring/seal",
+        "details": "The spark plug tube seal prevents oil from entering the spark plug well. (1) Remove the valve cover. (2) Remove the old spark plug tube seal. (3) Install a new seal — lightly lubricate with clean engine oil before installation. (4) Reinstall the valve cover with a new gasket. (5) Remove the spark plug and clean any oil from the plug well. (6) Install a new spark plug if the old one is oil-fouled. (7) The R1250GS uses NGK LMAR8D-J plugs."
+      },
+      {
+        "id": "solution_retorque_vc",
+        "type": "solution",
+        "text": "Valve cover bolts re-torqued",
+        "safety": "green",
+        "action": "Monitor after re-torquing",
+        "details": "Clean the area and monitor for 100 miles. If the leak stops, the bolts were simply loose from vibration. If the leak returns, the gasket needs replacement. The R1250GS boxer vibration is relatively low, but thermal cycles can loosen fasteners over time."
+      },
+      {
+        "id": "pushrod_area",
+        "type": "question",
+        "text": "Is the oil leaking from the pushrod tube area (between the cylinder head and the crankcase)?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — pushrod tube seal area", "next": "solution_pushrod_seals" },
+          { "text": "Cylinder base gasket area (where cylinder meets case)", "next": "solution_base_gasket" }
+        ]
+      },
+      {
+        "id": "solution_pushrod_seals",
+        "type": "solution",
+        "text": "Replace pushrod tube seals",
+        "safety": "yellow",
+        "warning": "Pushrod tube seal replacement on the R1250GS ShiftCam engine is more involved than on older boxer engines. Cam timing must be maintained.",
+        "action": "Replace the pushrod tube O-rings",
+        "details": "The R1250GS pushrod tubes connect the crankcase to the cylinder heads and seal with O-rings at both ends. When these O-rings harden from heat cycles: (1) Oil seeps along the pushrod tubes. (2) On the R1250GS with ShiftCam, this requires removing the valve covers and potentially the cam housing. (3) Replace all upper and lower O-rings. (4) Use BMW OEM O-rings — the ShiftCam engine has specific seal requirements. (5) This is an intermediate-to-advanced repair on the R1250GS due to the ShiftCam system. (6) Many GS owners have their dealer perform this during the 12,000-mile valve service when the covers are already off."
+      },
+      {
+        "id": "solution_base_gasket",
+        "type": "solution",
+        "text": "Cylinder base gasket leak",
+        "safety": "yellow",
+        "warning": "Cylinder base gasket replacement is a major repair requiring engine disassembly. This should be performed by a qualified BMW technician.",
+        "action": "Have the cylinder base gaskets replaced",
+        "details": "A base gasket leak on the R1250GS boxer requires removing the cylinder from the crankcase. This is a significant job: (1) Engine must be removed from the frame (or at minimum, the cylinder and head must be pulled). (2) Pistons, cylinders, and heads all come off. (3) New base gaskets are installed. (4) Reassembly requires proper torque sequences and timing. (5) This is best done by a BMW dealer or experienced boxer mechanic. (6) It's a good time to inspect pistons, rings, and cylinders while apart. (7) Base gasket leaks are less common on the R1250GS than on older airheads but can occur at high mileage."
+      },
+      {
+        "id": "rear_leak",
+        "type": "question",
+        "text": "Where in the rear/transmission area is the leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Rear main seal area (between engine and transmission)", "next": "solution_rear_main_seal" },
+          { "text": "Shaft drive seal (output shaft)", "next": "solution_shaft_drive_seal" },
+          { "text": "Final drive (rear wheel hub)", "next": "solution_final_drive" }
+        ]
+      },
+      {
+        "id": "solution_rear_main_seal",
+        "type": "solution",
+        "text": "Rear main seal / crankshaft seal",
+        "safety": "yellow",
+        "warning": "Rear main seal replacement requires separating the engine from the transmission. This is a major repair.",
+        "action": "Have the rear crankshaft seal replaced",
+        "details": "A rear main seal leak on the R1250GS means oil is escaping between the engine and transmission. (1) This requires removing the engine from the frame and separating the transmission. (2) The seal is pressed into the engine case around the crankshaft output. (3) This is strictly a dealer or specialist repair. (4) While the engine is out, it's worth replacing other seals and gaskets. (5) Check if BMW has a service bulletin for this — some model years had seal issues addressed under warranty."
+      },
+      {
+        "id": "solution_shaft_drive_seal",
+        "type": "solution",
+        "text": "Shaft drive output seal leak",
+        "safety": "yellow",
+        "warning": "The shaft drive operates at high speed. Do not inspect with the engine running.",
+        "action": "Replace the shaft drive output seal",
+        "details": "The R1250GS uses a shaft drive rather than chain or belt. The output shaft seal where the drive shaft exits the transmission can leak. (1) Clean the area and verify this is the leak source. (2) The seal replacement requires removing the drive shaft and accessing the output shaft seal. (3) This is a moderately involved repair. (4) While the shaft is out, inspect the splines and apply fresh moly grease. (5) A failing seal often leaks gradually — monitor and plan the repair. (6) If the seal fails suddenly, check the transmission vent for blockage — overpressure can blow out seals."
+      },
+      {
+        "id": "solution_final_drive",
+        "type": "solution",
+        "text": "Final drive oil leak",
+        "safety": "green",
+        "action": "Check and repair the final drive",
+        "details": "The R1250GS final drive (rear hub) contains gear oil separate from the engine oil. Leaks here are usually: (1) Final drive cover gasket — remove the cover, clean surfaces, replace gasket. (2) Drive shaft input seal — the seal where the drive shaft enters the final drive. (3) Final drive oil level — check and top off with 80W-90 hypoid gear oil (or BMW specified fluid). The final drive holds approximately 200ml. (4) Check the final drive breather vent — a blocked vent causes pressure buildup and seal failure. (5) Final drive service: drain and refill the gear oil every 12,000 miles."
+      },
+      {
+        "id": "bottom_leak",
+        "type": "question",
+        "text": "Where on the bottom of the engine is the oil?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil drain plug", "next": "solution_drain_plug" },
+          { "text": "Oil filter area", "next": "solution_oil_filter" },
+          { "text": "Oil pan gasket / sump", "next": "solution_oil_pan" },
+          { "text": "Front of engine / around the oil cooler", "next": "solution_oil_cooler_leak" }
+        ]
+      },
+      {
+        "id": "solution_drain_plug",
+        "type": "solution",
+        "text": "Oil drain plug leak",
+        "safety": "green",
+        "action": "Reseal the oil drain plug",
+        "details": "The R1250GS engine oil drain plug uses a crush washer. (1) Check drain plug torque — 25 Nm (18 ft-lbs). (2) If tight but leaking: drain the oil, remove the plug, replace the aluminum crush washer with a new one (always use a new washer at every oil change). (3) Clean the sealing surfaces. (4) Reinstall and torque. (5) Refill with BMW-recommended oil (BMW Advantec Pro 15W-50 or equivalent). The R1250GS holds approximately 4 liters with filter change."
+      },
+      {
+        "id": "solution_oil_filter",
+        "type": "solution",
+        "text": "Oil filter leak",
+        "safety": "green",
+        "action": "Check and reseat the oil filter",
+        "details": "The R1250GS oil filter is accessible from the front of the engine. (1) Check that the filter is tight — hand-tight plus 3/4 turn. (2) Check for a double gasket — the old filter O-ring may have stuck to the housing. Always verify the old gasket came off with the old filter. (3) If leaking from the filter housing itself: check the housing O-ring and replace if damaged. (4) Apply a thin film of clean oil to the new filter's O-ring before installation."
+      },
+      {
+        "id": "solution_oil_pan",
+        "type": "solution",
+        "text": "Oil pan / sump gasket leak",
+        "safety": "yellow",
+        "warning": "Oil pan removal requires draining the oil and may require engine support depending on the model year.",
+        "action": "Replace the oil pan gasket",
+        "details": "If oil is seeping from the oil pan gasket seam: (1) Drain the engine oil. (2) Remove the oil pan bolts. (3) Carefully lower the pan — there may be an oil pickup screen inside. (4) Clean both gasket surfaces thoroughly. (5) Install a new gasket or apply BMW-approved sealant if specified. (6) Reinstall and torque bolts in the correct pattern. (7) Refill with oil. (8) This is less common on the R1250GS than on older BMWs but can occur at higher mileage."
+      },
+      {
+        "id": "solution_oil_cooler_leak",
+        "type": "solution",
+        "text": "Oil cooler or oil line leak",
+        "safety": "yellow",
+        "warning": "Oil cooler lines carry pressurized oil. A sudden failure can result in rapid oil loss. If you see oil spraying, stop immediately.",
+        "action": "Inspect and repair the oil cooler and lines",
+        "details": "The R1250GS has an engine oil cooler at the front of the engine. (1) Inspect the oil cooler hose connections for leaks — check the banjo fittings and crush washers. (2) Check the oil cooler core for damage (stone impact, corrosion). (3) Replace crush washers on banjo fittings if leaking. (4) Check the oil cooler thermostat — some models have a thermostat that controls flow to the cooler. (5) If the cooler core is damaged, it needs replacement. Route hoses away from exhaust heat."
+      }
+    ]
+  }
+}

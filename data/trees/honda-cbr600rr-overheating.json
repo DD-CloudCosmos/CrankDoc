@@ -1,0 +1,259 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Overheating / Coolant Issues",
+  "description": "Diagnose overheating problems, coolant leaks, and cooling system failures on the Honda CBR600RR.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What symptom are you experiencing?",
+        "safety": "yellow",
+        "warning": "Never open the radiator cap on a hot engine. Allow the bike to cool for at least 30 minutes before inspecting the cooling system.",
+        "options": [
+          { "text": "Temperature gauge reads high / overheating warning light on", "next": "check_coolant_level" },
+          { "text": "Coolant leaking onto the ground", "next": "locate_leak" },
+          { "text": "Temperature fluctuates erratically", "next": "check_thermostat" },
+          { "text": "Fan never turns on", "next": "check_fan" }
+        ]
+      },
+      {
+        "id": "check_coolant_level",
+        "type": "check",
+        "text": "Check coolant level in the reservoir",
+        "safety": "yellow",
+        "warning": "Only check coolant level when the engine is cool. The CBR600RR reservoir is on the right side behind the lower fairing.",
+        "instructions": "With the engine cool, locate the coolant reservoir on the right side of the bike behind the lower fairing. Check that the coolant level is between the LOW and FULL marks. Also inspect the coolant color — it should be green or blue (depending on type), not brown or rusty.",
+        "next": "coolant_level_result"
+      },
+      {
+        "id": "coolant_level_result",
+        "type": "question",
+        "text": "What is the coolant level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Coolant level is low or empty", "next": "locate_leak" },
+          { "text": "Coolant level is normal but looks dirty/brown", "next": "solution_flush" },
+          { "text": "Coolant level is normal and looks clean", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "locate_leak",
+        "type": "check",
+        "text": "Locate the source of coolant loss",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to animals and slippery on surfaces. Clean up any spills immediately.",
+        "instructions": "With the engine cool, visually inspect these common CBR600RR leak points: (1) Radiator hose connections — upper and lower, (2) Water pump weep hole (bottom of water pump), (3) Radiator fins and tanks for damage, (4) Thermostat housing gasket, (5) Cylinder head gasket area. Look for white residue or green/blue staining around connections.",
+        "next": "leak_location"
+      },
+      {
+        "id": "leak_location",
+        "type": "question",
+        "text": "Where is the coolant leaking from?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator hose connection", "next": "solution_hose_clamp" },
+          { "text": "Water pump weep hole", "next": "solution_water_pump" },
+          { "text": "Radiator is damaged/cracked", "next": "solution_radiator" },
+          { "text": "No visible external leak found", "next": "check_head_gasket" },
+          { "text": "Thermostat housing area", "next": "solution_thermostat_gasket" }
+        ]
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Test the thermostat operation",
+        "safety": "yellow",
+        "warning": "The engine and radiator hoses will be hot if the engine was recently running. Use gloves.",
+        "instructions": "Start the engine and let it warm up. Feel the upper radiator hose — it should remain cool until the thermostat opens around 80-85°C (176-185°F), then get warm as coolant flows. If the hose stays cold even when the temperature gauge is high, the thermostat is stuck closed. If the hose gets warm immediately on a cold start, the thermostat may be stuck open (causing slow warm-up, not overheating).",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "What did you observe with the thermostat test?",
+        "safety": "green",
+        "options": [
+          { "text": "Upper hose stays cold even when gauge shows hot — thermostat stuck closed", "next": "solution_thermostat" },
+          { "text": "Upper hose gets warm normally — thermostat is working", "next": "check_fan" },
+          { "text": "Upper hose warm immediately on cold start — thermostat stuck open", "next": "solution_thermostat" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Test the radiator fan",
+        "safety": "yellow",
+        "warning": "Keep fingers and loose clothing away from the fan. It can turn on suddenly.",
+        "instructions": "Let the engine idle until the temperature gauge reaches the fan activation point (typically around 100-105°C / 212-221°F on the CBR600RR). The fan should kick on automatically. If it does not, check the fan fuse (10A in the fuse box under the seat). You can also test the fan by jumping it directly to the battery with the ignition off.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Does the radiator fan turn on?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan never turns on, even when very hot", "next": "check_fan_electrical" },
+          { "text": "Fan turns on but bike still overheats", "next": "check_radiator_blockage" },
+          { "text": "Fan works normally", "next": "check_radiator_blockage" }
+        ]
+      },
+      {
+        "id": "check_fan_electrical",
+        "type": "check",
+        "text": "Check fan circuit electrically",
+        "safety": "yellow",
+        "warning": "Disconnect the battery negative terminal before testing wiring to avoid shorts.",
+        "instructions": "Check the fan fuse (10A) in the fuse box under the seat. If the fuse is good, disconnect the fan connector and use a multimeter to check for 12V at the connector when the engine is at operating temperature. If voltage is present, the fan motor is faulty. If no voltage, check the coolant temperature sensor/switch and wiring.",
+        "next": "fan_electrical_result"
+      },
+      {
+        "id": "fan_electrical_result",
+        "type": "question",
+        "text": "What did the electrical test reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown fuse", "next": "solution_fan_fuse" },
+          { "text": "No voltage at fan connector — sensor or wiring issue", "next": "solution_fan_sensor" },
+          { "text": "Voltage present but fan does not spin — bad fan motor", "next": "solution_fan_motor" }
+        ]
+      },
+      {
+        "id": "check_radiator_blockage",
+        "type": "check",
+        "text": "Inspect radiator for blockage",
+        "safety": "green",
+        "instructions": "Inspect the front of the radiator for debris, bugs, mud, or bent fins blocking airflow. On the CBR600RR, you may need to remove the lower fairing for a clear view. Also check that nothing is blocking airflow between the radiator and the engine (plastic bags, leaves, etc.).",
+        "next": "radiator_blockage_result"
+      },
+      {
+        "id": "radiator_blockage_result",
+        "type": "question",
+        "text": "Is the radiator blocked or obstructed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes, radiator fins are clogged with debris", "next": "solution_clean_radiator" },
+          { "text": "No, radiator looks clear", "next": "solution_flush" }
+        ]
+      },
+      {
+        "id": "check_head_gasket",
+        "type": "check",
+        "text": "Check for head gasket failure",
+        "safety": "yellow",
+        "warning": "Head gasket failure is a serious engine issue. Do not continue riding if suspected.",
+        "instructions": "Look for these signs of head gasket failure: (1) White sweet-smelling smoke from the exhaust, (2) Milky/frothy oil on the dipstick or oil filler cap, (3) Bubbles in the coolant reservoir when the engine is running, (4) Oil in the coolant (oily film on coolant surface). A combustion leak tester (block tester) can confirm by detecting exhaust gases in the coolant.",
+        "next": "head_gasket_result"
+      },
+      {
+        "id": "head_gasket_result",
+        "type": "question",
+        "text": "Did you find signs of head gasket failure?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — white smoke, milky oil, or bubbles in coolant", "next": "solution_head_gasket" },
+          { "text": "No — no signs of head gasket failure", "next": "solution_flush" }
+        ]
+      },
+      {
+        "id": "solution_hose_clamp",
+        "type": "solution",
+        "text": "Tighten or Replace Radiator Hose Clamp",
+        "safety": "green",
+        "action": "Tighten the hose clamp or replace the hose if cracked.",
+        "details": "With the engine cool, tighten the hose clamp at the leaking connection. If the hose itself is cracked, swollen, or feels spongy, replace it. Use Honda OEM hoses or high-quality silicone replacements. Refill with Honda Type 2 coolant (or equivalent 50/50 ethylene glycol mix). Bleed the system by running the engine with the radiator cap off until bubbles stop."
+      },
+      {
+        "id": "solution_water_pump",
+        "type": "solution",
+        "text": "Replace Water Pump Seal or Water Pump",
+        "safety": "yellow",
+        "warning": "Water pump replacement requires draining the cooling system. Dispose of old coolant properly.",
+        "action": "Replace the water pump mechanical seal or the entire water pump assembly.",
+        "details": "A leaking weep hole indicates the water pump mechanical seal has failed. The CBR600RR water pump is located on the right side of the engine. Drain the coolant, remove the water pump cover (3 bolts), and replace the mechanical seal and O-ring. If the impeller is damaged or corroded, replace the entire pump assembly. Refill and bleed the cooling system after reassembly."
+      },
+      {
+        "id": "solution_radiator",
+        "type": "solution",
+        "text": "Repair or Replace Radiator",
+        "safety": "yellow",
+        "warning": "A damaged radiator can cause sudden coolant loss and overheating. Do not ride with a cracked radiator.",
+        "action": "Have the radiator repaired by a specialist or replace it.",
+        "details": "Minor radiator damage (small puncture, bent fins) can sometimes be repaired by a radiator specialist. For cracked tanks or major damage, replace the radiator. OEM Honda radiators are expensive; quality aftermarket aluminum radiators are available for the CBR600RR. After installation, refill with proper coolant mix and bleed the system thoroughly."
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant before removing the thermostat housing. Dispose of old coolant properly.",
+        "action": "Replace the thermostat with a new OEM unit.",
+        "details": "The CBR600RR thermostat is located in the housing where the upper radiator hose meets the engine (left side of the cylinder head). Drain the coolant, remove the thermostat housing (2 bolts), and replace the thermostat and gasket. The OEM thermostat opens at approximately 80°C (176°F). Do not run the engine without a thermostat — it will cause uneven heating and potential damage. Refill and bleed the cooling system."
+      },
+      {
+        "id": "solution_thermostat_gasket",
+        "type": "solution",
+        "text": "Replace Thermostat Housing Gasket",
+        "safety": "yellow",
+        "warning": "Drain coolant before removing the thermostat housing.",
+        "action": "Replace the thermostat housing gasket and inspect the thermostat.",
+        "details": "Remove the thermostat housing and replace the paper gasket or O-ring. While the housing is off, inspect the thermostat itself — if it shows any signs of corrosion or sticking, replace it too. Clean the mating surfaces thoroughly before reassembly. Torque the housing bolts to 12 Nm (9 ft-lb)."
+      },
+      {
+        "id": "solution_fan_fuse",
+        "type": "solution",
+        "text": "Replace Fan Fuse",
+        "safety": "green",
+        "action": "Replace the blown 10A fan fuse.",
+        "details": "Replace the fan fuse with a new 10A fuse of the same type. If the new fuse blows immediately, there is a short circuit in the fan wiring that must be found and repaired before replacing the fuse again. Check the fan motor wiring for chafing, pinching, or exposed conductors."
+      },
+      {
+        "id": "solution_fan_sensor",
+        "type": "solution",
+        "text": "Replace Coolant Temperature Sensor/Switch",
+        "safety": "yellow",
+        "warning": "Some coolant will drain when removing the sensor. Have a catch pan ready.",
+        "action": "Test and replace the coolant temperature sensor or fan relay.",
+        "details": "The CBR600RR uses an ECU-controlled fan via the coolant temperature sensor. Check the fan relay (under the seat) by swapping it with an identical relay. If the relay is good, the coolant temperature sensor (located on the thermostat housing or cylinder head) may be faulty. Replace the sensor, refill any lost coolant, and verify fan operation."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace Radiator Fan Motor",
+        "safety": "green",
+        "action": "Replace the radiator fan motor assembly.",
+        "details": "Disconnect the battery, remove the fan shroud mounting bolts, disconnect the fan wiring, and remove the fan assembly. Replace with a new fan motor. OEM and aftermarket options are available. After installation, reconnect the battery and verify the fan spins freely and activates at the correct temperature."
+      },
+      {
+        "id": "solution_clean_radiator",
+        "type": "solution",
+        "text": "Clean Radiator Fins",
+        "safety": "green",
+        "action": "Clean debris from the radiator fins to restore airflow.",
+        "details": "Remove the lower fairing for access. Use compressed air (from the engine side outward) or a gentle stream of water to flush debris from the radiator fins. Be careful not to bend the delicate fins. A soft brush can help remove stuck-on bugs and dirt. Straighten any bent fins with a fin comb. Reassemble the fairing and test ride to verify temperature returns to normal."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush and Refill Cooling System",
+        "safety": "yellow",
+        "warning": "Dispose of old coolant properly — it is toxic to animals and harmful to the environment.",
+        "action": "Flush the cooling system and refill with fresh coolant.",
+        "details": "Drain the old coolant from the radiator drain bolt and the cylinder block drain bolt (if accessible). Flush the system with distilled water by filling, running the engine briefly, and draining again. Repeat until the water runs clear. Refill with Honda Type 2 coolant or a 50/50 mix of ethylene glycol and distilled water. Total system capacity for the CBR600RR is approximately 2.3 liters. Bleed the system by running the engine with the radiator cap off, squeezing the hoses to release trapped air, and topping off as needed."
+      },
+      {
+        "id": "solution_head_gasket",
+        "type": "solution",
+        "text": "Head Gasket Replacement — Professional Service Required",
+        "safety": "red",
+        "warning": "Head gasket replacement on the CBR600RR inline-4 is a major engine job. Professional service is strongly recommended.",
+        "action": "Have the cylinder head gasket replaced by a qualified motorcycle mechanic.",
+        "details": "A failed head gasket on the CBR600RR requires removing the cam chain tensioner, camshafts, and cylinder head. This is a complex job requiring special tools (torque wrench, valve spring compressor), precise torque sequences, and valve clearance re-checking. Typical shop cost is $800-$1500 including parts and labor. Do not continue riding with a blown head gasket — it can cause catastrophic engine damage from coolant contamination of the oil or overheating."
+      }
+    ]
+  }
+}

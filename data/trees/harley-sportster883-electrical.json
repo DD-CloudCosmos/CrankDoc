@@ -1,0 +1,215 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "title": "Electrical Problems / Wiring",
+  "description": "Diagnose electrical issues on the Sportster 883, including charging system failures, blown fuses, and wiring problems.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery keeps dying / not charging", "next": "charging_system" },
+          { "text": "Lights flickering or dim", "next": "check_grounds" },
+          { "text": "Blown fuse(s)", "next": "blown_fuse" },
+          { "text": "Specific component not working (turn signals, horn, etc.)", "next": "single_component" }
+        ]
+      },
+      {
+        "id": "charging_system",
+        "type": "check",
+        "text": "Test the charging system output",
+        "safety": "yellow",
+        "warning": "Keep hands, hair, and loose clothing away from the belt/chain while the engine is running. Do not disconnect the battery while the engine is running — it can damage the voltage regulator.",
+        "instructions": "With the engine OFF, measure battery voltage (should be 12.6V+). Start the engine and let it idle. Measure voltage again at the battery terminals. At 2000 RPM, you should see 13.5V-14.5V. Below 13V means the charging system is not working. Above 15V means the regulator is overcharging.",
+        "next": "charging_result"
+      },
+      {
+        "id": "charging_result",
+        "type": "question",
+        "text": "What is the charging voltage at 2000 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "13.5V - 14.5V (normal)", "next": "solution_parasitic_draw" },
+          { "text": "Below 13V (not charging)", "next": "check_stator" },
+          { "text": "Above 15V (overcharging)", "next": "solution_regulator_over" }
+        ]
+      },
+      {
+        "id": "solution_parasitic_draw",
+        "type": "solution",
+        "text": "Check for parasitic battery drain",
+        "safety": "yellow",
+        "warning": "Disconnect the negative battery cable before testing. Do not start the engine with the ammeter connected inline.",
+        "action": "Test for parasitic electrical drain",
+        "details": "If the charging system tests normal but the battery still dies: (1) Fully charge the battery. (2) Disconnect the negative cable. (3) Connect a multimeter (set to DC milliamps) between the negative cable and terminal. (4) Normal draw is under 30mA. (5) If higher, pull fuses one at a time to identify the circuit causing the drain. Common culprits: aftermarket accessories, security system, faulty ignition switch. Also verify the battery itself is healthy — load test it or have it tested at an auto parts store."
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test the stator output",
+        "safety": "yellow",
+        "warning": "The stator produces AC voltage. Do not touch stator wires while the engine is running.",
+        "instructions": "Locate the stator connector (3 yellow wires coming from the primary cover area, connecting to the voltage regulator). Disconnect the stator connector. Set your multimeter to AC volts. With the engine running at 2000 RPM, measure between each pair of stator wires (3 combinations). Each should read 19-26 VAC. If one or more reads significantly lower or zero, the stator is failing.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What are the stator AC voltage readings?",
+        "safety": "green",
+        "options": [
+          { "text": "All three readings are 19-26 VAC", "next": "solution_regulator" },
+          { "text": "One or more readings are low or zero", "next": "solution_stator" }
+        ]
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace the stator",
+        "safety": "yellow",
+        "warning": "Stator replacement requires draining primary oil and removing the primary cover. Work on a cold engine.",
+        "action": "Replace the stator",
+        "details": "A failed stator is a common Sportster 883 issue. The stator is located inside the primary cover. Replacement requires: (1) Drain the primary/engine oil (common sump). (2) Remove the outer primary cover. (3) Remove the old stator (3 bolts). (4) Install the new stator and route wires properly. (5) Reassemble and refill oil. Use a quality aftermarket stator (Cycle Electric or similar) or genuine Harley part. Common failure causes: heat damage from running low on oil."
+      },
+      {
+        "id": "solution_regulator",
+        "type": "solution",
+        "text": "Replace the voltage regulator/rectifier",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the regulator. Incorrect wiring can damage the new regulator immediately.",
+        "action": "Replace the voltage regulator/rectifier",
+        "details": "The stator output is good but the battery isn't charging — the voltage regulator/rectifier is faulty. On the Sportster 883, it's typically mounted under the seat or on the frame near the battery. (1) Disconnect the battery. (2) Unplug the stator connector and battery leads from the regulator. (3) Remove mounting bolts. (4) Install new regulator — ensure it has good ground contact with the frame. (5) Reconnect and test. The regulator needs good heat dissipation — do not block airflow around it."
+      },
+      {
+        "id": "solution_regulator_over",
+        "type": "solution",
+        "text": "Overcharging — replace voltage regulator",
+        "safety": "yellow",
+        "warning": "An overcharging system can boil the battery, causing acid leaks and potential battery explosion. Stop riding and fix this immediately.",
+        "action": "Replace the voltage regulator immediately",
+        "details": "Voltage above 15V at the battery indicates a failed regulator that is overcharging. This can destroy your battery and damage electrical components. Replace the voltage regulator/rectifier immediately. Also inspect the battery for damage — an overcharged battery may be swollen or leaking acid. Replace the battery if damaged. After installing the new regulator, verify output is 13.5-14.5V at 2000 RPM."
+      },
+      {
+        "id": "check_grounds",
+        "type": "check",
+        "text": "Inspect ground connections",
+        "safety": "yellow",
+        "warning": "Disconnect the battery negative cable before cleaning ground connections to avoid short circuits.",
+        "instructions": "Flickering lights often indicate poor ground connections. Check these key ground points on the Sportster 883: (1) Battery negative to frame — should be clean, tight, no corrosion. (2) Engine-to-frame ground strap — usually on the front motor mount area. (3) Headlight ground wire inside the headlight bucket. (4) Handlebar switch ground connections. Clean all ground points with sandpaper or a wire brush until bare metal is visible, then apply dielectric grease and retighten.",
+        "next": "grounds_result"
+      },
+      {
+        "id": "grounds_result",
+        "type": "question",
+        "text": "Did cleaning the ground connections fix the flickering?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — lights are solid now", "next": "solution_grounds_fixed" },
+          { "text": "No — still flickering", "next": "solution_wiring_harness" }
+        ]
+      },
+      {
+        "id": "solution_grounds_fixed",
+        "type": "solution",
+        "text": "Ground connections restored",
+        "safety": "green",
+        "action": "Ground connections cleaned and secured",
+        "details": "Poor ground connections are one of the most common electrical issues on Sportsters, especially on older bikes. The vibration of the V-twin loosens connections over time. Apply dielectric grease to all ground connections to prevent future corrosion. Consider adding a secondary ground strap from the engine to the frame for extra reliability."
+      },
+      {
+        "id": "solution_wiring_harness",
+        "type": "solution",
+        "text": "Wiring harness inspection needed",
+        "safety": "yellow",
+        "warning": "Damaged wiring can cause electrical fires. Inspect carefully and repair any exposed or melted wires.",
+        "action": "Inspect the main wiring harness",
+        "details": "If ground connections are clean and tight but lights still flicker: (1) Check the main wiring harness for chafed, melted, or broken wires — especially where it routes near the frame, engine, and exhaust. (2) Check the ignition switch — a worn switch can cause intermittent power. (3) Inspect all connector plugs for corrosion or loose pins. (4) Check the headlight and taillight bulb connections. Sportster wiring harnesses are relatively simple — a wiring diagram from the service manual will help trace circuits."
+      },
+      {
+        "id": "blown_fuse",
+        "type": "check",
+        "text": "Identify which fuse is blown",
+        "safety": "yellow",
+        "warning": "Always replace fuses with the correct amperage rating. Never use a higher-rated fuse — it can cause a fire.",
+        "instructions": "The Sportster 883 fuse block is under the left side cover (newer models) or near the battery. Pull each fuse and inspect the filament — a broken filament means the fuse is blown. Note which circuit the blown fuse protects (the fuse box cover usually has a diagram). Replace with the same amperage fuse.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Does the replacement fuse blow again immediately?",
+        "safety": "green",
+        "options": [
+          { "text": "No — new fuse holds", "next": "solution_fuse_replaced" },
+          { "text": "Yes — keeps blowing", "next": "solution_short_circuit" }
+        ]
+      },
+      {
+        "id": "solution_fuse_replaced",
+        "type": "solution",
+        "text": "Fuse replaced successfully",
+        "safety": "green",
+        "action": "Monitor the circuit",
+        "details": "The fuse may have blown due to a temporary overload or vibration. Monitor the circuit — if the fuse blows again, there's an underlying issue (short circuit or failing component). Keep spare fuses in your saddlebag. If the same fuse blows repeatedly, see the short circuit diagnosis."
+      },
+      {
+        "id": "solution_short_circuit",
+        "type": "solution",
+        "text": "Short circuit in the wiring",
+        "safety": "yellow",
+        "warning": "A short circuit can cause an electrical fire. Do not keep replacing fuses with higher ratings. Disconnect the battery and fix the root cause.",
+        "action": "Locate and repair the short circuit",
+        "details": "A repeatedly blown fuse indicates a short circuit. (1) Identify which circuit the fuse protects. (2) Disconnect all loads on that circuit one at a time. (3) If the fuse holds with a load disconnected, that component or its wiring has the short. (4) Inspect the wiring to that component for: chafed insulation (especially where wires contact the frame or engine), melted wires near the exhaust, corroded connectors, or pinched wires. (5) Repair with proper heat-shrink solder connectors — do not use electrical tape for permanent repairs. Common short circuit locations: handlebar wiring (from turning), under-tank wiring, and near the exhaust pipes."
+      },
+      {
+        "id": "single_component",
+        "type": "question",
+        "text": "Which component is not working?",
+        "safety": "green",
+        "options": [
+          { "text": "Turn signals", "next": "solution_turn_signals" },
+          { "text": "Horn", "next": "solution_horn" },
+          { "text": "Headlight", "next": "solution_headlight" },
+          { "text": "Instrument cluster / gauges", "next": "solution_gauges" }
+        ]
+      },
+      {
+        "id": "solution_turn_signals",
+        "type": "solution",
+        "text": "Turn signal diagnosis",
+        "safety": "green",
+        "action": "Check turn signal bulbs and flasher relay",
+        "details": "If one signal doesn't work: check the bulb (1157 dual-filament). If all signals are dead: check the turn signal fuse and the flasher relay (usually under the side cover or in the headlight bucket). If signals are fast-flashing: a bulb is burned out — the flasher speeds up to alert you. If signals are dim: check ground connections at each signal housing. LED upgrades require a load equalizer or LED-compatible flasher relay."
+      },
+      {
+        "id": "solution_horn",
+        "type": "solution",
+        "text": "Horn diagnosis",
+        "safety": "green",
+        "action": "Check horn connections and fuse",
+        "details": "Check the horn fuse first. If the fuse is good: (1) Locate the horn (usually mounted on the frame below the headlight). (2) Check the wire connector at the horn for corrosion. (3) Apply 12V directly to the horn terminals to test it — if it honks, the issue is in the switch or wiring. (4) If the horn doesn't sound with direct power, replace it. (5) Check the horn button connections in the left handlebar switch housing."
+      },
+      {
+        "id": "solution_headlight",
+        "type": "solution",
+        "text": "Headlight diagnosis",
+        "safety": "green",
+        "action": "Check headlight bulb and wiring",
+        "details": "If the headlight is completely dead: (1) Check the headlight fuse. (2) Remove the headlight trim ring and lens to access the bulb. (3) Check if the bulb filament is broken — replace with the correct H4 bulb. (4) If the bulb is good, check for power at the headlight connector with a multimeter (key ON). (5) Check the headlight ground wire (often the problem on Sportsters). If only high beam or low beam is out, it's usually the bulb — H4 bulbs have two filaments."
+      },
+      {
+        "id": "solution_gauges",
+        "type": "solution",
+        "text": "Instrument cluster diagnosis",
+        "safety": "green",
+        "action": "Check instrument cluster wiring and connections",
+        "details": "If gauges are dead or intermittent: (1) Check the instrument fuse. (2) Inspect the wiring connector at the back of the speedometer/tachometer. (3) Clean the connector pins with electrical contact cleaner. (4) Check the speed sensor (on the transmission) if the speedometer doesn't work. (5) On newer EFI Sportsters, the instrument cluster is connected to the ECM — a fault code scan may reveal the issue. For intermittent problems, vibration-damaged solder joints inside the gauge cluster are common."
+      }
+    ]
+  }
+}

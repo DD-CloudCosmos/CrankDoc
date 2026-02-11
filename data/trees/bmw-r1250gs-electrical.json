@@ -1,0 +1,230 @@
+{
+  "motorcycle_make": "BMW",
+  "motorcycle_model": "R1250GS",
+  "title": "Electrical System / CAN Bus Issues",
+  "description": "Diagnose electrical and CAN bus communication problems on the R1250GS, including module faults, wiring issues, and accessory interference.",
+  "category": "electrical",
+  "difficulty": "advanced",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Multiple warning lights / fault messages on TFT", "next": "multiple_faults" },
+          { "text": "Single system not working (lights, heated grips, etc.)", "next": "single_system" },
+          { "text": "Intermittent electrical glitches (random resets, flickers)", "next": "intermittent_faults" },
+          { "text": "Battery keeps dying", "next": "battery_drain" },
+          { "text": "Accessories causing problems", "next": "accessory_issues" }
+        ]
+      },
+      {
+        "id": "multiple_faults",
+        "type": "check",
+        "text": "Check battery voltage — the most common cause of multiple CAN bus faults",
+        "safety": "yellow",
+        "warning": "Low voltage can cause the CAN bus modules to behave unpredictably. Do not attempt to clear fault codes until the battery is fully charged.",
+        "instructions": "The R1250GS CAN bus connects all electronic modules. Low battery voltage causes cascade failures — one module drops offline, and others report communication errors. (1) Measure battery voltage — must be 12.4V+ for reliable CAN bus operation. (2) If below 12.4V, charge fully before any further diagnosis. (3) Check for corroded battery terminals. (4) Check the main ground connection (battery negative to frame).",
+        "next": "multi_fault_result"
+      },
+      {
+        "id": "multi_fault_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.4V — charging it now", "next": "solution_charge_clear" },
+          { "text": "12.4V+ — battery is good", "next": "check_can_bus" }
+        ]
+      },
+      {
+        "id": "solution_charge_clear",
+        "type": "solution",
+        "text": "Charge battery and clear fault codes",
+        "safety": "green",
+        "action": "Fully charge the battery, then clear fault codes",
+        "details": "Low voltage is the #1 cause of multiple CAN bus faults on the R1250GS. (1) Charge the battery fully (12.6V+). (2) Turn the ignition on and let all modules initialize (30 seconds). (3) Start the engine and let it idle for 5 minutes. (4) Many faults will auto-clear once voltage is stable. (5) Use GS-911 to manually clear any persistent codes. (6) If the bike sat for more than 2 weeks, the CAN bus modules slowly drain the battery. Use a battery maintainer during storage. (7) If faults return with a charged battery, there is a real fault — proceed with CAN bus diagnosis."
+      },
+      {
+        "id": "check_can_bus",
+        "type": "check",
+        "text": "Scan all CAN bus modules for fault codes",
+        "safety": "green",
+        "instructions": "The R1250GS has multiple CAN bus modules: DME (engine), ABS, instrument cluster, body electronics, and more. (1) Connect a GS-911 diagnostic tool to the OBD port (under the seat, left side). (2) Scan ALL modules — not just the engine. (3) Note which modules have faults and what the specific codes are. (4) CAN bus communication errors between modules often point to a wiring or connector issue between those specific modules.",
+        "next": "can_scan_result"
+      },
+      {
+        "id": "can_scan_result",
+        "type": "question",
+        "text": "What type of fault codes were found?",
+        "safety": "green",
+        "options": [
+          { "text": "CAN bus communication errors between modules", "next": "solution_can_wiring" },
+          { "text": "Specific component faults (sensor, actuator)", "next": "solution_component_fault" },
+          { "text": "No codes found — faults cleared on their own", "next": "solution_intermittent_can" }
+        ]
+      },
+      {
+        "id": "solution_can_wiring",
+        "type": "solution",
+        "text": "CAN bus wiring / connector issue",
+        "safety": "yellow",
+        "warning": "CAN bus wiring is twisted-pair and has specific impedance. Improper repairs can cause further communication problems. Use proper CAN bus repair techniques.",
+        "action": "Inspect CAN bus wiring and connectors",
+        "details": "CAN bus communication errors indicate a wiring problem between modules. (1) Check all CAN bus connectors — they are multi-pin connectors, usually gray or black, located under the seat, under the tank, and behind the headlight. (2) Look for corrosion (green or white residue on pins). (3) Check for water intrusion — especially in the headlight area and under the seat. (4) Apply dielectric grease to connectors after cleaning. (5) Check the CAN bus backbone wiring for chafing — especially where it passes through the frame or near bolts. (6) The CAN bus terminates with resistors at each end — a missing termination causes communication errors. (7) BMW dealer diagnostic (ISTA) can perform CAN bus integrity tests."
+      },
+      {
+        "id": "solution_component_fault",
+        "type": "solution",
+        "text": "Specific component fault",
+        "safety": "green",
+        "action": "Replace or repair the faulted component",
+        "details": "If the fault codes point to a specific sensor, actuator, or module: (1) Verify the fault by checking the component's wiring and connector first — many faults are caused by connector corrosion, not component failure. (2) Test the component if possible (resistance check for sensors, function test for actuators). (3) Replace only if confirmed faulty. (4) After replacement, clear fault codes and test ride. (5) The R1250GS ECU may need to relearn or adapt after certain component replacements — a GS-911 can facilitate this. (6) Always use BMW OEM or OEM-equivalent parts for CAN bus components — generic parts may not communicate properly."
+      },
+      {
+        "id": "solution_intermittent_can",
+        "type": "solution",
+        "text": "Intermittent CAN bus faults",
+        "safety": "green",
+        "action": "Monitor and document intermittent faults",
+        "details": "Faults that appear and self-clear may be: (1) Voltage-related — the charging system may have a momentary dropout. Test charging voltage under load. (2) Connector getting hot and expanding — thermal expansion can open a marginal connection. (3) Vibration-sensitive connection — try wiggling connector bundles while the ignition is on (but engine off) and watching for faults on the TFT. (4) Software bug — check if a BMW software update is available for your model year. (5) Document the conditions when faults occur (temperature, speed, load) — this helps with diagnosis."
+      },
+      {
+        "id": "single_system",
+        "type": "question",
+        "text": "Which system is not working?",
+        "safety": "green",
+        "options": [
+          { "text": "Heated grips or seat", "next": "solution_heated_accessories" },
+          { "text": "Lights (headlight, tail light, signals)", "next": "solution_lighting" },
+          { "text": "TFT display issues", "next": "solution_tft" },
+          { "text": "Horn or other individual component", "next": "solution_single_component" }
+        ]
+      },
+      {
+        "id": "solution_heated_accessories",
+        "type": "solution",
+        "text": "Heated grips/seat not working",
+        "safety": "green",
+        "action": "Diagnose heated grip/seat system",
+        "details": "The R1250GS heated grips and seat (if equipped) are CAN bus controlled: (1) Check the fuse — heated accessories have a dedicated fuse in the fuse box. (2) Check the heated grip/seat connector under the tank or at the handlebars. (3) The system requires the engine to be running and sufficient charging system output — it may not work on battery alone. (4) Use the TFT menu to verify the heated grips are enabled and set to a heating level. (5) Scan for fault codes — the body electronics module controls heated accessories. (6) On aftermarket heated grips: verify they're wired to a switched 12V source with appropriate fusing."
+      },
+      {
+        "id": "solution_lighting",
+        "type": "solution",
+        "text": "Lighting system diagnosis",
+        "safety": "green",
+        "action": "Diagnose the lighting fault",
+        "details": "The R1250GS uses LED lighting on most models, controlled via the CAN bus: (1) Check the specific fuse for the affected light circuit. (2) LED headlights: these are modular units — if one element fails, the entire module may need replacement. Check the connector first. (3) Turn signals: check connectors and bulbs (some models use bulbs, others LEDs). (4) Tail/brake light: check the connector at the rear light assembly. (5) If running lights work but brake light doesn't, the brake light switch may be faulty. (6) The R1250GS adaptive headlight (if equipped) has a separate module — scan for faults. (7) Aftermarket LED conversion issues: the CAN bus may detect the lower current draw and report a bulb-out fault."
+      },
+      {
+        "id": "solution_tft",
+        "type": "solution",
+        "text": "TFT display issues",
+        "safety": "green",
+        "action": "Troubleshoot the TFT display",
+        "details": "The R1250GS TFT display is the central information hub: (1) Screen blank: check battery voltage first — the TFT requires stable power. (2) Screen glitches/artifacts: may be a loose connector behind the display. Check the multi-pin connector at the back of the TFT housing. (3) TFT buttons not responding: the left handlebar switch cluster communicates via CAN bus — check the connector at the switch housing. (4) TFT not showing correct data: sensor faults will cause incorrect readings — scan for fault codes. (5) Screen damaged: the TFT is a replaceable module but requires dealer coding. (6) After a battery disconnect, the TFT may need time to re-sync all systems."
+      },
+      {
+        "id": "solution_single_component",
+        "type": "solution",
+        "text": "Single component not working",
+        "safety": "green",
+        "action": "Diagnose the specific non-working component",
+        "details": "For any single component not working on the R1250GS: (1) Check the fuse — the fuse box is under the seat. The fuse diagram is on the fuse box cover. (2) Check the component's connector for corrosion or looseness. (3) Test for power at the connector (12V with ignition on). (4) Test the component directly if possible. (5) Scan for fault codes — the CAN bus may have disabled the component due to a detected fault. (6) Check if there's a relevant recall or service bulletin. (7) The R1250GS CAN bus can disable individual components as a fault response — fixing the underlying fault will restore function."
+      },
+      {
+        "id": "intermittent_faults",
+        "type": "check",
+        "text": "Document the intermittent behavior",
+        "safety": "green",
+        "instructions": "Intermittent electrical issues on the R1250GS are often CAN bus related. Before diagnosis: (1) Note exactly what happens (what resets, what flickers, what error messages appear). (2) Note the conditions: temperature (cold start vs. hot?), speed, vibration (rough road?), weather (rain?). (3) Does it happen when accessories are in use? (4) Check all visible wiring for chafing — especially under the seat, behind the headlight, and along the frame. (5) Flex wiring harness bundles gently while watching the TFT for errors — this can reveal an intermittent break.",
+        "next": "intermittent_result"
+      },
+      {
+        "id": "intermittent_result",
+        "type": "question",
+        "text": "Did you identify a pattern or find any wiring issues?",
+        "safety": "green",
+        "options": [
+          { "text": "Found chafed or damaged wire", "next": "solution_wire_repair" },
+          { "text": "Happens in rain or wet conditions", "next": "solution_water_intrusion" },
+          { "text": "Happens with specific accessory in use", "next": "accessory_issues" },
+          { "text": "No pattern found", "next": "solution_dealer_diag" }
+        ]
+      },
+      {
+        "id": "solution_wire_repair",
+        "type": "solution",
+        "text": "Repair damaged wiring",
+        "safety": "yellow",
+        "warning": "CAN bus wires (twisted pair) require proper repair technique. Use solder and heat-shrink — do not use crimp connectors on CAN bus wiring.",
+        "action": "Repair the chafed or damaged wire",
+        "details": "For CAN bus wiring: (1) Identify the damaged wire(s). (2) Solder the repair — use rosin-core solder. (3) Apply heat-shrink tubing to insulate. (4) Add split loom or additional protection where the chafing occurred. (5) Route the wire away from the chafe point. For non-CAN bus wiring (power, ground): (1) Solder and heat-shrink is best. (2) Marine-grade crimp connectors are acceptable for power wires. (3) Re-route and protect with split loom."
+      },
+      {
+        "id": "solution_water_intrusion",
+        "type": "solution",
+        "text": "Water intrusion causing electrical faults",
+        "safety": "green",
+        "action": "Seal and protect connectors from water",
+        "details": "The R1250GS is an adventure bike, but water can still affect electrical connectors: (1) Check under the seat — this area collects water during rain and washing. Dry thoroughly. (2) Check the headlight area — the connector block behind the headlight is vulnerable to water spray. (3) Apply dielectric grease to all suspect connectors — this prevents corrosion and water intrusion. (4) Check connector seals — replace any missing or damaged rubber seals on multi-pin connectors. (5) After power washing: avoid direct spray at connector areas. Let the bike dry completely before riding. (6) Consider conformal coating for exposed circuit boards in aftermarket accessories."
+      },
+      {
+        "id": "solution_dealer_diag",
+        "type": "solution",
+        "text": "Professional CAN bus diagnosis needed",
+        "safety": "green",
+        "action": "Have the CAN bus professionally diagnosed",
+        "details": "Intermittent electrical faults without an obvious pattern require professional tools: (1) BMW ISTA software can perform comprehensive CAN bus communication tests that GS-911 cannot. (2) A dealer can monitor live CAN bus traffic to identify intermittent dropouts. (3) BMW may have a relevant service bulletin or known issue for your model year. (4) Some intermittent faults are caused by ECU software bugs — a dealer can check for and apply software updates. (5) In rare cases, the CAN bus gateway module itself may be failing."
+      },
+      {
+        "id": "battery_drain",
+        "type": "check",
+        "text": "Test for parasitic battery drain",
+        "safety": "yellow",
+        "warning": "The R1250GS CAN bus modules take up to 16 minutes to fully go to sleep after the ignition is turned off. Wait at least 20 minutes before testing parasitic drain.",
+        "instructions": "The R1250GS has a higher baseline parasitic drain than simpler motorcycles due to its CAN bus modules. (1) Fully charge the battery. (2) Turn everything off. (3) Wait 20 minutes for modules to sleep. (4) Disconnect the negative cable. (5) Set multimeter to DC milliamps. (6) Connect between the cable and terminal. (7) Normal drain for the R1250GS: 20-40mA. Over 50mA indicates a module not sleeping or an accessory drawing power.",
+        "next": "drain_result"
+      },
+      {
+        "id": "drain_result",
+        "type": "question",
+        "text": "What is the parasitic drain reading after 20 minutes?",
+        "safety": "green",
+        "options": [
+          { "text": "Under 50mA — normal for the GS", "next": "solution_battery_age" },
+          { "text": "Over 50mA — excessive drain", "next": "solution_find_drain" }
+        ]
+      },
+      {
+        "id": "solution_battery_age",
+        "type": "solution",
+        "text": "Battery may be failing due to age",
+        "safety": "green",
+        "action": "Load test or replace the battery",
+        "details": "If parasitic drain is normal but the battery keeps dying: (1) The battery may be too old (typical life: 3-4 years on the GS due to CAN bus drain). (2) Have the battery load tested. (3) The R1250GS uses a YTZ14S AGM battery. (4) If the bike sits for more than 5-7 days between rides, use a battery maintainer. (5) Check the charging system — the alternator should produce 13.5-14.5V at 2000 RPM. (6) Consider a lithium battery for lighter weight and better charge retention during storage (Antigravity, Shorai) — but ensure compatibility with the GS charging system."
+      },
+      {
+        "id": "solution_find_drain",
+        "type": "solution",
+        "text": "Locate the parasitic drain source",
+        "safety": "yellow",
+        "warning": "Do not start the engine with the multimeter in the current measurement position.",
+        "action": "Identify the circuit causing excessive drain",
+        "details": "With the multimeter showing excessive drain: (1) Pull fuses one at a time from the fuse box while watching the meter. (2) When the drain drops significantly, you've identified the circuit. (3) Common R1250GS drain sources: aftermarket accessories (GPS, phone chargers, alarm systems), aftermarket lighting, a CAN bus module not sleeping (rare — usually caused by a wiring fault keeping the module awake), or the navigation cradle connector. (4) If an aftermarket accessory is the cause, it should be on a switched circuit that turns off with the ignition. (5) Verify any aftermarket wiring is done properly — unswitched connections to the battery are common culprits."
+      },
+      {
+        "id": "accessory_issues",
+        "type": "solution",
+        "text": "Aftermarket accessory electrical problems",
+        "safety": "yellow",
+        "warning": "Improperly installed accessories can interfere with the CAN bus and cause widespread electrical faults. Never tap into CAN bus wires for accessory power.",
+        "action": "Diagnose accessory-related electrical issues",
+        "details": "Aftermarket accessories can cause CAN bus interference on the R1250GS: (1) NEVER tap into CAN bus wires (twisted pair, usually orange/green or similar) for accessory power — this corrupts CAN bus signals. (2) Use BMW's accessory power socket or the dedicated accessory wiring harness. (3) High-draw accessories (heated gear, additional lights) should be wired through a relay, powered from the battery with an ignition-switched trigger. (4) Disconnect all aftermarket accessories one at a time to identify the culprit. (5) Common issues: GPS units introducing electrical noise, cheap USB chargers causing CAN bus interference, aftermarket LED lights without proper load resistors. (6) Use a BMW-compatible accessory wiring kit (Nippy Normans, Touratech, or BMW OEM) for proper installation."
+      }
+    ]
+  }
+}

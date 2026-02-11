@@ -1,0 +1,173 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "title": "Charging System Failure",
+  "description": "Diagnose charging system problems on the Sportster 1200 including battery not charging, stator failure, and voltage regulator issues.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What symptom is indicating a charging system problem?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery dies after riding", "next": "check_charging_output" },
+          { "text": "Battery light or check engine light on", "next": "check_charging_output" },
+          { "text": "Lights dimming while riding", "next": "check_charging_output" },
+          { "text": "Battery boiling or overcharging smell", "next": "check_overcharge" }
+        ]
+      },
+      {
+        "id": "check_charging_output",
+        "type": "check",
+        "text": "Test the charging system voltage output",
+        "safety": "yellow",
+        "warning": "Keep hands, hair, and loose clothing away from the drive belt while the engine is running. Do not disconnect the battery while the engine is running — this can damage the voltage regulator.",
+        "instructions": "With the engine OFF, measure battery voltage (should be 12.6V+). Start the engine and let it warm up for 2 minutes. At 2000 RPM, measure voltage at the battery terminals. Normal charging range: 13.5V-14.5V. Below 13V: not charging. Above 15V: overcharging. Also check voltage at idle — it may be slightly lower but should still be above 13V.",
+        "next": "charging_output_result"
+      },
+      {
+        "id": "charging_output_result",
+        "type": "question",
+        "text": "What voltage do you read at 2000 RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "13.5V - 14.5V (normal range)", "next": "check_parasitic_drain" },
+          { "text": "Below 13V (not charging)", "next": "test_stator" },
+          { "text": "Above 15V (overcharging)", "next": "check_overcharge" }
+        ]
+      },
+      {
+        "id": "check_parasitic_drain",
+        "type": "check",
+        "text": "Test for parasitic battery drain",
+        "safety": "yellow",
+        "warning": "Disconnect the negative battery cable before testing. The multimeter must be set to milliamps (mA) for this test.",
+        "instructions": "If charging output is normal but the battery still dies: (1) Fully charge the battery. (2) Turn everything off (key off, kill switch off). (3) Disconnect the negative battery cable. (4) Set multimeter to DC milliamps (mA). (5) Connect the meter between the negative cable and the negative terminal. (6) Wait 2 minutes for modules to go to sleep. (7) Normal drain: under 30mA. Over 30mA indicates a parasitic draw.",
+        "next": "parasitic_result"
+      },
+      {
+        "id": "parasitic_result",
+        "type": "question",
+        "text": "What is the parasitic draw reading?",
+        "safety": "green",
+        "options": [
+          { "text": "Under 30mA — normal", "next": "solution_battery_bad" },
+          { "text": "Over 30mA — excessive draw", "next": "solution_find_drain" }
+        ]
+      },
+      {
+        "id": "solution_battery_bad",
+        "type": "solution",
+        "text": "Battery itself is failing",
+        "safety": "green",
+        "action": "Load test or replace the battery",
+        "details": "The charging system and parasitic draw are normal, so the battery itself is failing. Batteries typically last 3-5 years on a Sportster. (1) Have the battery load tested at an auto parts store — they'll test it for free. (2) If it fails the load test, replace it. (3) The Sportster 1200 uses a YTX20L-BS or equivalent AGM battery. (4) After installing a new battery, ride for 30 minutes to fully charge it. (5) Consider a Battery Tender for long storage periods."
+      },
+      {
+        "id": "solution_find_drain",
+        "type": "solution",
+        "text": "Locate the parasitic drain source",
+        "safety": "yellow",
+        "warning": "Do not start the engine with the multimeter connected in the milliamp position — it will blow the meter fuse.",
+        "action": "Find and eliminate the parasitic electrical drain",
+        "details": "With the multimeter showing the parasitic draw: (1) Pull fuses one at a time from the fuse block. (2) When the draw drops significantly, you've found the circuit. (3) Investigate that circuit for: a failing component (relay stuck on, module not sleeping), aftermarket accessory (alarm, GPS tracker, LED lights), corroded wiring causing a partial short. Common Sportster culprits: aftermarket security systems, accessory power outlets left connected, failing turn signal relay, or aftermarket audio system."
+      },
+      {
+        "id": "test_stator",
+        "type": "check",
+        "text": "Test the stator AC output",
+        "safety": "yellow",
+        "warning": "The stator produces AC voltage while the engine is running. Do not touch the bare wire connections while the engine is running.",
+        "instructions": "Locate the stator connector — three yellow wires coming from behind the primary cover, connecting to the voltage regulator/rectifier. (1) Disconnect the stator connector (3-pin). (2) Set multimeter to AC volts. (3) Start the engine. (4) At 2000 RPM, measure between each pair of stator wires: Pin 1-2, Pin 1-3, Pin 2-3. (5) Each should read 19-26 VAC. (6) Also test stator resistance with engine OFF: each pair should read 0.1-1.0 ohms. (7) Test each wire to ground — should read infinite/OL (open). A reading to ground means the stator is shorted.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What are the stator test results?",
+        "safety": "green",
+        "options": [
+          { "text": "All AC readings 19-26V and resistances match", "next": "solution_replace_regulator" },
+          { "text": "One or more AC readings are low or zero", "next": "check_stator_resistance" },
+          { "text": "Stator wire shows continuity to ground (shorted)", "next": "solution_replace_stator" }
+        ]
+      },
+      {
+        "id": "check_stator_resistance",
+        "type": "check",
+        "text": "Confirm stator failure with resistance test",
+        "safety": "green",
+        "instructions": "With the engine OFF and stator disconnected, measure resistance between each pair of stator wires. All three combinations should read the same value (typically 0.1-1.0 ohms). A significantly different reading confirms a failed winding. Also measure from each stator wire to a good engine ground — should read infinite (OL). If any wire shows continuity to ground, the stator insulation has failed.",
+        "next": "stator_confirm"
+      },
+      {
+        "id": "stator_confirm",
+        "type": "question",
+        "text": "Do the resistance readings confirm a stator problem?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — uneven readings or short to ground", "next": "solution_replace_stator" },
+          { "text": "Readings are even and no short to ground", "next": "solution_replace_regulator" }
+        ]
+      },
+      {
+        "id": "solution_replace_stator",
+        "type": "solution",
+        "text": "Replace the stator",
+        "safety": "yellow",
+        "warning": "Stator replacement requires draining the oil (common sump) and removing the primary cover. Work on a cold engine.",
+        "action": "Replace the failed stator",
+        "details": "The stator is inside the primary cover/chain case. (1) Drain the engine/primary oil (common sump). (2) Remove the outer primary cover. (3) Disconnect the stator wires from the regulator. (4) Remove the 3 stator mounting screws. (5) Remove the old stator from the stator housing. (6) Install the new stator — route wires carefully to avoid pinching. (7) Reassemble the primary cover with new gasket. (8) Refill oil. (9) Test charging output. Quality options: Cycle Electric, Rick's Motorsport Electrics, or OEM. Common failure cause: heat from running low on oil."
+      },
+      {
+        "id": "solution_replace_regulator",
+        "type": "solution",
+        "text": "Replace the voltage regulator/rectifier",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the regulator. Incorrect wiring can destroy the new regulator instantly.",
+        "action": "Replace the voltage regulator/rectifier",
+        "details": "The stator is producing proper AC output, but the regulator is not converting and regulating it properly. (1) Disconnect the battery. (2) Locate the regulator (usually under the seat or on the frame rail). (3) Disconnect the stator connector and battery leads. (4) Remove the mounting bolts. (5) Install the new regulator — ensure good metal-to-metal ground contact with the frame (the regulator uses the frame as a heat sink). (6) Reconnect all wiring. (7) Reconnect battery and test at 2000 RPM — should read 13.5-14.5V. Use Cycle Electric, Rick's, or OEM regulator."
+      },
+      {
+        "id": "check_overcharge",
+        "type": "check",
+        "text": "Verify overcharging condition",
+        "safety": "yellow",
+        "warning": "An overcharging system can cause the battery to boil, release hydrogen gas, and potentially explode. If the battery is swollen or smells of rotten eggs, stop riding immediately.",
+        "instructions": "Measure voltage at the battery with the engine running at 2000 RPM. If consistently above 15V, the regulator has failed in a way that allows uncontrolled voltage through. Check: (1) Battery condition — is it swollen, hot, or leaking? (2) Smell — rotten egg smell (hydrogen sulfide) means the electrolyte is boiling. (3) Headlight — is it unusually bright? Bulbs may burn out quickly from overvoltage.",
+        "next": "overcharge_result"
+      },
+      {
+        "id": "overcharge_result",
+        "type": "question",
+        "text": "Is the voltage consistently above 15V?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — over 15V confirmed", "next": "solution_overcharge_regulator" },
+          { "text": "No — voltage is intermittently high", "next": "solution_check_ground" }
+        ]
+      },
+      {
+        "id": "solution_overcharge_regulator",
+        "type": "solution",
+        "text": "Replace the failed voltage regulator (overcharging)",
+        "safety": "yellow",
+        "warning": "Stop riding immediately with an overcharging system. It will destroy the battery and can damage all electrical components.",
+        "action": "Replace the voltage regulator immediately",
+        "details": "The voltage regulator has failed and is allowing uncontrolled voltage to the battery. (1) Stop riding immediately. (2) Disconnect the battery. (3) Replace the regulator (same procedure as the undercharging replacement). (4) Inspect the battery — if it's swollen, leaking, or damaged, replace it too. (5) Check all light bulbs — overvoltage may have burned some out. (6) After replacement, verify output is 13.5-14.5V at 2000 RPM."
+      },
+      {
+        "id": "solution_check_ground",
+        "type": "solution",
+        "text": "Check regulator ground connection",
+        "safety": "yellow",
+        "warning": "A poor regulator ground can cause intermittent overcharging and is dangerous.",
+        "action": "Clean and secure the regulator ground",
+        "details": "Intermittent high voltage often indicates a poor ground connection on the voltage regulator. The regulator mounts to the frame and uses the frame as its ground path. (1) Remove the regulator. (2) Clean the mounting surface on the frame to bare metal (sandpaper or wire brush). (3) Clean the regulator mounting surface. (4) Apply a thin coat of dielectric grease around (not under) the mounting surface. (5) Reinstall with star washers for better ground contact. (6) Also check the battery negative to frame ground connection. Test voltage at various RPMs after repair."
+      }
+    ]
+  }
+}

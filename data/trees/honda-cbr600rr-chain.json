@@ -1,0 +1,185 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Chain Noise / Adjustment",
+  "description": "Diagnose and resolve chain noise, tight spots, and adjustment issues on the Honda CBR600RR.",
+  "category": "drivetrain",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What chain issue are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is making noise (clicking, grinding, rattling)", "next": "check_chain_slack" },
+          { "text": "Chain feels too tight or too loose", "next": "check_chain_slack" },
+          { "text": "Chain has a tight spot (tension varies as wheel rotates)", "next": "check_tight_spot" },
+          { "text": "Chain or sprockets look worn", "next": "inspect_sprockets" }
+        ]
+      },
+      {
+        "id": "check_chain_slack",
+        "type": "check",
+        "text": "Measure chain slack",
+        "safety": "green",
+        "instructions": "Place the bike on a rear stand or center stand so the rear wheel is off the ground. Find the midpoint of the lower chain run (between the front and rear sprockets). Push the chain up and down and measure the total vertical movement. The CBR600RR chain slack specification is 25-35mm (1.0-1.4 inches). Measure at the tightest point by slowly rotating the rear wheel and checking slack at several positions.",
+        "next": "chain_slack_result"
+      },
+      {
+        "id": "chain_slack_result",
+        "type": "question",
+        "text": "What is the chain slack measurement?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is too loose (more than 35mm slack)", "next": "adjust_chain" },
+          { "text": "Chain is too tight (less than 25mm slack)", "next": "adjust_chain" },
+          { "text": "Chain slack is within spec but still noisy", "next": "check_chain_lube" },
+          { "text": "Chain slack varies a lot as the wheel rotates (tight spot)", "next": "check_tight_spot" }
+        ]
+      },
+      {
+        "id": "check_chain_lube",
+        "type": "check",
+        "text": "Check chain lubrication",
+        "safety": "green",
+        "instructions": "Inspect the chain for lubrication. A properly lubed chain should have a slight film of lubricant on the rollers and side plates. If the chain is dry, rusty, or has visible corrosion on the rollers, it needs lubrication. Check if the O-rings (or X-rings) between the side plates are intact — damaged seals mean the chain needs replacement.",
+        "next": "chain_lube_result"
+      },
+      {
+        "id": "chain_lube_result",
+        "type": "question",
+        "text": "What is the chain lubrication condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is dry or rusty", "next": "solution_lube_chain" },
+          { "text": "O-rings are damaged or missing", "next": "inspect_sprockets" },
+          { "text": "Chain is well-lubed but still noisy", "next": "inspect_sprockets" }
+        ]
+      },
+      {
+        "id": "check_tight_spot",
+        "type": "check",
+        "text": "Check for tight spots and chain wear",
+        "safety": "green",
+        "instructions": "Slowly rotate the rear wheel and feel the chain tension at several points. A significant tight spot (tension varies more than 10mm) indicates the chain is worn unevenly and needs replacement. Also try to pull the chain away from the rear sprocket at the 3 o'clock position — if you can see more than half a tooth of daylight between the chain and sprocket, the chain is stretched and worn.",
+        "next": "tight_spot_result"
+      },
+      {
+        "id": "tight_spot_result",
+        "type": "question",
+        "text": "Does the chain have a significant tight spot or excessive wear?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — chain has a bad tight spot or pulls far from sprocket", "next": "inspect_sprockets" },
+          { "text": "Minor variation — chain seems OK overall", "next": "adjust_chain" }
+        ]
+      },
+      {
+        "id": "inspect_sprockets",
+        "type": "check",
+        "text": "Inspect front and rear sprockets",
+        "safety": "green",
+        "instructions": "Inspect both sprockets for wear. Signs of worn sprockets: (1) Teeth are hooked or shark-fin shaped (leaning in the direction of rotation), (2) Teeth are pointed or thin at the tips, (3) Visible grooves worn into the sprocket between teeth. The front sprocket wears faster than the rear due to its smaller size. On the CBR600RR, you may need to remove the front sprocket cover (left side of engine, near the shift lever) to inspect it.",
+        "next": "sprocket_result"
+      },
+      {
+        "id": "sprocket_result",
+        "type": "question",
+        "text": "What is the condition of the sprockets?",
+        "safety": "green",
+        "options": [
+          { "text": "Sprockets are worn (hooked, pointed, or grooved teeth)", "next": "solution_replace_chain_set" },
+          { "text": "Sprockets look good but chain is worn", "next": "solution_replace_chain" },
+          { "text": "Both chain and sprockets look fine", "next": "check_chain_alignment" }
+        ]
+      },
+      {
+        "id": "check_chain_alignment",
+        "type": "check",
+        "text": "Check chain alignment",
+        "safety": "green",
+        "instructions": "Check that the rear axle alignment marks on both sides of the swingarm match. Misaligned chain causes noise, uneven wear, and can be dangerous. Use the alignment marks on the swingarm adjusters — both sides should be on the same mark. For more precision, use a laser alignment tool or a straight-edge along the chain.",
+        "next": "alignment_result"
+      },
+      {
+        "id": "alignment_result",
+        "type": "question",
+        "text": "Is the chain alignment correct?",
+        "safety": "green",
+        "options": [
+          { "text": "Alignment marks do not match — chain is misaligned", "next": "solution_align_chain" },
+          { "text": "Alignment looks correct", "next": "solution_chain_guide" }
+        ]
+      },
+      {
+        "id": "adjust_chain",
+        "type": "check",
+        "text": "Adjust chain tension",
+        "safety": "green",
+        "instructions": "To adjust the CBR600RR chain: (1) Loosen the rear axle nut (27mm) — do not remove it, just loosen enough to allow the wheel to slide. (2) Turn the adjuster bolts on both sides of the swingarm equally. Tighten (clockwise) to tighten the chain, loosen (counterclockwise) to loosen it. (3) Keep both sides even by matching the alignment marks. (4) Target 25-35mm of slack at the chain's tightest point. (5) Re-torque the axle nut to 113 Nm (83 ft-lb).",
+        "next": "adjust_chain_result"
+      },
+      {
+        "id": "adjust_chain_result",
+        "type": "question",
+        "text": "Were you able to adjust the chain to the correct slack?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — chain is now at 25-35mm slack", "next": "solution_adjustment_done" },
+          { "text": "No — adjusters are at maximum and chain is still loose", "next": "solution_replace_chain_set" }
+        ]
+      },
+      {
+        "id": "solution_lube_chain",
+        "type": "solution",
+        "text": "Clean and Lubricate Chain",
+        "safety": "green",
+        "action": "Clean the chain with chain cleaner and apply chain lubricant.",
+        "details": "Use a motorcycle-specific chain cleaner (not WD-40 or brake cleaner, which damage O-rings). Spray the cleaner on the chain, scrub with a chain brush, and wipe clean with a rag. Let it dry, then apply chain lubricant to the inside of the lower chain run while slowly rotating the rear wheel. Lubricate the chain every 500-1000 km or after riding in rain. The CBR600RR uses a 525 O-ring or X-ring chain."
+      },
+      {
+        "id": "solution_replace_chain_set",
+        "type": "solution",
+        "text": "Replace Chain and Sprocket Set",
+        "safety": "yellow",
+        "warning": "Always replace the chain and both sprockets as a set. A new chain on worn sprockets will wear rapidly.",
+        "action": "Replace the chain, front sprocket, and rear sprocket as a complete set.",
+        "details": "The CBR600RR uses a 525-pitch chain. OEM size: 16T front, 41T rear, 112 links (verify for your model year). Quality brands: DID, RK, EK for chains; Sunstar, JT for sprockets. You will need a chain breaker/riveting tool to install a new chain with a rivet-type master link (clip-type master links are not recommended for sport bikes). Lubricate the new chain before riding and check slack after 200 km as new chains stretch slightly during break-in."
+      },
+      {
+        "id": "solution_replace_chain",
+        "type": "solution",
+        "text": "Replace Chain Only",
+        "safety": "green",
+        "action": "Replace the worn chain.",
+        "details": "If the sprockets are in good condition (no hooked or pointed teeth), you can replace just the chain. Use a 525-pitch O-ring or X-ring chain with a rivet-type master link. After installation, adjust the slack to 25-35mm and lubricate the new chain. Check slack again after the first 200 km."
+      },
+      {
+        "id": "solution_align_chain",
+        "type": "solution",
+        "text": "Realign Rear Wheel",
+        "safety": "green",
+        "action": "Adjust the rear axle to align the chain properly.",
+        "details": "Loosen the rear axle nut. Adjust the chain adjusters on each side of the swingarm until the alignment marks match on both sides. Ensure the chain slack is still within spec (25-35mm) after alignment. Re-torque the axle nut to 113 Nm (83 ft-lb). Double-check alignment by spinning the rear wheel — the chain should run smoothly without pulling to one side."
+      },
+      {
+        "id": "solution_chain_guide",
+        "type": "solution",
+        "text": "Inspect Chain Guide and Slider",
+        "safety": "green",
+        "action": "Check and replace the chain guide/slider if worn.",
+        "details": "The CBR600RR has a chain slider on the swingarm and a chain guide near the front sprocket. If these rubber/plastic pieces are worn through, the chain can contact the swingarm directly, causing noise and damage. Replace any worn guides or sliders. Also check the front sprocket cover is secure — a loose cover can contact the chain and cause rattling noise."
+      },
+      {
+        "id": "solution_adjustment_done",
+        "type": "solution",
+        "text": "Chain Adjustment Complete",
+        "safety": "green",
+        "action": "Chain tension is now correct. Lubricate and ride.",
+        "details": "The chain is now adjusted to the correct 25-35mm slack. Apply chain lubricant and take a short test ride to verify the noise is resolved. Remember to check chain slack regularly — every 500-1000 km or before long rides. A properly maintained chain lasts 20,000-30,000 km."
+      }
+    ]
+  }
+}

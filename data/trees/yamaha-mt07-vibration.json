@@ -1,0 +1,273 @@
+{
+  "motorcycle_make": "Yamaha",
+  "motorcycle_model": "MT-07",
+  "title": "Excessive Vibration",
+  "description": "Diagnose excessive vibration issues on the Yamaha MT-07 parallel-twin.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "When do you notice the excessive vibration?",
+        "safety": "green",
+        "options": [
+          { "text": "Vibration at specific RPM range (usually 4,000-6,000)", "next": "check_rpm_range" },
+          { "text": "Vibration through the handlebars at all speeds", "next": "check_bar_end_weights" },
+          { "text": "Vibration through the foot pegs", "next": "check_engine_mounts" },
+          { "text": "New vibration that was not there before", "next": "check_recent_changes" }
+        ]
+      },
+      {
+        "id": "check_rpm_range",
+        "type": "check",
+        "text": "Identify the vibration RPM range",
+        "safety": "green",
+        "instructions": "The MT-07 CP2 270-degree crank twin has inherent vibration characteristics. Some vibration at certain RPM ranges is normal for a parallel twin. However, if vibration has increased noticeably, there may be an issue. Note the exact RPM where vibration is worst. Also check if the vibration is present in all gears at the same RPM or only at certain road speeds (which would suggest a wheel/tire issue rather than engine vibration).",
+        "next": "rpm_vibration_result"
+      },
+      {
+        "id": "rpm_vibration_result",
+        "type": "question",
+        "text": "Is the vibration RPM-dependent or speed-dependent?",
+        "safety": "green",
+        "options": [
+          { "text": "Vibration follows RPM regardless of gear — engine vibration", "next": "check_engine_mounts" },
+          { "text": "Vibration follows road speed regardless of gear — wheel/tire issue", "next": "check_wheel_balance" },
+          { "text": "Vibration is the same as always — just normal MT-07 buzz", "next": "solution_normal_vibration" }
+        ]
+      },
+      {
+        "id": "check_bar_end_weights",
+        "type": "check",
+        "text": "Check bar-end weights and handlebar components",
+        "safety": "green",
+        "instructions": "The MT-07 has bar-end weights that dampen handlebar vibration. Check: (1) Are the bar-end weights still installed? Removing them dramatically increases handlebar vibration. (2) Are the bar-end weight bolts tight? Loose weights buzz and do not dampen effectively. (3) If aftermarket grips, levers, or mirrors were installed, did they change the handlebar balance? Also check that the handlebar clamp bolts are tight (22 Nm).",
+        "next": "bar_end_result"
+      },
+      {
+        "id": "bar_end_result",
+        "type": "question",
+        "text": "What did you find with the bar-end weights?",
+        "safety": "green",
+        "options": [
+          { "text": "Bar-end weights are missing or loose", "next": "solution_bar_end_weights" },
+          { "text": "Aftermarket parts changed the handlebar balance", "next": "solution_aftermarket_bars" },
+          { "text": "Bar-end weights are installed and tight", "next": "check_steering_bearings" }
+        ]
+      },
+      {
+        "id": "check_steering_bearings",
+        "type": "check",
+        "text": "Check steering head bearings",
+        "safety": "green",
+        "instructions": "Worn steering head bearings can transmit engine vibration more noticeably and also cause a vibration or wobble at certain speeds. Put the bike on a front stand (or lift the front wheel). Turn the handlebars lock to lock — they should move smoothly without notches, clicks, or tight spots. Also try pushing and pulling the forks forward and back — any clunking indicates worn bearings.",
+        "next": "steering_bearing_result"
+      },
+      {
+        "id": "steering_bearing_result",
+        "type": "question",
+        "text": "How do the steering head bearings feel?",
+        "safety": "green",
+        "options": [
+          { "text": "Notchy, rough, or clicking when turning", "next": "solution_steering_bearings" },
+          { "text": "Play/clunking when rocking forks", "next": "solution_steering_bearings" },
+          { "text": "Smooth and tight — bearings feel fine", "next": "check_engine_mounts" }
+        ]
+      },
+      {
+        "id": "check_engine_mounts",
+        "type": "check",
+        "text": "Inspect engine mounting bolts",
+        "safety": "yellow",
+        "warning": "Do not remove engine mounting bolts unless you have proper support for the engine.",
+        "instructions": "The engine is a stressed member in the MT-07 frame — it bolts directly to the frame and is part of the structural integrity. Check that all engine mounting bolts are present and torqued correctly. A loose engine mount bolt will dramatically increase vibration. Visually inspect each bolt and check for tightness with a torque wrench if possible. Also check the rubber vibration dampers in the mounts — cracked or deteriorated rubber allows more vibration to transfer to the frame.",
+        "next": "engine_mount_result"
+      },
+      {
+        "id": "engine_mount_result",
+        "type": "question",
+        "text": "What did you find with the engine mounts?",
+        "safety": "green",
+        "options": [
+          { "text": "A mount bolt is loose or missing", "next": "solution_engine_mount_bolt" },
+          { "text": "Rubber dampers are cracked or deteriorated", "next": "solution_engine_mount_rubbers" },
+          { "text": "All engine mounts look secure", "next": "check_exhaust_mounts" }
+        ]
+      },
+      {
+        "id": "check_exhaust_mounts",
+        "type": "check",
+        "text": "Check exhaust system mounting",
+        "safety": "yellow",
+        "warning": "The exhaust gets very hot. Only inspect when the engine is cold.",
+        "instructions": "A loose or broken exhaust mount can cause vibration and buzzing at certain RPMs. Check: (1) Exhaust header bolts at the cylinder head — should be tight, (2) Muffler mounting brackets and bolts, (3) Exhaust springs (if aftermarket exhaust) for breakage, (4) If aftermarket exhaust is installed, check that it is the correct weight and properly supported — a heavier aftermarket exhaust without proper mounting will vibrate.",
+        "next": "exhaust_mount_result"
+      },
+      {
+        "id": "exhaust_mount_result",
+        "type": "question",
+        "text": "Is the exhaust system properly mounted?",
+        "safety": "green",
+        "options": [
+          { "text": "Exhaust mount bolt is loose or broken", "next": "solution_exhaust_mount" },
+          { "text": "Header bolts are loose at the cylinder head", "next": "solution_header_bolts" },
+          { "text": "Exhaust mounting is all tight", "next": "check_wheel_balance" }
+        ]
+      },
+      {
+        "id": "check_wheel_balance",
+        "type": "check",
+        "text": "Check wheel balance and tire condition",
+        "safety": "green",
+        "instructions": "An unbalanced wheel causes speed-dependent vibration that increases with speed. Check: (1) Are all wheel balance weights still attached? (they can fall off), (2) Is the tire worn unevenly (cupping, flat spots)? (3) Has the tire been recently replaced or patched? Spin each wheel (off the ground) and see if it stops at the same position repeatedly — this indicates an imbalance. Also check tire pressure — the MT-07 spec is 250 kPa (36 psi) front, 290 kPa (42 psi) rear.",
+        "next": "wheel_balance_result"
+      },
+      {
+        "id": "wheel_balance_result",
+        "type": "question",
+        "text": "What did you find with the wheels and tires?",
+        "safety": "green",
+        "options": [
+          { "text": "Balance weight is missing or tire is worn unevenly", "next": "solution_wheel_balance" },
+          { "text": "Tire has a flat spot from sitting or hard braking", "next": "solution_tire_replacement" },
+          { "text": "Wheels and tires look fine", "next": "solution_normal_vibration" }
+        ]
+      },
+      {
+        "id": "check_recent_changes",
+        "type": "question",
+        "text": "What has changed recently on the bike?",
+        "safety": "green",
+        "options": [
+          { "text": "Installed aftermarket exhaust", "next": "check_exhaust_mounts" },
+          { "text": "Changed handlebars, grips, or mirrors", "next": "check_bar_end_weights" },
+          { "text": "New tires or wheel service", "next": "check_wheel_balance" },
+          { "text": "Engine work or chain replacement", "next": "check_chain_vibration" },
+          { "text": "Nothing changed — vibration appeared gradually", "next": "check_engine_mounts" }
+        ]
+      },
+      {
+        "id": "check_chain_vibration",
+        "type": "check",
+        "text": "Check chain tension and sprocket condition",
+        "safety": "green",
+        "instructions": "A loose chain slaps and creates vibration. An overly tight chain binds and vibrates. Check the chain slack — the MT-07 spec is 30-40mm of free play in the lower chain run. Also inspect the front and rear sprockets for worn or missing teeth. A worn chain/sprocket set causes a rhythmic vibration pattern.",
+        "next": "chain_vibration_result"
+      },
+      {
+        "id": "chain_vibration_result",
+        "type": "question",
+        "text": "What is the chain condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is too loose or too tight", "next": "solution_chain_adjustment" },
+          { "text": "Sprockets are worn", "next": "solution_chain_sprocket_set" },
+          { "text": "Chain and sprockets look fine", "next": "check_engine_mounts" }
+        ]
+      },
+      {
+        "id": "solution_normal_vibration",
+        "type": "solution",
+        "text": "Normal MT-07 Vibration Characteristics",
+        "safety": "green",
+        "action": "The vibration you are experiencing is a normal characteristic of the MT-07 parallel-twin engine.",
+        "details": "The MT-07 CP2 270-degree crank parallel twin produces a characterful but vibey power delivery. Some vibration at the handlebars and pegs is inherent to the design, especially around 4,000-5,000 RPM. To reduce perceived vibration: (1) Ensure bar-end weights are installed and tight, (2) Consider heavier aftermarket bar-end weights, (3) Add foam grip puppies under the grips for additional handlebar dampening, (4) Gel seat pads reduce vibration felt through the seat."
+      },
+      {
+        "id": "solution_bar_end_weights",
+        "type": "solution",
+        "text": "Install or Tighten Bar-End Weights",
+        "safety": "green",
+        "action": "Install bar-end weights or tighten existing ones.",
+        "details": "The MT-07 OEM bar-end weights are critical for reducing handlebar vibration. If missing, purchase OEM weights or aftermarket bar-end weights (Renthal, Puig, Rizoma). Heavier weights dampen more vibration. Ensure the bolt is tight — use thread-locking compound (blue Loctite) on the bolt to prevent loosening from vibration."
+      },
+      {
+        "id": "solution_aftermarket_bars",
+        "type": "solution",
+        "text": "Address Aftermarket Handlebar Vibration",
+        "safety": "green",
+        "action": "Restore handlebar balance by adding weights or dampeners.",
+        "details": "Aftermarket grips, mirrors, or levers can change the handlebar resonance characteristics. Solutions: (1) Install heavier bar-end weights, (2) Use vibration-dampening grips (Grip Puppies foam covers), (3) Ensure the handlebar clamp bolts are torqued correctly (22 Nm), (4) If aftermarket clip-on mirrors are lighter than OEM, add weight to compensate."
+      },
+      {
+        "id": "solution_steering_bearings",
+        "type": "solution",
+        "text": "Replace Steering Head Bearings",
+        "safety": "yellow",
+        "warning": "Steering head bearing replacement requires proper tools and the front end to be properly supported.",
+        "action": "Replace the steering head bearings.",
+        "details": "The MT-07 uses tapered roller bearings in the steering head. Replacement requires: removing the front wheel, fender, forks, and triple clamp. Press out the old bearing races and press in new ones. Grease the new bearings generously. Adjust the bearing preload nut so the steering is smooth with no play. This is a job best done by a shop if you do not have a bearing press and front stand. Typical cost: $100-$200 including parts and labor."
+      },
+      {
+        "id": "solution_engine_mount_bolt",
+        "type": "solution",
+        "text": "Torque Engine Mounting Bolt",
+        "safety": "red",
+        "warning": "Engine mounting bolts are critical structural fasteners. Torque to the exact specification from the service manual.",
+        "action": "Re-torque the loose engine mounting bolt to specification.",
+        "details": "Clean the bolt threads and apply a light coat of oil. Torque to the specification in the MT-07 service manual (varies by bolt position — typically 45-65 Nm for main engine bolts). If the bolt threads are damaged or the bolt is missing, replace with an OEM bolt of the correct grade. Do not substitute hardware store bolts for engine mounting fasteners."
+      },
+      {
+        "id": "solution_engine_mount_rubbers",
+        "type": "solution",
+        "text": "Replace Engine Mount Rubber Dampers",
+        "safety": "yellow",
+        "warning": "The engine must be properly supported before removing any mount bolts.",
+        "action": "Replace the deteriorated rubber vibration dampers in the engine mounts.",
+        "details": "The rubber dampers in the engine mounts absorb vibration. Over time, especially in hot climates, they deteriorate and harden. Replacement requires supporting the engine, removing the mount bolts, and pressing in new rubbers. Use OEM Yamaha parts. This is a moderately involved job that may be best left to a shop."
+      },
+      {
+        "id": "solution_exhaust_mount",
+        "type": "solution",
+        "text": "Tighten or Replace Exhaust Mounting Hardware",
+        "safety": "green",
+        "action": "Tighten or replace the loose exhaust mounting bolts and brackets.",
+        "details": "Tighten all exhaust mounting bolts. If a bracket is broken, replace it. For aftermarket exhausts, ensure all mounting hardware is correctly installed and the exhaust is properly supported. Exhaust vibration at certain RPMs (resonance) can sometimes be addressed by adding rubber mounting bushings or repositioning the mount slightly."
+      },
+      {
+        "id": "solution_header_bolts",
+        "type": "solution",
+        "text": "Tighten Exhaust Header Bolts",
+        "safety": "yellow",
+        "warning": "Header bolts in aluminum cylinder heads can strip if overtightened. Torque carefully.",
+        "action": "Re-torque the exhaust header flange bolts.",
+        "details": "Loose header bolts cause exhaust leaks (ticking sound) and vibration. Clean the bolt threads and torque to specification (typically 20 Nm for the MT-07). If the bolts are corroded or stripped, replace them. Apply a small amount of anti-seize to the threads to prevent future seizure. Check header bolt tightness periodically — they can loosen from thermal cycling."
+      },
+      {
+        "id": "solution_wheel_balance",
+        "type": "solution",
+        "text": "Have Wheels Balanced",
+        "safety": "green",
+        "action": "Have the wheels dynamically balanced at a tire shop.",
+        "details": "Take the wheels to a motorcycle tire shop for dynamic balancing. Missing balance weights should be replaced. If the tire has uneven wear, the wheel may need balancing after addressing the wear cause. Proper wheel balance eliminates speed-dependent vibration. Cost is typically $15-$25 per wheel."
+      },
+      {
+        "id": "solution_tire_replacement",
+        "type": "solution",
+        "text": "Replace Tire with Flat Spot",
+        "safety": "yellow",
+        "warning": "A flat-spotted tire can cause unpredictable handling. Replace before riding.",
+        "action": "Replace the tire.",
+        "details": "Flat spots from sitting (especially with low tire pressure) or from panic braking do not smooth out and the tire must be replaced. The MT-07 stock tire sizes are 120/70ZR17 front and 180/55ZR17 rear. Popular tire choices: Michelin Road 5/6, Pirelli Angel GT II, Bridgestone T32. Have the new tire balanced after mounting."
+      },
+      {
+        "id": "solution_chain_adjustment",
+        "type": "solution",
+        "text": "Adjust Chain Tension",
+        "safety": "green",
+        "action": "Adjust the chain slack to the correct specification.",
+        "details": "The MT-07 chain slack should be 30-40mm measured at the midpoint of the lower chain run. Loosen the rear axle nut, adjust both swingarm chain adjusters equally, and re-torque the axle nut to 150 Nm. Verify alignment marks match on both sides. Lubricate the chain after adjustment."
+      },
+      {
+        "id": "solution_chain_sprocket_set",
+        "type": "solution",
+        "text": "Replace Chain and Sprocket Set",
+        "safety": "green",
+        "action": "Replace the chain and both sprockets as a set.",
+        "details": "The MT-07 uses a 525-pitch chain. OEM size: 16T front, 43T rear. Replace the chain and both sprockets together — a new chain on worn sprockets will wear quickly. Quality brands: DID, RK for chains; JT, Sunstar for sprockets. After installation, adjust chain slack to 30-40mm and lubricate."
+      }
+    ]
+  }
+}

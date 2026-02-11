@@ -1,0 +1,269 @@
+{
+  "motorcycle_make": "Kawasaki",
+  "motorcycle_model": "Ninja 400",
+  "title": "Engine Won't Start",
+  "description": "Diagnose a no-start condition on the Kawasaki Ninja 400, from simple checks to deeper electrical and fuel system diagnosis.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you try to start the bike?",
+        "safety": "green",
+        "options": [
+          { "text": "Completely dead — no lights, no sounds", "next": "check_basics" },
+          { "text": "Dash lights up but nothing happens when pressing start", "next": "check_safety_switches" },
+          { "text": "Starter motor cranks but engine does not fire", "next": "check_fuel_system" },
+          { "text": "Starter clicks but does not crank (or cranks slowly)", "next": "check_battery" }
+        ]
+      },
+      {
+        "id": "check_basics",
+        "type": "check",
+        "text": "Check basic electrical prerequisites",
+        "safety": "green",
+        "instructions": "Before troubleshooting further, check these basics: (1) Is the key turned to ON? (2) Is the kill switch (engine stop switch) on the right handlebar in the RUN position? (3) Check the main fuse (30A) located near the battery under the seat. (4) Check that the battery terminals are connected and not corroded. On the Ninja 400, the battery is under the seat on the left side.",
+        "next": "basics_result"
+      },
+      {
+        "id": "basics_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Kill switch was off — fixed!", "next": "solution_kill_switch" },
+          { "text": "Main fuse is blown", "next": "solution_main_fuse" },
+          { "text": "Battery terminals are loose or corroded", "next": "solution_clean_terminals" },
+          { "text": "Everything looks correct but still dead", "next": "check_battery" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Test battery voltage",
+        "safety": "green",
+        "instructions": "Use a multimeter set to DC volts. Measure across the battery terminals. A fully charged battery reads 12.6-12.8V. Below 12.4V = needs charging. Below 12.0V = deeply discharged, may be damaged. The Ninja 400 uses a YTX9-BS battery (or equivalent). If the starter clicks rapidly but does not crank, the battery has enough voltage for the relay but not enough cranking amps.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "12.6V or higher", "next": "check_safety_switches" },
+          { "text": "12.0-12.5V — low", "next": "solution_charge_battery" },
+          { "text": "Below 12.0V — very low or dead", "next": "solution_replace_battery" }
+        ]
+      },
+      {
+        "id": "check_safety_switches",
+        "type": "check",
+        "text": "Check safety interlock switches",
+        "safety": "green",
+        "instructions": "The Ninja 400 has two safety switches that prevent starting: (1) Side stand switch — the engine will not start in gear with the side stand down. Put the stand up or shift to neutral. (2) Clutch switch — the clutch lever must be fully pulled to activate the starter (unless in neutral). Check that the neutral light on the dash comes on when in neutral. Try starting in neutral without pulling the clutch to test if the neutral switch works.",
+        "next": "safety_switch_result"
+      },
+      {
+        "id": "safety_switch_result",
+        "type": "question",
+        "text": "Did any safety switch fix the issue?",
+        "safety": "green",
+        "options": [
+          { "text": "Side stand was down in gear — that was the issue", "next": "solution_side_stand" },
+          { "text": "Starting in neutral works but not in gear with clutch", "next": "solution_clutch_switch" },
+          { "text": "Neutral light does not come on in neutral", "next": "solution_neutral_switch" },
+          { "text": "All safety switches seem fine — still no start", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check the starter relay",
+        "safety": "yellow",
+        "warning": "The starter relay handles high current. Do not short the terminals.",
+        "instructions": "With the key on, kill switch in RUN, and clutch pulled, listen for a click from the starter relay when you press the start button. The relay is under the seat near the battery. If you hear a click but the starter does not crank, the issue is between the relay and the starter motor (wiring or starter motor itself). If no click, the relay or its trigger circuit is faulty.",
+        "next": "starter_relay_result"
+      },
+      {
+        "id": "starter_relay_result",
+        "type": "question",
+        "text": "Do you hear a click from the starter relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Click but no crank — starter motor or wiring issue", "next": "solution_starter_motor" },
+          { "text": "No click at all", "next": "solution_starter_relay" },
+          { "text": "Rapid clicking", "next": "solution_charge_battery" }
+        ]
+      },
+      {
+        "id": "check_fuel_system",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Work in a well-ventilated area away from ignition sources.",
+        "instructions": "The Ninja 400 is fuel-injected. Check: (1) Is there fuel in the tank? The fuel light comes on at approximately 3 liters remaining. (2) When you turn the key to ON, listen for the fuel pump priming — a 2-second whirring sound from under the tank. (3) Check the fuel pump fuse if the pump does not prime. (4) If the bike has been sitting for more than 2-3 months, the fuel may be stale.",
+        "next": "fuel_system_result"
+      },
+      {
+        "id": "fuel_system_result",
+        "type": "question",
+        "text": "What did the fuel system check reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel in the tank", "next": "solution_add_fuel" },
+          { "text": "Fuel pump does not prime", "next": "solution_fuel_pump" },
+          { "text": "Bike has been sitting with old fuel", "next": "solution_stale_fuel" },
+          { "text": "Fuel system seems fine — pump primes, tank has fuel", "next": "check_spark" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "Ignition systems produce high voltage. Do not touch spark plug wires while cranking.",
+        "instructions": "Remove a spark plug (the Ninja 400 has two cylinders). Reconnect the ignition coil to the plug. Ground the plug against the engine block. Have someone crank the engine while you watch for a spark at the plug gap. You should see a strong blue spark. No spark or a weak orange spark indicates an ignition problem. The Ninja 400 uses NGK CR8EIA-9 spark plugs.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Did you see a spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark on both cylinders", "next": "solution_mechanical" },
+          { "text": "No spark or weak spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_kill_switch",
+        "type": "solution",
+        "text": "Kill Switch Was in OFF Position",
+        "safety": "green",
+        "action": "Move the kill switch to the RUN position.",
+        "details": "The kill switch (engine stop switch) on the right handlebar must be in the RUN position. This is one of the most common no-start causes, especially for new riders. Make it part of your pre-start routine to verify the kill switch position."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Replace Main Fuse",
+        "safety": "yellow",
+        "warning": "If the new fuse blows immediately, there is a short circuit. Do not keep replacing fuses.",
+        "action": "Replace the 30A main fuse.",
+        "details": "The main fuse on the Ninja 400 is near the battery under the seat. Replace with a 30A fuse of the same type. There is usually a spare fuse in the fuse box. If the fuse blows again, check for shorts in the main wiring harness or a seized starter motor drawing excess current."
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Clean Battery Terminals",
+        "safety": "green",
+        "action": "Clean and tighten the battery terminal connections.",
+        "details": "Disconnect negative first, then positive. Clean corrosion with a wire brush or terminal cleaner. Apply dielectric grease to prevent future corrosion. Reconnect positive first, then negative. Tighten both terminals securely."
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge the Battery",
+        "safety": "green",
+        "action": "Charge the battery with a motorcycle battery charger.",
+        "details": "Use a smart charger (Battery Tender, NOCO, Optimate) at 1-2 amps. Charge until the charger indicates full. If the battery will not hold a charge after charging (drops below 12.4V within a few hours), it needs replacement. The Ninja 400 uses a YTX9-BS battery. Consider using a battery tender when the bike is parked for extended periods."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the Battery",
+        "safety": "green",
+        "action": "Replace the dead battery.",
+        "details": "A deeply discharged battery (below 12.0V) is likely sulfated and will not recover. Replace with a YTX9-BS or equivalent. Yuasa and GS are popular OEM-quality brands. Lithium options (Shorai, Antigravity) are lighter but more expensive. Install positive terminal first, then negative."
+      },
+      {
+        "id": "solution_side_stand",
+        "type": "solution",
+        "text": "Side Stand Switch Interlock",
+        "safety": "green",
+        "action": "Retract the side stand or shift to neutral to start.",
+        "details": "The Ninja 400 will not start in gear with the side stand down. This is a safety feature. Either put the stand up or shift to neutral. If the side stand switch is malfunctioning (engine dies randomly), the switch is located at the side stand pivot and can be replaced."
+      },
+      {
+        "id": "solution_clutch_switch",
+        "type": "solution",
+        "text": "Replace Clutch Safety Switch",
+        "safety": "green",
+        "action": "Replace or adjust the clutch lever safety switch.",
+        "details": "The clutch switch is on the left handlebar perch. It is a simple two-wire switch that closes when the clutch lever is fully pulled. Test by disconnecting the two-wire connector and jumping the wires — if the starter works, the switch is faulty. Replace with an OEM switch."
+      },
+      {
+        "id": "solution_neutral_switch",
+        "type": "solution",
+        "text": "Check Neutral Switch",
+        "safety": "green",
+        "action": "Inspect and replace the neutral switch.",
+        "details": "The neutral switch is on the engine case and detects when the transmission is in neutral. If the neutral light does not come on in neutral, the switch or its wiring may be faulty. The switch is a single-wire sensor. Check the wiring for damage. If the wiring is good, replace the switch."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Check Starter Motor and Wiring",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before inspecting starter motor connections.",
+        "action": "Inspect the starter motor cable connection and test the motor.",
+        "details": "Check the heavy positive cable connection at the starter motor for corrosion or looseness. Clean and retighten. If the connection is good, the starter motor may be seized or have worn brushes. You can tap the starter motor gently with a rubber mallet while pressing the start button — if it then cranks, the brushes are worn and the motor needs replacement or rebuilding."
+      },
+      {
+        "id": "solution_starter_relay",
+        "type": "solution",
+        "text": "Replace Starter Relay",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before replacing the relay.",
+        "action": "Replace the starter relay.",
+        "details": "The starter relay (solenoid) on the Ninja 400 is under the seat. It is an inexpensive part ($15-$30). Disconnect the battery, remove the old relay (2 small trigger wires, 2 large battery/starter wires), and install the new one. Reconnect the battery and test."
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Fill the tank with fresh gasoline.",
+        "details": "The Ninja 400 tank holds 14 liters. Fill with 87 octane (regular) or higher gasoline. Kawasaki specifies 87 octane minimum for the Ninja 400. After adding fuel, you may need to crank the engine slightly longer for the fuel system to pressurize."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Check Fuel Pump and Fuse",
+        "safety": "yellow",
+        "warning": "Fuel system work should be done in a ventilated area.",
+        "action": "Check the fuel pump fuse and test the fuel pump.",
+        "details": "Check the fuel pump fuse in the fuse box under the seat. If the fuse is good, check for 12V at the fuel pump connector when the ignition is turned on (pump should receive power for about 2 seconds). If voltage is present but the pump is silent, the pump has failed. The Ninja 400 fuel pump is inside the fuel tank."
+      },
+      {
+        "id": "solution_stale_fuel",
+        "type": "solution",
+        "text": "Replace Stale Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly — never pour down drains.",
+        "action": "Drain the old fuel and refill with fresh gasoline.",
+        "details": "Fuel older than 60 days can varnish and clog injectors. Drain the tank, refill with fresh fuel, and add a fuel system cleaner (Techron) to the first tank. For future storage, add fuel stabilizer (Sta-Bil) before parking for more than a few weeks."
+      },
+      {
+        "id": "solution_mechanical",
+        "type": "solution",
+        "text": "Mechanical Issue — Compression Test Recommended",
+        "safety": "green",
+        "action": "Perform a compression test to check engine mechanical condition.",
+        "details": "With confirmed spark and fuel but no start, the issue may be mechanical. A compression test checks if the engine can build adequate pressure. Screw a compression gauge into the spark plug hole, crank the engine, and note the reading. The Ninja 400 should read approximately 1,200-1,400 kPa (175-200 psi) per cylinder. Low compression indicates worn rings, leaking valves, or timing issues. Professional diagnosis is recommended for low compression."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Diagnose Ignition System",
+        "safety": "yellow",
+        "warning": "High-voltage ignition components can shock. Use insulated tools.",
+        "action": "Check spark plugs, ignition coils, and related sensors.",
+        "details": "Start with the cheapest components: (1) Replace spark plugs (NGK CR8EIA-9, gapped to 0.8-0.9mm), (2) Check ignition coil resistance — primary: 1-4 ohms, (3) Check for fault codes — the Ninja 400 stores codes readable via the diagnostic connector. The Ninja 400 uses coil-on-plug ignition. A faulty crank position sensor can also cause no-spark conditions. If basic checks do not resolve it, professional diagnosis with Kawasaki KDS (Kawasaki Diagnostic System) is recommended."
+      }
+    ]
+  }
+}

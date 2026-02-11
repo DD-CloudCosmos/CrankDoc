@@ -1,0 +1,243 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "title": "Brake Squeal / Poor Stopping",
+  "description": "Diagnose brake noise, poor stopping performance, and brake system issues on the Honda CBR600RR.",
+  "category": "brakes",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue are you experiencing?",
+        "safety": "red",
+        "warning": "Brakes are a critical safety system. If you have any doubt about your brake repairs, have them inspected by a professional before riding. Never ride with compromised brakes.",
+        "options": [
+          { "text": "Brakes are squealing or making noise", "next": "squeal_when" },
+          { "text": "Brake lever or pedal feels soft/spongy", "next": "check_fluid_level" },
+          { "text": "Poor stopping power — bike does not stop well", "next": "check_pad_thickness" },
+          { "text": "Brake lever pulses or vibrates when braking", "next": "check_rotor_warp" }
+        ]
+      },
+      {
+        "id": "squeal_when",
+        "type": "question",
+        "text": "When does the brake squeal occur?",
+        "safety": "green",
+        "options": [
+          { "text": "Only when brakes are cold / first applied", "next": "solution_normal_squeal" },
+          { "text": "Constant squeal whenever brakes are applied", "next": "check_pad_thickness" },
+          { "text": "Grinding/metal-on-metal sound", "next": "check_pad_thickness" }
+        ]
+      },
+      {
+        "id": "check_pad_thickness",
+        "type": "check",
+        "text": "Check brake pad thickness",
+        "safety": "yellow",
+        "warning": "Brake dust may contain harmful particles. Avoid breathing it in. Do not use compressed air to clean brakes — use brake cleaner spray.",
+        "instructions": "Visually inspect the brake pads through the caliper opening. The CBR600RR has dual front calipers (4-piston) and a single rear caliper. Check the pad material thickness — the minimum thickness is 1mm. If you can see the wear indicator groove on the pad face, the pads still have life. If the groove is gone or barely visible, the pads need replacement. A grinding sound means the pads are completely worn and the metal backing plate is contacting the rotor.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "What is the brake pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are worn thin (less than 2mm) or indicator groove is gone", "next": "solution_replace_pads" },
+          { "text": "Metal-on-metal — pads are completely gone", "next": "solution_pads_and_rotor" },
+          { "text": "Pads look OK (plenty of material remaining)", "next": "check_pad_glaze" }
+        ]
+      },
+      {
+        "id": "check_pad_glaze",
+        "type": "check",
+        "text": "Check for glazed brake pads",
+        "safety": "green",
+        "instructions": "Remove the brake pads from the caliper. Inspect the pad surface — glazed pads have a smooth, shiny surface instead of a slightly rough texture. Glazing happens from overheating (heavy braking, dragging brakes) and causes squeal and reduced stopping power. Also check for contamination — oil, chain lube, or brake fluid on the pad surface will cause squeal and poor braking.",
+        "next": "pad_glaze_result"
+      },
+      {
+        "id": "pad_glaze_result",
+        "type": "question",
+        "text": "What do the pad surfaces look like?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are glazed (smooth, shiny surface)", "next": "solution_deglaze" },
+          { "text": "Pads are contaminated with oil or fluid", "next": "solution_replace_pads" },
+          { "text": "Pad surfaces look normal", "next": "check_rotor_warp" }
+        ]
+      },
+      {
+        "id": "check_fluid_level",
+        "type": "check",
+        "text": "Check brake fluid level and condition",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive and will damage paint and plastic. Handle carefully and clean up any spills immediately.",
+        "instructions": "Check the front brake master cylinder reservoir (on the right handlebar) and the rear master cylinder reservoir (right side, near the foot peg). The fluid level should be between MIN and MAX marks. Also check the fluid color — fresh DOT4 brake fluid is clear/light yellow. Dark brown or black fluid is old and needs replacement. The CBR600RR uses DOT4 brake fluid.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fluid level is low", "next": "check_for_leak" },
+          { "text": "Fluid is dark/old but level is OK", "next": "solution_bleed_brakes" },
+          { "text": "Fluid level and condition are fine", "next": "check_air_in_lines" }
+        ]
+      },
+      {
+        "id": "check_for_leak",
+        "type": "check",
+        "text": "Check for brake fluid leaks",
+        "safety": "red",
+        "warning": "A brake fluid leak is a serious safety issue. Do not ride the motorcycle until the leak is repaired.",
+        "instructions": "Inspect the entire brake system for leaks: (1) Master cylinder — look for fluid weeping around the lever pivot or reservoir seal, (2) Brake lines — check for cracks, bulging, or dampness along the hoses, (3) Banjo bolt connections — check where hoses connect to calipers and master cylinder, (4) Caliper pistons — look for fluid weeping around the caliper piston seals. Fluid leaks leave a wet, shiny residue.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Did you find a brake fluid leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leaking from a banjo bolt connection", "next": "solution_banjo_bolt" },
+          { "text": "Yes — leaking from caliper piston area", "next": "solution_caliper_rebuild" },
+          { "text": "Yes — brake line is cracked or damaged", "next": "solution_brake_line" },
+          { "text": "No visible leak — fluid may be low from pad wear", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "check_air_in_lines",
+        "type": "question",
+        "text": "Does the brake lever gradually firm up with repeated pumping?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — lever firms up with pumping, then goes soft again", "next": "solution_bleed_brakes" },
+          { "text": "No — lever stays soft no matter how much I pump", "next": "solution_master_cylinder" }
+        ]
+      },
+      {
+        "id": "check_rotor_warp",
+        "type": "check",
+        "text": "Check brake rotors for warping",
+        "safety": "green",
+        "instructions": "Spin the front wheel and observe the rotor as it passes through the caliper. A warped rotor will visibly wobble or you will see the gap between the pads and rotor change. For a precise measurement, use a dial indicator against the rotor surface — the CBR600RR rotor runout specification is 0.30mm maximum. Also check the rotor thickness with a micrometer — minimum thickness is stamped on the rotor (typically 4.0mm for front, 4.5mm for rear).",
+        "next": "rotor_result"
+      },
+      {
+        "id": "rotor_result",
+        "type": "question",
+        "text": "Are the brake rotors warped or worn?",
+        "safety": "green",
+        "options": [
+          { "text": "Rotor is visibly wobbling — warped", "next": "solution_rotor" },
+          { "text": "Rotor is below minimum thickness", "next": "solution_rotor" },
+          { "text": "Rotors look straight and within thickness spec", "next": "solution_caliper_service" }
+        ]
+      },
+      {
+        "id": "solution_normal_squeal",
+        "type": "solution",
+        "text": "Normal Cold-Brake Squeal",
+        "safety": "green",
+        "action": "No repair needed — minor squeal when brakes are cold is normal.",
+        "details": "Light brake squeal during the first few stops when the brakes are cold is common and not a concern. This typically goes away once the pads reach operating temperature. If it persists, you can apply a thin layer of brake anti-squeal compound (copper-based) to the back of the pads (never on the friction surface). Ensure the anti-rattle clips and shims are properly installed."
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "Replace Brake Pads",
+        "safety": "red",
+        "warning": "Brake pads are a critical safety component. Use quality pads and verify proper installation before riding.",
+        "action": "Replace the worn brake pads with new pads.",
+        "details": "Remove the caliper mounting bolts, slide the caliper off the rotor, and remove the old pads. Push the caliper pistons back using a brake piston tool or C-clamp (open the reservoir cap first to prevent pressure buildup). Install new pads — OEM Honda or quality aftermarket (EBC, Vesrah, SBS). The CBR600RR front calipers use two sets of pads each. After installation, pump the brake lever repeatedly until it firms up before riding. Bed in new pads with 20-30 gentle stops from moderate speed."
+      },
+      {
+        "id": "solution_pads_and_rotor",
+        "type": "solution",
+        "text": "Replace Brake Pads and Inspect Rotors",
+        "safety": "red",
+        "warning": "Riding with metal-on-metal brakes causes rotor damage and is extremely dangerous. Do not ride until repaired.",
+        "action": "Replace brake pads immediately and inspect rotors for damage.",
+        "details": "Metal-on-metal contact likely scored the rotors. Replace the pads and measure the rotor thickness — if below minimum spec (stamped on rotor), replace the rotors too. Deep scoring grooves in the rotor (you can feel them with your fingernail) also warrant rotor replacement. On the CBR600RR, replacing front rotors requires removing the caliper and the wheel."
+      },
+      {
+        "id": "solution_deglaze",
+        "type": "solution",
+        "text": "Deglaze or Replace Brake Pads",
+        "safety": "yellow",
+        "warning": "Wear a dust mask when sanding brake pads. Brake dust can be harmful.",
+        "action": "Scuff the glazed pad surface or replace the pads.",
+        "details": "Lightly sand the pad surface with 120-grit sandpaper in a cross-hatch pattern to remove the glaze. Also lightly scuff the rotor surface. If glazing recurs, the pads may be low quality or the wrong compound for your riding style. Consider sintered pads for aggressive braking or organic pads for smoother, quieter operation."
+      },
+      {
+        "id": "solution_bleed_brakes",
+        "type": "solution",
+        "text": "Bleed Brake System",
+        "safety": "red",
+        "warning": "Improper brake bleeding can leave air in the system, causing brake failure. If unsure, have a professional perform this service.",
+        "action": "Bleed the brake system to remove air and replace old fluid.",
+        "details": "Use DOT4 brake fluid. Attach a clear tube to the caliper bleed nipple and submerge the other end in a container of fluid. Have an assistant pump the lever 3-4 times and hold. Open the bleed nipple to release fluid and air, close it, then release the lever. Repeat until no air bubbles appear in the tube. Keep the reservoir topped off during bleeding. For the CBR600RR dual front calipers, bleed the caliper farthest from the master cylinder first. Honda recommends replacing brake fluid every 2 years."
+      },
+      {
+        "id": "solution_banjo_bolt",
+        "type": "solution",
+        "text": "Tighten or Replace Banjo Bolt Washers",
+        "safety": "red",
+        "warning": "Brake line connections are critical. Torque to specification and verify no leaks before riding.",
+        "action": "Replace the copper crush washers on the banjo bolt and re-torque.",
+        "details": "Banjo bolt leaks are usually caused by old crush washers that no longer seal properly. Replace both copper crush washers (one on each side of the banjo fitting) with new ones. Torque the banjo bolt to 34 Nm (25 ft-lb). After tightening, bleed the brakes and verify no leaks by pumping the lever firmly and checking for fluid weeping."
+      },
+      {
+        "id": "solution_caliper_rebuild",
+        "type": "solution",
+        "text": "Rebuild or Replace Brake Caliper",
+        "safety": "red",
+        "warning": "Caliper rebuilds require careful attention. The brake system must be properly bled after any caliper work.",
+        "action": "Rebuild the brake caliper with new seals or replace the caliper.",
+        "details": "A leaking caliper piston seal requires a caliper rebuild. Caliper rebuild kits (new piston seals and dust boots) are available from Honda and aftermarket suppliers. This involves removing the caliper, extracting the pistons, cleaning the bores, and installing new seals. If the caliper bore is scored or corroded, replace the entire caliper. After rebuilding, bleed the entire brake circuit."
+      },
+      {
+        "id": "solution_brake_line",
+        "type": "solution",
+        "text": "Replace Brake Line",
+        "safety": "red",
+        "warning": "A damaged brake line can fail completely under pressure. Replace immediately and do not ride until repaired.",
+        "action": "Replace the damaged brake line.",
+        "details": "Replace with OEM rubber brake lines or upgrade to stainless steel braided lines (Galfer, Goodridge, HEL) for improved feel and durability. Stainless lines do not expand under pressure like rubber, giving a firmer lever feel. After installation, bleed the entire brake circuit thoroughly. Ensure all connections are tight and check for leaks."
+      },
+      {
+        "id": "solution_master_cylinder",
+        "type": "solution",
+        "text": "Rebuild or Replace Master Cylinder",
+        "safety": "red",
+        "warning": "A faulty master cylinder means no braking ability. Professional service recommended.",
+        "action": "Rebuild or replace the brake master cylinder.",
+        "details": "If the brake lever remains soft even after thorough bleeding, the master cylinder internal seals are likely worn, allowing fluid to bypass internally. Rebuild kits are available but master cylinder rebuilds require precision. For the CBR600RR, it may be more practical to replace the entire master cylinder unit. After replacement, bleed the brake system thoroughly and verify firm lever feel before riding."
+      },
+      {
+        "id": "solution_rotor",
+        "type": "solution",
+        "text": "Replace Brake Rotor",
+        "safety": "red",
+        "warning": "Never ride with a warped or undersize rotor. This causes unpredictable braking and is dangerous.",
+        "action": "Replace the warped or worn brake rotor.",
+        "details": "The CBR600RR front rotors are bolted to the wheel with 6 bolts each. Remove the caliper, then the wheel, and unbolt the old rotor. Install the new rotor and torque the bolts to specification (using thread-locking compound). OEM rotors or quality aftermarket (EBC, Galfer, Braking) are recommended. After installation, bed in new pads with the new rotor using 20-30 gentle stops. Avoid hard braking for the first 100 km."
+      },
+      {
+        "id": "solution_caliper_service",
+        "type": "solution",
+        "text": "Service Brake Calipers (Clean and Lubricate)",
+        "safety": "yellow",
+        "warning": "Use only brake-specific lubricant on caliper slide pins. Never use general-purpose grease.",
+        "action": "Clean and lubricate the caliper slide pins and pistons.",
+        "details": "A sticking caliper can cause poor braking and squeal. Remove the caliper, push the pistons in and out gently to check for sticking (use the brake lever with the pads removed to push pistons out slightly). Clean the pistons with brake cleaner and apply a thin coat of silicone brake grease. Also clean and lubricate the caliper slide pins (if applicable). Reassemble, install pads, and bleed if the hydraulic system was opened."
+      }
+    ]
+  }
+}
