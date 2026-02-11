@@ -3,9 +3,9 @@ import type { VinDecodedResult } from '@/types/database.types'
 
 const NHTSA_API_URL = 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues'
 
-function extractValue(results: Array<{ Variable: string; Value: string | null }>, variableName: string): string | null {
-  const entry = results.find((r) => r.Variable === variableName)
-  return entry?.Value || null
+function valueOrNull(val: unknown): string | null {
+  if (typeof val === 'string' && val.trim() !== '') return val.trim()
+  return null
 }
 
 export async function GET(request: Request): Promise<NextResponse> {
@@ -28,22 +28,26 @@ export async function GET(request: Request): Promise<NextResponse> {
     }
 
     const data = await response.json()
-    const results = data.Results as Array<{ Variable: string; Value: string | null }>
+    const result = data.Results?.[0] as Record<string, string> | undefined
 
-    const yearStr = extractValue(results, 'Model Year')
+    if (!result) {
+      return NextResponse.json({ error: 'No results from NHTSA' }, { status: 502 })
+    }
+
+    const yearStr = valueOrNull(result.ModelYear)
 
     const decoded: VinDecodedResult = {
-      make: extractValue(results, 'Make'),
-      model: extractValue(results, 'Model'),
+      make: valueOrNull(result.Make),
+      model: valueOrNull(result.Model),
       year: yearStr ? parseInt(yearStr, 10) : null,
-      vehicleType: extractValue(results, 'Vehicle Type'),
-      engineSize: extractValue(results, 'Displacement (L)'),
-      fuelType: extractValue(results, 'Fuel Type - Primary'),
-      displacement: extractValue(results, 'Displacement (L)'),
-      cylinders: extractValue(results, 'Engine Number of Cylinders'),
-      transmissionType: extractValue(results, 'Transmission Style'),
-      errorCode: extractValue(results, 'Error Code'),
-      errorText: extractValue(results, 'Error Text'),
+      vehicleType: valueOrNull(result.VehicleType),
+      engineSize: valueOrNull(result.DisplacementL),
+      fuelType: valueOrNull(result.FuelTypePrimary),
+      displacement: valueOrNull(result.DisplacementL),
+      cylinders: valueOrNull(result.EngineCylinders),
+      transmissionType: valueOrNull(result.TransmissionStyle),
+      errorCode: valueOrNull(result.ErrorCode),
+      errorText: valueOrNull(result.ErrorText),
     }
 
     return NextResponse.json(decoded)

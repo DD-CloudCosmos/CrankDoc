@@ -28,16 +28,18 @@ describe('GET /api/vin', () => {
       ok: true,
       json: async () => ({
         Results: [
-          { Variable: 'Make', Value: 'Honda' },
-          { Variable: 'Model', Value: 'CBR600RR' },
-          { Variable: 'Model Year', Value: '2020' },
-          { Variable: 'Vehicle Type', Value: 'MOTORCYCLE' },
-          { Variable: 'Displacement (L)', Value: '0.599' },
-          { Variable: 'Engine Number of Cylinders', Value: '4' },
-          { Variable: 'Fuel Type - Primary', Value: 'Gasoline' },
-          { Variable: 'Transmission Style', Value: 'Manual' },
-          { Variable: 'Error Code', Value: '0' },
-          { Variable: 'Error Text', Value: '' },
+          {
+            Make: 'Honda',
+            Model: 'CBR600RR',
+            ModelYear: '2020',
+            VehicleType: 'MOTORCYCLE',
+            DisplacementL: '0.599',
+            EngineCylinders: '4',
+            FuelTypePrimary: 'Gasoline',
+            TransmissionStyle: 'Manual',
+            ErrorCode: '0',
+            ErrorText: '',
+          },
         ],
       }),
     })
