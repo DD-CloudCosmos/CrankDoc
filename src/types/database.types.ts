@@ -159,3 +159,18 @@ export interface DecisionTreeNode {
 export interface DecisionTreeData {
   nodes: DecisionTreeNode[]
 }
+
+// VIN decoder types (NHTSA vPIC API response)
+export interface VinDecodedResult {
+  make: string | null
+  model: string | null
+  year: number | null
+  vehicleType: string | null
+  engineSize: string | null
+  fuelType: string | null
+  displacement: string | null
+  cylinders: string | null
+  transmissionType: string | null
+  errorCode: string | null
+  errorText: string | null
+}
