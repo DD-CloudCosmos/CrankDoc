@@ -4,7 +4,8 @@ import { createServerClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import type { Motorcycle } from '@/types/database.types'
+import { DiagnosticTreeCard } from '@/components/DiagnosticTreeCard'
+import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -27,6 +28,21 @@ async function getMotorcycle(id: string): Promise<Motorcycle | null> {
   return data
 }
 
+async function getDiagnosticTrees(motorcycleId: string): Promise<DiagnosticTree[]> {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from('diagnostic_trees')
+    .select('*')
+    .eq('motorcycle_id', motorcycleId)
+    .order('title')
+
+  if (error) {
+    console.error('Error fetching diagnostic trees:', error)
+    return []
+  }
+  return data ?? []
+}
+
 export default async function BikeDetailPage({ params }: PageProps) {
   const { id } = await params
   const motorcycle = await getMotorcycle(id)
@@ -34,6 +50,8 @@ export default async function BikeDetailPage({ params }: PageProps) {
   if (!motorcycle) {
     notFound()
   }
+
+  const trees = await getDiagnosticTrees(motorcycle.id)
 
   const { make, model, year_start, year_end, engine_type, displacement_cc, category } = motorcycle
 
@@ -129,14 +147,22 @@ export default async function BikeDetailPage({ params }: PageProps) {
             <CardDescription>Available troubleshooting guides</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-8 text-center">
-              <p className="text-muted-foreground">
-                No diagnostic trees available yet for this model.
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Check back soon as we add more diagnostic guides.
-              </p>
-            </div>
+            {trees.length === 0 ? (
+              <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+                <p className="text-muted-foreground">
+                  No diagnostic trees available yet for this model.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Check back soon as we add more diagnostic guides.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {trees.map((tree) => (
+                  <DiagnosticTreeCard key={tree.id} tree={tree} />
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
