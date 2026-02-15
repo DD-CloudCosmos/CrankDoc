@@ -15,7 +15,7 @@ describe('DtcPage', () => {
 
   it('renders the page description', () => {
     render(<DtcPage />)
-    expect(screen.getByText(/search diagnostic trouble codes/i)).toBeInTheDocument()
+    expect(screen.getByText(/search 600\+ motorcycle-specific dtcs/i)).toBeInTheDocument()
   })
 
   it('renders the DtcCodeList component', () => {
