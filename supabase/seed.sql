@@ -431,3 +431,73 @@ SELECT
   }'::jsonb
 FROM motorcycles
 WHERE make = 'Yamaha' AND model = 'MT-07';
+
+-- ============================================================
+-- Technical Documents (placeholder entries — actual files sourced post-deploy)
+-- ============================================================
+
+-- Honda CBR600RR documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'CBR600RR Wiring Diagram', 'wiring_diagram',
+  'Complete electrical wiring diagram. Covers ignition, charging, lighting, and ECU circuits.',
+  '/docs/placeholder-wiring-cbr600rr.pdf', 'application/pdf', 'Honda Service Manual'
+FROM motorcycles WHERE make = 'Honda' AND model = 'CBR600RR' LIMIT 1;
+
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'CBR600RR Torque Specifications', 'torque_chart',
+  'Engine, chassis, and suspension torque values for all major fasteners.',
+  '/docs/placeholder-torque-cbr600rr.pdf', 'application/pdf', 'Honda Service Manual'
+FROM motorcycles WHERE make = 'Honda' AND model = 'CBR600RR' LIMIT 1;
+
+-- Yamaha MT-07 documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'MT-07 Wiring Diagram', 'wiring_diagram',
+  'Full electrical schematic including EFI, instrument cluster, and lighting circuits.',
+  '/docs/placeholder-wiring-mt07.pdf', 'application/pdf', 'Yamaha Service Manual'
+FROM motorcycles WHERE make = 'Yamaha' AND model = 'MT-07';
+
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'MT-07 Fluid Capacities', 'fluid_chart',
+  'Engine oil, brake fluid, and fork oil specifications and capacities.',
+  '/docs/placeholder-fluids-mt07.pdf', 'application/pdf', 'Yamaha Service Manual'
+FROM motorcycles WHERE make = 'Yamaha' AND model = 'MT-07';
+
+-- Harley-Davidson Sportster 883 documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'Sportster 883 Wiring Diagram', 'wiring_diagram',
+  'Electrical system schematic for EFI Sportster models.',
+  '/docs/placeholder-wiring-sportster883.pdf', 'application/pdf', 'Harley-Davidson Service Manual'
+FROM motorcycles WHERE make = 'Harley-Davidson' AND model = 'Sportster 883' LIMIT 1;
+
+-- Harley-Davidson Sportster 1200 documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'Sportster 1200 Torque Specifications', 'torque_chart',
+  'Engine, primary, and transmission torque values.',
+  '/docs/placeholder-torque-sportster1200.pdf', 'application/pdf', 'Harley-Davidson Service Manual'
+FROM motorcycles WHERE make = 'Harley-Davidson' AND model = 'Sportster 1200' LIMIT 1;
+
+-- Kawasaki Ninja 400 documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'Ninja 400 Wiring Diagram', 'wiring_diagram',
+  'Complete wiring diagram covering EFI, ABS, instrument cluster, and lighting.',
+  '/docs/placeholder-wiring-ninja400.pdf', 'application/pdf', 'Kawasaki Service Manual'
+FROM motorcycles WHERE make = 'Kawasaki' AND model = 'Ninja 400';
+
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'Ninja 400 Torque Specifications', 'torque_chart',
+  'All fastener torque values for engine, frame, and suspension.',
+  '/docs/placeholder-torque-ninja400.pdf', 'application/pdf', 'Kawasaki Service Manual'
+FROM motorcycles WHERE make = 'Kawasaki' AND model = 'Ninja 400';
+
+-- BMW R1250GS documents
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'R1250GS Wiring Diagram', 'wiring_diagram',
+  'Comprehensive electrical schematic including CAN bus, ShiftCam, and rider aids.',
+  '/docs/placeholder-wiring-r1250gs.pdf', 'application/pdf', 'BMW Service Manual'
+FROM motorcycles WHERE make = 'BMW' AND model = 'R1250GS';
+
+INSERT INTO technical_documents (motorcycle_id, title, doc_type, description, file_url, file_type, source_attribution)
+SELECT id, 'R1250GS Fluid Capacities', 'fluid_chart',
+  'Engine oil, final drive oil, coolant, and brake fluid specifications.',
+  '/docs/placeholder-fluids-r1250gs.pdf', 'application/pdf', 'BMW Service Manual'
+FROM motorcycles WHERE make = 'BMW' AND model = 'R1250GS';
