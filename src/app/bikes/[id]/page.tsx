@@ -236,11 +236,11 @@ export default async function BikeDetailPage({ params }: PageProps) {
         </CardContent>
       </Card>
 
-      {/* Diagnostic Trees */}
+      {/* Diagnostic Trees CTA */}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Diagnostic Trees</CardTitle>
-          <CardDescription>Available troubleshooting guides</CardDescription>
+          <CardDescription>Step-by-step troubleshooting guides</CardDescription>
         </CardHeader>
         <CardContent>
           {trees.length === 0 ? (
@@ -253,10 +253,14 @@ export default async function BikeDetailPage({ params }: PageProps) {
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {trees.map((tree) => (
-                <DiagnosticTreeCard key={tree.id} tree={tree} />
-              ))}
+            <div className="text-center py-4">
+              <p className="text-2xl font-bold mb-1">{trees.length}</p>
+              <p className="text-muted-foreground mb-4">
+                diagnostic {trees.length === 1 ? 'guide' : 'guides'} available
+              </p>
+              <Link href={`/diagnose?bike=${motorcycle.id}`}>
+                <Button size="lg">Start Diagnosing</Button>
+              </Link>
             </div>
           )}
         </CardContent>
