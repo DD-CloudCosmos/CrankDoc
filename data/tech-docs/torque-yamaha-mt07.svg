@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap');
+      text { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; }
+      .title { font-size: 22px; font-weight: 700; fill: #1a1a1a; }
+      .subtitle { font-size: 13px; font-weight: 400; fill: #666; }
+      .header { font-size: 12px; font-weight: 600; fill: #fff; }
+      .cell { font-size: 11px; fill: #333; }
+      .cell-bold { font-size: 11px; font-weight: 600; fill: #1a1a1a; }
+      .section { font-size: 14px; font-weight: 600; fill: #8B6914; }
+      .note { font-size: 10px; fill: #888; }
+      .block-label { font-size: 11px; font-weight: 600; fill: #fff; text-anchor: middle; }
+      .block-sub { font-size: 9px; fill: #ddd; text-anchor: middle; }
+      .wire-label { font-size: 9px; fill: #666; }
+    </style>
+  </defs>
+  <rect width="600" height="320" fill="#FAFAF5" rx="8"/>
+  <text x="300" y="35" class="title" text-anchor="middle">Yamaha MT-07 — Torque Specifications</text>
+  <text x="300" y="55" class="subtitle" text-anchor="middle">Service torque values for critical fasteners</text>
+  <rect x="30" y="70" width="540" height="26" rx="4" fill="#8B6914"/>
+  <text x="45" y="88" class="header">Service Item</text>
+  <text x="350" y="88" class="header">Torque Specification</text>
+  <rect x="30" y="100" width="540" height="32" fill="#F5F0E6"/>
+  <text x="45" y="120" class="cell-bold">Engine Oil Change</text>
+  <text x="350" y="120" class="cell">Drain plug: 30 lb-ft (43 Nm), Oil filter: 12 lb-ft (17 Nm)</text>
+  <rect x="30" y="132" width="540" height="32" fill="#FAFAF5"/>
+  <text x="45" y="152" class="cell-bold">Spark Plugs</text>
+  <text x="350" y="152" class="cell">Spark plug: 9 lb-ft (12 Nm)</text>
+  <rect x="30" y="164" width="540" height="32" fill="#F5F0E6"/>
+  <text x="45" y="184" class="cell-bold">Chain Adjustment</text>
+  <text x="350" y="184" class="cell">Rear axle nut: 76 lb-ft (105 Nm)</text>
+  <rect x="30" y="196" width="540" height="32" fill="#FAFAF5"/>
+  <text x="45" y="216" class="cell-bold">Brake Pads Inspection</text>
+  <text x="350" y="216" class="cell">Front caliper bolts: 17 lb-ft (23 Nm)</text>
+  <rect x="30" y="228" width="540" height="32" fill="#F5F0E6"/>
+  <text x="45" y="248" class="cell-bold">Coolant Replacement</text>
+  <text x="350" y="248" class="cell">Drain plug: 5.8 lb-ft (8 Nm)</text>
+  <rect x="30" y="70" width="540" height="190" rx="4" fill="none" stroke="#D4C9A8" stroke-width="1"/>
+  <text x="300" y="305" class="note" text-anchor="middle">CrankDoc Reference — Values from service manual specifications</text>
+</svg>
