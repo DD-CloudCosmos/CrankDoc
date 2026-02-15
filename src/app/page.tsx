@@ -7,16 +7,16 @@ import { SafeDisclaimer } from '@/components/SafeDisclaimer'
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 md:h-[calc(100vh-64px)] md:overflow-hidden md:py-4">
       {/* Hero Section */}
-      <div className="mb-12 rounded-[24px] bg-[#EADFCB] p-8 text-center sm:p-12">
-        <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+      <div className="mb-12 md:mb-4 rounded-[24px] bg-[#EADFCB] p-8 text-center sm:p-12 md:p-6">
+        <h1 className="mb-4 md:mb-2 text-4xl font-bold tracking-tight sm:text-5xl md:text-4xl">
           CrankDoc
         </h1>
-        <p className="mb-2 text-lg text-muted-foreground sm:text-xl">
+        <p className="mb-2 md:mb-1 text-lg text-muted-foreground sm:text-xl md:text-lg">
           Your motorcycle mechanic&apos;s digital companion
         </p>
-        <p className="mx-auto mb-8 max-w-2xl text-sm text-muted-foreground sm:text-base">
+        <p className="mx-auto mb-8 md:mb-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
           Step-by-step diagnostic troubleshooting for Honda, Yamaha, Kawasaki,
           Harley-Davidson, and BMW motorcycles
         </p>
@@ -26,7 +26,7 @@ export default function Home() {
       </div>
 
       {/* Stats Banner */}
-      <div className="mb-12 rounded-[24px] bg-card p-6 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+      <div className="mb-12 md:mb-4 rounded-[24px] bg-card p-6 md:p-4 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
         <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground sm:gap-8 sm:text-base">
           <span className="font-semibold text-foreground">57</span>{' '}
           Diagnostic Trees
@@ -40,36 +40,36 @@ export default function Home() {
       </div>
 
       {/* How It Works */}
-      <div className="mb-12">
+      <div className="mb-12 md:mb-4">
         <HowItWorks />
       </div>
 
       {/* Feature Highlights */}
-      <div className="mb-12">
-        <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl">
+      <div className="mb-12 md:mb-3">
+        <h2 className="mb-8 md:mb-3 text-center text-2xl font-bold sm:text-3xl">
           Features
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 md:gap-3 sm:grid-cols-2">
           <FeatureHighlight
-            icon={<Search className="h-10 w-10 text-primary" />}
+            icon={<Search className="h-10 w-10 md:h-8 md:w-8 text-primary" />}
             title="Diagnose"
             description="Walk through interactive decision trees to troubleshoot engine, electrical, fuel, brake, and suspension issues step by step."
             href="/diagnose"
           />
           <FeatureHighlight
-            icon={<Database className="h-10 w-10 text-primary" />}
+            icon={<Database className="h-10 w-10 md:h-8 md:w-8 text-primary" />}
             title="Bikes"
             description="Browse detailed specs and model-specific diagnostic trees for Honda, Yamaha, Kawasaki, Harley-Davidson, and BMW motorcycles."
             href="/bikes"
           />
           <FeatureHighlight
-            icon={<Scan className="h-10 w-10 text-primary" />}
+            icon={<Scan className="h-10 w-10 md:h-8 md:w-8 text-primary" />}
             title="VIN Decoder"
             description="Decode any motorcycle VIN to instantly look up make, model, year, engine, and transmission details."
             href="/vin"
           />
           <FeatureHighlight
-            icon={<FileText className="h-10 w-10 text-primary" />}
+            icon={<FileText className="h-10 w-10 md:h-8 md:w-8 text-primary" />}
             title="DTC Codes"
             description="Search and look up diagnostic trouble codes to understand what your motorcycle is telling you."
             href="/dtc"

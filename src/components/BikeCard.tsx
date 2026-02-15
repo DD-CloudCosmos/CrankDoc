@@ -28,13 +28,13 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
   const categoryVariant = (cat: string | null) => {
     switch (cat) {
       case 'sport':
-        return 'destructive'
+        return 'default'
       case 'naked':
         return 'secondary'
       case 'cruiser':
-        return 'default'
-      case 'adventure':
         return 'outline'
+      case 'adventure':
+        return 'secondary'
       default:
         return 'default'
     }
