@@ -43,13 +43,13 @@ export function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-1 px-4 py-3 text-xs transition-colors md:flex-row md:gap-2 md:text-sm",
+                "flex flex-col items-center gap-1 px-2 py-3 text-xs transition-colors sm:px-4 md:flex-row md:gap-2 md:text-sm",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="h-5 w-5" />
+              <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
               <span>{item.name}</span>
             </Link>
           );

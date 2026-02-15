@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { DiagnosticTreeCard } from '@/components/DiagnosticTreeCard'
-import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
+import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
+import type { Motorcycle, DiagnosticTree, ServiceInterval } from '@/types/database.types'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -43,6 +44,21 @@ async function getDiagnosticTrees(motorcycleId: string): Promise<DiagnosticTree[
   return data ?? []
 }
 
+async function getServiceIntervals(motorcycleId: string): Promise<ServiceInterval[]> {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from('service_intervals')
+    .select('*')
+    .eq('motorcycle_id', motorcycleId)
+    .order('interval_miles', { ascending: true, nullsFirst: false })
+
+  if (error) {
+    console.error('Error fetching service intervals:', error)
+    return []
+  }
+  return data ?? []
+}
+
 export default async function BikeDetailPage({ params }: PageProps) {
   const { id } = await params
   const motorcycle = await getMotorcycle(id)
@@ -52,6 +68,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
   }
 
   const trees = await getDiagnosticTrees(motorcycle.id)
+  const serviceIntervals = await getServiceIntervals(motorcycle.id)
 
   const { make, model, year_start, year_end, engine_type, displacement_cc, category } = motorcycle
 
@@ -166,6 +183,16 @@ export default async function BikeDetailPage({ params }: PageProps) {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Service Intervals</CardTitle>
+          <CardDescription>Recommended maintenance schedule</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ServiceIntervalTable intervals={serviceIntervals} />
+        </CardContent>
+      </Card>
     </div>
   )
 }

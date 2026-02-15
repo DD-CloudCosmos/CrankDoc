@@ -1,5 +1,9 @@
-import Link from "next/link";
-import { Search, Database, FileText, Scan } from "lucide-react";
+import Link from 'next/link'
+import { Search, Database, FileText, Scan } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { HowItWorks } from '@/components/HowItWorks'
+import { FeatureHighlight } from '@/components/FeatureHighlight'
+import { SafeDisclaimer } from '@/components/SafeDisclaimer'
 
 export default function Home() {
   return (
@@ -9,57 +13,70 @@ export default function Home() {
         <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           CrankDoc
         </h1>
-        <p className="text-lg text-muted-foreground sm:text-xl">
-          Motorcycle Diagnostic Troubleshooting
+        <p className="mb-2 text-lg text-muted-foreground sm:text-xl">
+          Your motorcycle mechanic&apos;s digital companion
         </p>
+        <p className="mx-auto mb-8 max-w-2xl text-sm text-muted-foreground sm:text-base">
+          Step-by-step diagnostic troubleshooting for Honda, Yamaha, Kawasaki,
+          Harley-Davidson, and BMW motorcycles
+        </p>
+        <Button asChild size="lg">
+          <Link href="/diagnose">Start Diagnosing &rarr;</Link>
+        </Button>
       </div>
 
-      {/* Feature Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Link
-          href="/diagnose"
-          className="group flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent"
-        >
-          <Search className="h-10 w-10 text-primary" />
-          <h2 className="text-lg font-semibold">Diagnose</h2>
-          <p className="text-center text-sm text-muted-foreground">
-            Step-by-step diagnostic trees
-          </p>
-        </Link>
-
-        <Link
-          href="/bikes"
-          className="group flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent"
-        >
-          <Database className="h-10 w-10 text-primary" />
-          <h2 className="text-lg font-semibold">Bikes</h2>
-          <p className="text-center text-sm text-muted-foreground">
-            Motorcycle database and specs
-          </p>
-        </Link>
-
-        <Link
-          href="/vin"
-          className="group flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent"
-        >
-          <Scan className="h-10 w-10 text-primary" />
-          <h2 className="text-lg font-semibold">VIN Decoder</h2>
-          <p className="text-center text-sm text-muted-foreground">
-            Decode your motorcycle VIN
-          </p>
-        </Link>
-
-        <Link
-          href="/dtc"
-          className="group flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 transition-colors hover:bg-accent"
-        >
-          <FileText className="h-10 w-10 text-primary" />
-          <h2 className="text-lg font-semibold">DTC Codes</h2>
-          <p className="text-center text-sm text-muted-foreground">
-            Look up diagnostic trouble codes
-          </p>
-        </Link>
+      {/* Stats Banner */}
+      <div className="mb-12 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground sm:gap-8 sm:text-base">
+        <span className="font-semibold text-foreground">57</span>{' '}
+        Diagnostic Trees
+        <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
+        <span className="font-semibold text-foreground">6</span>{' '}
+        Motorcycle Models
+        <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
+        <span className="font-semibold text-foreground">500+</span>{' '}
+        DTC Codes
       </div>
+
+      {/* How It Works */}
+      <div className="mb-12">
+        <HowItWorks />
+      </div>
+
+      {/* Feature Highlights */}
+      <div className="mb-12">
+        <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl">
+          Features
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FeatureHighlight
+            icon={<Search className="h-10 w-10 text-primary" />}
+            title="Diagnose"
+            description="Walk through interactive decision trees to troubleshoot engine, electrical, fuel, brake, and suspension issues step by step."
+            href="/diagnose"
+          />
+          <FeatureHighlight
+            icon={<Database className="h-10 w-10 text-primary" />}
+            title="Bikes"
+            description="Browse detailed specs and model-specific diagnostic trees for Honda, Yamaha, Kawasaki, Harley-Davidson, and BMW motorcycles."
+            href="/bikes"
+          />
+          <FeatureHighlight
+            icon={<Scan className="h-10 w-10 text-primary" />}
+            title="VIN Decoder"
+            description="Decode any motorcycle VIN to instantly look up make, model, year, engine, and transmission details."
+            href="/vin"
+          />
+          <FeatureHighlight
+            icon={<FileText className="h-10 w-10 text-primary" />}
+            title="DTC Codes"
+            description="Search and look up diagnostic trouble codes to understand what your motorcycle is telling you."
+            href="/dtc"
+          />
+        </div>
+      </div>
+
+      {/* Safety Disclaimer */}
+      <SafeDisclaimer variant="full" />
     </div>
-  );
+  )
 }

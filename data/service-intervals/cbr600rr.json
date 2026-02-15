@@ -1,0 +1,17 @@
+{
+  "motorcycle_slug": "cbr600rr",
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "intervals": [
+    { "service_name": "Engine Oil Change", "interval_miles": 8000, "interval_km": 12800, "interval_months": 12, "description": "Replace engine oil and oil filter. Use 10W-30 or 10W-40 motorcycle-specific oil." },
+    { "service_name": "Valve Clearance Check", "interval_miles": 16000, "interval_km": 25600, "interval_months": null, "description": "Check and adjust intake and exhaust valve clearances using shim-under-bucket system." },
+    { "service_name": "Coolant Replacement", "interval_miles": 24000, "interval_km": 38400, "interval_months": 24, "description": "Drain and replace engine coolant. Use Honda-approved long-life coolant." },
+    { "service_name": "Spark Plugs", "interval_miles": 16000, "interval_km": 25600, "interval_months": null, "description": "Replace spark plugs. Use NGK IMR9C-9HES or equivalent iridium plugs." },
+    { "service_name": "Air Filter", "interval_miles": 16000, "interval_km": 25600, "interval_months": null, "description": "Replace air filter element. Inspect more frequently in dusty conditions." },
+    { "service_name": "Chain Adjustment", "interval_miles": 600, "interval_km": 1000, "interval_months": null, "description": "Check and adjust drive chain slack. Clean and lubricate chain. Replace if stretched beyond limit." },
+    { "service_name": "Brake Fluid", "interval_miles": null, "interval_km": null, "interval_months": 24, "description": "Replace front and rear brake fluid. Use DOT 4 brake fluid." },
+    { "service_name": "Brake Pads Inspection", "interval_miles": 6000, "interval_km": 10000, "interval_months": null, "description": "Inspect front and rear brake pad thickness. Replace when at minimum wear indicator." },
+    { "service_name": "Throttle Cable", "interval_miles": 16000, "interval_km": 25600, "interval_months": null, "description": "Inspect and adjust throttle cable free play. Lubricate cables." },
+    { "service_name": "Fork Oil", "interval_miles": 24000, "interval_km": 38400, "interval_months": 24, "description": "Replace front fork oil. Check fork seals for leaks." }
+  ]
+}

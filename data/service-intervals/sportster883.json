@@ -1,0 +1,17 @@
+{
+  "motorcycle_slug": "sportster883",
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 883",
+  "intervals": [
+    { "service_name": "Engine Oil Change", "interval_miles": 5000, "interval_km": 8000, "interval_months": 12, "description": "Replace engine oil and oil filter. Use Harley-Davidson SYN3 20W-50 or equivalent V-twin oil." },
+    { "service_name": "Primary Chaincase Oil", "interval_miles": 10000, "interval_km": 16000, "interval_months": 12, "description": "Drain and replace primary chaincase lubricant (1 qt). Use Harley-Davidson Formula+ or SYN3." },
+    { "service_name": "Transmission Oil", "interval_miles": 20000, "interval_km": 32000, "interval_months": 24, "description": "Drain and replace transmission lubricant. Use Harley-Davidson SYN3 or equivalent gear oil." },
+    { "service_name": "Spark Plugs", "interval_miles": 20000, "interval_km": 32000, "interval_months": null, "description": "Replace spark plugs. Use Harley-Davidson 6R12 or NGK DCPR7E equivalent." },
+    { "service_name": "Air Filter", "interval_miles": 25000, "interval_km": 40000, "interval_months": null, "description": "Replace air filter element. Clean and re-oil if using reusable filter." },
+    { "service_name": "Drive Belt Inspection", "interval_miles": 10000, "interval_km": 16000, "interval_months": null, "description": "Inspect drive belt for cracks, fraying, or missing teeth. Check belt tension." },
+    { "service_name": "Brake Fluid", "interval_miles": null, "interval_km": null, "interval_months": 24, "description": "Replace front and rear brake fluid. Use DOT 4 brake fluid." },
+    { "service_name": "Brake Pads Inspection", "interval_miles": 5000, "interval_km": 8000, "interval_months": null, "description": "Check front and rear brake pad wear. Replace when at minimum thickness." },
+    { "service_name": "Fork Oil", "interval_miles": 20000, "interval_km": 32000, "interval_months": null, "description": "Replace front fork oil. Inspect fork seals and bushings." },
+    { "service_name": "Battery Check", "interval_miles": 5000, "interval_km": 8000, "interval_months": 6, "description": "Check battery terminals for corrosion. Test battery voltage and charging system output." }
+  ]
+}

@@ -100,7 +100,10 @@ export interface Database {
           code: string
           description: string
           category: string | null
+          subcategory: string | null
+          severity: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes: string[] | null
+          applies_to_makes: string[] | null
           created_at: string
         }
         Insert: {
@@ -108,7 +111,10 @@ export interface Database {
           code: string
           description: string
           category?: string | null
+          subcategory?: string | null
+          severity?: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes?: string[] | null
+          applies_to_makes?: string[] | null
           created_at?: string
         }
         Update: {
@@ -116,7 +122,42 @@ export interface Database {
           code?: string
           description?: string
           category?: string | null
+          subcategory?: string | null
+          severity?: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes?: string[] | null
+          applies_to_makes?: string[] | null
+          created_at?: string
+        }
+      }
+      service_intervals: {
+        Row: {
+          id: string
+          motorcycle_id: string
+          service_name: string
+          interval_miles: number | null
+          interval_km: number | null
+          interval_months: number | null
+          description: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          motorcycle_id: string
+          service_name: string
+          interval_miles?: number | null
+          interval_km?: number | null
+          interval_months?: number | null
+          description?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          motorcycle_id?: string
+          service_name?: string
+          interval_miles?: number | null
+          interval_km?: number | null
+          interval_months?: number | null
+          description?: string | null
           created_at?: string
         }
       }
@@ -138,6 +179,7 @@ export type Enums<T extends keyof Database['public']['Enums']> =
 export type Motorcycle = Tables<'motorcycles'>
 export type DiagnosticTree = Tables<'diagnostic_trees'>
 export type DtcCode = Tables<'dtc_codes'>
+export type ServiceInterval = Tables<'service_intervals'>
 
 // Decision tree node types (for tree_data JSONB structure)
 export interface DecisionTreeNode {
