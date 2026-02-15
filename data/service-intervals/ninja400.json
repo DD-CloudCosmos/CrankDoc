@@ -1,7 +1,6 @@
 {
   "motorcycle_make": "Kawasaki",
   "motorcycle_model": "Ninja 400",
-  "motorcycle_generation": "All Years (2018-present)",
   "intervals": [
     {
       "service_name": "Engine Oil Change",

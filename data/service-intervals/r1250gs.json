@@ -1,7 +1,6 @@
 {
   "motorcycle_make": "BMW",
   "motorcycle_model": "R1250GS",
-  "motorcycle_generation": "All Years (2019-2024)",
   "intervals": [
     {
       "service_name": "Engine Oil Change",

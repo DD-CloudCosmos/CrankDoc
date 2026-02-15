@@ -1,7 +1,6 @@
 {
   "motorcycle_make": "Yamaha",
   "motorcycle_model": "MT-07",
-  "motorcycle_generation": "All Years (2014-present)",
   "intervals": [
     {
       "service_name": "Engine Oil Change",

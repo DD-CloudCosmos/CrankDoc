@@ -76,7 +76,7 @@ async function importFile(filePath) {
 
     const { error } = await supabase
       .from('dtc_codes')
-      .upsert(rows, { onConflict: 'code' })
+      .insert(rows)
 
     if (error) {
       console.error(`  FAIL batch ${i}-${i + batch.length} in ${fileName}: ${error.message}`)

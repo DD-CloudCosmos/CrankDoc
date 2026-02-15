@@ -1,64 +1,1160 @@
 [
-  { "code": "P0107", "description": "MAP Sensor Circuit Low Voltage", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Failed MAP sensor", "Vacuum hose off", "Short to ground"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check MAP sensor vacuum line, test voltage output, replace sensor" },
-  { "code": "P0108", "description": "MAP Sensor Circuit High Voltage", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Failed MAP sensor", "Short to voltage", "Corroded connector"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test MAP sensor, check for short to battery, replace sensor" },
-  { "code": "P0112", "description": "Intake Air Temperature Sensor Low", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "low", "common_causes": ["Faulty IAT sensor", "Short to ground", "Wiring damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test IAT sensor resistance, inspect wiring, replace sensor" },
-  { "code": "P0113", "description": "Intake Air Temperature Sensor High", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "low", "common_causes": ["Faulty IAT sensor", "Open circuit", "Disconnected connector"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check connector, test for open, replace IAT sensor" },
-  { "code": "P0115", "description": "Engine Coolant Temperature Sensor Malfunction", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Faulty ECT sensor", "Corroded connector", "Wiring issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test ECT resistance at known temp, inspect wiring, replace sensor" },
-  { "code": "P0117", "description": "Engine Coolant Temperature Sensor Low", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["ECT sensor short to ground", "Wiring damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test ECT sensor, check wiring for ground short, replace" },
-  { "code": "P0118", "description": "Engine Coolant Temperature Sensor High", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["ECT sensor open circuit", "Disconnected connector"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test connector, check for open wiring, replace ECT sensor" },
-  { "code": "P0120", "description": "Throttle Position Sensor Circuit Malfunction", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty TPS", "Dirty throttle body", "Wiring damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test TPS voltage sweep, clean throttle body, replace TPS" },
-  { "code": "P0122", "description": "Throttle Position Sensor Circuit Low", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty TPS", "Short to ground", "Damaged wiring"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check TPS wiring, test signal, replace TPS" },
-  { "code": "P0123", "description": "Throttle Position Sensor Circuit High", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty TPS", "Short to voltage", "Corroded pins"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test TPS output, check for shorts to battery, replace TPS" },
-  { "code": "P0131", "description": "O2 Sensor Low Voltage", "category": "powertrain", "subcategory": "emission", "severity": "medium", "common_causes": ["Faulty O2 sensor", "Lean condition", "Exhaust leak"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check for exhaust leaks, test O2 sensor, replace if stuck low" },
-  { "code": "P0132", "description": "O2 Sensor High Voltage", "category": "powertrain", "subcategory": "emission", "severity": "medium", "common_causes": ["Faulty O2 sensor", "Rich condition", "Aftermarket exhaust"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test O2 sensor, check for rich causes, replace sensor" },
-  { "code": "P0171", "description": "Fuel System Too Lean", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Intake air leak", "Clogged injector", "Weak fuel pump", "Air filter restriction"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check intake boots and seals, test fuel pressure, clean injectors" },
-  { "code": "P0172", "description": "Fuel System Too Rich", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Leaking injector", "Dirty air filter", "Faulty O2 sensor", "Fuel pressure high"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Replace air filter, check fuel pressure, test O2 sensor" },
-  { "code": "P0201", "description": "Injector Circuit Malfunction - Cylinder 1", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty injector", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test injector resistance, check wiring, swap injectors to isolate" },
-  { "code": "P0202", "description": "Injector Circuit Malfunction - Cylinder 2", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty injector", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test injector resistance, check wiring, swap injectors" },
-  { "code": "P0301", "description": "Cylinder 1 Misfire Detected", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Worn spark plug", "Faulty coil", "Low compression", "Valve clearance"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Replace spark plug, swap coils, check valve clearance, compression test" },
-  { "code": "P0302", "description": "Cylinder 2 Misfire Detected", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Worn spark plug", "Faulty coil", "Low compression"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Replace plug, swap coils, compression test" },
-  { "code": "P0335", "description": "Crankshaft Position Sensor Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "critical", "common_causes": ["Faulty CKP sensor", "Wiring damage", "Pulse rotor damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test CKP sensor resistance and output, check wiring, replace sensor" },
-  { "code": "P0340", "description": "Camshaft Position Sensor Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Faulty CMP sensor", "Wiring issue", "Cam chain stretch"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test CMP sensor, check wiring, verify cam chain tension" },
-  { "code": "P0351", "description": "Ignition Coil 1 Circuit Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Faulty ignition coil", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test coil resistance, check wiring, swap coils to isolate" },
-  { "code": "P0352", "description": "Ignition Coil 2 Circuit Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Faulty ignition coil", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test coil, swap to isolate, replace if faulty" },
-  { "code": "P0461", "description": "Fuel Level Sensor Range/Performance", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "low", "common_causes": ["Faulty fuel sender", "Float stuck", "Wiring issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test fuel sender resistance, inspect float, replace sender" },
-  { "code": "P0501", "description": "Vehicle Speed Sensor Range/Performance", "category": "powertrain", "subcategory": "vehicle_speed", "severity": "medium", "common_causes": ["Faulty VSS", "Wiring damage", "Speed sensor gear issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test VSS output, check wiring, replace sensor" },
-  { "code": "P0505", "description": "Idle Speed Control System Malfunction", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Faulty ISC valve", "Carbon buildup", "Vacuum leak"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ISC", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean ISC valve, check vacuum lines, replace valve if stuck" },
-  { "code": "P0506", "description": "Idle Speed Lower Than Expected", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Dirty throttle body", "ISC valve stuck", "Vacuum leak"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ISC", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean throttle body, reset ISC adaptation, check for leaks" },
-  { "code": "P0507", "description": "Idle Speed Higher Than Expected", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["Air leak", "Throttle cable tight", "ISC malfunction"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ISC", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check throttle cable free play, inspect intake for leaks, clean ISC" },
-  { "code": "P0562", "description": "System Voltage Low", "category": "powertrain", "subcategory": "electrical", "severity": "medium", "common_causes": ["Weak battery", "Faulty stator", "Regulator/rectifier failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Load test battery, test stator output, check R/R" },
-  { "code": "P0563", "description": "System Voltage High", "category": "powertrain", "subcategory": "electrical", "severity": "medium", "common_causes": ["Faulty regulator/rectifier", "Poor ground connection"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test charging voltage, replace R/R if overcharging" },
-  { "code": "P0605", "description": "ECU Internal ROM Error", "category": "powertrain", "subcategory": "electrical", "severity": "critical", "common_causes": ["ECU failure", "Voltage spike", "Water damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check ECU power supply, replace ECU" },
-  { "code": "P1250", "description": "EXUP Servo Motor Circuit Malfunction", "category": "powertrain", "subcategory": "emission", "severity": "medium", "common_causes": ["Faulty EXUP servo motor", "Cable snapped", "Valve seized"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "EXUP", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check EXUP cable, test servo motor, free or replace valve" },
-  { "code": "P1251", "description": "EXUP Servo Motor Position Error", "category": "powertrain", "subcategory": "emission", "severity": "medium", "common_causes": ["EXUP valve stuck", "Servo motor failing", "Position sensor fault"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "EXUP", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Manually operate EXUP valve, test servo position feedback, replace servo" },
-  { "code": "P1252", "description": "EXUP Valve Position Sensor Circuit", "category": "powertrain", "subcategory": "emission", "severity": "medium", "common_causes": ["Faulty position potentiometer", "Wiring damage", "Connector corrosion"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "EXUP", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test position sensor voltage, check wiring, replace servo assembly" },
-  { "code": "P1300", "description": "ISC Stepper Motor Malfunction", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "medium", "common_causes": ["ISC motor failure", "Carbon buildup", "Wiring open"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ISC", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean ISC motor, test coil resistance, replace motor" },
-  { "code": "P1600", "description": "ECU Communication Error", "category": "powertrain", "subcategory": "electrical", "severity": "critical", "common_causes": ["ECU failure", "Power supply issue", "CAN bus fault"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check ECU power and ground, test CAN bus, replace ECU" },
-  { "code": "P2100", "description": "Electronic Throttle Control Motor Circuit", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Throttle motor failure", "Open wiring", "Connector issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test throttle motor, check wiring, replace throttle body" },
-  { "code": "P2101", "description": "Electronic Throttle Control Range/Performance", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Carbon in throttle body", "Motor binding", "Spring issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean throttle body, test motor, replace if binding" },
-  { "code": "P2122", "description": "Throttle Grip Sensor Low", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty grip sensor", "Short to ground", "Connector damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test grip sensor voltage, check wiring, replace sensor" },
-  { "code": "P2135", "description": "TPS A/B Voltage Correlation Error", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "critical", "common_causes": ["Faulty TPS", "Wiring fault", "Sensor failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test both TPS outputs, check wiring, replace throttle body" },
-  { "code": "P2138", "description": "Throttle Grip Sensor Correlation Error", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "critical", "common_causes": ["Faulty grip sensor assembly", "Wiring damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test grip sensor outputs, check wiring, replace grip assembly" },
-  { "code": "C0045", "description": "ABS Front Wheel Speed Sensor Circuit", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Faulty front WSS", "Wiring break at fork", "Corroded connector"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check front WSS wiring, test resistance, replace sensor" },
-  { "code": "C0046", "description": "ABS Front Wheel Speed Sensor Signal Error", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Dirty tone ring", "Incorrect gap", "Bearing play"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean tone ring, adjust sensor gap, check bearing" },
-  { "code": "C0050", "description": "ABS Rear Wheel Speed Sensor Circuit", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Faulty rear WSS", "Wiring damage", "Connector corrosion"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test rear WSS, inspect wiring, replace sensor" },
-  { "code": "C0051", "description": "ABS Rear Wheel Speed Sensor Signal Error", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Dirty tone ring", "Sensor gap", "Bearing play"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Clean tone ring, set gap, check bearing" },
-  { "code": "C0060", "description": "ABS Front Solenoid Valve Fault", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Faulty solenoid", "ABS module fault", "Wiring issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test solenoid, check wiring, replace ABS unit if internal" },
-  { "code": "C0095", "description": "ABS Module Internal Error", "category": "chassis", "subcategory": "abs", "severity": "critical", "common_causes": ["ABS ECU failure", "Voltage spike", "Water damage"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Check power/ground, try reset, replace ABS unit" },
-  { "code": "C1100", "description": "Immobilizer Communication Error", "category": "chassis", "subcategory": "immobilizer", "severity": "medium", "common_causes": ["Key transponder fault", "Antenna ring failure", "Immobilizer module fault"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "Immobilizer", "diagnostic_method": "Yamaha dealer diagnostic", "fix_reference": "Try spare key, check antenna ring, reprogram key with dealer tool" },
-  { "code": "C1101", "description": "Immobilizer Key Not Recognized", "category": "chassis", "subcategory": "immobilizer", "severity": "medium", "common_causes": ["Wrong key", "Transponder damaged", "Key not registered"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "Immobilizer", "diagnostic_method": "Yamaha dealer diagnostic", "fix_reference": "Use registered key, reprogram with dealer tool, replace key if damaged" },
-  { "code": "U0001", "description": "High Speed CAN Bus Fault", "category": "network", "subcategory": "module_communication", "severity": "high", "common_causes": ["CAN bus wiring damage", "Module failure", "Missing termination"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "CAN Bus", "diagnostic_method": "OBD-II scanner", "fix_reference": "Measure CAN bus resistance, check wiring, isolate faulty module" },
-  { "code": "U0100", "description": "Lost Communication with ECU", "category": "network", "subcategory": "module_communication", "severity": "high", "common_causes": ["ECU power failure", "CAN bus fault", "ECU failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "CAN Bus", "diagnostic_method": "OBD-II scanner", "fix_reference": "Check ECU power/ground, test CAN bus, replace ECU" },
-  { "code": "U0121", "description": "Lost Communication with ABS Module", "category": "network", "subcategory": "module_communication", "severity": "medium", "common_causes": ["ABS module fault", "CAN wiring", "Blown fuse"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "CAN Bus", "diagnostic_method": "OBD-II scanner", "fix_reference": "Check ABS fuse, test CAN bus, replace module" },
-  { "code": "U0155", "description": "Lost Communication with Instrument Cluster", "category": "network", "subcategory": "module_communication", "severity": "medium", "common_causes": ["Cluster fault", "CAN wiring", "Connector issue"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "CAN Bus", "diagnostic_method": "OBD-II scanner", "fix_reference": "Check cluster connector, test CAN bus, replace cluster" },
-  { "code": "P0203", "description": "Injector Circuit Malfunction - Cylinder 3", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty injector", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test injector resistance, check wiring, swap injectors" },
-  { "code": "P0204", "description": "Injector Circuit Malfunction - Cylinder 4", "category": "powertrain", "subcategory": "fuel_and_air", "severity": "high", "common_causes": ["Faulty injector", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test injector resistance, check wiring, swap injectors" },
-  { "code": "P0303", "description": "Cylinder 3 Misfire Detected", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Worn spark plug", "Faulty coil", "Low compression"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Replace plug, swap coils, compression test" },
-  { "code": "P0304", "description": "Cylinder 4 Misfire Detected", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Worn spark plug", "Faulty coil", "Low compression"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Replace plug, swap coils, compression test" },
-  { "code": "P0353", "description": "Ignition Coil 3 Circuit Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Faulty ignition coil", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test coil, swap to isolate, replace" },
-  { "code": "P0354", "description": "Ignition Coil 4 Circuit Malfunction", "category": "powertrain", "subcategory": "ignition", "severity": "high", "common_causes": ["Faulty ignition coil", "Wiring fault", "ECU driver failure"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test coil, swap to isolate, replace" },
-  { "code": "P0443", "description": "EVAP Purge Control Valve Circuit", "category": "powertrain", "subcategory": "emission", "severity": "low", "common_causes": ["Faulty purge valve", "Wiring issue", "ECU driver fault"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test purge valve, check wiring, replace valve" },
-  { "code": "P0572", "description": "Brake Switch Circuit Low", "category": "powertrain", "subcategory": "electrical", "severity": "low", "common_causes": ["Faulty brake switch", "Wiring issue", "Switch maladjusted"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "FI System", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Adjust brake switch, check wiring, replace switch" },
-  { "code": "C0060", "description": "ABS Front Solenoid Valve Fault", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Faulty solenoid", "ABS module fault", "Wiring"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test solenoid, check wiring, replace ABS unit" },
-  { "code": "C0065", "description": "ABS Rear Solenoid Valve Fault", "category": "chassis", "subcategory": "abs", "severity": "high", "common_causes": ["Faulty solenoid", "ABS module fault", "Wiring"], "applies_to_makes": ["Yamaha"], "manufacturer": "Yamaha", "system": "ABS", "diagnostic_method": "OBD-II scanner or self-diagnostic mode", "fix_reference": "Test solenoid, check wiring, replace ABS unit" }
+  {
+    "code": "P0107",
+    "description": "MAP Sensor Circuit Low Voltage",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Failed MAP sensor",
+      "Vacuum hose off",
+      "Short to ground"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check MAP sensor vacuum line, test voltage output, replace sensor"
+  },
+  {
+    "code": "P0108",
+    "description": "MAP Sensor Circuit High Voltage",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Failed MAP sensor",
+      "Short to voltage",
+      "Corroded connector"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test MAP sensor, check for short to battery, replace sensor"
+  },
+  {
+    "code": "P0112",
+    "description": "Intake Air Temperature Sensor Low",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "low",
+    "common_causes": [
+      "Faulty IAT sensor",
+      "Short to ground",
+      "Wiring damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test IAT sensor resistance, inspect wiring, replace sensor"
+  },
+  {
+    "code": "P0113",
+    "description": "Intake Air Temperature Sensor High",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "low",
+    "common_causes": [
+      "Faulty IAT sensor",
+      "Open circuit",
+      "Disconnected connector"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check connector, test for open, replace IAT sensor"
+  },
+  {
+    "code": "P0115",
+    "description": "Engine Coolant Temperature Sensor Malfunction",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty ECT sensor",
+      "Corroded connector",
+      "Wiring issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test ECT resistance at known temp, inspect wiring, replace sensor"
+  },
+  {
+    "code": "P0117",
+    "description": "Engine Coolant Temperature Sensor Low",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "ECT sensor short to ground",
+      "Wiring damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test ECT sensor, check wiring for ground short, replace"
+  },
+  {
+    "code": "P0118",
+    "description": "Engine Coolant Temperature Sensor High",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "ECT sensor open circuit",
+      "Disconnected connector"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test connector, check for open wiring, replace ECT sensor"
+  },
+  {
+    "code": "P0120",
+    "description": "Throttle Position Sensor Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty TPS",
+      "Dirty throttle body",
+      "Wiring damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test TPS voltage sweep, clean throttle body, replace TPS"
+  },
+  {
+    "code": "P0122",
+    "description": "Throttle Position Sensor Circuit Low",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty TPS",
+      "Short to ground",
+      "Damaged wiring"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check TPS wiring, test signal, replace TPS"
+  },
+  {
+    "code": "P0123",
+    "description": "Throttle Position Sensor Circuit High",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty TPS",
+      "Short to voltage",
+      "Corroded pins"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test TPS output, check for shorts to battery, replace TPS"
+  },
+  {
+    "code": "P0131",
+    "description": "O2 Sensor Low Voltage",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty O2 sensor",
+      "Lean condition",
+      "Exhaust leak"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check for exhaust leaks, test O2 sensor, replace if stuck low"
+  },
+  {
+    "code": "P0132",
+    "description": "O2 Sensor High Voltage",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty O2 sensor",
+      "Rich condition",
+      "Aftermarket exhaust"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test O2 sensor, check for rich causes, replace sensor"
+  },
+  {
+    "code": "P0171",
+    "description": "Fuel System Too Lean",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Intake air leak",
+      "Clogged injector",
+      "Weak fuel pump",
+      "Air filter restriction"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check intake boots and seals, test fuel pressure, clean injectors"
+  },
+  {
+    "code": "P0172",
+    "description": "Fuel System Too Rich",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Leaking injector",
+      "Dirty air filter",
+      "Faulty O2 sensor",
+      "Fuel pressure high"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Replace air filter, check fuel pressure, test O2 sensor"
+  },
+  {
+    "code": "P0201",
+    "description": "Injector Circuit Malfunction - Cylinder 1",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty injector",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test injector resistance, check wiring, swap injectors to isolate"
+  },
+  {
+    "code": "P0202",
+    "description": "Injector Circuit Malfunction - Cylinder 2",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty injector",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test injector resistance, check wiring, swap injectors"
+  },
+  {
+    "code": "P0301",
+    "description": "Cylinder 1 Misfire Detected",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Worn spark plug",
+      "Faulty coil",
+      "Low compression",
+      "Valve clearance"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Replace spark plug, swap coils, check valve clearance, compression test"
+  },
+  {
+    "code": "P0302",
+    "description": "Cylinder 2 Misfire Detected",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Worn spark plug",
+      "Faulty coil",
+      "Low compression"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Replace plug, swap coils, compression test"
+  },
+  {
+    "code": "P0335",
+    "description": "Crankshaft Position Sensor Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "critical",
+    "common_causes": [
+      "Faulty CKP sensor",
+      "Wiring damage",
+      "Pulse rotor damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test CKP sensor resistance and output, check wiring, replace sensor"
+  },
+  {
+    "code": "P0340",
+    "description": "Camshaft Position Sensor Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Faulty CMP sensor",
+      "Wiring issue",
+      "Cam chain stretch"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test CMP sensor, check wiring, verify cam chain tension"
+  },
+  {
+    "code": "P0351",
+    "description": "Ignition Coil 1 Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Faulty ignition coil",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test coil resistance, check wiring, swap coils to isolate"
+  },
+  {
+    "code": "P0352",
+    "description": "Ignition Coil 2 Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Faulty ignition coil",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test coil, swap to isolate, replace if faulty"
+  },
+  {
+    "code": "P0461",
+    "description": "Fuel Level Sensor Range/Performance",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "low",
+    "common_causes": [
+      "Faulty fuel sender",
+      "Float stuck",
+      "Wiring issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test fuel sender resistance, inspect float, replace sender"
+  },
+  {
+    "code": "P0501",
+    "description": "Vehicle Speed Sensor Range/Performance",
+    "category": "powertrain",
+    "subcategory": "vehicle_speed",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty VSS",
+      "Wiring damage",
+      "Speed sensor gear issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test VSS output, check wiring, replace sensor"
+  },
+  {
+    "code": "P0505",
+    "description": "Idle Speed Control System Malfunction",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty ISC valve",
+      "Carbon buildup",
+      "Vacuum leak"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ISC",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean ISC valve, check vacuum lines, replace valve if stuck"
+  },
+  {
+    "code": "P0506",
+    "description": "Idle Speed Lower Than Expected",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Dirty throttle body",
+      "ISC valve stuck",
+      "Vacuum leak"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ISC",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean throttle body, reset ISC adaptation, check for leaks"
+  },
+  {
+    "code": "P0507",
+    "description": "Idle Speed Higher Than Expected",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "Air leak",
+      "Throttle cable tight",
+      "ISC malfunction"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ISC",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check throttle cable free play, inspect intake for leaks, clean ISC"
+  },
+  {
+    "code": "P0562",
+    "description": "System Voltage Low",
+    "category": "powertrain",
+    "subcategory": "electrical",
+    "severity": "medium",
+    "common_causes": [
+      "Weak battery",
+      "Faulty stator",
+      "Regulator/rectifier failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Load test battery, test stator output, check R/R"
+  },
+  {
+    "code": "P0563",
+    "description": "System Voltage High",
+    "category": "powertrain",
+    "subcategory": "electrical",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty regulator/rectifier",
+      "Poor ground connection"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test charging voltage, replace R/R if overcharging"
+  },
+  {
+    "code": "P0605",
+    "description": "ECU Internal ROM Error",
+    "category": "powertrain",
+    "subcategory": "electrical",
+    "severity": "critical",
+    "common_causes": [
+      "ECU failure",
+      "Voltage spike",
+      "Water damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check ECU power supply, replace ECU"
+  },
+  {
+    "code": "P1250",
+    "description": "EXUP Servo Motor Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty EXUP servo motor",
+      "Cable snapped",
+      "Valve seized"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "EXUP",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check EXUP cable, test servo motor, free or replace valve"
+  },
+  {
+    "code": "P1251",
+    "description": "EXUP Servo Motor Position Error",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "medium",
+    "common_causes": [
+      "EXUP valve stuck",
+      "Servo motor failing",
+      "Position sensor fault"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "EXUP",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Manually operate EXUP valve, test servo position feedback, replace servo"
+  },
+  {
+    "code": "P1252",
+    "description": "EXUP Valve Position Sensor Circuit",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "medium",
+    "common_causes": [
+      "Faulty position potentiometer",
+      "Wiring damage",
+      "Connector corrosion"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "EXUP",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test position sensor voltage, check wiring, replace servo assembly"
+  },
+  {
+    "code": "P1300",
+    "description": "ISC Stepper Motor Malfunction",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "medium",
+    "common_causes": [
+      "ISC motor failure",
+      "Carbon buildup",
+      "Wiring open"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ISC",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean ISC motor, test coil resistance, replace motor"
+  },
+  {
+    "code": "P1600",
+    "description": "ECU Communication Error",
+    "category": "powertrain",
+    "subcategory": "electrical",
+    "severity": "critical",
+    "common_causes": [
+      "ECU failure",
+      "Power supply issue",
+      "CAN bus fault"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check ECU power and ground, test CAN bus, replace ECU"
+  },
+  {
+    "code": "P2100",
+    "description": "Electronic Throttle Control Motor Circuit",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Throttle motor failure",
+      "Open wiring",
+      "Connector issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test throttle motor, check wiring, replace throttle body"
+  },
+  {
+    "code": "P2101",
+    "description": "Electronic Throttle Control Range/Performance",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Carbon in throttle body",
+      "Motor binding",
+      "Spring issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean throttle body, test motor, replace if binding"
+  },
+  {
+    "code": "P2122",
+    "description": "Throttle Grip Sensor Low",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty grip sensor",
+      "Short to ground",
+      "Connector damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test grip sensor voltage, check wiring, replace sensor"
+  },
+  {
+    "code": "P2135",
+    "description": "TPS A/B Voltage Correlation Error",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "critical",
+    "common_causes": [
+      "Faulty TPS",
+      "Wiring fault",
+      "Sensor failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test both TPS outputs, check wiring, replace throttle body"
+  },
+  {
+    "code": "P2138",
+    "description": "Throttle Grip Sensor Correlation Error",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "critical",
+    "common_causes": [
+      "Faulty grip sensor assembly",
+      "Wiring damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test grip sensor outputs, check wiring, replace grip assembly"
+  },
+  {
+    "code": "C0045",
+    "description": "ABS Front Wheel Speed Sensor Circuit",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Faulty front WSS",
+      "Wiring break at fork",
+      "Corroded connector"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check front WSS wiring, test resistance, replace sensor"
+  },
+  {
+    "code": "C0046",
+    "description": "ABS Front Wheel Speed Sensor Signal Error",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Dirty tone ring",
+      "Incorrect gap",
+      "Bearing play"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean tone ring, adjust sensor gap, check bearing"
+  },
+  {
+    "code": "C0050",
+    "description": "ABS Rear Wheel Speed Sensor Circuit",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Faulty rear WSS",
+      "Wiring damage",
+      "Connector corrosion"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test rear WSS, inspect wiring, replace sensor"
+  },
+  {
+    "code": "C0051",
+    "description": "ABS Rear Wheel Speed Sensor Signal Error",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Dirty tone ring",
+      "Sensor gap",
+      "Bearing play"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Clean tone ring, set gap, check bearing"
+  },
+  {
+    "code": "C0060",
+    "description": "ABS Front Solenoid Valve Fault",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Faulty solenoid",
+      "ABS module fault",
+      "Wiring issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test solenoid, check wiring, replace ABS unit if internal"
+  },
+  {
+    "code": "C0095",
+    "description": "ABS Module Internal Error",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "critical",
+    "common_causes": [
+      "ABS ECU failure",
+      "Voltage spike",
+      "Water damage"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Check power/ground, try reset, replace ABS unit"
+  },
+  {
+    "code": "C1100",
+    "description": "Immobilizer Communication Error",
+    "category": "chassis",
+    "subcategory": "immobilizer",
+    "severity": "medium",
+    "common_causes": [
+      "Key transponder fault",
+      "Antenna ring failure",
+      "Immobilizer module fault"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "Immobilizer",
+    "diagnostic_method": "Yamaha dealer diagnostic",
+    "fix_reference": "Try spare key, check antenna ring, reprogram key with dealer tool"
+  },
+  {
+    "code": "C1101",
+    "description": "Immobilizer Key Not Recognized",
+    "category": "chassis",
+    "subcategory": "immobilizer",
+    "severity": "medium",
+    "common_causes": [
+      "Wrong key",
+      "Transponder damaged",
+      "Key not registered"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "Immobilizer",
+    "diagnostic_method": "Yamaha dealer diagnostic",
+    "fix_reference": "Use registered key, reprogram with dealer tool, replace key if damaged"
+  },
+  {
+    "code": "U0001",
+    "description": "High Speed CAN Bus Fault",
+    "category": "network",
+    "subcategory": "module_communication",
+    "severity": "high",
+    "common_causes": [
+      "CAN bus wiring damage",
+      "Module failure",
+      "Missing termination"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "CAN Bus",
+    "diagnostic_method": "OBD-II scanner",
+    "fix_reference": "Measure CAN bus resistance, check wiring, isolate faulty module"
+  },
+  {
+    "code": "U0100",
+    "description": "Lost Communication with ECU",
+    "category": "network",
+    "subcategory": "module_communication",
+    "severity": "high",
+    "common_causes": [
+      "ECU power failure",
+      "CAN bus fault",
+      "ECU failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "CAN Bus",
+    "diagnostic_method": "OBD-II scanner",
+    "fix_reference": "Check ECU power/ground, test CAN bus, replace ECU"
+  },
+  {
+    "code": "U0121",
+    "description": "Lost Communication with ABS Module",
+    "category": "network",
+    "subcategory": "module_communication",
+    "severity": "medium",
+    "common_causes": [
+      "ABS module fault",
+      "CAN wiring",
+      "Blown fuse"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "CAN Bus",
+    "diagnostic_method": "OBD-II scanner",
+    "fix_reference": "Check ABS fuse, test CAN bus, replace module"
+  },
+  {
+    "code": "U0155",
+    "description": "Lost Communication with Instrument Cluster",
+    "category": "network",
+    "subcategory": "module_communication",
+    "severity": "medium",
+    "common_causes": [
+      "Cluster fault",
+      "CAN wiring",
+      "Connector issue"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "CAN Bus",
+    "diagnostic_method": "OBD-II scanner",
+    "fix_reference": "Check cluster connector, test CAN bus, replace cluster"
+  },
+  {
+    "code": "P0203",
+    "description": "Injector Circuit Malfunction - Cylinder 3",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty injector",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test injector resistance, check wiring, swap injectors"
+  },
+  {
+    "code": "P0204",
+    "description": "Injector Circuit Malfunction - Cylinder 4",
+    "category": "powertrain",
+    "subcategory": "fuel_and_air",
+    "severity": "high",
+    "common_causes": [
+      "Faulty injector",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test injector resistance, check wiring, swap injectors"
+  },
+  {
+    "code": "P0303",
+    "description": "Cylinder 3 Misfire Detected",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Worn spark plug",
+      "Faulty coil",
+      "Low compression"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Replace plug, swap coils, compression test"
+  },
+  {
+    "code": "P0304",
+    "description": "Cylinder 4 Misfire Detected",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Worn spark plug",
+      "Faulty coil",
+      "Low compression"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Replace plug, swap coils, compression test"
+  },
+  {
+    "code": "P0353",
+    "description": "Ignition Coil 3 Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Faulty ignition coil",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test coil, swap to isolate, replace"
+  },
+  {
+    "code": "P0354",
+    "description": "Ignition Coil 4 Circuit Malfunction",
+    "category": "powertrain",
+    "subcategory": "ignition",
+    "severity": "high",
+    "common_causes": [
+      "Faulty ignition coil",
+      "Wiring fault",
+      "ECU driver failure"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test coil, swap to isolate, replace"
+  },
+  {
+    "code": "P0443",
+    "description": "EVAP Purge Control Valve Circuit",
+    "category": "powertrain",
+    "subcategory": "emission",
+    "severity": "low",
+    "common_causes": [
+      "Faulty purge valve",
+      "Wiring issue",
+      "ECU driver fault"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test purge valve, check wiring, replace valve"
+  },
+  {
+    "code": "P0572",
+    "description": "Brake Switch Circuit Low",
+    "category": "powertrain",
+    "subcategory": "electrical",
+    "severity": "low",
+    "common_causes": [
+      "Faulty brake switch",
+      "Wiring issue",
+      "Switch maladjusted"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "FI System",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Adjust brake switch, check wiring, replace switch"
+  },
+  {
+    "code": "C0065",
+    "description": "ABS Rear Solenoid Valve Fault",
+    "category": "chassis",
+    "subcategory": "abs",
+    "severity": "high",
+    "common_causes": [
+      "Faulty solenoid",
+      "ABS module fault",
+      "Wiring"
+    ],
+    "applies_to_makes": [
+      "Yamaha"
+    ],
+    "manufacturer": "Yamaha",
+    "system": "ABS",
+    "diagnostic_method": "OBD-II scanner or self-diagnostic mode",
+    "fix_reference": "Test solenoid, check wiring, replace ABS unit"
+  }
 ]
