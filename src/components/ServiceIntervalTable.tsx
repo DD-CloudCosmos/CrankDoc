@@ -26,7 +26,8 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
               <th className="pb-2 pr-4 text-left font-medium text-muted-foreground">Service</th>
               <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Miles</th>
               <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Km</th>
-              <th className="pb-2 text-right font-medium text-muted-foreground">Months</th>
+              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Months</th>
+              <th className="pb-2 text-left font-medium text-muted-foreground">Specs</th>
             </tr>
           </thead>
           <tbody>
@@ -44,8 +45,23 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
                 <td className="py-3 pr-4 text-right tabular-nums">
                   {interval.interval_km ? interval.interval_km.toLocaleString() : '—'}
                 </td>
-                <td className="py-3 text-right tabular-nums">
+                <td className="py-3 pr-4 text-right tabular-nums">
                   {interval.interval_months ?? '—'}
+                </td>
+                <td className="py-3 text-left">
+                  {interval.torque_spec && (
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">Torque:</span> {interval.torque_spec}
+                    </p>
+                  )}
+                  {interval.fluid_spec && (
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">Fluid:</span> {interval.fluid_spec}
+                    </p>
+                  )}
+                  {!interval.torque_spec && !interval.fluid_spec && (
+                    <span className="text-xs text-muted-foreground">—</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -73,6 +89,20 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
                   <span>{interval.interval_months} months</span>
                 )}
               </div>
+              {(interval.torque_spec || interval.fluid_spec) && (
+                <div className="mt-2 space-y-0.5 border-t border-border pt-2">
+                  {interval.torque_spec && (
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">Torque:</span> {interval.torque_spec}
+                    </p>
+                  )}
+                  {interval.fluid_spec && (
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">Fluid:</span> {interval.fluid_spec}
+                    </p>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}

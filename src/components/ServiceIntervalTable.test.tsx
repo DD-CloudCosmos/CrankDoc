@@ -76,4 +76,70 @@ describe('ServiceIntervalTable', () => {
     const dashes = screen.getAllByText('—')
     expect(dashes.length).toBeGreaterThanOrEqual(2)
   })
+
+  it('displays torque_spec when available', () => {
+    const intervalsWithTorque: ServiceInterval[] = [
+      {
+        id: '4',
+        motorcycle_id: 'moto-1',
+        service_name: 'Oil Drain Plug',
+        interval_miles: 5000,
+        interval_km: 8000,
+        interval_months: 12,
+        description: null,
+        torque_spec: '30 Nm',
+        fluid_spec: null,
+        created_at: '2024-01-01T00:00:00Z',
+      },
+    ]
+    render(<ServiceIntervalTable intervals={intervalsWithTorque} />)
+    expect(screen.getAllByText('30 Nm').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Torque:').length).toBeGreaterThan(0)
+  })
+
+  it('displays fluid_spec when available', () => {
+    const intervalsWithFluid: ServiceInterval[] = [
+      {
+        id: '5',
+        motorcycle_id: 'moto-1',
+        service_name: 'Engine Oil Change',
+        interval_miles: 5000,
+        interval_km: 8000,
+        interval_months: 12,
+        description: null,
+        torque_spec: null,
+        fluid_spec: '10W-40 Synthetic, 3.2L',
+        created_at: '2024-01-01T00:00:00Z',
+      },
+    ]
+    render(<ServiceIntervalTable intervals={intervalsWithFluid} />)
+    expect(screen.getAllByText('10W-40 Synthetic, 3.2L').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Fluid:').length).toBeGreaterThan(0)
+  })
+
+  it('displays both torque_spec and fluid_spec together', () => {
+    const intervalsWithBoth: ServiceInterval[] = [
+      {
+        id: '6',
+        motorcycle_id: 'moto-1',
+        service_name: 'Oil Drain Plug',
+        interval_miles: 5000,
+        interval_km: 8000,
+        interval_months: 12,
+        description: null,
+        torque_spec: '30 Nm',
+        fluid_spec: '10W-40 Synthetic',
+        created_at: '2024-01-01T00:00:00Z',
+      },
+    ]
+    render(<ServiceIntervalTable intervals={intervalsWithBoth} />)
+    expect(screen.getAllByText('30 Nm').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('10W-40 Synthetic').length).toBeGreaterThan(0)
+  })
+
+  it('does not display specs section when both torque_spec and fluid_spec are null', () => {
+    render(<ServiceIntervalTable intervals={mockIntervals} />)
+    expect(screen.queryByText('Torque:')).not.toBeInTheDocument()
+    expect(screen.queryByText('Fluid:')).not.toBeInTheDocument()
+  })
 })
