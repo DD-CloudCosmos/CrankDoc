@@ -65,7 +65,7 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
       )}
 
       {/* Main Content Card */}
-      <Card>
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle className="text-lg">{currentNode.text}</CardTitle>
         </CardHeader>
@@ -77,7 +77,7 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
                 <Button
                   key={option.next}
                   variant="outline"
-                  className="w-full justify-between text-left"
+                  className="h-auto w-full justify-between whitespace-normal text-left"
                   onClick={() => navigateTo(option.next)}
                 >
                   <span>{option.text}</span>
