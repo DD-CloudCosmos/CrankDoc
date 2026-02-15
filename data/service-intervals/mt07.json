@@ -1,17 +1,106 @@
 {
-  "motorcycle_slug": "mt07",
   "motorcycle_make": "Yamaha",
   "motorcycle_model": "MT-07",
+  "motorcycle_generation": "All Years (2014-present)",
   "intervals": [
-    { "service_name": "Engine Oil Change", "interval_miles": 6000, "interval_km": 10000, "interval_months": 12, "description": "Replace engine oil and oil filter. Use 10W-40 JASO MA or MA2 rated oil." },
-    { "service_name": "Valve Clearance Check", "interval_miles": 24000, "interval_km": 40000, "interval_months": null, "description": "Check and adjust intake and exhaust valve clearances." },
-    { "service_name": "Coolant Replacement", "interval_miles": 18000, "interval_km": 30000, "interval_months": 24, "description": "Drain and replace engine coolant with Yamaha-approved coolant." },
-    { "service_name": "Spark Plugs", "interval_miles": 12000, "interval_km": 20000, "interval_months": null, "description": "Replace spark plugs. Use NGK LMAR8A-9 or equivalent." },
-    { "service_name": "Air Filter", "interval_miles": 12000, "interval_km": 20000, "interval_months": null, "description": "Replace air filter element. Clean more frequently in dusty environments." },
-    { "service_name": "Chain Adjustment", "interval_miles": 600, "interval_km": 1000, "interval_months": null, "description": "Check and adjust drive chain slack (20-30mm free play). Clean and lubricate." },
-    { "service_name": "Brake Fluid", "interval_miles": null, "interval_km": null, "interval_months": 24, "description": "Replace front and rear brake fluid. Use DOT 4 brake fluid." },
-    { "service_name": "Brake Pads Inspection", "interval_miles": 6000, "interval_km": 10000, "interval_months": null, "description": "Inspect front and rear brake pad wear. Minimum pad thickness: 1mm." },
-    { "service_name": "Throttle Body Sync", "interval_miles": 24000, "interval_km": 40000, "interval_months": null, "description": "Synchronize throttle bodies using vacuum gauges." },
-    { "service_name": "Fork Oil", "interval_miles": 18000, "interval_km": 30000, "interval_months": 24, "description": "Replace front fork oil. Inspect fork seals for leaks." }
+    {
+      "service_name": "Engine Oil Change",
+      "interval_miles": 6000,
+      "interval_km": 10000,
+      "interval_months": 12,
+      "description": "Replace engine oil and oil filter. Warm engine first for complete drain.",
+      "torque_spec": "Drain plug: 30 lb-ft (43 Nm), Oil filter: 12 lb-ft (17 Nm)",
+      "fluid_spec": "10W-40 JASO MA (Yamalube 10W-40) — 1.7L with filter change"
+    },
+    {
+      "service_name": "Valve Clearance Check",
+      "interval_miles": 24000,
+      "interval_km": 42000,
+      "interval_months": null,
+      "description": "Check and adjust intake and exhaust valve clearances. Intake: 0.11-0.20mm, Exhaust: 0.21-0.30mm.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark Plugs",
+      "interval_miles": 12000,
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "Replace spark plugs. Check electrode condition and gap before install.",
+      "torque_spec": "Spark plug: 9 lb-ft (12 Nm)",
+      "fluid_spec": "NGK LMAR8A-9, gap 0.035 in (0.9 mm)"
+    },
+    {
+      "service_name": "Air Filter",
+      "interval_miles": 12000,
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "Replace air filter element. Clean more frequently in dusty environments.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Adjustment",
+      "interval_miles": 500,
+      "interval_km": 800,
+      "interval_months": null,
+      "description": "Check and adjust drive chain slack (20-30mm free play). Clean and lubricate 525 O-ring chain.",
+      "torque_spec": "Rear axle nut: 76 lb-ft (105 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Lubrication",
+      "interval_miles": 300,
+      "interval_km": 500,
+      "interval_months": null,
+      "description": "Lubricate drive chain after cleaning. Apply to inner side of chain while rotating rear wheel.",
+      "torque_spec": null,
+      "fluid_spec": "O-ring compatible chain lubricant"
+    },
+    {
+      "service_name": "Brake Fluid",
+      "interval_miles": null,
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace front and rear brake fluid. Bleed system completely until fluid runs clear.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid"
+    },
+    {
+      "service_name": "Brake Pads Inspection",
+      "interval_miles": 6000,
+      "interval_km": 10000,
+      "interval_months": null,
+      "description": "Inspect front and rear brake pad wear. Minimum pad thickness: 1mm.",
+      "torque_spec": "Front caliper bolts: 17 lb-ft (23 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant Replacement",
+      "interval_miles": 18000,
+      "interval_km": 30000,
+      "interval_months": 24,
+      "description": "Drain and replace engine coolant with Yamaha-approved coolant. Bleed air after refill.",
+      "torque_spec": "Drain plug: 5.8 lb-ft (8 Nm)",
+      "fluid_spec": "50/50 ethylene glycol coolant — 1.25L total capacity"
+    },
+    {
+      "service_name": "Throttle Body Sync",
+      "interval_miles": 24000,
+      "interval_km": 40000,
+      "interval_months": null,
+      "description": "Synchronize throttle bodies using vacuum gauges. Adjust idle speed to specification.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Fork Oil",
+      "interval_miles": 18000,
+      "interval_km": 30000,
+      "interval_months": 24,
+      "description": "Replace front fork oil. Inspect fork seals for leaks.",
+      "torque_spec": null,
+      "fluid_spec": "Yamalube fork oil (10W) — 465ml per leg"
+    }
   ]
 }

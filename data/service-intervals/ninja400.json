@@ -1,17 +1,106 @@
 {
-  "motorcycle_slug": "ninja400",
   "motorcycle_make": "Kawasaki",
   "motorcycle_model": "Ninja 400",
+  "motorcycle_generation": "All Years (2018-present)",
   "intervals": [
-    { "service_name": "Engine Oil Change", "interval_miles": 6000, "interval_km": 10000, "interval_months": 12, "description": "Replace engine oil and oil filter. Use 10W-40 JASO MA rated motorcycle oil." },
-    { "service_name": "Valve Clearance Check", "interval_miles": 15000, "interval_km": 24000, "interval_months": null, "description": "Check and adjust intake and exhaust valve clearances using shim-over-bucket system." },
-    { "service_name": "Coolant Replacement", "interval_miles": 18000, "interval_km": 30000, "interval_months": 36, "description": "Drain and replace engine coolant. Use long-life coolant." },
-    { "service_name": "Spark Plugs", "interval_miles": 12000, "interval_km": 20000, "interval_months": null, "description": "Replace spark plugs. Use NGK CR8EIA-9 or equivalent." },
-    { "service_name": "Air Filter", "interval_miles": 12000, "interval_km": 20000, "interval_months": null, "description": "Replace air filter element." },
-    { "service_name": "Chain Adjustment", "interval_miles": 600, "interval_km": 1000, "interval_months": null, "description": "Check and adjust drive chain slack (20-30mm). Clean and lubricate chain." },
-    { "service_name": "Brake Fluid", "interval_miles": null, "interval_km": null, "interval_months": 24, "description": "Replace front and rear brake fluid. Use DOT 4 brake fluid." },
-    { "service_name": "Brake Pads Inspection", "interval_miles": 6000, "interval_km": 10000, "interval_months": null, "description": "Check brake pad thickness. Replace when pad material is at or below wear limit." },
-    { "service_name": "Throttle Cable", "interval_miles": 12000, "interval_km": 20000, "interval_months": null, "description": "Inspect and adjust throttle cable free play (2-3mm). Lubricate cables." },
-    { "service_name": "Fork Oil", "interval_miles": 18000, "interval_km": 30000, "interval_months": null, "description": "Replace front fork oil. Inspect fork seals and dust boots." }
+    {
+      "service_name": "Engine Oil Change",
+      "interval_miles": 6000,
+      "interval_km": 10000,
+      "interval_months": 12,
+      "description": "Replace engine oil and oil filter. Warm engine first for complete drain.",
+      "torque_spec": "Drain plug: 22 lb-ft (30 Nm), Oil filter: 13 lb-ft (18 Nm)",
+      "fluid_spec": "10W-40 JASO MA (Kawasaki Performance 4-Stroke) — 2.3L with filter change"
+    },
+    {
+      "service_name": "Valve Clearance Check",
+      "interval_miles": 15000,
+      "interval_km": 24000,
+      "interval_months": null,
+      "description": "Check and adjust intake and exhaust valve clearances using shim-over-bucket system. Intake: 0.10-0.20mm, Exhaust: 0.17-0.27mm.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant Replacement",
+      "interval_miles": 18000,
+      "interval_km": 30000,
+      "interval_months": 36,
+      "description": "Drain and replace engine coolant. Bleed air from system after refill.",
+      "torque_spec": "Drain plug: 7.2 lb-ft (10 Nm)",
+      "fluid_spec": "Long-life coolant (Kawasaki approved) — 1.3L total capacity"
+    },
+    {
+      "service_name": "Spark Plugs",
+      "interval_miles": 12000,
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "Replace spark plugs. Check electrode condition and gap before install.",
+      "torque_spec": "Spark plug: 9.4 lb-ft (13 Nm)",
+      "fluid_spec": "NGK LMAR9G, gap 0.026-0.030 in (0.65-0.75 mm)"
+    },
+    {
+      "service_name": "Air Filter",
+      "interval_miles": 12000,
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "Replace air filter element. Inspect more frequently in dusty conditions.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Adjustment",
+      "interval_miles": 600,
+      "interval_km": 1000,
+      "interval_months": null,
+      "description": "Check and adjust drive chain slack (20-30mm free play). Clean and lubricate 520 O-ring chain.",
+      "torque_spec": "Rear axle nut: 72 lb-ft (98 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Lubrication",
+      "interval_miles": 300,
+      "interval_km": 500,
+      "interval_months": null,
+      "description": "Lubricate drive chain after cleaning. Apply to inner side of chain while rotating rear wheel.",
+      "torque_spec": null,
+      "fluid_spec": "O-ring compatible chain lubricant"
+    },
+    {
+      "service_name": "Brake Fluid",
+      "interval_miles": null,
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace front and rear brake fluid. Bleed system completely until fluid runs clear.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid"
+    },
+    {
+      "service_name": "Brake Pads Inspection",
+      "interval_miles": 6000,
+      "interval_km": 10000,
+      "interval_months": null,
+      "description": "Check brake pad thickness. Replace when pad material is at or below wear limit.",
+      "torque_spec": "Front caliper bolts: 17 lb-ft (23 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Throttle Cable",
+      "interval_miles": 12000,
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "Inspect and adjust throttle cable free play (2-3mm). Lubricate cables.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Fork Oil",
+      "interval_miles": 18000,
+      "interval_km": 30000,
+      "interval_months": null,
+      "description": "Replace front fork oil. Inspect fork seals and dust boots for damage.",
+      "torque_spec": null,
+      "fluid_spec": "Kawasaki fork oil (10W) — 389ml per leg"
+    }
   ]
 }
