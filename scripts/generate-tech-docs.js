@@ -57,7 +57,14 @@ function escXml(s) {
 
 // --- Torque Chart ---
 function generateTorqueChart(make, model, intervals) {
-  const torqueItems = intervals.filter((i) => i.torque_spec)
+  const seen = new Set()
+  const torqueItems = intervals
+    .filter((i) => i.torque_spec)
+    .filter((i) => {
+      if (seen.has(i.service_name)) return false
+      seen.add(i.service_name)
+      return true
+    })
   if (torqueItems.length === 0) return null
 
   const rowH = 32

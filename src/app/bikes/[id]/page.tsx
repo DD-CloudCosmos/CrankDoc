@@ -265,7 +265,11 @@ export default async function BikeDetailPage({ params }: PageProps) {
       {/* Technical Documents */}
       <section className="mb-8">
         <h2 className="mb-4 text-2xl font-bold tracking-tight">Technical Documents</h2>
-        <TechnicalDocViewer documents={technicalDocs} />
+        <TechnicalDocViewer
+          documents={technicalDocs}
+          serviceIntervals={serviceIntervals}
+          motorcycle={motorcycle}
+        />
       </section>
 
       {/* Safety Disclaimer */}

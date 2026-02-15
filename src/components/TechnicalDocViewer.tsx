@@ -1,39 +1,118 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import type { TechnicalDocument } from '@/types/database.types'
+import type { TechnicalDocument, ServiceInterval, Motorcycle } from '@/types/database.types'
 
 interface TechnicalDocViewerProps {
   documents: TechnicalDocument[]
+  serviceIntervals: ServiceInterval[]
+  motorcycle: Motorcycle
 }
 
-const DOC_TYPE_CONFIG: Record<string, { label: string; variant: 'default' | 'secondary' | 'outline' }> = {
-  wiring_diagram: { label: 'Wiring', variant: 'default' },
-  torque_chart: { label: 'Torque', variant: 'secondary' },
-  fluid_chart: { label: 'Fluids', variant: 'outline' },
-  exploded_view: { label: 'Diagram', variant: 'secondary' },
-  reference: { label: 'Reference', variant: 'outline' },
+type TabId = 'wiring' | 'torque' | 'fluids'
+
+interface TabDef {
+  id: TabId
+  label: string
 }
 
-function getDocTypeConfig(docType: string) {
-  return DOC_TYPE_CONFIG[docType] || { label: docType, variant: 'outline' as const }
+function getWiringDocs(documents: TechnicalDocument[]) {
+  return documents.filter((d) => d.doc_type === 'wiring_diagram')
 }
 
-function isImageType(fileType: string) {
-  return fileType.startsWith('image/')
+function getTorqueItems(serviceIntervals: ServiceInterval[]) {
+  const seen = new Set<string>()
+  return serviceIntervals.filter((si) => {
+    if (!si.torque_spec) return false
+    if (seen.has(si.service_name)) return false
+    seen.add(si.service_name)
+    return true
+  })
 }
 
-function isPdfType(fileType: string) {
-  return fileType === 'application/pdf'
+interface FluidItem {
+  label: string
+  capacity: string | null
+  spec: string | null
 }
 
-export function TechnicalDocViewer({ documents }: TechnicalDocViewerProps) {
+function getFluidItems(
+  motorcycle: Motorcycle,
+  serviceIntervals: ServiceInterval[]
+): FluidItem[] {
+  const items: FluidItem[] = []
+
+  if (motorcycle.oil_capacity_liters) {
+    const oilSpec = serviceIntervals.find(
+      (i) => i.fluid_spec && i.service_name.toLowerCase().includes('oil')
+    )
+    items.push({
+      label: 'Engine Oil',
+      capacity: `${motorcycle.oil_capacity_liters} L`,
+      spec: oilSpec?.fluid_spec ?? null,
+    })
+  }
+
+  if (motorcycle.coolant_capacity_liters) {
+    items.push({
+      label: 'Coolant',
+      capacity: `${motorcycle.coolant_capacity_liters} L`,
+      spec: null,
+    })
+  }
+
+  if (motorcycle.fuel_capacity_liters) {
+    items.push({
+      label: 'Fuel Tank',
+      capacity: `${motorcycle.fuel_capacity_liters} L`,
+      spec: null,
+    })
+  }
+
+  const brakeFluid = serviceIntervals.find(
+    (i) => i.fluid_spec && i.service_name.toLowerCase().includes('brake')
+  )
+  if (brakeFluid) {
+    items.push({
+      label: 'Brake Fluid',
+      capacity: null,
+      spec: brakeFluid.fluid_spec,
+    })
+  }
+
+  const forkOil = serviceIntervals.find(
+    (i) => i.fluid_spec && i.service_name.toLowerCase().includes('fork')
+  )
+  if (forkOil) {
+    items.push({
+      label: 'Fork Oil',
+      capacity: null,
+      spec: forkOil.fluid_spec,
+    })
+  }
+
+  return items
+}
+
+export function TechnicalDocViewer({
+  documents,
+  serviceIntervals,
+  motorcycle,
+}: TechnicalDocViewerProps) {
+  const wiringDocs = getWiringDocs(documents)
+  const torqueItems = getTorqueItems(serviceIntervals)
+  const fluidItems = getFluidItems(motorcycle, serviceIntervals)
+
+  const tabs: TabDef[] = []
+  if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
+  if (torqueItems.length > 0) tabs.push({ id: 'torque', label: 'Torque Specs' })
+  if (fluidItems.length > 0) tabs.push({ id: 'fluids', label: 'Fluids' })
+
+  const [activeTab, setActiveTab] = useState<TabId>(tabs[0]?.id ?? 'wiring')
   const [lightboxDoc, setLightboxDoc] = useState<TechnicalDocument | null>(null)
 
-  if (documents.length === 0) {
+  // No data at all
+  if (tabs.length === 0) {
     return (
       <p className="py-8 text-center text-muted-foreground">
         No technical documents available for this motorcycle.
@@ -41,96 +120,57 @@ export function TechnicalDocViewer({ documents }: TechnicalDocViewerProps) {
     )
   }
 
-  function handleDocClick(doc: TechnicalDocument) {
-    if (isImageType(doc.file_type)) {
-      setLightboxDoc(doc)
-    } else {
-      window.open(doc.file_url, '_blank', 'noopener,noreferrer')
-    }
-  }
-
-  function closeLightbox() {
-    setLightboxDoc(null)
-  }
+  // Only one tab — skip tab bar
+  const showTabBar = tabs.length > 1
+  const displayTab = tabs.find((t) => t.id === activeTab) ? activeTab : tabs[0].id
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {documents.map((doc) => {
-          const config = getDocTypeConfig(doc.doc_type)
-          return (
-            <Card
-              key={doc.id}
-              className="cursor-pointer transition-transform duration-200 hover:-translate-y-1"
-              onClick={() => handleDocClick(doc)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  handleDocClick(doc)
-                }
-              }}
+      {/* Tab bar */}
+      {showTabBar && (
+        <div className="mb-4 flex gap-2 border-b border-border" role="tablist">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={displayTab === tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 text-sm font-medium transition-colors ${
+                displayTab === tab.id
+                  ? 'border-b-2 border-primary text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
-              {isImageType(doc.file_type) && (
-                <div className="aspect-[4/3] w-full overflow-hidden rounded-t-[24px]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={doc.file_url}
-                    alt={doc.title}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              )}
-              <CardHeader className="pb-2">
-                <div className="flex items-start justify-between gap-2">
-                  <CardTitle className="text-base">{doc.title}</CardTitle>
-                  <Badge variant={config.variant}>{config.label}</Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {doc.description && (
-                  <p className="mb-2 text-sm text-muted-foreground">{doc.description}</p>
-                )}
-                {doc.source_attribution && (
-                  <p className="mb-2 text-xs text-muted-foreground">
-                    Source: {doc.source_attribution}
-                  </p>
-                )}
-                {isPdfType(doc.file_type) && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-1 w-full"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      const link = document.createElement('a')
-                      link.href = doc.file_url
-                      link.download = doc.title
-                      link.rel = 'noopener noreferrer'
-                      link.click()
-                    }}
-                  >
-                    Download PDF
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Tab content */}
+      {displayTab === 'wiring' && (
+        <WiringContent
+          docs={wiringDocs}
+          onOpenLightbox={setLightboxDoc}
+        />
+      )}
+      {displayTab === 'torque' && <TorqueContent items={torqueItems} />}
+      {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
 
       {/* Lightbox overlay */}
       {lightboxDoc && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-          onClick={closeLightbox}
+          onClick={() => setLightboxDoc(null)}
           role="dialog"
           aria-label={`Viewing ${lightboxDoc.title}`}
         >
-          <div className="relative max-h-[90vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-h-[90vh] max-w-[90vw]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              onClick={closeLightbox}
+              onClick={() => setLightboxDoc(null)}
               className="absolute -right-3 -top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white text-black shadow-lg hover:bg-gray-200"
               aria-label="Close"
             >
@@ -151,5 +191,93 @@ export function TechnicalDocViewer({ documents }: TechnicalDocViewerProps) {
         </div>
       )}
     </>
+  )
+}
+
+// --- Wiring Tab ---
+
+function WiringContent({
+  docs,
+  onOpenLightbox,
+}: {
+  docs: TechnicalDocument[]
+  onOpenLightbox: (doc: TechnicalDocument) => void
+}) {
+  return (
+    <div className="space-y-4">
+      {docs.map((doc) => (
+        <div key={doc.id}>
+          <button
+            className="w-full cursor-pointer overflow-hidden rounded-lg border border-border transition-opacity hover:opacity-90"
+            onClick={() => onOpenLightbox(doc)}
+            aria-label={`View ${doc.title} full size`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={doc.file_url}
+              alt={doc.title}
+              className="w-full"
+            />
+          </button>
+          {doc.source_attribution && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              Source: {doc.source_attribution}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// --- Torque Tab ---
+
+function TorqueContent({ items }: { items: ServiceInterval[] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm" data-testid="torque-table">
+        <thead>
+          <tr className="border-b border-border bg-muted/50">
+            <th className="px-4 py-3 text-left font-semibold">Service Item</th>
+            <th className="px-4 py-3 text-left font-semibold">Torque Specification</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr key={item.id} className="border-b border-border last:border-b-0">
+              <td className="px-4 py-3 font-medium">{item.service_name}</td>
+              <td className="px-4 py-3">{item.torque_spec}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+// --- Fluids Tab ---
+
+function FluidsContent({ items }: { items: FluidItem[] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm" data-testid="fluids-table">
+        <thead>
+          <tr className="border-b border-border bg-muted/50">
+            <th className="px-4 py-3 text-left font-semibold">Fluid</th>
+            <th className="px-4 py-3 text-left font-semibold">Capacity</th>
+            <th className="px-4 py-3 text-left font-semibold">Specification</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr key={item.label} className="border-b border-border last:border-b-0">
+              <td className="px-4 py-3 font-medium">{item.label}</td>
+              <td className="px-4 py-3">{item.capacity ?? '—'}</td>
+              <td className="px-4 py-3">{item.spec ?? '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
