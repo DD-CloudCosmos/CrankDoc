@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { DtcSearch } from '@/components/DtcSearch'
 import { DtcCodeCard } from '@/components/DtcCodeCard'
 import { DtcCategoryFilter } from '@/components/DtcCategoryFilter'
+import { DtcManufacturerFilter } from '@/components/DtcManufacturerFilter'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import type { DtcCode } from '@/types/database.types'
@@ -21,12 +22,13 @@ export function DtcCodeList() {
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [category, setCategory] = useState('')
+  const [manufacturer, setManufacturer] = useState('')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [total, setTotal] = useState(0)
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const fetchCodes = useCallback(async (q: string, cat: string, p: number) => {
+  const fetchCodes = useCallback(async (q: string, cat: string, mfr: string, p: number) => {
     setLoading(true)
     setError(null)
 
@@ -34,6 +36,7 @@ export function DtcCodeList() {
       const params = new URLSearchParams()
       if (q) params.set('q', q)
       if (cat) params.set('category', cat)
+      if (mfr) params.set('manufacturer', mfr)
       params.set('page', String(p))
       params.set('limit', '20')
 
@@ -55,8 +58,8 @@ export function DtcCodeList() {
   }, [])
 
   useEffect(() => {
-    fetchCodes(searchQuery, category, page)
-  }, [searchQuery, category, page, fetchCodes])
+    fetchCodes(searchQuery, category, manufacturer, page)
+  }, [searchQuery, category, manufacturer, page, fetchCodes])
 
   const handleSearch = (query: string) => {
     if (debounceTimer.current) {
@@ -73,10 +76,16 @@ export function DtcCodeList() {
     setPage(1)
   }
 
+  const handleManufacturerChange = (mfr: string) => {
+    setManufacturer(mfr)
+    setPage(1)
+  }
+
   return (
     <div className="space-y-4">
       <DtcSearch onSearch={handleSearch} />
       <DtcCategoryFilter activeCategory={category} onChange={handleCategoryChange} />
+      <DtcManufacturerFilter activeManufacturer={manufacturer} onChange={handleManufacturerChange} />
 
       {loading && (
         <div className="flex items-center justify-center p-8">
@@ -94,7 +103,7 @@ export function DtcCodeList() {
       {!loading && !error && codes.length === 0 && (
         <div className="rounded-lg border border-border bg-card p-8 text-center">
           <p className="text-muted-foreground">
-            {searchQuery || category ? 'No DTC codes match your search' : 'No DTC codes available'}
+            {searchQuery || category || manufacturer ? 'No DTC codes match your search' : 'No DTC codes available'}
           </p>
         </div>
       )}

@@ -12,13 +12,16 @@
  * {
  *   "motorcycle_make": "Honda",
  *   "motorcycle_model": "CBR600RR",
+ *   "motorcycle_generation": "Gen 1 (2003-2004)",
  *   "intervals": [
  *     {
  *       "service_name": "Engine Oil Change",
  *       "interval_miles": 8000,
  *       "interval_km": 12800,
  *       "interval_months": 12,
- *       "description": "Replace engine oil and filter."
+ *       "description": "Replace engine oil and filter.",
+ *       "torque_spec": "Drain plug: 22 lb-ft (30 Nm)",
+ *       "fluid_spec": "10W-30 JASO MA — 3.4L with filter"
  *     }
  *   ]
  * }
@@ -41,17 +44,22 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
 const INTERVALS_DIR = path.join(__dirname, '..', 'data', 'service-intervals')
 
-async function getMotorcycleId(make, model) {
-  const { data, error } = await supabase
+async function getMotorcycleId(make, model, generation) {
+  let query = supabase
     .from('motorcycles')
     .select('id')
     .eq('make', make)
     .eq('model', model)
-    .limit(1)
-    .single()
+
+  if (generation) {
+    query = query.eq('generation', generation)
+  }
+
+  const { data, error } = await query.limit(1).single()
 
   if (error) {
-    console.warn(`  Warning: Could not find motorcycle ${make} ${model}`)
+    const genLabel = generation ? ` [${generation}]` : ''
+    console.warn(`  Warning: Could not find motorcycle ${make} ${model}${genLabel}`)
     return null
   }
   return data.id
@@ -67,7 +75,7 @@ async function importFile(filePath) {
     return { success: 0, failed: 0 }
   }
 
-  const motorcycleId = await getMotorcycleId(data.motorcycle_make, data.motorcycle_model)
+  const motorcycleId = await getMotorcycleId(data.motorcycle_make, data.motorcycle_model, data.motorcycle_generation)
   if (!motorcycleId) {
     console.error(`  SKIP ${fileName}: motorcycle not found in database`)
     return { success: 0, failed: 0 }
@@ -90,6 +98,8 @@ async function importFile(filePath) {
     interval_km: interval.interval_km || null,
     interval_months: interval.interval_months || null,
     description: interval.description || null,
+    torque_spec: interval.torque_spec || null,
+    fluid_spec: interval.fluid_spec || null,
   }))
 
   const { error } = await supabase
@@ -101,7 +111,8 @@ async function importFile(filePath) {
     return { success: 0, failed: rows.length }
   }
 
-  console.log(`  INSERT ${fileName}: ${rows.length} intervals for ${data.motorcycle_make} ${data.motorcycle_model}`)
+  const gen = data.motorcycle_generation ? ` [${data.motorcycle_generation}]` : ''
+  console.log(`  INSERT ${fileName}: ${rows.length} intervals for ${data.motorcycle_make} ${data.motorcycle_model}${gen}`)
   return { success: rows.length, failed: 0 }
 }
 

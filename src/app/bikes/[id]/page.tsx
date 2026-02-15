@@ -6,7 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { DiagnosticTreeCard } from '@/components/DiagnosticTreeCard'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
-import type { Motorcycle, DiagnosticTree, ServiceInterval } from '@/types/database.types'
+import { BikeImage } from '@/components/BikeImage'
+import { SpecSheet } from '@/components/SpecSheet'
+import { TechnicalDocViewer } from '@/components/TechnicalDocViewer'
+import { GenerationNavSelector } from '@/components/GenerationNavSelector'
+import { SafeDisclaimer } from '@/components/SafeDisclaimer'
+import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument } from '@/types/database.types'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -27,6 +32,62 @@ async function getMotorcycle(id: string): Promise<Motorcycle | null> {
   }
 
   return data
+}
+
+async function getGenerations(make: string, model: string): Promise<Motorcycle[]> {
+  const supabase = createServerClient()
+
+  const { data, error } = await supabase
+    .from('motorcycles')
+    .select('*')
+    .eq('make', make)
+    .eq('model', model)
+    .order('year_start', { ascending: true })
+
+  if (error) {
+    console.error('Error fetching generations:', error)
+    return []
+  }
+
+  return data ?? []
+}
+
+async function getPrimaryImage(motorcycleId: string): Promise<MotorcycleImage | null> {
+  const supabase = createServerClient()
+
+  const { data, error } = await supabase
+    .from('motorcycle_images')
+    .select('*')
+    .eq('motorcycle_id', motorcycleId)
+    .eq('is_primary', true)
+    .single()
+
+  if (error) {
+    // Not an error if no image found — just return null
+    if (error.code !== 'PGRST116') {
+      console.error('Error fetching primary image:', error)
+    }
+    return null
+  }
+
+  return data
+}
+
+async function getTechnicalDocuments(motorcycleId: string): Promise<TechnicalDocument[]> {
+  const supabase = createServerClient()
+
+  const { data, error } = await supabase
+    .from('technical_documents')
+    .select('*')
+    .eq('motorcycle_id', motorcycleId)
+    .order('doc_type')
+
+  if (error) {
+    console.error('Error fetching technical documents:', error)
+    return []
+  }
+
+  return data ?? []
 }
 
 async function getDiagnosticTrees(motorcycleId: string): Promise<DiagnosticTree[]> {
@@ -67,19 +128,19 @@ export default async function BikeDetailPage({ params }: PageProps) {
     notFound()
   }
 
-  const trees = await getDiagnosticTrees(motorcycle.id)
-  const serviceIntervals = await getServiceIntervals(motorcycle.id)
+  const { make, model, year_start, year_end, category, generation } = motorcycle
 
-  const { make, model, year_start, year_end, engine_type, displacement_cc, category } = motorcycle
+  // Fetch all data in parallel
+  const [generations, primaryImage, technicalDocs, trees, serviceIntervals] = await Promise.all([
+    getGenerations(make, model),
+    getPrimaryImage(motorcycle.id),
+    getTechnicalDocuments(motorcycle.id),
+    getDiagnosticTrees(motorcycle.id),
+    getServiceIntervals(motorcycle.id),
+  ])
 
   // Format year range
   const yearRange = year_end ? `${year_start}-${year_end}` : `${year_start}-present`
-
-  // Format displacement
-  const displacement = displacement_cc ? `${displacement_cc}cc` : 'Not specified'
-
-  // Format engine type
-  const engineDisplay = engine_type || 'Not specified'
 
   // Format category
   const categoryDisplay = category
@@ -102,89 +163,70 @@ export default async function BikeDetailPage({ params }: PageProps) {
     }
   }
 
+  // Prepare generation items for the selector
+  const generationItems = generations.map((gen) => ({
+    id: gen.id,
+    generation: gen.generation,
+    year_start: gen.year_start,
+    year_end: gen.year_end,
+  }))
+
+  const hasMultipleGenerations = generations.length > 1
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Back button */}
       <div className="mb-6">
         <Link href="/bikes">
           <Button variant="ghost" size="sm" className="mb-4">
             ← Back to all bikes
           </Button>
         </Link>
+      </div>
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h1 className="mb-2 text-3xl font-bold tracking-tight">
-              {make} {model}
-            </h1>
-            <p className="text-xl text-muted-foreground">{yearRange}</p>
+      {/* Hero section */}
+      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <BikeImage
+          image={primaryImage}
+          make={make}
+          model={model}
+          className="w-full"
+        />
+        <div className="flex flex-col justify-center">
+          <h1 className="mb-2 text-3xl font-bold tracking-tight">
+            {make} {model}
+          </h1>
+          <p className="text-xl text-muted-foreground">{yearRange}</p>
+          {generation && (
+            <p className="mt-1 text-base text-muted-foreground">{generation}</p>
+          )}
+          <div className="mt-3">
+            <Badge variant={categoryVariant(category)} className="text-base">
+              {categoryDisplay}
+            </Badge>
           </div>
-          <Badge variant={categoryVariant(category)} className="self-start text-base">
-            {categoryDisplay}
-          </Badge>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Specifications</CardTitle>
-            <CardDescription>Technical details and specifications</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between border-b border-border pb-2">
-              <span className="text-muted-foreground">Make</span>
-              <span className="font-medium">{make}</span>
-            </div>
-            <div className="flex justify-between border-b border-border pb-2">
-              <span className="text-muted-foreground">Model</span>
-              <span className="font-medium">{model}</span>
-            </div>
-            <div className="flex justify-between border-b border-border pb-2">
-              <span className="text-muted-foreground">Years</span>
-              <span className="font-medium">{yearRange}</span>
-            </div>
-            <div className="flex justify-between border-b border-border pb-2">
-              <span className="text-muted-foreground">Engine Type</span>
-              <span className="font-medium">{engineDisplay}</span>
-            </div>
-            <div className="flex justify-between border-b border-border pb-2">
-              <span className="text-muted-foreground">Displacement</span>
-              <span className="font-medium">{displacement}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Category</span>
-              <span className="font-medium">{categoryDisplay}</span>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Generation selector */}
+      {hasMultipleGenerations && (
+        <div className="mb-8">
+          <h2 className="mb-3 text-lg font-semibold">Generations</h2>
+          <GenerationNavSelector
+            generations={generationItems}
+            activeGenerationId={motorcycle.id}
+          />
+        </div>
+      )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Diagnostic Trees</CardTitle>
-            <CardDescription>Available troubleshooting guides</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {trees.length === 0 ? (
-              <div className="rounded-lg border border-border bg-card p-8 text-center">
-                <p className="text-muted-foreground">
-                  No diagnostic trees available yet for this model.
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Check back soon as we add more diagnostic guides.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {trees.map((tree) => (
-                  <DiagnosticTreeCard key={tree.id} tree={tree} />
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      {/* Full Specifications */}
+      <section className="mb-8">
+        <h2 className="mb-4 text-2xl font-bold tracking-tight">Specifications</h2>
+        <SpecSheet motorcycle={motorcycle} />
+      </section>
 
-      <Card className="mt-6">
+      {/* Service Intervals */}
+      <Card className="mb-8">
         <CardHeader>
           <CardTitle>Service Intervals</CardTitle>
           <CardDescription>Recommended maintenance schedule</CardDescription>
@@ -193,6 +235,41 @@ export default async function BikeDetailPage({ params }: PageProps) {
           <ServiceIntervalTable intervals={serviceIntervals} />
         </CardContent>
       </Card>
+
+      {/* Diagnostic Trees */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Diagnostic Trees</CardTitle>
+          <CardDescription>Available troubleshooting guides</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {trees.length === 0 ? (
+            <div className="rounded-lg border border-border bg-card p-8 text-center">
+              <p className="text-muted-foreground">
+                No diagnostic trees available yet for this model.
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Check back soon as we add more diagnostic guides.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {trees.map((tree) => (
+                <DiagnosticTreeCard key={tree.id} tree={tree} />
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Technical Documents */}
+      <section className="mb-8">
+        <h2 className="mb-4 text-2xl font-bold tracking-tight">Technical Documents</h2>
+        <TechnicalDocViewer documents={technicalDocs} />
+      </section>
+
+      {/* Safety Disclaimer */}
+      <SafeDisclaimer variant="full" />
     </div>
   )
 }

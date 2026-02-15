@@ -8,7 +8,10 @@ interface BikeCardProps {
 }
 
 export function BikeCard({ motorcycle }: BikeCardProps) {
-  const { id, make, model, year_start, year_end, engine_type, displacement_cc, category } = motorcycle
+  const {
+    id, make, model, year_start, year_end, engine_type,
+    displacement_cc, category, generation, horsepower, dry_weight_kg
+  } = motorcycle
 
   // Format year range: "2003-2024" or "2003-present"
   const yearRange = year_end ? `${year_start}-${year_end}` : `${year_start}-present`
@@ -23,6 +26,11 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
   const categoryDisplay = category
     ? category.charAt(0).toUpperCase() + category.slice(1)
     : 'Other'
+
+  // Format generation label: "Gen 1 (2003-2004)"
+  const generationLabel = generation
+    ? `${generation} (${yearRange})`
+    : null
 
   // Category color mapping for badges
   const categoryVariant = (cat: string | null) => {
@@ -49,6 +57,11 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
             <Badge variant={categoryVariant(category)}>{categoryDisplay}</Badge>
           </div>
           <CardDescription className="text-base">{yearRange}</CardDescription>
+          {generationLabel && (
+            <Badge variant="outline" className="mt-1 w-fit text-xs">
+              {generationLabel}
+            </Badge>
+          )}
         </CardHeader>
         <CardContent>
           <div className="space-y-1 text-sm">
@@ -60,6 +73,18 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
               <span className="text-muted-foreground">Displacement:</span>
               <span className="font-medium text-foreground">{displacement}</span>
             </div>
+            {horsepower !== null && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Power:</span>
+                <span className="font-medium text-foreground">{horsepower} hp</span>
+              </div>
+            )}
+            {dry_weight_kg !== null && (
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Weight:</span>
+                <span className="font-medium text-foreground">{dry_weight_kg} kg</span>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

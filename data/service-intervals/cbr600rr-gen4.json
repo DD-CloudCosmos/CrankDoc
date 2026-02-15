@@ -1,0 +1,106 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CBR600RR",
+  "motorcycle_generation": "Gen 4 (2013-2024)",
+  "intervals": [
+    {
+      "service_name": "Engine Oil Change",
+      "interval_miles": 8000,
+      "interval_km": 12800,
+      "interval_months": 12,
+      "description": "Replace engine oil and oil filter. Warm engine first for complete drain.",
+      "torque_spec": "Drain plug: 22 lb-ft (30 Nm), Oil filter: 18 lb-ft (24 Nm)",
+      "fluid_spec": "10W-30 JASO MA (Honda Pro GN4) — 3.4L with filter change"
+    },
+    {
+      "service_name": "Valve Clearance Check",
+      "interval_miles": 16000,
+      "interval_km": 26000,
+      "interval_months": null,
+      "description": "Check and adjust intake and exhaust valve clearances using shim-under-bucket system. Intake: 0.16-0.19mm, Exhaust: 0.22-0.27mm.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant Replacement",
+      "interval_miles": 24000,
+      "interval_km": 38400,
+      "interval_months": 24,
+      "description": "Drain and replace engine coolant. Bleed air from system after refill.",
+      "torque_spec": "Drain plug: 5.8 lb-ft (8 Nm)",
+      "fluid_spec": "50/50 Honda Type 2 coolant — 1.87L total capacity"
+    },
+    {
+      "service_name": "Spark Plugs",
+      "interval_miles": 16000,
+      "interval_km": 26000,
+      "interval_months": null,
+      "description": "Replace all four spark plugs. Check electrode condition and gap before install.",
+      "torque_spec": "Spark plug: 9 lb-ft (12 Nm)",
+      "fluid_spec": "NGK IMR9C-9HES, gap 0.031-0.035 in (0.80-0.90 mm)"
+    },
+    {
+      "service_name": "Air Filter",
+      "interval_miles": 16000,
+      "interval_km": 26000,
+      "interval_months": null,
+      "description": "Replace air filter element. Inspect more frequently in dusty conditions.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Adjustment",
+      "interval_miles": 500,
+      "interval_km": 800,
+      "interval_months": null,
+      "description": "Check and adjust drive chain slack (25-35mm free play). Clean and lubricate 525 O-ring chain.",
+      "torque_spec": "Rear axle nut: 76 lb-ft (103 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Chain Lubrication",
+      "interval_miles": 300,
+      "interval_km": 500,
+      "interval_months": null,
+      "description": "Lubricate drive chain after cleaning. Apply to inner side of chain while rotating rear wheel.",
+      "torque_spec": null,
+      "fluid_spec": "O-ring compatible chain lubricant"
+    },
+    {
+      "service_name": "Brake Fluid",
+      "interval_miles": 24000,
+      "interval_km": 38400,
+      "interval_months": 24,
+      "description": "Replace front and rear brake fluid. Bleed system completely until fluid runs clear.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid"
+    },
+    {
+      "service_name": "Brake Pads Inspection",
+      "interval_miles": 6000,
+      "interval_km": 10000,
+      "interval_months": null,
+      "description": "Inspect front and rear brake pad thickness. Replace when at minimum wear indicator.",
+      "torque_spec": "Front caliper bolts: 23 lb-ft (31 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Throttle Cable",
+      "interval_miles": 16000,
+      "interval_km": 26000,
+      "interval_months": null,
+      "description": "Inspect and adjust throttle cable free play (2-6mm). Lubricate cables.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Fork Oil",
+      "interval_miles": 24000,
+      "interval_km": 38400,
+      "interval_months": 24,
+      "description": "Replace front fork oil. Check fork seals for leaks and dust boots for damage.",
+      "torque_spec": null,
+      "fluid_spec": "Honda SS-8 fork oil (10W) — 483ml per leg"
+    }
+  ]
+}

@@ -16,7 +16,11 @@
  *     "subcategory": "ignition",
  *     "severity": "high",
  *     "common_causes": ["Faulty spark plug", ...],
- *     "applies_to_makes": ["Harley-Davidson"]  // optional
+ *     "applies_to_makes": ["Harley-Davidson"],  // optional
+ *     "manufacturer": "Harley-Davidson",         // optional
+ *     "system": "Engine Management",             // optional
+ *     "diagnostic_method": "OBD-II scanner",     // optional
+ *     "fix_reference": "Replace spark plug"      // optional
  *   }
  * ]
  */
@@ -64,6 +68,10 @@ async function importFile(filePath) {
       severity: code.severity || null,
       common_causes: code.common_causes || null,
       applies_to_makes: code.applies_to_makes || null,
+      manufacturer: code.manufacturer || null,
+      system: code.system || null,
+      diagnostic_method: code.diagnostic_method || null,
+      fix_reference: code.fix_reference || null,
     }))
 
     const { error } = await supabase

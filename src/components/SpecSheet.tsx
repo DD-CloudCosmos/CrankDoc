@@ -1,0 +1,95 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import type { Motorcycle } from '@/types/database.types'
+
+interface SpecSheetProps {
+  motorcycle: Motorcycle
+}
+
+interface SpecRow {
+  label: string
+  value: string
+}
+
+interface SpecSection {
+  title: string
+  rows: SpecRow[]
+}
+
+function formatSpec(value: number | string | null, unit: string): string | null {
+  if (value === null) return null
+  if (typeof value === 'string') return value
+  return `${value}${unit}`
+}
+
+function buildSections(motorcycle: Motorcycle): SpecSection[] {
+  const sections: SpecSection[] = []
+
+  // Engine section
+  const engineRows: SpecRow[] = []
+  if (motorcycle.engine_type) engineRows.push({ label: 'Engine Type', value: motorcycle.engine_type })
+  if (motorcycle.displacement_cc !== null) engineRows.push({ label: 'Displacement', value: `${motorcycle.displacement_cc}cc` })
+  if (motorcycle.fuel_system) engineRows.push({ label: 'Fuel System', value: motorcycle.fuel_system })
+  if (motorcycle.horsepower !== null) engineRows.push({ label: 'Horsepower', value: `${motorcycle.horsepower} hp` })
+  if (motorcycle.torque_nm !== null) engineRows.push({ label: 'Torque', value: `${motorcycle.torque_nm} Nm` })
+  if (engineRows.length > 0) sections.push({ title: 'Engine', rows: engineRows })
+
+  // Capacities section
+  const capacityRows: SpecRow[] = []
+  const oilCap = formatSpec(motorcycle.oil_capacity_liters, 'L')
+  if (oilCap) capacityRows.push({ label: 'Oil Capacity', value: oilCap })
+  const fuelCap = formatSpec(motorcycle.fuel_capacity_liters, 'L')
+  if (fuelCap) capacityRows.push({ label: 'Fuel Capacity', value: fuelCap })
+  const coolantCap = formatSpec(motorcycle.coolant_capacity_liters, 'L')
+  if (coolantCap) capacityRows.push({ label: 'Coolant Capacity', value: coolantCap })
+  if (capacityRows.length > 0) sections.push({ title: 'Capacities', rows: capacityRows })
+
+  // Maintenance section
+  const maintenanceRows: SpecRow[] = []
+  if (motorcycle.valve_clearance_intake) maintenanceRows.push({ label: 'Valve Clearance (Intake)', value: motorcycle.valve_clearance_intake })
+  if (motorcycle.valve_clearance_exhaust) maintenanceRows.push({ label: 'Valve Clearance (Exhaust)', value: motorcycle.valve_clearance_exhaust })
+  if (motorcycle.spark_plug) maintenanceRows.push({ label: 'Spark Plug', value: motorcycle.spark_plug })
+  if (maintenanceRows.length > 0) sections.push({ title: 'Maintenance', rows: maintenanceRows })
+
+  // Chassis section
+  const chassisRows: SpecRow[] = []
+  if (motorcycle.dry_weight_kg !== null) chassisRows.push({ label: 'Dry Weight', value: `${motorcycle.dry_weight_kg} kg` })
+  if (motorcycle.tire_front) chassisRows.push({ label: 'Front Tire', value: motorcycle.tire_front })
+  if (motorcycle.tire_rear) chassisRows.push({ label: 'Rear Tire', value: motorcycle.tire_rear })
+  if (chassisRows.length > 0) sections.push({ title: 'Chassis', rows: chassisRows })
+
+  return sections
+}
+
+export function SpecSheet({ motorcycle }: SpecSheetProps) {
+  const sections = buildSections(motorcycle)
+
+  if (sections.length === 0) {
+    return (
+      <p className="py-8 text-center text-muted-foreground">
+        No specifications available for this motorcycle.
+      </p>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {sections.map((section) => (
+        <Card key={section.title}>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">{section.title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {section.rows.map((row) => (
+                <div key={row.label} className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">{row.label}</span>
+                  <span className="font-medium text-foreground">{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )
+}

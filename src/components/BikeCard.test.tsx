@@ -14,6 +14,19 @@ describe('BikeCard', () => {
     displacement_cc: 599,
     category: 'sport',
     image_url: null,
+    generation: null,
+    fuel_system: null,
+    dry_weight_kg: null,
+    horsepower: null,
+    torque_nm: null,
+    fuel_capacity_liters: null,
+    oil_capacity_liters: null,
+    coolant_capacity_liters: null,
+    valve_clearance_intake: null,
+    valve_clearance_exhaust: null,
+    spark_plug: null,
+    tire_front: null,
+    tire_rear: null,
     created_at: '2024-01-01T00:00:00Z',
   }
 
@@ -88,5 +101,44 @@ describe('BikeCard', () => {
     const adventureBike = { ...mockMotorcycle, category: 'adventure' }
     rerender(<BikeCard motorcycle={adventureBike} />)
     expect(screen.getByText('Adventure')).toBeInTheDocument()
+  })
+
+  it('renders generation badge when generation is set', () => {
+    const motorcycleWithGen = {
+      ...mockMotorcycle,
+      generation: 'Gen 1',
+    }
+    render(<BikeCard motorcycle={motorcycleWithGen} />)
+    expect(screen.getByText('Gen 1 (2003-2024)')).toBeInTheDocument()
+  })
+
+  it('does not render generation badge when generation is null', () => {
+    render(<BikeCard motorcycle={mockMotorcycle} />)
+    // Should not have any badge with generation-style text
+    expect(screen.queryByText(/Gen \d/)).not.toBeInTheDocument()
+  })
+
+  it('renders horsepower when available', () => {
+    const motorcycleWithHp = { ...mockMotorcycle, horsepower: 117 }
+    render(<BikeCard motorcycle={motorcycleWithHp} />)
+    expect(screen.getByText('117 hp')).toBeInTheDocument()
+    expect(screen.getByText('Power:')).toBeInTheDocument()
+  })
+
+  it('does not render power row when horsepower is null', () => {
+    render(<BikeCard motorcycle={mockMotorcycle} />)
+    expect(screen.queryByText('Power:')).not.toBeInTheDocument()
+  })
+
+  it('renders dry weight when available', () => {
+    const motorcycleWithWeight = { ...mockMotorcycle, dry_weight_kg: 186 }
+    render(<BikeCard motorcycle={motorcycleWithWeight} />)
+    expect(screen.getByText('186 kg')).toBeInTheDocument()
+    expect(screen.getByText('Weight:')).toBeInTheDocument()
+  })
+
+  it('does not render weight row when dry_weight_kg is null', () => {
+    render(<BikeCard motorcycle={mockMotorcycle} />)
+    expect(screen.queryByText('Weight:')).not.toBeInTheDocument()
   })
 })

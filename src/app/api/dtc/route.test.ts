@@ -38,7 +38,7 @@ describe('GET /api/dtc', () => {
 
   it('returns paginated DTC codes with defaults', async () => {
     const mockCodes = [
-      { id: '1', code: 'P0301', description: 'Cylinder 1 Misfire', category: 'powertrain', subcategory: 'ignition', severity: 'high', common_causes: ['Spark plug'], applies_to_makes: null, created_at: '2024-01-01T00:00:00Z' },
+      { id: '1', code: 'P0301', description: 'Cylinder 1 Misfire', category: 'powertrain', subcategory: 'ignition', severity: 'high', common_causes: ['Spark plug'], applies_to_makes: null, manufacturer: null, system: null, diagnostic_method: null, fix_reference: null, created_at: '2024-01-01T00:00:00Z' },
     ]
     vi.mocked(createServerClient).mockReturnValue(buildMockQuery(mockCodes, 1) as never)
 
@@ -69,7 +69,7 @@ describe('GET /api/dtc', () => {
     expect(data.total).toBe(45)
   })
 
-  it('passes search query to the or filter', async () => {
+  it('passes search query to the or filter including manufacturer and system', async () => {
     const mock = buildMockQuery([], 0)
     vi.mocked(createServerClient).mockReturnValue(mock as never)
 
@@ -77,7 +77,7 @@ describe('GET /api/dtc', () => {
     const request = new Request('http://localhost/api/dtc?q=misfire')
     await GET(request)
 
-    expect(mock._orFn).toHaveBeenCalledWith('code.ilike.%misfire%,description.ilike.%misfire%')
+    expect(mock._orFn).toHaveBeenCalledWith('code.ilike.%misfire%,description.ilike.%misfire%,manufacturer.ilike.%misfire%,system.ilike.%misfire%')
   })
 
   it('passes category filter to the eq filter', async () => {
@@ -89,6 +89,52 @@ describe('GET /api/dtc', () => {
     await GET(request)
 
     expect(mock._eqFn).toHaveBeenCalledWith('category', 'powertrain')
+  })
+
+  it('passes manufacturer filter to the eq filter', async () => {
+    const mock = buildMockQuery([], 0)
+    vi.mocked(createServerClient).mockReturnValue(mock as never)
+
+    const { GET } = await import('./route')
+    const request = new Request('http://localhost/api/dtc?manufacturer=BMW')
+    await GET(request)
+
+    expect(mock._eqFn).toHaveBeenCalledWith('manufacturer', 'BMW')
+  })
+
+  it('passes system filter to the eq filter', async () => {
+    const mock = buildMockQuery([], 0)
+    vi.mocked(createServerClient).mockReturnValue(mock as never)
+
+    const { GET } = await import('./route')
+    const request = new Request('http://localhost/api/dtc?system=ABS')
+    await GET(request)
+
+    expect(mock._eqFn).toHaveBeenCalledWith('system', 'ABS')
+  })
+
+  it('passes severity filter to the eq filter', async () => {
+    const mock = buildMockQuery([], 0)
+    vi.mocked(createServerClient).mockReturnValue(mock as never)
+
+    const { GET } = await import('./route')
+    const request = new Request('http://localhost/api/dtc?severity=critical')
+    await GET(request)
+
+    expect(mock._eqFn).toHaveBeenCalledWith('severity', 'critical')
+  })
+
+  it('applies multiple filters together', async () => {
+    const mock = buildMockQuery([], 0)
+    vi.mocked(createServerClient).mockReturnValue(mock as never)
+
+    const { GET } = await import('./route')
+    const request = new Request('http://localhost/api/dtc?category=powertrain&manufacturer=Honda&severity=high')
+    await GET(request)
+
+    expect(mock._eqFn).toHaveBeenCalledWith('category', 'powertrain')
+    expect(mock._eqFn).toHaveBeenCalledWith('manufacturer', 'Honda')
+    expect(mock._eqFn).toHaveBeenCalledWith('severity', 'high')
   })
 
   it('returns empty results for no matches', async () => {

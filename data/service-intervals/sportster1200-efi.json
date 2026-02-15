@@ -1,0 +1,115 @@
+{
+  "motorcycle_make": "Harley-Davidson",
+  "motorcycle_model": "Sportster 1200",
+  "motorcycle_generation": "EFI (2007-2022)",
+  "intervals": [
+    {
+      "service_name": "Engine Oil Change",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": 12,
+      "description": "Replace engine oil and oil filter. Warm engine first for complete drain. Sportster uses a separate oil tank.",
+      "torque_spec": "Drain plug: 14-21 lb-ft (19-28 Nm), Oil filter: hand-tight plus 1/2 turn",
+      "fluid_spec": "20W-50 (Screamin Eagle SYN3 or equivalent V-twin oil) — 2.8 qt with filter"
+    },
+    {
+      "service_name": "Primary Chaincase Oil",
+      "interval_miles": 10000,
+      "interval_km": 16000,
+      "interval_months": 12,
+      "description": "Drain and replace primary chaincase lubricant. Check primary chain tension and compensator sprocket.",
+      "torque_spec": "Primary drain plug: 14-21 lb-ft (19-28 Nm)",
+      "fluid_spec": "Harley-Davidson Formula+ or Sportster Primary Oil — 32 oz (1 qt)"
+    },
+    {
+      "service_name": "Transmission Oil",
+      "interval_miles": 20000,
+      "interval_km": 32000,
+      "interval_months": 24,
+      "description": "Drain and replace transmission lubricant. Inspect for metal shavings on drain plug magnet.",
+      "torque_spec": "Transmission drain plug: 14-21 lb-ft (19-28 Nm)",
+      "fluid_spec": "75W-140 synthetic gear oil — 24 oz"
+    },
+    {
+      "service_name": "Spark Plugs",
+      "interval_miles": 20000,
+      "interval_km": 32000,
+      "interval_months": null,
+      "description": "Replace spark plugs. EFI models maintain consistent mixture so plug condition should be uniform.",
+      "torque_spec": "Spark plug: 11-18 lb-ft (15-24 Nm)",
+      "fluid_spec": "Harley 6R12 or NGK DCPR7E"
+    },
+    {
+      "service_name": "Air Filter",
+      "interval_miles": 25000,
+      "interval_km": 40000,
+      "interval_months": null,
+      "description": "Replace air filter element. Clean and re-oil if using reusable filter.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Valve Clearance Check",
+      "interval_miles": 10000,
+      "interval_km": 16000,
+      "interval_months": null,
+      "description": "Check and adjust pushrod valve clearances on both cylinders. Engine must be stone cold.",
+      "torque_spec": "Pushrod cover: 5-6 lb-ft (7-8 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Drive Belt Inspection",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": null,
+      "description": "Inspect drive belt for cracks, fraying, or missing teeth. Check belt tension and alignment.",
+      "torque_spec": null,
+      "fluid_spec": "Belt deflection: 5/16-3/8 in (8-10 mm) at midpoint"
+    },
+    {
+      "service_name": "Drive Belt Replacement",
+      "interval_miles": 50000,
+      "interval_km": 80000,
+      "interval_months": null,
+      "description": "Replace drive belt. Inspect rear pulley and front sprocket for wear. Verify alignment after install.",
+      "torque_spec": "Rear axle nut: 60-65 lb-ft (81-88 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake Fluid",
+      "interval_miles": null,
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace front and rear brake fluid. Bleed system completely until fluid runs clear.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid"
+    },
+    {
+      "service_name": "Brake Pads Inspection",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": null,
+      "description": "Check front and rear brake pad wear. Replace when pad material is at minimum thickness.",
+      "torque_spec": "Caliper mounting bolts: 28-38 lb-ft (38-51 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Fork Oil",
+      "interval_miles": 20000,
+      "interval_km": 32000,
+      "interval_months": null,
+      "description": "Replace front fork oil. Inspect fork seals and bushings for leaks.",
+      "torque_spec": null,
+      "fluid_spec": "Type E fork oil — 10.4 oz (310ml) per leg"
+    },
+    {
+      "service_name": "Battery Check",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": 6,
+      "description": "Check battery terminals for corrosion. Test battery voltage (12.6V resting) and charging system output (13.5-14.5V at 2000 RPM). EFI requires good battery health.",
+      "torque_spec": null,
+      "fluid_spec": null
+    }
+  ]
+}

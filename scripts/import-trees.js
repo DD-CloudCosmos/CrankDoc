@@ -37,17 +37,22 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
 const TREES_DIR = path.join(__dirname, '..', 'data', 'trees')
 
-async function getMotorcycleId(make, model) {
-  const { data, error } = await supabase
+async function getMotorcycleId(make, model, generation) {
+  let query = supabase
     .from('motorcycles')
     .select('id')
     .eq('make', make)
     .eq('model', model)
-    .limit(1)
-    .single()
+
+  if (generation) {
+    query = query.eq('generation', generation)
+  }
+
+  const { data, error } = await query.limit(1).single()
 
   if (error) {
-    console.warn(`  Warning: Could not find motorcycle ${make} ${model}`)
+    const genLabel = generation ? ` [${generation}]` : ''
+    console.warn(`  Warning: Could not find motorcycle ${make} ${model}${genLabel}`)
     return null
   }
   return data.id
@@ -67,7 +72,7 @@ async function importTree(filePath) {
   // Look up motorcycle if specified
   let motorcycleId = null
   if (tree.motorcycle_make && tree.motorcycle_model) {
-    motorcycleId = await getMotorcycleId(tree.motorcycle_make, tree.motorcycle_model)
+    motorcycleId = await getMotorcycleId(tree.motorcycle_make, tree.motorcycle_model, tree.motorcycle_generation)
   }
 
   // Check for existing tree with same title and motorcycle

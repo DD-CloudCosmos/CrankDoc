@@ -4,6 +4,7 @@
  * This file contains TypeScript types for the Supabase database schema.
  * These types are manually created based on the schema in:
  * supabase/migrations/001_initial_schema.sql
+ * supabase/migrations/002_phase5_schema.sql
  *
  * To regenerate from live database (after schema changes):
  * ```bash
@@ -35,6 +36,19 @@ export interface Database {
           displacement_cc: number | null
           category: string | null
           image_url: string | null
+          generation: string | null
+          fuel_system: string | null
+          dry_weight_kg: number | null
+          horsepower: number | null
+          torque_nm: number | null
+          fuel_capacity_liters: number | null
+          oil_capacity_liters: number | null
+          coolant_capacity_liters: number | null
+          valve_clearance_intake: string | null
+          valve_clearance_exhaust: string | null
+          spark_plug: string | null
+          tire_front: string | null
+          tire_rear: string | null
           created_at: string
         }
         Insert: {
@@ -47,6 +61,19 @@ export interface Database {
           displacement_cc?: number | null
           category?: string | null
           image_url?: string | null
+          generation?: string | null
+          fuel_system?: string | null
+          dry_weight_kg?: number | null
+          horsepower?: number | null
+          torque_nm?: number | null
+          fuel_capacity_liters?: number | null
+          oil_capacity_liters?: number | null
+          coolant_capacity_liters?: number | null
+          valve_clearance_intake?: string | null
+          valve_clearance_exhaust?: string | null
+          spark_plug?: string | null
+          tire_front?: string | null
+          tire_rear?: string | null
           created_at?: string
         }
         Update: {
@@ -59,6 +86,19 @@ export interface Database {
           displacement_cc?: number | null
           category?: string | null
           image_url?: string | null
+          generation?: string | null
+          fuel_system?: string | null
+          dry_weight_kg?: number | null
+          horsepower?: number | null
+          torque_nm?: number | null
+          fuel_capacity_liters?: number | null
+          oil_capacity_liters?: number | null
+          coolant_capacity_liters?: number | null
+          valve_clearance_intake?: string | null
+          valve_clearance_exhaust?: string | null
+          spark_plug?: string | null
+          tire_front?: string | null
+          tire_rear?: string | null
           created_at?: string
         }
       }
@@ -104,6 +144,10 @@ export interface Database {
           severity: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes: string[] | null
           applies_to_makes: string[] | null
+          manufacturer: string | null
+          system: string | null
+          diagnostic_method: string | null
+          fix_reference: string | null
           created_at: string
         }
         Insert: {
@@ -115,6 +159,10 @@ export interface Database {
           severity?: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes?: string[] | null
           applies_to_makes?: string[] | null
+          manufacturer?: string | null
+          system?: string | null
+          diagnostic_method?: string | null
+          fix_reference?: string | null
           created_at?: string
         }
         Update: {
@@ -126,6 +174,10 @@ export interface Database {
           severity?: 'low' | 'medium' | 'high' | 'critical' | null
           common_causes?: string[] | null
           applies_to_makes?: string[] | null
+          manufacturer?: string | null
+          system?: string | null
+          diagnostic_method?: string | null
+          fix_reference?: string | null
           created_at?: string
         }
       }
@@ -138,6 +190,8 @@ export interface Database {
           interval_km: number | null
           interval_months: number | null
           description: string | null
+          torque_spec: string | null
+          fluid_spec: string | null
           created_at: string
         }
         Insert: {
@@ -148,6 +202,8 @@ export interface Database {
           interval_km?: number | null
           interval_months?: number | null
           description?: string | null
+          torque_spec?: string | null
+          fluid_spec?: string | null
           created_at?: string
         }
         Update: {
@@ -158,6 +214,72 @@ export interface Database {
           interval_km?: number | null
           interval_months?: number | null
           description?: string | null
+          torque_spec?: string | null
+          fluid_spec?: string | null
+          created_at?: string
+        }
+      }
+      technical_documents: {
+        Row: {
+          id: string
+          motorcycle_id: string | null
+          title: string
+          doc_type: string
+          description: string | null
+          file_url: string
+          file_type: string
+          source_attribution: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          motorcycle_id?: string | null
+          title: string
+          doc_type: string
+          description?: string | null
+          file_url: string
+          file_type: string
+          source_attribution?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          motorcycle_id?: string | null
+          title?: string
+          doc_type?: string
+          description?: string | null
+          file_url?: string
+          file_type?: string
+          source_attribution?: string | null
+          created_at?: string
+        }
+      }
+      motorcycle_images: {
+        Row: {
+          id: string
+          motorcycle_id: string
+          image_url: string
+          alt_text: string
+          is_primary: boolean
+          source_attribution: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          motorcycle_id: string
+          image_url: string
+          alt_text: string
+          is_primary?: boolean
+          source_attribution?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          motorcycle_id?: string
+          image_url?: string
+          alt_text?: string
+          is_primary?: boolean
+          source_attribution?: string | null
           created_at?: string
         }
       }
@@ -180,6 +302,8 @@ export type Motorcycle = Tables<'motorcycles'>
 export type DiagnosticTree = Tables<'diagnostic_trees'>
 export type DtcCode = Tables<'dtc_codes'>
 export type ServiceInterval = Tables<'service_intervals'>
+export type TechnicalDocument = Tables<'technical_documents'>
+export type MotorcycleImage = Tables<'motorcycle_images'>
 
 // Decision tree node types (for tree_data JSONB structure)
 export interface DecisionTreeNode {

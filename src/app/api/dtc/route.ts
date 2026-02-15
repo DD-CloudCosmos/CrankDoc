@@ -13,6 +13,9 @@ export async function GET(request: Request): Promise<NextResponse<DtcApiResponse
   const { searchParams } = new URL(request.url)
   const q = searchParams.get('q') || ''
   const category = searchParams.get('category') || ''
+  const manufacturer = searchParams.get('manufacturer') || ''
+  const system = searchParams.get('system') || ''
+  const severity = searchParams.get('severity') || ''
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10))
   const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)))
 
@@ -26,11 +29,23 @@ export async function GET(request: Request): Promise<NextResponse<DtcApiResponse
       .select('*', { count: 'exact' })
 
     if (q) {
-      query = query.or(`code.ilike.%${q}%,description.ilike.%${q}%`)
+      query = query.or(`code.ilike.%${q}%,description.ilike.%${q}%,manufacturer.ilike.%${q}%,system.ilike.%${q}%`)
     }
 
     if (category) {
       query = query.eq('category', category)
+    }
+
+    if (manufacturer) {
+      query = query.eq('manufacturer', manufacturer)
+    }
+
+    if (system) {
+      query = query.eq('system', system)
+    }
+
+    if (severity) {
+      query = query.eq('severity', severity)
     }
 
     const { data, error, count } = await query

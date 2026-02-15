@@ -23,6 +23,10 @@ const mockCodes = [
     severity: 'high',
     common_causes: ['Faulty spark plug'],
     applies_to_makes: null,
+    manufacturer: 'Honda',
+    system: 'Engine Management',
+    diagnostic_method: 'OBD-II scanner',
+    fix_reference: 'Replace spark plug',
     created_at: '2024-01-01T00:00:00Z',
   },
   {
@@ -34,6 +38,10 @@ const mockCodes = [
     severity: 'medium',
     common_causes: ['Faulty sensor'],
     applies_to_makes: null,
+    manufacturer: 'BMW',
+    system: 'ABS',
+    diagnostic_method: 'BMW GS-911',
+    fix_reference: null,
     created_at: '2024-01-01T00:00:00Z',
   },
 ]
@@ -118,10 +126,51 @@ describe('DtcCodeList', () => {
     render(<DtcCodeList />)
 
     await waitFor(() => {
-      expect(screen.getByText('All')).toBeInTheDocument()
+      expect(screen.getByText('Powertrain (P)')).toBeInTheDocument()
     })
-    expect(screen.getByText('Powertrain (P)')).toBeInTheDocument()
     expect(screen.getByText('Chassis (C)')).toBeInTheDocument()
+  })
+
+  it('renders manufacturer filter pills', async () => {
+    mockApiResponse(mockCodes, 2)
+
+    render(<DtcCodeList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer')).toBeInTheDocument()
+    })
+    expect(screen.getByText('Harley-Davidson')).toBeInTheDocument()
+    // BMW and Honda appear both as filter buttons and in card badges, so use getAllByText
+    expect(screen.getAllByText('BMW').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Honda').length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('fetches with manufacturer parameter when manufacturer filter is clicked', async () => {
+    const user = userEvent.setup()
+
+    mockApiResponse(mockCodes, 2)
+    render(<DtcCodeList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('P0301')).toBeInTheDocument()
+    })
+
+    // Find the BMW filter button (not the badge on the card)
+    // The filter button is inside the manufacturer filter section
+    const bmwElements = screen.getAllByText('BMW')
+    const bmwButton = bmwElements.find((el) => el.closest('button'))
+    expect(bmwButton).toBeDefined()
+
+    mockApiResponse(mockCodes, 1)
+    await user.click(bmwButton!)
+
+    await waitFor(() => {
+      const calls = mockFetch.mock.calls
+      const hasMfrCall = calls.some((call: unknown[]) =>
+        typeof call[0] === 'string' && call[0].includes('manufacturer=BMW')
+      )
+      expect(hasMfrCall).toBe(true)
+    }, { timeout: 2000 })
   })
 
   it('fetches with search parameter after typing', async () => {
