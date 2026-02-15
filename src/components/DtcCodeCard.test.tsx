@@ -9,7 +9,14 @@ describe('DtcCodeCard', () => {
     code: 'P0301',
     description: 'Cylinder 1 Misfire Detected',
     category: 'powertrain',
+    subcategory: null,
+    severity: null,
     common_causes: ['Faulty spark plug', 'Ignition coil failure'],
+    applies_to_makes: null,
+    manufacturer: null,
+    system: null,
+    diagnostic_method: null,
+    fix_reference: null,
     created_at: '2024-01-01T00:00:00Z',
   }
 

@@ -12,6 +12,8 @@ const mockIntervals: ServiceInterval[] = [
     interval_km: 8000,
     interval_months: 12,
     description: 'Replace engine oil and filter.',
+    torque_spec: null,
+    fluid_spec: null,
     created_at: '2024-01-01T00:00:00Z',
   },
   {
@@ -22,6 +24,8 @@ const mockIntervals: ServiceInterval[] = [
     interval_km: 32000,
     interval_months: null,
     description: null,
+    torque_spec: null,
+    fluid_spec: null,
     created_at: '2024-01-01T00:00:00Z',
   },
 ]
@@ -62,6 +66,8 @@ describe('ServiceIntervalTable', () => {
         interval_km: null,
         interval_months: 24,
         description: null,
+        torque_spec: null,
+        fluid_spec: null,
         created_at: '2024-01-01T00:00:00Z',
       },
     ]
