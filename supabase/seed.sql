@@ -1,70 +1,179 @@
 -- CrankDoc Seed Data
--- Pilot motorcycle data for MVP (5 models)
+-- Pilot motorcycle data with generation splits and expanded specs
 
--- Insert pilot motorcycles
-INSERT INTO motorcycles (make, model, year_start, year_end, engine_type, displacement_cc, category, image_url) VALUES
-  (
-    'Honda',
-    'CBR600RR',
-    2003,
-    2024,
-    'inline-4',
-    599,
-    'sport',
-    NULL
-  ),
-  (
-    'Yamaha',
-    'MT-07',
-    2014,
-    NULL,  -- Still in production
-    'parallel-twin',
-    689,
-    'naked',
-    NULL
-  ),
-  (
-    'Harley-Davidson',
-    'Sportster 883',
-    1986,
-    2022,  -- Last year of Sportster before moving to Sportster S
-    'v-twin',
-    883,
-    'cruiser',
-    NULL
-  ),
-  (
-    'Harley-Davidson',
-    'Sportster 1200',
-    1988,
-    2022,
-    'v-twin',
-    1202,
-    'cruiser',
-    NULL
-  ),
-  (
-    'Kawasaki',
-    'Ninja 400',
-    2018,
-    NULL,  -- Still in production
-    'parallel-twin',
-    399,
-    'sport',
-    NULL
-  ),
-  (
-    'BMW',
-    'R1250GS',
-    2019,
-    NULL,  -- Still in production
-    'boxer-twin',
-    1254,
-    'adventure',
-    NULL
-  );
+-- ============================================================
+-- Motorcycles (10 rows: 4 CBR + 2 Sportster 883 + 2 Sportster 1200 + MT-07 + Ninja 400 + R1250GS)
+-- ============================================================
 
--- Insert sample DTC codes (common across motorcycles)
+-- Honda CBR600RR Gen 1 (2003-2004): Original
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Honda', 'CBR600RR', 2003, 2004, 'inline-4', 599, 'sport', NULL,
+  'Gen 1 (2003-2004)', 'EFI (PGM-FI)', 170, 117, 66,
+  18, 3.4, NULL,
+  '0.16-0.19mm', '0.22-0.27mm', 'NGK IMR9C-9HES',
+  '120/70ZR17', '180/55ZR17'
+);
+
+-- Honda CBR600RR Gen 2 (2005-2006): New frame, inverted forks, dual-stage FI
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Honda', 'CBR600RR', 2005, 2006, 'inline-4', 599, 'sport', NULL,
+  'Gen 2 (2005-2006)', 'EFI (PGM-FI, dual-stage)', 155, 118, 66,
+  18, 3.4, NULL,
+  '0.16-0.19mm', '0.22-0.27mm', 'NGK IMR9C-9HES',
+  '120/70ZR17', '180/55ZR17'
+);
+
+-- Honda CBR600RR Gen 3 (2007-2012): All-new engine, lighter, C-ABS option 2009+
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Honda', 'CBR600RR', 2007, 2012, 'inline-4', 599, 'sport', NULL,
+  'Gen 3 (2007-2012)', 'EFI (PGM-FI)', 156, 118, 66,
+  18.1, 3.4, NULL,
+  '0.16-0.19mm', '0.22-0.27mm', 'NGK IMR9C-9HES',
+  '120/70ZR17', '180/55ZR17'
+);
+
+-- Honda CBR600RR Gen 4 (2013-2024): Big Piston Fork, revised ECU, TC 2021+
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Honda', 'CBR600RR', 2013, 2024, 'inline-4', 599, 'sport', NULL,
+  'Gen 4 (2013-2024)', 'EFI (PGM-FI)', 162, 118, 66,
+  18.1, 3.4, NULL,
+  '0.16-0.19mm', '0.22-0.27mm', 'NGK IMR9C-9HES',
+  '120/70ZR17', '180/55ZR17'
+);
+
+-- Yamaha MT-07 (2014-present): Single generation
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Yamaha', 'MT-07', 2014, NULL, 'parallel-twin', 689, 'naked', NULL,
+  NULL, 'EFI', 182, 73, 67,
+  14, 1.7, NULL,
+  '0.11-0.20mm', '0.21-0.30mm', 'NGK LMAR8A-9',
+  '120/70ZR17', '180/55ZR17'
+);
+
+-- Harley-Davidson Sportster 883 Carbureted (1986-2006)
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Harley-Davidson', 'Sportster 883', 1986, 2006, 'v-twin', 883, 'cruiser', NULL,
+  'Carbureted (1986-2006)', 'Keihin CV40 carburetor', 227, 53, 69,
+  12.5, 2.8, NULL,
+  '0.001-0.003in', '0.002-0.004in', 'Harley 6R12',
+  'MH90-21', '150/80-16'
+);
+
+-- Harley-Davidson Sportster 883 EFI (2007-2022)
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Harley-Davidson', 'Sportster 883', 2007, 2022, 'v-twin', 883, 'cruiser', NULL,
+  'EFI (2007-2022)', 'Electronic Sequential Port Fuel Injection', 256, 53, 69,
+  12.5, 2.8, NULL,
+  '0.001-0.003in', '0.002-0.004in', 'Harley 6R12',
+  'MH90-21', '150/80-16'
+);
+
+-- Harley-Davidson Sportster 1200 Carbureted (1988-2006)
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Harley-Davidson', 'Sportster 1200', 1988, 2006, 'v-twin', 1202, 'cruiser', NULL,
+  'Carbureted (1988-2006)', 'Keihin CV40 carburetor', 230, 67, 84,
+  12.5, 2.8, NULL,
+  '0.001-0.003in', '0.002-0.004in', 'Harley 6R12',
+  'MH90-21', '150/80-16'
+);
+
+-- Harley-Davidson Sportster 1200 EFI (2007-2022)
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Harley-Davidson', 'Sportster 1200', 2007, 2022, 'v-twin', 1202, 'cruiser', NULL,
+  'EFI (2007-2022)', 'Electronic Sequential Port Fuel Injection', 256, 67, 84,
+  12.5, 2.8, NULL,
+  '0.001-0.003in', '0.002-0.004in', 'Harley 6R12',
+  'MH90-21', '150/80-16'
+);
+
+-- Kawasaki Ninja 400 (2018-present): Single generation
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'Kawasaki', 'Ninja 400', 2018, NULL, 'parallel-twin', 399, 'sport', NULL,
+  NULL, 'EFI', 168, 49, 38,
+  14, 2.3, 2.0,
+  '0.13-0.17mm', '0.20-0.24mm', 'NGK LMAR9G',
+  '110/70R17', '150/60R17'
+);
+
+-- BMW R1250GS (2019-present): Single generation (ShiftCam)
+INSERT INTO motorcycles (
+  make, model, year_start, year_end, engine_type, displacement_cc, category, image_url,
+  generation, fuel_system, dry_weight_kg, horsepower, torque_nm,
+  fuel_capacity_liters, oil_capacity_liters, coolant_capacity_liters,
+  valve_clearance_intake, valve_clearance_exhaust, spark_plug,
+  tire_front, tire_rear
+) VALUES (
+  'BMW', 'R1250GS', 2019, NULL, 'boxer-twin', 1254, 'adventure', NULL,
+  NULL, 'EFI (ShiftCam)', 249, 136, 143,
+  20, 4.0, 1.5,
+  '0.15-0.20mm', '0.30-0.35mm', 'NGK LMAR8BI-9',
+  '120/70R19', '170/60R17'
+);
+
+-- ============================================================
+-- DTC Codes
+-- ============================================================
+
 INSERT INTO dtc_codes (code, description, category, common_causes) VALUES
   (
     'P0301',
@@ -109,7 +218,12 @@ INSERT INTO dtc_codes (code, description, category, common_causes) VALUES
     ARRAY['Faulty wheel speed sensor', 'Damaged sensor ring', 'Wiring issues', 'Debris on sensor']
   );
 
+-- ============================================================
+-- Sample Diagnostic Trees
+-- ============================================================
+
 -- Insert sample diagnostic tree (Engine Won't Start for Honda CBR600RR)
+-- Uses LIMIT 1 since there are now multiple CBR600RR generations
 INSERT INTO diagnostic_trees (motorcycle_id, title, description, category, difficulty, tree_data)
 SELECT
   id,
@@ -247,7 +361,8 @@ SELECT
     ]
   }'::jsonb
 FROM motorcycles
-WHERE make = 'Honda' AND model = 'CBR600RR';
+WHERE make = 'Honda' AND model = 'CBR600RR'
+LIMIT 1;
 
 -- Insert sample diagnostic tree (Won't Idle for Yamaha MT-07)
 INSERT INTO diagnostic_trees (motorcycle_id, title, description, category, difficulty, tree_data)

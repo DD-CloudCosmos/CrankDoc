@@ -41,17 +41,22 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
 const INTERVALS_DIR = path.join(__dirname, '..', 'data', 'service-intervals')
 
-async function getMotorcycleId(make, model) {
-  const { data, error } = await supabase
+async function getMotorcycleId(make, model, generation) {
+  let query = supabase
     .from('motorcycles')
     .select('id')
     .eq('make', make)
     .eq('model', model)
-    .limit(1)
-    .single()
+
+  if (generation) {
+    query = query.eq('generation', generation)
+  }
+
+  const { data, error } = await query.limit(1).single()
 
   if (error) {
-    console.warn(`  Warning: Could not find motorcycle ${make} ${model}`)
+    const genLabel = generation ? ` [${generation}]` : ''
+    console.warn(`  Warning: Could not find motorcycle ${make} ${model}${genLabel}`)
     return null
   }
   return data.id
@@ -67,7 +72,7 @@ async function importFile(filePath) {
     return { success: 0, failed: 0 }
   }
 
-  const motorcycleId = await getMotorcycleId(data.motorcycle_make, data.motorcycle_model)
+  const motorcycleId = await getMotorcycleId(data.motorcycle_make, data.motorcycle_model, data.motorcycle_generation)
   if (!motorcycleId) {
     console.error(`  SKIP ${fileName}: motorcycle not found in database`)
     return { success: 0, failed: 0 }
