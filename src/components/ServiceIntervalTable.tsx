@@ -8,7 +8,7 @@ interface ServiceIntervalTableProps {
 export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
   if (intervals.length === 0) {
     return (
-      <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+      <div className="rounded-lg border border-border bg-card p-8 text-center">
         <p className="text-muted-foreground">
           No service intervals available for this model.
         </p>
@@ -22,16 +22,16 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
       <div className="hidden overflow-x-auto sm:block">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800">
-              <th className="pb-2 pr-4 text-left font-medium text-zinc-400">Service</th>
-              <th className="pb-2 pr-4 text-right font-medium text-zinc-400">Miles</th>
-              <th className="pb-2 pr-4 text-right font-medium text-zinc-400">Km</th>
-              <th className="pb-2 text-right font-medium text-zinc-400">Months</th>
+            <tr className="border-b border-border">
+              <th className="pb-2 pr-4 text-left font-medium text-muted-foreground">Service</th>
+              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Miles</th>
+              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Km</th>
+              <th className="pb-2 text-right font-medium text-muted-foreground">Months</th>
             </tr>
           </thead>
           <tbody>
             {intervals.map((interval) => (
-              <tr key={interval.id} className="border-b border-zinc-800/50">
+              <tr key={interval.id} className="border-b border-border">
                 <td className="py-3 pr-4">
                   <p className="font-medium">{interval.service_name}</p>
                   {interval.description && (
@@ -62,7 +62,7 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
               {interval.description && (
                 <p className="mt-1 text-xs text-muted-foreground">{interval.description}</p>
               )}
-              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-400">
+              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 {interval.interval_miles && (
                   <span>{interval.interval_miles.toLocaleString()} mi</span>
                 )}

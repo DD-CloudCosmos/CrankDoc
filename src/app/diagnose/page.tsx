@@ -24,15 +24,15 @@ export default async function DiagnosePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold">Diagnostic Trees</h1>
+        <h1 className="mb-2 text-3xl font-bold tracking-tight">Diagnostic Trees</h1>
         <p className="text-muted-foreground">
           Step-by-step troubleshooting for common motorcycle issues
         </p>
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-800 bg-red-900/20 p-8 text-center">
-          <p className="text-red-400">Error loading diagnostic trees</p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center">
+          <p className="text-red-700">Error loading diagnostic trees</p>
           <p className="mt-2 text-sm text-muted-foreground">
             Failed to fetch diagnostic trees from database. Please try again later.
           </p>

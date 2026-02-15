@@ -35,7 +35,7 @@ export function BikeFilters({ availableMakes }: BikeFiltersProps) {
   const hasActiveFilters = currentCategory || currentMake
 
   return (
-    <div className="mb-6 space-y-4 rounded-lg border border-zinc-800 bg-zinc-900 p-4">
+    <div className="mb-6 space-y-4 rounded-[24px] bg-[#EADFCB] p-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Filters</h2>
         {hasActiveFilters && (
@@ -43,7 +43,7 @@ export function BikeFilters({ availableMakes }: BikeFiltersProps) {
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="text-zinc-400 hover:text-zinc-100"
+            className="text-muted-foreground hover:text-foreground"
           >
             Clear all
           </Button>
@@ -52,13 +52,14 @@ export function BikeFilters({ availableMakes }: BikeFiltersProps) {
 
       {/* Category filter */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-zinc-300">Category</label>
+        <label className="mb-2 block text-sm font-medium text-foreground">Category</label>
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((category) => (
             <Button
               key={category}
               variant={currentCategory === category ? 'default' : 'outline'}
               size="sm"
+              className={currentCategory === category ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground border-border'}
               onClick={() => updateFilter('category', currentCategory === category ? null : category)}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -69,13 +70,14 @@ export function BikeFilters({ availableMakes }: BikeFiltersProps) {
 
       {/* Make filter */}
       <div>
-        <label className="mb-2 block text-sm font-medium text-zinc-300">Make</label>
+        <label className="mb-2 block text-sm font-medium text-foreground">Make</label>
         <div className="flex flex-wrap gap-2">
           {availableMakes.map((make) => (
             <Button
               key={make}
               variant={currentMake === make ? 'default' : 'outline'}
               size="sm"
+              className={currentMake === make ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground border-border'}
               onClick={() => updateFilter('make', currentMake === make ? null : make)}
             >
               {make}

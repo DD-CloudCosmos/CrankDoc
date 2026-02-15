@@ -108,7 +108,7 @@ export function CardExamples() {
           </Button>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-muted-foreground">
             You can customize the layout by overriding default classes.
           </p>
         </CardContent>
@@ -123,13 +123,13 @@ export function CardExamples() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <p className="text-sm font-medium">Required Tools:</p>
-            <ul className="text-sm text-zinc-400 list-disc list-inside">
+            <ul className="text-sm text-muted-foreground list-disc list-inside">
               <li>Fuel pressure gauge</li>
               <li>Service manual</li>
             </ul>
           </div>
 
-          <Card className="bg-zinc-800">
+          <Card className="bg-secondary">
             <CardHeader>
               <CardTitle className="text-base">Safety Warning</CardTitle>
             </CardHeader>

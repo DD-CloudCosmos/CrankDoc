@@ -58,9 +58,9 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
 
       {/* Safety Warning */}
       {currentNode.warning && (
-        <div className="flex items-start gap-3 rounded-lg border border-yellow-800 bg-yellow-900/30 p-4">
-          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-400" />
-          <p className="text-sm text-yellow-200">{currentNode.warning}</p>
+        <div className="flex items-start gap-3 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-700" />
+          <p className="text-sm text-yellow-700">{currentNode.warning}</p>
         </div>
       )}
 
@@ -91,8 +91,8 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
           {currentNode.type === 'check' && (
             <div className="space-y-4">
               {currentNode.instructions && (
-                <div className="rounded-lg bg-zinc-800/50 p-4">
-                  <p className="text-sm text-zinc-300">{currentNode.instructions}</p>
+                <div className="rounded-lg bg-card p-4 shadow-[var(--shadow-soft)]">
+                  <p className="text-sm text-foreground">{currentNode.instructions}</p>
                 </div>
               )}
               {currentNode.next && (
@@ -108,7 +108,7 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
           {currentNode.type === 'solution' && (
             <div className="space-y-4">
               {currentNode.action && (
-                <div className="flex items-start gap-3 rounded-lg bg-zinc-800/50 p-4">
+                <div className="flex items-start gap-3 rounded-lg bg-card p-4 shadow-[var(--shadow-soft)]">
                   <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                   <div>
                     <p className="font-medium">{currentNode.action}</p>
@@ -118,9 +118,9 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
               {currentNode.details && (
                 <p className="text-sm text-muted-foreground">{currentNode.details}</p>
               )}
-              <div className="flex items-center gap-2 rounded-lg border border-green-800 bg-green-900/20 p-3">
-                <CheckCircle className="h-5 w-5 text-green-400" />
-                <span className="text-sm text-green-300">Diagnosis complete</span>
+              <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3">
+                <CheckCircle className="h-5 w-5 text-green-700" />
+                <span className="text-sm text-green-700">Diagnosis complete</span>
               </div>
             </div>
           )}

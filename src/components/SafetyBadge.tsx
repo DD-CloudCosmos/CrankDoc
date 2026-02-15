@@ -8,15 +8,15 @@ interface SafetyBadgeProps {
 const safetyConfig = {
   green: {
     label: 'Beginner Safe',
-    className: 'bg-green-900/50 text-green-400 border-green-800',
+    className: 'bg-green-50 text-green-700 border-green-200',
   },
   yellow: {
     label: 'Use Caution',
-    className: 'bg-yellow-900/50 text-yellow-400 border-yellow-800',
+    className: 'bg-yellow-50 text-yellow-700 border-yellow-200',
   },
   red: {
     label: 'Professional Recommended',
-    className: 'bg-red-900/50 text-red-400 border-red-800',
+    className: 'bg-red-50 text-red-700 border-red-200',
   },
 } as const
 
@@ -26,7 +26,7 @@ export function SafetyBadge({ level, className }: SafetyBadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center rounded-[999px] border px-2.5 py-0.5 text-xs font-medium',
         config.className,
         className
       )}

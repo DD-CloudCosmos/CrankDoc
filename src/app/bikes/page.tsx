@@ -78,7 +78,7 @@ export default async function BikesPage({ searchParams }: PageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold">Motorcycle Database</h1>
+        <h1 className="mb-2 text-3xl font-bold tracking-tight">Motorcycle Database</h1>
         <p className="text-muted-foreground">
           Browse specifications and technical data for various motorcycle models
         </p>
@@ -89,9 +89,9 @@ export default async function BikesPage({ searchParams }: PageProps) {
       </Suspense>
 
       {error && (
-        <div className="mb-6 rounded-lg border border-red-900 bg-red-950 p-4 text-red-200">
+        <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
           <p className="font-semibold">Error loading motorcycles</p>
-          <p className="text-sm">{error}</p>
+          <p className="text-sm text-red-600">{error}</p>
         </div>
       )}
 

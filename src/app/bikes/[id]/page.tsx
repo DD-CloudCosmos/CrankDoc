@@ -113,7 +113,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="mb-2 text-3xl font-bold">
+            <h1 className="mb-2 text-3xl font-bold tracking-tight">
               {make} {model}
             </h1>
             <p className="text-xl text-muted-foreground">{yearRange}</p>
@@ -131,28 +131,28 @@ export default async function BikeDetailPage({ params }: PageProps) {
             <CardDescription>Technical details and specifications</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex justify-between border-b border-zinc-800 pb-2">
-              <span className="text-zinc-400">Make</span>
+            <div className="flex justify-between border-b border-border pb-2">
+              <span className="text-muted-foreground">Make</span>
               <span className="font-medium">{make}</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-800 pb-2">
-              <span className="text-zinc-400">Model</span>
+            <div className="flex justify-between border-b border-border pb-2">
+              <span className="text-muted-foreground">Model</span>
               <span className="font-medium">{model}</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-800 pb-2">
-              <span className="text-zinc-400">Years</span>
+            <div className="flex justify-between border-b border-border pb-2">
+              <span className="text-muted-foreground">Years</span>
               <span className="font-medium">{yearRange}</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-800 pb-2">
-              <span className="text-zinc-400">Engine Type</span>
+            <div className="flex justify-between border-b border-border pb-2">
+              <span className="text-muted-foreground">Engine Type</span>
               <span className="font-medium">{engineDisplay}</span>
             </div>
-            <div className="flex justify-between border-b border-zinc-800 pb-2">
-              <span className="text-zinc-400">Displacement</span>
+            <div className="flex justify-between border-b border-border pb-2">
+              <span className="text-muted-foreground">Displacement</span>
               <span className="font-medium">{displacement}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-zinc-400">Category</span>
+              <span className="text-muted-foreground">Category</span>
               <span className="font-medium">{categoryDisplay}</span>
             </div>
           </CardContent>
@@ -165,7 +165,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
           </CardHeader>
           <CardContent>
             {trees.length === 0 ? (
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+              <div className="rounded-lg border border-border bg-card p-8 text-center">
                 <p className="text-muted-foreground">
                   No diagnostic trees available yet for this model.
                 </p>

@@ -9,10 +9,11 @@ vi.mock('next/navigation', () => ({
 describe('Navigation', () => {
   it('renders all nav items', () => {
     render(<Navigation />)
-    expect(screen.getByText('Home')).toBeInTheDocument()
-    expect(screen.getByText('Diagnose')).toBeInTheDocument()
-    expect(screen.getByText('Bikes')).toBeInTheDocument()
-    expect(screen.getByText('DTC')).toBeInTheDocument()
+    // Each item appears in both mobile and desktop navs
+    expect(screen.getAllByText('Home').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Diagnose').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Bikes').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('DTC').length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders nav links with correct hrefs', () => {
@@ -25,9 +26,32 @@ describe('Navigation', () => {
     expect(hrefs).toContain('/dtc')
   })
 
-  it('highlights the active route', () => {
+  it('applies active styling to the current route on desktop', () => {
     render(<Navigation />)
-    const homeLink = screen.getByText('Home').closest('a')
-    expect(homeLink?.className).toContain('text-primary')
+    // Desktop nav links with "Home" text — the active one gets bg-[#1F1F1F]
+    const homeLinks = screen.getAllByText('Home')
+    const desktopHomeLink = homeLinks.find((el) =>
+      el.closest('a')?.className.includes('bg-[#1F1F1F]')
+    )
+    expect(desktopHomeLink).toBeDefined()
+  })
+
+  it('applies active opacity to the current route on mobile', () => {
+    render(<Navigation />)
+    const homeLinks = screen.getAllByText('Home')
+    const mobileHomeLink = homeLinks.find((el) =>
+      el.closest('a')?.className.includes('opacity-100')
+    )
+    expect(mobileHomeLink).toBeDefined()
+  })
+
+  it('applies inactive styling to non-active routes', () => {
+    render(<Navigation />)
+    const diagnoseLinks = screen.getAllByText('Diagnose')
+    // At least one should have inactive desktop styling (text-foreground without bg-[#1F1F1F])
+    const inactiveDesktop = diagnoseLinks.find(
+      (el) => !el.closest('a')?.className.includes('bg-[#1F1F1F]')
+    )
+    expect(inactiveDesktop).toBeDefined()
   })
 })

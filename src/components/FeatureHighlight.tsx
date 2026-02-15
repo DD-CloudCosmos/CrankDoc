@@ -10,7 +10,7 @@ interface FeatureHighlightProps {
 
 export function FeatureHighlight({ icon, title, description, href }: FeatureHighlightProps) {
   return (
-    <Link href={href} className="block transition-transform hover:scale-105">
+    <Link href={href} className="block transition-transform duration-200 hover:-translate-y-1">
       <Card className="h-full">
         <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
           {icon}

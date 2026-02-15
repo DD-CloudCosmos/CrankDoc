@@ -1,23 +1,26 @@
 @import "tailwindcss";
 
-/* Dark theme as default (workshop-friendly) */
+/* Warm neutral editorial theme (Lumière-inspired) */
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --card: #18181b;
-  --card-foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #18181b;
-  --secondary: #27272a;
-  --secondary-foreground: #fafafa;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  --accent: #27272a;
-  --accent-foreground: #fafafa;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #d4d4d8;
-  --radius: 0.5rem;
+  --background: #F2E8D8;
+  --foreground: #1F1F1F;
+  --card: #FFFFFF;
+  --card-foreground: #1F1F1F;
+  --primary: #1F1F1F;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EADFCB;
+  --secondary-foreground: #1F1F1F;
+  --muted: #D8CBB4;
+  --muted-foreground: #6B6356;
+  --accent: #EADFCB;
+  --accent-foreground: #1F1F1F;
+  --border: #D8CBB4;
+  --input: #EADFCB;
+  --ring: #1F1F1F;
+  --radius: 0.75rem;
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
 @theme inline {
@@ -36,8 +39,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
 }
 
 body {

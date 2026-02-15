@@ -6,7 +6,7 @@ interface LogoProps {
 
 export function Logo({ className }: LogoProps) {
   return (
-    <h1 className={cn('text-2xl font-bold text-zinc-900 dark:text-zinc-50', className)}>
+    <h1 className={cn('text-2xl font-bold text-foreground', className)}>
       CrankDoc
     </h1>
   )

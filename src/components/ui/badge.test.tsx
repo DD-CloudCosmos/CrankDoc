@@ -11,13 +11,13 @@ describe('Badge', () => {
   it('renders with default variant', () => {
     render(<Badge>Default</Badge>)
     const badge = screen.getByText('Default')
-    expect(badge).toHaveClass('bg-zinc-100')
+    expect(badge).toHaveClass('bg-primary')
   })
 
   it('renders with secondary variant', () => {
     render(<Badge variant="secondary">Secondary</Badge>)
     const badge = screen.getByText('Secondary')
-    expect(badge).toHaveClass('bg-zinc-200')
+    expect(badge).toHaveClass('bg-secondary')
   })
 
   it('renders with destructive variant', () => {
@@ -29,7 +29,7 @@ describe('Badge', () => {
   it('renders with outline variant', () => {
     render(<Badge variant="outline">Outline</Badge>)
     const badge = screen.getByText('Outline')
-    expect(badge).toHaveClass('border-zinc-200')
+    expect(badge).toHaveClass('border-border')
   })
 
   it('applies custom className', () => {

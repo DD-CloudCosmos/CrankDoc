@@ -18,7 +18,7 @@ describe('Card', () => {
   it('applies default styling classes', () => {
     const { container } = render(<Card>Test</Card>)
     const card = container.firstChild as HTMLElement
-    expect(card).toHaveClass('rounded-xl', 'border', 'border-zinc-800', 'bg-zinc-900')
+    expect(card).toHaveClass('rounded-[24px]', 'border', 'border-border', 'bg-card')
   })
 
   it('applies custom className', () => {
@@ -75,7 +75,7 @@ describe('CardDescription', () => {
   it('applies default styling classes', () => {
     const { container } = render(<CardDescription>Test</CardDescription>)
     const description = container.firstChild as HTMLElement
-    expect(description).toHaveClass('text-sm', 'text-zinc-400')
+    expect(description).toHaveClass('text-sm', 'text-muted-foreground')
   })
 
   it('applies custom className', () => {

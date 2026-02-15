@@ -23,7 +23,7 @@ describe('Button', () => {
   it('renders with default variant', () => {
     render(<Button>Default</Button>)
     const button = screen.getByRole('button', { name: /default/i })
-    expect(button).toHaveClass('bg-zinc-50')
+    expect(button).toHaveClass('bg-primary')
   })
 
   it('renders with destructive variant', () => {
@@ -41,13 +41,13 @@ describe('Button', () => {
   it('renders with secondary variant', () => {
     render(<Button variant="secondary">Secondary</Button>)
     const button = screen.getByRole('button', { name: /secondary/i })
-    expect(button).toHaveClass('bg-zinc-100')
+    expect(button).toHaveClass('bg-secondary')
   })
 
   it('renders with ghost variant', () => {
     render(<Button variant="ghost">Ghost</Button>)
     const button = screen.getByRole('button', { name: /ghost/i })
-    expect(button).toHaveClass('hover:bg-zinc-100')
+    expect(button).toHaveClass('hover:bg-accent')
   })
 
   it('renders with link variant', () => {
@@ -65,13 +65,13 @@ describe('Button', () => {
   it('renders with large size', () => {
     render(<Button size="lg">Large</Button>)
     const button = screen.getByRole('button', { name: /large/i })
-    expect(button).toHaveClass('h-10')
+    expect(button).toHaveClass('h-12')
   })
 
   it('renders with icon size', () => {
     render(<Button size="icon" aria-label="icon button">X</Button>)
     const button = screen.getByRole('button', { name: /icon button/i })
-    expect(button).toHaveClass('h-9', 'w-9')
+    expect(button).toHaveClass('h-12', 'w-12')
   })
 
   it('applies custom className', () => {

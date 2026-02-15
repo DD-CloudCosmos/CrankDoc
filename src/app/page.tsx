@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
-      <div className="mb-12 text-center">
+      <div className="mb-12 rounded-[24px] bg-[#EADFCB] p-8 text-center sm:p-12">
         <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           CrankDoc
         </h1>
@@ -20,21 +20,23 @@ export default function Home() {
           Step-by-step diagnostic troubleshooting for Honda, Yamaha, Kawasaki,
           Harley-Davidson, and BMW motorcycles
         </p>
-        <Button asChild size="lg">
+        <Button asChild size="lg" className="rounded-[999px]">
           <Link href="/diagnose">Start Diagnosing &rarr;</Link>
         </Button>
       </div>
 
       {/* Stats Banner */}
-      <div className="mb-12 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground sm:gap-8 sm:text-base">
-        <span className="font-semibold text-foreground">57</span>{' '}
-        Diagnostic Trees
-        <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
-        <span className="font-semibold text-foreground">6</span>{' '}
-        Motorcycle Models
-        <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
-        <span className="font-semibold text-foreground">500+</span>{' '}
-        DTC Codes
+      <div className="mb-12 rounded-[24px] bg-card p-6 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+        <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground sm:gap-8 sm:text-base">
+          <span className="font-semibold text-foreground">57</span>{' '}
+          Diagnostic Trees
+          <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
+          <span className="font-semibold text-foreground">6</span>{' '}
+          Motorcycle Models
+          <span className="hidden text-border sm:inline" aria-hidden="true">|</span>
+          <span className="font-semibold text-foreground">500+</span>{' '}
+          DTC Codes
+        </div>
       </div>
 
       {/* How It Works */}

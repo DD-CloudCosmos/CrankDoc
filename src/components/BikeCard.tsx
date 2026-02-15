@@ -41,8 +41,8 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
   }
 
   return (
-    <Link href={`/bikes/${id}`} className="block transition-transform hover:scale-105">
-      <Card className="h-full">
+    <Link href={`/bikes/${id}`} className="block transition-transform duration-200 hover:-translate-y-1">
+      <Card className="h-full rounded-[24px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
         <CardHeader>
           <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
             <CardTitle className="min-w-0 break-words text-xl">{make} {model}</CardTitle>
@@ -53,12 +53,12 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
         <CardContent>
           <div className="space-y-1 text-sm">
             <div className="flex justify-between">
-              <span className="text-zinc-400">Engine:</span>
-              <span className="font-medium text-zinc-100">{engineDisplay}</span>
+              <span className="text-muted-foreground">Engine:</span>
+              <span className="font-medium text-foreground">{engineDisplay}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-zinc-400">Displacement:</span>
-              <span className="font-medium text-zinc-100">{displacement}</span>
+              <span className="text-muted-foreground">Displacement:</span>
+              <span className="font-medium text-foreground">{displacement}</span>
             </div>
           </div>
         </CardContent>

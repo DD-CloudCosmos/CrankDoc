@@ -86,8 +86,8 @@ export function DtcCodeList() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-800 bg-red-900/20 p-8 text-center">
-          <p className="text-red-400">{error}</p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center">
+          <p className="text-red-700">{error}</p>
         </div>
       )}
 

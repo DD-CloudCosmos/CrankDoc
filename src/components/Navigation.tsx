@@ -32,8 +32,9 @@ export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card md:static md:border-0">
-      <div className="flex items-center justify-around md:justify-start md:gap-6 md:px-6 md:py-4">
+    <>
+      {/* Mobile: floating bottom bar */}
+      <nav className="fixed bottom-4 left-4 right-4 z-50 flex items-center justify-around rounded-[24px] bg-[#1F1F1F] px-2 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.12)] md:hidden">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           const Icon = item.icon;
@@ -43,18 +44,40 @@ export function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-1 px-2 py-3 text-xs transition-colors sm:px-4 md:flex-row md:gap-2 md:text-sm",
-                isActive
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                "flex flex-col items-center gap-1 px-2 text-xs text-white transition-opacity",
+                isActive ? "opacity-100" : "opacity-60"
               )}
             >
-              <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Icon className="h-5 w-5" />
               <span>{item.name}</span>
             </Link>
           );
         })}
-      </div>
-    </nav>
+      </nav>
+
+      {/* Desktop: minimal top bar */}
+      <nav className="hidden md:block">
+        <div className="flex items-center gap-2 px-6 py-4">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-2 rounded-[999px] px-4 py-2 text-sm transition-colors",
+                  isActive
+                    ? "bg-[#1F1F1F] text-white"
+                    : "text-foreground hover:text-foreground/70"
+                )}
+              >
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 }

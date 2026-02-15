@@ -74,8 +74,8 @@ export function VinDecoder() {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-800 bg-red-900/20 p-4 text-center">
-          <p className="text-sm text-red-400">{error}</p>
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-center">
+          <p className="text-sm text-red-700">{error}</p>
         </div>
       )}
 
@@ -86,8 +86,8 @@ export function VinDecoder() {
           </CardHeader>
           <CardContent className="space-y-3">
             {displayFields.map(({ label, value }) => (
-              <div key={label} className="flex justify-between border-b border-zinc-800 pb-2">
-                <span className="text-zinc-400">{label}</span>
+              <div key={label} className="flex justify-between border-b border-border pb-2">
+                <span className="text-muted-foreground">{label}</span>
                 <span className="font-medium">{value}</span>
               </div>
             ))}

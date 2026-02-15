@@ -4,8 +4,8 @@
   "description": "Step-by-step motorcycle diagnostic troubleshooting",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#09090b",
-  "theme_color": "#09090b",
+  "background_color": "#F2E8D8",
+  "theme_color": "#F2E8D8",
   "icons": [
     {
       "src": "/icons/icon-192.png",

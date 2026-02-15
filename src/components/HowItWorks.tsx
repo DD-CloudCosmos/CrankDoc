@@ -34,7 +34,7 @@ export function HowItWorks() {
           return (
             <Card key={step.number} className="relative">
               <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-800 text-sm font-bold text-zinc-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1F1F1F] text-sm font-bold text-white">
                   {step.number}
                 </div>
                 <Icon className="h-8 w-8 text-primary" />
