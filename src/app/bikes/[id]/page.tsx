@@ -2,13 +2,10 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { DiagnosticTreeCard } from '@/components/DiagnosticTreeCard'
-import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import { BikeImage } from '@/components/BikeImage'
-import { SpecSheet } from '@/components/SpecSheet'
-import { TechnicalDocViewer } from '@/components/TechnicalDocViewer'
+import { QuickSpecs } from '@/components/QuickSpecs'
+import { BikeDetailTabs } from '@/components/BikeDetailTabs'
 import { GenerationNavSelector } from '@/components/GenerationNavSelector'
 import { SafeDisclaimer } from '@/components/SafeDisclaimer'
 import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument } from '@/types/database.types'
@@ -205,6 +202,13 @@ export default async function BikeDetailPage({ params }: PageProps) {
               {categoryDisplay}
             </Badge>
           </div>
+          {trees.length > 0 && (
+            <div className="mt-5">
+              <Link href={`/diagnose?bike=${motorcycle.id}`}>
+                <Button size="lg" className="w-full md:w-auto">Start Diagnosing</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -219,60 +223,17 @@ export default async function BikeDetailPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Full Specifications */}
+      {/* Quick Specs */}
+      <div className="mb-6">
+        <QuickSpecs motorcycle={motorcycle} />
+      </div>
+
+      {/* Unified tabbed reference section */}
       <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-bold tracking-tight">Specifications</h2>
-        <SpecSheet motorcycle={motorcycle} />
-      </section>
-
-      {/* Service Intervals */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Service Intervals</CardTitle>
-          <CardDescription>Recommended maintenance schedule</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ServiceIntervalTable intervals={serviceIntervals} />
-        </CardContent>
-      </Card>
-
-      {/* Diagnostic Trees CTA */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Diagnostic Trees</CardTitle>
-          <CardDescription>Step-by-step troubleshooting guides</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {trees.length === 0 ? (
-            <div className="rounded-lg border border-border bg-card p-8 text-center">
-              <p className="text-muted-foreground">
-                No diagnostic trees available yet for this model.
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Check back soon as we add more diagnostic guides.
-              </p>
-            </div>
-          ) : (
-            <div className="text-center py-4">
-              <p className="text-2xl font-bold mb-1">{trees.length}</p>
-              <p className="text-muted-foreground mb-4">
-                diagnostic {trees.length === 1 ? 'guide' : 'guides'} available
-              </p>
-              <Link href={`/diagnose?bike=${motorcycle.id}`}>
-                <Button size="lg">Start Diagnosing</Button>
-              </Link>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Technical Documents */}
-      <section className="mb-8">
-        <h2 className="mb-4 text-2xl font-bold tracking-tight">Technical Documents</h2>
-        <TechnicalDocViewer
+        <BikeDetailTabs
+          motorcycle={motorcycle}
           documents={technicalDocs}
           serviceIntervals={serviceIntervals}
-          motorcycle={motorcycle}
         />
       </section>
 

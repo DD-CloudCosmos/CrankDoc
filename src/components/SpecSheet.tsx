@@ -33,16 +33,6 @@ function buildSections(motorcycle: Motorcycle): SpecSection[] {
   if (motorcycle.torque_nm !== null) engineRows.push({ label: 'Torque', value: `${motorcycle.torque_nm} Nm` })
   if (engineRows.length > 0) sections.push({ title: 'Engine', rows: engineRows })
 
-  // Capacities section
-  const capacityRows: SpecRow[] = []
-  const oilCap = formatSpec(motorcycle.oil_capacity_liters, 'L')
-  if (oilCap) capacityRows.push({ label: 'Oil Capacity', value: oilCap })
-  const fuelCap = formatSpec(motorcycle.fuel_capacity_liters, 'L')
-  if (fuelCap) capacityRows.push({ label: 'Fuel Capacity', value: fuelCap })
-  const coolantCap = formatSpec(motorcycle.coolant_capacity_liters, 'L')
-  if (coolantCap) capacityRows.push({ label: 'Coolant Capacity', value: coolantCap })
-  if (capacityRows.length > 0) sections.push({ title: 'Capacities', rows: capacityRows })
-
   // Maintenance section
   const maintenanceRows: SpecRow[] = []
   if (motorcycle.valve_clearance_intake) maintenanceRows.push({ label: 'Valve Clearance (Intake)', value: motorcycle.valve_clearance_intake })

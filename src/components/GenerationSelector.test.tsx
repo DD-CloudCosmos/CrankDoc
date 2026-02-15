@@ -18,8 +18,8 @@ describe('GenerationSelector', () => {
         onSelect={vi.fn()}
       />
     )
-    expect(screen.getByText('Gen 1 (2003-2006)')).toBeInTheDocument()
-    expect(screen.getByText('Gen 2 (2007-2012)')).toBeInTheDocument()
+    expect(screen.getByText('Gen 1')).toBeInTheDocument()
+    expect(screen.getByText('Gen 2')).toBeInTheDocument()
     expect(screen.getByText('2013-present')).toBeInTheDocument()
   })
 
@@ -57,7 +57,7 @@ describe('GenerationSelector', () => {
       />
     )
 
-    await user.click(screen.getByText('Gen 2 (2007-2012)'))
+    await user.click(screen.getByText('Gen 2'))
     expect(onSelect).toHaveBeenCalledWith('gen-2')
   })
 
@@ -71,11 +71,11 @@ describe('GenerationSelector', () => {
     )
     const buttons = container.querySelectorAll('button')
     // Active button (gen-2) should have dark background class
-    const gen2Button = screen.getByText('Gen 2 (2007-2012)').closest('button')!
+    const gen2Button = screen.getByText('Gen 2').closest('button')!
     expect(gen2Button.className).toContain('bg-[#1F1F1F]')
 
     // Inactive buttons should have outline/background class
-    const gen1Button = screen.getByText('Gen 1 (2003-2006)').closest('button')!
+    const gen1Button = screen.getByText('Gen 1').closest('button')!
     expect(gen1Button.className).toContain('bg-background')
 
     expect(buttons.length).toBe(3)
@@ -90,6 +90,24 @@ describe('GenerationSelector', () => {
       />
     )
     expect(screen.getByText('2013-present')).toBeInTheDocument()
+  })
+
+  it('does not duplicate years when generation already contains them', () => {
+    const generationsWithYears = [
+      { id: 'gen-a', generation: 'Gen 1 (2003-2004)', year_start: 2003, year_end: 2004 },
+      { id: 'gen-b', generation: 'Gen 2 (2005-2006)', year_start: 2005, year_end: 2006 },
+    ]
+    render(
+      <GenerationSelector
+        generations={generationsWithYears}
+        activeGenerationId="gen-a"
+        onSelect={vi.fn()}
+      />
+    )
+    // Should show the generation string as-is, NOT "Gen 1 (2003-2004) (2003-2004)"
+    expect(screen.getByText('Gen 1 (2003-2004)')).toBeInTheDocument()
+    expect(screen.getByText('Gen 2 (2005-2006)')).toBeInTheDocument()
+    expect(screen.queryByText(/\(2003-2004\).*\(2003-2004\)/)).not.toBeInTheDocument()
   })
 
   it('shows only year range when generation name is null', () => {

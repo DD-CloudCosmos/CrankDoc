@@ -16,11 +16,10 @@ interface GenerationSelectorProps {
 }
 
 function formatGenerationLabel(gen: Generation): string {
-  const yearRange = gen.year_end ? `${gen.year_start}-${gen.year_end}` : `${gen.year_start}-present`
   if (gen.generation) {
-    return `${gen.generation} (${yearRange})`
+    return gen.generation
   }
-  return yearRange
+  return gen.year_end ? `${gen.year_start}-${gen.year_end}` : `${gen.year_start}-present`
 }
 
 export function GenerationSelector({ generations, activeGenerationId, onSelect }: GenerationSelectorProps) {

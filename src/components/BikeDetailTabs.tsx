@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { SpecSheet } from '@/components/SpecSheet'
+import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import type { TechnicalDocument, ServiceInterval, Motorcycle } from '@/types/database.types'
 
-interface TechnicalDocViewerProps {
+interface BikeDetailTabsProps {
+  motorcycle: Motorcycle
   documents: TechnicalDocument[]
   serviceIntervals: ServiceInterval[]
-  motorcycle: Motorcycle
 }
 
-type TabId = 'wiring' | 'torque' | 'fluids'
+type TabId = 'specs' | 'service' | 'fluids' | 'wiring'
 
 interface TabDef {
   id: TabId
@@ -18,16 +20,6 @@ interface TabDef {
 
 function getWiringDocs(documents: TechnicalDocument[]) {
   return documents.filter((d) => d.doc_type === 'wiring_diagram')
-}
-
-function getTorqueItems(serviceIntervals: ServiceInterval[]) {
-  const seen = new Set<string>()
-  return serviceIntervals.filter((si) => {
-    if (!si.torque_spec) return false
-    if (seen.has(si.service_name)) return false
-    seen.add(si.service_name)
-    return true
-  })
 }
 
 interface FluidItem {
@@ -94,33 +86,23 @@ function getFluidItems(
   return items
 }
 
-export function TechnicalDocViewer({
+export function BikeDetailTabs({
+  motorcycle,
   documents,
   serviceIntervals,
-  motorcycle,
-}: TechnicalDocViewerProps) {
+}: BikeDetailTabsProps) {
   const wiringDocs = getWiringDocs(documents)
-  const torqueItems = getTorqueItems(serviceIntervals)
   const fluidItems = getFluidItems(motorcycle, serviceIntervals)
 
-  const tabs: TabDef[] = []
-  if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
-  if (torqueItems.length > 0) tabs.push({ id: 'torque', label: 'Torque Specs' })
+  // Specs tab is always shown
+  const tabs: TabDef[] = [{ id: 'specs', label: 'Specs' }]
+  if (serviceIntervals.length > 0) tabs.push({ id: 'service', label: 'Service' })
   if (fluidItems.length > 0) tabs.push({ id: 'fluids', label: 'Fluids' })
+  if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
 
-  const [activeTab, setActiveTab] = useState<TabId>(tabs[0]?.id ?? 'wiring')
+  const [activeTab, setActiveTab] = useState<TabId>('specs')
   const [lightboxDoc, setLightboxDoc] = useState<TechnicalDocument | null>(null)
 
-  // No data at all
-  if (tabs.length === 0) {
-    return (
-      <p className="py-8 text-center text-muted-foreground">
-        No technical documents available for this motorcycle.
-      </p>
-    )
-  }
-
-  // Only one tab — skip tab bar
   const showTabBar = tabs.length > 1
   const displayTab = tabs.find((t) => t.id === activeTab) ? activeTab : tabs[0].id
 
@@ -148,14 +130,15 @@ export function TechnicalDocViewer({
       )}
 
       {/* Tab content */}
+      {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
+      {displayTab === 'service' && <ServiceIntervalTable intervals={serviceIntervals} />}
+      {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
       {displayTab === 'wiring' && (
         <WiringContent
           docs={wiringDocs}
           onOpenLightbox={setLightboxDoc}
         />
       )}
-      {displayTab === 'torque' && <TorqueContent items={torqueItems} />}
-      {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
 
       {/* Lightbox overlay */}
       {lightboxDoc && (
@@ -226,31 +209,6 @@ function WiringContent({
           )}
         </div>
       ))}
-    </div>
-  )
-}
-
-// --- Torque Tab ---
-
-function TorqueContent({ items }: { items: ServiceInterval[] }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm" data-testid="torque-table">
-        <thead>
-          <tr className="border-b border-border bg-muted/50">
-            <th className="px-4 py-3 text-left font-semibold">Service Item</th>
-            <th className="px-4 py-3 text-left font-semibold">Torque Specification</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.id} className="border-b border-border last:border-b-0">
-              <td className="px-4 py-3 font-medium">{item.service_name}</td>
-              <td className="px-4 py-3">{item.torque_spec}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   )
 }

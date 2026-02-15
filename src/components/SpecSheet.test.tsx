@@ -59,9 +59,13 @@ describe('SpecSheet', () => {
   it('renders all spec sections for a full motorcycle', () => {
     render(<SpecSheet motorcycle={fullMotorcycle} />)
     expect(screen.getByText('Engine')).toBeInTheDocument()
-    expect(screen.getByText('Capacities')).toBeInTheDocument()
     expect(screen.getByText('Maintenance')).toBeInTheDocument()
     expect(screen.getByText('Chassis')).toBeInTheDocument()
+  })
+
+  it('does not render Capacities section (moved to Fluids tab)', () => {
+    render(<SpecSheet motorcycle={fullMotorcycle} />)
+    expect(screen.queryByText('Capacities')).not.toBeInTheDocument()
   })
 
   it('renders engine specs with formatted values', () => {
@@ -71,13 +75,6 @@ describe('SpecSheet', () => {
     expect(screen.getByText('PGM-FI')).toBeInTheDocument()
     expect(screen.getByText('118 hp')).toBeInTheDocument()
     expect(screen.getByText('66 Nm')).toBeInTheDocument()
-  })
-
-  it('renders capacity specs with L suffix', () => {
-    render(<SpecSheet motorcycle={fullMotorcycle} />)
-    expect(screen.getByText('3.4L')).toBeInTheDocument()
-    expect(screen.getByText('18L')).toBeInTheDocument()
-    expect(screen.getByText('2.2L')).toBeInTheDocument()
   })
 
   it('renders maintenance specs', () => {
@@ -119,9 +116,6 @@ describe('SpecSheet', () => {
     expect(screen.getByText('Fuel System')).toBeInTheDocument()
     expect(screen.getByText('Horsepower')).toBeInTheDocument()
     expect(screen.getByText('Torque')).toBeInTheDocument()
-    expect(screen.getByText('Oil Capacity')).toBeInTheDocument()
-    expect(screen.getByText('Fuel Capacity')).toBeInTheDocument()
-    expect(screen.getByText('Coolant Capacity')).toBeInTheDocument()
     expect(screen.getByText('Valve Clearance (Intake)')).toBeInTheDocument()
     expect(screen.getByText('Valve Clearance (Exhaust)')).toBeInTheDocument()
     expect(screen.getByText('Spark Plug')).toBeInTheDocument()

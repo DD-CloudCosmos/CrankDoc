@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { TechnicalDocViewer } from './TechnicalDocViewer'
+import { BikeDetailTabs } from './BikeDetailTabs'
 import type { TechnicalDocument, ServiceInterval, Motorcycle } from '@/types/database.types'
 
 // --- Fixtures ---
@@ -40,6 +40,22 @@ const motoNoCapacities: Motorcycle = {
   fuel_capacity_liters: null,
 }
 
+const motoMinimal: Motorcycle = {
+  ...motoNoCapacities,
+  id: 'moto-3',
+  engine_type: null,
+  displacement_cc: null,
+  fuel_system: null,
+  dry_weight_kg: null,
+  horsepower: null,
+  torque_nm: null,
+  valve_clearance_intake: null,
+  valve_clearance_exhaust: null,
+  spark_plug: null,
+  tire_front: null,
+  tire_rear: null,
+}
+
 const wiringDoc: TechnicalDocument = {
   id: 'doc-1',
   motorcycle_id: 'moto-1',
@@ -49,18 +65,6 @@ const wiringDoc: TechnicalDocument = {
   file_url: 'https://example.com/wiring.svg',
   file_type: 'image/svg+xml',
   source_attribution: 'CrankDoc simplified overview diagram',
-  created_at: '2024-01-01T00:00:00Z',
-}
-
-const torqueDoc: TechnicalDocument = {
-  id: 'doc-2',
-  motorcycle_id: 'moto-1',
-  title: 'CBR600RR Torque Specifications',
-  doc_type: 'torque_chart',
-  description: null,
-  file_url: 'https://example.com/torque.svg',
-  file_type: 'image/svg+xml',
-  source_attribution: null,
   created_at: '2024-01-01T00:00:00Z',
 }
 
@@ -131,142 +135,132 @@ const noSpecInterval: ServiceInterval = {
 
 // --- Tests ---
 
-describe('TechnicalDocViewer', () => {
-  it('renders empty state when no documents and no torque/fluid data', () => {
+describe('BikeDetailTabs', () => {
+  it('renders Specs tab as default active tab', () => {
     render(
-      <TechnicalDocViewer
-        documents={[]}
-        serviceIntervals={[noSpecInterval]}
-        motorcycle={motoNoCapacities}
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[wiringDoc]}
+        serviceIntervals={[baseInterval]}
       />
     )
-    expect(screen.getByText(/no technical documents available/i)).toBeInTheDocument()
+    // Specs tab is active by default — SpecSheet content visible
+    expect(screen.getByText('Engine')).toBeInTheDocument()
+    expect(screen.getByText('599cc')).toBeInTheDocument()
   })
 
-  it('renders tab buttons for available data types', () => {
+  it('renders tab buttons for all available data types', () => {
     render(
-      <TechnicalDocViewer
-        documents={[wiringDoc]}
-        serviceIntervals={[baseInterval, sparkPlugInterval, brakeFluidInterval]}
+      <BikeDetailTabs
         motorcycle={baseMoto}
+        documents={[wiringDoc]}
+        serviceIntervals={[baseInterval, brakeFluidInterval]}
       />
     )
-    expect(screen.getByRole('tab', { name: 'Wiring' })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Torque Specs' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Specs' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Service' })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'Fluids' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Wiring' })).toBeInTheDocument()
   })
 
-  it('switches content when clicking tabs', async () => {
+  it('switches to Service tab and shows service intervals', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
-        documents={[wiringDoc]}
-        serviceIntervals={[baseInterval, sparkPlugInterval]}
+      <BikeDetailTabs
         motorcycle={baseMoto}
-      />
-    )
-
-    // First tab (Wiring) is active by default — wiring image visible
-    expect(screen.getByAltText('CBR600RR Wiring Diagram')).toBeInTheDocument()
-
-    // Click Torque Specs tab
-    await user.click(screen.getByRole('tab', { name: 'Torque Specs' }))
-    expect(screen.queryByAltText('CBR600RR Wiring Diagram')).not.toBeInTheDocument()
-    expect(screen.getByTestId('torque-table')).toBeInTheDocument()
-
-    // Click Fluids tab
-    await user.click(screen.getByRole('tab', { name: 'Fluids' }))
-    expect(screen.queryByTestId('torque-table')).not.toBeInTheDocument()
-    expect(screen.getByTestId('fluids-table')).toBeInTheDocument()
-  })
-
-  it('torque tab renders HTML table with service items and specs', () => {
-    render(
-      <TechnicalDocViewer
         documents={[]}
-        serviceIntervals={[baseInterval, sparkPlugInterval]}
-        motorcycle={motoNoCapacities}
+        serviceIntervals={[baseInterval]}
       />
     )
-    // Only torque tab should show (no wiring, no fluids with no capacities/fluid specs from non-brake/fork)
-    const table = screen.getByTestId('torque-table')
-    expect(table).toBeInTheDocument()
 
-    // Check column headers
-    expect(screen.getByText('Service Item')).toBeInTheDocument()
-    expect(screen.getByText('Torque Specification')).toBeInTheDocument()
-
-    // Check rows
-    expect(screen.getByText('Engine Oil Change')).toBeInTheDocument()
-    expect(screen.getByText('26 Nm')).toBeInTheDocument()
-    expect(screen.getByText('Spark Plug Replacement')).toBeInTheDocument()
-    expect(screen.getByText('12 Nm')).toBeInTheDocument()
+    await user.click(screen.getByRole('tab', { name: 'Service' }))
+    // ServiceIntervalTable renders both desktop table + mobile cards, so text appears twice
+    expect(screen.getAllByText('Engine Oil Change').length).toBeGreaterThanOrEqual(1)
   })
 
-  it('fluids tab renders capacity and spec data', async () => {
+  it('switches to Fluids tab and shows fluid data', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
         serviceIntervals={[baseInterval, brakeFluidInterval, forkOilInterval]}
-        motorcycle={baseMoto}
       />
     )
 
-    // Switch to fluids tab
     await user.click(screen.getByRole('tab', { name: 'Fluids' }))
 
     const table = screen.getByTestId('fluids-table')
     expect(table).toBeInTheDocument()
 
-    // Capacity headers
-    expect(screen.getByText('Fluid')).toBeInTheDocument()
-    expect(screen.getByText('Capacity')).toBeInTheDocument()
-    expect(screen.getByText('Specification')).toBeInTheDocument()
-
-    // Motorcycle capacity data
     expect(screen.getByText('Engine Oil')).toBeInTheDocument()
     expect(screen.getByText('3.4 L')).toBeInTheDocument()
     expect(screen.getByText('10W-30 Full Synthetic')).toBeInTheDocument()
-
     expect(screen.getByText('Coolant')).toBeInTheDocument()
     expect(screen.getByText('2.2 L')).toBeInTheDocument()
-
     expect(screen.getByText('Fuel Tank')).toBeInTheDocument()
     expect(screen.getByText('18 L')).toBeInTheDocument()
-
-    // Fluid specs from intervals
     expect(screen.getByText('Brake Fluid')).toBeInTheDocument()
     expect(screen.getByText('DOT 4')).toBeInTheDocument()
-
     expect(screen.getByText('Fork Oil')).toBeInTheDocument()
     expect(screen.getByText('10W Fork Oil')).toBeInTheDocument()
   })
 
-  it('wiring tab renders SVG image full-width', () => {
+  it('switches to Wiring tab and shows wiring diagram', async () => {
+    const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
-        serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
+        serviceIntervals={[baseInterval]}
       />
     )
+
+    await user.click(screen.getByRole('tab', { name: 'Wiring' }))
     const img = screen.getByAltText('CBR600RR Wiring Diagram')
     expect(img).toBeInTheDocument()
     expect(img).toHaveAttribute('src', 'https://example.com/wiring.svg')
     expect(img).toHaveClass('w-full')
   })
 
+  it('hides tabs with no data', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={motoNoCapacities}
+        documents={[]}
+        serviceIntervals={[]}
+      />
+    )
+    // Only specs tab — no tab bar shown
+    expect(screen.queryByRole('tablist')).not.toBeInTheDocument()
+    // Specs content shown directly
+    expect(screen.getByText('Engine')).toBeInTheDocument()
+  })
+
+  it('shows content directly when only Specs tab has data', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={motoNoCapacities}
+        documents={[]}
+        serviceIntervals={[]}
+      />
+    )
+    // Only Specs tab — no tab bar shown
+    expect(screen.queryByRole('tablist')).not.toBeInTheDocument()
+    expect(screen.getByText('Engine')).toBeInTheDocument()
+  })
+
   it('lightbox opens when clicking wiring diagram', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
-        serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
+        serviceIntervals={[baseInterval]}
       />
     )
 
+    await user.click(screen.getByRole('tab', { name: 'Wiring' }))
     await user.click(screen.getByLabelText(/view.*full size/i))
 
     const dialog = screen.getByRole('dialog')
@@ -277,13 +271,15 @@ describe('TechnicalDocViewer', () => {
   it('lightbox closes when clicking close button', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
         serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
       />
     )
 
+    // Only specs and wiring — need to switch to wiring first
+    await user.click(screen.getByRole('tab', { name: 'Wiring' }))
     await user.click(screen.getByLabelText(/view.*full size/i))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
@@ -294,13 +290,14 @@ describe('TechnicalDocViewer', () => {
   it('lightbox closes when clicking overlay background', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
         serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
       />
     )
 
+    await user.click(screen.getByRole('tab', { name: 'Wiring' }))
     await user.click(screen.getByLabelText(/view.*full size/i))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
@@ -308,85 +305,51 @@ describe('TechnicalDocViewer', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
-  it('hides tabs with no data', () => {
-    render(
-      <TechnicalDocViewer
-        documents={[]}
-        serviceIntervals={[baseInterval]}
-        motorcycle={motoNoCapacities}
-      />
-    )
-    // No wiring docs, no fluid data (no capacities, no brake/fork fluid specs) — only torque tab
-    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
-    // Content shows directly (single tab skips tab bar)
-    expect(screen.getByTestId('torque-table')).toBeInTheDocument()
-  })
-
-  it('shows content directly when only one tab has data', () => {
-    render(
-      <TechnicalDocViewer
-        documents={[wiringDoc]}
-        serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
-      />
-    )
-    // Only wiring data — no tab bar, content shown directly
-    expect(screen.queryByRole('tablist')).not.toBeInTheDocument()
-    expect(screen.getByAltText('CBR600RR Wiring Diagram')).toBeInTheDocument()
-  })
-
   it('shows source attribution in lightbox for wiring diagrams', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
         serviceIntervals={[]}
-        motorcycle={motoNoCapacities}
       />
     )
 
+    await user.click(screen.getByRole('tab', { name: 'Wiring' }))
     await user.click(screen.getByLabelText(/view.*full size/i))
-    // Source appears in lightbox and in card
     const attributions = screen.getAllByText(/Source: CrankDoc simplified overview diagram/)
     expect(attributions.length).toBeGreaterThanOrEqual(1)
-  })
-
-  it('deduplicates torque items by service name', () => {
-    const duplicateInterval: ServiceInterval = {
-      ...baseInterval,
-      id: 'si-dup',
-      // Same service_name as baseInterval
-    }
-    render(
-      <TechnicalDocViewer
-        documents={[]}
-        serviceIntervals={[baseInterval, duplicateInterval]}
-        motorcycle={motoNoCapacities}
-      />
-    )
-    // Should only show one row for "Engine Oil Change"
-    const rows = screen.getAllByText('Engine Oil Change')
-    expect(rows).toHaveLength(1)
   })
 
   it('sets aria-selected on active tab', async () => {
     const user = userEvent.setup()
     render(
-      <TechnicalDocViewer
+      <BikeDetailTabs
+        motorcycle={baseMoto}
         documents={[wiringDoc]}
         serviceIntervals={[baseInterval]}
-        motorcycle={baseMoto}
       />
     )
 
+    const specsTab = screen.getByRole('tab', { name: 'Specs' })
     const wiringTab = screen.getByRole('tab', { name: 'Wiring' })
-    const torqueTab = screen.getByRole('tab', { name: 'Torque Specs' })
 
-    expect(wiringTab).toHaveAttribute('aria-selected', 'true')
-    expect(torqueTab).toHaveAttribute('aria-selected', 'false')
-
-    await user.click(torqueTab)
+    expect(specsTab).toHaveAttribute('aria-selected', 'true')
     expect(wiringTab).toHaveAttribute('aria-selected', 'false')
-    expect(torqueTab).toHaveAttribute('aria-selected', 'true')
+
+    await user.click(wiringTab)
+    expect(specsTab).toHaveAttribute('aria-selected', 'false')
+    expect(wiringTab).toHaveAttribute('aria-selected', 'true')
+  })
+
+  it('shows empty state when motorcycle has no specs', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={motoMinimal}
+        documents={[]}
+        serviceIntervals={[]}
+      />
+    )
+    expect(screen.getByText(/no specifications available/i)).toBeInTheDocument()
   })
 })

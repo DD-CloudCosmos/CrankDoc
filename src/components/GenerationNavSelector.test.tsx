@@ -28,9 +28,9 @@ describe('GenerationNavSelector', () => {
         activeGenerationId="gen-1"
       />
     )
-    expect(screen.getByText('Gen 1 (2003-2006)')).toBeInTheDocument()
-    expect(screen.getByText('Gen 2 (2007-2012)')).toBeInTheDocument()
-    expect(screen.getByText('Gen 3 (2013-present)')).toBeInTheDocument()
+    expect(screen.getByText('Gen 1')).toBeInTheDocument()
+    expect(screen.getByText('Gen 2')).toBeInTheDocument()
+    expect(screen.getByText('Gen 3')).toBeInTheDocument()
   })
 
   it('renders nothing when only one generation exists', () => {
@@ -51,7 +51,7 @@ describe('GenerationNavSelector', () => {
         activeGenerationId="gen-1"
       />
     )
-    fireEvent.click(screen.getByText('Gen 2 (2007-2012)'))
+    fireEvent.click(screen.getByText('Gen 2'))
     expect(mockPush).toHaveBeenCalledWith('/bikes/gen-2')
   })
 
@@ -62,7 +62,7 @@ describe('GenerationNavSelector', () => {
         activeGenerationId="gen-2"
       />
     )
-    fireEvent.click(screen.getByText('Gen 3 (2013-present)'))
+    fireEvent.click(screen.getByText('Gen 3'))
     expect(mockPush).toHaveBeenCalledWith('/bikes/gen-3')
   })
 })
