@@ -92,6 +92,43 @@ describe('Table', () => {
     expect(table?.className).toContain('custom-class')
   })
 
+  it('wrapper has card background styling', () => {
+    const { container } = render(
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>Content</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    const wrapper = container.firstElementChild as HTMLElement
+    expect(wrapper.className).toContain('bg-card')
+    expect(wrapper.className).toContain('rounded-[24px]')
+    expect(wrapper.className).toContain('border')
+    expect(wrapper.className).toContain('border-border')
+    expect(wrapper.className).toContain('shadow-[var(--shadow-soft)]')
+  })
+
+  it('TableHeader has tinted background', () => {
+    const { container } = render(
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Value</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    const thead = container.querySelector('[data-slot="table-header"]')
+    expect(thead?.className).toContain('bg-muted/40')
+  })
+
   it('applies custom className to TableRow', () => {
     render(
       <Table>
