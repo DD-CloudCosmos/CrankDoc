@@ -17,6 +17,13 @@ vi.mock('next/navigation', () => ({
   useSearchParams: vi.fn(() => new URLSearchParams()),
 }))
 
+// Mock Next.js Link
+vi.mock('next/link', () => ({
+  default: ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}))
+
 describe('BikesPage', () => {
   const mockMotorcycles: Motorcycle[] = [
     {
@@ -71,54 +78,40 @@ describe('BikesPage', () => {
     },
   ]
 
-  const createMockSupabaseClient = (motorcyclesData: Motorcycle[], makesData: { make: string }[]) => {
+  // Build a deeply chainable mock that returns `this` for any method call,
+  // with final data/error at any level
+  function createChainMock(result: { data: unknown; error: unknown }) {
+    const mock: Record<string, unknown> = {
+      data: result.data,
+      error: result.error,
+    }
+    const handler = {
+      get(target: Record<string, unknown>, prop: string) {
+        if (prop === 'data') return target.data
+        if (prop === 'error') return target.error
+        if (prop === 'then') return undefined // not a promise
+        // Return a function that returns the same proxy for chaining
+        return vi.fn(() => new Proxy({ ...mock }, handler))
+      },
+    }
+    return new Proxy(mock, handler)
+  }
+
+  const createMockSupabaseClient = (
+    motorcyclesData: Motorcycle[],
+    makesData: { make: string }[],
+    imagesData: { motorcycle_id: string; image_url: string; alt_text: string }[] = []
+  ) => {
     return {
       from: vi.fn((table: string) => {
         if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              order: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  eq: vi.fn(() => ({
-                    data: motorcyclesData,
-                    error: null,
-                  })),
-                  data: motorcyclesData,
-                  error: null,
-                })),
-                eq: vi.fn(() => ({
-                  data: motorcyclesData,
-                  error: null,
-                })),
-                data: motorcyclesData,
-                error: null,
-              })),
-              eq: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  order: vi.fn(() => ({
-                    data: motorcyclesData,
-                    error: null,
-                  })),
-                  data: motorcyclesData,
-                  error: null,
-                })),
-                data: motorcyclesData,
-                error: null,
-              })),
-              data: motorcyclesData,
-              error: null,
-            })),
-          }
+          return createChainMock({ data: motorcyclesData, error: null })
+        }
+        if (table === 'motorcycle_images') {
+          return createChainMock({ data: imagesData, error: null })
         }
         // For makes query
-        return {
-          select: vi.fn(() => ({
-            order: vi.fn(() => ({
-              data: makesData,
-              error: null,
-            })),
-          })),
-        }
+        return createChainMock({ data: makesData, error: null })
       }),
     }
   }
@@ -149,8 +142,9 @@ describe('BikesPage', () => {
 
     render(await BikesPage({ searchParams: Promise.resolve({}) }))
 
-    expect(screen.getByText(/Honda CBR600RR/i)).toBeInTheDocument()
-    expect(screen.getByText(/Yamaha MT-07/i)).toBeInTheDocument()
+    // Both desktop table and mobile list render, so use getAllByText
+    expect(screen.getAllByText(/Honda CBR600RR/i).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(/Yamaha MT-07/i).length).toBeGreaterThanOrEqual(1)
   })
 
   it('displays empty state when no motorcycles are found', async () => {
@@ -165,20 +159,13 @@ describe('BikesPage', () => {
 
   it('displays error message when database query fails', async () => {
     const mockClient = {
-      from: vi.fn(() => ({
-        select: vi.fn(() => ({
-          order: vi.fn(() => ({
-            order: vi.fn(() => ({
-              data: null,
-              error: { message: 'Database connection failed' },
-            })),
-            data: null,
-            error: { message: 'Database connection failed' },
-          })),
-          data: null,
-          error: { message: 'Database connection failed' },
-        })),
-      })),
+      from: vi.fn((table: string) => {
+        if (table === 'motorcycles') {
+          return createChainMock({ data: null, error: { message: 'Database connection failed' } })
+        }
+        // Makes and images queries
+        return createChainMock({ data: null, error: { message: 'Database connection failed' } })
+      }),
     }
     vi.mocked(createServerClient).mockReturnValue(mockClient as never)
 
@@ -198,7 +185,7 @@ describe('BikesPage', () => {
 
     render(await BikesPage({ searchParams: Promise.resolve({ category: 'sport' }) }))
 
-    expect(screen.getByText(/Honda CBR600RR/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/Honda CBR600RR/i).length).toBeGreaterThanOrEqual(1)
     expect(screen.queryByText(/Yamaha MT-07/i)).not.toBeInTheDocument()
   })
 
@@ -212,7 +199,7 @@ describe('BikesPage', () => {
 
     render(await BikesPage({ searchParams: Promise.resolve({ make: 'Honda' }) }))
 
-    expect(screen.getByText(/Honda CBR600RR/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/Honda CBR600RR/i).length).toBeGreaterThanOrEqual(1)
     expect(screen.queryByText(/Yamaha MT-07/i)).not.toBeInTheDocument()
   })
 
@@ -226,5 +213,17 @@ describe('BikesPage', () => {
     render(await BikesPage({ searchParams: Promise.resolve({}) }))
 
     expect(screen.getByText(/filters/i)).toBeInTheDocument()
+  })
+
+  it('shows result count in filters', async () => {
+    const mockClient = createMockSupabaseClient(
+      mockMotorcycles,
+      [{ make: 'Honda' }, { make: 'Yamaha' }]
+    )
+    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
+
+    render(await BikesPage({ searchParams: Promise.resolve({}) }))
+
+    expect(screen.getByText('Showing 2 motorcycles')).toBeInTheDocument()
   })
 })

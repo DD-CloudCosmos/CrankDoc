@@ -1,30 +1,78 @@
 import { Suspense } from 'react'
 import { createServerClient } from '@/lib/supabase/server'
-import { BikeCard } from '@/components/BikeCard'
 import { BikeFilters } from '@/components/BikeFilters'
-import type { Motorcycle } from '@/types/database.types'
+import { BikeTableView } from '@/components/BikeTableView'
+import { BikeGridView } from '@/components/BikeGridView'
+import type { Motorcycle, MotorcycleImage } from '@/types/database.types'
+
+export type MotorcycleWithImage = Motorcycle & {
+  primaryImage?: Pick<MotorcycleImage, 'image_url' | 'alt_text'> | null
+}
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-async function getMotorcycles(category?: string, make?: string): Promise<Motorcycle[]> {
+async function getPrimaryImages(
+  motorcycleIds: string[]
+): Promise<Map<string, Pick<MotorcycleImage, 'image_url' | 'alt_text'>>> {
+  const imageMap = new Map<string, Pick<MotorcycleImage, 'image_url' | 'alt_text'>>()
+  if (motorcycleIds.length === 0) return imageMap
+
   const supabase = createServerClient()
+  const result = await supabase
+    .from('motorcycle_images')
+    .select('*')
+    .in('motorcycle_id', motorcycleIds)
+    .eq('is_primary', true)
+
+  const images = result.data as MotorcycleImage[] | null
+  if (images) {
+    for (const img of images) {
+      imageMap.set(img.motorcycle_id, {
+        image_url: img.image_url,
+        alt_text: img.alt_text,
+      })
+    }
+  }
+
+  return imageMap
+}
+
+async function getMotorcycles(
+  category?: string,
+  make?: string,
+  search?: string,
+  sort?: string,
+  sortDir?: 'asc' | 'desc'
+): Promise<MotorcycleWithImage[]> {
+  const supabase = createServerClient()
+
+  // Determine sort column — only allow known columns
+  const validSortColumns = ['make', 'year_start', 'displacement_cc', 'horsepower', 'dry_weight_kg']
+  const sortColumn = sort && validSortColumns.includes(sort) ? sort : 'make'
+  const ascending = sortDir === 'desc' ? false : true
 
   let query = supabase
     .from('motorcycles')
     .select('*')
-    .order('make', { ascending: true })
-    .order('model', { ascending: true })
+    .order(sortColumn, { ascending })
 
-  // Apply category filter if provided
+  // Secondary sort by model when sorting by make
+  if (sortColumn === 'make') {
+    query = query.order('model', { ascending: true })
+  }
+
   if (category) {
     query = query.eq('category', category)
   }
 
-  // Apply make filter if provided
   if (make) {
     query = query.eq('make', make)
+  }
+
+  if (search) {
+    query = query.or(`make.ilike.%${search}%,model.ilike.%${search}%`)
   }
 
   const { data, error } = await query
@@ -34,7 +82,19 @@ async function getMotorcycles(category?: string, make?: string): Promise<Motorcy
     throw new Error('Failed to fetch motorcycles from database')
   }
 
-  return data || []
+  const motorcycles: Motorcycle[] = data || []
+
+  if (motorcycles.length === 0) {
+    return []
+  }
+
+  // Fetch primary images for all motorcycles
+  const imageMap = await getPrimaryImages(motorcycles.map((m) => m.id))
+
+  return motorcycles.map((moto) => ({
+    ...moto,
+    primaryImage: imageMap.get(moto.id) ?? null,
+  }))
 }
 
 async function getAvailableMakes(): Promise<string[]> {
@@ -54,7 +114,6 @@ async function getAvailableMakes(): Promise<string[]> {
     return []
   }
 
-  // Get unique makes - data is an array of objects with 'make' property
   const uniqueMakes = Array.from(new Set(data.map((item: { make: string }) => item.make)))
   return uniqueMakes
 }
@@ -63,12 +122,16 @@ export default async function BikesPage({ searchParams }: PageProps) {
   const params = await searchParams
   const category = typeof params.category === 'string' ? params.category : undefined
   const make = typeof params.make === 'string' ? params.make : undefined
+  const search = typeof params.search === 'string' ? params.search : undefined
+  const sort = typeof params.sort === 'string' ? params.sort : 'make'
+  const sortDir = params.sortDir === 'desc' ? 'desc' as const : 'asc' as const
+  const view = typeof params.view === 'string' ? params.view : 'table'
 
-  let motorcycles: Motorcycle[] = []
+  let motorcycles: MotorcycleWithImage[] = []
   let error: string | null = null
 
   try {
-    motorcycles = await getMotorcycles(category, make)
+    motorcycles = await getMotorcycles(category, make, search, sort, sortDir)
   } catch (err) {
     error = err instanceof Error ? err.message : 'An unexpected error occurred'
   }
@@ -85,7 +148,7 @@ export default async function BikesPage({ searchParams }: PageProps) {
       </div>
 
       <Suspense fallback={<div>Loading filters...</div>}>
-        <BikeFilters availableMakes={availableMakes} />
+        <BikeFilters availableMakes={availableMakes} totalCount={error ? undefined : motorcycles.length} />
       </Suspense>
 
       {error && (
@@ -95,24 +158,11 @@ export default async function BikesPage({ searchParams }: PageProps) {
         </div>
       )}
 
-      {!error && motorcycles.length === 0 && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
-          <p className="text-lg text-muted-foreground">
-            No motorcycles found matching your filters.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Try adjusting your filter criteria or clearing all filters.
-          </p>
-        </div>
-      )}
-
-      {!error && motorcycles.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {motorcycles.map((motorcycle) => (
-            <BikeCard key={motorcycle.id} motorcycle={motorcycle} />
-          ))}
-        </div>
-      )}
+      {!error && view === 'grid' ? (
+        <BikeGridView motorcycles={motorcycles} />
+      ) : !error ? (
+        <BikeTableView motorcycles={motorcycles} sort={sort} sortDir={sortDir} />
+      ) : null}
     </div>
   )
 }

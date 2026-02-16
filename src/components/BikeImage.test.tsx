@@ -1,16 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { BikeImage } from './BikeImage'
-import type { MotorcycleImage } from '@/types/database.types'
 
-const mockImage: MotorcycleImage = {
-  id: 'img-1',
-  motorcycle_id: 'moto-1',
+const mockImage = {
   image_url: 'https://example.com/cbr600rr.jpg',
   alt_text: 'Honda CBR600RR side profile',
-  is_primary: true,
   source_attribution: 'Photo by John Doe',
-  created_at: '2024-01-01T00:00:00Z',
 }
 
 describe('BikeImage', () => {
@@ -62,5 +57,47 @@ describe('BikeImage', () => {
     const wrapper = container.firstElementChild as HTMLElement
     expect(wrapper.className).toContain('w-full')
     expect(wrapper.className).toContain('max-w-md')
+  })
+
+  // --- Thumbnail variant tests ---
+
+  it('renders thumbnail size with smaller dimensions', () => {
+    const { container } = render(
+      <BikeImage image={mockImage} make="Honda" model="CBR600RR" size="thumbnail" />
+    )
+    const wrapper = container.firstElementChild as HTMLElement
+    expect(wrapper.className).toContain('w-10')
+    expect(wrapper.className).toContain('h-7')
+    expect(wrapper.className).toContain('rounded-[6px]')
+  })
+
+  it('hides attribution in thumbnail mode', () => {
+    render(<BikeImage image={mockImage} make="Honda" model="CBR600RR" size="thumbnail" />)
+    expect(screen.queryByText('Photo by John Doe')).not.toBeInTheDocument()
+  })
+
+  it('renders thumbnail placeholder without text label', () => {
+    render(<BikeImage make="Honda" model="CBR600RR" size="thumbnail" />)
+    expect(screen.queryByText('Honda CBR600RR')).not.toBeInTheDocument()
+  })
+
+  it('renders thumbnail placeholder with smaller SVG', () => {
+    const { container } = render(
+      <BikeImage make="Honda" model="CBR600RR" size="thumbnail" />
+    )
+    const svg = container.querySelector('svg')
+    expect(svg).toBeInTheDocument()
+    const svgClass = svg?.getAttribute('class') || ''
+    expect(svgClass).toContain('h-4')
+    expect(svgClass).toContain('w-6')
+  })
+
+  it('defaults to full size when size prop is omitted', () => {
+    const { container } = render(
+      <BikeImage make="Honda" model="CBR600RR" />
+    )
+    const wrapper = container.firstElementChild as HTMLElement
+    expect(wrapper.className).toContain('rounded-[24px]')
+    expect(wrapper.className).not.toContain('w-10')
   })
 })
