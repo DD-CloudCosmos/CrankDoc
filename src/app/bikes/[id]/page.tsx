@@ -124,8 +124,8 @@ async function getRecalls(make: string, model: string, yearStart: number, yearEn
   let query = supabase
     .from('recalls')
     .select('*')
-    .eq('make', make)
-    .eq('model', model)
+    .ilike('make', make)
+    .ilike('model', model)
     .gte('model_year', yearStart)
 
   if (yearEnd) {
