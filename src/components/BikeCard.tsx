@@ -27,10 +27,8 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
     ? category.charAt(0).toUpperCase() + category.slice(1)
     : 'Other'
 
-  // Format generation label: "Gen 1 (2003-2004)"
-  const generationLabel = generation
-    ? `${generation} (${yearRange})`
-    : null
+  // Generation string already includes years, e.g. "EFI (2007-2022)"
+  const generationLabel = generation || null
 
   // Category color mapping for badges
   const categoryVariant = (cat: string | null) => {
