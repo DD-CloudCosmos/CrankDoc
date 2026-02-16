@@ -40,9 +40,11 @@ const CURRENT_YEAR = new Date().getFullYear()
  * Try the primary name first; if 0 results, try alternates.
  */
 const NHTSA_MODEL_ALIASES = {
-  'Sportster 883': ['Sportster 883', 'XL883', 'XL 883'],
-  'Sportster 1200': ['Sportster 1200', 'XL1200', 'XL 1200'],
-  'R1250GS': ['R1250GS', 'R 1250 GS'],
+  'Sportster 883': ['Sportster 883', 'XL883', 'XL883N', 'XL883L'],
+  'Sportster 1200': ['Sportster 1200', 'XL1200', 'XL1200V', 'XL1200X', 'XL1200C'],
+  'R1250GS': ['R 1250 GS', 'R1250GS'],
+  'MT-07': ['MT-07', 'MT07', 'FZ-07'],
+  'Ninja 400': ['Ninja 400', 'NINJA 400', 'EX400'],
 }
 
 function sleep(ms) {
@@ -53,6 +55,10 @@ async function fetchWithRetry(url, retries = MAX_RETRIES) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await fetch(url)
+      // NHTSA returns 400 for year/model combos it doesn't recognize — treat as "no data"
+      if (response.status === 400) {
+        return null
+      }
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`)
       }
