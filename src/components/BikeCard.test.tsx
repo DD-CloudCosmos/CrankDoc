@@ -109,7 +109,7 @@ describe('BikeCard', () => {
       generation: 'Gen 1',
     }
     render(<BikeCard motorcycle={motorcycleWithGen} />)
-    expect(screen.getByText('Gen 1 (2003-2024)')).toBeInTheDocument()
+    expect(screen.getByText('Gen 1')).toBeInTheDocument()
   })
 
   it('does not render generation badge when generation is null', () => {

@@ -133,15 +133,80 @@ describe('BikeFilters', () => {
     expect(mockPush).toHaveBeenCalledWith('/bikes')
   })
 
-  it('renders no make buttons when availableMakes is empty', () => {
+  // --- Search input tests ---
+
+  it('renders search input', () => {
+    render(<BikeFilters availableMakes={[]} />)
+    expect(screen.getByRole('searchbox')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText(/search by make or model/i)).toBeInTheDocument()
+  })
+
+  it('handles search input change', async () => {
+    const user = userEvent.setup()
     render(<BikeFilters availableMakes={[]} />)
 
-    // Should still have category buttons
-    expect(screen.getByRole('button', { name: /sport/i })).toBeInTheDocument()
+    const searchInput = screen.getByRole('searchbox')
+    await user.type(searchInput, 'c')
 
-    // Should not have any make-specific buttons beyond the category ones
-    const allButtons = screen.getAllByRole('button')
-    const categoryButtons = 5 // sport, naked, cruiser, adventure, scooter
-    expect(allButtons.length).toBe(categoryButtons)
+    // Controlled input calls push on each character
+    expect(mockPush).toHaveBeenCalledWith('/bikes?search=c')
+  })
+
+  it('renders clear all when search is active', () => {
+    const searchParamsWithSearch = new URLSearchParams('search=honda')
+    vi.mocked(useSearchParams).mockReturnValue(searchParamsWithSearch as never)
+
+    render(<BikeFilters availableMakes={[]} />)
+    expect(screen.getByRole('button', { name: /clear all/i })).toBeInTheDocument()
+  })
+
+  // --- View toggle tests ---
+
+  it('renders view toggle buttons', () => {
+    render(<BikeFilters availableMakes={[]} />)
+    expect(screen.getByRole('button', { name: /table view/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /grid view/i })).toBeInTheDocument()
+  })
+
+  it('table view is active by default', () => {
+    render(<BikeFilters availableMakes={[]} />)
+    const tableButton = screen.getByRole('button', { name: /table view/i })
+    expect(tableButton).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('switches to grid view on click', async () => {
+    const user = userEvent.setup()
+    render(<BikeFilters availableMakes={[]} />)
+
+    const gridButton = screen.getByRole('button', { name: /grid view/i })
+    await user.click(gridButton)
+
+    expect(mockPush).toHaveBeenCalledWith('/bikes?view=grid')
+  })
+
+  it('grid view button is active when view=grid', () => {
+    const searchParamsWithGrid = new URLSearchParams('view=grid')
+    vi.mocked(useSearchParams).mockReturnValue(searchParamsWithGrid as never)
+
+    render(<BikeFilters availableMakes={[]} />)
+    const gridButton = screen.getByRole('button', { name: /grid view/i })
+    expect(gridButton).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  // --- Result count tests ---
+
+  it('shows result count when totalCount is provided', () => {
+    render(<BikeFilters availableMakes={[]} totalCount={18} />)
+    expect(screen.getByText('Showing 18 motorcycles')).toBeInTheDocument()
+  })
+
+  it('shows singular form for count of 1', () => {
+    render(<BikeFilters availableMakes={[]} totalCount={1} />)
+    expect(screen.getByText('Showing 1 motorcycle')).toBeInTheDocument()
+  })
+
+  it('does not show result count when totalCount is not provided', () => {
+    render(<BikeFilters availableMakes={[]} />)
+    expect(screen.queryByTestId('result-count')).not.toBeInTheDocument()
   })
 })

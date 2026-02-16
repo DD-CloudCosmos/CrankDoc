@@ -1,18 +1,33 @@
 import { cn } from '@/lib/utils'
-import type { MotorcycleImage } from '@/types/database.types'
+
+type BikeImageData = {
+  image_url: string
+  alt_text: string
+  source_attribution?: string | null
+}
 
 interface BikeImageProps {
-  image?: MotorcycleImage | null
+  image?: BikeImageData | null
   make: string
   model: string
+  size?: 'full' | 'thumbnail'
   className?: string
 }
 
-export function BikeImage({ image, make, model, className }: BikeImageProps) {
+export function BikeImage({ image, make, model, size = 'full', className }: BikeImageProps) {
+  const isThumbnail = size === 'thumbnail'
+
   if (image) {
     return (
-      <div className={cn('overflow-hidden rounded-[24px]', className)}>
-        <div className="relative aspect-[3/2] w-full">
+      <div className={cn(
+        'overflow-hidden',
+        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[24px]',
+        className
+      )}>
+        <div className={cn(
+          'relative w-full',
+          isThumbnail ? 'h-full' : 'aspect-[3/2]'
+        )}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image.image_url}
@@ -21,7 +36,7 @@ export function BikeImage({ image, make, model, className }: BikeImageProps) {
             style={{ filter: 'sepia(15%) saturate(85%) brightness(102%)' }}
           />
         </div>
-        {image.source_attribution && (
+        {!isThumbnail && image.source_attribution && (
           <p className="mt-1 text-center text-xs text-muted-foreground">
             {image.source_attribution}
           </p>
@@ -33,14 +48,21 @@ export function BikeImage({ image, make, model, className }: BikeImageProps) {
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-[24px] bg-gradient-to-b from-[#EADFCB] to-[#D8CBB4]',
+        'overflow-hidden bg-gradient-to-b from-[#EADFCB] to-[#D8CBB4]',
+        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[24px]',
         className
       )}
     >
-      <div className="flex aspect-[3/2] w-full flex-col items-center justify-center gap-3 p-6">
+      <div className={cn(
+        'flex w-full flex-col items-center justify-center',
+        isThumbnail ? 'h-full p-0.5' : 'aspect-[3/2] gap-3 p-6'
+      )}>
         <svg
           viewBox="0 0 120 80"
-          className="h-16 w-24 text-[#8B7D6B]"
+          className={cn(
+            'text-[#8B7D6B]',
+            isThumbnail ? 'h-4 w-6' : 'h-16 w-24'
+          )}
           fill="currentColor"
           aria-hidden="true"
         >
@@ -72,9 +94,11 @@ export function BikeImage({ image, make, model, className }: BikeImageProps) {
             strokeWidth="2.5"
           />
         </svg>
-        <span className="text-sm font-medium text-[#6B5E4F]">
-          {make} {model}
-        </span>
+        {!isThumbnail && (
+          <span className="text-sm font-medium text-[#6B5E4F]">
+            {make} {model}
+          </span>
+        )}
       </div>
     </div>
   )
