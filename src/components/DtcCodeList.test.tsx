@@ -21,12 +21,12 @@ const mockCodes = [
     category: 'powertrain',
     subcategory: 'ignition',
     severity: 'high',
-    common_causes: ['Faulty spark plug'],
+    common_causes: ['Faulty spark plug', 'Ignition coil failure'],
     applies_to_makes: null,
     manufacturer: 'Honda',
     system: 'Engine Management',
     diagnostic_method: 'OBD-II scanner',
-    fix_reference: 'Replace spark plug',
+    fix_reference: 'Replace spark plug and check ignition coil resistance',
     created_at: '2024-01-01T00:00:00Z',
   },
   {
@@ -51,7 +51,7 @@ describe('DtcCodeList', () => {
     vi.clearAllMocks()
   })
 
-  it('renders codes fetched from API', async () => {
+  it('renders codes in a table after fetch', async () => {
     mockApiResponse(mockCodes, 2)
 
     render(<DtcCodeList />)
@@ -89,6 +89,47 @@ describe('DtcCodeList', () => {
     })
   })
 
+  it('expands row on click to show details', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockCodes, 2)
+
+    render(<DtcCodeList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('P0301')).toBeInTheDocument()
+    })
+
+    // Click the first row to expand
+    const rows = screen.getAllByTestId('dtc-row')
+    await user.click(rows[0])
+
+    // Detail section should appear
+    expect(screen.getByTestId('dtc-detail')).toBeInTheDocument()
+    expect(screen.getByText('Engine Management')).toBeInTheDocument()
+    expect(screen.getByText('OBD-II scanner')).toBeInTheDocument()
+    expect(screen.getByText('Faulty spark plug')).toBeInTheDocument()
+    expect(screen.getByText('Ignition coil failure')).toBeInTheDocument()
+    expect(screen.getByText('Replace spark plug and check ignition coil resistance')).toBeInTheDocument()
+  })
+
+  it('collapses expanded row on second click', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockCodes, 2)
+
+    render(<DtcCodeList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('P0301')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('dtc-row')
+    await user.click(rows[0])
+    expect(screen.getByTestId('dtc-detail')).toBeInTheDocument()
+
+    await user.click(rows[0])
+    expect(screen.queryByTestId('dtc-detail')).not.toBeInTheDocument()
+  })
+
   it('shows pagination controls when multiple pages exist', async () => {
     mockApiResponse(mockCodes, 45, 1, 3)
 
@@ -111,7 +152,6 @@ describe('DtcCodeList', () => {
       expect(screen.getByText('Page 1 of 3')).toBeInTheDocument()
     })
 
-    // Mock for page 2
     mockApiResponse(mockCodes, 45, 2, 3)
     await user.click(screen.getByText('Next'))
 
@@ -140,9 +180,6 @@ describe('DtcCodeList', () => {
       expect(screen.getByText('Manufacturer')).toBeInTheDocument()
     })
     expect(screen.getByText('Harley-Davidson')).toBeInTheDocument()
-    // BMW and Honda appear both as filter buttons and in card badges, so use getAllByText
-    expect(screen.getAllByText('BMW').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Honda').length).toBeGreaterThanOrEqual(1)
   })
 
   it('fetches with manufacturer parameter when manufacturer filter is clicked', async () => {
@@ -155,8 +192,6 @@ describe('DtcCodeList', () => {
       expect(screen.getByText('P0301')).toBeInTheDocument()
     })
 
-    // Find the BMW filter button (not the badge on the card)
-    // The filter button is inside the manufacturer filter section
     const bmwElements = screen.getAllByText('BMW')
     const bmwButton = bmwElements.find((el) => el.closest('button'))
     expect(bmwButton).toBeDefined()
@@ -183,11 +218,9 @@ describe('DtcCodeList', () => {
       expect(screen.getByText('P0301')).toBeInTheDocument()
     })
 
-    // Type search query - the debounce will fire after 300ms
     mockApiResponse([], 0)
     await user.type(screen.getByPlaceholderText(/search dtc codes/i), 'misfire')
 
-    // Wait for debounce and fetch to complete
     await waitFor(() => {
       const calls = mockFetch.mock.calls
       const hasSearchCall = calls.some((call: unknown[]) =>

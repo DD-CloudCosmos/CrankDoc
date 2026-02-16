@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { mapNhtsaToRecall, fetchNhtsaRecalls } from './nhtsaClient'
+import { mapNhtsaToRecall, fetchNhtsaRecalls, parseNhtsaDate } from './nhtsaClient'
 import type { NhtsaRecallResult, NhtsaRecallResponse } from './nhtsaClient'
 
 /**
@@ -47,7 +47,7 @@ describe('mapNhtsaToRecall', () => {
       consequence: 'Fuel leak may cause fire.',
       remedy: 'Dealers will replace the fuel line.',
       notes: 'Owners may contact Honda at 1-800-999-1009.',
-      report_received_date: '20240315',
+      report_received_date: '2024-03-15',
       park_it: false,
       park_outside: false,
     })
@@ -107,6 +107,48 @@ describe('mapNhtsaToRecall', () => {
     const raw = buildNhtsaResult({ parkOutSide: false })
     const result = mapNhtsaToRecall(raw)
     expect(result.park_outside).toBe(false)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// parseNhtsaDate
+// ---------------------------------------------------------------------------
+
+describe('parseNhtsaDate', () => {
+  it('converts MM/DD/YYYY to ISO format', () => {
+    expect(parseNhtsaDate('01/15/2024')).toBe('2024-01-15')
+  })
+
+  it('converts M/D/YYYY with single-digit month/day', () => {
+    expect(parseNhtsaDate('3/5/2023')).toBe('2023-03-05')
+  })
+
+  it('passes through YYYY-MM-DD unchanged', () => {
+    expect(parseNhtsaDate('2024-01-15')).toBe('2024-01-15')
+  })
+
+  it('converts YYYYMMDD compact format', () => {
+    expect(parseNhtsaDate('20240315')).toBe('2024-03-15')
+  })
+
+  it('returns null for null input', () => {
+    expect(parseNhtsaDate(null)).toBeNull()
+  })
+
+  it('returns null for undefined input', () => {
+    expect(parseNhtsaDate(undefined)).toBeNull()
+  })
+
+  it('returns null for empty string', () => {
+    expect(parseNhtsaDate('')).toBeNull()
+  })
+
+  it('returns null for whitespace-only string', () => {
+    expect(parseNhtsaDate('   ')).toBeNull()
+  })
+
+  it('returns null for garbage input', () => {
+    expect(parseNhtsaDate('not-a-date')).toBeNull()
   })
 })
 

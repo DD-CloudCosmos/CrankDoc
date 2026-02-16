@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
-import { RecallCard } from '@/components/RecallCard'
+import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
 import type { TechnicalDocument, ServiceInterval, Motorcycle, Recall } from '@/types/database.types'
 
 interface BikeDetailTabsProps {
@@ -248,6 +249,19 @@ function WiringContent({
 
 // --- Recalls Tab ---
 
+function formatRecallDate(dateString: string): string {
+  const parts = dateString.split('-')
+  if (parts.length === 3) {
+    const date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  }
+  return dateString
+}
+
 function RecallsContent({ recalls }: { recalls: Recall[] }) {
   const hasParkIt = recalls.some((r) => r.park_it)
 
@@ -261,9 +275,47 @@ function RecallsContent({ recalls }: { recalls: Recall[] }) {
           </p>
         </div>
       )}
-      {recalls.map((recall) => (
-        <RecallCard key={recall.id} recall={recall} />
-      ))}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Date</TableHead>
+            <TableHead>Campaign #</TableHead>
+            <TableHead>Component</TableHead>
+            <TableHead className="hidden sm:table-cell">Summary</TableHead>
+            <TableHead className="w-20">Flags</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {recalls.map((recall) => (
+            <TableRow key={recall.id} data-testid="recall-table-row">
+              <TableCell className="whitespace-nowrap">
+                {recall.report_received_date ? formatRecallDate(recall.report_received_date) : '—'}
+              </TableCell>
+              <TableCell className="font-mono text-xs">
+                {recall.nhtsa_campaign_number}
+              </TableCell>
+              <TableCell>{recall.component ?? '—'}</TableCell>
+              <TableCell className="hidden sm:table-cell max-w-xs truncate">
+                {recall.summary ?? '—'}
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-1">
+                  {recall.park_it && (
+                    <Badge className="bg-red-600 text-white hover:bg-red-600/80 text-xs">
+                      PARK IT
+                    </Badge>
+                  )}
+                  {recall.park_outside && (
+                    <Badge className="bg-amber-600 text-white hover:bg-amber-600/80 text-xs">
+                      PARK OUTSIDE
+                    </Badge>
+                  )}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   )
 }
@@ -272,25 +324,23 @@ function RecallsContent({ recalls }: { recalls: Recall[] }) {
 
 function FluidsContent({ items }: { items: FluidItem[] }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm" data-testid="fluids-table">
-        <thead>
-          <tr className="border-b border-border bg-muted/50">
-            <th className="px-4 py-3 text-left font-semibold">Fluid</th>
-            <th className="px-4 py-3 text-left font-semibold">Capacity</th>
-            <th className="px-4 py-3 text-left font-semibold">Specification</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.label} className="border-b border-border last:border-b-0">
-              <td className="px-4 py-3 font-medium">{item.label}</td>
-              <td className="px-4 py-3">{item.capacity ?? '—'}</td>
-              <td className="px-4 py-3">{item.spec ?? '—'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Table data-testid="fluids-table">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Fluid</TableHead>
+          <TableHead>Capacity</TableHead>
+          <TableHead>Specification</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {items.map((item) => (
+          <TableRow key={item.label}>
+            <TableCell className="font-medium">{item.label}</TableCell>
+            <TableCell>{item.capacity ?? '—'}</TableCell>
+            <TableCell>{item.spec ?? '—'}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   )
 }

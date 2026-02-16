@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
 import type { ServiceInterval } from '@/types/database.types'
 
 interface ServiceIntervalTableProps {
@@ -17,96 +17,54 @@ export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
   }
 
   return (
-    <>
-      {/* Desktop table view */}
-      <div className="hidden overflow-x-auto sm:block">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border">
-              <th className="pb-2 pr-4 text-left font-medium text-muted-foreground">Service</th>
-              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Miles</th>
-              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Km</th>
-              <th className="pb-2 pr-4 text-right font-medium text-muted-foreground">Months</th>
-              <th className="pb-2 text-left font-medium text-muted-foreground">Specs</th>
-            </tr>
-          </thead>
-          <tbody>
-            {intervals.map((interval) => (
-              <tr key={interval.id} className="border-b border-border">
-                <td className="py-3 pr-4">
-                  <p className="font-medium">{interval.service_name}</p>
-                  {interval.description && (
-                    <p className="mt-1 text-xs text-muted-foreground">{interval.description}</p>
-                  )}
-                </td>
-                <td className="py-3 pr-4 text-right tabular-nums">
-                  {interval.interval_miles ? interval.interval_miles.toLocaleString() : '—'}
-                </td>
-                <td className="py-3 pr-4 text-right tabular-nums">
-                  {interval.interval_km ? interval.interval_km.toLocaleString() : '—'}
-                </td>
-                <td className="py-3 pr-4 text-right tabular-nums">
-                  {interval.interval_months ?? '—'}
-                </td>
-                <td className="py-3 text-left">
-                  {interval.torque_spec && (
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">Torque:</span> {interval.torque_spec}
-                    </p>
-                  )}
-                  {interval.fluid_spec && (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">Fluid:</span> {interval.fluid_spec}
-                    </p>
-                  )}
-                  {!interval.torque_spec && !interval.fluid_spec && (
-                    <span className="text-xs text-muted-foreground">—</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile card view */}
-      <div className="space-y-3 sm:hidden">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Service</TableHead>
+          <TableHead className="text-right">Miles</TableHead>
+          <TableHead className="text-right">Km</TableHead>
+          <TableHead className="text-right">Months</TableHead>
+          <TableHead>Specs</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {intervals.map((interval) => (
-          <Card key={interval.id}>
-            <CardContent className="p-4">
+          <TableRow key={interval.id}>
+            <TableCell>
               <p className="font-medium">{interval.service_name}</p>
               {interval.description && (
-                <p className="mt-1 text-xs text-muted-foreground">{interval.description}</p>
+                <p className="mt-1 text-xs text-foreground">{interval.description}</p>
               )}
-              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                {interval.interval_miles && (
-                  <span>{interval.interval_miles.toLocaleString()} mi</span>
-                )}
-                {interval.interval_km && (
-                  <span>{interval.interval_km.toLocaleString()} km</span>
-                )}
-                {interval.interval_months && (
-                  <span>{interval.interval_months} months</span>
-                )}
-              </div>
-              {(interval.torque_spec || interval.fluid_spec) && (
-                <div className="mt-2 space-y-0.5 border-t border-border pt-2">
-                  {interval.torque_spec && (
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">Torque:</span> {interval.torque_spec}
-                    </p>
-                  )}
-                  {interval.fluid_spec && (
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">Fluid:</span> {interval.fluid_spec}
-                    </p>
-                  )}
-                </div>
+            </TableCell>
+            <TableCell className="text-right tabular-nums">
+              {interval.interval_miles ? interval.interval_miles.toLocaleString() : '—'}
+            </TableCell>
+            <TableCell className="text-right tabular-nums">
+              {interval.interval_km ? interval.interval_km.toLocaleString() : '—'}
+            </TableCell>
+            <TableCell className="text-right tabular-nums">
+              {interval.interval_months ?? '—'}
+            </TableCell>
+            <TableCell>
+              {interval.torque_spec && (
+                <p className="text-xs">
+                  <span className="font-medium text-muted-foreground">Torque:</span>{' '}
+                  <span className="text-foreground">{interval.torque_spec}</span>
+                </p>
               )}
-            </CardContent>
-          </Card>
+              {interval.fluid_spec && (
+                <p className="mt-0.5 text-xs">
+                  <span className="font-medium text-muted-foreground">Fluid:</span>{' '}
+                  <span className="text-foreground">{interval.fluid_spec}</span>
+                </p>
+              )}
+              {!interval.torque_spec && !interval.fluid_spec && (
+                <span className="text-xs text-muted-foreground">—</span>
+              )}
+            </TableCell>
+          </TableRow>
         ))}
-      </div>
-    </>
+      </TableBody>
+    </Table>
   )
 }

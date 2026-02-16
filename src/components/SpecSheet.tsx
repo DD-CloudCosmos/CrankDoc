@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import React from 'react'
+import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
 import type { Motorcycle } from '@/types/database.types'
 
 interface SpecSheetProps {
@@ -62,24 +63,27 @@ export function SpecSheet({ motorcycle }: SpecSheetProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {sections.map((section) => (
-        <Card key={section.title}>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base">{section.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {section.rows.map((row) => (
-                <div key={row.label} className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{row.label}</span>
-                  <span className="font-medium text-foreground">{row.value}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+    <Table>
+      <TableBody>
+        {sections.map((section) => (
+          <React.Fragment key={section.title}>
+            <TableRow className="hover:bg-transparent">
+              <TableCell
+                colSpan={2}
+                className="pt-4 pb-2 text-sm font-semibold text-foreground first:pt-0"
+              >
+                {section.title}
+              </TableCell>
+            </TableRow>
+            {section.rows.map((row) => (
+              <TableRow key={row.label}>
+                <TableCell className="text-muted-foreground">{row.label}</TableCell>
+                <TableCell className="text-right font-medium text-foreground">{row.value}</TableCell>
+              </TableRow>
+            ))}
+          </React.Fragment>
+        ))}
+      </TableBody>
+    </Table>
   )
 }

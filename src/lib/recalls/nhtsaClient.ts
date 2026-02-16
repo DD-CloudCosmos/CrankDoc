@@ -55,6 +55,39 @@ function toBooleanFlag(value: string | boolean | null | undefined): boolean {
 }
 
 /**
+ * Converts NHTSA date strings to ISO format (YYYY-MM-DD).
+ * Handles:
+ * - MM/DD/YYYY (slash-delimited) → YYYY-MM-DD
+ * - YYYYMMDD (8-digit compact) → YYYY-MM-DD
+ * - YYYY-MM-DD (already ISO) → passthrough
+ * - null, empty, or garbage → null
+ */
+export function parseNhtsaDate(dateStr: string | null | undefined): string | null {
+  if (!dateStr || typeof dateStr !== 'string') return null
+  const trimmed = dateStr.trim()
+  if (!trimmed) return null
+
+  // Already ISO: YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed
+
+  // Slash-delimited: MM/DD/YYYY
+  const slashMatch = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (slashMatch) {
+    const [, mm, dd, yyyy] = slashMatch
+    return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`
+  }
+
+  // Compact 8-digit: YYYYMMDD
+  const compactMatch = trimmed.match(/^(\d{4})(\d{2})(\d{2})$/)
+  if (compactMatch) {
+    const [, yyyy, mm, dd] = compactMatch
+    return `${yyyy}-${mm}-${dd}`
+  }
+
+  return null
+}
+
+/**
  * Maps a raw NHTSA recall result (PascalCase fields) to our database Insert shape
  * (snake_case fields). Sets `data_source` to `'nhtsa'`.
  */
@@ -71,7 +104,7 @@ export function mapNhtsaToRecall(raw: NhtsaRecallResult): RecallInsert {
     consequence: raw.Consequence ?? null,
     remedy: raw.Remedy ?? null,
     notes: raw.Notes ?? null,
-    report_received_date: raw.ReportReceivedDate ?? null,
+    report_received_date: parseNhtsaDate(raw.ReportReceivedDate),
     park_it: toBooleanFlag(raw.parkIt),
     park_outside: toBooleanFlag(raw.parkOutSide),
   }
