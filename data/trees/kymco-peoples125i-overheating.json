@@ -1,0 +1,185 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating on the air-cooled Kymco People S 125i scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does overheating present on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Power loss in traffic or hot weather", "next": "check_oil" },
+          { "text": "Excessive heat from engine area", "next": "check_oil" },
+          { "text": "Pinging or knocking under load", "next": "check_fuel" },
+          { "text": "Engine seized or nearly seized", "next": "solution_seizure" }
+        ]
+      },
+      {
+        "id": "check_oil",
+        "type": "check",
+        "text": "Check engine oil",
+        "safety": "green",
+        "instructions": "The People S 125i is air-cooled — oil is the primary heat-transfer medium. Center stand on level ground. Check dipstick/sight glass: level between min-max, condition amber-brown (not black or gritty). Capacity approximately 0.8-0.9 liters.",
+        "next": "oil_result"
+      },
+      {
+        "id": "oil_result",
+        "type": "question",
+        "text": "Oil status?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "solution_add_oil" },
+          { "text": "Black or burnt", "next": "solution_change_oil" },
+          { "text": "Fine", "next": "check_fins" }
+        ]
+      },
+      {
+        "id": "check_fins",
+        "type": "check",
+        "text": "Inspect cooling fins and fan system",
+        "safety": "yellow",
+        "warning": "Do not touch when hot.",
+        "instructions": "The People S 125i uses forced-air cooling: fan on the magneto pushes air through a shroud over the cylinder fins. Check: (1) Fins clean (no packed dirt), (2) Shroud intact and attached, (3) Fan blades not broken, (4) Air intake not blocked. Clean fins with brush or compressed air.",
+        "next": "fins_result"
+      },
+      {
+        "id": "fins_result",
+        "type": "question",
+        "text": "Cooling system condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty fins — cleaned them", "next": "solution_fins_clean" },
+          { "text": "Shroud damaged", "next": "solution_shroud" },
+          { "text": "Fan broken", "next": "solution_fan" },
+          { "text": "All clean and intact", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel octane",
+        "safety": "green",
+        "instructions": "Low-octane fuel causes pre-ignition (pinging) and excess heat. Use 91+ octane. Check freshness. Pinging under load = inadequate octane or carbon buildup.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel quality?",
+        "safety": "green",
+        "options": [
+          { "text": "Regular 87 octane", "next": "solution_fuel" },
+          { "text": "Premium but still pinging", "next": "solution_carbon" },
+          { "text": "Good fuel, no pinging", "next": "check_valves" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Engine must be cold. TDC compression stroke.",
+        "instructions": "Tight exhaust valves are a leading cause of overheating on air-cooled scooters. Intake 0.10mm, exhaust 0.15mm (verify with manual). Tight valves leak hot combustion gases.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Valve clearances?",
+        "safety": "green",
+        "options": [
+          { "text": "Tight (below spec)", "next": "solution_valves" },
+          { "text": "Within spec", "next": "solution_riding" }
+        ]
+      },
+      {
+        "id": "solution_add_oil",
+        "type": "solution",
+        "text": "Add Oil",
+        "safety": "green",
+        "action": "Add 10W-40 motorcycle oil to correct level.",
+        "details": "Low oil on air-cooled engine is dangerous. Use JASO rated oil. Check for leaks if level drops quickly."
+      },
+      {
+        "id": "solution_change_oil",
+        "type": "solution",
+        "text": "Change Oil",
+        "safety": "green",
+        "action": "Drain and refill with fresh 10W-40.",
+        "details": "Change every 2,000-3,000 km. Replace drain plug washer. Capacity ~0.8L."
+      },
+      {
+        "id": "solution_fins_clean",
+        "type": "solution",
+        "text": "Fins Cleaned",
+        "safety": "green",
+        "action": "Cooling fins cleaned and airflow restored.",
+        "details": "Clean regularly, especially in dusty conditions. Check every oil change."
+      },
+      {
+        "id": "solution_shroud",
+        "type": "solution",
+        "text": "Repair/Replace Shroud",
+        "safety": "green",
+        "action": "Fix or replace damaged fan shroud.",
+        "details": "Critical for low-speed cooling. Without proper shroud, engine overheats in traffic."
+      },
+      {
+        "id": "solution_fan",
+        "type": "solution",
+        "text": "Replace Fan",
+        "safety": "green",
+        "action": "Replace damaged cooling fan (flywheel assembly).",
+        "details": "Requires flywheel puller. Broken blades = inadequate cooling and vibration."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Use Higher Octane",
+        "safety": "green",
+        "action": "Switch to 91+ octane premium fuel.",
+        "details": "Drain low-octane fuel and refill premium. Carbon buildup from pinging may also need addressing."
+      },
+      {
+        "id": "solution_carbon",
+        "type": "solution",
+        "text": "Remove Carbon Deposits",
+        "safety": "yellow",
+        "warning": "Follow chemical cleaner instructions exactly.",
+        "action": "Clean carbon from combustion chamber.",
+        "details": "Try Seafoam or similar first. For heavy buildup, remove head and scrape with plastic scraper."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valves",
+        "safety": "yellow",
+        "warning": "Cold engine, TDC compression stroke.",
+        "action": "Adjust to specification.",
+        "details": "Screw-and-locknut method. Tight exhaust valves = overheating and valve burning. Check every 8,000-12,000 km."
+      },
+      {
+        "id": "solution_riding",
+        "type": "solution",
+        "text": "Heat Management Tips",
+        "safety": "green",
+        "action": "Adapt riding for air-cooled engine.",
+        "details": "Avoid prolonged idle in traffic. In extreme heat avoid sustained full throttle. Use synthetic oil. Keep fins clean. Some heat under panels is normal."
+      },
+      {
+        "id": "solution_seizure",
+        "type": "solution",
+        "text": "Engine Seizure",
+        "safety": "red",
+        "warning": "Do not force-start. Stop riding immediately.",
+        "action": "Professional inspection required.",
+        "details": "Caused by low oil, extreme overheating, or incorrect clearances. Engine disassembly needed. May need piston, cylinder, or complete engine replacement."
+      }
+    ]
+  }
+}

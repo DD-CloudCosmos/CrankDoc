@@ -1,0 +1,174 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss on the Kymco Downtown 300i 276cc scooter with CVT emphasis.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration", "next": "check_belt" },
+          { "text": "Engine revs high, barely moves", "next": "check_clutch" },
+          { "text": "Reduced top speed", "next": "check_rollers" },
+          { "text": "Bogs under load", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The Downtown 300i uses a larger, wider belt than 125cc models to handle the 276cc engine's power. Check for cracks, fraying, wear. Replace every 12,000-18,000 km.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn/damaged", "next": "solution_belt" },
+          { "text": "OK", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Inspect variator rollers",
+        "safety": "green",
+        "instructions": "The Downtown 300i uses heavier roller weights than 125cc scooters (check manual for exact weight and size). Check for flat spots, deformation. Flat-spotted rollers cause poor CVT ratio changes.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots", "next": "solution_rollers" },
+          { "text": "OK", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect clutch",
+        "safety": "green",
+        "instructions": "The Downtown 300i clutch handles significantly more power. Check shoes, springs, bell. Higher-powered slipping creates more heat and wear. A slipping clutch on the 300i is more noticeable than on a 125.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn/glazed", "next": "solution_clutch" },
+          { "text": "Weak springs", "next": "solution_springs" },
+          { "text": "OK", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_filter",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "A clogged filter starves the 276cc engine. Replace if dirty. The larger engine is more sensitive to airflow restriction.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust",
+        "safety": "yellow",
+        "warning": "Hot — inspect cold.",
+        "instructions": "Blocked cat or muffler causes significant power loss. The Downtown 300i exhaust is larger. Try loosening header to test.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Restricted?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_exhaust" },
+          { "text": "No", "next": "solution_valves" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace with correct 300i belt.",
+        "details": "Larger than 125cc belts. Inspect rollers and clutch simultaneously."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all as a set.",
+        "details": "Use correct weight for 300i (heavier than 125cc models)."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch",
+        "safety": "green",
+        "action": "Replace shoes and/or assembly.",
+        "details": "The 300i clutch handles more power — use quality replacements."
+      },
+      {
+        "id": "solution_springs",
+        "type": "solution",
+        "text": "Replace Springs",
+        "safety": "green",
+        "action": "Replace all springs.",
+        "details": "300i springs must handle higher RPM loads."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Filter",
+        "safety": "green",
+        "action": "New air filter.",
+        "details": "Replace every 6,000-8,000 km."
+      },
+      {
+        "id": "solution_exhaust",
+        "type": "solution",
+        "text": "Service Exhaust",
+        "safety": "yellow",
+        "warning": "Cool first.",
+        "action": "Replace blocked component.",
+        "details": "Do not remove catalytic converter."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Check Valves",
+        "safety": "yellow",
+        "warning": "Cold engine, TDC.",
+        "action": "Adjust valve clearances.",
+        "details": "Check every 8,000-12,000 km. Tight valves reduce power."
+      }
+    ]
+  }
+}

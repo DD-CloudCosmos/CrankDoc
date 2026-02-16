@@ -1,0 +1,228 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco Like 125i scooter including front disc and rear drum brakes.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Which brake issue are you experiencing on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak braking — poor stopping power", "next": "check_which_brake" },
+          { "text": "Squealing or grinding noise when braking", "next": "check_pad_wear" },
+          { "text": "Brake lever pulls to handlebar with little resistance", "next": "check_fluid_level" },
+          { "text": "Brake is dragging — wheel doesn't spin freely", "next": "check_dragging" }
+        ]
+      },
+      {
+        "id": "check_which_brake",
+        "type": "question",
+        "text": "Which brake feels weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front disc brake (right lever)", "next": "check_fluid_level" },
+          { "text": "Rear drum brake (left lever)", "next": "check_drum_adjustment" },
+          { "text": "Both brakes", "next": "check_fluid_level" }
+        ]
+      },
+      {
+        "id": "check_fluid_level",
+        "type": "check",
+        "text": "Check front brake fluid level",
+        "safety": "yellow",
+        "warning": "Brake fluid damages paint. Wipe spills immediately.",
+        "instructions": "Check the brake fluid reservoir on the right handlebar. Fluid should be between MIN and MAX marks. If low, brake pads may be worn or there is a leak. Dark brown or black fluid should be replaced — brake fluid absorbs moisture over time.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid level?",
+        "safety": "green",
+        "options": [
+          { "text": "Fluid is low", "next": "check_pad_wear" },
+          { "text": "Fluid is dark or contaminated", "next": "solution_flush_fluid" },
+          { "text": "Fluid level is fine", "next": "check_pad_wear" }
+        ]
+      },
+      {
+        "id": "check_pad_wear",
+        "type": "check",
+        "text": "Inspect front brake pads",
+        "safety": "yellow",
+        "warning": "If pads are worn to metal, do not ride. Metal-on-metal damages the disc.",
+        "instructions": "Look through the caliper opening to see the brake pads. New pads are 4-5mm thick. Replace when they reach 1-1.5mm or when the wear groove is gone. Grinding noise means pads are worn to the metal backing. Also check the disc for grooves, scoring, or warping.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "What is the pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are worn thin or to metal", "next": "solution_replace_pads" },
+          { "text": "Pads have adequate thickness", "next": "check_caliper" },
+          { "text": "Squealing with good pads", "next": "solution_clean_brakes" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check the brake caliper",
+        "safety": "yellow",
+        "warning": "Work on cool brake components only.",
+        "instructions": "The Like 125i front caliper is a single-piston sliding type. Check that slide pins move freely, the piston extends evenly when the lever is squeezed, and there are no fluid leaks. Seized slide pins cause uneven pad wear and reduced braking.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Caliper slides are seized", "next": "solution_service_caliper" },
+          { "text": "Piston is stuck", "next": "solution_rebuild_caliper" },
+          { "text": "Fluid leak found", "next": "solution_brake_leak" },
+          { "text": "Caliper seems fine", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "check_drum_adjustment",
+        "type": "check",
+        "text": "Adjust the rear drum brake",
+        "safety": "green",
+        "instructions": "The Like 125i rear brake is a drum type with cable actuation. Find the adjusting nut at the rear brake arm on the hub. Tighten to take up cable slack — the lever should have 10-20mm free play. If the adjuster is maxed out, the brake shoes need replacement.",
+        "next": "drum_result"
+      },
+      {
+        "id": "drum_result",
+        "type": "question",
+        "text": "Did adjustment help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — brake works properly now", "next": "solution_drum_adjusted" },
+          { "text": "No — adjuster maxed out", "next": "solution_replace_shoes" },
+          { "text": "Cable is sticky or stiff", "next": "solution_replace_cable" }
+        ]
+      },
+      {
+        "id": "check_dragging",
+        "type": "check",
+        "text": "Identify which brake is dragging",
+        "safety": "green",
+        "instructions": "Put the scooter on its center stand. Spin each wheel by hand. A dragging brake prevents free spinning. Front: disc caliper issue. Rear: drum brake not releasing.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which wheel is dragging?",
+        "safety": "green",
+        "options": [
+          { "text": "Front wheel", "next": "solution_service_caliper" },
+          { "text": "Rear wheel", "next": "solution_drum_dragging" }
+        ]
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "Replace Front Brake Pads",
+        "safety": "yellow",
+        "warning": "Pump the brake lever several times after pad replacement before riding. Bed in new pads with gentle stops.",
+        "action": "Replace the worn brake pads.",
+        "details": "Remove the caliper, slide out old pads, push piston back, install new pads. Check disc thickness — replace if below the minimum stamped on the disc. Bed new pads in with gentle braking for the first 100 km."
+      },
+      {
+        "id": "solution_flush_fluid",
+        "type": "solution",
+        "text": "Flush Brake Fluid",
+        "safety": "yellow",
+        "warning": "Use only DOT 4 brake fluid. Never mix types.",
+        "action": "Flush and replace the brake fluid.",
+        "details": "Flush every 2 years. Attach a tube to the bleed nipple, pump the lever, and push old fluid out while keeping the reservoir topped up with fresh DOT 4."
+      },
+      {
+        "id": "solution_clean_brakes",
+        "type": "solution",
+        "text": "Clean Brake Components",
+        "safety": "green",
+        "action": "Clean the disc and pads with brake cleaner.",
+        "details": "Spray disc and pads with brake cleaner. Sand glazed pads lightly with 120-grit. Apply anti-squeal compound to pad backs (not friction surface)."
+      },
+      {
+        "id": "solution_service_caliper",
+        "type": "solution",
+        "text": "Service Brake Caliper",
+        "safety": "yellow",
+        "warning": "Use only silicone brake grease on caliper components.",
+        "action": "Clean and lubricate the caliper slide pins.",
+        "details": "Remove caliper, extract slide pins, clean, apply silicone brake grease, reinstall. Seized pins are the most common caliper problem on scooters."
+      },
+      {
+        "id": "solution_rebuild_caliper",
+        "type": "solution",
+        "text": "Rebuild the Caliper",
+        "safety": "yellow",
+        "warning": "A stuck piston means the brake is compromised. Do not ride until fixed.",
+        "action": "Rebuild with new seals or replace the caliper.",
+        "details": "Rebuild kits include new seals and dust boots. If the bore is pitted, replace the entire caliper."
+      },
+      {
+        "id": "solution_brake_leak",
+        "type": "solution",
+        "text": "Repair Brake Leak",
+        "safety": "red",
+        "warning": "A brake fluid leak means your brake can fail. Do not ride until repaired.",
+        "action": "Find and repair the brake fluid leak source.",
+        "details": "Check banjo bolt crush washers, brake line for cracks, and caliper piston seal. Replace damaged components. Bleed brakes after repair."
+      },
+      {
+        "id": "solution_bleed_brakes",
+        "type": "solution",
+        "text": "Bleed the Brakes",
+        "safety": "yellow",
+        "warning": "Air in the system causes a soft lever. Verify firm feel before riding.",
+        "action": "Bleed air from the front brake system.",
+        "details": "Pump lever 3-4 times, hold, open bleed nipple, close, release lever. Repeat until no bubbles in the fluid. Keep reservoir topped up."
+      },
+      {
+        "id": "solution_drum_adjusted",
+        "type": "solution",
+        "text": "Drum Brake Adjusted",
+        "safety": "green",
+        "action": "Rear brake cable adjusted for proper free play.",
+        "details": "Maintain 10-20mm free play at the lever. If frequent adjustment is needed, brake shoes are wearing and will need replacement soon."
+      },
+      {
+        "id": "solution_replace_shoes",
+        "type": "solution",
+        "text": "Replace Rear Brake Shoes",
+        "safety": "yellow",
+        "warning": "Do not blow brake dust with compressed air. Wipe with a damp cloth.",
+        "action": "Replace the worn drum brake shoes.",
+        "details": "Remove the rear wheel and brake plate. Replace shoes and springs. Clean the drum surface. Adjust cable after installation. Bed in with gentle braking for 100 km."
+      },
+      {
+        "id": "solution_replace_cable",
+        "type": "solution",
+        "text": "Replace Brake Cable",
+        "safety": "green",
+        "action": "Lubricate or replace the stiff brake cable.",
+        "details": "Try lubricating first. If frayed, kinked, or outer sheath is damaged, replace. Route the new cable exactly as original. Adjust free play after installation."
+      },
+      {
+        "id": "solution_drum_dragging",
+        "type": "solution",
+        "text": "Fix Drum Brake Drag",
+        "safety": "green",
+        "action": "Loosen the cable adjustment and check return springs.",
+        "details": "Provide 10-20mm free play. If springs are weak, replace them. Check that the cable returns freely without binding in its routing."
+      }
+    ]
+  }
+}

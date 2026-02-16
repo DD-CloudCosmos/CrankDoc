@@ -120,6 +120,63 @@ const motorcycles = [
     valve_clearance_intake: '0.15-0.20mm', valve_clearance_exhaust: '0.30-0.35mm',
     spark_plug: 'NGK LMAR8BI-9', tire_front: '120/70R19', tire_rear: '170/60R17'
   },
+  // Kymco scooters
+  {
+    make: 'Kymco', model: 'Agility 125', year_start: 2006, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 125, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 117, horsepower: 9, torque_nm: 9,
+    fuel_capacity_liters: 6.5, oil_capacity_liters: 0.8,
+    valve_clearance_intake: '0.05-0.10mm', valve_clearance_exhaust: '0.10-0.15mm',
+    spark_plug: 'NGK CR7HSA', tire_front: '120/70-12', tire_rear: '130/70-12'
+  },
+  {
+    make: 'Kymco', model: 'Like 125i', year_start: 2017, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 125, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 119, horsepower: 10, torque_nm: 9.5,
+    fuel_capacity_liters: 6.2, oil_capacity_liters: 0.8,
+    valve_clearance_intake: '0.05-0.10mm', valve_clearance_exhaust: '0.10-0.15mm',
+    spark_plug: 'NGK CR7HSA', tire_front: '110/70-12', tire_rear: '120/70-12'
+  },
+  {
+    make: 'Kymco', model: 'People S 125i', year_start: 2018, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 125, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 127, horsepower: 10, torque_nm: 10,
+    fuel_capacity_liters: 7.0, oil_capacity_liters: 0.8,
+    valve_clearance_intake: '0.05-0.10mm', valve_clearance_exhaust: '0.10-0.15mm',
+    spark_plug: 'NGK CR7HSA', tire_front: '110/70-16', tire_rear: '130/70-16'
+  },
+  {
+    make: 'Kymco', model: 'Downtown 125i', year_start: 2009, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 125, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 181, horsepower: 14, torque_nm: 12,
+    fuel_capacity_liters: 12.5, oil_capacity_liters: 1.0, coolant_capacity_liters: 0.9,
+    valve_clearance_intake: '0.10-0.15mm', valve_clearance_exhaust: '0.15-0.20mm',
+    spark_plug: 'NGK CR8EK', tire_front: '120/80-14', tire_rear: '150/70-13'
+  },
+  {
+    make: 'Kymco', model: 'Downtown 300i', year_start: 2009, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 276, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 189, horsepower: 25, torque_nm: 26,
+    fuel_capacity_liters: 12.5, oil_capacity_liters: 1.2, coolant_capacity_liters: 1.0,
+    valve_clearance_intake: '0.10-0.15mm', valve_clearance_exhaust: '0.15-0.20mm',
+    spark_plug: 'NGK CR8EK', tire_front: '120/80-14', tire_rear: '150/70-13'
+  },
+  {
+    make: 'Kymco', model: 'X-Town 300i', year_start: 2016, year_end: null,
+    engine_type: 'single-cylinder', displacement_cc: 276, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 183, horsepower: 25, torque_nm: 26,
+    fuel_capacity_liters: 12.5, oil_capacity_liters: 1.2, coolant_capacity_liters: 1.0,
+    valve_clearance_intake: '0.10-0.15mm', valve_clearance_exhaust: '0.15-0.20mm',
+    spark_plug: 'NGK CR8EK', tire_front: '120/70-15', tire_rear: '140/70-14'
+  },
+  {
+    make: 'Kymco', model: 'AK 550i', year_start: 2017, year_end: null,
+    engine_type: 'parallel-twin', displacement_cc: 550, category: 'scooter',
+    fuel_system: 'EFI', dry_weight_kg: 226, horsepower: 53, torque_nm: 55,
+    fuel_capacity_liters: 15, oil_capacity_liters: 2.0, coolant_capacity_liters: 1.3,
+    valve_clearance_intake: '0.10-0.15mm', valve_clearance_exhaust: '0.15-0.20mm',
+    spark_plug: 'NGK CR8EK', tire_front: '120/70R15', tire_rear: '160/60R15'
+  },
 ]
 
 async function main() {

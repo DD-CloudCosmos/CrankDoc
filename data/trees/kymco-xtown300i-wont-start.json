@@ -1,0 +1,217 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco X-Town 300i with its liquid-cooled 276cc engine.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights on but starter silent", "next": "check_kill_switch" },
+          { "text": "Cranks but doesn't fire", "next": "check_fuel" },
+          { "text": "Clicks but won't spin", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check battery",
+        "safety": "yellow",
+        "warning": "Battery acid is corrosive.",
+        "instructions": "The X-Town 300i uses a 12V battery (typically YTX12-BS). Measure with multimeter — should read 12.4V+. Below 12.0V = dead. Clean terminals. The X-Town 300i may have a Noodoe dashboard — a weak battery can cause display glitches before complete failure.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "Voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Low/dead", "next": "solution_battery" },
+          { "text": "Good (12.4V+)", "next": "check_fuses" }
+        ]
+      },
+      {
+        "id": "check_fuses",
+        "type": "check",
+        "text": "Check fuses",
+        "safety": "yellow",
+        "warning": "Ignition off.",
+        "instructions": "Check main fuse and all secondary fuses. The X-Town 300i has a comprehensive fuse box under the seat.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Fuses?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown", "next": "solution_fuse" },
+          { "text": "All good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check safety interlocks",
+        "safety": "green",
+        "instructions": "X-Town 300i: (1) Kill switch in RUN, (2) Side stand retracted, (3) Brake lever applied. Some X-Town models feature keyless smart key — check fob battery if the scooter doesn't recognize the key.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "Resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_switch" },
+          { "text": "No", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_relay",
+        "type": "check",
+        "text": "Check starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass carelessly.",
+        "instructions": "Listen for click. Click + no crank = starter issue. No click = wiring fault. Check 12V at trigger wire.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Clicks, no crank", "next": "solution_starter" },
+          { "text": "No click", "next": "solution_wiring" },
+          { "text": "Cranks, won't fire", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable.",
+        "instructions": "Turn ignition ON, listen for fuel pump prime. The X-Town 300i is fuel-injected. Check fuel level — approximately 12.5-liter tank. Check pump fuse if no prime sound.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump", "next": "solution_pump" },
+          { "text": "Pump OK, no start", "next": "check_spark" },
+          { "text": "Empty", "next": "solution_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check spark",
+        "safety": "yellow",
+        "warning": "High voltage.",
+        "instructions": "Remove plug, ground against engine, crank. Look for blue spark. ECU-controlled ignition. Check for stored codes via the Noodoe system or diagnostic port if available.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Good spark", "next": "solution_compression" },
+          { "text": "No spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Charge/Replace Battery",
+        "safety": "green",
+        "action": "Charge or replace.",
+        "details": "Check charging system (13.5-14.8V). If Noodoe display was flickering, the battery was likely failing."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Fuse",
+        "safety": "yellow",
+        "warning": "Same rating only.",
+        "action": "Replace blown fuse.",
+        "details": "Trace short if it blows again."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Switch Resolved",
+        "safety": "green",
+        "action": "Interlock was preventing start.",
+        "details": "Check fob battery on keyless models. Clean switch contacts."
+      },
+      {
+        "id": "solution_starter",
+        "type": "solution",
+        "text": "Starter Motor",
+        "safety": "yellow",
+        "warning": "Check cable first.",
+        "action": "Repair or replace starter.",
+        "details": "Check heavy cable connection first."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring Fault",
+        "safety": "yellow",
+        "warning": "Ignition off.",
+        "action": "Trace start circuit.",
+        "details": "Check switch connectors, side stand switch, brake switch."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Fuel Pump",
+        "safety": "yellow",
+        "warning": "Fire risk.",
+        "action": "Check fuse/connector, replace pump if needed.",
+        "details": "Higher capacity pump for 276cc engine."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Refuel.",
+        "details": "~12.5L tank. Let pump prime before starting."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition Fault",
+        "safety": "yellow",
+        "warning": "High voltage.",
+        "action": "Replace plug, check ECU/coil/crank sensor.",
+        "details": "Check for diagnostic codes. Crank position sensor failure common."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression Issue",
+        "safety": "yellow",
+        "warning": "Compression test needed.",
+        "action": "Test compression — should be 11-14 bar.",
+        "details": "Low = worn rings, head gasket, or tight valves. Liquid-cooled: check for coolant in oil."
+      }
+    ]
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss on the sporty Kymco X-Town 300i 276cc scooter with CVT emphasis.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration", "next": "check_belt" },
+          { "text": "Revs high, barely moves", "next": "check_clutch" },
+          { "text": "Reduced top speed", "next": "check_rollers" },
+          { "text": "Bogs under load", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The X-Town 300i uses a heavy-duty belt for its 276cc engine. Check for damage and width. The sportier nature of the X-Town means the CVT works harder during spirited riding. Replace every 12,000-18,000 km.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_belt" },
+          { "text": "OK", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Check rollers",
+        "safety": "green",
+        "instructions": "The X-Town 300i uses heavier rollers than 125 models. Check for flat spots. The sporty character means more CVT wear during aggressive acceleration.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots", "next": "solution_rollers" },
+          { "text": "OK", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Check clutch",
+        "safety": "green",
+        "instructions": "The X-Town 300i clutch handles more power than small scooters. Check shoes, springs, bell for wear. A slipping clutch is very noticeable on the sportier X-Town.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn/glazed", "next": "solution_clutch" },
+          { "text": "Weak springs", "next": "solution_springs" },
+          { "text": "OK", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_filter",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "Clogged filter starves the 276cc engine badly. Replace if dirty.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust",
+        "safety": "yellow",
+        "warning": "Hot — cold only.",
+        "instructions": "Blocked exhaust = major power loss on the X-Town 300i. Check flow, try loosening header.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Restricted?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_exhaust" },
+          { "text": "No", "next": "solution_valves" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace with correct X-Town 300i belt.",
+        "details": "Inspect rollers and clutch at same time."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all as set.",
+        "details": "Correct weight for 300i."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch",
+        "safety": "green",
+        "action": "Replace shoes/assembly.",
+        "details": "Quality parts for the sporty 300i platform."
+      },
+      {
+        "id": "solution_springs",
+        "type": "solution",
+        "text": "Replace Springs",
+        "safety": "green",
+        "action": "Replace all springs.",
+        "details": "Must handle 276cc power."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Filter",
+        "safety": "green",
+        "action": "New filter.",
+        "details": "Replace every 6,000-8,000 km."
+      },
+      {
+        "id": "solution_exhaust",
+        "type": "solution",
+        "text": "Service Exhaust",
+        "safety": "yellow",
+        "warning": "Cool first.",
+        "action": "Replace blocked component.",
+        "details": "Do not remove catalytic converter."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Check Valves",
+        "safety": "yellow",
+        "warning": "Cold, TDC.",
+        "action": "Adjust clearances.",
+        "details": "Check every 8,000-12,000 km."
+      }
+    ]
+  }
+}

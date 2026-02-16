@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco Downtown 300i scooter with its liquid-cooled 276cc single-cylinder engine.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights on, starter silent", "next": "check_kill_switch" },
+          { "text": "Starter cranks but no fire", "next": "check_fuel_pump" },
+          { "text": "Starter clicks but won't spin", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check battery voltage",
+        "safety": "yellow",
+        "warning": "Battery acid is corrosive. Wear eye protection.",
+        "instructions": "The Downtown 300i uses a larger battery than 125cc scooters (typically YTX12-BS or similar) to handle the bigger starter motor. Measure across terminals — should read 12.4V+. Below 12.0V = dead. Clean corroded terminals.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "Voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V", "next": "solution_battery" },
+          { "text": "12.0-12.3V", "next": "solution_battery" },
+          { "text": "12.4V+", "next": "check_fuses" }
+        ]
+      },
+      {
+        "id": "check_fuses",
+        "type": "check",
+        "text": "Check fuses",
+        "safety": "yellow",
+        "warning": "Ignition off.",
+        "instructions": "Check main fuse (typically 30A on the 300i) and secondary fuses. The Downtown 300i has a more complex electrical system than smaller scooters.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Fuses?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown", "next": "solution_fuse" },
+          { "text": "All good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check safety interlocks",
+        "safety": "green",
+        "instructions": "Downtown 300i: (1) Kill switch RUN position, (2) Side stand retracted, (3) Brake lever applied while pressing start. The 300i may also have a keyless ignition system (Smart Key) on newer models — ensure the key fob battery is not dead.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "Resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_switch" },
+          { "text": "No", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_relay",
+        "type": "check",
+        "text": "Check starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass carelessly.",
+        "instructions": "Listen for click when pressing start. The Downtown 300i starter draws significant current. Click + no crank = starter motor issue or weak battery. No click = wiring fault.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Relay findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Clicks, no crank", "next": "solution_starter" },
+          { "text": "No click", "next": "solution_wiring" },
+          { "text": "Cranks, won't fire", "next": "check_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable.",
+        "instructions": "Turn ignition ON, listen for pump prime. The Downtown 300i has a higher-capacity fuel pump for the 276cc engine. Check fuel level — the 300i has approximately a 12.5-liter tank. Check fuel pump fuse if no prime.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel delivery?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump", "next": "solution_pump" },
+          { "text": "Pump OK, no start", "next": "check_spark" },
+          { "text": "Empty", "next": "solution_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check spark",
+        "safety": "yellow",
+        "warning": "High voltage.",
+        "instructions": "Remove plug, ground against engine, crank. Look for blue spark. The Downtown 300i uses ECU-controlled ignition. No spark may indicate ECU issue, crank sensor failure, or coil fault. Check for stored codes.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Good spark", "next": "solution_compression" },
+          { "text": "No spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Charge/Replace Battery",
+        "safety": "green",
+        "action": "Charge or replace battery.",
+        "details": "Downtown 300i uses a larger battery. Check charging (13.5-14.8V). Battery lasts 2-3 years."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Fuse",
+        "safety": "yellow",
+        "warning": "Same rating only.",
+        "action": "Replace blown fuse.",
+        "details": "If it blows again, find the short."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Switch Fixed",
+        "safety": "green",
+        "action": "Interlock resolved.",
+        "details": "If Smart Key equipped, replace fob battery if needed."
+      },
+      {
+        "id": "solution_starter",
+        "type": "solution",
+        "text": "Starter Motor",
+        "safety": "yellow",
+        "warning": "Check cable first.",
+        "action": "Starter motor repair or replacement.",
+        "details": "The 300i starter motor handles a larger engine. Check the heavy cable connection first."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring Fault",
+        "safety": "yellow",
+        "warning": "Ignition off for checks.",
+        "action": "Trace start circuit.",
+        "details": "Check all switch connectors, especially behind front fairing."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Fuel Pump",
+        "safety": "yellow",
+        "warning": "Fire risk.",
+        "action": "Check fuse, connector, replace pump if needed.",
+        "details": "Higher capacity pump for 276cc engine."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Refuel.",
+        "details": "12.5-liter tank. Let pump prime after refueling."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition Fault",
+        "safety": "yellow",
+        "warning": "High voltage.",
+        "action": "Replace plug, then check ECU, coil, crank sensor.",
+        "details": "ECU-controlled ignition. Check for stored diagnostic codes. Crank position sensor failure is a common no-spark cause."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression Issue",
+        "safety": "yellow",
+        "warning": "Compression test needed.",
+        "action": "Test compression — should be 11-14 bar for the 276cc engine.",
+        "details": "Low compression = worn rings, head gasket, or tight valves. The liquid-cooled 300i head gasket failure may also show as coolant in oil."
+      }
+    ]
+  }
+}

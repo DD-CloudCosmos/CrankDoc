@@ -1,0 +1,220 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating on the liquid-cooled Kymco Downtown 300i 276cc scooter.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does overheating present on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Temp gauge high or warning light", "next": "check_coolant" },
+          { "text": "Coolant boiling/steam", "next": "solution_stop" },
+          { "text": "Fan never runs", "next": "check_fan" },
+          { "text": "Power loss in traffic", "next": "check_coolant" }
+        ]
+      },
+      {
+        "id": "check_coolant",
+        "type": "check",
+        "text": "Check coolant level",
+        "safety": "yellow",
+        "warning": "NEVER open radiator cap when hot. Pressurized coolant causes severe burns.",
+        "instructions": "Check the overflow reservoir (translucent tank with MIN/MAX). If empty, check radiator (cold engine only). The Downtown 300i 276cc engine generates more heat than 125cc models and requires proper coolant flow. Use 50/50 ethylene glycol coolant.",
+        "next": "coolant_result"
+      },
+      {
+        "id": "coolant_result",
+        "type": "question",
+        "text": "Coolant level?",
+        "safety": "green",
+        "options": [
+          { "text": "Low/empty", "next": "check_leak" },
+          { "text": "Normal", "next": "check_fan" },
+          { "text": "Brown/oily", "next": "solution_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_leak",
+        "type": "check",
+        "text": "Find coolant leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic. Clean spills.",
+        "instructions": "Top up and look for leaks: hose connections, water pump weep hole, radiator damage, head gasket. The Downtown 300i has more coolant plumbing than basic scooters. Use a pressure tester for hard-to-find leaks.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Leak location?",
+        "safety": "green",
+        "options": [
+          { "text": "Hose", "next": "solution_hose" },
+          { "text": "Water pump", "next": "solution_pump" },
+          { "text": "Radiator", "next": "solution_radiator" },
+          { "text": "No external leak", "next": "solution_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Check cooling fan",
+        "safety": "yellow",
+        "warning": "Fan can start suddenly. Keep hands clear.",
+        "instructions": "Let the engine idle until hot — the fan should activate at approximately 95-100 degrees C. If not: check fan fuse, motor connector, temperature switch. Test fan by applying direct 12V.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Fan status?",
+        "safety": "green",
+        "options": [
+          { "text": "Motor dead", "next": "solution_fan_motor" },
+          { "text": "Works direct, not auto", "next": "solution_temp_sensor" },
+          { "text": "Works normally", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Check thermostat",
+        "safety": "yellow",
+        "warning": "Cool engine only.",
+        "instructions": "Feel upper radiator hose after warmup. Should get hot when thermostat opens (~80-85C). Cold hose + hot engine = stuck closed thermostat.",
+        "next": "thermo_result"
+      },
+      {
+        "id": "thermo_result",
+        "type": "question",
+        "text": "Thermostat?",
+        "safety": "green",
+        "options": [
+          { "text": "Stuck closed", "next": "solution_thermostat" },
+          { "text": "Opens normally", "next": "check_radiator" }
+        ]
+      },
+      {
+        "id": "check_radiator",
+        "type": "check",
+        "text": "Check radiator",
+        "safety": "green",
+        "instructions": "Check fins for debris, airflow path, radiator cap pressure. The Downtown 300i radiator is front-mounted. Road debris buildup reduces cooling.",
+        "next": "rad_result"
+      },
+      {
+        "id": "rad_result",
+        "type": "question",
+        "text": "Radiator?",
+        "safety": "green",
+        "options": [
+          { "text": "Blocked fins", "next": "solution_clean_rad" },
+          { "text": "Weak cap", "next": "solution_cap" },
+          { "text": "Clean and good", "next": "solution_pump_check" }
+        ]
+      },
+      {
+        "id": "solution_stop",
+        "type": "solution",
+        "text": "Stop Immediately",
+        "safety": "red",
+        "warning": "Stop engine NOW. Do not open radiator cap. Wait 30+ minutes to cool.",
+        "action": "Turn off engine. Wait for complete cooling.",
+        "details": "Boiling coolant = dangerously hot. Do not restart until system is cool, checked, and refilled."
+      },
+      {
+        "id": "solution_hose",
+        "type": "solution",
+        "text": "Replace Hose",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace leaking hose.",
+        "details": "Tighten clamps first. Replace if cracked/swollen. Refill with 50/50 coolant. Bleed air."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Water Pump",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace pump seal or pump.",
+        "details": "Weep hole drip = seal failure. Normal wear item."
+      },
+      {
+        "id": "solution_radiator",
+        "type": "solution",
+        "text": "Replace Radiator",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace damaged radiator.",
+        "details": "Refill with fresh coolant and bleed air."
+      },
+      {
+        "id": "solution_head_gasket",
+        "type": "solution",
+        "text": "Head Gasket Failure",
+        "safety": "red",
+        "warning": "Coolant in oil destroys bearings. Stop riding.",
+        "action": "Professional head gasket replacement.",
+        "details": "Signs: white smoke, milky oil, bubbles in coolant, coolant disappearing. Requires head removal."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace Fan Motor",
+        "safety": "green",
+        "action": "Replace failed fan motor.",
+        "details": "Verify operation after replacement."
+      },
+      {
+        "id": "solution_temp_sensor",
+        "type": "solution",
+        "text": "Replace Temp Sensor/Switch",
+        "safety": "yellow",
+        "warning": "Drain some coolant first.",
+        "action": "Replace the fan temperature switch.",
+        "details": "Some models use ECU-controlled fan via ECT sensor — check for fault codes."
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace stuck thermostat.",
+        "details": "Refill and bleed system. Emergency: remove thermostat temporarily."
+      },
+      {
+        "id": "solution_clean_rad",
+        "type": "solution",
+        "text": "Clean Radiator",
+        "safety": "green",
+        "action": "Clean debris from radiator fins.",
+        "details": "Low-pressure water or compressed air. Fins are fragile."
+      },
+      {
+        "id": "solution_cap",
+        "type": "solution",
+        "text": "Replace Cap",
+        "safety": "yellow",
+        "warning": "Never open hot.",
+        "action": "Replace radiator cap.",
+        "details": "Correct pressure rating. Cheap and easy."
+      },
+      {
+        "id": "solution_pump_check",
+        "type": "solution",
+        "text": "Check Water Pump Flow",
+        "safety": "yellow",
+        "warning": "Hot engine — careful.",
+        "action": "Verify pump is circulating coolant.",
+        "details": "Squeeze upper hose at operating temp — feel for flow. No flow = pump impeller failed."
+      }
+    ]
+  }
+}

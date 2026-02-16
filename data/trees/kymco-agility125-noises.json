@@ -1,0 +1,296 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco Agility 125 scooter including CVT, engine, and exhaust sounds.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise seem to come from on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Left side — CVT/transmission area", "next": "check_cvt_noise" },
+          { "text": "Top of engine — cylinder head area", "next": "check_valve_noise" },
+          { "text": "Bottom of engine — crankcase area", "next": "check_bottom_end" },
+          { "text": "Exhaust system — rattling or ticking from exhaust", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_cvt_noise",
+        "type": "question",
+        "text": "How would you describe the CVT area noise?",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping or flapping sound that changes with speed", "next": "check_cvt_belt" },
+          { "text": "Rattling or clicking at idle or low speed", "next": "check_cvt_rollers" },
+          { "text": "Squealing or screeching during acceleration", "next": "check_cvt_clutch" },
+          { "text": "Grinding or scraping sound", "next": "check_cvt_cover" }
+        ]
+      },
+      {
+        "id": "check_cvt_belt",
+        "type": "check",
+        "text": "Inspect the CVT drive belt",
+        "safety": "green",
+        "instructions": "Remove the CVT cover on the left side of the Agility 125. Inspect the drive belt for: (1) Cracks, fraying, or missing chunks — a damaged belt slaps against the pulleys, (2) Glazed or hardened surfaces, (3) Belt width — measure it. A new belt is approximately 18mm wide. If it is significantly narrower, it is worn. A belt that is about to fail often makes a slapping sound as it slips on the pulleys. Replace immediately if damage is found — a broken belt will leave you stranded.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "What is the belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is cracked, frayed, or damaged", "next": "solution_replace_belt" },
+          { "text": "Belt looks fine", "next": "check_cvt_rollers" }
+        ]
+      },
+      {
+        "id": "check_cvt_rollers",
+        "type": "check",
+        "text": "Inspect the variator rollers",
+        "safety": "green",
+        "instructions": "With the CVT cover removed, remove the variator face to access the roller weights. On the Agility 125, there are 6 rollers. Inspect each one for: (1) Flat spots — worn rollers with flat spots rattle and click as they tumble in the variator ramps, (2) Crumbled or deformed rollers, (3) Wear marks or scoring on the variator ramp plate. Flat-spotted rollers are the most common cause of rattling noises from the CVT at idle and low speed.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "What is the roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Rollers have flat spots or are damaged", "next": "solution_replace_rollers" },
+          { "text": "Rollers are round and smooth", "next": "check_cvt_clutch" }
+        ]
+      },
+      {
+        "id": "check_cvt_clutch",
+        "type": "check",
+        "text": "Inspect the centrifugal clutch",
+        "safety": "green",
+        "instructions": "The centrifugal clutch in the rear driven pulley can cause squealing or screeching if: (1) The clutch shoes are glazed — they screech as they engage the bell, (2) The clutch springs are weak, causing premature engagement at too-low RPM, (3) The clutch bell has grooves worn into it. Remove the rear clutch assembly and inspect. Also listen for rattling from worn torque driver pins or loose contra spring in the driven pulley assembly.",
+        "next": "clutch_noise_result"
+      },
+      {
+        "id": "clutch_noise_result",
+        "type": "question",
+        "text": "What did you find with the clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch shoes are glazed or worn", "next": "solution_replace_clutch" },
+          { "text": "Clutch bell is grooved", "next": "solution_replace_clutch_bell" },
+          { "text": "Driven pulley components are rattling", "next": "solution_service_driven_pulley" }
+        ]
+      },
+      {
+        "id": "check_cvt_cover",
+        "type": "check",
+        "text": "Check the CVT cover and gasket",
+        "safety": "green",
+        "instructions": "A grinding or scraping sound from the CVT area can be caused by: (1) A loose CVT cover that vibrates against the pulleys, (2) Debris (broken roller fragments, gravel) inside the CVT case, (3) A damaged cover gasket allowing the cover to sit misaligned. Check that all CVT cover bolts are tight and the gasket is intact. If the cover has been off recently, make sure nothing was left inside the CVT case.",
+        "next": "cover_result"
+      },
+      {
+        "id": "cover_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Cover was loose or debris was found inside", "next": "solution_secure_cover" },
+          { "text": "Cover is tight, no debris", "next": "check_cvt_belt" }
+        ]
+      },
+      {
+        "id": "check_valve_noise",
+        "type": "check",
+        "text": "Check the valve clearances",
+        "safety": "yellow",
+        "warning": "Valve clearance checks must be done with the engine completely cold.",
+        "instructions": "A ticking or tapping noise from the cylinder head that increases with engine RPM is typically valve train noise. On the Agility 125, this is usually caused by excessive valve clearance (valves too loose). Remove the valve inspection caps on the cylinder head. Rotate the engine to TDC compression stroke and check clearances with feeler gauges. Specs are typically: intake 0.10mm, exhaust 0.15mm (verify with manual). Loose valves tick; tight valves are quieter but cause other problems (loss of power, overheating).",
+        "next": "valve_noise_result"
+      },
+      {
+        "id": "valve_noise_result",
+        "type": "question",
+        "text": "Are the valve clearances within spec?",
+        "safety": "green",
+        "options": [
+          { "text": "Valves are too loose (clearance above spec)", "next": "solution_adjust_valves" },
+          { "text": "Valves are within spec — noise persists", "next": "check_cam_chain" }
+        ]
+      },
+      {
+        "id": "check_cam_chain",
+        "type": "check",
+        "text": "Check the cam chain tensioner",
+        "safety": "yellow",
+        "warning": "The cam chain drives the camshaft. A severely worn chain can skip and cause engine damage.",
+        "instructions": "The cam chain (timing chain) on the Agility 125 connects the crankshaft to the camshaft. A rattling or slapping sound from the cylinder area, especially at idle, can indicate a loose cam chain. The automatic cam chain tensioner should keep the chain tight. Check: (1) Is the tensioner fully extended? (2) Is the tensioner ratchet mechanism working? (3) With the valve cover removed, check the chain for excessive slack. A worn cam chain will be noisy and can eventually skip a tooth, causing timing failure.",
+        "next": "cam_chain_result"
+      },
+      {
+        "id": "cam_chain_result",
+        "type": "question",
+        "text": "What is the cam chain condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Chain is slack or tensioner is fully extended", "next": "solution_cam_chain" },
+          { "text": "Chain seems OK", "next": "check_bottom_end" }
+        ]
+      },
+      {
+        "id": "check_bottom_end",
+        "type": "check",
+        "text": "Listen for bottom-end engine noises",
+        "safety": "yellow",
+        "warning": "Bottom-end engine noises (crankshaft, connecting rod) indicate serious internal wear. Professional diagnosis is recommended.",
+        "instructions": "Deep knocking or rumbling from the lower engine is more serious than valve noise. With the engine idling, listen with a mechanics stethoscope or a long screwdriver (blade on the engine, handle to your ear) at the crankcase area. (1) A rhythmic deep knock that gets louder under load suggests worn connecting rod bearing, (2) A rattle at idle that goes away at higher RPM can be piston slap (piston rocking in a worn cylinder). Also check the engine oil level — low oil will cause or worsen bottom-end noises.",
+        "next": "bottom_end_result"
+      },
+      {
+        "id": "bottom_end_result",
+        "type": "question",
+        "text": "What type of noise is coming from the bottom end?",
+        "safety": "green",
+        "options": [
+          { "text": "Deep knock under load — possible rod bearing", "next": "solution_bottom_end_repair" },
+          { "text": "Rattle at idle that goes away at higher RPM — possible piston slap", "next": "solution_piston_slap" },
+          { "text": "No clear bottom-end noise", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Inspect the exhaust system",
+        "safety": "yellow",
+        "warning": "The exhaust system becomes extremely hot. Only inspect when the engine is cold.",
+        "instructions": "Exhaust noises on the Agility 125 can include: (1) Ticking at the exhaust header gasket — a leak at the cylinder head to exhaust pipe joint causes a ticking that increases with RPM, (2) Rattling heat shields or loose exhaust mounting bolts, (3) Internal baffle rattling in the muffler (common on older scooters). With the engine cold, check all exhaust mounting bolts and brackets for tightness. Look for soot marks at the header gasket, which indicate a leak.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "What did you find with the exhaust?",
+        "safety": "green",
+        "options": [
+          { "text": "Exhaust header gasket is leaking (soot marks visible)", "next": "solution_exhaust_gasket" },
+          { "text": "Loose mounting bolts or rattling heat shield", "next": "solution_tighten_exhaust" },
+          { "text": "Internal muffler rattle", "next": "solution_replace_muffler" }
+        ]
+      },
+      {
+        "id": "solution_replace_belt",
+        "type": "solution",
+        "text": "Replace the CVT Belt",
+        "safety": "green",
+        "action": "Replace the damaged CVT drive belt immediately.",
+        "details": "A damaged belt is at risk of breaking, which will leave you stranded. Use the correct belt size for the Agility 125. When installing a new belt, also check the variator rollers and clutch as preventative maintenance. The belt should be replaced every 8,000-12,000 km as part of routine maintenance."
+      },
+      {
+        "id": "solution_replace_rollers",
+        "type": "solution",
+        "text": "Replace the Variator Rollers",
+        "safety": "green",
+        "action": "Replace all six variator rollers as a complete set.",
+        "details": "Flat-spotted rollers are a very common noise source on scooters. Replace all rollers at once (never mix old and new). The Agility 125 typically uses 15x12mm rollers at 12-13 grams each. Also inspect the variator ramp plate for scoring and the slider guides for wear. Apply a thin coat of molybdenum grease to the variator boss (shaft) when reassembling."
+      },
+      {
+        "id": "solution_replace_clutch",
+        "type": "solution",
+        "text": "Replace the Clutch Shoes",
+        "safety": "green",
+        "action": "Replace the worn or glazed clutch shoes.",
+        "details": "Glazed clutch shoes cause squealing during engagement. Replace with new shoes and springs. If the clutch bell (outer drum) has deep grooves, replace it as well — grooves will quickly wear out new shoes. Lightly sand the inside of the clutch bell with 120-grit sandpaper to remove glaze."
+      },
+      {
+        "id": "solution_replace_clutch_bell",
+        "type": "solution",
+        "text": "Replace the Clutch Bell",
+        "safety": "green",
+        "action": "Replace the grooved clutch bell (outer drum).",
+        "details": "A deeply grooved clutch bell causes noise and uneven clutch engagement. Replace the bell and consider replacing the clutch shoes and springs at the same time (they are inexpensive wear items). Use an OEM or quality aftermarket bell."
+      },
+      {
+        "id": "solution_service_driven_pulley",
+        "type": "solution",
+        "text": "Service the Driven Pulley Assembly",
+        "safety": "green",
+        "action": "Disassemble, inspect, and reassemble the driven (rear) pulley.",
+        "details": "The driven pulley contains the contra spring, torque driver pins (or cam), and sliding sheave. Rattling can come from worn torque driver pins in their grooves. Disassemble the unit, clean all parts, inspect for wear, and apply fresh molybdenum grease to the moving parts. Replace any worn pins or guides. Reassemble with the contra spring correctly positioned."
+      },
+      {
+        "id": "solution_secure_cover",
+        "type": "solution",
+        "text": "Secure the CVT Cover",
+        "safety": "green",
+        "action": "Tighten the CVT cover and remove any debris from inside the case.",
+        "details": "Make sure all cover bolts are tight and the gasket is properly seated. If debris was found inside, identify its source (broken roller, belt fragment, etc.) and address the root cause. A small amount of belt dust inside the CVT case is normal, but large chunks of material indicate a failing component."
+      },
+      {
+        "id": "solution_adjust_valves",
+        "type": "solution",
+        "text": "Adjust the Valve Clearances",
+        "safety": "yellow",
+        "warning": "Valve adjustment must be done with the engine cold and at TDC compression stroke.",
+        "action": "Adjust the valves to the correct specification.",
+        "details": "Loose valves create a ticking noise but are generally less harmful than tight valves. Adjust to the correct spec (intake 0.10mm, exhaust 0.15mm — verify with manual). Use the screw-and-locknut method: loosen the locknut, turn the adjuster until the feeler gauge slides with slight drag, then hold the adjuster and tighten the locknut. Re-check after tightening. Valve clearances should be checked every 8,000-12,000 km."
+      },
+      {
+        "id": "solution_cam_chain",
+        "type": "solution",
+        "text": "Replace the Cam Chain or Tensioner",
+        "safety": "yellow",
+        "warning": "A worn cam chain can skip timing. If the chain is severely worn, replacing it prevents potential engine damage.",
+        "action": "Replace the cam chain tensioner or the cam chain itself.",
+        "details": "If the automatic tensioner is fully extended and the chain is still loose, the chain has stretched beyond the tensioner's range and must be replaced. This involves removing the cylinder head and cylinder. If the tensioner mechanism itself has failed (ratchet not holding), replace just the tensioner. Cam chain replacement is an intermediate to advanced job — consider professional help if you are not experienced with top-end engine work."
+      },
+      {
+        "id": "solution_bottom_end_repair",
+        "type": "solution",
+        "text": "Bottom-End Repair Required",
+        "safety": "red",
+        "warning": "Continuing to ride with a knocking bottom end risks catastrophic engine failure. Stop riding and seek professional repair.",
+        "action": "Have the engine professionally inspected for connecting rod and crankshaft bearing damage.",
+        "details": "A deep knock under load indicates worn connecting rod bearings, crankshaft bearings, or both. This requires a complete engine teardown. On a scooter like the Agility 125, it may be more economical to replace the engine with a used or rebuilt unit rather than rebuilding the original. Get a quote for both options before deciding."
+      },
+      {
+        "id": "solution_piston_slap",
+        "type": "solution",
+        "text": "Piston Slap — Monitor and Plan for Repair",
+        "safety": "yellow",
+        "warning": "Piston slap indicates cylinder wear. Monitor the condition but plan for eventual top-end work.",
+        "action": "Monitor the noise and plan for a top-end rebuild when it worsens.",
+        "details": "Piston slap (a light rattle at cold idle that fades when warm) indicates the piston-to-cylinder clearance has increased due to wear. This is not immediately dangerous but will worsen over time. Check the oil level more frequently (worn cylinders consume more oil). When the noise becomes constant or oil consumption becomes excessive, a top-end rebuild (new piston, rings, and possibly a cylinder re-bore) will be needed."
+      },
+      {
+        "id": "solution_exhaust_gasket",
+        "type": "solution",
+        "text": "Replace the Exhaust Header Gasket",
+        "safety": "yellow",
+        "warning": "Exhaust bolts can be seized due to heat cycling. Use penetrating oil and be careful not to break the studs.",
+        "action": "Replace the exhaust header gasket at the cylinder head.",
+        "details": "Remove the exhaust header bolts (typically 2 studs with nuts). Replace the gasket with a new OEM or copper gasket. Clean the mating surfaces before installing the new gasket. Tighten the bolts evenly to spec. An exhaust leak at the header will cause a ticking sound that gets louder with RPM and will also affect engine performance."
+      },
+      {
+        "id": "solution_tighten_exhaust",
+        "type": "solution",
+        "text": "Tighten Exhaust Mounting Hardware",
+        "safety": "green",
+        "action": "Tighten all loose exhaust bolts, brackets, and heat shields.",
+        "details": "Exhaust components vibrate significantly and fasteners can loosen over time. Check all mounting bolts, rubber hangers, and heat shield screws. If heat shield fasteners are missing, replace them — a loose heat shield can rattle loudly and sound alarming. Apply anti-seize compound to exhaust bolts when reinstalling to prevent future seizure."
+      },
+      {
+        "id": "solution_replace_muffler",
+        "type": "solution",
+        "text": "Replace the Muffler",
+        "safety": "green",
+        "action": "Replace the muffler if internal baffles have broken loose.",
+        "details": "Internal baffle rattle is caused by corroded or broken welds inside the muffler. There is no practical repair — the muffler must be replaced. Use an OEM or quality aftermarket muffler for the Agility 125. A rattling muffler is mainly a noise nuisance but can also indicate the exhaust is becoming restricted, which will affect performance."
+      }
+    ]
+  }
+}

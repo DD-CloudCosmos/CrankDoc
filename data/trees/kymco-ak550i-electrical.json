@@ -1,0 +1,360 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco AK 550i including Noodoe system, Smart Key, traction control, and charging.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working", "next": "check_bulbs" },
+          { "text": "Battery dying", "next": "check_charging" },
+          { "text": "Dashboard/Noodoe issues", "next": "check_display" },
+          { "text": "Smart Key not recognized", "next": "check_smartkey" },
+          { "text": "Intermittent issues", "next": "check_connectors" },
+          { "text": "Completely dead", "next": "check_main" }
+        ]
+      },
+      {
+        "id": "check_bulbs",
+        "type": "check",
+        "text": "Check lights and fuses",
+        "safety": "green",
+        "instructions": "The AK 550i uses LED headlights (not bulb-replaceable — entire unit). Check fuses for the affected circuit. Turn signals and tail lights may be LED or conventional depending on model year. Check fuse box under seat.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_fixed" },
+          { "text": "No", "next": "check_switches" },
+          { "text": "Fuse keeps blowing", "next": "solution_short" }
+        ]
+      },
+      {
+        "id": "check_switches",
+        "type": "check",
+        "text": "Check switches and wiring",
+        "safety": "yellow",
+        "warning": "Disconnect battery before probing.",
+        "instructions": "Test switches with multimeter. The AK 550i has extensive wiring for its premium electronics (Noodoe, TC, ABS, Smart Key). Check connectors behind the front fairing and under the seat. Look for chafed wires and corroded pins.",
+        "next": "sw_result"
+      },
+      {
+        "id": "sw_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad switch", "next": "solution_switch" },
+          { "text": "Wiring damage", "next": "solution_wiring" },
+          { "text": "Bad ground", "next": "solution_ground" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Test charging system",
+        "safety": "yellow",
+        "warning": "Keep clear of moving parts while running.",
+        "instructions": "At 3,000+ RPM: should read 13.5-14.8V. The AK 550i has a high-output charging system to power its extensive electronics. Below 13.0V = not charging. Above 15.0V = overcharging (dangerous for ECU and electronics). Check with Noodoe voltage display if available.",
+        "next": "charge_result"
+      },
+      {
+        "id": "charge_result",
+        "type": "question",
+        "text": "Voltage at RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "Low (under 13V)", "next": "check_stator" },
+          { "text": "Normal", "next": "solution_drain" },
+          { "text": "High (over 15V)", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test stator output",
+        "safety": "yellow",
+        "warning": "AC voltage — caution.",
+        "instructions": "Disconnect stator connector, measure AC between each pair of wires at 3,000 RPM. Should be 40-90V AC (higher output than singles). Low or zero on any pair = stator winding failure.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "Stator AC output?",
+        "safety": "green",
+        "options": [
+          { "text": "No output", "next": "solution_stator" },
+          { "text": "Good AC output", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_display",
+        "type": "check",
+        "text": "Check Noodoe dashboard",
+        "safety": "green",
+        "instructions": "The AK 550i features the Noodoe smart display with Bluetooth connectivity, navigation, and customizable watch faces. If it is flickering, blank, or showing errors: (1) Check battery voltage — low voltage causes display glitches, (2) Check display connector behind instrument cluster, (3) Try hard reset — disconnect battery for 5 minutes, (4) Check for software update via the Noodoe app on your phone. Note any error codes displayed.",
+        "next": "display_result"
+      },
+      {
+        "id": "display_result",
+        "type": "question",
+        "text": "Display issue?",
+        "safety": "green",
+        "options": [
+          { "text": "Low battery caused it", "next": "solution_battery_display" },
+          { "text": "Connector issue", "next": "solution_display_conn" },
+          { "text": "Display itself failed", "next": "solution_display_replace" },
+          { "text": "Bluetooth not connecting", "next": "solution_bluetooth" }
+        ]
+      },
+      {
+        "id": "check_smartkey",
+        "type": "check",
+        "text": "Check Smart Key system",
+        "safety": "green",
+        "instructions": "The AK 550i uses a keyless Smart Key system. If the scooter does not recognize the fob: (1) Replace fob battery (CR2032) — most common fix, (2) Try the spare fob if available, (3) Check Smart Key receiver antenna (usually near the ignition area), (4) Check for water damage to the fob. The fob has an emergency mechanical backup for seat/trunk.",
+        "next": "key_result"
+      },
+      {
+        "id": "key_result",
+        "type": "question",
+        "text": "Smart Key status?",
+        "safety": "green",
+        "options": [
+          { "text": "Fob battery dead", "next": "solution_fob" },
+          { "text": "Fob works but not recognized", "next": "solution_receiver" },
+          { "text": "Both fobs fail", "next": "solution_antenna" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Check connectors",
+        "safety": "green",
+        "instructions": "The AK 550i has the most extensive wiring harness of any Kymco scooter — Noodoe, ABS, TC, Smart Key, dual coils, dual injectors. Check all accessible connectors. Clean with electrical contact cleaner. Apply dielectric grease. Pay special attention to connectors exposed to road spray under the floor.",
+        "next": "conn_result"
+      },
+      {
+        "id": "conn_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_conn" },
+          { "text": "No", "next": "solution_harness" }
+        ]
+      },
+      {
+        "id": "check_main",
+        "type": "check",
+        "text": "Check battery and main fuse",
+        "safety": "yellow",
+        "warning": "Potential short circuit.",
+        "instructions": "Completely dead: (1) Check battery terminals — clean and tight, (2) Check main fuse (30A), (3) Measure battery voltage. Smart Key system requires minimum voltage to detect fob — a completely dead battery means no response at all. Jump start or charge the battery to test.",
+        "next": "main_result"
+      },
+      {
+        "id": "main_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose terminal", "next": "solution_terminals" },
+          { "text": "Blown main fuse", "next": "solution_fuse" },
+          { "text": "Dead battery", "next": "solution_battery" },
+          { "text": "All OK, no power", "next": "solution_ign" }
+        ]
+      },
+      {
+        "id": "solution_fixed",
+        "type": "solution",
+        "text": "Light Fixed",
+        "safety": "green",
+        "action": "Fuse replaced or connection restored.",
+        "details": "LED headlight units are not bulb-serviceable — entire unit replacement if LEDs fail."
+      },
+      {
+        "id": "solution_short",
+        "type": "solution",
+        "text": "Short Circuit",
+        "safety": "red",
+        "warning": "Fire risk. Do not upsize fuse.",
+        "action": "Find and repair the short circuit.",
+        "details": "Isolate by disconnecting loads one at a time. The AK 550i's extensive electronics means more potential short sources. Check aftermarket accessories first."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Replace Switch",
+        "safety": "green",
+        "action": "Replace faulty switch.",
+        "details": "Apply dielectric grease to new connector."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Repair Wiring",
+        "safety": "yellow",
+        "warning": "Solder and heat-shrink repairs.",
+        "action": "Repair damaged wire.",
+        "details": "Check fairing edges and under seat for chafing. Vibration from the twin can loosen connections over time."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Fix Ground Connection",
+        "safety": "green",
+        "action": "Clean and secure ground point.",
+        "details": "Sand to bare metal, apply dielectric grease. The AK 550i's frame grounds are critical for all electronics."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Parasitic Drain",
+        "safety": "green",
+        "action": "Find drain source (should be under 50mA).",
+        "details": "The AK 550i Noodoe and Smart Key systems draw standby power. Acceptable standby drain is higher than simpler scooters. Check aftermarket accessories (USB charger, phone mount, etc.)."
+      },
+      {
+        "id": "solution_regrec",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "Overcharging damages expensive electronics.",
+        "action": "Replace the regulator/rectifier.",
+        "details": "Critical on the AK 550i — overcharging can damage the Noodoe display, ECU, ABS module, and Smart Key receiver. Replace promptly."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Flywheel puller needed.",
+        "action": "Replace stator.",
+        "details": "The AK 550i stator is higher output than single-cylinder models. Intermediate repair — flywheel removal required."
+      },
+      {
+        "id": "solution_battery_display",
+        "type": "solution",
+        "text": "Battery Causing Display Issues",
+        "safety": "green",
+        "action": "Charge or replace battery.",
+        "details": "Low voltage causes the Noodoe display to glitch, flicker, or show incorrect readings. A healthy battery resolves this."
+      },
+      {
+        "id": "solution_display_conn",
+        "type": "solution",
+        "text": "Dashboard Connector",
+        "safety": "green",
+        "action": "Clean and reseat display connector.",
+        "details": "The connector behind the instrument cluster can corrode. Disconnect, clean contacts, apply dielectric grease."
+      },
+      {
+        "id": "solution_display_replace",
+        "type": "solution",
+        "text": "Replace Display Unit",
+        "safety": "yellow",
+        "warning": "OEM part required for Noodoe integration.",
+        "action": "Have the display unit replaced by a dealer.",
+        "details": "The Noodoe display is integrated with the ECU and may require dealer programming after replacement."
+      },
+      {
+        "id": "solution_bluetooth",
+        "type": "solution",
+        "text": "Fix Bluetooth Connection",
+        "safety": "green",
+        "action": "Reset Bluetooth pairing.",
+        "details": "Delete pairing from both phone and scooter. Re-pair via the Noodoe app. Ensure the app and Noodoe firmware are updated."
+      },
+      {
+        "id": "solution_fob",
+        "type": "solution",
+        "text": "Replace Fob Battery",
+        "safety": "green",
+        "action": "Replace the CR2032 battery in the Smart Key fob.",
+        "details": "Most common Smart Key issue. Replace annually. Hold fob close to ignition area while replacing if emergency start needed."
+      },
+      {
+        "id": "solution_receiver",
+        "type": "solution",
+        "text": "Smart Key Receiver Issue",
+        "safety": "yellow",
+        "warning": "Dealer diagnosis may be needed.",
+        "action": "Check Smart Key receiver module.",
+        "details": "If one fob works and the other does not, the fob needs re-pairing or replacement. If neither works with fresh batteries, the receiver module may have failed."
+      },
+      {
+        "id": "solution_antenna",
+        "type": "solution",
+        "text": "Smart Key Antenna",
+        "safety": "yellow",
+        "warning": "Dealer repair likely needed.",
+        "action": "Check antenna and receiver module.",
+        "details": "Both fobs failing = receiver antenna or module issue. Water intrusion is a common cause. Dealer diagnosis and reprogramming required."
+      },
+      {
+        "id": "solution_conn",
+        "type": "solution",
+        "text": "Connectors Cleaned",
+        "safety": "green",
+        "action": "Connectors cleaned and greased.",
+        "details": "Re-check every 6 months, especially connectors exposed to road spray."
+      },
+      {
+        "id": "solution_harness",
+        "type": "solution",
+        "text": "Wiring Harness Issue",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may be needed.",
+        "action": "Full harness inspection.",
+        "details": "Wiggle-test connectors while monitoring the affected system. The AK 550i harness is complex — systematic testing required."
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Clean Terminals",
+        "safety": "green",
+        "action": "Clean and tighten battery terminals.",
+        "details": "Apply dielectric grease after cleaning."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Main Fuse",
+        "safety": "yellow",
+        "warning": "Same rating only (30A).",
+        "action": "Replace blown main fuse.",
+        "details": "If it blows again immediately, there is a major short circuit. Do not upsize the fuse."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Replace Battery",
+        "safety": "green",
+        "action": "Replace battery.",
+        "details": "Use correct size for the AK 550i. Check charging system after replacement to ensure the new battery will be maintained."
+      },
+      {
+        "id": "solution_ign",
+        "type": "solution",
+        "text": "Ignition/Smart Key Module",
+        "safety": "yellow",
+        "warning": "Dealer diagnosis likely needed.",
+        "action": "Check ignition switch and Smart Key module.",
+        "details": "With good battery and fuses but no power, the Smart Key receiver or ignition module may have failed. Dealer diagnostic tools required."
+      }
+    ]
+  }
+}

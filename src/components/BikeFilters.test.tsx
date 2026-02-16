@@ -28,6 +28,7 @@ describe('BikeFilters', () => {
     expect(screen.getByRole('button', { name: /naked/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /cruiser/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /adventure/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /scooter/i })).toBeInTheDocument()
   })
 
   it('renders all available make filter buttons', () => {
@@ -140,7 +141,7 @@ describe('BikeFilters', () => {
 
     // Should not have any make-specific buttons beyond the category ones
     const allButtons = screen.getAllByRole('button')
-    const categoryButtons = 4 // sport, naked, cruiser, adventure
+    const categoryButtons = 5 // sport, naked, cruiser, adventure, scooter
     expect(allButtons.length).toBe(categoryButtons)
   })
 })

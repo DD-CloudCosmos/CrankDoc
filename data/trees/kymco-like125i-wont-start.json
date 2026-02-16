@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco Like 125i scooter, covering battery, starter, fuel, and ignition checks.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights come on but starter does not engage", "next": "check_kill_switch" },
+          { "text": "Starter cranks but engine does not fire", "next": "check_fuel_pump" },
+          { "text": "Starter clicks once but does not spin", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check the battery voltage",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working near the battery. Battery acid is corrosive.",
+        "instructions": "Locate the battery on the Kymco Like 125i — it is typically under the seat or under a panel near the floorboard. Using a multimeter set to DC volts, measure across the battery terminals. A healthy battery reads 12.4V or higher. Below 12.0V the starter cannot crank. Check the terminals for corrosion (white or green powder) — clean with a wire brush if needed. The Like 125i uses a small 12V sealed battery (typically YTX7A-BS or similar).",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V — battery is dead or very low", "next": "solution_charge_battery" },
+          { "text": "12.0V-12.3V — battery is weak", "next": "solution_charge_battery" },
+          { "text": "12.4V or higher — battery is good", "next": "check_main_fuse" }
+        ]
+      },
+      {
+        "id": "check_main_fuse",
+        "type": "check",
+        "text": "Check the main fuse and fuse box",
+        "safety": "yellow",
+        "warning": "Turn the ignition off before checking fuses.",
+        "instructions": "The Like 125i fuse box is located near the battery. Check the main fuse (typically 15A or 20A) and all secondary fuses. Remove each fuse and visually inspect the metal strip — if it is broken or blackened, the fuse is blown. Replace with the same amperage rating only.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Are all fuses intact?",
+        "safety": "green",
+        "options": [
+          { "text": "A fuse is blown", "next": "solution_replace_fuse" },
+          { "text": "All fuses are good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check the kill switch and safety interlocks",
+        "safety": "green",
+        "instructions": "The Like 125i has safety interlocks that prevent starting: (1) Engine kill switch on the right handlebar must be in RUN position, (2) The side stand must be fully retracted, (3) The rear brake lever or front brake lever must be applied while pressing start (depending on model year). Toggle the kill switch back and forth a few times to clean contacts. Make sure the side stand retracts fully and the switch engages.",
+        "next": "kill_switch_result"
+      },
+      {
+        "id": "kill_switch_result",
+        "type": "question",
+        "text": "Did checking the switches help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — scooter now cranks or starts", "next": "solution_switch_resolved" },
+          { "text": "No — still no response from starter", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check the starter relay (solenoid)",
+        "safety": "yellow",
+        "warning": "Do not bypass the starter relay unless you understand the risk of unexpected engine cranking.",
+        "instructions": "The starter relay is near the battery on the Like 125i. When you press the start button, listen for a click from the relay. A click means the relay is receiving the start signal. If the relay clicks but the starter does not turn, the starter motor or its wiring may be faulty. If there is no click, check for 12V at the relay trigger wire while pressing the start button — no voltage means a wiring or switch problem upstream.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "What did you find with the starter relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Relay clicks but starter does not turn", "next": "solution_starter_motor" },
+          { "text": "No click at all — no voltage at trigger", "next": "solution_wiring_fault" },
+          { "text": "Relay clicks and starter spins but engine won't fire", "next": "check_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Do not work near open flames when inspecting the fuel system.",
+        "instructions": "When you turn the ignition to ON on the Like 125i, listen for the fuel pump priming — a brief whirring sound lasting 2-3 seconds. If you hear nothing, the pump may have failed or lost power. Check the fuel pump fuse. Also verify there is fuel in the tank — the fuel gauge on the Like 125i can be inaccurate when the tank is low. The Like 125i is fuel-injected, so proper fuel delivery is essential.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Is the fuel pump priming?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound at all", "next": "solution_fuel_pump" },
+          { "text": "Pump primes but engine won't fire", "next": "check_spark" },
+          { "text": "Tank is empty", "next": "solution_add_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch spark plug wire or coil while cranking.",
+        "instructions": "Remove the spark plug from the Like 125i cylinder head. Reconnect the plug to its cap. Ground the plug body against the engine block using insulated pliers. Have someone crank the engine — watch for a bright blue spark at the electrode. Weak or no spark indicates an ignition fault. The Like 125i typically uses a CDI ignition system with an NGK CR7HSA or similar spark plug.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Is there a good spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark visible", "next": "solution_compression" },
+          { "text": "Weak or no spark", "next": "solution_ignition_fault" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge or Replace the Battery",
+        "safety": "green",
+        "action": "Charge the battery fully using a smart charger, or replace it if it won't hold charge.",
+        "details": "Use a 1-2 amp smart charger. If the battery won't hold 12.4V after a full charge, replace it. The Like 125i battery typically lasts 2-3 years. After charging or replacing, if the battery dies again quickly, check the charging system (stator and regulator/rectifier output should be 13.5-14.8V at 3,000 RPM)."
+      },
+      {
+        "id": "solution_replace_fuse",
+        "type": "solution",
+        "text": "Replace the Blown Fuse",
+        "safety": "yellow",
+        "warning": "Never use a higher-rated fuse than specified. This can cause wiring damage or fire.",
+        "action": "Replace the blown fuse with one of the same amperage rating.",
+        "details": "If the new fuse blows immediately, there is a short circuit that must be found. Do not keep replacing fuses. Trace the wiring on the affected circuit to find the short — look for pinched or chafed wires."
+      },
+      {
+        "id": "solution_switch_resolved",
+        "type": "solution",
+        "text": "Safety Switch Issue Resolved",
+        "safety": "green",
+        "action": "A safety interlock was preventing the scooter from starting.",
+        "details": "If the side stand switch was the cause, make sure the stand retracts fully and the switch plunger moves freely. Spray with contact cleaner if it sticks. If the kill switch was the issue, toggle it several times to clean internal contacts. Apply dielectric grease to the connector."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Starter Motor Fault",
+        "safety": "yellow",
+        "warning": "Do not disassemble the starter motor unless comfortable with electrical components.",
+        "action": "Check the starter motor cable connection. If secure, the starter motor likely needs replacement.",
+        "details": "Check the heavy positive cable at the starter motor — it may be loose or corroded. If the cable is good and the relay clicks but the motor does not turn, the starter motor has likely failed (worn brushes or seized armature). Starter motors for the Like 125i are available and reasonably priced."
+      },
+      {
+        "id": "solution_wiring_fault",
+        "type": "solution",
+        "text": "Wiring or Switch Problem",
+        "safety": "yellow",
+        "warning": "Perform wiring checks with the ignition off. Use proper connectors for repairs.",
+        "action": "Trace the start circuit wiring to find the break.",
+        "details": "No voltage at the relay trigger means the signal from the start button is not reaching the relay. Check: (1) Start button connector, (2) Handlebar switch cluster connections, (3) Side stand switch connector, (4) Brake switch connector. Water ingress into switch housings is common. Clean and reseal connectors."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel Pump Not Working",
+        "safety": "yellow",
+        "warning": "Do not run the fuel pump outside the tank with fuel present — fire risk.",
+        "action": "Check the fuel pump fuse and connector. Replace the pump if it has failed.",
+        "details": "Check the fuel pump fuse first. If the fuse is good, check for 12V at the pump connector with the ignition on. If voltage is present but no pump sound, the pump has failed. Scooter fuel pumps can fail from running the tank very low or from contaminated fuel."
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Add fresh unleaded gasoline to the tank.",
+        "details": "The Like 125i has approximately a 6.5-liter fuel tank. After refueling, turn the ignition on and wait 3-5 seconds for the fuel pump to prime before pressing start. It may take a few extra cranks after running dry."
+      },
+      {
+        "id": "solution_ignition_fault",
+        "type": "solution",
+        "text": "Ignition System Fault",
+        "safety": "yellow",
+        "warning": "The CDI and ignition coil handle high voltage. Test with caution.",
+        "action": "Replace the spark plug first. If still no spark, check CDI, coil, and pickup coil.",
+        "details": "Start with a new spark plug (NGK CR7HSA, gap 0.6-0.7mm). If still no spark: check the ignition coil for cracks, test the CDI unit, and check the pickup coil resistance. A faulty CDI is a common no-spark cause on Kymco scooters. Also check that the kill switch wiring is not shorting the ignition to ground."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression or Timing Issue",
+        "safety": "yellow",
+        "warning": "A compression test requires removing the spark plug and using a gauge.",
+        "action": "Perform a compression test to check engine condition.",
+        "details": "If there is spark and fuel but no start, check compression. The Like 125i should produce approximately 10-12 bar (145-175 PSI). Low compression indicates worn piston rings, leaking head gasket, or tight valves. Check valve clearances (intake: 0.10mm, exhaust: 0.15mm — verify with manual). Excessively tight valves are a common no-start cause on scooters."
+      }
+    ]
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose rough idle and stalling on the Kymco X-Town 300i liquid-cooled scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Rough idle with vibration", "next": "check_idle" },
+          { "text": "Stalls at stops", "next": "check_idle" },
+          { "text": "Idle surges", "next": "check_vacuum" },
+          { "text": "Dies after starting", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle",
+        "type": "check",
+        "text": "Check idle speed",
+        "safety": "green",
+        "instructions": "Warm the X-Town 300i fully (wait for fan cycle). The 276cc engine should idle at approximately 1,400-1,600 RPM. The X-Town uses ECU-controlled idle. If the Noodoe display shows error codes, note them.",
+        "next": "idle_result"
+      },
+      {
+        "id": "idle_result",
+        "type": "question",
+        "text": "Stable?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_idle" },
+          { "text": "Still rough", "next": "check_filter" },
+          { "text": "Keeps stalling", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_filter",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "The X-Town 300i air filter services the 276cc engine. A dirty filter significantly affects the larger engine. Replace if dirty.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_vacuum",
+        "type": "check",
+        "text": "Check vacuum leaks",
+        "safety": "yellow",
+        "warning": "No sprays near hot engine.",
+        "instructions": "Spray contact cleaner around intake boot while idling. Check all vacuum hoses and connections on the throttle body.",
+        "next": "vacuum_result"
+      },
+      {
+        "id": "vacuum_result",
+        "type": "question",
+        "text": "Leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_vacuum" },
+          { "text": "No", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check IACV",
+        "safety": "green",
+        "instructions": "ECU-controlled idle via IACV or electronic throttle body. Carbon buildup causes idle failure. Remove and clean with throttle body cleaner. Check for stored fault codes.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "IACV?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty — cleaned", "next": "solution_iacv" },
+          { "text": "Failed", "next": "solution_iacv_replace" },
+          { "text": "Fine", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel",
+        "safety": "yellow",
+        "warning": "Flammable.",
+        "instructions": "Check fuel freshness, quality. Use 91+ octane. Stale fuel (30+ days) causes poor running.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel?",
+        "safety": "green",
+        "options": [
+          { "text": "Stale", "next": "solution_fuel" },
+          { "text": "Contaminated", "next": "solution_drain" },
+          { "text": "Fresh", "next": "check_plug" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Inspect plug",
+        "safety": "green",
+        "instructions": "Remove and inspect. Check color and gap per manual.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug?",
+        "safety": "green",
+        "options": [
+          { "text": "Fouled", "next": "solution_plug" },
+          { "text": "Fine", "next": "solution_injector" }
+        ]
+      },
+      {
+        "id": "solution_idle",
+        "type": "solution",
+        "text": "Idle OK",
+        "safety": "green",
+        "action": "Idle stable.",
+        "details": "1,400-1,600 RPM when warm."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Filter",
+        "safety": "green",
+        "action": "New filter.",
+        "details": "Replace every 6,000-8,000 km."
+      },
+      {
+        "id": "solution_vacuum",
+        "type": "solution",
+        "text": "Fix Leak",
+        "safety": "green",
+        "action": "Replace boot/hose.",
+        "details": "Reset idle after."
+      },
+      {
+        "id": "solution_iacv",
+        "type": "solution",
+        "text": "IACV Cleaned",
+        "safety": "green",
+        "action": "Reinstall. ECU relearns.",
+        "details": "Clean every 10,000 km."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace IACV",
+        "safety": "green",
+        "action": "OEM replacement.",
+        "details": "ECU calibrates automatically."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose old fuel properly.",
+        "action": "Drain, refill 91+ octane.",
+        "details": "Add injector cleaner."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Drain Fuel",
+        "safety": "yellow",
+        "warning": "Water damages injector.",
+        "action": "Drain all, refill.",
+        "details": "Check cap seal."
+      },
+      {
+        "id": "solution_plug",
+        "type": "solution",
+        "text": "Replace Plug",
+        "safety": "green",
+        "action": "New plug per manual spec.",
+        "details": "Correct gap."
+      },
+      {
+        "id": "solution_injector",
+        "type": "solution",
+        "text": "Injector Service",
+        "safety": "green",
+        "action": "Fuel system cleaner or professional service.",
+        "details": "Add Techron. Professional ultrasonic if persistent."
+      }
+    ]
+  }
+}

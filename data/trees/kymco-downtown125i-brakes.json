@@ -1,0 +1,251 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco Downtown 125i scooter with front and rear disc brakes.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak stopping power", "next": "check_which" },
+          { "text": "Squealing or grinding", "next": "check_pads" },
+          { "text": "Spongy lever feel", "next": "check_fluid" },
+          { "text": "Brake dragging", "next": "check_drag" }
+        ]
+      },
+      {
+        "id": "check_which",
+        "type": "question",
+        "text": "Which brake is weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front disc", "next": "check_fluid" },
+          { "text": "Rear disc", "next": "check_rear_fluid" },
+          { "text": "Both", "next": "check_fluid" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Check front brake fluid",
+        "safety": "yellow",
+        "warning": "Brake fluid damages paint. Wipe spills.",
+        "instructions": "The Downtown 125i has front disc brakes with a hydraulic master cylinder on the right handlebar. Check reservoir level (between MIN/MAX). Low = worn pads or leak. Dark fluid = needs replacement. Uses DOT 4.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "Front fluid status?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_pads" },
+          { "text": "Dark", "next": "solution_flush" },
+          { "text": "OK", "next": "check_pads" }
+        ]
+      },
+      {
+        "id": "check_rear_fluid",
+        "type": "check",
+        "text": "Check rear brake fluid",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive.",
+        "instructions": "The Downtown 125i typically has rear disc brakes with a separate reservoir (often on the left handlebar or near the rear caliper). Check level and condition. Same DOT 4 fluid as front.",
+        "next": "rear_fluid_result"
+      },
+      {
+        "id": "rear_fluid_result",
+        "type": "question",
+        "text": "Rear fluid status?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_rear_pads" },
+          { "text": "Dark", "next": "solution_flush_rear" },
+          { "text": "OK", "next": "check_rear_pads" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Inspect front brake pads",
+        "safety": "yellow",
+        "warning": "Metal-on-metal damages disc. Do not ride.",
+        "instructions": "Look through caliper opening. New = 4-5mm. Replace at 1-1.5mm. The Downtown 125i front caliper may be a dual-piston unit for better stopping power. Check disc for grooves or warping.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "Front pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn thin", "next": "solution_front_pads" },
+          { "text": "Adequate", "next": "check_caliper" },
+          { "text": "Squealing, good pads", "next": "solution_clean" }
+        ]
+      },
+      {
+        "id": "check_rear_pads",
+        "type": "check",
+        "text": "Inspect rear brake pads",
+        "safety": "yellow",
+        "warning": "Same wear standards as front.",
+        "instructions": "Check rear caliper pads. The rear disc on the Downtown 125i is smaller than the front. Replace when under 1.5mm.",
+        "next": "rear_pad_result"
+      },
+      {
+        "id": "rear_pad_result",
+        "type": "question",
+        "text": "Rear pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_rear_pads" },
+          { "text": "OK", "next": "solution_bleed_rear" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check front caliper",
+        "safety": "yellow",
+        "warning": "Cool brakes only.",
+        "instructions": "Check slide pins, piston movement, and for leaks. Seized slides = uneven wear. The Downtown 125i may have a multi-piston caliper.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "Caliper status?",
+        "safety": "green",
+        "options": [
+          { "text": "Slides seized", "next": "solution_service" },
+          { "text": "Piston stuck", "next": "solution_rebuild" },
+          { "text": "Leak", "next": "solution_leak" },
+          { "text": "OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_drag",
+        "type": "check",
+        "text": "Check for dragging brake",
+        "safety": "green",
+        "instructions": "Center stand the scooter. Spin each wheel. Both front and rear are disc brakes on the Downtown 125i, so check calipers on both wheels.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which drags?",
+        "safety": "green",
+        "options": [
+          { "text": "Front", "next": "solution_service" },
+          { "text": "Rear", "next": "solution_service_rear" }
+        ]
+      },
+      {
+        "id": "solution_front_pads",
+        "type": "solution",
+        "text": "Replace Front Pads",
+        "safety": "yellow",
+        "warning": "Pump lever before riding. Bed in new pads.",
+        "action": "Replace worn front brake pads.",
+        "details": "Push piston back, install new pads. Check disc thickness. Bed in for 100 km."
+      },
+      {
+        "id": "solution_rear_pads",
+        "type": "solution",
+        "text": "Replace Rear Pads",
+        "safety": "yellow",
+        "warning": "Same procedure as front.",
+        "action": "Replace worn rear brake pads.",
+        "details": "Rear disc is smaller — pads may wear differently from front."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush Front Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4 only.",
+        "action": "Flush and replace front brake fluid.",
+        "details": "Flush every 2 years. Bleed until clear fluid flows."
+      },
+      {
+        "id": "solution_flush_rear",
+        "type": "solution",
+        "text": "Flush Rear Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4 only.",
+        "action": "Flush and replace rear brake fluid.",
+        "details": "Same procedure as front, different reservoir."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Brakes",
+        "safety": "green",
+        "action": "Clean with brake cleaner.",
+        "details": "Sand glazed pads. Anti-squeal compound on pad backs."
+      },
+      {
+        "id": "solution_service",
+        "type": "solution",
+        "text": "Service Front Caliper",
+        "safety": "yellow",
+        "warning": "Silicone brake grease only.",
+        "action": "Clean and lubricate slide pins.",
+        "details": "Most common caliper issue."
+      },
+      {
+        "id": "solution_service_rear",
+        "type": "solution",
+        "text": "Service Rear Caliper",
+        "safety": "yellow",
+        "warning": "Silicone brake grease only.",
+        "action": "Clean and lubricate rear caliper slides.",
+        "details": "Same as front procedure."
+      },
+      {
+        "id": "solution_rebuild",
+        "type": "solution",
+        "text": "Rebuild Caliper",
+        "safety": "yellow",
+        "warning": "Stuck piston = unsafe. Do not ride.",
+        "action": "Rebuild with new seals or replace.",
+        "details": "Rebuild kits available. Replace if bore pitted."
+      },
+      {
+        "id": "solution_leak",
+        "type": "solution",
+        "text": "Repair Leak",
+        "safety": "red",
+        "warning": "Brake leak = failure risk. Do not ride.",
+        "action": "Find and fix leak.",
+        "details": "Check banjo bolts, line, seals. Bleed after repair."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Front Brakes",
+        "safety": "yellow",
+        "warning": "Verify firm lever before riding.",
+        "action": "Bleed air from front brake.",
+        "details": "Pump, hold, open, close, release. Repeat. Keep reservoir topped up."
+      },
+      {
+        "id": "solution_bleed_rear",
+        "type": "solution",
+        "text": "Bleed Rear Brakes",
+        "safety": "yellow",
+        "warning": "Verify firm feel before riding.",
+        "action": "Bleed air from rear brake.",
+        "details": "Same procedure as front."
+      }
+    ]
+  }
+}

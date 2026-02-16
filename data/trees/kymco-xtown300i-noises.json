@@ -1,0 +1,237 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco X-Town 300i 276cc scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise come from on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "CVT area", "next": "cvt_type" },
+          { "text": "Cylinder head", "next": "check_valves" },
+          { "text": "Lower engine", "next": "check_bottom" },
+          { "text": "Exhaust", "next": "check_exhaust" },
+          { "text": "Cooling system", "next": "check_cooling" }
+        ]
+      },
+      {
+        "id": "cvt_type",
+        "type": "question",
+        "text": "CVT noise:",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping", "next": "check_belt" },
+          { "text": "Rattling", "next": "check_rollers" },
+          { "text": "Squealing", "next": "check_clutch" },
+          { "text": "Grinding", "next": "check_debris" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The X-Town 300i belt handles significant power during sporty riding. Check for damage. Replace immediately if any found.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Damaged", "next": "solution_belt" },
+          { "text": "Fine", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Check rollers",
+        "safety": "green",
+        "instructions": "Check for flat spots. Heavier rollers than 125 models.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat", "next": "solution_rollers" },
+          { "text": "OK", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Check clutch",
+        "safety": "green",
+        "instructions": "The sporty X-Town puts more stress on the clutch. Check shoes, bell, springs, driven pulley.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed shoes", "next": "solution_clutch" },
+          { "text": "Grooved bell", "next": "solution_bell" },
+          { "text": "Driven pulley", "next": "solution_driven" }
+        ]
+      },
+      {
+        "id": "check_debris",
+        "type": "check",
+        "text": "CVT debris",
+        "safety": "green",
+        "instructions": "Check for debris or loose cover.",
+        "next": "debris_result"
+      },
+      {
+        "id": "debris_result",
+        "type": "question",
+        "text": "Found?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_clean" },
+          { "text": "No", "next": "check_belt" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valves",
+        "safety": "yellow",
+        "warning": "Cold engine.",
+        "instructions": "Ticking = valve noise. Check clearances and cam chain. Refer to X-Town 300i service manual for specs.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Valves?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose", "next": "solution_valves" },
+          { "text": "Cam chain", "next": "solution_chain" },
+          { "text": "In spec", "next": "check_bottom" }
+        ]
+      },
+      {
+        "id": "check_bottom",
+        "type": "check",
+        "text": "Bottom end",
+        "safety": "yellow",
+        "warning": "Serious — professional.",
+        "instructions": "Deep knock = rod bearing. Rattle fading warm = piston slap. Check oil level.",
+        "next": "bottom_result"
+      },
+      {
+        "id": "bottom_result",
+        "type": "question",
+        "text": "Type?",
+        "safety": "green",
+        "options": [
+          { "text": "Knock", "next": "solution_bottom" },
+          { "text": "Rattle", "next": "solution_piston" },
+          { "text": "None", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Exhaust",
+        "safety": "yellow",
+        "warning": "Cold only.",
+        "instructions": "Header gasket, bolts, muffler baffles.",
+        "next": "exh_result"
+      },
+      {
+        "id": "exh_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Header leak", "next": "solution_header" },
+          { "text": "Loose hardware", "next": "solution_tighten" },
+          { "text": "Muffler rattle", "next": "solution_muffler" }
+        ]
+      },
+      {
+        "id": "check_cooling",
+        "type": "check",
+        "text": "Cooling noise",
+        "safety": "green",
+        "instructions": "Gurgling = air. Hissing = pressure leak. Whining = pump bearing.",
+        "next": "cool_result"
+      },
+      {
+        "id": "cool_result",
+        "type": "question",
+        "text": "Type?",
+        "safety": "green",
+        "options": [
+          { "text": "Gurgling", "next": "solution_bleed" },
+          { "text": "Hissing", "next": "solution_cool_leak" },
+          { "text": "Whining", "next": "solution_pump" }
+        ]
+      },
+      {
+        "id": "solution_belt", "type": "solution", "text": "Replace Belt", "safety": "green", "action": "Replace immediately.", "details": "Correct X-Town 300i size."
+      },
+      {
+        "id": "solution_rollers", "type": "solution", "text": "Replace Rollers", "safety": "green", "action": "Replace all.", "details": "Stock weight."
+      },
+      {
+        "id": "solution_clutch", "type": "solution", "text": "Clutch Shoes", "safety": "green", "action": "Replace.", "details": "Sand bell."
+      },
+      {
+        "id": "solution_bell", "type": "solution", "text": "Bell", "safety": "green", "action": "Replace bell and shoes.", "details": "Replace together."
+      },
+      {
+        "id": "solution_driven", "type": "solution", "text": "Driven Pulley", "safety": "green", "action": "Service.", "details": "Clean, grease, replace worn parts."
+      },
+      {
+        "id": "solution_clean", "type": "solution", "text": "Clean CVT", "safety": "green", "action": "Remove debris.", "details": "Identify source."
+      },
+      {
+        "id": "solution_valves", "type": "solution", "text": "Adjust Valves", "safety": "yellow", "warning": "Cold, TDC.", "action": "Adjust.", "details": "Per manual specs."
+      },
+      {
+        "id": "solution_chain", "type": "solution", "text": "Cam Chain", "safety": "yellow", "warning": "Timing risk.", "action": "Replace tensioner/chain.", "details": "Top-end work if stretched."
+      },
+      {
+        "id": "solution_bottom", "type": "solution", "text": "Bottom End", "safety": "red", "warning": "Stop riding.", "action": "Professional repair.", "details": "Full teardown."
+      },
+      {
+        "id": "solution_piston", "type": "solution", "text": "Piston Slap", "safety": "yellow", "warning": "Wear indicator.", "action": "Monitor.", "details": "Plan rebuild."
+      },
+      {
+        "id": "solution_header", "type": "solution", "text": "Header Gasket", "safety": "yellow", "warning": "Bolts may seize.", "action": "Replace.", "details": "Clean surfaces."
+      },
+      {
+        "id": "solution_tighten", "type": "solution", "text": "Tighten", "safety": "green", "action": "Tighten hardware.", "details": "Anti-seize."
+      },
+      {
+        "id": "solution_muffler", "type": "solution", "text": "Muffler", "safety": "green", "action": "Replace.", "details": "Broken baffles."
+      },
+      {
+        "id": "solution_bleed", "type": "solution", "text": "Bleed Coolant", "safety": "yellow", "warning": "Cold cap.", "action": "Bleed air.", "details": "Fill, run cap off, top off."
+      },
+      {
+        "id": "solution_cool_leak", "type": "solution", "text": "Coolant Leak", "safety": "yellow", "warning": "Pressure.", "action": "Fix leak.", "details": "Hoses, cap, radiator."
+      },
+      {
+        "id": "solution_pump", "type": "solution", "text": "Water Pump", "safety": "yellow", "warning": "Drain coolant.", "action": "Replace.", "details": "Before it seizes."
+      }
+    ]
+  }
+}

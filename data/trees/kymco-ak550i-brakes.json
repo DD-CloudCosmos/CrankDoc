@@ -1,0 +1,317 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco AK 550i with dual front discs, single rear disc, and ABS.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak stopping", "next": "check_which" },
+          { "text": "Squealing/grinding", "next": "check_pads" },
+          { "text": "Spongy lever", "next": "check_fluid" },
+          { "text": "Dragging", "next": "check_drag" },
+          { "text": "ABS light on", "next": "check_abs" },
+          { "text": "Pulsating lever", "next": "check_disc" }
+        ]
+      },
+      {
+        "id": "check_which",
+        "type": "question",
+        "text": "Which brake feels weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front (dual disc)", "next": "check_fluid" },
+          { "text": "Rear", "next": "check_rear" },
+          { "text": "Both", "next": "check_fluid" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Check front brake fluid",
+        "safety": "yellow",
+        "warning": "Brake fluid damages paint and plastics.",
+        "instructions": "The AK 550i has dual front disc brakes — strong brakes are critical at the speeds this maxi-scooter can reach. Check front master cylinder reservoir on the right handlebar. DOT 4 fluid. Level should be between MIN and MAX marks. Dark/black fluid = contaminated, needs flush.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "Front fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_pads" },
+          { "text": "Dark/contaminated", "next": "solution_flush" },
+          { "text": "OK", "next": "check_pads" }
+        ]
+      },
+      {
+        "id": "check_rear",
+        "type": "check",
+        "text": "Check rear brake",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive.",
+        "instructions": "Check rear brake reservoir (left handlebar or foot area). The AK 550i has a rear disc brake. Check fluid level and pad wear.",
+        "next": "rear_result"
+      },
+      {
+        "id": "rear_result",
+        "type": "question",
+        "text": "Rear fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_rear_pads" },
+          { "text": "OK", "next": "check_rear_pads" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Check front brake pads",
+        "safety": "yellow",
+        "warning": "Metal-on-metal = do not ride.",
+        "instructions": "The AK 550i has DUAL front calipers — check pads on BOTH sides. Look through the caliper inspection window or remove caliper. Replace at 1-1.5mm remaining. The AK 550i's speed capability makes quality pads essential. Also check both front discs for scoring or wear lip.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "Front pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_pads" },
+          { "text": "OK", "next": "check_caliper" },
+          { "text": "Squealing with good pads", "next": "solution_clean" }
+        ]
+      },
+      {
+        "id": "check_rear_pads",
+        "type": "check",
+        "text": "Check rear pads",
+        "safety": "yellow",
+        "warning": "Same wear limit applies.",
+        "instructions": "Check rear caliper pads. Replace at 1-1.5mm. Check rear disc for scoring.",
+        "next": "rpad_result"
+      },
+      {
+        "id": "rpad_result",
+        "type": "question",
+        "text": "Rear pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_rear_pads" },
+          { "text": "OK", "next": "solution_bleed_rear" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check front calipers",
+        "safety": "yellow",
+        "warning": "Let cool before touching.",
+        "instructions": "The AK 550i has two front calipers. Check BOTH for: (1) Slide pin movement — should be smooth, (2) Piston retraction — piston should push back, (3) Fluid leaks at banjo bolts or seals. A stuck caliper on one side causes uneven braking.",
+        "next": "cal_result"
+      },
+      {
+        "id": "cal_result",
+        "type": "question",
+        "text": "Caliper condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Seized slides", "next": "solution_service" },
+          { "text": "Stuck piston", "next": "solution_rebuild" },
+          { "text": "Leak found", "next": "solution_leak" },
+          { "text": "Both OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_drag",
+        "type": "check",
+        "text": "Check for dragging brake",
+        "safety": "green",
+        "instructions": "Center stand, spin both wheels. The AK 550i has disc brakes front and rear — slight pad contact is normal on discs. Excessive drag = heat, pad wear, and fuel waste. Check if one front caliper is dragging more than the other.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which drags?",
+        "safety": "green",
+        "options": [
+          { "text": "Front (one side)", "next": "solution_service" },
+          { "text": "Front (both)", "next": "solution_service" },
+          { "text": "Rear", "next": "solution_service_rear" }
+        ]
+      },
+      {
+        "id": "check_abs",
+        "type": "check",
+        "text": "ABS system check",
+        "safety": "yellow",
+        "warning": "ABS is a critical safety system. Professional diagnosis recommended.",
+        "instructions": "The AK 550i has ABS on both wheels. If ABS light stays on after startup: (1) Check wheel speed sensors — front and rear (dirt is the most common cause), (2) Clean ABS reluctor rings on both wheels, (3) Check sensor wiring for damage, (4) Check for fault codes via diagnostic port. ABS light staying on = ABS disabled, brakes still work normally but without anti-lock protection.",
+        "next": "abs_result"
+      },
+      {
+        "id": "abs_result",
+        "type": "question",
+        "text": "ABS finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty sensor", "next": "solution_abs_clean" },
+          { "text": "Damaged wire", "next": "solution_abs_wire" },
+          { "text": "Cannot diagnose", "next": "solution_abs_pro" }
+        ]
+      },
+      {
+        "id": "check_disc",
+        "type": "check",
+        "text": "Check disc condition",
+        "safety": "green",
+        "instructions": "The AK 550i has three brake discs (two front, one rear). Check each for: (1) Minimum thickness (stamped on disc), (2) Warping — spin wheel and watch pad gap, (3) Scoring or grooves. A warped disc causes lever pulsation during braking.",
+        "next": "disc_result"
+      },
+      {
+        "id": "disc_result",
+        "type": "question",
+        "text": "Disc condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Warped", "next": "solution_disc" },
+          { "text": "Below minimum thickness", "next": "solution_disc" },
+          { "text": "Discs OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "solution_pads",
+        "type": "solution",
+        "text": "Replace Front Pads",
+        "safety": "yellow",
+        "warning": "Pump lever before riding. Bed in new pads.",
+        "action": "Replace front brake pads.",
+        "details": "Replace pads on BOTH front calipers even if only one side is worn. Use quality pads rated for the AK 550i's speed. Pump lever several times after installation to seat pads."
+      },
+      {
+        "id": "solution_rear_pads",
+        "type": "solution",
+        "text": "Replace Rear Pads",
+        "safety": "yellow",
+        "warning": "Pump lever before riding.",
+        "action": "Replace rear brake pads.",
+        "details": "Same procedure as front. Check disc for scoring."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush Brake Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4 only. Fluid damages paint.",
+        "action": "Flush and replace all brake fluid.",
+        "details": "Flush every 2 years. The AK 550i has ABS — follow the specific ABS bleed procedure (may require cycling the ABS pump). Front system has two calipers to bleed."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Brake Components",
+        "safety": "green",
+        "action": "Clean discs and pads with brake cleaner.",
+        "details": "Lightly sand glazed pads. Apply anti-squeal compound to pad backs. Do not contaminate friction surfaces."
+      },
+      {
+        "id": "solution_service",
+        "type": "solution",
+        "text": "Service Front Caliper(s)",
+        "safety": "yellow",
+        "warning": "Use only silicone grease on slides.",
+        "action": "Clean and lubricate caliper slide pins.",
+        "details": "Remove slides, clean, apply silicone brake grease. This is the most common cause of uneven front braking on dual-disc setups."
+      },
+      {
+        "id": "solution_service_rear",
+        "type": "solution",
+        "text": "Service Rear Caliper",
+        "safety": "yellow",
+        "warning": "Same procedure.",
+        "action": "Clean and lubricate rear caliper slides.",
+        "details": "Clean pins, apply silicone grease."
+      },
+      {
+        "id": "solution_rebuild",
+        "type": "solution",
+        "text": "Rebuild Caliper",
+        "safety": "yellow",
+        "warning": "Do not ride with a stuck piston.",
+        "action": "Rebuild or replace the caliper.",
+        "details": "Seal kits are available. If piston is heavily corroded, replace the entire caliper."
+      },
+      {
+        "id": "solution_leak",
+        "type": "solution",
+        "text": "Fix Brake Fluid Leak",
+        "safety": "red",
+        "warning": "Brake failure risk. Do not ride.",
+        "action": "Find and fix the leak immediately.",
+        "details": "Check banjo bolts (copper washers), brake lines, caliper seals. Replace any damaged component. Re-bleed after repair."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Front Brakes",
+        "safety": "yellow",
+        "warning": "Firm lever before riding.",
+        "action": "Bleed the front brake system.",
+        "details": "Two front calipers — bleed the caliper farthest from the master cylinder first. ABS models may need a specific bleeding sequence."
+      },
+      {
+        "id": "solution_bleed_rear",
+        "type": "solution",
+        "text": "Bleed Rear Brake",
+        "safety": "yellow",
+        "warning": "Firm feel before riding.",
+        "action": "Bleed the rear brake.",
+        "details": "Standard bleed procedure. ABS models may require additional steps."
+      },
+      {
+        "id": "solution_abs_clean",
+        "type": "solution",
+        "text": "Clean ABS Sensor",
+        "safety": "green",
+        "action": "Clean ABS sensor and reluctor ring.",
+        "details": "Remove sensor, wipe with a clean cloth. Clean metallic debris from reluctor ring. Reinstall and check if ABS light clears after riding."
+      },
+      {
+        "id": "solution_abs_wire",
+        "type": "solution",
+        "text": "Repair ABS Wiring",
+        "safety": "green",
+        "action": "Repair or replace damaged sensor wire.",
+        "details": "Check connector for corrosion. Route wire away from heat sources and moving parts."
+      },
+      {
+        "id": "solution_abs_pro",
+        "type": "solution",
+        "text": "Professional ABS Diagnosis",
+        "safety": "yellow",
+        "warning": "Requires diagnostic tools.",
+        "action": "Dealer diagnosis of ABS system.",
+        "details": "ABS module faults require proprietary diagnostic tools. Brakes still function without ABS, but anti-lock protection is disabled."
+      },
+      {
+        "id": "solution_disc",
+        "type": "solution",
+        "text": "Replace Brake Disc",
+        "safety": "yellow",
+        "warning": "Torque bolts to spec.",
+        "action": "Replace the warped or worn disc.",
+        "details": "If a front disc is warped, consider replacing both fronts for even braking. New pads recommended with new discs. Bed in properly."
+      }
+    ]
+  }
+}

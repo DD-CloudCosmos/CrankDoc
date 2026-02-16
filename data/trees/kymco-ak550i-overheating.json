@@ -1,0 +1,242 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating on the liquid-cooled Kymco AK 550i 550cc parallel-twin maxi-scooter.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does overheating present on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Temp gauge high / warning", "next": "check_coolant" },
+          { "text": "Coolant boiling/steam", "next": "solution_stop" },
+          { "text": "Fan not running", "next": "check_fan" },
+          { "text": "Power loss in traffic", "next": "check_coolant" },
+          { "text": "Coolant loss, no visible leak", "next": "check_internal" }
+        ]
+      },
+      {
+        "id": "check_coolant",
+        "type": "check",
+        "text": "Check coolant level",
+        "safety": "yellow",
+        "warning": "NEVER open radiator cap when hot. Severe burn risk from pressurized coolant.",
+        "instructions": "Check overflow reservoir (MIN/MAX marks). The AK 550i parallel-twin generates significant heat, especially in traffic. If reservoir is empty, check radiator (cold only). Use 50/50 coolant mix. The Noodoe display shows temp — monitor for normal operating range.",
+        "next": "coolant_result"
+      },
+      {
+        "id": "coolant_result",
+        "type": "question",
+        "text": "Coolant level?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_leak" },
+          { "text": "Normal", "next": "check_fan" },
+          { "text": "Oily/brown coolant", "next": "solution_gasket" }
+        ]
+      },
+      {
+        "id": "check_leak",
+        "type": "check",
+        "text": "Find coolant leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to animals and children.",
+        "instructions": "Top up and inspect: (1) All hoses and clamps — the twin has more cooling hoses than singles, (2) Water pump weep hole, (3) Radiator for damage or corrosion, (4) Head gasket area between both cylinders, (5) Thermostat housing. Use a pressure tester for hard-to-find leaks.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Leak source?",
+        "safety": "green",
+        "options": [
+          { "text": "Hose or clamp", "next": "solution_hose" },
+          { "text": "Water pump", "next": "solution_pump" },
+          { "text": "Radiator", "next": "solution_rad" },
+          { "text": "No external leak found", "next": "check_internal" }
+        ]
+      },
+      {
+        "id": "check_internal",
+        "type": "check",
+        "text": "Check for internal leak",
+        "safety": "yellow",
+        "warning": "Internal coolant leak is serious. Stop riding.",
+        "instructions": "On the AK 550i parallel-twin, internal leaks can occur at the head gasket between cylinders or between coolant passages and oil galleries. Check: (1) Oil dipstick/sight glass — milky oil = coolant mixing, (2) Exhaust — white smoke with sweet smell = coolant burning, (3) Coolant — bubbles when engine running (cap off, cold) = combustion gases entering coolant. Any of these = head gasket failure.",
+        "next": "internal_result"
+      },
+      {
+        "id": "internal_result",
+        "type": "question",
+        "text": "Internal leak signs?",
+        "safety": "green",
+        "options": [
+          { "text": "Milky oil", "next": "solution_gasket" },
+          { "text": "White smoke", "next": "solution_gasket" },
+          { "text": "Bubbles in coolant", "next": "solution_gasket" },
+          { "text": "No signs", "next": "check_fan" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Check radiator fan",
+        "safety": "yellow",
+        "warning": "Fan starts suddenly — keep fingers clear.",
+        "instructions": "Let engine idle until hot. The AK 550i fan should activate at approximately 95-100C. Monitor temp on the Noodoe display. If fan does not come on: (1) Check fan fuse, (2) Check fan connector, (3) Test fan motor with direct 12V, (4) Check temp switch/sensor.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Fan status?",
+        "safety": "green",
+        "options": [
+          { "text": "Dead motor", "next": "solution_fan" },
+          { "text": "Works direct, not auto", "next": "solution_sensor" },
+          { "text": "Works normally", "next": "check_thermo" }
+        ]
+      },
+      {
+        "id": "check_thermo",
+        "type": "check",
+        "text": "Check thermostat",
+        "safety": "yellow",
+        "warning": "Test on cool engine only.",
+        "instructions": "Feel upper radiator hose after the engine warms up. If hose stays cold while the engine is hot = thermostat stuck closed. Coolant is not circulating to the radiator. The AK 550i twin reaches operating temp quickly — the hose should be warm within 5-7 minutes of running.",
+        "next": "thermo_result"
+      },
+      {
+        "id": "thermo_result",
+        "type": "question",
+        "text": "Thermostat?",
+        "safety": "green",
+        "options": [
+          { "text": "Stuck closed", "next": "solution_thermo" },
+          { "text": "Opens normally", "next": "check_rad" }
+        ]
+      },
+      {
+        "id": "check_rad",
+        "type": "check",
+        "text": "Check radiator condition",
+        "safety": "green",
+        "instructions": "Inspect: (1) Radiator fins — clean of bugs, dirt, road debris (common on the AK 550i due to its low-mounted radiator), (2) Airflow path — nothing blocking the radiator, (3) Radiator cap — test with pressure tester or just replace (cheap). A weak cap reduces boiling point.",
+        "next": "rad_result"
+      },
+      {
+        "id": "rad_result",
+        "type": "question",
+        "text": "Radiator?",
+        "safety": "green",
+        "options": [
+          { "text": "Blocked fins", "next": "solution_clean" },
+          { "text": "Weak cap", "next": "solution_cap" },
+          { "text": "All looks good", "next": "solution_pump_check" }
+        ]
+      },
+      {
+        "id": "solution_stop",
+        "type": "solution",
+        "text": "Stop Immediately",
+        "safety": "red",
+        "warning": "Stop engine NOW. Do not open radiator cap when hot. Wait 30+ minutes to cool.",
+        "action": "Shut off engine and let it cool completely.",
+        "details": "Do not restart until the engine is cool, coolant level is checked, and the cause is identified. Running a twin without adequate cooling can warp the head or blow the head gasket."
+      },
+      {
+        "id": "solution_hose",
+        "type": "solution",
+        "text": "Replace Coolant Hose",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace the leaking hose.",
+        "details": "The AK 550i has more cooling hoses than single-cylinder scooters. Replace with OEM or silicone equivalents. Refill with 50/50 coolant and bleed air."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Water Pump Repair",
+        "safety": "yellow",
+        "warning": "Drain coolant before removal.",
+        "action": "Replace water pump seal or entire pump.",
+        "details": "Weep hole dripping = seal failure. Replace promptly before it becomes a catastrophic leak. The twin's higher flow demands mean a pump failure has more immediate consequences."
+      },
+      {
+        "id": "solution_rad",
+        "type": "solution",
+        "text": "Replace Radiator",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace damaged radiator.",
+        "details": "Stone damage or corrosion. Refill with 50/50 coolant and bleed air thoroughly. Consider a radiator guard to prevent future damage."
+      },
+      {
+        "id": "solution_gasket",
+        "type": "solution",
+        "text": "Head Gasket Failure",
+        "safety": "red",
+        "warning": "Stop riding immediately. Coolant in oil destroys bearings. Running with a blown head gasket can destroy the engine.",
+        "action": "Professional head gasket replacement.",
+        "details": "The AK 550i parallel-twin head gasket seals between two cylinders and multiple coolant/oil passages. This is a significant repair. White smoke, milky oil, or bubbles in coolant all confirm head gasket failure. Have the head checked for warping during replacement."
+      },
+      {
+        "id": "solution_fan",
+        "type": "solution",
+        "text": "Replace Fan Motor",
+        "safety": "green",
+        "action": "Replace the radiator fan motor.",
+        "details": "Verify operation after installation. The AK 550i relies heavily on the fan in slow traffic where the twin generates significant heat."
+      },
+      {
+        "id": "solution_sensor",
+        "type": "solution",
+        "text": "Replace Temp Sensor/Switch",
+        "safety": "yellow",
+        "warning": "Drain some coolant before removing sensor.",
+        "action": "Replace the temperature sensor or fan switch.",
+        "details": "The ECU uses the temp sensor for both fueling and fan control. A faulty sensor affects both. Check for fault codes on the Noodoe display or via diagnostic port."
+      },
+      {
+        "id": "solution_thermo",
+        "type": "solution",
+        "text": "Replace Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace thermostat.",
+        "details": "Replace with OEM spec. Refill with 50/50 coolant and bleed air from the system. Run engine to operating temp and verify circulation."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Radiator Fins",
+        "safety": "green",
+        "action": "Clean radiator fins with low-pressure water.",
+        "details": "Spray from the engine side outward. Be gentle — fins bend easily. Consider installing a radiator guard to prevent future blockage from road debris."
+      },
+      {
+        "id": "solution_cap",
+        "type": "solution",
+        "text": "Replace Radiator Cap",
+        "safety": "yellow",
+        "warning": "Cold engine only.",
+        "action": "Replace with correct-pressure cap.",
+        "details": "A weak cap lowers the boiling point of coolant. Cheap, easy fix. Use the correct pressure rating for the AK 550i."
+      },
+      {
+        "id": "solution_pump_check",
+        "type": "solution",
+        "text": "Verify Coolant Circulation",
+        "safety": "yellow",
+        "warning": "Hot engine — be careful.",
+        "action": "Verify the water pump is circulating coolant.",
+        "details": "Squeeze the upper radiator hose at operating temperature — you should feel flow/pressure. No flow = failed impeller (impeller may have come loose from the shaft). Replace the water pump."
+      }
+    ]
+  }
+}

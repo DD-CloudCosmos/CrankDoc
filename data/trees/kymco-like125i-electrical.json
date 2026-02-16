@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco Like 125i including lighting, charging, and wiring faults.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue are you experiencing on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working (headlight, tail, indicators)", "next": "check_bulbs_fuses" },
+          { "text": "Battery keeps dying or won't hold charge", "next": "check_charging" },
+          { "text": "Intermittent electrical problems", "next": "check_connectors" },
+          { "text": "No electrical power at all", "next": "check_battery_connections" }
+        ]
+      },
+      {
+        "id": "check_bulbs_fuses",
+        "type": "check",
+        "text": "Check bulbs and fuses",
+        "safety": "green",
+        "instructions": "For a non-working light on the Like 125i: (1) Check the bulb — remove and inspect the filament, (2) Check the fuse for that circuit in the fuse box near the battery. Replace any blown bulb or fuse with the correct rating. The Like 125i may use LED lighting on newer models — LEDs do not have filaments but can still fail.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Did replacing the bulb or fuse fix it?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — light works now", "next": "solution_bulb_fixed" },
+          { "text": "No — still not working", "next": "check_switch_wiring" },
+          { "text": "Fuse blows again immediately", "next": "solution_short_circuit" }
+        ]
+      },
+      {
+        "id": "check_switch_wiring",
+        "type": "check",
+        "text": "Check switches and wiring",
+        "safety": "yellow",
+        "warning": "Disconnect the battery before probing connectors to prevent short circuits.",
+        "instructions": "If bulb and fuse are good: (1) Check the related switch (dimmer, turn signal) for proper function, (2) Use a multimeter to check for 12V at the bulb socket with the switch on. No voltage means a wiring or switch fault. Check connectors along the wire path for corrosion or loose pins. The retro styling of the Like 125i means some wiring runs are longer than on other scooters.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Faulty switch", "next": "solution_replace_switch" },
+          { "text": "No voltage at socket — wiring issue", "next": "solution_wiring_repair" },
+          { "text": "Voltage present but no light — ground problem", "next": "solution_ground_fix" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Check the charging system",
+        "safety": "yellow",
+        "warning": "Keep hands away from moving parts while the engine is running.",
+        "instructions": "With the Like 125i engine running at 3,000-4,000 RPM, measure voltage across the battery terminals. A working charging system should read 13.5V-14.8V. Below 13.0V means no charging. Above 15.0V means overcharging. If not charging, the stator or regulator/rectifier has failed.",
+        "next": "charging_result"
+      },
+      {
+        "id": "charging_result",
+        "type": "question",
+        "text": "What is the charging voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V — not charging", "next": "check_stator" },
+          { "text": "13.5V-14.8V — normal", "next": "solution_parasitic_drain" },
+          { "text": "Above 15.0V — overcharging", "next": "solution_replace_reg_rec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test the stator output",
+        "safety": "yellow",
+        "warning": "The stator produces AC voltage. Do not touch wires while the engine runs.",
+        "instructions": "Disconnect the stator connector. Set multimeter to AC volts. With engine at 3,000 RPM, measure across the stator output wires. You should see 30-60V AC. If 0V or very low, the stator has failed. If proper AC voltage is present, the regulator/rectifier is faulty.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What is the stator output?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or no AC voltage — stator failed", "next": "solution_replace_stator" },
+          { "text": "Good AC voltage — reg/rec failed", "next": "solution_replace_reg_rec" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Inspect electrical connectors",
+        "safety": "green",
+        "instructions": "Intermittent issues are almost always connection-related. Check: (1) Battery terminals, (2) Main harness connectors under the seat, (3) Handlebar switch connectors, (4) Ground wires at engine and frame. Clean corroded pins with contact cleaner, apply dielectric grease, and reconnect firmly.",
+        "next": "connector_result"
+      },
+      {
+        "id": "connector_result",
+        "type": "question",
+        "text": "Did cleaning connectors help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — problem resolved", "next": "solution_connectors_fixed" },
+          { "text": "No — still intermittent", "next": "solution_harness_check" }
+        ]
+      },
+      {
+        "id": "check_battery_connections",
+        "type": "check",
+        "text": "Check battery and main fuse",
+        "safety": "yellow",
+        "warning": "A completely dead system may indicate a major short. Proceed carefully.",
+        "instructions": "If the Like 125i has no power at all: (1) Check battery terminal tightness, (2) Check main fuse near the battery, (3) Measure battery voltage. If the battery has voltage and fuse is good but nothing works, the ignition switch or main wiring ground may have failed.",
+        "next": "dead_result"
+      },
+      {
+        "id": "dead_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose or corroded terminal", "next": "solution_clean_terminals" },
+          { "text": "Blown main fuse", "next": "solution_main_fuse" },
+          { "text": "Dead battery", "next": "solution_replace_battery" },
+          { "text": "Battery and fuse OK but no power", "next": "solution_ignition_switch" }
+        ]
+      },
+      {
+        "id": "solution_bulb_fixed",
+        "type": "solution",
+        "text": "Bulb/Fuse Replaced",
+        "safety": "green",
+        "action": "The light is working with the new bulb or fuse.",
+        "details": "Keep spare bulbs and fuses. If bulbs blow frequently, check the regulator/rectifier output (should not exceed 14.8V)."
+      },
+      {
+        "id": "solution_short_circuit",
+        "type": "solution",
+        "text": "Short Circuit Detected",
+        "safety": "red",
+        "warning": "A short circuit can cause wiring fires. Do not keep replacing fuses. Professional diagnosis recommended.",
+        "action": "Find and repair the short circuit in the affected circuit.",
+        "details": "Disconnect loads one at a time to isolate which component causes the fuse to blow. Inspect wiring for bare wire touching ground. Common locations: headlight bracket, under seat, where harness runs along the frame."
+      },
+      {
+        "id": "solution_replace_switch",
+        "type": "solution",
+        "text": "Replace the Switch",
+        "safety": "green",
+        "action": "Replace the faulty handlebar switch assembly.",
+        "details": "Water ingress and corrosion cause switch failure. Replace with an OEM assembly. Apply dielectric grease to prevent future corrosion."
+      },
+      {
+        "id": "solution_wiring_repair",
+        "type": "solution",
+        "text": "Repair Wiring",
+        "safety": "yellow",
+        "warning": "Use soldered connections with heat-shrink tubing for permanent repairs.",
+        "action": "Find and repair the damaged wiring.",
+        "details": "Trace wiring from fuse to switch to bulb. Look for cut, chafed, or corroded wires where they pass through grommets or where body panels can pinch them."
+      },
+      {
+        "id": "solution_ground_fix",
+        "type": "solution",
+        "text": "Fix Ground Connection",
+        "safety": "green",
+        "action": "Clean and secure the ground wire for the affected light.",
+        "details": "Clean the ground contact point to bare metal, reconnect, and apply dielectric grease."
+      },
+      {
+        "id": "solution_parasitic_drain",
+        "type": "solution",
+        "text": "Find Parasitic Drain",
+        "safety": "green",
+        "action": "Check for a parasitic draw killing the battery when parked.",
+        "details": "With ignition off, measure current between the negative cable and terminal. Normal is under 30mA. Remove fuses one at a time to identify the draining circuit. Common culprits: aftermarket accessories, alarm, faulty reg/rec."
+      },
+      {
+        "id": "solution_replace_reg_rec",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "An overcharging system damages the battery and electronics. Replace promptly.",
+        "action": "Replace the faulty regulator/rectifier.",
+        "details": "The reg/rec is mounted on the frame for heat dissipation. Clean the mounting surface for good heat transfer. After replacement, verify 13.5-14.8V at the battery with the engine running."
+      },
+      {
+        "id": "solution_replace_stator",
+        "type": "solution",
+        "text": "Replace the Stator",
+        "safety": "yellow",
+        "warning": "Requires removing the flywheel with a puller tool.",
+        "action": "Replace the failed stator.",
+        "details": "The stator is inside the magneto cover. Requires a flywheel puller to access. This is an intermediate repair."
+      },
+      {
+        "id": "solution_connectors_fixed",
+        "type": "solution",
+        "text": "Connectors Cleaned",
+        "safety": "green",
+        "action": "Corroded connectors have been cleaned and the problem is resolved.",
+        "details": "Apply dielectric grease to prevent future corrosion. Check connectors every 6 months."
+      },
+      {
+        "id": "solution_harness_check",
+        "type": "solution",
+        "text": "Wiring Harness Inspection Needed",
+        "safety": "yellow",
+        "warning": "Harness faults can be time-consuming to find. Consider professional help.",
+        "action": "Inspect the wiring harness for chafed or broken wires.",
+        "details": "Wiggle sections of the harness while monitoring the affected circuit. Common damage points: steering column flex point, under body panels, near battery area."
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Terminals Cleaned",
+        "safety": "green",
+        "action": "Battery terminals cleaned and reconnected securely.",
+        "details": "Clean with wire brush, reconnect (negative last), apply dielectric grease."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Main Fuse Replaced",
+        "safety": "yellow",
+        "warning": "If it blows again, do not keep replacing. There is a major short.",
+        "action": "Replace the main fuse with the correct rating.",
+        "details": "Use exact same amperage. If it blows again, disconnect circuits systematically to find the short."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "Replace the Battery",
+        "safety": "green",
+        "action": "Install a new battery.",
+        "details": "Replace with the correct type (typically YTX7A-BS). Check the charging system after installation to ensure it works properly."
+      },
+      {
+        "id": "solution_ignition_switch",
+        "type": "solution",
+        "text": "Ignition Switch Fault",
+        "safety": "yellow",
+        "warning": "A faulty ignition switch can overheat. Replace promptly.",
+        "action": "Test and replace the ignition switch if faulty.",
+        "details": "Check for 12V on the output side of the ignition switch when turned to ON. If no voltage passes through, the switch contacts have failed. Replacement switches include the lock cylinder."
+      }
+    ]
+  }
+}

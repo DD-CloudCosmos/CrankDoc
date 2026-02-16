@@ -1,0 +1,220 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating on the liquid-cooled Kymco X-Town 300i 276cc scooter.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does overheating present on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Temp gauge high / warning", "next": "check_coolant" },
+          { "text": "Coolant boiling/steam", "next": "solution_stop" },
+          { "text": "Fan not running", "next": "check_fan" },
+          { "text": "Power loss in traffic", "next": "check_coolant" }
+        ]
+      },
+      {
+        "id": "check_coolant",
+        "type": "check",
+        "text": "Check coolant level",
+        "safety": "yellow",
+        "warning": "NEVER open radiator cap when hot. Severe burn risk.",
+        "instructions": "Check overflow reservoir (MIN/MAX). If empty, check radiator (cold only). The X-Town 300i with its sporty character generates significant heat. Use 50/50 coolant.",
+        "next": "coolant_result"
+      },
+      {
+        "id": "coolant_result",
+        "type": "question",
+        "text": "Level?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_leak" },
+          { "text": "Normal", "next": "check_fan" },
+          { "text": "Oily/brown", "next": "solution_gasket" }
+        ]
+      },
+      {
+        "id": "check_leak",
+        "type": "check",
+        "text": "Find leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic.",
+        "instructions": "Top up and look: hoses, water pump weep hole, radiator, head gasket. Use pressure tester for small leaks.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Source?",
+        "safety": "green",
+        "options": [
+          { "text": "Hose", "next": "solution_hose" },
+          { "text": "Pump", "next": "solution_pump" },
+          { "text": "Radiator", "next": "solution_rad" },
+          { "text": "No external", "next": "solution_gasket" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Check fan",
+        "safety": "yellow",
+        "warning": "Fan starts suddenly. Keep clear.",
+        "instructions": "Let engine idle until hot. Fan should activate ~95-100C. If not: check fuse, connector, temp switch. Test with direct 12V.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Fan?",
+        "safety": "green",
+        "options": [
+          { "text": "Dead motor", "next": "solution_fan" },
+          { "text": "Works direct, not auto", "next": "solution_sensor" },
+          { "text": "Works OK", "next": "check_thermo" }
+        ]
+      },
+      {
+        "id": "check_thermo",
+        "type": "check",
+        "text": "Check thermostat",
+        "safety": "yellow",
+        "warning": "Cool engine.",
+        "instructions": "Feel upper hose after warmup. Hot = thermostat opens. Cold + hot engine = stuck closed.",
+        "next": "thermo_result"
+      },
+      {
+        "id": "thermo_result",
+        "type": "question",
+        "text": "Thermostat?",
+        "safety": "green",
+        "options": [
+          { "text": "Stuck closed", "next": "solution_thermo" },
+          { "text": "Opens OK", "next": "check_rad" }
+        ]
+      },
+      {
+        "id": "check_rad",
+        "type": "check",
+        "text": "Check radiator",
+        "safety": "green",
+        "instructions": "Clean fins, check airflow path, check cap pressure.",
+        "next": "rad_result"
+      },
+      {
+        "id": "rad_result",
+        "type": "question",
+        "text": "Radiator?",
+        "safety": "green",
+        "options": [
+          { "text": "Blocked", "next": "solution_clean" },
+          { "text": "Weak cap", "next": "solution_cap" },
+          { "text": "All good", "next": "solution_pump_check" }
+        ]
+      },
+      {
+        "id": "solution_stop",
+        "type": "solution",
+        "text": "Stop Now",
+        "safety": "red",
+        "warning": "Stop engine. Do not open cap hot. Wait 30+ minutes.",
+        "action": "Shut off and cool.",
+        "details": "Do not restart until cool, checked, and refilled."
+      },
+      {
+        "id": "solution_hose",
+        "type": "solution",
+        "text": "Replace Hose",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace hose.",
+        "details": "Refill 50/50, bleed air."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Water Pump",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace seal or pump.",
+        "details": "Weep hole drip = seal failure."
+      },
+      {
+        "id": "solution_rad",
+        "type": "solution",
+        "text": "Radiator",
+        "safety": "yellow",
+        "warning": "Drain first.",
+        "action": "Replace.",
+        "details": "Refill and bleed."
+      },
+      {
+        "id": "solution_gasket",
+        "type": "solution",
+        "text": "Head Gasket",
+        "safety": "red",
+        "warning": "Stop riding. Coolant in oil destroys bearings.",
+        "action": "Professional repair.",
+        "details": "White smoke, milky oil, bubbles in coolant = head gasket failure."
+      },
+      {
+        "id": "solution_fan",
+        "type": "solution",
+        "text": "Fan Motor",
+        "safety": "green",
+        "action": "Replace fan motor.",
+        "details": "Verify after installation."
+      },
+      {
+        "id": "solution_sensor",
+        "type": "solution",
+        "text": "Temp Sensor",
+        "safety": "yellow",
+        "warning": "Drain some coolant.",
+        "action": "Replace temp switch/sensor.",
+        "details": "Check for ECU fault codes on the Noodoe display."
+      },
+      {
+        "id": "solution_thermo",
+        "type": "solution",
+        "text": "Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace thermostat.",
+        "details": "Refill and bleed."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Radiator",
+        "safety": "green",
+        "action": "Clean fins.",
+        "details": "Low-pressure water. Be gentle with fins."
+      },
+      {
+        "id": "solution_cap",
+        "type": "solution",
+        "text": "Replace Cap",
+        "safety": "yellow",
+        "warning": "Cold only.",
+        "action": "New cap with correct pressure.",
+        "details": "Cheap, easy."
+      },
+      {
+        "id": "solution_pump_check",
+        "type": "solution",
+        "text": "Check Pump Flow",
+        "safety": "yellow",
+        "warning": "Hot engine.",
+        "action": "Verify coolant circulation.",
+        "details": "Squeeze upper hose at temp — feel for flow. No flow = failed impeller."
+      }
+    ]
+  }
+}

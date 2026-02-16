@@ -1,0 +1,228 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco Agility 125 scooter including disc and drum brake systems.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Which brake issue are you experiencing on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Brakes feel weak or spongy — poor stopping power", "next": "check_which_brake" },
+          { "text": "Brakes squeal or make grinding noises", "next": "check_pad_wear" },
+          { "text": "Brake lever pulls to the handlebar with little resistance", "next": "check_fluid_level" },
+          { "text": "Brakes are dragging — wheel does not spin freely", "next": "check_dragging" }
+        ]
+      },
+      {
+        "id": "check_which_brake",
+        "type": "question",
+        "text": "Which brake feels weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front brake (disc) — right lever", "next": "check_fluid_level" },
+          { "text": "Rear brake (drum) — left lever", "next": "check_drum_adjustment" },
+          { "text": "Both brakes feel weak", "next": "check_fluid_level" }
+        ]
+      },
+      {
+        "id": "check_fluid_level",
+        "type": "check",
+        "text": "Check the front brake fluid level",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive and will damage paint. Wipe up any spills immediately. Do not allow brake fluid to contact painted surfaces.",
+        "instructions": "The Agility 125 front disc brake uses hydraulic fluid. Locate the brake fluid reservoir on the right handlebar — it has a small sight window or a screw-off cap. Check that the fluid level is between the MIN and MAX marks. If the fluid is below MIN, the brake pads may be worn (fluid fills the space as pads thin out) or there is a leak. Also check the fluid color — it should be clear or light amber. Dark brown or black fluid should be replaced.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fluid is low", "next": "check_pad_wear" },
+          { "text": "Fluid is dark or contaminated", "next": "solution_flush_fluid" },
+          { "text": "Fluid level is fine", "next": "check_pad_wear" }
+        ]
+      },
+      {
+        "id": "check_pad_wear",
+        "type": "check",
+        "text": "Inspect the front brake pads",
+        "safety": "yellow",
+        "warning": "If brake pads are worn to the metal backing plate, do not ride the scooter. Metal-on-metal contact damages the brake disc and severely reduces stopping power.",
+        "instructions": "Look at the front brake caliper on the Agility 125. You can see the brake pads through the caliper opening without removing the wheel. Check the pad thickness — new pads are typically 4-5mm thick. Replace when they reach 1-1.5mm or when the wear indicator groove is no longer visible. If you hear grinding, the pads are likely worn to the metal backing plate. Also inspect the brake disc for deep grooves, scoring, or a pronounced lip at the edge.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "What is the condition of the brake pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are worn thin (under 1.5mm) or down to metal", "next": "solution_replace_pads" },
+          { "text": "Pads have adequate thickness", "next": "check_caliper" },
+          { "text": "Squealing noise even with good pads", "next": "solution_clean_brakes" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check the front brake caliper",
+        "safety": "yellow",
+        "warning": "Work on a cool brake system. Brake components get very hot during riding.",
+        "instructions": "The front caliper on the Agility 125 is a single-piston sliding caliper. If braking feels weak despite good pads and fluid: (1) Check that the caliper slides freely on its pins — it should move back and forth easily, (2) Check for a stuck piston — the piston should push out evenly when the lever is squeezed, (3) Look for fluid leaks around the piston seal or at the brake line banjo bolt. A seized caliper slide pin is very common on scooters and causes uneven pad wear.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "What did you find with the caliper?",
+        "safety": "green",
+        "options": [
+          { "text": "Caliper slide pins are seized or stiff", "next": "solution_service_caliper" },
+          { "text": "Piston is stuck and will not move", "next": "solution_rebuild_caliper" },
+          { "text": "Leak at the caliper or line", "next": "solution_brake_leak" },
+          { "text": "Caliper seems fine", "next": "solution_bleed_brakes" }
+        ]
+      },
+      {
+        "id": "check_drum_adjustment",
+        "type": "check",
+        "text": "Adjust the rear drum brake",
+        "safety": "green",
+        "instructions": "The Agility 125 rear brake is typically a drum brake operated by a cable from the left handlebar lever. Locate the brake adjustment nut at the rear brake arm on the wheel hub. Tighten the nut (turn clockwise) to take up slack in the cable. The lever should have about 10-20mm of free play before the brake engages. If the adjuster is fully tightened and the brake is still weak, the brake shoes inside the drum are worn and need replacement.",
+        "next": "drum_result"
+      },
+      {
+        "id": "drum_result",
+        "type": "question",
+        "text": "Did adjusting the rear brake cable help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — rear brake now engages properly", "next": "solution_drum_adjusted" },
+          { "text": "No — adjuster is maxed out and brake is still weak", "next": "solution_replace_shoes" },
+          { "text": "Cable feels sticky or does not return smoothly", "next": "solution_replace_cable" }
+        ]
+      },
+      {
+        "id": "check_dragging",
+        "type": "check",
+        "text": "Identify which brake is dragging",
+        "safety": "green",
+        "instructions": "Put the scooter on its center stand so the wheels can spin freely. Spin each wheel by hand. A dragging brake will cause the wheel to stop quickly or not spin freely. For the front disc brake: a dragging caliper or warped disc will cause resistance. For the rear drum brake: a brake that does not fully release (cable not returning, springs weak) will cause dragging. Note which wheel is affected.",
+        "next": "dragging_result"
+      },
+      {
+        "id": "dragging_result",
+        "type": "question",
+        "text": "Which wheel is dragging?",
+        "safety": "green",
+        "options": [
+          { "text": "Front wheel — disc brake dragging", "next": "solution_service_caliper" },
+          { "text": "Rear wheel — drum brake dragging", "next": "solution_drum_dragging" }
+        ]
+      },
+      {
+        "id": "solution_replace_pads",
+        "type": "solution",
+        "text": "Replace the Front Brake Pads",
+        "safety": "yellow",
+        "warning": "After replacing brake pads, pump the brake lever several times before riding to seat the pads against the disc. The first few stops will have reduced braking power as the pads bed in.",
+        "action": "Replace the worn front brake pads with new pads.",
+        "details": "Remove the caliper (two bolts), slide out the old pads, and install new ones. Use OEM or quality aftermarket pads for the Agility 125. Before installing new pads, push the caliper piston back into its bore using a C-clamp or brake piston tool (this makes room for the thicker new pads). Check the brake disc thickness — if it is below the minimum marked on the disc, replace it too. After installation, pump the brake lever until firm, then bed in the pads with several gentle stops from low speed."
+      },
+      {
+        "id": "solution_flush_fluid",
+        "type": "solution",
+        "text": "Flush and Replace Brake Fluid",
+        "safety": "yellow",
+        "warning": "Use only the correct brake fluid type (DOT 3 or DOT 4 as specified). Never mix fluid types. Brake fluid is hygroscopic and absorbs moisture over time.",
+        "action": "Flush the old brake fluid and replace with fresh DOT 4 fluid.",
+        "details": "Brake fluid should be replaced every 2 years regardless of mileage, as it absorbs moisture which lowers its boiling point. Attach a clear tube to the caliper bleed nipple, open the nipple, and pump the brake lever to push old fluid out. Keep the reservoir topped up with fresh fluid. Continue until clean, clear fluid comes out of the bleed tube. Close the nipple, top off the reservoir, and pump the lever until firm."
+      },
+      {
+        "id": "solution_clean_brakes",
+        "type": "solution",
+        "text": "Clean the Brake Components",
+        "safety": "green",
+        "action": "Clean the brake disc and pads with brake cleaner spray.",
+        "details": "Squealing with good pads is usually caused by glazed pads, contamination, or vibration. Spray the disc and pads with dedicated brake cleaner (not general-purpose degreaser). If the pads are glazed (shiny surface), lightly sand them with 120-grit sandpaper to restore the friction surface. Make sure the anti-squeal shims (if equipped) are in place behind the pads. A thin application of brake anti-squeal compound on the back of the pads (not the friction surface) can also help."
+      },
+      {
+        "id": "solution_service_caliper",
+        "type": "solution",
+        "text": "Service the Brake Caliper",
+        "safety": "yellow",
+        "warning": "Do not use petroleum-based lubricants on brake components. Use only silicone-based brake grease on caliper slide pins.",
+        "action": "Clean and lubricate the caliper slide pins.",
+        "details": "Remove the caliper from its bracket. Extract the slide pins and clean off old grease and corrosion. Apply fresh silicone brake grease to the pins and reinstall. The caliper should slide freely on the pins. If the pins are pitted or corroded beyond cleaning, replace them. Seized slide pins are the most common cause of uneven pad wear and dragging disc brakes on scooters."
+      },
+      {
+        "id": "solution_rebuild_caliper",
+        "type": "solution",
+        "text": "Rebuild or Replace the Caliper",
+        "safety": "yellow",
+        "warning": "A stuck caliper piston means the brake is not working safely. Do not ride until resolved.",
+        "action": "Rebuild the caliper with a new seal kit, or replace the caliper.",
+        "details": "A stuck piston is caused by corrosion or a deteriorated piston seal. Caliper rebuild kits are available for the Agility 125 and include new seals and dust boots. To rebuild, remove the caliper, extract the piston (using compressed air or the brake lever with the caliper off), clean the bore, install new seals, and reassemble. If the bore is heavily corroded or pitted, replace the entire caliper."
+      },
+      {
+        "id": "solution_brake_leak",
+        "type": "solution",
+        "text": "Repair Brake Fluid Leak",
+        "safety": "red",
+        "warning": "A brake fluid leak means your brake can fail without warning. Do not ride the scooter until the leak is repaired.",
+        "action": "Identify and repair the source of the brake fluid leak.",
+        "details": "Check the banjo bolt at the caliper and master cylinder — tighten and replace crush washers if leaking. Check the brake line for cracks or damage — replace if compromised. If fluid is leaking from the caliper piston area, the piston seal has failed and the caliper needs rebuilding. After repair, bleed the brake system to remove any air that entered. Verify firm lever feel before riding."
+      },
+      {
+        "id": "solution_bleed_brakes",
+        "type": "solution",
+        "text": "Bleed the Front Brake",
+        "safety": "yellow",
+        "warning": "Air in the brake line causes a soft lever and reduced stopping power. Bleed carefully and verify firm lever feel before riding.",
+        "action": "Bleed the front brake to remove air from the hydraulic system.",
+        "details": "Air in the brake line causes a spongy lever feel. Attach a clear tube to the bleed nipple on the caliper. Fill the master cylinder reservoir with fresh DOT 4 fluid. Pump the lever 3-4 times, hold it pulled in, open the bleed nipple to release fluid and air, close the nipple, then release the lever. Repeat until no bubbles appear in the tube. Keep the reservoir topped up throughout the process. A firm, consistent lever feel indicates proper bleeding."
+      },
+      {
+        "id": "solution_drum_adjusted",
+        "type": "solution",
+        "text": "Rear Drum Brake Adjusted",
+        "safety": "green",
+        "action": "The rear drum brake cable has been adjusted and the brake is now working properly.",
+        "details": "As the drum brake shoes wear, the cable needs periodic adjustment to maintain proper free play (10-20mm at the lever). If you find yourself adjusting frequently, the shoes may be nearing the end of their life. Plan to replace the shoes at the next major service."
+      },
+      {
+        "id": "solution_replace_shoes",
+        "type": "solution",
+        "text": "Replace the Rear Brake Shoes",
+        "safety": "yellow",
+        "warning": "Brake shoe dust may contain harmful particles. Do not blow it out with compressed air. Wipe with a damp cloth.",
+        "action": "Replace the worn rear drum brake shoes.",
+        "details": "Remove the rear wheel and the brake drum cover/plate. The brake shoes are held by springs. Remove the old shoes, clean the drum surface with brake cleaner, and install new shoes. Make sure the return springs are correctly positioned. After installation, adjust the cable for proper free play. New shoes need a break-in period — use gentle braking for the first 100 km to bed them in."
+      },
+      {
+        "id": "solution_replace_cable",
+        "type": "solution",
+        "text": "Replace or Lubricate the Brake Cable",
+        "safety": "green",
+        "action": "Lubricate or replace the rear brake cable.",
+        "details": "A sticky brake cable prevents the brake from fully releasing, causing drag and heat. Try lubricating the cable first by applying cable lubricant at the top end and working it through. If the cable is frayed, kinked, or the outer sheath is damaged, replace it. Route the new cable exactly as the original to avoid kinks. Adjust the free play after installation."
+      },
+      {
+        "id": "solution_drum_dragging",
+        "type": "solution",
+        "text": "Fix Rear Drum Brake Dragging",
+        "safety": "green",
+        "action": "Adjust the brake cable free play and check the return springs.",
+        "details": "A dragging rear drum brake is usually caused by: (1) Cable adjusted too tight — loosen the adjusting nut to provide 10-20mm of free play at the lever, (2) Weak or broken return springs inside the drum — the springs pull the shoes away from the drum when the brake is released. If the springs are weak, replace them when you next have the drum apart. Also check that the cable is not binding in its routing."
+      }
+    ]
+  }
+}

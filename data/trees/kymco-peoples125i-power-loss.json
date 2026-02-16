@@ -1,0 +1,202 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss and sluggish acceleration on the Kymco People S 125i scooter with CVT focus.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration from a stop", "next": "check_belt" },
+          { "text": "Engine revs high but scooter barely moves", "next": "check_clutch" },
+          { "text": "Reduced top speed", "next": "check_rollers" },
+          { "text": "Power bogs or cuts out intermittently", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT drive belt",
+        "safety": "green",
+        "instructions": "Remove the CVT cover on the left side of the People S 125i. Inspect the belt for cracks, fraying, glazing, or reduced width. A new belt is approximately 18mm — replace if notably narrower. Worn belt = sluggish acceleration and poor top speed. Replace every 8,000-12,000 km.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn or damaged", "next": "solution_belt" },
+          { "text": "Belt looks OK", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Inspect variator rollers",
+        "safety": "green",
+        "instructions": "Remove the variator face plate to access the 6 roller weights. Check for flat spots (most common), deformation, or crumbling. Flat-spotted rollers cause hesitation and poor CVT ratio shifting. The People S 125i typically uses 15x12mm rollers at 12-13 grams.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots or damage", "next": "solution_rollers" },
+          { "text": "Rollers look round and uniform", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect centrifugal clutch",
+        "safety": "green",
+        "instructions": "Remove the rear clutch assembly. Check clutch shoes for friction material (min 2mm), glazing, or damage. Check springs for stretch or discoloration. Check clutch bell for grooves. Worn or glazed clutch = engine revs high without power transfer.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Shoes worn or glazed", "next": "solution_clutch" },
+          { "text": "Springs weak", "next": "solution_springs" },
+          { "text": "Clutch looks OK", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "A clogged air filter starves the engine and causes bogging under acceleration. Remove and inspect. Replace if dirty or restricted. Check every 2,000 km.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty or clogged", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work away from ignition sources.",
+        "instructions": "Check fuel freshness, fuel pump priming sound, and fuel filter condition. Stale fuel and a weak pump cause bogging under load. The People S 125i fuel filter may be inline or part of the pump assembly.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel delivery OK?",
+        "safety": "green",
+        "options": [
+          { "text": "Stale fuel or weak pump", "next": "solution_fuel" },
+          { "text": "Fuel seems normal", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust for blockage",
+        "safety": "yellow",
+        "warning": "Exhaust gets extremely hot. Inspect cold only.",
+        "instructions": "A blocked exhaust (clogged catalytic converter or carbon-packed muffler) causes major power loss. Check flow from the tailpipe. Try loosening the exhaust header temporarily to see if power improves.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Exhaust restricted?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — restricted flow", "next": "solution_exhaust" },
+          { "text": "No — flows freely", "next": "solution_valves" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace CVT Belt",
+        "safety": "green",
+        "action": "Replace with correct belt for People S 125i.",
+        "details": "Use OEM or quality aftermarket. Also inspect rollers and clutch while cover is off. New belt immediately restores proper acceleration."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Variator Rollers",
+        "safety": "green",
+        "action": "Replace all 6 rollers as a set.",
+        "details": "Use stock weight (12-13g, 15x12mm). Never mix old and new. Inspect variator ramp plate. Apply molybdenum grease to boss shaft."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch",
+        "safety": "green",
+        "action": "Replace worn clutch shoes or complete assembly.",
+        "details": "Also replace bell if grooved. Sand bell interior lightly to remove glaze."
+      },
+      {
+        "id": "solution_springs",
+        "type": "solution",
+        "text": "Replace Clutch Springs",
+        "safety": "green",
+        "action": "Replace all springs as a set.",
+        "details": "Weak springs cause early engagement at low RPM, resulting in sluggish takeoff. Stock springs recommended for normal use."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Install new filter element.",
+        "details": "Most common cause of power loss. Replace every 4,000-6,000 km. Immediate improvement expected."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Service Fuel System",
+        "safety": "yellow",
+        "warning": "Work in well-ventilated area.",
+        "action": "Drain stale fuel, refill fresh, add injector cleaner.",
+        "details": "If pump sounds weak, it may need replacement. Replace fuel filter if accessible."
+      },
+      {
+        "id": "solution_exhaust",
+        "type": "solution",
+        "text": "Service or Replace Exhaust",
+        "safety": "yellow",
+        "warning": "Allow exhaust to cool completely first.",
+        "action": "Replace blocked catalytic converter or muffler.",
+        "details": "Do not remove catalytic converter (may be illegal). Carbon-clogged mufflers are best replaced."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Check Valve Clearances",
+        "safety": "yellow",
+        "warning": "Must be done with engine cold at TDC compression.",
+        "action": "Adjust valves to spec.",
+        "details": "Tight valves reduce compression and power. Intake 0.10mm, exhaust 0.15mm (verify with manual). Check every 8,000-12,000 km."
+      }
+    ]
+  }
+}

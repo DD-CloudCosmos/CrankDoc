@@ -1,0 +1,325 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco Downtown 300i 276cc scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise come from on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "CVT area (left side)", "next": "cvt_type" },
+          { "text": "Cylinder head", "next": "check_valves" },
+          { "text": "Lower engine", "next": "check_bottom" },
+          { "text": "Exhaust", "next": "check_exhaust" },
+          { "text": "Cooling system", "next": "check_cooling" }
+        ]
+      },
+      {
+        "id": "cvt_type",
+        "type": "question",
+        "text": "CVT noise type:",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping", "next": "check_belt" },
+          { "text": "Rattling at idle", "next": "check_rollers" },
+          { "text": "Squealing", "next": "check_clutch" },
+          { "text": "Grinding", "next": "check_debris" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The Downtown 300i belt is larger/wider than 125cc models. Check for damage. A slapping belt on a 300 should be replaced immediately — the forces involved are significant.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Damaged", "next": "solution_belt" },
+          { "text": "Fine", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Check rollers",
+        "safety": "green",
+        "instructions": "Check for flat spots. The 300i uses heavier rollers than 125 models. Flat spots are still the most common rattle cause.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots", "next": "solution_rollers" },
+          { "text": "Fine", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Check clutch",
+        "safety": "green",
+        "instructions": "The 300i clutch handles more power. Check shoes, bell, springs, and driven pulley components.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed shoes", "next": "solution_clutch" },
+          { "text": "Grooved bell", "next": "solution_bell" },
+          { "text": "Driven pulley", "next": "solution_driven" }
+        ]
+      },
+      {
+        "id": "check_debris",
+        "type": "check",
+        "text": "Check CVT case",
+        "safety": "green",
+        "instructions": "Check for debris or loose cover bolts.",
+        "next": "debris_result"
+      },
+      {
+        "id": "debris_result",
+        "type": "question",
+        "text": "Found?",
+        "safety": "green",
+        "options": [
+          { "text": "Debris/loose", "next": "solution_clean_cvt" },
+          { "text": "Nothing", "next": "check_belt" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valves",
+        "safety": "yellow",
+        "warning": "Cold engine.",
+        "instructions": "Ticking = valve noise. The 276cc engine has larger valves. Check clearances and cam chain tension. Check manual for correct specs.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose valves", "next": "solution_valves" },
+          { "text": "Cam chain", "next": "solution_chain" },
+          { "text": "Within spec", "next": "check_bottom" }
+        ]
+      },
+      {
+        "id": "check_bottom",
+        "type": "check",
+        "text": "Bottom-end noise",
+        "safety": "yellow",
+        "warning": "Serious — professional needed.",
+        "instructions": "Deep knock = rod bearing. Rattle fading warm = piston slap. The 276cc engine bottom-end is more costly to repair than a 125.",
+        "next": "bottom_result"
+      },
+      {
+        "id": "bottom_result",
+        "type": "question",
+        "text": "Type?",
+        "safety": "green",
+        "options": [
+          { "text": "Deep knock", "next": "solution_bottom" },
+          { "text": "Idle rattle", "next": "solution_piston" },
+          { "text": "None", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust",
+        "safety": "yellow",
+        "warning": "Cold only.",
+        "instructions": "Header gasket, mounting bolts, muffler baffles. The Downtown 300i has a larger exhaust system.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Header leak", "next": "solution_header" },
+          { "text": "Loose hardware", "next": "solution_tighten" },
+          { "text": "Muffler rattle", "next": "solution_muffler" }
+        ]
+      },
+      {
+        "id": "check_cooling",
+        "type": "check",
+        "text": "Check cooling noises",
+        "safety": "green",
+        "instructions": "Gurgling = air in system. Hissing = pressure leak. Whining = water pump bearing. Check coolant level and look for leaks.",
+        "next": "cool_result"
+      },
+      {
+        "id": "cool_result",
+        "type": "question",
+        "text": "Noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Gurgling", "next": "solution_bleed" },
+          { "text": "Hissing", "next": "solution_cool_leak" },
+          { "text": "Whining pump", "next": "solution_pump" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace belt immediately.",
+        "details": "Use correct 300i size. Inspect rollers and clutch."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all as set.",
+        "details": "Correct weight for 300i."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch Shoes",
+        "safety": "green",
+        "action": "Replace shoes/springs.",
+        "details": "Sand bell. Replace if grooved."
+      },
+      {
+        "id": "solution_bell",
+        "type": "solution",
+        "text": "Replace Bell",
+        "safety": "green",
+        "action": "Replace bell and shoes.",
+        "details": "300i bell handles more power."
+      },
+      {
+        "id": "solution_driven",
+        "type": "solution",
+        "text": "Service Driven Pulley",
+        "safety": "green",
+        "action": "Service driven pulley.",
+        "details": "Clean, inspect, re-grease."
+      },
+      {
+        "id": "solution_clean_cvt",
+        "type": "solution",
+        "text": "Clean CVT",
+        "safety": "green",
+        "action": "Remove debris, secure cover.",
+        "details": "Identify source."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valves",
+        "safety": "yellow",
+        "warning": "Cold, TDC.",
+        "action": "Adjust to spec.",
+        "details": "Check manual for 276cc specs."
+      },
+      {
+        "id": "solution_chain",
+        "type": "solution",
+        "text": "Service Cam Chain",
+        "safety": "yellow",
+        "warning": "Chain skip = damage.",
+        "action": "Replace tensioner or chain.",
+        "details": "Top-end work if chain stretched."
+      },
+      {
+        "id": "solution_bottom",
+        "type": "solution",
+        "text": "Bottom-End Repair",
+        "safety": "red",
+        "warning": "Stop riding.",
+        "action": "Professional repair.",
+        "details": "Full teardown. Consider replacement engine."
+      },
+      {
+        "id": "solution_piston",
+        "type": "solution",
+        "text": "Piston Slap",
+        "safety": "yellow",
+        "warning": "Cylinder wear.",
+        "action": "Monitor. Plan rebuild.",
+        "details": "Check oil frequently."
+      },
+      {
+        "id": "solution_header",
+        "type": "solution",
+        "text": "Header Gasket",
+        "safety": "yellow",
+        "warning": "Bolts may be seized.",
+        "action": "Replace gasket.",
+        "details": "Clean surfaces, tighten evenly."
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Tighten Exhaust",
+        "safety": "green",
+        "action": "Tighten loose hardware.",
+        "details": "Anti-seize on bolts."
+      },
+      {
+        "id": "solution_muffler",
+        "type": "solution",
+        "text": "Replace Muffler",
+        "safety": "green",
+        "action": "Replace muffler.",
+        "details": "Broken baffles not repairable."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Coolant",
+        "safety": "yellow",
+        "warning": "Cold cap removal only.",
+        "action": "Bleed air from cooling system.",
+        "details": "Remove cap cold, fill, run with cap off until no bubbles. Top off."
+      },
+      {
+        "id": "solution_cool_leak",
+        "type": "solution",
+        "text": "Fix Coolant Leak",
+        "safety": "yellow",
+        "warning": "Pressurized system.",
+        "action": "Find and repair leak.",
+        "details": "Check hoses, cap, radiator."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Replace Water Pump",
+        "safety": "yellow",
+        "warning": "Drain coolant.",
+        "action": "Replace failing pump.",
+        "details": "Whining bearing will seize eventually."
+      }
+    ]
+  }
+}

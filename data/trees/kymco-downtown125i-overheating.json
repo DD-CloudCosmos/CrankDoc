@@ -1,0 +1,220 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating on the liquid-cooled Kymco Downtown 125i scooter, including coolant, thermostat, fan, and radiator checks.",
+  "category": "cooling",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does overheating present on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Temperature gauge reads high or warning light on", "next": "check_coolant" },
+          { "text": "Coolant boiling over or steam from engine area", "next": "solution_stop_now" },
+          { "text": "Cooling fan never turns on", "next": "check_fan" },
+          { "text": "Engine loses power in traffic — runs hot", "next": "check_coolant" }
+        ]
+      },
+      {
+        "id": "check_coolant",
+        "type": "check",
+        "text": "Check coolant level",
+        "safety": "yellow",
+        "warning": "NEVER open the radiator cap when the engine is hot. Pressurized coolant will spray and cause severe burns. Wait until the engine is completely cool.",
+        "instructions": "The Downtown 125i is liquid-cooled with a radiator. Check the coolant reservoir (overflow tank) — it is a translucent container usually near the radiator with MIN and MAX marks. The level should be between these marks when cold. If the reservoir is empty, carefully check the radiator level (engine cold only). Low coolant is the most common cause of overheating. Use the correct coolant type (typically pre-mixed 50/50 ethylene glycol, or mix concentrate to 50/50).",
+        "next": "coolant_result"
+      },
+      {
+        "id": "coolant_result",
+        "type": "question",
+        "text": "Coolant level?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or empty", "next": "check_coolant_leak" },
+          { "text": "Normal level", "next": "check_fan" },
+          { "text": "Coolant looks brown or oily", "next": "solution_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_coolant_leak",
+        "type": "check",
+        "text": "Find the coolant leak",
+        "safety": "yellow",
+        "warning": "Coolant is toxic to animals. Clean up spills and dispose properly.",
+        "instructions": "Top up the coolant system and look for leaks. Common leak points on the Downtown 125i: (1) Radiator hoses — check connections and for cracks, (2) Water pump seal — look for weeping from the water pump weep hole, (3) Radiator — check for damage or corrosion leaks, (4) Head gasket — white exhaust smoke or oil/coolant mixing. A pressure test (with a cooling system pressure tester) is the most reliable way to find small leaks.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Where is the leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Radiator hose connection", "next": "solution_hose" },
+          { "text": "Water pump area", "next": "solution_water_pump" },
+          { "text": "Radiator itself", "next": "solution_radiator" },
+          { "text": "No visible external leak", "next": "solution_head_gasket" }
+        ]
+      },
+      {
+        "id": "check_fan",
+        "type": "check",
+        "text": "Check the cooling fan",
+        "safety": "yellow",
+        "warning": "The fan can start unexpectedly. Keep hands clear of the fan blades when the engine is running.",
+        "instructions": "The Downtown 125i radiator fan should turn on automatically when the coolant reaches approximately 95-100 degrees C. Let the engine idle until warm — the fan should kick in. If it does not: (1) Check the fan fuse, (2) Check the fan motor connector for power when the engine is hot, (3) Check the temperature sensor/switch that triggers the fan. You can test the fan by applying 12V directly to the motor connector (bypassing the switch) to see if the motor works.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "Fan status?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan motor does not work even with direct power", "next": "solution_fan_motor" },
+          { "text": "Fan works with direct power but not automatically", "next": "solution_temp_switch" },
+          { "text": "Fan works normally", "next": "check_thermostat" }
+        ]
+      },
+      {
+        "id": "check_thermostat",
+        "type": "check",
+        "text": "Check the thermostat",
+        "safety": "yellow",
+        "warning": "Work on a cool engine only. Hot coolant causes burns.",
+        "instructions": "The thermostat controls coolant flow between the engine and radiator. If stuck closed, coolant cannot reach the radiator and the engine overheats rapidly. If stuck open, the engine will not warm up properly (overcooling). Feel the upper radiator hose after the engine warms up — it should become hot when the thermostat opens (around 80-85 degrees C). If it stays cold while the engine overheats, the thermostat is stuck closed.",
+        "next": "thermostat_result"
+      },
+      {
+        "id": "thermostat_result",
+        "type": "question",
+        "text": "Thermostat status?",
+        "safety": "green",
+        "options": [
+          { "text": "Upper hose stays cold — stuck closed", "next": "solution_thermostat" },
+          { "text": "Upper hose gets hot — thermostat opens", "next": "check_radiator" }
+        ]
+      },
+      {
+        "id": "check_radiator",
+        "type": "check",
+        "text": "Inspect the radiator",
+        "safety": "green",
+        "instructions": "The radiator on the Downtown 125i is typically mounted at the front of the scooter. Check: (1) Are the fins clean and not blocked by bugs, dirt, or debris? (2) Is the airflow path to the radiator clear (no misaligned body panels blocking it)? (3) Is the radiator cap holding pressure (a weak cap reduces the coolant boiling point)? Clean the radiator fins gently with low-pressure water or compressed air.",
+        "next": "radiator_result"
+      },
+      {
+        "id": "radiator_result",
+        "type": "question",
+        "text": "Radiator condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fins blocked with debris", "next": "solution_clean_radiator" },
+          { "text": "Radiator cap weak or damaged", "next": "solution_rad_cap" },
+          { "text": "Radiator clean and cap good", "next": "solution_water_pump_check" }
+        ]
+      },
+      {
+        "id": "solution_stop_now",
+        "type": "solution",
+        "text": "Stop Immediately — Engine Overheating",
+        "safety": "red",
+        "warning": "Stop the engine NOW. Do not continue riding. Do not open the radiator cap until completely cool. Severe engine damage can result from continued operation.",
+        "action": "Turn off the engine and allow it to cool completely before investigating.",
+        "details": "Coolant boiling over or steam indicates the engine is dangerously hot. Wait at least 30 minutes for cooling. Check coolant level (cold engine only), look for leaks, and check the fan operation before restarting. If coolant was lost, do not restart until the system is refilled."
+      },
+      {
+        "id": "solution_hose",
+        "type": "solution",
+        "text": "Replace Coolant Hose",
+        "safety": "yellow",
+        "warning": "Work on cool engine only. Drain coolant first.",
+        "action": "Replace the leaking or damaged hose.",
+        "details": "Tighten hose clamps first — the leak may be at a loose connection. If the hose itself is cracked, swollen, or soft, replace it. Use OEM or quality silicone hoses. Refill with the correct 50/50 coolant mix and bleed air from the system by running the engine with the radiator cap off until no more bubbles appear."
+      },
+      {
+        "id": "solution_water_pump",
+        "type": "solution",
+        "text": "Replace Water Pump Seal or Pump",
+        "safety": "yellow",
+        "warning": "Water pump replacement involves draining coolant and may require engine cover removal.",
+        "action": "Replace the water pump seal. If the pump shaft is worn, replace the complete pump.",
+        "details": "A weep hole drip from the water pump indicates the mechanical seal has failed. This is a normal wear item. Some pumps can be resealed; others require complete replacement. Coolant dripping from the weep hole will gradually empty the system and cause overheating."
+      },
+      {
+        "id": "solution_radiator",
+        "type": "solution",
+        "text": "Replace the Radiator",
+        "safety": "yellow",
+        "warning": "Drain coolant before removal.",
+        "action": "Replace the damaged radiator.",
+        "details": "Radiators can leak from stone damage, corrosion, or vibration cracks. Small leaks can sometimes be temporarily sealed with radiator stop-leak products, but replacement is the permanent fix. Use an OEM or quality aftermarket radiator. After installation, fill with fresh 50/50 coolant and bleed the air."
+      },
+      {
+        "id": "solution_head_gasket",
+        "type": "solution",
+        "text": "Head Gasket Failure Suspected",
+        "safety": "red",
+        "warning": "A blown head gasket can cause rapid engine damage. Stop riding and have it repaired promptly.",
+        "action": "Have the head gasket professionally inspected and replaced if needed.",
+        "details": "Signs of head gasket failure: (1) White sweet-smelling exhaust smoke (coolant burning in combustion), (2) Oily or milky substance in the coolant (oil mixing with coolant), (3) Coolant disappearing with no external leak, (4) Bubbles in the coolant reservoir with engine running (combustion gases entering the cooling system). A combustion leak test (block tester) can confirm. Head gasket replacement requires removing the cylinder head."
+      },
+      {
+        "id": "solution_fan_motor",
+        "type": "solution",
+        "text": "Replace the Cooling Fan Motor",
+        "safety": "green",
+        "action": "Replace the failed fan motor.",
+        "details": "If the fan does not spin even with direct 12V power, the motor has failed. Replace with an OEM or compatible fan motor. After installation, verify it operates by letting the engine warm up to the fan trigger temperature."
+      },
+      {
+        "id": "solution_temp_switch",
+        "type": "solution",
+        "text": "Replace the Temperature Switch/Sensor",
+        "safety": "yellow",
+        "warning": "Drain some coolant before removing the sensor to prevent spillage.",
+        "action": "Replace the faulty coolant temperature switch.",
+        "details": "If the fan motor works but does not turn on automatically, the temperature sensor or switch that triggers it has failed. This is a threaded sensor in the coolant passage. Replace with OEM spec. Some models use the ECU to control the fan via the ECT sensor — check for stored fault codes."
+      },
+      {
+        "id": "solution_thermostat",
+        "type": "solution",
+        "text": "Replace the Thermostat",
+        "safety": "yellow",
+        "warning": "Drain coolant before thermostat removal.",
+        "action": "Replace the stuck thermostat.",
+        "details": "A stuck-closed thermostat prevents coolant from circulating to the radiator, causing rapid overheating. Remove the thermostat housing, replace the thermostat with a new one (make sure the jiggle valve is oriented correctly). Refill and bleed the cooling system. As a temporary emergency measure, you can remove the thermostat entirely, but the engine will take longer to warm up."
+      },
+      {
+        "id": "solution_clean_radiator",
+        "type": "solution",
+        "text": "Clean the Radiator",
+        "safety": "green",
+        "action": "Clean debris from the radiator fins.",
+        "details": "Use low-pressure water (front to back) or compressed air to clear bugs, dirt, and road debris from the radiator fins. Be gentle — the fins are fragile aluminum and bend easily. Make sure body panels are not blocking airflow to the radiator. A clean radiator can make a dramatic difference in cooling efficiency."
+      },
+      {
+        "id": "solution_rad_cap",
+        "type": "solution",
+        "text": "Replace the Radiator Cap",
+        "safety": "yellow",
+        "warning": "Never open cap when hot.",
+        "action": "Replace the radiator cap with a new one of the correct pressure rating.",
+        "details": "The radiator cap maintains system pressure (typically 1.1 bar / 16 PSI for scooters). A weak cap lowers the boiling point of the coolant. Caps are inexpensive — replace if in doubt. Make sure you use the correct pressure rating."
+      },
+      {
+        "id": "solution_water_pump_check",
+        "type": "solution",
+        "text": "Check Water Pump Function",
+        "safety": "yellow",
+        "warning": "Hot engine — be careful.",
+        "action": "Verify the water pump is circulating coolant.",
+        "details": "With the engine running and thermostat open (engine at operating temp), squeeze the upper radiator hose — you should feel coolant flowing. If there is no flow, the water pump impeller may have failed (broken or corroded impeller). The water pump on the Downtown 125i is typically driven by the engine. A failed pump requires replacement."
+      }
+    ]
+  }
+}

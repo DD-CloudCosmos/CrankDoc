@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
-const CATEGORIES = ['sport', 'naked', 'cruiser', 'adventure'] as const
+const CATEGORIES = ['sport', 'naked', 'cruiser', 'adventure', 'scooter'] as const
 
 interface BikeFiltersProps {
   availableMakes: string[]

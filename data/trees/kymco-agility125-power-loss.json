@@ -1,0 +1,202 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss, sluggish acceleration, and poor top speed on the Kymco Agility 125 scooter, with emphasis on CVT drivetrain components.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration from a stop — takes long to get moving", "next": "check_cvt_belt" },
+          { "text": "Engine revs high but scooter barely moves", "next": "check_clutch" },
+          { "text": "Top speed is reduced — cannot reach normal max speed", "next": "check_cvt_rollers" },
+          { "text": "Power cuts out intermittently or bogs under load", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_cvt_belt",
+        "type": "check",
+        "text": "Inspect the CVT drive belt",
+        "safety": "green",
+        "instructions": "Remove the CVT cover on the left side of the Agility 125 (several bolts hold it on). Inspect the drive belt for: (1) Cracks or fraying on the edges, (2) Glazed or shiny surfaces (indicates slipping), (3) Reduced width — a worn belt will be narrower than new, (4) Chunks missing or visible cord. The belt width should be approximately 18mm when new; replace if it is below 17mm. A worn belt cannot grip the variator and clutch pulleys properly, causing sluggish acceleration and reduced top speed.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "What is the condition of the CVT belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is cracked, frayed, or visibly worn", "next": "solution_replace_belt" },
+          { "text": "Belt looks OK — no visible damage or excessive wear", "next": "check_cvt_rollers" }
+        ]
+      },
+      {
+        "id": "check_cvt_rollers",
+        "type": "check",
+        "text": "Inspect the variator rollers (roller weights)",
+        "safety": "green",
+        "instructions": "With the CVT cover removed, remove the variator face plate (front pulley half). Inside you will find the roller weights — typically 6 cylindrical rollers that ride in ramps. Inspect them for: (1) Flat spots — rollers should be perfectly round/cylindrical, (2) Uneven wear — all rollers should look the same, (3) Deformed or crumbled rollers. Flat-spotted rollers cannot move smoothly in the variator ramps, causing hesitation and poor acceleration. The Agility 125 typically uses 12-13 gram rollers (15x12mm size).",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "What is the condition of the variator rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Rollers have flat spots or are deformed", "next": "solution_replace_rollers" },
+          { "text": "Rollers look round and uniform", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect the centrifugal clutch and clutch springs",
+        "safety": "green",
+        "instructions": "The rear (driven) pulley assembly contains the centrifugal clutch. Remove the rear clutch assembly from the Agility 125. Inspect: (1) Clutch shoes/pads — they should have adequate friction material remaining (at least 2mm), (2) Clutch springs — they should not be stretched, broken, or discolored from overheating, (3) Clutch bell (outer drum) — the inner surface should be smooth, not grooved or glazed. Worn clutch pads or weak springs cause the clutch to slip, which feels like the engine revs high but the scooter does not accelerate.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "What did you find with the clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch pads are worn thin or glazed", "next": "solution_replace_clutch" },
+          { "text": "Clutch springs are weak or broken", "next": "solution_replace_clutch_springs" },
+          { "text": "Clutch looks OK", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "A heavily clogged air filter is one of the most common and easily overlooked causes of power loss on the Agility 125. Remove the air filter cover and pull out the filter element. If it is black with dirt, oil-soaked, or restricted, it is starving the engine of air. This causes rich running, bogging under acceleration, and noticeable power loss. The filter should be serviced every 2,000 km.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the air filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is dirty or clogged", "next": "solution_replace_air_filter" },
+          { "text": "Filter is clean", "next": "check_fuel_delivery" }
+        ]
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Check fuel delivery and injector",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Do not disconnect fuel lines near heat sources or open flames.",
+        "instructions": "Poor fuel delivery will cause bogging and power loss under load. Check: (1) Is the fuel fresh? Stale fuel causes poor combustion, (2) Listen for the fuel pump priming when you turn the key on — a weak or failing pump may not deliver enough fuel at higher RPMs, (3) Check the fuel filter (if accessible) for clogging. On the Agility 125, the fuel filter may be an inline element or part of the fuel pump assembly.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "How does the fuel delivery check look?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is stale or pump sounds weak", "next": "solution_fuel_service" },
+          { "text": "Fuel delivery seems normal", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check the exhaust for blockage",
+        "safety": "yellow",
+        "warning": "The exhaust system gets extremely hot. Only inspect when the engine is cold or fully cooled down.",
+        "instructions": "A partially blocked exhaust will cause significant power loss. With the engine running, check that exhaust gases flow freely from the tailpipe. Common issues on the Agility 125: (1) Clogged catalytic converter (if equipped), (2) Carbon buildup in the muffler over many kilometers, (3) Crushed or dented exhaust pipe. If you suspect a blocked exhaust, temporarily loosen the exhaust header to see if power improves (retighten afterward).",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Does the exhaust seem blocked or restricted?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — poor exhaust flow or power improves with header loosened", "next": "solution_exhaust_blockage" },
+          { "text": "No — exhaust flows freely", "next": "solution_valve_check" }
+        ]
+      },
+      {
+        "id": "solution_replace_belt",
+        "type": "solution",
+        "text": "Replace the CVT Drive Belt",
+        "safety": "green",
+        "action": "Replace the worn CVT belt with a new OEM or quality aftermarket belt.",
+        "details": "The CVT belt on the Agility 125 is a wearing part that should be replaced every 8,000-12,000 km depending on riding conditions. Always use the correct belt size for your model. When replacing the belt, also inspect the variator rollers and clutch as preventative maintenance. A new belt will immediately restore proper acceleration and top speed if the old one was worn."
+      },
+      {
+        "id": "solution_replace_rollers",
+        "type": "solution",
+        "text": "Replace the Variator Rollers",
+        "safety": "green",
+        "action": "Replace all variator rollers as a set with the correct weight.",
+        "details": "Always replace all rollers at once — never mix old and new. The Agility 125 uses 6 rollers, typically 15x12mm at 12-13 grams each (check the service manual for your exact model year). Heavier rollers shift the CVT ratio for better top speed; lighter rollers improve acceleration. Stick with the stock weight unless you have a specific tuning goal. Also inspect the variator ramp plate and slider guides for wear while the variator is apart."
+      },
+      {
+        "id": "solution_replace_clutch",
+        "type": "solution",
+        "text": "Replace the Clutch Assembly",
+        "safety": "green",
+        "action": "Replace the worn clutch shoes or the complete clutch assembly.",
+        "details": "If the clutch pads are worn below 2mm or are glazed and shiny, they will slip under load. You can replace just the clutch shoes if the spring posts and backing plate are in good condition, or replace the entire clutch assembly. Also check the clutch bell (outer drum) for deep grooves — a grooved bell will eat new clutch pads quickly and should be replaced."
+      },
+      {
+        "id": "solution_replace_clutch_springs",
+        "type": "solution",
+        "text": "Replace the Clutch Springs",
+        "safety": "green",
+        "action": "Replace the weak or broken clutch springs.",
+        "details": "Clutch springs determine the engagement RPM. Weak springs cause the clutch to engage too early at low RPM, making the scooter feel sluggish off the line. Replace all springs as a set. Stiffer aftermarket springs will raise the engagement RPM, which can improve acceleration by keeping the engine in its power band longer. Stock springs are recommended for normal use."
+      },
+      {
+        "id": "solution_replace_air_filter",
+        "type": "solution",
+        "text": "Replace the Air Filter",
+        "safety": "green",
+        "action": "Replace the clogged air filter with a new element.",
+        "details": "A clogged air filter is the single most common cause of power loss on scooters. Replace with an OEM filter element. The Agility 125 air filter should be checked every 2,000 km and replaced every 4,000-6,000 km. In dusty conditions, check it more frequently. After installing the new filter, you should notice an immediate improvement in throttle response and power."
+      },
+      {
+        "id": "solution_fuel_service",
+        "type": "solution",
+        "text": "Service the Fuel System",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work in a well-ventilated area away from ignition sources.",
+        "action": "Drain stale fuel, replace with fresh fuel, and add injector cleaner.",
+        "details": "Drain old fuel and refill with fresh regular unleaded gasoline. Add a fuel system cleaner (such as Techron) to the first tank. If the fuel pump sounds weak or whines, it may need replacement — scooter fuel pumps are not serviceable. A partially clogged fuel filter will also restrict flow under high demand. Replace the fuel filter if accessible."
+      },
+      {
+        "id": "solution_exhaust_blockage",
+        "type": "solution",
+        "text": "Service or Replace the Exhaust",
+        "safety": "yellow",
+        "warning": "Allow the exhaust to cool completely before working on it. Exhaust components can cause severe burns.",
+        "action": "Clean or replace the blocked exhaust component.",
+        "details": "If the catalytic converter is blocked, it must be replaced (do not remove it, as this may be illegal in your area). If the muffler is carbon-clogged (common on older scooters or those that burn oil), replacement is usually the best option. Some shops can clean mufflers using a torch to burn out carbon, but this is not always effective. A free-flowing exhaust will restore lost power."
+      },
+      {
+        "id": "solution_valve_check",
+        "type": "solution",
+        "text": "Valve Clearance Check Recommended",
+        "safety": "yellow",
+        "warning": "Valve adjustment requires removing the valve cover and using feeler gauges. Only attempt if you are comfortable with engine work.",
+        "action": "Check and adjust the valve clearances on the Agility 125.",
+        "details": "If all CVT, fuel, and air checks are normal, tight valve clearances may be the cause. Valves that are too tight do not close fully, reducing compression and power. The Agility 125 valve clearances are typically: intake 0.10mm, exhaust 0.15mm (verify with the service manual). Valves should be checked every 8,000-12,000 km. Scooter valves tend to tighten over time rather than loosen."
+      }
+    ]
+  }
+}

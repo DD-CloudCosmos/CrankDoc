@@ -155,6 +155,8 @@ export default async function BikeDetailPage({ params }: PageProps) {
         return 'outline'
       case 'adventure':
         return 'secondary'
+      case 'scooter':
+        return 'outline'
       default:
         return 'default'
     }

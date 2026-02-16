@@ -1,0 +1,246 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Power Loss / Poor Performance",
+  "description": "Diagnose power loss and poor acceleration on the Kymco AK 550i 550cc parallel-twin maxi-scooter with CVT.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration", "next": "check_cvt" },
+          { "text": "Low top speed", "next": "check_cvt" },
+          { "text": "Bogs under load", "next": "check_fuel_delivery" },
+          { "text": "Surges / hesitates", "next": "check_fuel_delivery" },
+          { "text": "Loss at high RPM only", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_cvt",
+        "type": "check",
+        "text": "Inspect CVT",
+        "safety": "green",
+        "instructions": "The AK 550i has a heavy-duty CVT designed for its 550cc twin. Remove CVT cover. Check: (1) Belt width and condition — the AK belt is wider and stronger than single-cylinder models, (2) Variator rollers for flat spots, (3) Clutch shoes and bell, (4) Driven pulley / contra spring, (5) Slider guides for wear. Dust inside is normal; chunks of material are not.",
+        "next": "cvt_result"
+      },
+      {
+        "id": "cvt_result",
+        "type": "question",
+        "text": "CVT condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt worn/damaged", "next": "solution_belt" },
+          { "text": "Rollers flat", "next": "solution_rollers" },
+          { "text": "Clutch worn", "next": "solution_clutch" },
+          { "text": "CVT looks OK", "next": "check_fuel_delivery" }
+        ]
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable.",
+        "instructions": "The AK 550i has dual throttle bodies and dual injectors. Check: (1) Air filter — a clogged filter starves both cylinders, (2) Fuel pump pressure — listen for strong prime, (3) Injectors — uneven spray pattern causes one cylinder to run lean, (4) Throttle body sync — both TBs must be synchronized for smooth power. Also check for fault codes on the Noodoe display.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty filter", "next": "solution_filter" },
+          { "text": "Weak fuel pump", "next": "solution_pump" },
+          { "text": "Injector issue", "next": "solution_injector" },
+          { "text": "Fuel system OK", "next": "check_engine" }
+        ]
+      },
+      {
+        "id": "check_engine",
+        "type": "check",
+        "text": "Check engine mechanicals",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may be needed for compression tests.",
+        "instructions": "The AK 550i parallel-twin: (1) Check valve clearances on BOTH cylinders — tight valves cause power loss, (2) Compression test both cylinders — should be 10-14 bar, within 10% of each other, (3) Check for coolant leaks or overheating affecting performance, (4) Check exhaust for blockage.",
+        "next": "engine_result"
+      },
+      {
+        "id": "engine_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Valves tight", "next": "solution_valves" },
+          { "text": "Low compression", "next": "solution_compression" },
+          { "text": "One cyl low", "next": "solution_single_cyl" },
+          { "text": "All OK mechanically", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust system",
+        "safety": "yellow",
+        "warning": "Exhaust is hot after running.",
+        "instructions": "The AK 550i has a 2-into-1 exhaust. Check: (1) Catalytic converter — may be clogged (common on high-mileage), (2) Header gaskets for leaks, (3) Muffler internals — rattling or collapsed baffles restrict flow. A blocked cat causes significant power loss, especially at higher RPM.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Exhaust?",
+        "safety": "green",
+        "options": [
+          { "text": "Blocked cat", "next": "solution_cat" },
+          { "text": "Leak at header", "next": "solution_header" },
+          { "text": "Exhaust OK", "next": "check_traction" }
+        ]
+      },
+      {
+        "id": "check_traction",
+        "type": "check",
+        "text": "Check traction control / electronics",
+        "safety": "green",
+        "instructions": "The AK 550i has traction control. If the TC light is flashing or active, it may be limiting power due to a sensor issue. Check: (1) Traction control not stuck in active/reduced mode, (2) Wheel speed sensors for dirt or damage, (3) ECU fault codes. Also check throttle position sensor for consistent readings.",
+        "next": "traction_result"
+      },
+      {
+        "id": "traction_result",
+        "type": "question",
+        "text": "Electronics?",
+        "safety": "green",
+        "options": [
+          { "text": "TC limiting power", "next": "solution_tc" },
+          { "text": "Dirty speed sensor", "next": "solution_sensor" },
+          { "text": "All electronics OK", "next": "solution_diag" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace CVT Belt",
+        "safety": "green",
+        "action": "Replace the CVT belt.",
+        "details": "Use the correct AK 550i belt — it is wider and longer than single-cylinder models. A worn belt slips and cannot transmit the twin's power effectively. Replace every 15,000-20,000 km."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Variator Rollers",
+        "safety": "green",
+        "action": "Replace all rollers as a set.",
+        "details": "The AK 550i uses heavier rollers than smaller Kymco models. Always replace as a complete set. Stock weight optimizes the balance between acceleration and top speed."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Service Clutch Assembly",
+        "safety": "green",
+        "action": "Replace clutch shoes and inspect bell.",
+        "details": "The AK 550i clutch handles significant power. Replace shoes if glazed. Replace bell if deeply grooved. Check contra spring tension."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Replace air filter element.",
+        "details": "A dirty filter starves both cylinders equally. Replace every 6,000-8,000 km. Use OEM or quality aftermarket filter."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Replace Fuel Pump",
+        "safety": "yellow",
+        "warning": "Fire risk — no sparks near fuel.",
+        "action": "Replace fuel pump.",
+        "details": "The AK 550i fuel pump must supply adequate pressure for dual injectors. Check fuel filter and lines first."
+      },
+      {
+        "id": "solution_injector",
+        "type": "solution",
+        "text": "Service Injectors",
+        "safety": "yellow",
+        "warning": "Fuel system — fire risk.",
+        "action": "Clean or replace injectors.",
+        "details": "Try fuel system cleaner additive first. Then professional ultrasonic cleaning. Ensure both injectors flow equally for balanced twin operation."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valves",
+        "safety": "yellow",
+        "warning": "Cold engine only. Mark TDC per cylinder.",
+        "action": "Adjust valve clearances on both cylinders.",
+        "details": "The parallel-twin has 4 valves total (2 per cylinder) or 8 valves (4 per cylinder) depending on generation. Adjust per service manual specs. Tight intake valves are the most common cause of power loss."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Engine Rebuild Needed",
+        "safety": "yellow",
+        "warning": "Professional repair.",
+        "action": "Both cylinders low — top-end rebuild.",
+        "details": "Low compression on both cylinders indicates worn rings, head gasket failure, or cam timing issue. Professional inspection and rebuild recommended."
+      },
+      {
+        "id": "solution_single_cyl",
+        "type": "solution",
+        "text": "Single Cylinder Issue",
+        "safety": "yellow",
+        "warning": "Professional diagnosis recommended.",
+        "action": "Investigate the low cylinder.",
+        "details": "One cylinder low while the other is normal = valve issue or ring wear on that specific cylinder. A leak-down test will identify whether it is valves, rings, or head gasket."
+      },
+      {
+        "id": "solution_cat",
+        "type": "solution",
+        "text": "Replace Catalytic Converter",
+        "safety": "yellow",
+        "warning": "Hot component — let cool completely.",
+        "action": "Replace the clogged catalytic converter.",
+        "details": "A blocked cat causes back-pressure, power loss, and overheating. More common on high-mileage AK 550i models."
+      },
+      {
+        "id": "solution_header",
+        "type": "solution",
+        "text": "Fix Exhaust Leak",
+        "safety": "yellow",
+        "warning": "Bolts may seize from heat.",
+        "action": "Replace header gaskets and tighten.",
+        "details": "An exhaust leak causes power loss and an incorrect O2 sensor reading, which causes the ECU to adjust fueling incorrectly."
+      },
+      {
+        "id": "solution_tc",
+        "type": "solution",
+        "text": "Reset Traction Control",
+        "safety": "green",
+        "action": "Reset TC system and check for fault codes.",
+        "details": "Try power-cycling the ignition. If TC keeps activating inappropriately, have the system scanned at a dealer. A faulty wheel speed sensor can trigger false TC intervention."
+      },
+      {
+        "id": "solution_sensor",
+        "type": "solution",
+        "text": "Clean Wheel Speed Sensor",
+        "safety": "green",
+        "action": "Clean or replace the dirty sensor.",
+        "details": "Remove sensor, clean with brake cleaner, check reluctor ring for debris. Dirty sensors cause false readings that activate TC or ABS unnecessarily."
+      },
+      {
+        "id": "solution_diag",
+        "type": "solution",
+        "text": "Professional Diagnosis",
+        "safety": "yellow",
+        "warning": "Dealer scan tool may be needed.",
+        "action": "Full ECU diagnostic scan.",
+        "details": "If all mechanical and CVT checks pass, the AK 550i's ECU may have a sensor or mapping issue. Dealer diagnostic tools can read all sensor values and fault codes."
+      }
+    ]
+  }
+}

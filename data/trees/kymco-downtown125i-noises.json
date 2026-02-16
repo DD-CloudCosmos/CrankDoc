@@ -1,0 +1,325 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco Downtown 125i scooter from CVT, engine, and exhaust.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise come from on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Left side — CVT area", "next": "cvt_type" },
+          { "text": "Top of engine — head area", "next": "check_valves" },
+          { "text": "Lower engine", "next": "check_bottom" },
+          { "text": "Exhaust", "next": "check_exhaust" },
+          { "text": "Cooling system — gurgling or hissing", "next": "check_cooling_noise" }
+        ]
+      },
+      {
+        "id": "cvt_type",
+        "type": "question",
+        "text": "CVT noise type:",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping/flapping", "next": "check_belt" },
+          { "text": "Rattling at idle", "next": "check_rollers" },
+          { "text": "Squealing on acceleration", "next": "check_clutch" },
+          { "text": "Grinding", "next": "check_cvt_debris" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. Check for cracks, fraying, wear. The Downtown 125i uses a wider belt than basic 125 scooters. Replace if damaged.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Damaged", "next": "solution_belt" },
+          { "text": "Fine", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Inspect rollers",
+        "safety": "green",
+        "instructions": "Check roller weights for flat spots — the most common rattling cause in the CVT. Replace all if any are damaged.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Rollers OK?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots", "next": "solution_rollers" },
+          { "text": "Fine", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect clutch",
+        "safety": "green",
+        "instructions": "Check shoes for glazing, bell for grooves, springs for weakness. Also check driven pulley for worn torque driver and contra spring.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed shoes", "next": "solution_clutch" },
+          { "text": "Grooved bell", "next": "solution_bell" },
+          { "text": "Driven pulley noise", "next": "solution_driven" }
+        ]
+      },
+      {
+        "id": "check_cvt_debris",
+        "type": "check",
+        "text": "Check CVT case",
+        "safety": "green",
+        "instructions": "Grinding = debris inside or loose cover. Check bolts and inspect inside.",
+        "next": "debris_result"
+      },
+      {
+        "id": "debris_result",
+        "type": "question",
+        "text": "Found anything?",
+        "safety": "green",
+        "options": [
+          { "text": "Debris/loose cover", "next": "solution_cvt_clean" },
+          { "text": "Nothing", "next": "check_belt" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Cold engine only.",
+        "instructions": "Ticking from head = valve noise. Check clearances at TDC compression. Also check cam chain tensioner for rattling.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose valves", "next": "solution_valves" },
+          { "text": "Cam chain rattle", "next": "solution_cam_chain" },
+          { "text": "All OK", "next": "check_bottom" }
+        ]
+      },
+      {
+        "id": "check_bottom",
+        "type": "check",
+        "text": "Bottom-end noise",
+        "safety": "yellow",
+        "warning": "Deep knock = serious. Get professional help.",
+        "instructions": "Deep knock under load = rod bearing. Idle rattle fading warm = piston slap. Use stethoscope at crankcase. Check oil level.",
+        "next": "bottom_result"
+      },
+      {
+        "id": "bottom_result",
+        "type": "question",
+        "text": "Noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Deep knock", "next": "solution_bottom" },
+          { "text": "Idle rattle", "next": "solution_piston" },
+          { "text": "No bottom noise", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Inspect exhaust",
+        "safety": "yellow",
+        "warning": "Cold only.",
+        "instructions": "Header gasket leak = ticking. Loose bolts = rattling. Internal muffler rattle = broken baffles.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Exhaust findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Header leak", "next": "solution_header" },
+          { "text": "Loose hardware", "next": "solution_tighten" },
+          { "text": "Muffler rattle", "next": "solution_muffler" }
+        ]
+      },
+      {
+        "id": "check_cooling_noise",
+        "type": "check",
+        "text": "Check cooling system noises",
+        "safety": "green",
+        "instructions": "The Downtown 125i is liquid-cooled. Gurgling = air in the cooling system (needs bleeding). Hissing = pressure leak from a hose or radiator cap. Whining = water pump bearing failing. Check coolant level and look for leaks.",
+        "next": "cooling_result"
+      },
+      {
+        "id": "cooling_result",
+        "type": "question",
+        "text": "Cooling noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Gurgling — air in system", "next": "solution_bleed_coolant" },
+          { "text": "Hissing — pressure leak", "next": "solution_cooling_leak" },
+          { "text": "Whining — water pump", "next": "solution_pump_bearing" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace damaged belt.",
+        "details": "Use correct size for Downtown 125i."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all rollers as set.",
+        "details": "Stock weight. Grease variator boss."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch Shoes",
+        "safety": "green",
+        "action": "Replace glazed shoes.",
+        "details": "Sand bell interior. Replace bell if grooved."
+      },
+      {
+        "id": "solution_bell",
+        "type": "solution",
+        "text": "Replace Bell",
+        "safety": "green",
+        "action": "Replace grooved bell.",
+        "details": "Replace shoes together."
+      },
+      {
+        "id": "solution_driven",
+        "type": "solution",
+        "text": "Service Driven Pulley",
+        "safety": "green",
+        "action": "Service driven pulley.",
+        "details": "Clean, inspect, re-grease. Replace worn parts."
+      },
+      {
+        "id": "solution_cvt_clean",
+        "type": "solution",
+        "text": "Clean CVT",
+        "safety": "green",
+        "action": "Remove debris, secure cover.",
+        "details": "Identify debris source."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valves",
+        "safety": "yellow",
+        "warning": "Cold engine, TDC.",
+        "action": "Adjust to spec.",
+        "details": "Check every 8,000-12,000 km."
+      },
+      {
+        "id": "solution_cam_chain",
+        "type": "solution",
+        "text": "Service Cam Chain",
+        "safety": "yellow",
+        "warning": "Worn chain = timing risk.",
+        "action": "Replace tensioner or chain.",
+        "details": "Top-end disassembly if chain stretched."
+      },
+      {
+        "id": "solution_bottom",
+        "type": "solution",
+        "text": "Bottom-End Repair",
+        "safety": "red",
+        "warning": "Stop riding immediately.",
+        "action": "Professional inspection needed.",
+        "details": "Full teardown. Consider engine replacement vs rebuild."
+      },
+      {
+        "id": "solution_piston",
+        "type": "solution",
+        "text": "Piston Slap",
+        "safety": "yellow",
+        "warning": "Cylinder wear indicator.",
+        "action": "Monitor. Plan top-end rebuild.",
+        "details": "Check oil frequently. Not immediately dangerous."
+      },
+      {
+        "id": "solution_header",
+        "type": "solution",
+        "text": "Replace Header Gasket",
+        "safety": "yellow",
+        "warning": "Bolts may be seized.",
+        "action": "Replace gasket.",
+        "details": "Clean surfaces. Tighten evenly."
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Tighten Exhaust",
+        "safety": "green",
+        "action": "Tighten loose hardware.",
+        "details": "Anti-seize on bolts."
+      },
+      {
+        "id": "solution_muffler",
+        "type": "solution",
+        "text": "Replace Muffler",
+        "safety": "green",
+        "action": "Replace muffler with broken baffles.",
+        "details": "No practical repair."
+      },
+      {
+        "id": "solution_bleed_coolant",
+        "type": "solution",
+        "text": "Bleed Cooling System",
+        "safety": "yellow",
+        "warning": "Use cool engine only when opening radiator cap.",
+        "action": "Bleed air from the cooling system.",
+        "details": "Remove radiator cap (cold engine), fill completely, run engine with cap off until air bubbles stop appearing. Top off and replace cap. Air in the system causes hot spots and gurgling noises."
+      },
+      {
+        "id": "solution_cooling_leak",
+        "type": "solution",
+        "text": "Fix Cooling System Leak",
+        "safety": "yellow",
+        "warning": "Pressurized coolant causes burns.",
+        "action": "Find and repair the coolant leak.",
+        "details": "Check hoses, clamps, radiator cap, and radiator for leaks. A hissing sound indicates a pressure leak — the system is losing pressure."
+      },
+      {
+        "id": "solution_pump_bearing",
+        "type": "solution",
+        "text": "Replace Water Pump",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace the water pump if bearing is failing.",
+        "details": "A whining water pump bearing will eventually fail and stop circulating coolant. Replace before it seizes. Refill and bleed the cooling system after."
+      }
+    ]
+  }
+}

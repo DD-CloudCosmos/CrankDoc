@@ -1,0 +1,297 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco Downtown 300i with front and rear disc brakes and possible ABS.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak stopping", "next": "check_which" },
+          { "text": "Squealing/grinding", "next": "check_pads" },
+          { "text": "Spongy lever", "next": "check_fluid" },
+          { "text": "Dragging", "next": "check_drag" },
+          { "text": "ABS warning light on", "next": "check_abs" }
+        ]
+      },
+      {
+        "id": "check_which",
+        "type": "question",
+        "text": "Which brake?",
+        "safety": "green",
+        "options": [
+          { "text": "Front disc", "next": "check_fluid" },
+          { "text": "Rear disc", "next": "check_rear_fluid" },
+          { "text": "Both", "next": "check_fluid" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Check front brake fluid",
+        "safety": "yellow",
+        "warning": "Brake fluid damages paint.",
+        "instructions": "Check reservoir level (MIN/MAX). The Downtown 300i is a heavier scooter requiring good brakes. Low fluid = worn pads or leak. Dark = replace. DOT 4.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "Fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_pads" },
+          { "text": "Dark", "next": "solution_flush" },
+          { "text": "OK", "next": "check_pads" }
+        ]
+      },
+      {
+        "id": "check_rear_fluid",
+        "type": "check",
+        "text": "Check rear brake fluid",
+        "safety": "yellow",
+        "warning": "Brake fluid is corrosive.",
+        "instructions": "Check rear reservoir level and condition. Same DOT 4.",
+        "next": "rear_result"
+      },
+      {
+        "id": "rear_result",
+        "type": "question",
+        "text": "Rear fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_rear_pads" },
+          { "text": "Dark", "next": "solution_flush_rear" },
+          { "text": "OK", "next": "check_rear_pads" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Inspect front pads",
+        "safety": "yellow",
+        "warning": "Metal-on-metal — do not ride.",
+        "instructions": "The Downtown 300i is heavier and faster than 125s — adequate brakes are critical. Check pad thickness through caliper opening. Replace at 1-1.5mm. The 300i may use larger or dual-piston calipers.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "Pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_pads" },
+          { "text": "OK", "next": "check_caliper" },
+          { "text": "Squealing, good pads", "next": "solution_clean" }
+        ]
+      },
+      {
+        "id": "check_rear_pads",
+        "type": "check",
+        "text": "Inspect rear pads",
+        "safety": "yellow",
+        "warning": "Same standards.",
+        "instructions": "Check rear caliper pads.",
+        "next": "rear_pad_result"
+      },
+      {
+        "id": "rear_pad_result",
+        "type": "question",
+        "text": "Rear pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_rear_pads" },
+          { "text": "OK", "next": "solution_bleed_rear" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check caliper",
+        "safety": "yellow",
+        "warning": "Cool brakes only.",
+        "instructions": "Check slide pins, piston, leaks. The Downtown 300i may have multi-piston calipers.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "Caliper?",
+        "safety": "green",
+        "options": [
+          { "text": "Seized slides", "next": "solution_service" },
+          { "text": "Stuck piston", "next": "solution_rebuild" },
+          { "text": "Leak", "next": "solution_leak" },
+          { "text": "OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_drag",
+        "type": "check",
+        "text": "Check dragging",
+        "safety": "green",
+        "instructions": "Center stand, spin wheels. Both are disc brakes.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which drags?",
+        "safety": "green",
+        "options": [
+          { "text": "Front", "next": "solution_service" },
+          { "text": "Rear", "next": "solution_service_rear" }
+        ]
+      },
+      {
+        "id": "check_abs",
+        "type": "check",
+        "text": "Check ABS system",
+        "safety": "yellow",
+        "warning": "ABS is a safety-critical system. Professional diagnosis recommended for ABS faults.",
+        "instructions": "If the Downtown 300i is ABS-equipped and the ABS warning light is on: (1) Check ABS wheel speed sensor connections (front and rear), (2) Clean the ABS reluctor rings (toothed rings on the wheel hubs), (3) Check for stored ABS fault codes. A dirty or disconnected wheel speed sensor is the most common ABS fault.",
+        "next": "abs_result"
+      },
+      {
+        "id": "abs_result",
+        "type": "question",
+        "text": "ABS findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty sensor", "next": "solution_abs_sensor" },
+          { "text": "Disconnected sensor wire", "next": "solution_abs_wire" },
+          { "text": "Cannot diagnose", "next": "solution_abs_professional" }
+        ]
+      },
+      {
+        "id": "solution_pads",
+        "type": "solution",
+        "text": "Replace Front Pads",
+        "safety": "yellow",
+        "warning": "Pump lever before riding. Bed in new pads.",
+        "action": "Replace worn pads.",
+        "details": "The 300i is heavier — quality pads are important. Check disc thickness."
+      },
+      {
+        "id": "solution_rear_pads",
+        "type": "solution",
+        "text": "Replace Rear Pads",
+        "safety": "yellow",
+        "warning": "Pump lever before riding.",
+        "action": "Replace rear pads.",
+        "details": "Same procedure as front."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush Front Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4 only.",
+        "action": "Flush and replace.",
+        "details": "Every 2 years. If ABS equipped, follow ABS bleed procedure."
+      },
+      {
+        "id": "solution_flush_rear",
+        "type": "solution",
+        "text": "Flush Rear Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4.",
+        "action": "Flush rear fluid.",
+        "details": "Same procedure."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Brakes",
+        "safety": "green",
+        "action": "Brake cleaner on disc and pads.",
+        "details": "Sand glazed pads. Anti-squeal on backs."
+      },
+      {
+        "id": "solution_service",
+        "type": "solution",
+        "text": "Service Caliper",
+        "safety": "yellow",
+        "warning": "Silicone grease only.",
+        "action": "Clean and lube slide pins.",
+        "details": "Most common caliper issue."
+      },
+      {
+        "id": "solution_service_rear",
+        "type": "solution",
+        "text": "Service Rear Caliper",
+        "safety": "yellow",
+        "warning": "Same procedure.",
+        "action": "Service rear caliper slides.",
+        "details": "Clean and lube."
+      },
+      {
+        "id": "solution_rebuild",
+        "type": "solution",
+        "text": "Rebuild Caliper",
+        "safety": "yellow",
+        "warning": "Unsafe brake — do not ride.",
+        "action": "Rebuild or replace.",
+        "details": "Seal kits available."
+      },
+      {
+        "id": "solution_leak",
+        "type": "solution",
+        "text": "Fix Leak",
+        "safety": "red",
+        "warning": "Brake failure risk.",
+        "action": "Find and repair leak.",
+        "details": "Check banjo bolts, lines, seals."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Front",
+        "safety": "yellow",
+        "warning": "Firm lever before riding.",
+        "action": "Bleed front brake.",
+        "details": "If ABS equipped, follow ABS bleed procedure."
+      },
+      {
+        "id": "solution_bleed_rear",
+        "type": "solution",
+        "text": "Bleed Rear",
+        "safety": "yellow",
+        "warning": "Firm feel before riding.",
+        "action": "Bleed rear brake.",
+        "details": "Standard bleed procedure."
+      },
+      {
+        "id": "solution_abs_sensor",
+        "type": "solution",
+        "text": "Clean ABS Sensor",
+        "safety": "green",
+        "action": "Clean the wheel speed sensor and reluctor ring.",
+        "details": "Remove the sensor, clean the tip with a cloth. Clean the toothed reluctor ring on the wheel hub. Reinstall and check if the ABS light clears after a short ride."
+      },
+      {
+        "id": "solution_abs_wire",
+        "type": "solution",
+        "text": "Reconnect ABS Sensor",
+        "safety": "green",
+        "action": "Reconnect the disconnected ABS sensor wire.",
+        "details": "Check for damaged connector or chafed wire. ABS sensors are exposed to road spray and debris — connectors can corrode."
+      },
+      {
+        "id": "solution_abs_professional",
+        "type": "solution",
+        "text": "Professional ABS Diagnosis",
+        "safety": "yellow",
+        "warning": "ABS faults beyond sensor cleaning require diagnostic equipment.",
+        "action": "Take to a Kymco dealer or qualified shop for ABS diagnosis.",
+        "details": "ABS module faults, hydraulic unit issues, and internal sensor failures require proprietary diagnostic tools to read codes and perform system tests. The brakes will still work without ABS, but the safety system is disabled."
+      }
+    ]
+  }
+}

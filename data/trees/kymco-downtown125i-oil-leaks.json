@@ -1,0 +1,223 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and excessive consumption on the Kymco Downtown 125i liquid-cooled scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil dripping under scooter", "next": "find_source" },
+          { "text": "Oil level drops, no visible leak", "next": "check_burning" },
+          { "text": "Oil weeping from engine", "next": "check_gaskets" },
+          { "text": "Milky substance in oil (white/creamy)", "next": "solution_coolant_in_oil" }
+        ]
+      },
+      {
+        "id": "find_source",
+        "type": "check",
+        "text": "Locate the leak",
+        "safety": "green",
+        "instructions": "Degrease engine, run briefly, inspect. Common Downtown 125i leak points: drain plug, valve cover gasket, crankcase seams, crankshaft seals, oil filter area, CVT side drain plug. The Downtown 125i being liquid-cooled also has water pump seals that can leak — distinguish coolant (colored, sweet smell) from oil (brown/black, oil smell).",
+        "next": "source_result"
+      },
+      {
+        "id": "source_result",
+        "type": "question",
+        "text": "Leak source?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug", "next": "check_plug" },
+          { "text": "Valve cover", "next": "solution_valve_cover" },
+          { "text": "Crankcase/seal", "next": "solution_seal" },
+          { "text": "Cannot find", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Inspect drain plug",
+        "safety": "green",
+        "instructions": "Check tightness (torque spec), crush washer, thread condition.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug status?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose", "next": "solution_tighten" },
+          { "text": "Bad washer", "next": "solution_washer" },
+          { "text": "Stripped", "next": "solution_threads" }
+        ]
+      },
+      {
+        "id": "check_burning",
+        "type": "check",
+        "text": "Check for oil burning",
+        "safety": "green",
+        "instructions": "Blue exhaust smoke = oil burning. Check spark plug for oil fouling. Check air box for oil. No leak + disappearing oil = internal consumption. On the Downtown 125i, also check that coolant is not mixing with oil (head gasket).",
+        "next": "burn_result"
+      },
+      {
+        "id": "burn_result",
+        "type": "question",
+        "text": "Signs?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue smoke", "next": "check_source" },
+          { "text": "Oil in air box", "next": "solution_breather" },
+          { "text": "No signs", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_source",
+        "type": "check",
+        "text": "Valve seals vs rings",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may help.",
+        "instructions": "Smoke on startup/decel = valve seals. Smoke on acceleration + low compression = rings. Compression test: 10-13 bar.",
+        "next": "source2_result"
+      },
+      {
+        "id": "source2_result",
+        "type": "question",
+        "text": "Smoke pattern?",
+        "safety": "green",
+        "options": [
+          { "text": "Startup/decel", "next": "solution_valve_seals" },
+          { "text": "Acceleration", "next": "solution_rings" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect gaskets",
+        "safety": "green",
+        "instructions": "Check valve cover, cylinder base, crankcase covers for oil residue along seams.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Weeping location?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover", "next": "solution_valve_cover" },
+          { "text": "Cylinder base", "next": "solution_base" },
+          { "text": "Cover gasket", "next": "solution_cover" },
+          { "text": "Multiple/unclear", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Plug Tightened",
+        "safety": "green",
+        "action": "Tightened drain plug.",
+        "details": "Torque to spec. Monitor."
+      },
+      {
+        "id": "solution_washer",
+        "type": "solution",
+        "text": "Replace Washer",
+        "safety": "green",
+        "action": "New crush washer installed.",
+        "details": "Replace at every oil change."
+      },
+      {
+        "id": "solution_threads",
+        "type": "solution",
+        "text": "Thread Repair",
+        "safety": "yellow",
+        "warning": "Proper repair required.",
+        "action": "Install Helicoil insert.",
+        "details": "Keep chips out of crankcase."
+      },
+      {
+        "id": "solution_valve_cover",
+        "type": "solution",
+        "text": "Replace Valve Cover Gasket",
+        "safety": "green",
+        "action": "Replace gasket.",
+        "details": "Easy, cheap. Clean surfaces. Tighten evenly."
+      },
+      {
+        "id": "solution_seal",
+        "type": "solution",
+        "text": "Replace Crank Seal",
+        "safety": "yellow",
+        "warning": "Requires flywheel/CVT removal.",
+        "action": "Replace leaking seal.",
+        "details": "Intermediate repair."
+      },
+      {
+        "id": "solution_uv",
+        "type": "solution",
+        "text": "UV Dye Test",
+        "safety": "green",
+        "action": "Add UV dye to find leak.",
+        "details": "Run engine, inspect with UV light."
+      },
+      {
+        "id": "solution_breather",
+        "type": "solution",
+        "text": "Service Breather",
+        "safety": "green",
+        "action": "Clean breather system.",
+        "details": "If recurs, check compression (worn rings)."
+      },
+      {
+        "id": "solution_valve_seals",
+        "type": "solution",
+        "text": "Replace Valve Seals",
+        "safety": "yellow",
+        "warning": "Head removal required.",
+        "action": "Replace valve stem seals.",
+        "details": "Check valve guides too."
+      },
+      {
+        "id": "solution_rings",
+        "type": "solution",
+        "text": "Top-End Rebuild",
+        "safety": "yellow",
+        "warning": "Intermediate repair.",
+        "action": "New rings, cylinder service.",
+        "details": "Measure bore. Hone or re-bore as needed."
+      },
+      {
+        "id": "solution_base",
+        "type": "solution",
+        "text": "Replace Base Gasket",
+        "safety": "yellow",
+        "warning": "Head and cylinder removal needed.",
+        "action": "Replace cylinder base gasket.",
+        "details": "Inspect piston while apart."
+      },
+      {
+        "id": "solution_cover",
+        "type": "solution",
+        "text": "Replace Cover Gasket",
+        "safety": "green",
+        "action": "Replace crankcase cover gasket.",
+        "details": "Clean surfaces, new gasket or liquid sealant."
+      },
+      {
+        "id": "solution_coolant_in_oil",
+        "type": "solution",
+        "text": "Coolant Mixing with Oil — Head Gasket Failure",
+        "safety": "red",
+        "warning": "Do not continue riding. Coolant in oil destroys engine bearings rapidly.",
+        "action": "Have the head gasket replaced immediately.",
+        "details": "Milky white substance on the oil dipstick or under the oil fill cap indicates coolant leaking into the oil via a blown head gasket. This is critical on the liquid-cooled Downtown 125i — coolant contamination destroys bearing surfaces. Stop riding, replace the head gasket, and do a thorough oil flush before running the engine."
+      }
+    ]
+  }
+}

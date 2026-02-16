@@ -1,0 +1,189 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter CVT Belt Diagnosis",
+  "description": "Diagnose CVT belt wear, slipping, and breakage on scooters. Covers belt inspection, replacement criteria, and common symptoms of a worn or broken drive belt.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What CVT belt symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Loss of power or acceleration at higher speeds", "next": "check_belt_slipping" },
+          { "text": "Scooter won't move despite engine running and revving", "next": "check_belt_broken" },
+          { "text": "Burning rubber smell or squealing from the CVT area", "next": "check_belt_glazing" },
+          { "text": "Jerky or uneven acceleration", "next": "check_belt_wear" },
+          { "text": "Routine belt inspection — no symptoms yet", "next": "check_belt_wear" }
+        ]
+      },
+      {
+        "id": "check_belt_slipping",
+        "type": "check",
+        "text": "Inspect the CVT belt for signs of slipping.",
+        "safety": "yellow",
+        "warning": "Allow the CVT cover and belt to cool before handling. The CVT area becomes very hot during riding. Do not run the engine with the CVT cover removed.",
+        "instructions": "Remove the CVT cover (usually held by several bolts on the left side of the scooter). Inspect the belt surface for a shiny, glazed appearance — a healthy belt has a slightly rough, matte texture on the contact faces. Check for black dust or residue inside the CVT case, which indicates belt material is wearing away. Smell the belt — a burnt rubber odor confirms slipping and overheating. Also check that the belt is seated properly in both the front (variator) and rear (clutch) pulleys.",
+        "next": "belt_slipping_result"
+      },
+      {
+        "id": "belt_slipping_result",
+        "type": "question",
+        "text": "What did you find when inspecting the belt?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt surface is glazed and shiny", "next": "check_belt_width" },
+          { "text": "Lots of black dust or debris in the CVT case", "next": "check_belt_width" },
+          { "text": "Belt looks fine — no glazing or dust", "next": "check_variator_rollers" }
+        ]
+      },
+      {
+        "id": "check_belt_broken",
+        "type": "check",
+        "text": "Check if the CVT belt is broken.",
+        "safety": "yellow",
+        "warning": "A broken belt can leave fragments inside the CVT case that may jam the variator or clutch. Inspect carefully before installing a new belt.",
+        "instructions": "Remove the CVT cover. If the belt is broken, you will find it in pieces or shredded inside the case. A completely snapped belt is obvious — the engine revs freely but nothing drives the rear wheel. Collect all belt fragments from the CVT case. Inspect the variator face and clutch sheaves for scoring or damage caused by belt debris. Clean the entire CVT case thoroughly before installing a new belt.",
+        "next": "belt_broken_result"
+      },
+      {
+        "id": "belt_broken_result",
+        "type": "question",
+        "text": "Is the belt broken?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — belt is snapped or shredded", "next": "solution_replace_belt" },
+          { "text": "Belt is intact but very worn or cracked", "next": "check_belt_width" },
+          { "text": "Belt looks OK — problem is elsewhere", "next": "check_clutch_engagement" }
+        ]
+      },
+      {
+        "id": "check_belt_glazing",
+        "type": "check",
+        "text": "Inspect the belt for glazing and overheating damage.",
+        "safety": "yellow",
+        "warning": "The CVT case and components may be extremely hot if you just heard squealing. Wait at least 15 minutes for everything to cool.",
+        "instructions": "Remove the CVT cover and examine the belt contact surfaces (the angled sides of the belt that ride in the pulley grooves). A glazed belt will be smooth and shiny rather than having a matte, slightly rough texture. Look for discoloration — a belt that has overheated may appear darker than normal or have a bluish tint. Check for surface cracks running across the belt width. Squeeze the belt — it should feel firm but slightly flexible, not hard and rigid.",
+        "next": "belt_glazing_result"
+      },
+      {
+        "id": "belt_glazing_result",
+        "type": "question",
+        "text": "What is the condition of the belt surface?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is glazed, hard, or discolored from heat", "next": "solution_replace_belt" },
+          { "text": "Belt has cracks but surface is not glazed", "next": "check_belt_width" },
+          { "text": "Belt surface looks and feels normal", "next": "check_variator_rollers" }
+        ]
+      },
+      {
+        "id": "check_belt_wear",
+        "type": "check",
+        "text": "Perform a general belt wear inspection.",
+        "safety": "yellow",
+        "warning": "Ensure the engine is off and the CVT area is cool before removing the cover.",
+        "instructions": "Remove the CVT cover. Examine the belt for these wear indicators: cracks on the top, bottom, or side surfaces (even hairline cracks mean the belt is aging); frayed or separated cord layers visible at the belt edges; chunks of rubber missing from the belt body; uneven wear on one side versus the other (indicates misalignment). Check the belt teeth (cogs) on the inside surface — worn teeth will be rounded rather than having crisp, defined edges.",
+        "next": "belt_wear_result"
+      },
+      {
+        "id": "belt_wear_result",
+        "type": "question",
+        "text": "What wear signs did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Cracks, fraying, or missing chunks", "next": "solution_replace_belt" },
+          { "text": "Belt teeth are rounded or worn down", "next": "check_belt_width" },
+          { "text": "Belt looks good — no visible wear", "next": "check_belt_width" }
+        ]
+      },
+      {
+        "id": "check_belt_width",
+        "type": "check",
+        "text": "Measure the belt width to determine remaining life.",
+        "safety": "green",
+        "instructions": "Using a caliper or ruler, measure the width of the belt at its widest point. Compare this to the service limit in your scooter's service manual. Most scooter CVT belts have a new width of approximately 18-23mm (varies by model). The typical service limit is 1-2mm narrower than the new width. For example, if a new belt is 22mm wide, the service limit might be 20.5mm. A belt that has worn below the service limit cannot grip the pulley faces properly and will slip, causing loss of top speed and poor acceleration.",
+        "next": "belt_width_result"
+      },
+      {
+        "id": "belt_width_result",
+        "type": "question",
+        "text": "How does the belt width compare to specification?",
+        "safety": "green",
+        "options": [
+          { "text": "Below the service limit — too narrow", "next": "solution_replace_belt" },
+          { "text": "Close to the service limit but not yet below it", "next": "solution_monitor_belt" },
+          { "text": "Well within specification", "next": "check_variator_rollers" }
+        ]
+      },
+      {
+        "id": "check_variator_rollers",
+        "type": "question",
+        "text": "The belt appears to be in acceptable condition. The issue may be with the variator rollers or clutch. Would you like to check those?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — check the variator rollers", "next": "solution_check_variator" },
+          { "text": "Yes — check the clutch engagement", "next": "check_clutch_engagement" }
+        ]
+      },
+      {
+        "id": "check_clutch_engagement",
+        "type": "check",
+        "text": "Check the rear clutch assembly for proper engagement.",
+        "safety": "yellow",
+        "warning": "The clutch springs are under tension. Be careful when disassembling the clutch assembly.",
+        "instructions": "With the CVT cover removed, inspect the rear clutch assembly. The clutch shoes (or pads) should have adequate friction material — if the material is worn down to the metal backing, the clutch will slip. Check the clutch springs for breakage or weakness — weak springs cause the clutch to engage too early (bogging at takeoff) or allow slipping. Inspect the clutch drum (the outer bell) for scoring, glazing, or heat discoloration on the inner surface where the shoes contact it.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "What is the condition of the clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch shoes are worn or glazed", "next": "solution_replace_clutch" },
+          { "text": "Clutch drum is scored or heat-damaged", "next": "solution_replace_clutch" },
+          { "text": "Clutch springs are broken or weak", "next": "solution_replace_clutch" },
+          { "text": "Clutch looks fine", "next": "solution_check_variator" }
+        ]
+      },
+      {
+        "id": "solution_replace_belt",
+        "type": "solution",
+        "text": "The CVT belt needs replacement.",
+        "safety": "yellow",
+        "warning": "Always use the correct belt size and type for your scooter model. An incorrect belt can cause poor performance or break prematurely.",
+        "action": "Replace the CVT drive belt",
+        "details": "Replace the belt with a new OEM or quality aftermarket belt of the correct dimensions for your scooter (length, width, and angle must match specification). When installing, clean the variator and clutch pulley faces with brake cleaner or isopropyl alcohol to remove any old belt residue — contaminants cause premature glazing. Inspect the variator roller weights and clutch shoes while you have access. Most manufacturers recommend replacing the CVT belt every 6,000-12,000 miles or every 2-3 years, whichever comes first. After installation, ride gently for the first 20-30 miles to allow the new belt to seat into the pulleys."
+      },
+      {
+        "id": "solution_monitor_belt",
+        "type": "solution",
+        "text": "The belt is approaching its service limit but is still usable.",
+        "safety": "green",
+        "action": "Plan for belt replacement soon and monitor for symptoms",
+        "details": "Your belt is nearing the end of its service life. It is still within specification but should be replaced at the next major service or within the next 1,000-2,000 miles. Watch for symptoms of belt slipping: loss of top speed, slower acceleration, or a burning rubber smell during hard acceleration or hill climbing. Keep a replacement belt on hand so you are not stranded. When you do replace it, also inspect and replace the variator rollers if they are worn."
+      },
+      {
+        "id": "solution_replace_clutch",
+        "type": "solution",
+        "text": "The rear clutch assembly needs service.",
+        "safety": "yellow",
+        "warning": "Clutch springs are under tension. Use the correct tools and follow your service manual for disassembly and reassembly.",
+        "action": "Replace worn clutch shoes, springs, or drum as needed",
+        "details": "If the clutch shoes are worn below minimum thickness or glazed, replace them as a set. If the clutch drum inner surface is scored or heat-damaged, it should be replaced as well — a scored drum will quickly destroy new shoes. Replace clutch springs if they are broken, deformed, or if their free length is below the service manual specification. When reassembling, ensure the clutch shoes are evenly spaced and the springs are installed correctly. Also replace the CVT belt at the same time if it is near its service limit."
+      },
+      {
+        "id": "solution_check_variator",
+        "type": "solution",
+        "text": "The issue may be in the variator assembly rather than the belt.",
+        "safety": "green",
+        "action": "Inspect the variator rollers, ramp plate, and slider for wear",
+        "details": "If the belt is in good condition but you are experiencing power delivery issues, the variator rollers are the most likely culprit. Flat-spotted or worn rollers cause poor acceleration and reduced top speed. Remove the variator face and inspect the rollers — they should be perfectly round with a smooth surface. Also check the variator ramp plate for grooves worn by the rollers, and check the slider bushing for play. See the Variator Roller Diagnosis tree for detailed roller inspection guidance."
+      }
+    ]
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the Kymco People S 125i scooter including disc and drum brakes.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak stopping power", "next": "which_brake" },
+          { "text": "Squealing or grinding", "next": "check_pads" },
+          { "text": "Lever pulls to handlebar — spongy", "next": "check_fluid" },
+          { "text": "Brake dragging", "next": "check_drag" }
+        ]
+      },
+      {
+        "id": "which_brake",
+        "type": "question",
+        "text": "Which brake is weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front disc brake", "next": "check_fluid" },
+          { "text": "Rear drum brake", "next": "check_drum" },
+          { "text": "Both", "next": "check_fluid" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Check brake fluid level",
+        "safety": "yellow",
+        "warning": "Brake fluid damages paint. Wipe spills immediately.",
+        "instructions": "Check the reservoir on the right handlebar. Fluid between MIN and MAX marks. Low fluid = worn pads or leak. Dark fluid = needs replacement. The People S 125i uses DOT 4 fluid.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "Fluid status?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_pads" },
+          { "text": "Dark/contaminated", "next": "solution_flush" },
+          { "text": "Level OK", "next": "check_pads" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Inspect brake pads",
+        "safety": "yellow",
+        "warning": "Metal-on-metal = do not ride. Damages disc.",
+        "instructions": "Look through caliper opening. New pads = 4-5mm. Replace at 1-1.5mm. Grinding = worn to metal. Also check disc for grooves or warping.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "Pad condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn thin or to metal", "next": "solution_pads" },
+          { "text": "Adequate thickness", "next": "check_caliper" },
+          { "text": "Squealing with good pads", "next": "solution_clean" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Check caliper function",
+        "safety": "yellow",
+        "warning": "Work on cool brakes only.",
+        "instructions": "Check slide pins move freely, piston extends evenly, no fluid leaks. The People S 125i has a single-piston sliding caliper. Seized slides cause uneven wear.",
+        "next": "caliper_result"
+      },
+      {
+        "id": "caliper_result",
+        "type": "question",
+        "text": "Caliper status?",
+        "safety": "green",
+        "options": [
+          { "text": "Slides seized", "next": "solution_service_caliper" },
+          { "text": "Piston stuck", "next": "solution_rebuild" },
+          { "text": "Leak found", "next": "solution_leak" },
+          { "text": "Caliper OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_drum",
+        "type": "check",
+        "text": "Adjust rear drum brake",
+        "safety": "green",
+        "instructions": "Find the adjusting nut at the rear brake arm. Tighten for 10-20mm lever free play. If maxed out, shoes need replacement.",
+        "next": "drum_result"
+      },
+      {
+        "id": "drum_result",
+        "type": "question",
+        "text": "Adjustment help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — works now", "next": "solution_drum_ok" },
+          { "text": "No — maxed out", "next": "solution_shoes" },
+          { "text": "Cable sticky", "next": "solution_cable" }
+        ]
+      },
+      {
+        "id": "check_drag",
+        "type": "check",
+        "text": "Identify dragging brake",
+        "safety": "green",
+        "instructions": "Center stand the scooter. Spin each wheel. A dragging brake stops the wheel quickly.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which wheel drags?",
+        "safety": "green",
+        "options": [
+          { "text": "Front", "next": "solution_service_caliper" },
+          { "text": "Rear", "next": "solution_drum_drag" }
+        ]
+      },
+      {
+        "id": "solution_pads",
+        "type": "solution",
+        "text": "Replace Brake Pads",
+        "safety": "yellow",
+        "warning": "Pump lever several times before riding. Bed in new pads with gentle stops.",
+        "action": "Replace worn pads.",
+        "details": "Remove caliper, slide out old pads, push piston back, install new ones. Check disc thickness. Bed in for 100 km."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush Brake Fluid",
+        "safety": "yellow",
+        "warning": "Use DOT 4 only. Never mix types.",
+        "action": "Flush and replace all brake fluid.",
+        "details": "Replace every 2 years. Bleed until clean, clear fluid flows from the caliper."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean Brakes",
+        "safety": "green",
+        "action": "Clean disc and pads with brake cleaner.",
+        "details": "Sand glazed pads with 120-grit. Apply anti-squeal compound to pad backs."
+      },
+      {
+        "id": "solution_service_caliper",
+        "type": "solution",
+        "text": "Service Caliper",
+        "safety": "yellow",
+        "warning": "Use only silicone brake grease.",
+        "action": "Clean and lubricate caliper slide pins.",
+        "details": "Most common scooter caliper issue. Clean pins, apply silicone grease, reinstall."
+      },
+      {
+        "id": "solution_rebuild",
+        "type": "solution",
+        "text": "Rebuild Caliper",
+        "safety": "yellow",
+        "warning": "Stuck piston = unsafe brake. Do not ride until fixed.",
+        "action": "Rebuild with new seals or replace caliper.",
+        "details": "Rebuild kits available. If bore is pitted, replace entire caliper."
+      },
+      {
+        "id": "solution_leak",
+        "type": "solution",
+        "text": "Repair Brake Leak",
+        "safety": "red",
+        "warning": "Brake leak = potential brake failure. Do not ride.",
+        "action": "Find and fix the leak source.",
+        "details": "Check banjo bolts, brake line, caliper seals. Bleed after repair."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Brakes",
+        "safety": "yellow",
+        "warning": "Verify firm lever before riding.",
+        "action": "Bleed air from the brake system.",
+        "details": "Pump, hold, open nipple, close, release. Repeat until no bubbles. Keep reservoir topped up."
+      },
+      {
+        "id": "solution_drum_ok",
+        "type": "solution",
+        "text": "Drum Adjusted",
+        "safety": "green",
+        "action": "Rear brake adjusted properly.",
+        "details": "Maintain 10-20mm free play. Frequent adjustment means shoes are wearing."
+      },
+      {
+        "id": "solution_shoes",
+        "type": "solution",
+        "text": "Replace Brake Shoes",
+        "safety": "yellow",
+        "warning": "Do not blow brake dust. Wipe with damp cloth.",
+        "action": "Replace worn drum brake shoes.",
+        "details": "Remove rear wheel, replace shoes and springs, clean drum. Adjust cable. Bed in for 100 km."
+      },
+      {
+        "id": "solution_cable",
+        "type": "solution",
+        "text": "Lubricate or Replace Cable",
+        "safety": "green",
+        "action": "Lubricate or replace sticky brake cable.",
+        "details": "Try lubrication first. Replace if frayed or kinked. Route same as original."
+      },
+      {
+        "id": "solution_drum_drag",
+        "type": "solution",
+        "text": "Fix Drum Drag",
+        "safety": "green",
+        "action": "Adjust cable free play and check return springs.",
+        "details": "Provide 10-20mm free play. Replace weak return springs."
+      }
+    ]
+  }
+}

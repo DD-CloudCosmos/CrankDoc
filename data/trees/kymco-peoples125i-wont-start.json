@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco People S 125i scooter, covering battery, starter, fuel, and ignition.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights work but starter doesn't engage", "next": "check_kill_switch" },
+          { "text": "Starter cranks but engine doesn't fire", "next": "check_fuel_pump" },
+          { "text": "Starter clicks but doesn't spin", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check battery voltage",
+        "safety": "yellow",
+        "warning": "Wear eye protection near the battery. Battery acid is corrosive.",
+        "instructions": "Locate the battery under the seat of the People S 125i. Measure across terminals with a multimeter (DC volts). A healthy battery reads 12.4V+. Below 12.0V the starter won't have enough power. Clean corroded terminals with a wire brush. The People S 125i uses a 12V sealed battery (typically YTX7A-BS or equivalent).",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "Battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V", "next": "solution_charge_battery" },
+          { "text": "12.0-12.3V — weak", "next": "solution_charge_battery" },
+          { "text": "12.4V+ — good", "next": "check_main_fuse" }
+        ]
+      },
+      {
+        "id": "check_main_fuse",
+        "type": "check",
+        "text": "Check main fuse",
+        "safety": "yellow",
+        "warning": "Turn ignition off before checking fuses.",
+        "instructions": "Check the main fuse (15-20A) and all secondary fuses near the battery. Remove and inspect each — the metal strip should be intact. Replace blown fuses with the same rating only.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Fuses OK?",
+        "safety": "green",
+        "options": [
+          { "text": "A fuse is blown", "next": "solution_replace_fuse" },
+          { "text": "All fuses good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check kill switch and safety interlocks",
+        "safety": "green",
+        "instructions": "The People S 125i safety interlocks: (1) Kill switch must be in RUN position, (2) Side stand must be retracted, (3) A brake lever may need to be squeezed while pressing start. Toggle the kill switch several times. Make sure the side stand retracts fully and its switch engages.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "Did checking switches help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — now cranks or starts", "next": "solution_switch_fixed" },
+          { "text": "No — still no response", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass the relay unless you understand the risk.",
+        "instructions": "Listen for a click from the relay near the battery when pressing start. Click but no crank = starter motor issue. No click = wiring or switch fault upstream. Check for 12V at the relay trigger wire while pressing start.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Relay diagnosis?",
+        "safety": "green",
+        "options": [
+          { "text": "Clicks but starter doesn't turn", "next": "solution_starter_motor" },
+          { "text": "No click — no voltage at trigger", "next": "solution_wiring" },
+          { "text": "Clicks, cranks, but won't fire", "next": "check_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. No open flames near fuel system.",
+        "instructions": "Turn ignition ON — listen for the fuel pump priming (2-3 second whir). If no sound, check the fuel pump fuse. Verify fuel is in the tank. The People S 125i is fuel-injected and requires proper fuel pump operation.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel pump status?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound", "next": "solution_fuel_pump" },
+          { "text": "Pump primes but no start", "next": "check_spark" },
+          { "text": "Tank empty", "next": "solution_add_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "High voltage — do not touch plug wire or coil while cranking.",
+        "instructions": "Remove the spark plug, reconnect to cap, ground against engine with insulated pliers. Crank and look for bright blue spark. Weak or no spark = ignition fault. The People S 125i uses CDI ignition, typically with an NGK CR7HSA plug.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Spark quality?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark", "next": "solution_compression" },
+          { "text": "Weak or no spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge or Replace Battery",
+        "safety": "green",
+        "action": "Charge with a smart charger or replace if it won't hold charge.",
+        "details": "Use a 1-2 amp charger. Replace if it won't hold 12.4V. Check charging system (13.5-14.8V at 3,000 RPM) if battery dies again. Scooter batteries last 2-3 years."
+      },
+      {
+        "id": "solution_replace_fuse",
+        "type": "solution",
+        "text": "Replace Blown Fuse",
+        "safety": "yellow",
+        "warning": "Never use a higher-rated fuse.",
+        "action": "Replace with same amperage fuse.",
+        "details": "If it blows again immediately, there is a short circuit. Trace the wiring to find the damaged section."
+      },
+      {
+        "id": "solution_switch_fixed",
+        "type": "solution",
+        "text": "Safety Interlock Resolved",
+        "safety": "green",
+        "action": "The safety switch was preventing starting.",
+        "details": "Clean switch contacts with contact cleaner. Ensure side stand retracts fully. Apply dielectric grease to connectors."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Starter Motor Fault",
+        "safety": "yellow",
+        "warning": "Do not disassemble unless comfortable with electrical work.",
+        "action": "Check starter cable connection first, then replace starter if needed.",
+        "details": "Check the heavy cable at the motor for looseness or corrosion. If secure, the motor has failed (worn brushes or seized). Starter motors for the People S 125i are available and affordable."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring or Switch Fault",
+        "safety": "yellow",
+        "warning": "Check wiring with ignition off.",
+        "action": "Trace start circuit wiring to find the break.",
+        "details": "Check: start button connector, handlebar switch cluster, side stand switch connector, brake switch. Water ingress into switches is common on scooters."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel Pump Failure",
+        "safety": "yellow",
+        "warning": "Fire risk — do not run fuel pump outside the tank.",
+        "action": "Check fuel pump fuse and connector. Replace pump if failed.",
+        "details": "Check fuse first, then check for 12V at the pump connector. If voltage present but pump silent, the pump has failed. Running tank very low kills pump life."
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Add fresh gasoline.",
+        "details": "The People S 125i has approximately a 7-liter tank. Wait for pump to prime after refueling. May take extra cranks after running dry."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition System Fault",
+        "safety": "yellow",
+        "warning": "CDI and coil handle high voltage.",
+        "action": "Replace spark plug first, then check CDI, coil, and pickup.",
+        "details": "New plug (NGK CR7HSA, gap 0.6-0.7mm) is the simplest fix. If still no spark: check coil for cracks, test CDI, check pickup coil resistance. Faulty CDI is common on Kymco scooters."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression or Timing Issue",
+        "safety": "yellow",
+        "warning": "Compression test requires removing spark plug.",
+        "action": "Perform a compression test.",
+        "details": "Should produce 10-12 bar (145-175 PSI). Low compression = worn rings, head gasket leak, or tight valves. Check valve clearances (intake 0.10mm, exhaust 0.15mm). Tight valves are a common no-start cause."
+      }
+    ]
+  }
+}

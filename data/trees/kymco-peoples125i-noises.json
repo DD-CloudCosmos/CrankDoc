@@ -1,0 +1,278 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco People S 125i scooter from CVT, engine, and exhaust.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise come from on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Left side — CVT area", "next": "cvt_type" },
+          { "text": "Cylinder head — top of engine", "next": "check_valves" },
+          { "text": "Lower engine — crankcase", "next": "check_bottom" },
+          { "text": "Exhaust system", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "cvt_type",
+        "type": "question",
+        "text": "Describe the CVT noise:",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping/flapping — changes with speed", "next": "check_belt" },
+          { "text": "Rattling/clicking at idle", "next": "check_rollers" },
+          { "text": "Squealing on acceleration", "next": "check_clutch" },
+          { "text": "Grinding/scraping", "next": "check_debris" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. Check belt for cracks, fraying, missing chunks. A damaged belt slaps the pulleys. Measure width (new ~18mm). Replace immediately if damaged — a broken belt strands you.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Damaged", "next": "solution_belt" },
+          { "text": "Looks fine", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Inspect variator rollers",
+        "safety": "green",
+        "instructions": "Remove variator face plate. Check 6 rollers for flat spots — most common noise cause. Flat-spotted rollers tumble unevenly in the ramps creating clicking/rattling at idle.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots found", "next": "solution_rollers" },
+          { "text": "Rollers look fine", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect clutch assembly",
+        "safety": "green",
+        "instructions": "Check clutch shoes for glazing (causes squealing), bell for grooves, springs for weakness. Also check driven pulley torque driver and contra spring for wear.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed shoes", "next": "solution_clutch" },
+          { "text": "Grooved bell", "next": "solution_bell" },
+          { "text": "Driven pulley rattling", "next": "solution_driven" }
+        ]
+      },
+      {
+        "id": "check_debris",
+        "type": "check",
+        "text": "Check CVT case for debris",
+        "safety": "green",
+        "instructions": "Grinding may be debris inside the case or loose cover. Check all bolts and inspect inside for fragments.",
+        "next": "debris_result"
+      },
+      {
+        "id": "debris_result",
+        "type": "question",
+        "text": "Found anything?",
+        "safety": "green",
+        "options": [
+          { "text": "Debris or loose cover", "next": "solution_clean_cvt" },
+          { "text": "Nothing obvious", "next": "check_belt" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Engine must be cold.",
+        "instructions": "Ticking from the head = valve train noise. Check clearances at TDC compression. Intake 0.10mm, exhaust 0.15mm. Also check cam chain tension — rattling from cylinder = loose chain.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Valves loose", "next": "solution_valves" },
+          { "text": "Cam chain rattles", "next": "solution_cam_chain" },
+          { "text": "All within spec", "next": "check_bottom" }
+        ]
+      },
+      {
+        "id": "check_bottom",
+        "type": "check",
+        "text": "Listen for bottom-end noise",
+        "safety": "yellow",
+        "warning": "Bottom-end knock = serious. Professional diagnosis recommended.",
+        "instructions": "Use stethoscope or screwdriver to listen at crankcase. Deep knock under load = rod bearing. Rattle at idle that fades warm = piston slap. Check oil level first.",
+        "next": "bottom_result"
+      },
+      {
+        "id": "bottom_result",
+        "type": "question",
+        "text": "Noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Deep knock", "next": "solution_bottom_end" },
+          { "text": "Idle rattle fading warm", "next": "solution_piston" },
+          { "text": "No bottom noise", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Inspect exhaust",
+        "safety": "yellow",
+        "warning": "Inspect when cold only.",
+        "instructions": "Check header gasket for soot marks (leak = ticking), mounting bolts for tightness, heat shields for rattling, muffler for internal baffle rattle.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Exhaust findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Header gasket leak", "next": "solution_header" },
+          { "text": "Loose hardware", "next": "solution_tighten" },
+          { "text": "Internal muffler rattle", "next": "solution_muffler" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace damaged CVT belt.",
+        "details": "Use correct size. Replace every 8,000-12,000 km. Inspect rollers and clutch at the same time."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all 6 rollers.",
+        "details": "Stock weight 12-13g, 15x12mm. Never mix old and new. Grease variator boss."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch Shoes",
+        "safety": "green",
+        "action": "Replace glazed shoes and springs.",
+        "details": "Sand clutch bell lightly. Replace bell if deeply grooved."
+      },
+      {
+        "id": "solution_bell",
+        "type": "solution",
+        "text": "Replace Clutch Bell",
+        "safety": "green",
+        "action": "Replace grooved bell.",
+        "details": "Replace shoes at the same time."
+      },
+      {
+        "id": "solution_driven",
+        "type": "solution",
+        "text": "Service Driven Pulley",
+        "safety": "green",
+        "action": "Clean, inspect, and re-grease driven pulley.",
+        "details": "Replace worn torque driver pins or contra spring."
+      },
+      {
+        "id": "solution_clean_cvt",
+        "type": "solution",
+        "text": "Clean CVT Case",
+        "safety": "green",
+        "action": "Remove debris, secure cover.",
+        "details": "Identify debris source. Tighten all bolts."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valves",
+        "safety": "yellow",
+        "warning": "Cold engine, TDC compression.",
+        "action": "Adjust to spec.",
+        "details": "Check every 8,000-12,000 km. Loose valves tick but are less harmful than tight valves."
+      },
+      {
+        "id": "solution_cam_chain",
+        "type": "solution",
+        "text": "Service Cam Chain",
+        "safety": "yellow",
+        "warning": "Worn chain can skip — risk of engine damage.",
+        "action": "Replace tensioner or chain.",
+        "details": "If tensioner fully extended, chain has stretched. Requires top-end work."
+      },
+      {
+        "id": "solution_bottom_end",
+        "type": "solution",
+        "text": "Bottom-End Repair",
+        "safety": "red",
+        "warning": "Stop riding. Catastrophic failure risk.",
+        "action": "Professional engine inspection.",
+        "details": "Full teardown needed. Consider replacement engine vs. rebuild cost."
+      },
+      {
+        "id": "solution_piston",
+        "type": "solution",
+        "text": "Piston Slap",
+        "safety": "yellow",
+        "warning": "Indicates cylinder wear.",
+        "action": "Monitor and plan for top-end rebuild.",
+        "details": "Not immediately dangerous. Check oil frequently. Plan rebuild when noise worsens."
+      },
+      {
+        "id": "solution_header",
+        "type": "solution",
+        "text": "Replace Header Gasket",
+        "safety": "yellow",
+        "warning": "Exhaust bolts may be seized.",
+        "action": "Replace exhaust header gasket.",
+        "details": "Clean mating surfaces. Tighten evenly."
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Tighten Exhaust",
+        "safety": "green",
+        "action": "Tighten loose bolts and heat shields.",
+        "details": "Apply anti-seize. Replace missing fasteners."
+      },
+      {
+        "id": "solution_muffler",
+        "type": "solution",
+        "text": "Replace Muffler",
+        "safety": "green",
+        "action": "Replace muffler with broken internal baffles.",
+        "details": "No practical repair for internal rattle. Use OEM or quality aftermarket."
+      }
+    ]
+  }
+}

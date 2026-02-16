@@ -1,0 +1,185 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating and heat-related problems on the air-cooled Kymco Like 125i scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the overheating present on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Loss of power in traffic or hot weather", "next": "check_oil_level" },
+          { "text": "Excessive heat from the engine area", "next": "check_oil_level" },
+          { "text": "Engine pinging or knocking under load", "next": "check_fuel_octane" },
+          { "text": "Engine seized or nearly seized", "next": "solution_engine_seizure" }
+        ]
+      },
+      {
+        "id": "check_oil_level",
+        "type": "check",
+        "text": "Check engine oil level and condition",
+        "safety": "green",
+        "instructions": "The Like 125i is air-cooled — engine oil is critical for heat management. Place the scooter on its center stand on level ground. Check the oil via the dipstick or sight glass. Oil should be between min and max marks. Check the condition — amber to light brown is good, black or gritty means it needs changing. The Like 125i takes approximately 0.8-0.9 liters of oil.",
+        "next": "oil_result"
+      },
+      {
+        "id": "oil_result",
+        "type": "question",
+        "text": "What is the oil level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil is low", "next": "solution_add_oil" },
+          { "text": "Oil is black or burnt", "next": "solution_change_oil" },
+          { "text": "Oil is fine", "next": "check_cooling_fins" }
+        ]
+      },
+      {
+        "id": "check_cooling_fins",
+        "type": "check",
+        "text": "Inspect cooling fins and fan shroud",
+        "safety": "yellow",
+        "warning": "Do not touch engine components when hot.",
+        "instructions": "The Like 125i relies on a forced-air cooling system: a fan on the magneto flywheel pushes air through a shroud over the cylinder fins. Check: (1) Fins are clean — no mud, dirt, or debris packed between them, (2) Fan shroud is intact and properly attached — missing or cracked pieces misdirect airflow, (3) Fan blades are not broken, (4) Air intake to the fan is not blocked by debris. Clean fins with a brush or compressed air.",
+        "next": "fins_result"
+      },
+      {
+        "id": "fins_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Fins dirty or debris in shroud", "next": "solution_clean_cooling" },
+          { "text": "Fan shroud damaged or missing pieces", "next": "solution_repair_shroud" },
+          { "text": "Fan blades broken", "next": "solution_replace_fan" },
+          { "text": "Everything looks clean and intact", "next": "check_fuel_octane" }
+        ]
+      },
+      {
+        "id": "check_fuel_octane",
+        "type": "check",
+        "text": "Check fuel quality and octane rating",
+        "safety": "green",
+        "instructions": "Low-octane fuel causes pre-ignition (pinging) which generates excess heat. The Like 125i should use 91+ octane premium fuel. Check if the fuel is fresh (gasoline degrades after 30-60 days). Pinging under acceleration or uphill is a sign of inadequate octane or carbon buildup in the combustion chamber.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "What fuel are you using?",
+        "safety": "green",
+        "options": [
+          { "text": "Regular 87 octane", "next": "solution_better_fuel" },
+          { "text": "Premium but still pinging", "next": "solution_carbon_removal" },
+          { "text": "Good fuel, no pinging", "next": "check_valves" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Check valves only with the engine completely cold.",
+        "instructions": "Tight exhaust valves are a common cause of overheating on air-cooled scooters. When the exhaust valve does not fully close, hot gases leak past it. Check clearances at TDC compression stroke with feeler gauges. Typical specs: intake 0.10mm, exhaust 0.15mm (verify with manual).",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Are valve clearances within spec?",
+        "safety": "green",
+        "options": [
+          { "text": "Valves are tight (below spec)", "next": "solution_adjust_valves" },
+          { "text": "Valves are within spec", "next": "solution_riding_tips" }
+        ]
+      },
+      {
+        "id": "solution_add_oil",
+        "type": "solution",
+        "text": "Add Engine Oil",
+        "safety": "green",
+        "action": "Add 10W-40 motorcycle oil to the correct level.",
+        "details": "Low oil on an air-cooled engine is dangerous — oil carries significant heat. Do not overfill. If oil drops quickly, check for leaks or burning (blue exhaust smoke). Use JASO MA or MB rated oil."
+      },
+      {
+        "id": "solution_change_oil",
+        "type": "solution",
+        "text": "Change Engine Oil",
+        "safety": "green",
+        "action": "Drain old oil and refill with fresh 10W-40.",
+        "details": "Change every 2,000-3,000 km or 6 months. Shorter intervals are better for air-cooled engines. Replace the drain plug washer. Capacity is approximately 0.8 liters."
+      },
+      {
+        "id": "solution_clean_cooling",
+        "type": "solution",
+        "text": "Clean Cooling System",
+        "safety": "green",
+        "action": "Clean cooling fins and fan shroud area.",
+        "details": "Use a brush or compressed air to clear debris from fins. Keep the shroud area clear of leaves and dirt. Clean the fins every oil change as preventative maintenance."
+      },
+      {
+        "id": "solution_repair_shroud",
+        "type": "solution",
+        "text": "Repair or Replace Fan Shroud",
+        "safety": "green",
+        "action": "Reattach, repair, or replace the damaged shroud.",
+        "details": "The shroud directs forced air from the fan over the fins. Without a proper shroud, the engine will overheat at low speeds. Repair cracks with plastic welding or replace. Ensure all mounting screws are tight."
+      },
+      {
+        "id": "solution_replace_fan",
+        "type": "solution",
+        "text": "Replace Cooling Fan",
+        "safety": "green",
+        "action": "Replace the damaged cooling fan (flywheel assembly).",
+        "details": "The fan is part of the magneto flywheel. A flywheel puller is required for removal. Broken blades cause inadequate cooling and vibration."
+      },
+      {
+        "id": "solution_better_fuel",
+        "type": "solution",
+        "text": "Use Higher Octane Fuel",
+        "safety": "green",
+        "action": "Switch to 91+ octane premium fuel.",
+        "details": "Low-octane fuel causes pre-ignition heat. Drain the current fuel and refill with premium. If pinging has been occurring for a while, carbon buildup may also need addressing."
+      },
+      {
+        "id": "solution_carbon_removal",
+        "type": "solution",
+        "text": "Remove Combustion Chamber Carbon",
+        "safety": "yellow",
+        "warning": "Follow product instructions for chemical carbon cleaners exactly.",
+        "action": "Clean carbon deposits from the combustion chamber.",
+        "details": "Carbon hot spots cause pre-ignition even with good fuel. Try a chemical cleaner first (Seafoam or similar). For heavy buildup, remove the head and scrape with a plastic scraper. Check valve clearances after cleaning."
+      },
+      {
+        "id": "solution_adjust_valves",
+        "type": "solution",
+        "text": "Adjust Valve Clearances",
+        "safety": "yellow",
+        "warning": "Must be done with engine cold at TDC compression stroke.",
+        "action": "Adjust valves to correct specification.",
+        "details": "Tight exhaust valves are a leading cause of overheating on air-cooled scooters. Adjust using the screw-and-locknut method with feeler gauges. Check every 8,000-12,000 km."
+      },
+      {
+        "id": "solution_riding_tips",
+        "type": "solution",
+        "text": "Heat Management Tips",
+        "safety": "green",
+        "action": "Adapt riding habits for the air-cooled engine.",
+        "details": "Avoid prolonged idling in traffic (shut off if stopped more than a few minutes). In hot weather, avoid sustained full throttle. Let the engine idle briefly before shutting off after hard riding. Use quality synthetic oil. Keep cooling fins clean. Some heat under body panels is normal on enclosed scooter engines."
+      },
+      {
+        "id": "solution_engine_seizure",
+        "type": "solution",
+        "text": "Engine Seizure — Professional Help Required",
+        "safety": "red",
+        "warning": "Do not force-start a seized engine. Continuing to ride risks catastrophic damage.",
+        "action": "Stop immediately and have the engine professionally inspected.",
+        "details": "Seizure is caused by low oil, extreme overheating, or incorrect clearances. The engine needs disassembly to assess damage. Minimum repair: new piston and cylinder. Also inspect crankshaft and bearings. May be uneconomical on an older scooter depending on damage extent."
+      }
+    ]
+  }
+}

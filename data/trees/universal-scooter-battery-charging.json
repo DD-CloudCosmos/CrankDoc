@@ -1,0 +1,261 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Battery and Charging System",
+  "description": "Diagnose battery and charging system issues on scooters including dead battery, slow cranking, battery not holding charge, stator testing, regulator/rectifier testing, and parasitic draw.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What battery or charging symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery is completely dead — no lights, no cranking", "next": "check_battery_connections" },
+          { "text": "Slow cranking — engine turns over weakly", "next": "check_battery_voltage" },
+          { "text": "Battery dies after sitting for a few days", "next": "check_parasitic_draw" },
+          { "text": "Battery keeps dying even after charging", "next": "check_battery_age" },
+          { "text": "Lights dim or flicker while riding", "next": "check_charging_output" }
+        ]
+      },
+      {
+        "id": "check_battery_connections",
+        "type": "check",
+        "text": "Inspect the battery terminals and connections.",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working with batteries. Battery acid is corrosive. If you see white or green corrosion on the terminals, avoid touching it with bare hands.",
+        "instructions": "Locate the battery (on most scooters it is under the seat or under a side panel). Check that both terminals are tight and free of corrosion. White, green, or blue powdery buildup on the terminals indicates corrosion that can prevent electrical flow. Also check the ground cable where it connects to the frame — a loose or corroded ground connection causes the same symptoms as a dead battery. Wiggle each terminal by hand — they should be firmly attached with no movement.",
+        "next": "connection_result"
+      },
+      {
+        "id": "connection_result",
+        "type": "question",
+        "text": "What is the condition of the battery connections?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminals are corroded or loose", "next": "solution_clean_terminals" },
+          { "text": "Connections are clean and tight", "next": "check_battery_voltage" }
+        ]
+      },
+      {
+        "id": "check_battery_voltage",
+        "type": "check",
+        "text": "Measure the battery resting voltage.",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working with batteries. Do not short the multimeter probes across the terminals.",
+        "instructions": "With the ignition off and everything turned off, set your multimeter to DC volts and measure across the battery terminals (red probe on the positive terminal, black probe on the negative terminal). A healthy, fully charged 12V scooter battery should read 12.6V or higher. 12.4V indicates about 75% charge. 12.2V indicates about 50% charge. Below 12.0V, the battery is significantly discharged. Below 10V, the battery likely has a dead cell and cannot be recovered.",
+        "next": "voltage_result"
+      },
+      {
+        "id": "voltage_result",
+        "type": "question",
+        "text": "What is the resting voltage of the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 10V — very low", "next": "solution_replace_battery" },
+          { "text": "10V-12.3V — discharged", "next": "charge_and_retest" },
+          { "text": "12.4V or above — adequately charged", "next": "check_cranking" }
+        ]
+      },
+      {
+        "id": "charge_and_retest",
+        "type": "check",
+        "text": "Charge the battery fully and retest.",
+        "safety": "yellow",
+        "warning": "Use a smart charger or battery tender appropriate for small batteries. Standard car battery chargers can overcharge and damage small scooter batteries. Charge in a well-ventilated area.",
+        "instructions": "Connect a smart charger to the battery and allow it to charge fully (this may take several hours depending on the level of discharge). After the charger shows full, disconnect it and wait one hour. Recheck the voltage — a healthy battery should hold 12.6V or above after sitting for an hour. If the voltage drops below 12.4V within an hour of being disconnected from the charger, the battery cannot hold a charge and needs replacement.",
+        "next": "retest_result"
+      },
+      {
+        "id": "retest_result",
+        "type": "question",
+        "text": "After charging and waiting one hour, did the battery hold 12.4V or above?",
+        "safety": "green",
+        "options": [
+          { "text": "No — voltage dropped back down quickly", "next": "solution_replace_battery" },
+          { "text": "Yes — it holds charge but still dies on the scooter", "next": "check_charging_output" }
+        ]
+      },
+      {
+        "id": "check_cranking",
+        "type": "question",
+        "text": "The battery voltage is adequate. Is the scooter cranking normally now?",
+        "safety": "green",
+        "options": [
+          { "text": "Still cranking slowly despite good voltage", "next": "check_starter_circuit" },
+          { "text": "Cranking normally now — was it just discharged?", "next": "check_charging_output" }
+        ]
+      },
+      {
+        "id": "check_starter_circuit",
+        "type": "check",
+        "text": "Check the starter circuit for voltage drop.",
+        "safety": "yellow",
+        "warning": "Keep your hands and tools away from moving parts while cranking the engine.",
+        "instructions": "A battery with good voltage that still cranks slowly often has a high-resistance connection in the starter circuit. With the multimeter set to DC volts, measure the voltage at the battery terminals while someone presses the starter button. The voltage should not drop below 10V during cranking. If it drops below 10V, the battery's internal resistance is high (battery is failing). Also check for voltage drop across each connection: measure the voltage between the battery positive terminal and the starter motor positive terminal while cranking — you should see less than 0.5V drop. More than 0.5V indicates a bad connection, corroded wire, or faulty starter relay.",
+        "next": "starter_circuit_result"
+      },
+      {
+        "id": "starter_circuit_result",
+        "type": "question",
+        "text": "What did the cranking voltage test reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Battery voltage drops below 10V during cranking", "next": "solution_replace_battery" },
+          { "text": "High voltage drop in the starter circuit wiring", "next": "solution_starter_circuit" },
+          { "text": "Voltages look normal but still cranks slowly", "next": "solution_starter_motor" }
+        ]
+      },
+      {
+        "id": "check_battery_age",
+        "type": "question",
+        "text": "How old is the battery?",
+        "safety": "green",
+        "options": [
+          { "text": "More than 3 years old", "next": "solution_replace_battery" },
+          { "text": "Less than 3 years old", "next": "check_parasitic_draw" },
+          { "text": "Brand new — just installed it", "next": "check_charging_output" }
+        ]
+      },
+      {
+        "id": "check_parasitic_draw",
+        "type": "check",
+        "text": "Test for parasitic battery drain.",
+        "safety": "yellow",
+        "warning": "Do not turn on the ignition or start the engine while the multimeter is connected in series for current measurement — this can blow the multimeter fuse or damage the meter.",
+        "instructions": "Turn off all electrical accessories and the ignition. Disconnect the negative battery cable. Set your multimeter to the highest DC amps range. Connect the multimeter in series between the negative battery cable and the negative battery terminal. The reading shows how much current the scooter draws with everything off. Normal parasitic draw for a scooter is typically 1-5 milliamps (0.001-0.005A). Anything above 20 milliamps (0.020A) is excessive for a scooter. Common causes of parasitic draw on scooters: aftermarket alarms, GPS trackers, USB chargers wired directly to the battery, or a faulty regulator/rectifier.",
+        "next": "parasitic_result"
+      },
+      {
+        "id": "parasitic_result",
+        "type": "question",
+        "text": "How much current is the scooter drawing with everything off?",
+        "safety": "green",
+        "options": [
+          { "text": "Less than 20 milliamps — normal", "next": "check_charging_output" },
+          { "text": "More than 20 milliamps — excessive draw", "next": "solution_parasitic_draw" }
+        ]
+      },
+      {
+        "id": "check_charging_output",
+        "type": "check",
+        "text": "Test the charging system output voltage.",
+        "safety": "yellow",
+        "warning": "Keep the multimeter probes and loose wires away from the spinning cooling fan and CVT components while the engine is running.",
+        "instructions": "Start the engine and let it idle for a minute. Set your multimeter to DC volts and measure across the battery terminals with the engine running. At idle, the voltage should be above 13.0V. Rev the engine to about 4,000-5,000 RPM — the voltage should read between 13.5V and 14.8V. Below 13.0V at elevated RPM means the charging system is not working. Above 15.0V means the system is overcharging. Note: some small scooters (50cc) may have a magneto-based lighting system that does not charge the battery — check your service manual.",
+        "next": "charging_output_result"
+      },
+      {
+        "id": "charging_output_result",
+        "type": "question",
+        "text": "What voltage do you see at the battery with the engine running at elevated RPM?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V — not charging", "next": "check_stator" },
+          { "text": "13.5V-14.8V — charging correctly", "next": "solution_charging_ok" },
+          { "text": "Above 15.0V — overcharging", "next": "solution_overcharging" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test the stator output to isolate the faulty component.",
+        "safety": "yellow",
+        "warning": "The stator connector is usually located near the engine. Be careful of hot engine components. Do not touch the stator wires while the engine is running — they carry AC voltage.",
+        "instructions": "The charging system has two main components: the stator (generator, inside the engine cover) and the regulator/rectifier (usually mounted on the frame). To determine which is faulty, test the stator output directly. Locate the stator connector (usually a 3-pin connector with yellow wires, or a single-phase 2-pin connector on smaller scooters). Disconnect it. Set your multimeter to AC volts. With the engine running at 3,000-5,000 RPM, measure the AC voltage between each pair of stator wires. You should see 20-80V AC (check your service manual for exact specification). If the voltage is low or zero, the stator is faulty. If the stator output is good, the regulator/rectifier is the problem.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "What is the stator AC output voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Low or zero AC output — stator is bad", "next": "solution_replace_stator" },
+          { "text": "AC output is within specification — stator is good", "next": "solution_replace_reg_rec" }
+        ]
+      },
+      {
+        "id": "solution_clean_terminals",
+        "type": "solution",
+        "text": "Corroded or loose battery terminals are preventing proper electrical flow.",
+        "safety": "yellow",
+        "warning": "If using a wire brush or sandpaper to clean terminals, wear gloves and eye protection. Corrosion residue is acidic.",
+        "action": "Clean the battery terminals and tighten the connections",
+        "details": "Disconnect the negative cable first, then the positive. Clean both terminals and cable ends with a wire brush, sandpaper (120-180 grit), or a battery terminal cleaning tool until the metal is shiny. Apply a thin coat of dielectric grease or battery terminal protector to prevent future corrosion. Reconnect the positive cable first, then the negative. Ensure both are tight. Also clean and tighten the ground cable where it bolts to the frame. After cleaning, check the battery voltage to ensure it is adequately charged."
+      },
+      {
+        "id": "solution_replace_battery",
+        "type": "solution",
+        "text": "The battery is no longer serviceable and needs replacement.",
+        "safety": "yellow",
+        "warning": "Dispose of old batteries properly — return them to an auto parts store or battery retailer for recycling. Never throw batteries in regular waste.",
+        "action": "Replace the battery with the correct type and size",
+        "details": "Scooter batteries are typically small 12V batteries (5Ah-12Ah). Replace with the exact size and type specified in your service manual (conventional lead-acid, AGM, or gel). AGM batteries are maintenance-free and resist vibration better than conventional batteries. Lithium batteries are lighter but require a compatible charging system. After installing the new battery, verify the charging system is working properly — a faulty charging system will kill a new battery within weeks. If the scooter sits unused for extended periods, keep the battery on a smart tender."
+      },
+      {
+        "id": "solution_starter_circuit",
+        "type": "solution",
+        "text": "There is excessive resistance in the starter circuit wiring.",
+        "safety": "yellow",
+        "warning": "Damaged or corroded wiring can cause overheating and fire. Repair any damaged wires promptly.",
+        "action": "Clean or replace corroded starter circuit connections and wiring",
+        "details": "Follow the positive cable from the battery to the starter relay, and from the relay to the starter motor. Clean every connection point. Check the starter relay by applying 12V directly to its coil terminals — you should hear it click. Measure the resistance across the relay contacts when activated — it should be near zero ohms. If the relay is corroded or its contacts are burned, replace it. Also check the ground cable and frame ground point. Scooter wiring is exposed to road spray and weather, making corrosion a common issue in the starter circuit."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "The starter motor may be worn or failing.",
+        "safety": "yellow",
+        "warning": "The starter motor draws high current. Ensure the battery is disconnected before removing the starter.",
+        "action": "Have the starter motor inspected or replaced",
+        "details": "If the battery and circuit wiring are in good condition but cranking is still slow, the starter motor itself may be worn. Worn brushes, a corroded commutator, or worn bearings inside the starter cause slow and weak cranking. On some scooters, the starter motor can be rebuilt with new brushes. On others, replacement is more practical. The starter motor on most scooters is accessible from the outside of the engine case. Ensure the starter motor mounting bolts are tight — a loose starter can also cause slow cranking due to poor grounding through the engine case."
+      },
+      {
+        "id": "solution_parasitic_draw",
+        "type": "solution",
+        "text": "There is an excessive parasitic drain on the battery.",
+        "safety": "yellow",
+        "warning": "Do not start the engine while the multimeter is connected in the amps circuit.",
+        "action": "Locate and eliminate the source of the parasitic draw",
+        "details": "With the multimeter still showing the excessive draw, pull fuses one at a time. When pulling a fuse causes the draw to drop to normal, you have found the circuit responsible. Check all components on that circuit. Common culprits on scooters: aftermarket alarms or anti-theft devices that remain active, GPS trackers, USB charging ports wired directly to the battery (should be wired through the ignition switch), or LED accent lights that remain on. If no fuse resolves the draw, check the regulator/rectifier — some failure modes cause it to draw current even with the engine off. Disconnect the regulator/rectifier and recheck the draw."
+      },
+      {
+        "id": "solution_charging_ok",
+        "type": "solution",
+        "text": "The charging system is working correctly.",
+        "safety": "green",
+        "action": "The issue is likely the battery itself, a parasitic draw, or riding habits",
+        "details": "Since the charging system is producing the correct voltage, the battery should charge while riding. If the battery still dies, either the battery is faulty (will not hold charge — replace it), there is a parasitic draw (test for draw with everything off), or your riding habits do not allow sufficient charging. Very short rides (under 10 minutes) may not fully replenish the energy used to start the engine. Scooters used for very short trips benefit from being connected to a battery tender between rides to maintain full charge."
+      },
+      {
+        "id": "solution_overcharging",
+        "type": "solution",
+        "text": "The charging system is overcharging the battery.",
+        "safety": "red",
+        "warning": "Overcharging can cause the battery to overheat, swell, vent toxic gases, or potentially explode. Stop riding and address this immediately.",
+        "action": "Replace the regulator/rectifier",
+        "details": "Voltage above 15V at the battery means the regulator/rectifier is failing to limit the charging voltage. This damages the battery, boils electrolyte, and can damage other electrical components (blown bulbs are a common symptom of overcharging). Replace the regulator/rectifier with an OEM or quality aftermarket unit. Ensure the replacement unit has a good ground connection — poor grounding can cause overcharging even with a new unit. After replacing the regulator/rectifier, also replace or thoroughly test the battery, as overcharging likely damaged it."
+      },
+      {
+        "id": "solution_replace_stator",
+        "type": "solution",
+        "text": "The stator (generator) has failed and is not producing electricity.",
+        "safety": "yellow",
+        "warning": "Stator replacement requires removing the engine side cover and working near the crankshaft. Follow your service manual for the correct procedure.",
+        "action": "Replace the stator",
+        "details": "The stator is a set of wire coils mounted inside the engine cover that generates AC electricity as the magnets on the flywheel spin past them. Stator failure is caused by overheating, insulation breakdown, or physical damage. Replacement involves removing the engine side cover to access the stator. On some scooters, the stator is part of the same cover that houses the CVT components. When replacing, inspect the flywheel magnets for cracks or weakness. Use the correct gasket or sealant on the cover. After replacement, verify the charging output is within specification."
+      },
+      {
+        "id": "solution_replace_reg_rec",
+        "type": "solution",
+        "text": "The regulator/rectifier has failed.",
+        "safety": "green",
+        "action": "Replace the regulator/rectifier",
+        "details": "The regulator/rectifier converts AC from the stator to DC for the battery and regulates the voltage. It is usually a finned aluminum unit mounted on the frame for cooling. Replace it with an OEM or quality aftermarket unit. Ensure the mounting location allows good airflow — overheating is a common cause of regulator/rectifier failure. Verify all wiring connections are clean and tight. After installation, test the charging output at the battery (13.5-14.8V at elevated RPM). If regulators fail repeatedly, check for excessive stator output or poor grounding that causes the regulator to overheat."
+      }
+    ]
+  }
+}

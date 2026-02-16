@@ -1,0 +1,305 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco X-Town 300i including Noodoe system, lighting, and charging.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working", "next": "check_bulbs" },
+          { "text": "Battery dying", "next": "check_charging" },
+          { "text": "Dashboard/Noodoe issues", "next": "check_display" },
+          { "text": "Intermittent issues", "next": "check_connectors" },
+          { "text": "Completely dead", "next": "check_main" }
+        ]
+      },
+      {
+        "id": "check_bulbs",
+        "type": "check",
+        "text": "Check bulbs/fuses",
+        "safety": "green",
+        "instructions": "The X-Town 300i uses LED headlights on most models (not bulb-replaceable — entire unit). Check fuses for the affected circuit.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_fixed" },
+          { "text": "No", "next": "check_switches" },
+          { "text": "Fuse blows", "next": "solution_short" }
+        ]
+      },
+      {
+        "id": "check_switches",
+        "type": "check",
+        "text": "Check switches/wiring",
+        "safety": "yellow",
+        "warning": "Battery disconnect first.",
+        "instructions": "Test switches. Check 12V at socket. The X-Town has more electronics — check connectors behind fairing.",
+        "next": "sw_result"
+      },
+      {
+        "id": "sw_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad switch", "next": "solution_switch" },
+          { "text": "Wiring", "next": "solution_wiring" },
+          { "text": "Ground", "next": "solution_ground" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Test charging",
+        "safety": "yellow",
+        "warning": "Keep clear while running.",
+        "instructions": "At 3,000+ RPM: 13.5-14.8V. The X-Town 300i has a higher-output charging system. Below 13.0V = not charging. Above 15.0V = overcharging.",
+        "next": "charge_result"
+      },
+      {
+        "id": "charge_result",
+        "type": "question",
+        "text": "Voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_stator" },
+          { "text": "Normal", "next": "solution_drain" },
+          { "text": "High", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test stator",
+        "safety": "yellow",
+        "warning": "AC — caution.",
+        "instructions": "Disconnect stator, measure AC at 3,000 RPM. Should be 40-80V AC.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "AC?",
+        "safety": "green",
+        "options": [
+          { "text": "None", "next": "solution_stator" },
+          { "text": "Good", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_display",
+        "type": "check",
+        "text": "Check dashboard/Noodoe",
+        "safety": "green",
+        "instructions": "The X-Town 300i features the Noodoe smart display. If it is flickering, blank, or showing errors: (1) Check battery voltage — low voltage causes display glitches, (2) Check the display connector under the instrument cluster, (3) Try a hard reset by disconnecting the battery for 5 minutes. If specific error codes are displayed, note them for dealer diagnosis.",
+        "next": "display_result"
+      },
+      {
+        "id": "display_result",
+        "type": "question",
+        "text": "Display issue?",
+        "safety": "green",
+        "options": [
+          { "text": "Low battery caused it", "next": "solution_battery_display" },
+          { "text": "Connector issue", "next": "solution_display_conn" },
+          { "text": "Display itself failed", "next": "solution_display_replace" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Check connectors",
+        "safety": "green",
+        "instructions": "The X-Town 300i has extensive wiring for its electronics. Clean all connectors with contact cleaner, apply dielectric grease.",
+        "next": "conn_result"
+      },
+      {
+        "id": "conn_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_conn" },
+          { "text": "No", "next": "solution_harness" }
+        ]
+      },
+      {
+        "id": "check_main",
+        "type": "check",
+        "text": "Check battery/fuse",
+        "safety": "yellow",
+        "warning": "Major short possible.",
+        "instructions": "Check terminals, main fuse, voltage. Smart Key models: check fob battery.",
+        "next": "main_result"
+      },
+      {
+        "id": "main_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminal", "next": "solution_terminals" },
+          { "text": "Fuse", "next": "solution_fuse" },
+          { "text": "Dead battery", "next": "solution_battery" },
+          { "text": "All OK, no power", "next": "solution_ign" }
+        ]
+      },
+      {
+        "id": "solution_fixed",
+        "type": "solution",
+        "text": "Fixed",
+        "safety": "green",
+        "action": "Bulb/fuse replaced.",
+        "details": "LED units not bulb-serviceable."
+      },
+      {
+        "id": "solution_short",
+        "type": "solution",
+        "text": "Short",
+        "safety": "red",
+        "warning": "Fire risk.",
+        "action": "Find short.",
+        "details": "Isolate by disconnecting loads."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Switch",
+        "safety": "green",
+        "action": "Replace.",
+        "details": "Dielectric grease."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring",
+        "safety": "yellow",
+        "warning": "Solder repairs.",
+        "action": "Repair wire.",
+        "details": "Check fairing and under seat."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Ground",
+        "safety": "green",
+        "action": "Clean and secure.",
+        "details": "Bare metal, dielectric grease."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Parasitic Drain",
+        "safety": "green",
+        "action": "Find drain (under 30mA).",
+        "details": "The Noodoe system draws minimal standby power. Check aftermarket accessories."
+      },
+      {
+        "id": "solution_regrec",
+        "type": "solution",
+        "text": "Reg/Rec",
+        "safety": "yellow",
+        "warning": "Overcharging damages electronics.",
+        "action": "Replace.",
+        "details": "Critical for the electronics-heavy X-Town."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Stator",
+        "safety": "yellow",
+        "warning": "Flywheel puller needed.",
+        "action": "Replace.",
+        "details": "Intermediate repair."
+      },
+      {
+        "id": "solution_battery_display",
+        "type": "solution",
+        "text": "Battery Causing Display Issues",
+        "safety": "green",
+        "action": "Charge or replace the battery.",
+        "details": "Low voltage causes the Noodoe display to glitch, flicker, or show incorrect readings. A healthy battery resolves this."
+      },
+      {
+        "id": "solution_display_conn",
+        "type": "solution",
+        "text": "Dashboard Connector",
+        "safety": "green",
+        "action": "Clean and reseat the display connector.",
+        "details": "The connector behind the instrument cluster can corrode. Disconnect, clean contacts, apply dielectric grease."
+      },
+      {
+        "id": "solution_display_replace",
+        "type": "solution",
+        "text": "Replace Display Unit",
+        "safety": "yellow",
+        "warning": "OEM replacement required for Noodoe integration.",
+        "action": "Have the display unit replaced by a dealer.",
+        "details": "The Noodoe display is integrated with the ECU and may require dealer programming after replacement."
+      },
+      {
+        "id": "solution_conn",
+        "type": "solution",
+        "text": "Connectors Fixed",
+        "safety": "green",
+        "action": "Cleaned.",
+        "details": "Check every 6 months."
+      },
+      {
+        "id": "solution_harness",
+        "type": "solution",
+        "text": "Harness",
+        "safety": "yellow",
+        "warning": "May need professional.",
+        "action": "Full inspection.",
+        "details": "Wiggle test."
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Terminals",
+        "safety": "green",
+        "action": "Cleaned/tightened.",
+        "details": "Dielectric grease."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Fuse",
+        "safety": "yellow",
+        "warning": "Same rating.",
+        "action": "Replace.",
+        "details": "Trace short if recurs."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Battery",
+        "safety": "green",
+        "action": "Replace.",
+        "details": "Check charging after."
+      },
+      {
+        "id": "solution_ign",
+        "type": "solution",
+        "text": "Ignition/Smart Key",
+        "safety": "yellow",
+        "warning": "May be Smart Key system.",
+        "action": "Check ignition switch or Smart Key receiver.",
+        "details": "Smart Key fob battery or receiver module may have failed."
+      }
+    ]
+  }
+}
