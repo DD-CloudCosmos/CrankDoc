@@ -16,7 +16,7 @@ describe('ServiceWorkerRegistration', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals()
-    process.env.NODE_ENV = originalEnv
+    vi.stubEnv('NODE_ENV', originalEnv)
   })
 
   it('renders nothing visually', () => {
@@ -25,13 +25,13 @@ describe('ServiceWorkerRegistration', () => {
   })
 
   it('does not register service worker in non-production environment', () => {
-    process.env.NODE_ENV = 'test'
+    vi.stubEnv('NODE_ENV', 'test')
     render(<ServiceWorkerRegistration />)
     expect(navigator.serviceWorker.register).not.toHaveBeenCalled()
   })
 
   it('registers service worker in production environment', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     render(<ServiceWorkerRegistration />)
 
     await vi.waitFor(() => {
