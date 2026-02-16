@@ -57,7 +57,7 @@ export function ButtonExamples() {
       {/* asChild example */}
       <h2 className="text-2xl font-bold">Button as Link</h2>
       <Button asChild>
-        <a href="/">Home</a>
+        <a href="/examples">Example Link</a>
       </Button>
     </div>
   )

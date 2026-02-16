@@ -81,7 +81,7 @@ const baseInterval: ServiceInterval = {
   created_at: '2024-01-01T00:00:00Z',
 }
 
-const sparkPlugInterval: ServiceInterval = {
+const _sparkPlugInterval: ServiceInterval = {
   id: 'si-2',
   motorcycle_id: 'moto-1',
   service_name: 'Spark Plug Replacement',
@@ -120,7 +120,7 @@ const forkOilInterval: ServiceInterval = {
   created_at: '2024-01-01T00:00:00Z',
 }
 
-const noSpecInterval: ServiceInterval = {
+const _noSpecInterval: ServiceInterval = {
   id: 'si-5',
   motorcycle_id: 'moto-1',
   service_name: 'Chain Adjustment',

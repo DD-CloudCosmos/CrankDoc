@@ -15,7 +15,7 @@ interface SpecSection {
   rows: SpecRow[]
 }
 
-function formatSpec(value: number | string | null, unit: string): string | null {
+function _formatSpec(value: number | string | null, unit: string): string | null {
   if (value === null) return null
   if (typeof value === 'string') return value
   return `${value}${unit}`

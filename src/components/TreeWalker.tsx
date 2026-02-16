@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SafetyBadge } from '@/components/SafetyBadge'
-import type { DecisionTreeData, DecisionTreeNode } from '@/types/database.types'
+import type { DecisionTreeData } from '@/types/database.types'
 import { AlertTriangle, ArrowLeft, RotateCcw, ChevronRight, Wrench, CheckCircle } from 'lucide-react'
 
 interface TreeWalkerProps {
