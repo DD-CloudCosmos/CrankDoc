@@ -8,7 +8,7 @@ import { QuickSpecs } from '@/components/QuickSpecs'
 import { BikeDetailTabs } from '@/components/BikeDetailTabs'
 import { GenerationNavSelector } from '@/components/GenerationNavSelector'
 import { SafeDisclaimer } from '@/components/SafeDisclaimer'
-import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument } from '@/types/database.types'
+import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument, Recall } from '@/types/database.types'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -117,6 +117,29 @@ async function getServiceIntervals(motorcycleId: string): Promise<ServiceInterva
   return data ?? []
 }
 
+async function getRecalls(make: string, model: string, yearStart: number, yearEnd: number | null): Promise<Recall[]> {
+  const supabase = createServerClient()
+
+  let query = supabase
+    .from('recalls')
+    .select('*')
+    .eq('make', make)
+    .eq('model', model)
+    .gte('model_year', yearStart)
+
+  if (yearEnd) {
+    query = query.lte('model_year', yearEnd)
+  }
+
+  const { data, error } = await query.order('report_received_date', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching recalls:', error)
+    return []
+  }
+  return data ?? []
+}
+
 export default async function BikeDetailPage({ params }: PageProps) {
   const { id } = await params
   const motorcycle = await getMotorcycle(id)
@@ -128,12 +151,13 @@ export default async function BikeDetailPage({ params }: PageProps) {
   const { make, model, year_start, year_end, category, generation } = motorcycle
 
   // Fetch all data in parallel
-  const [generations, primaryImage, technicalDocs, trees, serviceIntervals] = await Promise.all([
+  const [generations, primaryImage, technicalDocs, trees, serviceIntervals, recalls] = await Promise.all([
     getGenerations(make, model),
     getPrimaryImage(motorcycle.id),
     getTechnicalDocuments(motorcycle.id),
     getDiagnosticTrees(motorcycle.id),
     getServiceIntervals(motorcycle.id),
+    getRecalls(make, model, year_start, year_end),
   ])
 
   // Format year range
@@ -236,6 +260,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
           motorcycle={motorcycle}
           documents={technicalDocs}
           serviceIntervals={serviceIntervals}
+          recalls={recalls}
         />
       </section>
 

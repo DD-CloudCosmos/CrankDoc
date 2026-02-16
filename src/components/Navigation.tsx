@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Database, FileText } from "lucide-react";
+import { Home, Search, Database, FileText, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -25,6 +25,11 @@ const navItems = [
     name: "DTC",
     href: "/dtc",
     icon: FileText,
+  },
+  {
+    name: "Recalls",
+    href: "/recalls",
+    icon: AlertTriangle,
   },
 ];
 

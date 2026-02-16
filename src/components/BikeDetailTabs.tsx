@@ -3,15 +3,17 @@
 import { useState } from 'react'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
-import type { TechnicalDocument, ServiceInterval, Motorcycle } from '@/types/database.types'
+import { RecallCard } from '@/components/RecallCard'
+import type { TechnicalDocument, ServiceInterval, Motorcycle, Recall } from '@/types/database.types'
 
 interface BikeDetailTabsProps {
   motorcycle: Motorcycle
   documents: TechnicalDocument[]
   serviceIntervals: ServiceInterval[]
+  recalls?: Recall[]
 }
 
-type TabId = 'specs' | 'service' | 'fluids' | 'wiring'
+type TabId = 'specs' | 'service' | 'fluids' | 'wiring' | 'recalls'
 
 interface TabDef {
   id: TabId
@@ -86,19 +88,47 @@ function getFluidItems(
   return items
 }
 
+/**
+ * Deduplicate recalls by campaign number (one campaign can span multiple years).
+ * Sort by date descending, with park-it recalls pinned to top.
+ */
+function getDeduplicatedRecalls(recalls: Recall[]): Recall[] {
+  const seen = new Set<string>()
+  const unique: Recall[] = []
+
+  for (const recall of recalls) {
+    if (!seen.has(recall.nhtsa_campaign_number)) {
+      seen.add(recall.nhtsa_campaign_number)
+      unique.push(recall)
+    }
+  }
+
+  // Sort: park_it first, then by date descending
+  return unique.sort((a, b) => {
+    if (a.park_it && !b.park_it) return -1
+    if (!a.park_it && b.park_it) return 1
+    const dateA = a.report_received_date || ''
+    const dateB = b.report_received_date || ''
+    return dateB.localeCompare(dateA)
+  })
+}
+
 export function BikeDetailTabs({
   motorcycle,
   documents,
   serviceIntervals,
+  recalls = [],
 }: BikeDetailTabsProps) {
   const wiringDocs = getWiringDocs(documents)
   const fluidItems = getFluidItems(motorcycle, serviceIntervals)
+  const deduplicatedRecalls = getDeduplicatedRecalls(recalls)
 
   // Specs tab is always shown
   const tabs: TabDef[] = [{ id: 'specs', label: 'Specs' }]
   if (serviceIntervals.length > 0) tabs.push({ id: 'service', label: 'Service' })
   if (fluidItems.length > 0) tabs.push({ id: 'fluids', label: 'Fluids' })
   if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
+  if (deduplicatedRecalls.length > 0) tabs.push({ id: 'recalls', label: `Recalls (${deduplicatedRecalls.length})` })
 
   const [activeTab, setActiveTab] = useState<TabId>('specs')
   const [lightboxDoc, setLightboxDoc] = useState<TechnicalDocument | null>(null)
@@ -138,6 +168,9 @@ export function BikeDetailTabs({
           docs={wiringDocs}
           onOpenLightbox={setLightboxDoc}
         />
+      )}
+      {displayTab === 'recalls' && (
+        <RecallsContent recalls={deduplicatedRecalls} />
       )}
 
       {/* Lightbox overlay */}
@@ -208,6 +241,28 @@ function WiringContent({
             </p>
           )}
         </div>
+      ))}
+    </div>
+  )
+}
+
+// --- Recalls Tab ---
+
+function RecallsContent({ recalls }: { recalls: Recall[] }) {
+  const hasParkIt = recalls.some((r) => r.park_it)
+
+  return (
+    <div className="space-y-4">
+      {hasParkIt && (
+        <div className="rounded-lg border border-red-500/50 bg-red-950/30 p-4">
+          <p className="text-sm font-semibold text-red-400">
+            One or more recalls advise you to stop driving this vehicle immediately.
+            Contact your dealer for a free repair.
+          </p>
+        </div>
+      )}
+      {recalls.map((recall) => (
+        <RecallCard key={recall.id} recall={recall} />
       ))}
     </div>
   )
