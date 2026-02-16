@@ -5,6 +5,7 @@
  * These types are manually created based on the schema in:
  * supabase/migrations/001_initial_schema.sql
  * supabase/migrations/002_phase5_schema.sql
+ * supabase/migrations/004_recalls_schema.sql
  *
  * To regenerate from live database (after schema changes):
  * ```bash
@@ -254,6 +255,62 @@ export interface Database {
           created_at?: string
         }
       }
+      recalls: {
+        Row: {
+          id: string
+          nhtsa_campaign_number: string
+          data_source: string
+          manufacturer: string
+          make: string
+          model: string
+          model_year: number
+          component: string | null
+          summary: string | null
+          consequence: string | null
+          remedy: string | null
+          notes: string | null
+          report_received_date: string | null
+          park_it: boolean
+          park_outside: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          nhtsa_campaign_number: string
+          data_source?: string
+          manufacturer: string
+          make: string
+          model: string
+          model_year: number
+          component?: string | null
+          summary?: string | null
+          consequence?: string | null
+          remedy?: string | null
+          notes?: string | null
+          report_received_date?: string | null
+          park_it?: boolean
+          park_outside?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          nhtsa_campaign_number?: string
+          data_source?: string
+          manufacturer?: string
+          make?: string
+          model?: string
+          model_year?: number
+          component?: string | null
+          summary?: string | null
+          consequence?: string | null
+          remedy?: string | null
+          notes?: string | null
+          report_received_date?: string | null
+          park_it?: boolean
+          park_outside?: boolean
+          created_at?: string
+        }
+      }
       motorcycle_images: {
         Row: {
           id: string
@@ -303,6 +360,7 @@ export type DiagnosticTree = Tables<'diagnostic_trees'>
 export type DtcCode = Tables<'dtc_codes'>
 export type ServiceInterval = Tables<'service_intervals'>
 export type TechnicalDocument = Tables<'technical_documents'>
+export type Recall = Tables<'recalls'>
 export type MotorcycleImage = Tables<'motorcycle_images'>
 
 // Decision tree node types (for tree_data JSONB structure)

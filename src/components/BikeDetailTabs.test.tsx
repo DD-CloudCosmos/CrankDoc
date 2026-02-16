@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BikeDetailTabs } from './BikeDetailTabs'
-import type { TechnicalDocument, ServiceInterval, Motorcycle } from '@/types/database.types'
+import type { TechnicalDocument, ServiceInterval, Motorcycle, Recall } from '@/types/database.types'
 
 // --- Fixtures ---
 
@@ -132,6 +132,45 @@ const _noSpecInterval: ServiceInterval = {
   fluid_spec: null,
   created_at: '2024-01-01T00:00:00Z',
 }
+
+const baseRecall: Recall = {
+  id: 'recall-1',
+  nhtsa_campaign_number: '23V456',
+  data_source: 'nhtsa',
+  manufacturer: 'Honda',
+  make: 'Honda',
+  model: 'CBR600RR',
+  model_year: 2009,
+  component: 'Fuel System',
+  summary: 'Fuel line may crack causing a leak',
+  consequence: 'Fire risk when fuel contacts hot engine',
+  remedy: 'Dealers will replace the fuel line free of charge',
+  notes: null,
+  report_received_date: '2023-08-15',
+  park_it: false,
+  park_outside: false,
+  created_at: '2024-01-01T00:00:00Z',
+}
+
+const parkItRecall: Recall = {
+  ...baseRecall,
+  id: 'recall-2',
+  nhtsa_campaign_number: '24V001',
+  component: 'Brakes',
+  summary: 'Brake caliper bolt may loosen',
+  consequence: 'Loss of braking ability',
+  remedy: 'Dealers will inspect and replace bolts',
+  report_received_date: '2024-01-10',
+  park_it: true,
+  park_outside: false,
+}
+
+// Mock RecallCard since it's tested separately
+vi.mock('@/components/RecallCard', () => ({
+  RecallCard: ({ recall }: { recall: Recall }) => (
+    <div data-testid="recall-card">{recall.nhtsa_campaign_number}</div>
+  ),
+}))
 
 // --- Tests ---
 
@@ -351,5 +390,88 @@ describe('BikeDetailTabs', () => {
       />
     )
     expect(screen.getByText(/no specifications available/i)).toBeInTheDocument()
+  })
+
+  it('shows Recalls tab with count when recalls are provided', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+        recalls={[baseRecall]}
+      />
+    )
+    expect(screen.getByRole('tab', { name: 'Recalls (1)' })).toBeInTheDocument()
+  })
+
+  it('switches to Recalls tab and shows recall cards', async () => {
+    const user = userEvent.setup()
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+        recalls={[baseRecall]}
+      />
+    )
+
+    await user.click(screen.getByRole('tab', { name: 'Recalls (1)' }))
+    expect(screen.getByTestId('recall-card')).toBeInTheDocument()
+    expect(screen.getByText('23V456')).toBeInTheDocument()
+  })
+
+  it('shows urgency banner when park-it recall is present', async () => {
+    const user = userEvent.setup()
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+        recalls={[parkItRecall]}
+      />
+    )
+
+    await user.click(screen.getByRole('tab', { name: 'Recalls (1)' }))
+    expect(screen.getByText(/stop driving this vehicle/i)).toBeInTheDocument()
+  })
+
+  it('deduplicates recalls by campaign number', async () => {
+    const user = userEvent.setup()
+    const duplicateRecall: Recall = { ...baseRecall, id: 'recall-3', model_year: 2010 }
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+        recalls={[baseRecall, duplicateRecall]}
+      />
+    )
+
+    // Should deduplicate to 1 recall since same campaign number
+    await user.click(screen.getByRole('tab', { name: 'Recalls (1)' }))
+    expect(screen.getAllByTestId('recall-card')).toHaveLength(1)
+  })
+
+  it('does not show Recalls tab when recalls array is empty', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+        recalls={[]}
+      />
+    )
+    expect(screen.queryByRole('tab', { name: /recalls/i })).not.toBeInTheDocument()
+  })
+
+  it('does not show Recalls tab when recalls prop is omitted', () => {
+    render(
+      <BikeDetailTabs
+        motorcycle={baseMoto}
+        documents={[]}
+        serviceIntervals={[]}
+      />
+    )
+    expect(screen.queryByRole('tab', { name: /recalls/i })).not.toBeInTheDocument()
   })
 })
