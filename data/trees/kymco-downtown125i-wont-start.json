@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco Downtown 125i scooter, covering battery, starter, fuel, and ignition.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights on but starter doesn't engage", "next": "check_kill_switch" },
+          { "text": "Starter cranks but engine doesn't fire", "next": "check_fuel_pump" },
+          { "text": "Starter clicks but doesn't spin", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check battery voltage",
+        "safety": "yellow",
+        "warning": "Wear eye protection. Battery acid is corrosive.",
+        "instructions": "Locate the battery on the Downtown 125i under the seat. Measure with a multimeter (DC volts). Should read 12.4V+. Below 12.0V = insufficient for cranking. Clean corroded terminals. The Downtown 125i typically uses a YTX9-BS or similar battery.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "Battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V", "next": "solution_charge_battery" },
+          { "text": "12.0-12.3V", "next": "solution_charge_battery" },
+          { "text": "12.4V+", "next": "check_fuses" }
+        ]
+      },
+      {
+        "id": "check_fuses",
+        "type": "check",
+        "text": "Check fuses",
+        "safety": "yellow",
+        "warning": "Ignition off before checking fuses.",
+        "instructions": "Check main fuse (20-30A) and all secondary fuses in the fuse box near the battery. The Downtown 125i is a larger scooter with more electrical systems. Replace blown fuses with same rating only.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Fuses OK?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown fuse found", "next": "solution_fuse" },
+          { "text": "All good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check safety interlocks",
+        "safety": "green",
+        "instructions": "Downtown 125i interlocks: (1) Kill switch in RUN, (2) Side stand retracted, (3) Brake lever applied while pressing start. Toggle kill switch several times. The Downtown 125i may also require the rear brake specifically.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "Switches resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — now cranks", "next": "solution_switch" },
+          { "text": "No — still dead", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass relay carelessly.",
+        "instructions": "Listen for relay click when pressing start. Click + no crank = starter motor fault. No click = wiring/switch issue. Check for 12V at relay trigger wire.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Relay status?",
+        "safety": "green",
+        "options": [
+          { "text": "Clicks, no crank", "next": "solution_starter" },
+          { "text": "No click, no voltage", "next": "solution_wiring" },
+          { "text": "Cranks but won't fire", "next": "check_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. No flames.",
+        "instructions": "Turn ignition ON — listen for fuel pump prime (2-3 second whir). The Downtown 125i is fuel-injected. No prime sound = check fuel pump fuse. Verify fuel in tank.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel pump status?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound", "next": "solution_fuel_pump" },
+          { "text": "Pump primes, still no start", "next": "check_spark" },
+          { "text": "Empty tank", "next": "solution_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "High voltage — do not touch plug wire while cranking.",
+        "instructions": "Remove spark plug, reconnect to cap, ground against engine. Crank and look for blue spark. The Downtown 125i uses electronic fuel injection with ECU-controlled ignition timing.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Spark quality?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark", "next": "solution_compression" },
+          { "text": "Weak or no spark", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge/Replace Battery",
+        "safety": "green",
+        "action": "Charge with smart charger or replace.",
+        "details": "The Downtown 125i uses a larger battery than small scooters. Check charging system (13.5-14.8V at 3,000 RPM) if it dies again. Battery lasts 2-3 years."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Fuse",
+        "safety": "yellow",
+        "warning": "Never upsize fuses.",
+        "action": "Replace blown fuse with same rating.",
+        "details": "If it blows again, trace wiring for short circuit."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Switch Resolved",
+        "safety": "green",
+        "action": "Safety interlock was preventing start.",
+        "details": "Clean switch contacts. Apply dielectric grease. Check side stand spring tension."
+      },
+      {
+        "id": "solution_starter",
+        "type": "solution",
+        "text": "Starter Motor Fault",
+        "safety": "yellow",
+        "warning": "Check cable connection first.",
+        "action": "Check starter cable, replace motor if needed.",
+        "details": "The Downtown 125i starter motor is accessible from the engine area. Check cable connection before replacing."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring Fault",
+        "safety": "yellow",
+        "warning": "Ignition off for wiring checks.",
+        "action": "Trace start circuit wiring.",
+        "details": "Check start button, handlebar switches, side stand switch, brake switch connectors. Water ingress common."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel Pump Issue",
+        "safety": "yellow",
+        "warning": "Fire risk with fuel components.",
+        "action": "Check fuel pump fuse, connector, replace pump if failed.",
+        "details": "Check fuse first, then 12V at connector. No voltage = wiring. Voltage but silent = pump failed."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Add fresh gasoline.",
+        "details": "The Downtown 125i has a larger fuel tank (~10 liters). Let pump prime before starting after running dry."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition Fault",
+        "safety": "yellow",
+        "warning": "High voltage components.",
+        "action": "Replace spark plug first, then check ECU, coil, sensors.",
+        "details": "New plug (check manual for spec). The Downtown 125i uses ECU-controlled ignition. A faulty crank position sensor or ECU can cause no-spark. Check for stored fault codes if possible."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression Issue",
+        "safety": "yellow",
+        "warning": "Remove plug for compression test.",
+        "action": "Compression test — should be 10-13 bar.",
+        "details": "Low compression = worn rings, head gasket, or tight valves. Check valve clearances. The Downtown 125i is liquid-cooled, so a blown head gasket may also show as coolant in oil or white exhaust smoke."
+      }
+    ]
+  }
+}

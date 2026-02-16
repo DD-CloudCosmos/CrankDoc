@@ -1,0 +1,395 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Suspension Diagnosis",
+  "description": "Diagnose suspension issues on scooters including front forks (telescopic or leading-link), rear shocks (usually twin non-adjustable shocks), bottoming out, leaking seals, uneven tire wear, and handling problems.",
+  "category": "suspension",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What suspension problem are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Suspension bottoms out easily over bumps", "next": "check_bottoming_location" },
+          { "text": "Ride feels harsh and stiff — every bump is felt", "next": "check_harsh_ride" },
+          { "text": "Front forks are leaking oil", "next": "check_fork_leak" },
+          { "text": "Scooter feels unstable, wallows, or wobbles", "next": "check_instability" },
+          { "text": "Uneven tire wear", "next": "check_tire_wear" },
+          { "text": "Clunking or knocking noise from suspension", "next": "check_suspension_noise" }
+        ]
+      },
+      {
+        "id": "check_bottoming_location",
+        "type": "question",
+        "text": "Which end of the scooter is bottoming out?",
+        "safety": "green",
+        "options": [
+          { "text": "Front — forks compress fully over bumps or under braking", "next": "check_fork_oil_level" },
+          { "text": "Rear — bottoms out with a passenger or over bumps", "next": "check_rear_shock_condition" },
+          { "text": "Both ends", "next": "check_rider_load" }
+        ]
+      },
+      {
+        "id": "check_rider_load",
+        "type": "question",
+        "text": "Are you regularly carrying a passenger or heavy loads?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — riding two-up or with heavy cargo frequently", "next": "solution_overloaded" },
+          { "text": "No — just solo riding with minimal cargo", "next": "check_fork_oil_level" }
+        ]
+      },
+      {
+        "id": "check_fork_oil_level",
+        "type": "check",
+        "text": "Check the front fork oil level and condition.",
+        "safety": "yellow",
+        "warning": "Fork removal requires supporting the front of the scooter securely. Use a proper stand or lift. The scooter must be completely stable before removing the forks.",
+        "instructions": "Front forks that bottom out easily often have low or degraded fork oil. On most scooter forks, the oil level is checked by removing the fork cap and measuring the oil height from the top of the fork tube with the spring removed and the fork fully compressed. The correct oil level varies by model — check your service manual. Fork oil also degrades over time, losing its viscosity and damping ability. If the oil is dark, thin, or has metallic particles, it needs replacement regardless of level. Most scooter fork oil should be changed every 10,000-15,000 miles.",
+        "next": "fork_oil_result"
+      },
+      {
+        "id": "fork_oil_result",
+        "type": "question",
+        "text": "What is the condition of the fork oil?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil level is low or oil looks dark and thin", "next": "solution_fork_oil_change" },
+          { "text": "Oil level and condition seem OK", "next": "solution_fork_spring_upgrade" },
+          { "text": "I cannot check the fork oil myself", "next": "solution_fork_service_shop" }
+        ]
+      },
+      {
+        "id": "check_rear_shock_condition",
+        "type": "check",
+        "text": "Inspect the rear shock absorbers.",
+        "safety": "green",
+        "instructions": "Most scooters have twin rear shocks (one on each side). Inspect each shock for oil leaks around the shaft seal at the top of the shock body — a wet or oily shock has a blown seal and has lost its damping ability. Push down firmly on the rear of the seat and release. The rear should compress and return smoothly to its resting position without bouncing repeatedly. If it bounces more than once or twice, the shocks are worn. Also check if the rear shocks have a preload adjustment (a threaded collar or a stepped adjustment with a hook wrench) and try increasing it if available.",
+        "next": "rear_shock_result"
+      },
+      {
+        "id": "rear_shock_result",
+        "type": "question",
+        "text": "What is the condition of the rear shocks?",
+        "safety": "green",
+        "options": [
+          { "text": "One or both shocks are leaking oil", "next": "solution_replace_rear_shocks" },
+          { "text": "Rear bounces excessively — shocks are worn", "next": "solution_replace_rear_shocks" },
+          { "text": "Shocks have preload adjustment available", "next": "solution_adjust_rear_preload" },
+          { "text": "Shocks look OK and have no adjustment", "next": "solution_rear_shock_upgrade" }
+        ]
+      },
+      {
+        "id": "check_harsh_ride",
+        "type": "check",
+        "text": "Check tire pressures — the most common cause of a harsh ride.",
+        "safety": "green",
+        "instructions": "Overinflated tires are the most common cause of a harsh ride on scooters. Check both tire pressures when cold (before riding). Scooter tire pressures are typically: front 29-33 PSI (200-230 kPa) and rear 33-36 PSI (230-250 kPa), but always check the sticker on the scooter body or your service manual for exact values. Even 5 PSI over specification makes a noticeable difference in ride quality. Also check the tire condition — old, hardened tires with cracked sidewalls lose their ability to absorb bumps even at correct pressure.",
+        "next": "tire_pressure_result"
+      },
+      {
+        "id": "tire_pressure_result",
+        "type": "question",
+        "text": "Are the tire pressures correct?",
+        "safety": "green",
+        "options": [
+          { "text": "Tires were overinflated — corrected now", "next": "solution_tire_pressure_corrected" },
+          { "text": "Pressures are correct but ride is still harsh", "next": "check_tire_age" }
+        ]
+      },
+      {
+        "id": "check_tire_age",
+        "type": "check",
+        "text": "Check the tire age and condition.",
+        "safety": "green",
+        "instructions": "Look at the tire sidewall for the DOT date code — a four-digit number where the first two digits are the week and the last two are the year of manufacture (e.g., 2522 means week 25 of 2022). Tires older than 5-6 years harden and lose their ability to grip and absorb bumps, even if the tread looks OK. Scooter tires are small and inexpensive — they should be replaced when old, regardless of tread depth. Also check for flat spots from sitting in one position, cracking in the tread grooves, or bulges in the sidewall.",
+        "next": "tire_age_result"
+      },
+      {
+        "id": "tire_age_result",
+        "type": "question",
+        "text": "What is the age and condition of the tires?",
+        "safety": "green",
+        "options": [
+          { "text": "Tires are older than 5 years or have cracks/flat spots", "next": "solution_replace_tires" },
+          { "text": "Tires are relatively new and in good condition", "next": "solution_suspension_harsh" }
+        ]
+      },
+      {
+        "id": "check_fork_leak",
+        "type": "check",
+        "text": "Inspect the front fork seals for oil leakage.",
+        "safety": "green",
+        "instructions": "Look at the front fork tubes where the shiny upper tube slides into the lower fork leg. Run your finger around the area just below the dust seal (the rubber cover at the top of the lower fork leg). If there is oil residue on your finger or oil running down the fork tube, the fork seal is leaking. Check both fork legs — one may leak while the other is fine. Also look at the fork tube surface for scratches, pits, or rust spots — any damage to the tube surface will cause new seals to leak immediately.",
+        "next": "fork_leak_result"
+      },
+      {
+        "id": "fork_leak_result",
+        "type": "question",
+        "text": "Are the fork seals leaking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — oil is visible on one or both forks", "next": "check_fork_tube_surface" },
+          { "text": "A small amount of moisture but not actively leaking", "next": "solution_fork_seal_saver" }
+        ]
+      },
+      {
+        "id": "check_fork_tube_surface",
+        "type": "check",
+        "text": "Inspect the fork tube surface for damage.",
+        "safety": "green",
+        "instructions": "Run your fingertips slowly along the exposed portion of the fork tube. Feel for any pits, nicks, scratches, or rough spots. Even a tiny imperfection will cut through a new fork seal quickly. Rust pitting is the most common cause of fork tube damage on scooters because the tubes are exposed to road spray and many scooter owners do not wipe them down regularly. Stone chips from road debris can also nick the tube surface.",
+        "next": "fork_tube_result"
+      },
+      {
+        "id": "fork_tube_result",
+        "type": "question",
+        "text": "Is the fork tube surface smooth and undamaged?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — surface is smooth", "next": "solution_replace_fork_seals" },
+          { "text": "No — there are pits, scratches, or rust", "next": "solution_fork_tube_repair" }
+        ]
+      },
+      {
+        "id": "check_instability",
+        "type": "question",
+        "text": "When does the instability occur?",
+        "safety": "yellow",
+        "warning": "An unstable scooter is a safety hazard. Ride slowly and carefully until the issue is diagnosed and resolved.",
+        "options": [
+          { "text": "At higher speeds — wobble or weave", "next": "check_steering_bearings" },
+          { "text": "Over bumps — wallowing or floaty feeling", "next": "check_rear_shock_condition" },
+          { "text": "Under braking — front end dives excessively", "next": "check_fork_oil_level" }
+        ]
+      },
+      {
+        "id": "check_steering_bearings",
+        "type": "check",
+        "text": "Check the steering head bearings for wear or looseness.",
+        "safety": "yellow",
+        "warning": "Support the scooter securely so the front wheel is off the ground before testing the steering bearings.",
+        "instructions": "With the front wheel off the ground (use the center stand and have a helper lift the front, or use a front stand), grab the lower fork legs and push and pull them forward and back. Any clunking or play indicates loose or worn steering head bearings. Also turn the handlebars slowly from lock to lock — the steering should turn smoothly without tight spots, notches, or grinding. A notchy feeling in the center position is a classic sign of worn bearings that have developed an indent (brinelling) from road impacts.",
+        "next": "steering_bearing_result"
+      },
+      {
+        "id": "steering_bearing_result",
+        "type": "question",
+        "text": "What is the condition of the steering head bearings?",
+        "safety": "green",
+        "options": [
+          { "text": "Play or clunking felt — bearings are loose or worn", "next": "solution_steering_bearings" },
+          { "text": "Notchy or tight spots when turning", "next": "solution_steering_bearings" },
+          { "text": "Steering feels smooth with no play", "next": "solution_check_wheels_tires" }
+        ]
+      },
+      {
+        "id": "check_tire_wear",
+        "type": "question",
+        "text": "What pattern of uneven wear do you see?",
+        "safety": "green",
+        "options": [
+          { "text": "One side of the tire is more worn than the other", "next": "solution_alignment_issue" },
+          { "text": "Cupping or scalloped wear pattern", "next": "solution_shock_worn_tire_wear" },
+          { "text": "Center of tire worn but edges have tread", "next": "solution_tire_pressure_high" },
+          { "text": "Flat spot on the tire", "next": "solution_flat_spot" }
+        ]
+      },
+      {
+        "id": "check_suspension_noise",
+        "type": "question",
+        "text": "Where is the clunking or knocking coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "From the front end when going over bumps", "next": "solution_front_noise" },
+          { "text": "From the rear when going over bumps", "next": "solution_rear_noise" },
+          { "text": "From the steering when turning the handlebars", "next": "check_steering_bearings" }
+        ]
+      },
+      {
+        "id": "solution_overloaded",
+        "type": "solution",
+        "text": "The scooter is being overloaded beyond its suspension capacity.",
+        "safety": "yellow",
+        "warning": "Overloading a scooter affects handling, braking distance, and tire wear. Do not exceed the maximum load rating specified in your owner's manual.",
+        "action": "Reduce the load or upgrade the rear shocks to handle the weight",
+        "details": "Most scooters are designed for a single rider with minimal cargo. Frequent two-up riding or heavy loads overwhelm the stock suspension. Check your owner's manual for the maximum load capacity. If you regularly ride with a passenger, consider upgrading to adjustable rear shocks with a higher spring rate. Some aftermarket shocks offer adjustable preload to accommodate varying loads. On the front, heavier fork oil (one grade above stock) can reduce dive. Also check that tire pressures are set to the laden (loaded) specification when carrying weight."
+      },
+      {
+        "id": "solution_fork_oil_change",
+        "type": "solution",
+        "text": "The front fork oil needs replacement.",
+        "safety": "yellow",
+        "warning": "Fork service requires removing the forks from the scooter. Ensure the front end is securely supported throughout the procedure.",
+        "action": "Replace the fork oil with fresh oil of the correct weight and level",
+        "details": "Drain the old fork oil by removing the fork drain bolt (usually at the bottom of each fork leg) or by removing the fork caps and inverting the forks. Pump the fork several times to expel all old oil. Refill with fresh fork oil of the correct weight (typically 5W or 10W for most scooters — check your service manual). Measure the oil level precisely — the level is measured from the top of the fork tube with the spring removed and the fork fully compressed. Incorrect oil level dramatically affects damping. Replace the fork oil every 10,000-15,000 miles or every 2 years."
+      },
+      {
+        "id": "solution_fork_spring_upgrade",
+        "type": "solution",
+        "text": "The fork springs may be too soft for your weight or riding style.",
+        "safety": "yellow",
+        "warning": "Changing fork springs requires disassembling the forks. This is a good time to replace seals and oil as well.",
+        "action": "Install stiffer fork springs or add preload spacers",
+        "details": "If the fork oil is fresh and at the correct level but the forks still bottom out, the springs are too soft. Options: add a preload spacer (a PVC or aluminum tube placed on top of the spring to increase preload — a common DIY modification for scooters), or replace the springs with aftermarket stiffer springs if available for your model. Increasing the fork oil weight by one grade (e.g., from 5W to 10W) also increases damping resistance. For scooters that are regularly loaded heavily, a combination of a preload spacer and slightly heavier oil works well."
+      },
+      {
+        "id": "solution_fork_service_shop",
+        "type": "solution",
+        "text": "Have a shop service the front forks.",
+        "safety": "green",
+        "action": "Take the scooter to a shop for fork oil change and inspection",
+        "details": "If you are not comfortable removing and servicing the forks yourself, any motorcycle or scooter shop can do a fork oil change. This is routine maintenance that most shops can complete in an hour or two. Ask them to also inspect the fork seals, bushings, and springs while the forks are apart. A fork service typically costs less than a rear shock replacement and makes a significant improvement in ride quality and control."
+      },
+      {
+        "id": "solution_replace_rear_shocks",
+        "type": "solution",
+        "text": "The rear shock absorbers are worn and need replacement.",
+        "safety": "yellow",
+        "warning": "When replacing rear shocks, ensure the scooter is securely supported. The rear may drop when the old shocks are removed.",
+        "action": "Replace both rear shock absorbers",
+        "details": "Always replace rear shocks as a pair — even if only one is leaking, the other is likely near the end of its life too. Most scooter rear shocks are simple non-rebuildable units that bolt on at the top and bottom. Replacement is usually straightforward — two bolts per shock. Consider upgrading to adjustable aftermarket shocks if you carry a passenger or heavy loads frequently. Adjustable shocks allow you to increase preload for heavy loads and decrease it for solo riding. Match the shock length and mounting eye dimensions to the originals."
+      },
+      {
+        "id": "solution_adjust_rear_preload",
+        "type": "solution",
+        "text": "Adjust the rear shock preload to support the load.",
+        "safety": "green",
+        "action": "Increase the rear shock preload to reduce bottoming out",
+        "details": "If your rear shocks have a preload adjustment (a stepped ring or threaded collar on the shock body), increase the preload to support the weight better. Adjustable scooter shocks typically have 3-5 preload positions. Use the softest setting for solo riding and increase for two-up or loaded riding. The correct setting should allow about 25-30% of the total rear suspension travel as rider sag (the amount the rear compresses under your weight). If the highest preload setting still allows bottoming, the shocks are either worn or too soft for your combined weight."
+      },
+      {
+        "id": "solution_rear_shock_upgrade",
+        "type": "solution",
+        "text": "Consider upgrading to adjustable rear shocks.",
+        "safety": "green",
+        "action": "Replace the non-adjustable rear shocks with adjustable aftermarket units",
+        "details": "Non-adjustable rear shocks (standard on most scooters) are designed for a single average-weight rider. If the suspension does not suit your weight or needs, aftermarket adjustable shocks are available for most popular scooter models. Look for shocks with at least preload adjustment. Gas-charged shocks offer better damping consistency than non-gas units. Match the eye-to-eye length and mounting hardware to your original shocks. Higher-quality aftermarket shocks are one of the most effective upgrades for scooter ride quality and handling."
+      },
+      {
+        "id": "solution_tire_pressure_corrected",
+        "type": "solution",
+        "text": "Overinflated tires were causing the harsh ride.",
+        "safety": "green",
+        "action": "Maintain correct tire pressures and check regularly",
+        "details": "Set tire pressures to the specification for your scooter and load. Check pressures when tires are cold (before riding). Hot tires read higher than cold tires, so do not bleed air from hot tires. Check pressures weekly or before every ride — small scooter tires lose pressure faster than larger tires. Use a quality gauge rather than the gas station pump gauges, which can be inaccurate. Correct tire pressure improves ride quality, tire life, handling, and fuel economy."
+      },
+      {
+        "id": "solution_replace_tires",
+        "type": "solution",
+        "text": "The tires are old or damaged and should be replaced.",
+        "safety": "yellow",
+        "warning": "Old, hardened tires have significantly reduced grip, especially in wet conditions. Replace them promptly.",
+        "action": "Replace the old or damaged tires",
+        "details": "Scooter tires should be replaced if they are older than 5-6 years (regardless of tread depth), have cracked sidewalls, flat spots from sitting, or tread depth below 1mm. Scooter tires are inexpensive relative to motorcycle tires. Choose a tire rated for your scooter's speed capability and intended use. Ensure the tires are mounted in the correct direction (marked with a rotation arrow on the sidewall). After mounting, balance the tires — even scooter tires benefit from balancing, which reduces vibration and uneven wear."
+      },
+      {
+        "id": "solution_suspension_harsh",
+        "type": "solution",
+        "text": "The suspension may need service or adjustment to soften the ride.",
+        "safety": "green",
+        "action": "Service the front forks with lighter oil and check rear shock condition",
+        "details": "If tire pressures and age are not the issue, the suspension itself may be too stiff. Try lighter-weight fork oil (one grade below current — e.g., from 10W to 5W) to reduce front-end harshness. If the rear shocks have preload adjustment, try reducing it. On scooters with non-adjustable rear shocks, the shocks may actually be seized internally (the damping rod corrodes and locks up), creating a very harsh ride — replace them with new units. Also verify that all suspension bolts are properly torqued — an overtorqued shock mount can restrict suspension travel."
+      },
+      {
+        "id": "solution_replace_fork_seals",
+        "type": "solution",
+        "text": "The front fork seals need replacement.",
+        "safety": "yellow",
+        "warning": "Fork seal replacement requires removing the forks and using a seal driver tool. Incorrect installation causes immediate re-leaking.",
+        "action": "Replace the fork seals, dust seals, and fork oil",
+        "details": "Replace both the oil seal and dust seal (the outer rubber seal that keeps dirt out). While the forks are apart, replace the fork oil with fresh oil at the correct weight and level. Before reassembly, ensure the fork tube is clean and the seal bore in the lower fork leg is free of old seal material. Use a proper seal driver — improvised tools can damage the new seal. After reassembly, cycle the forks several times and check for leaks. To extend seal life, wipe the fork tubes regularly to remove road grime and install fork tube protectors if available for your model."
+      },
+      {
+        "id": "solution_fork_seal_saver",
+        "type": "solution",
+        "text": "A small amount of fork moisture may be cleared without full seal replacement.",
+        "safety": "green",
+        "action": "Try a fork seal cleaning tool before replacing the seals",
+        "details": "If the forks are weeping slightly (a thin film of oil but not actively dripping), dirt trapped under the seal lip may be the cause. A fork seal cleaning tool (a thin flexible strip that slides under the seal lip) can remove trapped debris and restore the seal. Also try pushing the dust seal down, cleaning underneath it, and working the forks through their travel several times. If the weeping stops, monitor it. If it returns or worsens, the seals need replacement. Fork seal cleaners are inexpensive and worth trying before committing to a full seal change."
+      },
+      {
+        "id": "solution_fork_tube_repair",
+        "type": "solution",
+        "text": "The fork tubes are damaged and must be addressed before new seals.",
+        "safety": "yellow",
+        "warning": "Installing new seals on damaged tubes is pointless — they will leak again immediately.",
+        "action": "Repair or replace the damaged fork tubes",
+        "details": "Minor surface scratches can sometimes be smoothed with very fine emery cloth (2000 grit) or a fork tube polishing tool. Rust pitting requires more aggressive treatment — the tubes may need professional polishing or chrome replating. If the damage is severe, replacement fork tubes are available for most scooter models. After the tube surface is smooth, install new seals and fresh oil. To prevent future tube damage, apply a fork tube protector film, wipe the tubes after every ride, and apply a light coating of fork oil or silicone spray to protect against corrosion."
+      },
+      {
+        "id": "solution_steering_bearings",
+        "type": "solution",
+        "text": "The steering head bearings need adjustment or replacement.",
+        "safety": "yellow",
+        "warning": "Severely worn steering bearings can cause a dangerous wobble at speed. Do not ride at highway speeds until this is resolved.",
+        "action": "Adjust or replace the steering head bearings",
+        "details": "Scooters typically use either tapered roller bearings or ball bearings in the steering head. If there is play, the bearings may just need tightening (adjusting the preload nut). If the steering feels notchy or has tight spots, the bearings are damaged and must be replaced — tightening damaged bearings will not fix the problem. Bearing replacement requires pressing the old races out of the frame and pressing new ones in. Many scooter shops can do this job. When properly adjusted, the steering should turn smoothly through the full range with no play and no tight spots."
+      },
+      {
+        "id": "solution_check_wheels_tires",
+        "type": "solution",
+        "text": "The instability may be caused by wheel or tire issues rather than suspension.",
+        "safety": "yellow",
+        "warning": "A scooter that wobbles at speed is dangerous. Identify and fix the cause before riding at speed.",
+        "action": "Check wheel bearings, tire condition, and wheel balance",
+        "details": "If the steering bearings are in good condition, instability can be caused by: worn wheel bearings (grab the wheel and rock it side to side — any looseness means worn bearings), unbalanced wheels (especially after a tire change), uneven tire wear, mismatched or incorrect tire sizes, or low tire pressure. Inspect both wheels. Scooter wheel bearings are inexpensive and relatively easy to replace. Ensure tires are balanced after mounting — even a small imbalance on a lightweight scooter wheel causes noticeable vibration at speed."
+      },
+      {
+        "id": "solution_alignment_issue",
+        "type": "solution",
+        "text": "One-sided tire wear indicates a possible alignment or bearing issue.",
+        "safety": "yellow",
+        "warning": "Misalignment affects handling and tire life. Address it before the tire wears dangerously thin.",
+        "action": "Check rear wheel alignment and wheel bearings",
+        "details": "One-sided wear on the rear tire usually indicates the rear wheel is not aligned with the front. On scooters with a swingarm, check the axle adjustment marks (if present) and ensure both sides are equal. On scooters with a single-sided swingarm or engine-mounted rear wheel, misalignment can come from a bent axle or worn engine mount bushings. Also check the wheel bearings — a worn bearing allows the wheel to tilt, causing one-sided wear. If the front tire shows one-sided wear, the fork legs may be misaligned in the triple clamp."
+      },
+      {
+        "id": "solution_shock_worn_tire_wear",
+        "type": "solution",
+        "text": "Cupped or scalloped tire wear indicates worn shock absorbers.",
+        "safety": "yellow",
+        "warning": "Worn shocks that cause cupping also reduce handling and braking control.",
+        "action": "Replace the worn shock absorbers and the affected tire",
+        "details": "Cupping (scalloped wear pattern around the tire circumference) is caused by the tire bouncing rather than maintaining constant contact with the road. This happens when shock absorbers are worn and cannot control the suspension rebound. Replace the shocks to restore proper tire contact. The cupped tire should also be replaced, as the irregular surface causes vibration and noise that will not smooth out. After replacing shocks and tires, the ride quality and handling will improve dramatically."
+      },
+      {
+        "id": "solution_tire_pressure_high",
+        "type": "solution",
+        "text": "Center-only tire wear indicates chronic overinflation.",
+        "safety": "green",
+        "action": "Reduce tire pressure to the correct specification",
+        "details": "When a tire is consistently overinflated, only the center of the tread contacts the road, causing rapid center wear while the edges remain unworn. Set the pressure to the manufacturer's specification (found on the scooter body sticker or in the manual). If the center is already worn significantly more than the edges, the tire may need replacement even if the center tread depth is still above minimum, because the tire profile is no longer correct for proper handling."
+      },
+      {
+        "id": "solution_flat_spot",
+        "type": "solution",
+        "text": "A flat spot indicates the tire sat in one position for too long.",
+        "safety": "yellow",
+        "warning": "A flat-spotted tire causes vibration and can affect handling. Replace it if the flat spot is significant.",
+        "action": "Replace the flat-spotted tire or ride gently to see if it rounds out",
+        "details": "Scooters that sit unused for weeks or months develop flat spots where the tire contacts the ground. The rubber deforms under the weight of the scooter. Minor flat spots may round out after 10-20 minutes of riding as the tire heats up and becomes pliable. Severe flat spots (visible indentation) will not fully recover and the tire should be replaced. To prevent flat spots during storage: inflate tires to the maximum rated pressure, move the scooter periodically to change the contact point, or place the scooter on its center stand to reduce weight on the tires."
+      },
+      {
+        "id": "solution_front_noise",
+        "type": "solution",
+        "text": "Front suspension noise is typically caused by worn fork bushings or low oil.",
+        "safety": "yellow",
+        "warning": "Clunking from the front end can also indicate loose axle or caliper bolts — check these before assuming it is the forks.",
+        "action": "Check fork oil, fork bushings, and all front-end fasteners",
+        "details": "Common causes of front suspension noise: low or degraded fork oil (causes knocking when the forks compress fully), worn fork bushings (allow the fork tube to move laterally inside the lower leg, causing a clunk over bumps), loose front axle nut, loose caliper mounting bolts, or loose fender bolts. Check all accessible fasteners first — tighten anything loose. If the noise persists, the forks likely need a full service with fresh oil, new bushings, and new seals. A fork service shop can inspect and advise on the specific cause."
+      },
+      {
+        "id": "solution_rear_noise",
+        "type": "solution",
+        "text": "Rear suspension noise is typically caused by worn shock mounts or bushings.",
+        "safety": "green",
+        "action": "Inspect rear shock mounting hardware and bushings",
+        "details": "Check the rear shock mounting bolts at the top and bottom — tighten if loose. Inspect the shock eye bushings (rubber or polyurethane inserts in the shock mounting points) for cracking, deterioration, or excessive play. Worn bushings allow the shock to move in its mount, creating a clunking noise. On scooters with a single-sided swingarm that pivots at the engine, also check the engine mount bolts and swing arm pivot for looseness. If the shock itself is making noise (internal rattling), it has failed internally and needs replacement."
+      }
+    ]
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and consumption on the Kymco Downtown 300i 276cc liquid-cooled scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil dripping", "next": "find_source" },
+          { "text": "Level drops, no visible leak", "next": "check_burning" },
+          { "text": "Oil weeping from engine", "next": "check_gaskets" },
+          { "text": "Milky oil (white/creamy)", "next": "solution_coolant_mix" }
+        ]
+      },
+      {
+        "id": "find_source",
+        "type": "check",
+        "text": "Locate leak",
+        "safety": "green",
+        "instructions": "Degrease, run, inspect. The Downtown 300i 276cc engine has more gasket surface area than 125s. Common leak points: drain plug, valve cover, crankcase, crank seals, oil filter area. Distinguish oil (brown/black) from coolant (colored, sweet).",
+        "next": "source_result"
+      },
+      {
+        "id": "source_result",
+        "type": "question",
+        "text": "Source?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug", "next": "check_plug" },
+          { "text": "Valve cover", "next": "solution_valve_cover" },
+          { "text": "Seal/gasket", "next": "solution_seal" },
+          { "text": "Cannot find", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Check drain plug",
+        "safety": "green",
+        "instructions": "Check tightness, crush washer, threads. The 300i may have multiple drain points (engine oil and possibly a CVT area drain).",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose", "next": "solution_tighten" },
+          { "text": "Bad washer", "next": "solution_washer" },
+          { "text": "Stripped", "next": "solution_threads" }
+        ]
+      },
+      {
+        "id": "check_burning",
+        "type": "check",
+        "text": "Check for burning",
+        "safety": "green",
+        "instructions": "Blue smoke = oil burning. Oil-fouled plug. Oil in air box. The 276cc engine consumes more oil than a 125 if rings are worn. Also check for coolant/oil mixing (head gasket).",
+        "next": "burn_result"
+      },
+      {
+        "id": "burn_result",
+        "type": "question",
+        "text": "Signs?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue smoke", "next": "check_source" },
+          { "text": "Oil in air box", "next": "solution_breather" },
+          { "text": "No signs", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_source",
+        "type": "check",
+        "text": "Seals vs rings",
+        "safety": "yellow",
+        "warning": "Professional diagnosis helpful.",
+        "instructions": "Startup/decel smoke = valve seals. Acceleration smoke + low compression = rings. Compression should be 11-14 bar for the 276cc engine.",
+        "next": "smoke_result"
+      },
+      {
+        "id": "smoke_result",
+        "type": "question",
+        "text": "When?",
+        "safety": "green",
+        "options": [
+          { "text": "Startup/decel", "next": "solution_seals" },
+          { "text": "Acceleration", "next": "solution_rings" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect gaskets",
+        "safety": "green",
+        "instructions": "Check valve cover, cylinder base, crankcase covers for oil seepage along seams.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Where?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover", "next": "solution_valve_cover" },
+          { "text": "Base/cover", "next": "solution_gasket" },
+          { "text": "Multiple", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Plug Tightened",
+        "safety": "green",
+        "action": "Tightened. Monitor.",
+        "details": "Torque to spec."
+      },
+      {
+        "id": "solution_washer",
+        "type": "solution",
+        "text": "New Washer",
+        "safety": "green",
+        "action": "Replace crush washer.",
+        "details": "Replace at every change."
+      },
+      {
+        "id": "solution_threads",
+        "type": "solution",
+        "text": "Thread Repair",
+        "safety": "yellow",
+        "warning": "Proper repair needed.",
+        "action": "Helicoil insert.",
+        "details": "Keep chips out of crankcase."
+      },
+      {
+        "id": "solution_valve_cover",
+        "type": "solution",
+        "text": "Valve Cover Gasket",
+        "safety": "green",
+        "action": "Replace gasket.",
+        "details": "Easy repair. Check valves while cover is off."
+      },
+      {
+        "id": "solution_seal",
+        "type": "solution",
+        "text": "Replace Seal",
+        "safety": "yellow",
+        "warning": "May need flywheel/CVT removal.",
+        "action": "Replace leaking seal.",
+        "details": "Intermediate repair."
+      },
+      {
+        "id": "solution_uv",
+        "type": "solution",
+        "text": "UV Dye",
+        "safety": "green",
+        "action": "Add UV dye to find leak.",
+        "details": "Run 15-20 min, inspect with UV light."
+      },
+      {
+        "id": "solution_breather",
+        "type": "solution",
+        "text": "Service Breather",
+        "safety": "green",
+        "action": "Clean breather system.",
+        "details": "If recurs, test compression."
+      },
+      {
+        "id": "solution_seals",
+        "type": "solution",
+        "text": "Valve Seals",
+        "safety": "yellow",
+        "warning": "Head removal required.",
+        "action": "Replace valve stem seals.",
+        "details": "Check guides too."
+      },
+      {
+        "id": "solution_rings",
+        "type": "solution",
+        "text": "Top-End Rebuild",
+        "safety": "yellow",
+        "warning": "Intermediate/advanced.",
+        "action": "New rings, bore service.",
+        "details": "The 276cc cylinder is more expensive to service than a 125."
+      },
+      {
+        "id": "solution_gasket",
+        "type": "solution",
+        "text": "Replace Gasket",
+        "safety": "yellow",
+        "warning": "May require component removal.",
+        "action": "Replace leaking gasket.",
+        "details": "Clean surfaces, install new gasket."
+      },
+      {
+        "id": "solution_coolant_mix",
+        "type": "solution",
+        "text": "Coolant in Oil — Head Gasket",
+        "safety": "red",
+        "warning": "Stop riding immediately. Coolant destroys bearings.",
+        "action": "Head gasket replacement required.",
+        "details": "Milky oil on dipstick = coolant mixing. The liquid-cooled 276cc engine is susceptible to head gasket issues. Stop riding, replace gasket, thorough oil flush before running."
+      }
+    ]
+  }
+}

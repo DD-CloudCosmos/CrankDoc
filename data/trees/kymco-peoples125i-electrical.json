@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco People S 125i including lighting, charging, and connections.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working", "next": "check_bulbs" },
+          { "text": "Battery keeps dying", "next": "check_charging" },
+          { "text": "Intermittent electrical issues", "next": "check_connectors" },
+          { "text": "Completely dead — no power at all", "next": "check_battery_main" }
+        ]
+      },
+      {
+        "id": "check_bulbs",
+        "type": "check",
+        "text": "Check bulbs and fuses",
+        "safety": "green",
+        "instructions": "Check the affected bulb (remove and inspect filament) and the corresponding fuse. The People S 125i fuse box is near the battery under the seat. Replace blown bulbs or fuses with correct ratings.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Did that fix it?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — working now", "next": "solution_bulb_fixed" },
+          { "text": "No — still not working", "next": "check_switch_wiring" },
+          { "text": "Fuse blows immediately", "next": "solution_short" }
+        ]
+      },
+      {
+        "id": "check_switch_wiring",
+        "type": "check",
+        "text": "Check switch and wiring",
+        "safety": "yellow",
+        "warning": "Disconnect battery before probing connectors.",
+        "instructions": "Check the relevant switch (dimmer, turn signal) and test for 12V at the bulb socket with the switch on. No voltage = wiring or switch fault between fuse and bulb. Check connectors for corrosion.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Faulty switch", "next": "solution_switch" },
+          { "text": "Wiring problem", "next": "solution_wiring" },
+          { "text": "Ground issue", "next": "solution_ground" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Test charging system",
+        "safety": "yellow",
+        "warning": "Keep hands from moving parts while engine runs.",
+        "instructions": "Engine at 3,000-4,000 RPM: measure battery voltage. Should be 13.5-14.8V. Below 13.0V = not charging. Above 15.0V = overcharging. Either condition damages the battery.",
+        "next": "charge_result"
+      },
+      {
+        "id": "charge_result",
+        "type": "question",
+        "text": "Charging voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V", "next": "check_stator" },
+          { "text": "13.5-14.8V — normal", "next": "solution_parasitic" },
+          { "text": "Above 15.0V", "next": "solution_reg_rec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test stator output",
+        "safety": "yellow",
+        "warning": "Stator produces AC voltage. Do not touch wires while running.",
+        "instructions": "Disconnect stator connector. Measure AC volts at stator output at 3,000 RPM. Should be 30-60V AC. Zero = stator failed. Proper AC = regulator/rectifier failed.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "Stator AC output?",
+        "safety": "green",
+        "options": [
+          { "text": "No AC voltage — stator bad", "next": "solution_stator" },
+          { "text": "Good AC — reg/rec bad", "next": "solution_reg_rec" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Inspect connectors",
+        "safety": "green",
+        "instructions": "Clean all accessible connectors: battery terminals, main harness under seat, handlebar switches, ground points. Use contact cleaner and apply dielectric grease. Intermittent issues are almost always corrosion-related on scooters.",
+        "next": "conn_result"
+      },
+      {
+        "id": "conn_result",
+        "type": "question",
+        "text": "Problem resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_connectors_fixed" },
+          { "text": "No — still intermittent", "next": "solution_harness" }
+        ]
+      },
+      {
+        "id": "check_battery_main",
+        "type": "check",
+        "text": "Check battery and main fuse",
+        "safety": "yellow",
+        "warning": "Dead electrical may indicate major short.",
+        "instructions": "Check: (1) Battery terminal tightness, (2) Main fuse (15-20A), (3) Battery voltage. If battery has voltage and fuse is good but nothing works, the ignition switch may have failed.",
+        "next": "dead_result"
+      },
+      {
+        "id": "dead_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose terminal", "next": "solution_terminals" },
+          { "text": "Blown main fuse", "next": "solution_main_fuse" },
+          { "text": "Dead battery", "next": "solution_new_battery" },
+          { "text": "All OK but no power", "next": "solution_ign_switch" }
+        ]
+      },
+      {
+        "id": "solution_bulb_fixed",
+        "type": "solution",
+        "text": "Bulb/Fuse Replaced",
+        "safety": "green",
+        "action": "Light is working with new bulb or fuse.",
+        "details": "Keep spares. If bulbs blow often, check regulator output."
+      },
+      {
+        "id": "solution_short",
+        "type": "solution",
+        "text": "Short Circuit",
+        "safety": "red",
+        "warning": "Short circuits can cause fires. Professional diagnosis recommended.",
+        "action": "Find and repair the short in the affected circuit.",
+        "details": "Disconnect loads one at a time to isolate. Look for bare wires touching ground."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Replace Switch",
+        "safety": "green",
+        "action": "Replace faulty handlebar switch assembly.",
+        "details": "Water ingress causes switch failure. Apply dielectric grease to new connector."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Repair Wiring",
+        "safety": "yellow",
+        "warning": "Use solder and heat-shrink for permanent repairs.",
+        "action": "Find and repair damaged wiring.",
+        "details": "Check where wires pass through grommets and where body panels can pinch wires."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Fix Ground",
+        "safety": "green",
+        "action": "Clean and secure ground connection.",
+        "details": "Clean to bare metal, reconnect, apply dielectric grease."
+      },
+      {
+        "id": "solution_parasitic",
+        "type": "solution",
+        "text": "Parasitic Drain",
+        "safety": "green",
+        "action": "Find the component draining the battery when parked.",
+        "details": "Measure current draw with ignition off (should be under 30mA). Pull fuses one at a time to identify the circuit. Common: aftermarket accessories, alarm, faulty reg/rec."
+      },
+      {
+        "id": "solution_reg_rec",
+        "type": "solution",
+        "text": "Replace Regulator/Rectifier",
+        "safety": "yellow",
+        "warning": "Overcharging damages battery and electronics.",
+        "action": "Replace the reg/rec unit.",
+        "details": "Clean mounting surface for heat dissipation. Verify 13.5-14.8V after replacement."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Requires flywheel puller tool.",
+        "action": "Replace the failed stator.",
+        "details": "Located inside the magneto cover. Intermediate repair."
+      },
+      {
+        "id": "solution_connectors_fixed",
+        "type": "solution",
+        "text": "Connectors Cleaned",
+        "safety": "green",
+        "action": "Problem resolved by cleaning connectors.",
+        "details": "Apply dielectric grease. Check every 6 months."
+      },
+      {
+        "id": "solution_harness",
+        "type": "solution",
+        "text": "Harness Inspection",
+        "safety": "yellow",
+        "warning": "May need professional help for complex harness faults.",
+        "action": "Systematically inspect wiring harness.",
+        "details": "Wiggle harness sections while monitoring the affected circuit. Check steering column flex point and under body panels."
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Terminals Cleaned",
+        "safety": "green",
+        "action": "Battery terminals cleaned and secured.",
+        "details": "Wire brush clean, reconnect negative last, apply dielectric grease."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Main Fuse Replaced",
+        "safety": "yellow",
+        "warning": "If it blows again, major short exists.",
+        "action": "Replace main fuse with same rating.",
+        "details": "Do not use higher rating. If it blows again, disconnect circuits systematically."
+      },
+      {
+        "id": "solution_new_battery",
+        "type": "solution",
+        "text": "Replace Battery",
+        "safety": "green",
+        "action": "Install new battery.",
+        "details": "Use correct type (typically YTX7A-BS). Check charging system after install."
+      },
+      {
+        "id": "solution_ign_switch",
+        "type": "solution",
+        "text": "Ignition Switch",
+        "safety": "yellow",
+        "warning": "Faulty switch can overheat.",
+        "action": "Test and replace ignition switch.",
+        "details": "Check for 12V on output when key is ON. If no pass-through, switch contacts have failed."
+      }
+    ]
+  }
+}

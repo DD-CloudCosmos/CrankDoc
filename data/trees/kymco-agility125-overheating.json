@@ -1,0 +1,203 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Overheating / Cooling Issues",
+  "description": "Diagnose overheating and heat-related problems on the air-cooled Kymco Agility 125 scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the overheating present on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine loses power in heavy traffic or hot weather", "next": "check_oil_level" },
+          { "text": "Engine smells hot or you can feel excessive heat from the cylinder", "next": "check_oil_level" },
+          { "text": "Engine makes pinging or knocking sounds under load", "next": "check_fuel_octane" },
+          { "text": "Engine seized or nearly seized while riding", "next": "solution_engine_seizure" }
+        ]
+      },
+      {
+        "id": "check_oil_level",
+        "type": "check",
+        "text": "Check the engine oil level and condition",
+        "safety": "green",
+        "instructions": "The Agility 125 is air-cooled, so engine oil is the primary heat-transfer medium. Place the scooter on its center stand on level ground. Check the oil level using the dipstick or sight glass on the engine. The oil should be between the minimum and maximum marks. Also check the oil condition — it should be amber to light brown. If it is black, gritty, or smells burned, it has broken down and is no longer protecting the engine. The Agility 125 oil capacity is approximately 0.8-0.9 liters.",
+        "next": "oil_level_result"
+      },
+      {
+        "id": "oil_level_result",
+        "type": "question",
+        "text": "What is the oil level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil is low — below minimum mark", "next": "solution_add_oil" },
+          { "text": "Oil is black, gritty, or smells burned", "next": "solution_change_oil" },
+          { "text": "Oil level and condition are fine", "next": "check_cooling_fins" }
+        ]
+      },
+      {
+        "id": "check_cooling_fins",
+        "type": "check",
+        "text": "Inspect the cylinder cooling fins",
+        "safety": "yellow",
+        "warning": "Do not touch the engine cylinder or head when the engine is hot. Allow it to cool completely before inspecting.",
+        "instructions": "The Agility 125 relies entirely on air flowing over the cylinder and cylinder head fins for cooling. Inspect the fins for: (1) Mud, dirt, or debris packed between the fins — this insulates the engine and prevents heat dissipation, (2) Broken or damaged fins, (3) Plastic bodywork or covers blocking airflow to the fins. Use a brush or compressed air to clean between all the fins. On scooters, the body panels can trap heat around the engine — make sure the engine area has adequate ventilation.",
+        "next": "fins_result"
+      },
+      {
+        "id": "fins_result",
+        "type": "question",
+        "text": "What did you find with the cooling fins?",
+        "safety": "green",
+        "options": [
+          { "text": "Fins were packed with dirt and debris — cleaned them", "next": "solution_fins_cleaned" },
+          { "text": "Fins are clean and undamaged", "next": "check_fan_shroud" }
+        ]
+      },
+      {
+        "id": "check_fan_shroud",
+        "type": "check",
+        "text": "Check the forced-air cooling fan and shroud",
+        "safety": "green",
+        "instructions": "The Agility 125 has a forced-air cooling system — a fan mounted on the magneto flywheel blows air through a shroud that directs it over the cylinder fins. This is how air-cooled scooters stay cool even at low speeds (unlike motorcycles that rely on forward motion). Inspect: (1) The fan shroud — make sure it is intact and properly attached. Missing or cracked shroud pieces will misdirect airflow, (2) The fan blades — check for broken or missing blades, (3) Debris blocking the air intake to the fan shroud.",
+        "next": "fan_result"
+      },
+      {
+        "id": "fan_result",
+        "type": "question",
+        "text": "What is the condition of the fan and shroud?",
+        "safety": "green",
+        "options": [
+          { "text": "Fan shroud is cracked, missing pieces, or not seated properly", "next": "solution_fix_shroud" },
+          { "text": "Fan blades are broken or damaged", "next": "solution_replace_fan" },
+          { "text": "Fan and shroud are in good condition", "next": "check_fuel_octane" }
+        ]
+      },
+      {
+        "id": "check_fuel_octane",
+        "type": "check",
+        "text": "Check fuel quality and octane",
+        "safety": "green",
+        "instructions": "Low-octane or poor-quality fuel can cause pre-ignition (pinging/knocking), which generates excessive heat. The Agility 125 typically requires 91+ octane (premium) fuel, especially in hot climates. Check: (1) What octane fuel are you using? (2) Is the fuel fresh? Stale fuel has degraded octane, (3) Are you hearing pinging or knocking under acceleration or going uphill? If so, the engine may be running too lean or on inadequate fuel.",
+        "next": "fuel_octane_result"
+      },
+      {
+        "id": "fuel_octane_result",
+        "type": "question",
+        "text": "What fuel are you using?",
+        "safety": "green",
+        "options": [
+          { "text": "Regular 87 octane or unknown", "next": "solution_upgrade_fuel" },
+          { "text": "Premium 91+ octane, still pinging", "next": "solution_carbon_buildup" },
+          { "text": "Fuel is fine, no pinging", "next": "check_valve_clearance" }
+        ]
+      },
+      {
+        "id": "check_valve_clearance",
+        "type": "check",
+        "text": "Check valve clearances",
+        "safety": "yellow",
+        "warning": "Valve clearance checks must be done with the engine completely cold. Incorrect clearance can damage the engine.",
+        "instructions": "Tight exhaust valves are a common cause of overheating on air-cooled scooter engines. When the exhaust valve does not fully close, hot combustion gases leak past it, overheating the valve and the head. On the Agility 125, remove the valve cover and check the clearances with feeler gauges with the engine at TDC on the compression stroke. Typical specs: intake 0.10mm, exhaust 0.15mm (verify with your service manual). Tight valves (below spec) must be adjusted.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "What are the valve clearances?",
+        "safety": "green",
+        "options": [
+          { "text": "Exhaust valve is tight (below spec)", "next": "solution_adjust_valves" },
+          { "text": "Intake valve is tight", "next": "solution_adjust_valves" },
+          { "text": "Both are within spec", "next": "solution_riding_habits" }
+        ]
+      },
+      {
+        "id": "solution_add_oil",
+        "type": "solution",
+        "text": "Add Engine Oil",
+        "safety": "green",
+        "action": "Add the correct engine oil to bring the level to the upper mark.",
+        "details": "Use a quality 10W-40 motorcycle-grade oil (with appropriate JASO MA or MB rating). Add oil slowly and check the level frequently — overfilling is harmful too. If the oil level drops quickly after topping up, check for leaks at the drain plug, crankcase, and valve cover. Also check for oil burning (blue smoke from the exhaust). On an air-cooled engine, maintaining proper oil level is critical because the oil carries much of the engine heat."
+      },
+      {
+        "id": "solution_change_oil",
+        "type": "solution",
+        "text": "Change the Engine Oil",
+        "safety": "green",
+        "action": "Drain the old oil and refill with fresh 10W-40 motorcycle oil.",
+        "details": "The Agility 125 should have its oil changed every 2,000-3,000 km or every 6 months, whichever comes first. Shorter intervals are better for air-cooled engines. Warm the engine briefly to thin the oil, then drain from the drain plug on the bottom of the engine. Replace the drain plug washer. Refill with approximately 0.8 liters of 10W-40 (check the dipstick for correct level). Used-up oil loses its ability to cool and protect the engine, directly contributing to overheating."
+      },
+      {
+        "id": "solution_fins_cleaned",
+        "type": "solution",
+        "text": "Cooling Fins Cleaned",
+        "safety": "green",
+        "action": "The cooling fins have been cleaned and airflow is restored.",
+        "details": "Clean the fins regularly, especially if you ride in muddy or dusty conditions. Packed debris between the fins insulates the engine and can cause significant overheating. Use a stiff brush, compressed air, or a gentle pressure wash to keep the fins clean. Check the fins every time you change the oil."
+      },
+      {
+        "id": "solution_fix_shroud",
+        "type": "solution",
+        "text": "Repair or Replace the Fan Shroud",
+        "safety": "green",
+        "action": "Reattach, repair, or replace the damaged fan shroud.",
+        "details": "The fan shroud is a critical part of the Agility 125 cooling system — it directs forced air from the magneto fan over the cylinder and head fins. Without a properly sealed shroud, the air blows in the wrong direction and the engine overheats, especially at low speeds and idle. If the shroud is cracked, it can sometimes be repaired with plastic welding or epoxy. If pieces are missing, replace it. Make sure all mounting screws are tight."
+      },
+      {
+        "id": "solution_replace_fan",
+        "type": "solution",
+        "text": "Replace the Cooling Fan",
+        "safety": "green",
+        "action": "Replace the damaged cooling fan.",
+        "details": "The cooling fan is integrated into the magneto flywheel on the Agility 125. If fan blades are broken, the fan will not move enough air and the engine will overheat. The fan/flywheel assembly must be replaced. A flywheel puller tool is required to remove the flywheel from the crankshaft. This is an intermediate repair. Broken fan blades can also cause vibration that damages the magneto."
+      },
+      {
+        "id": "solution_upgrade_fuel",
+        "type": "solution",
+        "text": "Switch to Higher Octane Fuel",
+        "safety": "green",
+        "action": "Use premium 91+ octane fuel in the Agility 125.",
+        "details": "Low-octane fuel in a high-compression engine causes pre-ignition (knocking), which generates excessive heat and can damage the piston. Drain the low-octane fuel and refill with premium. If you have been using low-octane fuel for a long time, the pinging may have caused carbon buildup in the combustion chamber, which makes the problem worse. Consider using a combustion chamber cleaner additive."
+      },
+      {
+        "id": "solution_carbon_buildup",
+        "type": "solution",
+        "text": "Combustion Chamber Carbon Removal",
+        "safety": "yellow",
+        "warning": "Chemical combustion chamber cleaners involve running the engine with the cleaner. Follow product instructions exactly.",
+        "action": "Remove carbon deposits from the combustion chamber.",
+        "details": "Carbon deposits in the combustion chamber create hot spots that cause pre-ignition even with good fuel. You can try a chemical cleaner (such as Seafoam or a dedicated combustion chamber cleaner) first. For heavy buildup, removing the cylinder head and manually scraping carbon deposits (using a plastic scraper to avoid damaging the aluminum) is more thorough. After cleaning, check and adjust the valve clearances."
+      },
+      {
+        "id": "solution_adjust_valves",
+        "type": "solution",
+        "text": "Adjust the Valve Clearances",
+        "safety": "yellow",
+        "warning": "Valve adjustment must be done with the engine cold and at TDC compression stroke. Incorrect adjustment can cause valve damage.",
+        "action": "Adjust the valves to the correct clearance specification.",
+        "details": "The Agility 125 uses screw-and-locknut type valve adjusters. With the engine at TDC on the compression stroke (both valves closed), loosen the locknut, insert the correct feeler gauge (intake: 0.10mm, exhaust: 0.15mm — verify with manual), adjust the screw until the feeler gauge slides with a slight drag, then tighten the locknut while holding the adjuster screw. Re-check the clearance after tightening. Tight exhaust valves are a leading cause of overheating and valve burning on air-cooled scooter engines."
+      },
+      {
+        "id": "solution_riding_habits",
+        "type": "solution",
+        "text": "Adjust Riding Habits for Air-Cooled Engine",
+        "safety": "green",
+        "action": "Modify riding habits to reduce engine heat in extreme conditions.",
+        "details": "The Agility 125 is air-cooled and will run hotter in certain conditions. To manage heat: (1) Avoid prolonged idling in traffic — turn the engine off if stopped for more than a few minutes, (2) In very hot weather, avoid sustained full-throttle riding, (3) Allow the engine to idle for 30-60 seconds before shutting off after hard riding to circulate oil, (4) Use quality synthetic 10W-40 oil which handles heat better, (5) Keep the cooling fins and fan shroud clean. Some heat under the body panels is normal — these are enclosed engines."
+      },
+      {
+        "id": "solution_engine_seizure",
+        "type": "solution",
+        "text": "Engine Seizure — Professional Repair Required",
+        "safety": "red",
+        "warning": "A seized engine requires professional disassembly and inspection. Do not attempt to force-start a seized engine. Continuing to ride with a partially seized engine will cause catastrophic damage.",
+        "action": "Stop riding immediately and have the engine professionally inspected.",
+        "details": "Engine seizure on an air-cooled scooter is typically caused by: (1) Low or no engine oil, (2) Extreme overheating from blocked cooling or sustained high-speed riding in extreme heat, (3) Incorrect piston-to-cylinder clearance. The engine will need to be disassembled to assess damage. At minimum, the piston and cylinder may need replacement or re-boring. Inspect the crankshaft bearings and connecting rod as well. This is a significant repair and may be uneconomical on an older Agility 125 depending on damage extent."
+      }
+    ]
+  }
+}

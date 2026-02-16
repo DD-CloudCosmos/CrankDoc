@@ -1,0 +1,287 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Brake Problems",
+  "description": "Diagnose brake issues on the sporty Kymco X-Town 300i with dual disc brakes and possible ABS.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake issue on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Weak stopping", "next": "check_which" },
+          { "text": "Squealing/grinding", "next": "check_pads" },
+          { "text": "Spongy lever", "next": "check_fluid" },
+          { "text": "Dragging", "next": "check_drag" },
+          { "text": "ABS light on", "next": "check_abs" }
+        ]
+      },
+      {
+        "id": "check_which",
+        "type": "question",
+        "text": "Which brake?",
+        "safety": "green",
+        "options": [
+          { "text": "Front", "next": "check_fluid" },
+          { "text": "Rear", "next": "check_rear" },
+          { "text": "Both", "next": "check_fluid" }
+        ]
+      },
+      {
+        "id": "check_fluid",
+        "type": "check",
+        "text": "Front brake fluid",
+        "safety": "yellow",
+        "warning": "Fluid damages paint.",
+        "instructions": "Check reservoir. The X-Town 300i has a sporty braking setup — adequate fluid is critical at higher speeds. DOT 4. Check level and condition.",
+        "next": "fluid_result"
+      },
+      {
+        "id": "fluid_result",
+        "type": "question",
+        "text": "Fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_pads" },
+          { "text": "Dark", "next": "solution_flush" },
+          { "text": "OK", "next": "check_pads" }
+        ]
+      },
+      {
+        "id": "check_rear",
+        "type": "check",
+        "text": "Rear brake fluid",
+        "safety": "yellow",
+        "warning": "Corrosive.",
+        "instructions": "Check rear reservoir. X-Town 300i has rear disc.",
+        "next": "rear_result"
+      },
+      {
+        "id": "rear_result",
+        "type": "question",
+        "text": "Rear fluid?",
+        "safety": "green",
+        "options": [
+          { "text": "Low", "next": "check_rear_pads" },
+          { "text": "OK", "next": "check_rear_pads" }
+        ]
+      },
+      {
+        "id": "check_pads",
+        "type": "check",
+        "text": "Front pads",
+        "safety": "yellow",
+        "warning": "Metal-on-metal — don't ride.",
+        "instructions": "The X-Town 300i is faster — good pads are critical. Check thickness (replace at 1-1.5mm). Check disc for wear.",
+        "next": "pad_result"
+      },
+      {
+        "id": "pad_result",
+        "type": "question",
+        "text": "Pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_pads" },
+          { "text": "OK", "next": "check_caliper" },
+          { "text": "Squealing, good pads", "next": "solution_clean" }
+        ]
+      },
+      {
+        "id": "check_rear_pads",
+        "type": "check",
+        "text": "Rear pads",
+        "safety": "yellow",
+        "warning": "Same standard.",
+        "instructions": "Check rear caliper pads.",
+        "next": "rpad_result"
+      },
+      {
+        "id": "rpad_result",
+        "type": "question",
+        "text": "Rear pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn", "next": "solution_rear_pads" },
+          { "text": "OK", "next": "solution_bleed_rear" }
+        ]
+      },
+      {
+        "id": "check_caliper",
+        "type": "check",
+        "text": "Caliper check",
+        "safety": "yellow",
+        "warning": "Cool only.",
+        "instructions": "Check slides, piston, leaks.",
+        "next": "cal_result"
+      },
+      {
+        "id": "cal_result",
+        "type": "question",
+        "text": "Caliper?",
+        "safety": "green",
+        "options": [
+          { "text": "Seized", "next": "solution_service" },
+          { "text": "Stuck piston", "next": "solution_rebuild" },
+          { "text": "Leak", "next": "solution_leak" },
+          { "text": "OK", "next": "solution_bleed" }
+        ]
+      },
+      {
+        "id": "check_drag",
+        "type": "check",
+        "text": "Dragging brake",
+        "safety": "green",
+        "instructions": "Center stand, spin wheels. Both disc brakes.",
+        "next": "drag_result"
+      },
+      {
+        "id": "drag_result",
+        "type": "question",
+        "text": "Which?",
+        "safety": "green",
+        "options": [
+          { "text": "Front", "next": "solution_service" },
+          { "text": "Rear", "next": "solution_service_rear" }
+        ]
+      },
+      {
+        "id": "check_abs",
+        "type": "check",
+        "text": "ABS system",
+        "safety": "yellow",
+        "warning": "ABS is safety-critical. Professional diagnosis recommended.",
+        "instructions": "If ABS light is on: (1) Check wheel speed sensor connections, (2) Clean ABS reluctor rings, (3) Check for fault codes. Dirty sensor is most common cause.",
+        "next": "abs_result"
+      },
+      {
+        "id": "abs_result",
+        "type": "question",
+        "text": "ABS?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty sensor", "next": "solution_abs_clean" },
+          { "text": "Disconnected wire", "next": "solution_abs_wire" },
+          { "text": "Cannot diagnose", "next": "solution_abs_pro" }
+        ]
+      },
+      {
+        "id": "solution_pads",
+        "type": "solution",
+        "text": "Front Pads",
+        "safety": "yellow",
+        "warning": "Pump lever. Bed in.",
+        "action": "Replace pads.",
+        "details": "Quality pads for the faster X-Town. Check disc."
+      },
+      {
+        "id": "solution_rear_pads",
+        "type": "solution",
+        "text": "Rear Pads",
+        "safety": "yellow",
+        "warning": "Pump lever.",
+        "action": "Replace.",
+        "details": "Same as front procedure."
+      },
+      {
+        "id": "solution_flush",
+        "type": "solution",
+        "text": "Flush Fluid",
+        "safety": "yellow",
+        "warning": "DOT 4.",
+        "action": "Flush and replace.",
+        "details": "Every 2 years. Follow ABS bleed if equipped."
+      },
+      {
+        "id": "solution_clean",
+        "type": "solution",
+        "text": "Clean",
+        "safety": "green",
+        "action": "Brake cleaner.",
+        "details": "Sand glazed pads. Anti-squeal."
+      },
+      {
+        "id": "solution_service",
+        "type": "solution",
+        "text": "Service Caliper",
+        "safety": "yellow",
+        "warning": "Silicone grease.",
+        "action": "Clean and lube slides.",
+        "details": "Most common issue."
+      },
+      {
+        "id": "solution_service_rear",
+        "type": "solution",
+        "text": "Service Rear",
+        "safety": "yellow",
+        "warning": "Same.",
+        "action": "Service rear slides.",
+        "details": "Clean and lube."
+      },
+      {
+        "id": "solution_rebuild",
+        "type": "solution",
+        "text": "Rebuild",
+        "safety": "yellow",
+        "warning": "Unsafe — don't ride.",
+        "action": "Rebuild or replace caliper.",
+        "details": "Seal kits available."
+      },
+      {
+        "id": "solution_leak",
+        "type": "solution",
+        "text": "Fix Leak",
+        "safety": "red",
+        "warning": "Brake failure risk.",
+        "action": "Find and fix.",
+        "details": "Check banjo bolts, lines, seals."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Front",
+        "safety": "yellow",
+        "warning": "Firm lever first.",
+        "action": "Bleed.",
+        "details": "ABS models may need specific procedure."
+      },
+      {
+        "id": "solution_bleed_rear",
+        "type": "solution",
+        "text": "Bleed Rear",
+        "safety": "yellow",
+        "warning": "Firm feel.",
+        "action": "Bleed rear.",
+        "details": "Standard procedure."
+      },
+      {
+        "id": "solution_abs_clean",
+        "type": "solution",
+        "text": "Clean ABS Sensor",
+        "safety": "green",
+        "action": "Clean sensor and reluctor ring.",
+        "details": "Remove, wipe, reinstall. Check if light clears after riding."
+      },
+      {
+        "id": "solution_abs_wire",
+        "type": "solution",
+        "text": "Fix ABS Wire",
+        "safety": "green",
+        "action": "Reconnect sensor wire.",
+        "details": "Check for corrosion at connector."
+      },
+      {
+        "id": "solution_abs_pro",
+        "type": "solution",
+        "text": "ABS Professional",
+        "safety": "yellow",
+        "warning": "Needs diagnostic tools.",
+        "action": "Dealer diagnosis.",
+        "details": "ABS module faults need proprietary tools. Brakes still work without ABS."
+      }
+    ]
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose rough idle, stalling, and poor low-speed running on the Kymco Agility 125 scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine idles rough and vibrates excessively", "next": "check_idle_speed" },
+          { "text": "Engine stalls when coming to a stop", "next": "check_idle_speed" },
+          { "text": "Idle speed surges up and down", "next": "check_vacuum_leaks" },
+          { "text": "Engine dies immediately after starting", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check and adjust the idle speed",
+        "safety": "green",
+        "instructions": "Warm the engine to operating temperature by letting it idle for 3-5 minutes. The Kymco Agility 125 should idle at approximately 1,500-1,700 RPM. Locate the idle speed adjuster screw on the throttle body — it is typically a knob or screw accessible from the side. Turn clockwise to increase idle speed, counterclockwise to decrease. If you do not have a tachometer, adjust until the engine runs smoothly without stalling but is not racing.",
+        "next": "idle_speed_result"
+      },
+      {
+        "id": "idle_speed_result",
+        "type": "question",
+        "text": "Were you able to set a stable idle?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle is now stable and smooth", "next": "solution_idle_adjusted" },
+          { "text": "No — idle is still rough or unstable", "next": "check_air_filter" },
+          { "text": "Idle keeps dropping and engine stalls", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "The air filter on the Agility 125 is located in the air box on the left side of the scooter, under a plastic cover held by screws or clips. Remove the cover and pull out the filter element. It should be a foam or paper element. If it is clogged with dirt, oil-soaked, or damaged, it will restrict airflow and cause poor idle. A dirty air filter is one of the most common causes of running problems on scooters, especially in dusty environments.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the condition of the air filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is very dirty or clogged", "next": "solution_replace_air_filter" },
+          { "text": "Filter is clean and in good condition", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_vacuum_leaks",
+        "type": "check",
+        "text": "Check for intake vacuum leaks",
+        "safety": "yellow",
+        "warning": "Do not spray flammable chemicals near a hot engine. Use caution with aerosol sprays.",
+        "instructions": "Vacuum leaks allow unmetered air into the engine, causing a lean condition and surging idle. With the engine idling, carefully spray a small amount of contact cleaner around the intake manifold rubber boot (between the throttle body and cylinder head). If the idle speed changes when you spray a certain spot, that is where the leak is. Also check all vacuum hoses for cracks or loose connections. The rubber intake boot on the Agility 125 hardens with age and can develop cracks.",
+        "next": "vacuum_leak_result"
+      },
+      {
+        "id": "vacuum_leak_result",
+        "type": "question",
+        "text": "Did you find a vacuum leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle changes when spraying a specific area", "next": "solution_vacuum_leak" },
+          { "text": "No vacuum leak found", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check the Idle Air Control Valve (IACV) / stepper motor",
+        "safety": "green",
+        "instructions": "The Agility 125 uses an IACV (or idle stepper motor) controlled by the ECU to regulate idle air bypass. It is mounted on or near the throttle body. When you turn the ignition on, you may hear a faint buzzing or clicking as it initializes. If the IACV is clogged with carbon or has failed electrically, the engine cannot maintain proper idle. Remove the IACV and inspect for heavy carbon deposits on the valve pintle. Clean it with throttle body cleaner and a soft brush.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "What did you find with the IACV?",
+        "safety": "green",
+        "options": [
+          { "text": "IACV was clogged with carbon — cleaned it", "next": "solution_iacv_cleaned" },
+          { "text": "IACV does not respond or move", "next": "solution_iacv_replace" },
+          { "text": "IACV seems fine", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality and age",
+        "safety": "yellow",
+        "warning": "Gasoline is highly flammable. Do not check fuel near open flames or ignition sources.",
+        "instructions": "Old or contaminated fuel is a very common cause of rough idle on scooters, especially if the scooter has been sitting. Check: (1) How old is the fuel? Gasoline degrades after 30-60 days, (2) Does the fuel smell stale or like varnish? (3) Is there visible water or sediment in the fuel? If the scooter has been sitting for more than a month without a fuel stabilizer, stale fuel is the likely culprit.",
+        "next": "fuel_quality_result"
+      },
+      {
+        "id": "fuel_quality_result",
+        "type": "question",
+        "text": "What is the fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is old (over 1 month) or smells stale", "next": "solution_fresh_fuel" },
+          { "text": "Fuel has water or sediment", "next": "solution_drain_fuel" },
+          { "text": "Fuel is fresh and clean", "next": "check_spark_plug" }
+        ]
+      },
+      {
+        "id": "check_spark_plug",
+        "type": "check",
+        "text": "Inspect the spark plug",
+        "safety": "green",
+        "instructions": "Remove the spark plug from the Agility 125 using the correct plug wrench. The standard plug is typically NGK CR7HSA. Inspect the electrode: (1) A black, sooty plug indicates rich running (possibly from a dirty air filter or leaking injector), (2) A white or light-grey plug indicates lean running (vacuum leak or fuel delivery issue), (3) A tan/brown plug indicates correct mixture. Check the electrode gap — it should be 0.6-0.7mm. Replace the plug if it is fouled, worn, or has more than 5,000 km on it.",
+        "next": "spark_plug_result"
+      },
+      {
+        "id": "spark_plug_result",
+        "type": "question",
+        "text": "What is the spark plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Plug is fouled (black/sooty) or worn", "next": "solution_replace_plug" },
+          { "text": "Plug looks fine — tan/brown color", "next": "solution_injector_check" }
+        ]
+      },
+      {
+        "id": "solution_idle_adjusted",
+        "type": "solution",
+        "text": "Idle Speed Adjusted Successfully",
+        "safety": "green",
+        "action": "Idle speed is now set correctly on the Agility 125.",
+        "details": "The idle adjuster may drift over time or after maintenance. The correct idle speed for the Kymco Agility 125 is approximately 1,500-1,700 RPM when fully warmed up. If it drifts again quickly, there may be an underlying issue with the IACV, vacuum leak, or throttle body that should be investigated."
+      },
+      {
+        "id": "solution_replace_air_filter",
+        "type": "solution",
+        "text": "Replace the Air Filter",
+        "safety": "green",
+        "action": "Replace the dirty air filter with a new OEM or equivalent filter element.",
+        "details": "A clogged air filter restricts airflow and causes the engine to run rich, leading to rough idle and poor performance. The Agility 125 air filter should be inspected every 2,000 km and replaced every 4,000-6,000 km (more often in dusty conditions). If the filter is a reusable foam type, it can be washed in warm soapy water, dried completely, and lightly oiled with foam filter oil. Paper elements must be replaced."
+      },
+      {
+        "id": "solution_vacuum_leak",
+        "type": "solution",
+        "text": "Repair Vacuum Leak",
+        "safety": "green",
+        "action": "Replace the cracked or damaged intake boot or vacuum hose.",
+        "details": "The intake manifold boot between the throttle body and cylinder head is rubber and hardens over time due to heat. Replace it if it is cracked, hard, or no longer pliable. Make sure all hose clamps are tight. Also check any small vacuum hoses connected to sensors or the fuel petcock (if equipped). After replacing the leaking part, reset the idle speed and verify smooth operation."
+      },
+      {
+        "id": "solution_iacv_cleaned",
+        "type": "solution",
+        "text": "IACV Cleaned",
+        "safety": "green",
+        "action": "Reinstall the cleaned IACV and reset the idle speed.",
+        "details": "Carbon buildup on the IACV is common on scooters that do mostly short trips or city riding. After cleaning, reinstall the IACV and start the engine. The ECU may need a minute to relearn the idle position. Adjust the idle speed if needed. To prevent future carbon buildup, use quality fuel and occasionally take the scooter on longer rides to fully warm the engine."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace the IACV",
+        "safety": "green",
+        "action": "Replace the faulty Idle Air Control Valve.",
+        "details": "If the IACV does not respond to power and cleaning does not help, it has failed electronically and must be replaced. Use an OEM Kymco replacement for the Agility 125. After installation, the ECU may need a few idle cycles to calibrate. Reset the idle speed as needed."
+      },
+      {
+        "id": "solution_fresh_fuel",
+        "type": "solution",
+        "text": "Replace with Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly at a hazardous waste facility. Do not pour it down drains.",
+        "action": "Drain the old fuel and refill with fresh unleaded gasoline.",
+        "details": "Drain the fuel tank completely. The Agility 125 has a roughly 7-liter tank. If the fuel was very old (3+ months), add a fuel system cleaner to the first tank of fresh fuel to clean the injector. After refueling, turn the ignition on and wait for the fuel pump to prime before starting. It may take several cranking attempts to clear old fuel from the lines."
+      },
+      {
+        "id": "solution_drain_fuel",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Water-contaminated fuel can cause engine damage. Drain completely before refueling.",
+        "action": "Drain all contaminated fuel from the tank and fuel system, then refill with fresh fuel.",
+        "details": "Water in fuel causes misfires and rough running. Drain the tank completely. After refilling with fresh fuel, check the fuel cap seal for damage that could allow water entry. If the scooter is parked outdoors, a cracked or worn fuel cap gasket is a common water entry point."
+      },
+      {
+        "id": "solution_replace_plug",
+        "type": "solution",
+        "text": "Replace the Spark Plug",
+        "safety": "green",
+        "action": "Install a new spark plug (NGK CR7HSA or equivalent).",
+        "details": "Gap the new plug to 0.6-0.7mm. Install hand-tight, then tighten an additional 1/2 turn with the wrench (for a new plug) or 1/8 turn (for a reused plug). Spark plugs on the Agility 125 should be replaced every 4,000-6,000 km. If the old plug was heavily fouled, also check the air filter and fuel system for the root cause of fouling."
+      },
+      {
+        "id": "solution_injector_check",
+        "type": "solution",
+        "text": "Fuel Injector Service Recommended",
+        "safety": "green",
+        "action": "Have the fuel injector professionally cleaned or use a fuel system cleaner additive.",
+        "details": "If idle is still rough after checking all other items, the fuel injector may be partially clogged or not atomizing fuel properly. Try adding a fuel injector cleaner (such as Techron) to a full tank of fresh fuel and ride normally for a tank. If the problem persists, the injector may need professional ultrasonic cleaning or replacement. A leaking or dripping injector can also cause rich running and rough idle."
+      }
+    ]
+  }
+}

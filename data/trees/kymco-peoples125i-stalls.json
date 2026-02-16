@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "People S 125i",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose rough idle, stalling, and poor low-speed running on the Kymco People S 125i scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present on your People S 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Rough idle with excessive vibration", "next": "check_idle_speed" },
+          { "text": "Stalls when coming to a stop", "next": "check_idle_speed" },
+          { "text": "Idle surges up and down", "next": "check_vacuum_leaks" },
+          { "text": "Dies immediately after starting", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check and adjust idle speed",
+        "safety": "green",
+        "instructions": "Warm the engine fully (3-5 minutes). The People S 125i should idle at 1,500-1,700 RPM. Locate the idle adjuster on the throttle body. Turn clockwise to raise, counterclockwise to lower. Adjust until smooth without stalling.",
+        "next": "idle_result"
+      },
+      {
+        "id": "idle_result",
+        "type": "question",
+        "text": "Stable idle achieved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — smooth now", "next": "solution_idle_set" },
+          { "text": "No — still rough", "next": "check_air_filter" },
+          { "text": "Keeps dropping and stalling", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "Access the air filter on the People S 125i — remove the air box cover. If the filter is clogged with dirt or oil-soaked, it restricts airflow causing rich running and rough idle. This is one of the most common and overlooked causes. Replace every 4,000-6,000 km.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Air filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty or clogged", "next": "solution_replace_filter" },
+          { "text": "Clean", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_vacuum_leaks",
+        "type": "check",
+        "text": "Check for vacuum leaks",
+        "safety": "yellow",
+        "warning": "Do not spray flammable chemicals near hot engine.",
+        "instructions": "With the engine idling, spray contact cleaner around the intake manifold boot between throttle body and cylinder head. If idle changes when spraying, you found the leak. Also check vacuum hoses for cracks. The rubber intake boot hardens with age.",
+        "next": "vacuum_result"
+      },
+      {
+        "id": "vacuum_result",
+        "type": "question",
+        "text": "Vacuum leak found?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_vacuum_leak" },
+          { "text": "No", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check the IACV / idle stepper motor",
+        "safety": "green",
+        "instructions": "The People S 125i IACV controls idle air bypass. It is on the throttle body. Listen for initialization click at key-on. If clogged with carbon, remove and clean with throttle body cleaner. Make sure its electrical connector is secure.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "IACV status?",
+        "safety": "green",
+        "options": [
+          { "text": "Was clogged — cleaned", "next": "solution_iacv_cleaned" },
+          { "text": "Doesn't respond electrically", "next": "solution_iacv_replace" },
+          { "text": "Seems fine", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. No open flames.",
+        "instructions": "Old or contaminated fuel is extremely common on scooters that sit. Fuel degrades in 30-60 days. Check freshness, smell (stale = varnish smell), and look for water or sediment. The People S 125i fuel injection is sensitive to poor fuel.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Old or stale", "next": "solution_fresh_fuel" },
+          { "text": "Water or sediment", "next": "solution_drain_fuel" },
+          { "text": "Fresh and clean", "next": "check_spark_plug" }
+        ]
+      },
+      {
+        "id": "check_spark_plug",
+        "type": "check",
+        "text": "Inspect spark plug",
+        "safety": "green",
+        "instructions": "Remove and inspect. Black/sooty = rich (dirty filter or injector issue). White = lean (vacuum leak). Tan/brown = correct. Check gap (0.6-0.7mm). Replace if fouled or worn. Standard plug: NGK CR7HSA.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fouled or worn", "next": "solution_new_plug" },
+          { "text": "Looks fine", "next": "solution_injector_clean" }
+        ]
+      },
+      {
+        "id": "solution_idle_set",
+        "type": "solution",
+        "text": "Idle Speed Set",
+        "safety": "green",
+        "action": "Idle is now properly adjusted.",
+        "details": "Correct idle is 1,500-1,700 RPM when warm. If it drifts again, investigate IACV or vacuum leaks."
+      },
+      {
+        "id": "solution_replace_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Install new filter element.",
+        "details": "Replace with OEM or equivalent. Check every 2,000 km, replace every 4,000-6,000 km. Immediate improvement in throttle response expected."
+      },
+      {
+        "id": "solution_vacuum_leak",
+        "type": "solution",
+        "text": "Repair Vacuum Leak",
+        "safety": "green",
+        "action": "Replace cracked intake boot or damaged hose.",
+        "details": "Rubber intake boot hardens with age. Replace if cracked. Tighten clamps. Reset idle after repair."
+      },
+      {
+        "id": "solution_iacv_cleaned",
+        "type": "solution",
+        "text": "IACV Cleaned",
+        "safety": "green",
+        "action": "Reinstall cleaned IACV.",
+        "details": "ECU needs a minute to relearn. Adjust idle if needed. Clean every 10,000 km preventatively."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace IACV",
+        "safety": "green",
+        "action": "Replace the failed IACV.",
+        "details": "Use OEM Kymco replacement. ECU needs a few idle cycles to calibrate after installation."
+      },
+      {
+        "id": "solution_fresh_fuel",
+        "type": "solution",
+        "text": "Replace Stale Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly.",
+        "action": "Drain old fuel, refill with fresh gasoline.",
+        "details": "The People S 125i has approximately a 7-liter tank. Add injector cleaner to the first tank if fuel was very old."
+      },
+      {
+        "id": "solution_drain_fuel",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Water in fuel can damage injector and pump.",
+        "action": "Drain all contaminated fuel and refill fresh.",
+        "details": "Check fuel cap seal for cracks allowing water entry."
+      },
+      {
+        "id": "solution_new_plug",
+        "type": "solution",
+        "text": "Replace Spark Plug",
+        "safety": "green",
+        "action": "Install new NGK CR7HSA.",
+        "details": "Gap to 0.6-0.7mm. Replace every 4,000-6,000 km. Investigate root cause if fouled."
+      },
+      {
+        "id": "solution_injector_clean",
+        "type": "solution",
+        "text": "Fuel Injector Service",
+        "safety": "green",
+        "action": "Use fuel system cleaner or have injector professionally cleaned.",
+        "details": "Add Techron to a full tank of fresh fuel. If persistent, the injector may need ultrasonic cleaning or replacement."
+      }
+    ]
+  }
+}

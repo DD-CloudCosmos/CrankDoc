@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose rough idle and stalling on the Kymco Downtown 125i liquid-cooled scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Rough idle with vibration", "next": "check_idle" },
+          { "text": "Stalls at stops", "next": "check_idle" },
+          { "text": "Idle surges up and down", "next": "check_vacuum" },
+          { "text": "Dies right after starting", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle",
+        "type": "check",
+        "text": "Check idle speed",
+        "safety": "green",
+        "instructions": "Warm the Downtown 125i fully — wait for the cooling fan to cycle once. The liquid-cooled engine should idle at approximately 1,400-1,600 RPM. Locate the idle adjuster on the throttle body. Adjust until smooth.",
+        "next": "idle_result"
+      },
+      {
+        "id": "idle_result",
+        "type": "question",
+        "text": "Stable idle?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_idle_set" },
+          { "text": "Still rough", "next": "check_air_filter" },
+          { "text": "Keeps stalling", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect air filter",
+        "safety": "green",
+        "instructions": "Access the air filter box on the Downtown 125i. A clogged filter restricts airflow causing rich running and rough idle. The Downtown 125i is a commuter scooter that often operates in urban traffic with higher pollution — check the filter more frequently.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty/clogged", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_vacuum",
+        "type": "check",
+        "text": "Check for vacuum leaks",
+        "safety": "yellow",
+        "warning": "No flammable sprays near hot engine.",
+        "instructions": "Surging idle = vacuum leak. Spray contact cleaner around intake boot while idling. If idle changes, you found the leak. Check all vacuum hoses. The Downtown 125i throttle body to intake boot connection is a common leak point.",
+        "next": "vacuum_result"
+      },
+      {
+        "id": "vacuum_result",
+        "type": "question",
+        "text": "Leak found?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_vacuum" },
+          { "text": "No", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check IACV",
+        "safety": "green",
+        "instructions": "The Downtown 125i IACV controls idle air bypass via the ECU. If clogged with carbon, idle cannot be maintained. Remove and clean with throttle body cleaner. Listen for initialization click at key-on.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "IACV status?",
+        "safety": "green",
+        "options": [
+          { "text": "Was dirty — cleaned", "next": "solution_iacv_clean" },
+          { "text": "Doesn't respond", "next": "solution_iacv_replace" },
+          { "text": "Seems fine", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel quality",
+        "safety": "yellow",
+        "warning": "Fuel is flammable.",
+        "instructions": "Stale fuel (30+ days old) causes rough running. Check freshness, smell, and for contamination. The Downtown 125i fuel injection is sensitive to poor fuel.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Stale", "next": "solution_fuel" },
+          { "text": "Contaminated", "next": "solution_drain" },
+          { "text": "Fresh", "next": "check_plug" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Inspect spark plug",
+        "safety": "green",
+        "instructions": "Remove and inspect. Black/sooty = rich. White = lean. Tan = correct. Check gap per service manual specification. Replace if fouled or worn.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fouled or worn", "next": "solution_plug" },
+          { "text": "Looks fine", "next": "solution_injector" }
+        ]
+      },
+      {
+        "id": "solution_idle_set",
+        "type": "solution",
+        "text": "Idle Adjusted",
+        "safety": "green",
+        "action": "Idle speed set correctly.",
+        "details": "Downtown 125i should idle at 1,400-1,600 RPM when warm. If it drifts, check IACV or vacuum leaks."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Filter",
+        "safety": "green",
+        "action": "Install new air filter.",
+        "details": "Replace every 4,000-6,000 km. Urban commuting = check more often."
+      },
+      {
+        "id": "solution_vacuum",
+        "type": "solution",
+        "text": "Repair Vacuum Leak",
+        "safety": "green",
+        "action": "Replace cracked boot or hose.",
+        "details": "Rubber hardens with age. Replace if cracked. Reset idle after."
+      },
+      {
+        "id": "solution_iacv_clean",
+        "type": "solution",
+        "text": "IACV Cleaned",
+        "safety": "green",
+        "action": "Reinstall cleaned IACV.",
+        "details": "ECU needs time to relearn. Clean every 10,000 km preventatively."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace IACV",
+        "safety": "green",
+        "action": "Replace failed IACV.",
+        "details": "Use OEM Kymco replacement."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel properly.",
+        "action": "Drain and refill with fresh fuel.",
+        "details": "Add injector cleaner to first tank if fuel was very old."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Water in fuel damages injector.",
+        "action": "Drain all fuel, refill fresh.",
+        "details": "Check fuel cap seal."
+      },
+      {
+        "id": "solution_plug",
+        "type": "solution",
+        "text": "Replace Plug",
+        "safety": "green",
+        "action": "Install new spark plug.",
+        "details": "Gap per manual spec. Replace every 4,000-6,000 km."
+      },
+      {
+        "id": "solution_injector",
+        "type": "solution",
+        "text": "Injector Service",
+        "safety": "green",
+        "action": "Fuel injector cleaning recommended.",
+        "details": "Add Techron to fresh fuel. If persistent, professional ultrasonic cleaning."
+      }
+    ]
+  }
+}

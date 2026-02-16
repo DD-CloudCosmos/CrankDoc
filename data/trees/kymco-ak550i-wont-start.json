@@ -1,0 +1,227 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco AK 550i 550cc liquid-cooled parallel-twin maxi-scooter.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights on but starter silent", "next": "check_kill_switch" },
+          { "text": "Cranks but doesn't fire", "next": "check_fuel" },
+          { "text": "Clicks but won't spin", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check battery",
+        "safety": "yellow",
+        "warning": "Battery acid is corrosive.",
+        "instructions": "The AK 550i uses a large 12V battery (YTX14-BS or equivalent) to handle its twin-cylinder starter load plus extensive electronics. Measure with multimeter — should read 12.4V+. Below 12.0V = dead. The Noodoe dashboard may flicker or show errors before full battery failure. Clean terminals thoroughly.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "Voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Low/dead", "next": "solution_battery" },
+          { "text": "Good (12.4V+)", "next": "check_fuses" }
+        ]
+      },
+      {
+        "id": "check_fuses",
+        "type": "check",
+        "text": "Check fuses",
+        "safety": "yellow",
+        "warning": "Ignition off.",
+        "instructions": "The AK 550i has multiple fuse boxes. Check main fuse (30A), ECU fuse, fuel pump fuse, and ignition fuse. Fuse box locations: under the seat and near the battery compartment.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Fuses?",
+        "safety": "green",
+        "options": [
+          { "text": "Blown", "next": "solution_fuse" },
+          { "text": "All good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check safety interlocks",
+        "safety": "green",
+        "instructions": "AK 550i interlocks: (1) Kill switch in RUN position, (2) Side stand retracted, (3) Brake lever applied while pressing start. The AK 550i uses a Smart Key system — ensure the fob is nearby and its battery is not dead (CR2032). If the Noodoe dash does not recognize the key, replace the fob battery.",
+        "next": "switch_result"
+      },
+      {
+        "id": "switch_result",
+        "type": "question",
+        "text": "Resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_switch" },
+          { "text": "No", "next": "check_relay" }
+        ]
+      },
+      {
+        "id": "check_relay",
+        "type": "check",
+        "text": "Check starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass carelessly — the AK 550i starter draws high current.",
+        "instructions": "Listen for a click from the starter relay when pressing start. Click + no crank = starter motor or heavy cable fault. No click = relay, wiring, or interlock fault. The AK 550i's parallel-twin requires a strong starter motor — weak connections cause clicking.",
+        "next": "relay_result"
+      },
+      {
+        "id": "relay_result",
+        "type": "question",
+        "text": "Relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Clicks, no crank", "next": "solution_starter" },
+          { "text": "No click", "next": "solution_wiring" },
+          { "text": "Cranks, won't fire", "next": "check_fuel" }
+        ]
+      },
+      {
+        "id": "check_fuel",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. No open flames.",
+        "instructions": "Turn ignition ON, listen for fuel pump prime (2-3 second buzz). The AK 550i is fuel-injected with dual throttle bodies (one per cylinder). Check fuel level — 15-liter tank. If no prime sound, check pump fuse and connector. Stale fuel (3+ months) may not ignite.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound", "next": "solution_pump" },
+          { "text": "Pump OK, no start", "next": "check_spark" },
+          { "text": "Empty tank", "next": "solution_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check spark",
+        "safety": "yellow",
+        "warning": "High voltage — do not hold plug by electrode.",
+        "instructions": "The AK 550i has TWO spark plugs (one per cylinder). Remove each plug, ground against engine, crank — look for blue spark on BOTH. If one fires and the other doesn't, check that cylinder's coil and wiring. Use diagnostic port or Noodoe error codes if available.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Both good", "next": "solution_compression" },
+          { "text": "One dead", "next": "solution_coil" },
+          { "text": "Both dead", "next": "solution_ignition" }
+        ]
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Charge/Replace Battery",
+        "safety": "green",
+        "action": "Charge or replace battery.",
+        "details": "The AK 550i draws significant power at startup for the twin-cylinder starter. Check charging system after (13.5-14.8V at 3,000+ RPM). If Noodoe dash was flickering, battery was likely failing."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Fuse",
+        "safety": "yellow",
+        "warning": "Same rating only.",
+        "action": "Replace blown fuse.",
+        "details": "If it blows again, trace the short. The AK 550i's extensive electronics mean more potential short sources."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Switch/Key Resolved",
+        "safety": "green",
+        "action": "Interlock was preventing start.",
+        "details": "Smart Key fob uses CR2032 battery. Replace annually. Clean switch contacts with contact cleaner."
+      },
+      {
+        "id": "solution_starter",
+        "type": "solution",
+        "text": "Starter Motor",
+        "safety": "yellow",
+        "warning": "Check heavy cable first.",
+        "action": "Repair or replace starter motor.",
+        "details": "Check the heavy power cable connection first — the twin requires more cranking current than single-cylinder scooters. Clean and tighten before replacing motor."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring Fault",
+        "safety": "yellow",
+        "warning": "Ignition off before tracing.",
+        "action": "Trace start circuit wiring.",
+        "details": "Check kill switch connector, side stand switch, brake switch, Smart Key receiver module. Connector corrosion is common."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Fuel Pump",
+        "safety": "yellow",
+        "warning": "Fire risk — no sparks near fuel.",
+        "action": "Check pump fuse and connector, replace pump if faulty.",
+        "details": "The AK 550i uses a higher-capacity fuel pump for dual throttle bodies. Check fuel filter as well."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Add Fuel",
+        "safety": "green",
+        "action": "Refuel the scooter.",
+        "details": "15L tank. Let the fuel pump prime fully (2-3 seconds of buzzing) before cranking. Use fresh premium fuel."
+      },
+      {
+        "id": "solution_coil",
+        "type": "solution",
+        "text": "Single Coil Failure",
+        "safety": "yellow",
+        "warning": "High voltage — ignition off.",
+        "action": "Replace the faulty ignition coil.",
+        "details": "The AK 550i has individual coils per cylinder. Swap coils between cylinders to confirm which coil is dead. Also check the plug cap and wire."
+      },
+      {
+        "id": "solution_ignition",
+        "type": "solution",
+        "text": "Ignition System Fault",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may be needed.",
+        "action": "Check ECU, crank position sensor, and wiring.",
+        "details": "Both cylinders dead = ECU, crank position sensor, or main ignition relay. Check for stored fault codes via diagnostic port."
+      },
+      {
+        "id": "solution_compression",
+        "type": "solution",
+        "text": "Compression Issue",
+        "safety": "yellow",
+        "warning": "Compression test needed.",
+        "action": "Test compression on BOTH cylinders.",
+        "details": "Both cylinders should read 10-14 bar and be within 10% of each other. Low on one = valve or ring issue on that cylinder. Low on both = head gasket or timing. Check for coolant in oil (milky)."
+      }
+    ]
+  }
+}

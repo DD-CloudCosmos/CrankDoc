@@ -1,0 +1,114 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "intervals": [
+    {
+      "service_name": "Engine Oil Change",
+      "interval_miles": 2500,
+      "interval_km": 4000,
+      "interval_months": 12,
+      "description": "Replace engine oil and oil filter. Warm engine first for complete drain. The 550cc parallel-twin has a conventional spin-on oil filter — replace at every oil change.",
+      "torque_spec": "Drain plug: 22 lb-ft (30 Nm), Oil filter: 13 lb-ft (18 Nm)",
+      "fluid_spec": "10W-40 JASO MA — 2.0L with filter change"
+    },
+    {
+      "service_name": "Gear Oil / Final Drive Oil",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": 12,
+      "description": "Drain and replace final drive gear oil. Check drain and fill plugs for metal debris. Higher torque from the 550cc twin means more stress on final drive gears.",
+      "torque_spec": "Drain plug: 13 lb-ft (18 Nm), Fill plug: 13 lb-ft (18 Nm)",
+      "fluid_spec": "SAE 80W-90 gear oil — 150ml"
+    },
+    {
+      "service_name": "CVT Belt Inspection",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": null,
+      "description": "Remove CVT cover and inspect drive belt for cracks, fraying, glazing, and width. The 550cc twin puts significant load on the belt — inspect thoroughly for signs of heat damage.",
+      "torque_spec": "CVT cover bolts: 7 lb-ft (10 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "CVT Belt Replacement",
+      "interval_miles": 15000,
+      "interval_km": 24000,
+      "interval_months": null,
+      "description": "Replace CVT drive belt regardless of condition. The AK 550i uses a heavy-duty belt designed for higher torque loads. Inspect variator and clutch faces for wear or scoring at the same time.",
+      "torque_spec": "CVT cover bolts: 7 lb-ft (10 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Roller Weight Inspection",
+      "interval_miles": 10000,
+      "interval_km": 16000,
+      "interval_months": null,
+      "description": "Remove variator and inspect roller weights for flat spots, uneven wear, or reduced diameter. Replace as a set if any roller is out of spec. AK 550i uses heavier rollers than single-cylinder scooters.",
+      "torque_spec": "Variator nut: 44 lb-ft (60 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Air Filter",
+      "interval_miles": 2500,
+      "interval_km": 4000,
+      "interval_months": null,
+      "description": "Remove and clean air filter element. Replace element every 12,000 km or sooner if damaged. Inspect more frequently in dusty conditions.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark Plugs",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": null,
+      "description": "Replace both spark plugs (parallel-twin, two plugs). Check electrode condition, carbon fouling, and gap before install.",
+      "torque_spec": "Spark plug: 9 lb-ft (12 Nm)",
+      "fluid_spec": "NGK CR8EK, gap 0.6-0.7mm"
+    },
+    {
+      "service_name": "Valve Clearance Check",
+      "interval_miles": 7500,
+      "interval_km": 12000,
+      "interval_months": null,
+      "description": "Check and adjust intake and exhaust valve clearances on both cylinders with engine cold. Parallel-twin has four valves total (two intake, two exhaust). Intake: 0.10-0.20mm, Exhaust: 0.20-0.30mm.",
+      "torque_spec": "Valve cover bolts: 7 lb-ft (10 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant Replacement",
+      "interval_miles": 15000,
+      "interval_km": 24000,
+      "interval_months": 24,
+      "description": "Drain and replace engine coolant. Bleed air from system after refill. Check hoses and clamps for leaks or deterioration. Larger engine produces more heat — do not skip this interval.",
+      "torque_spec": "Drain plug: 7 lb-ft (10 Nm)",
+      "fluid_spec": "Long-life coolant (ethylene glycol based, 50/50 premix) — 1.3L total capacity"
+    },
+    {
+      "service_name": "Brake Fluid",
+      "interval_miles": null,
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace front and rear brake fluid. Bleed system completely until fluid runs clear. AK 550i has dual front disc brakes — bleed both calipers separately.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid"
+    },
+    {
+      "service_name": "Brake Pad Inspection",
+      "interval_miles": 3700,
+      "interval_km": 6000,
+      "interval_months": null,
+      "description": "Check front and rear brake pad thickness. Replace when pad material reaches wear indicator groove or minimum thickness of 1.0mm. Heavier scooter with higher speeds — brake wear is accelerated.",
+      "torque_spec": "Front caliper bolts: 17 lb-ft (23 Nm)",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Throttle Cable Adjustment",
+      "interval_miles": 5000,
+      "interval_km": 8000,
+      "interval_months": null,
+      "description": "Inspect and adjust throttle cable free play (2-6mm at grip). Lubricate cable with cable lubricant. Check for smooth operation through full range.",
+      "torque_spec": null,
+      "fluid_spec": null
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Variator Roller Weight Diagnosis",
+  "description": "Diagnose variator roller weight issues on scooters. Covers flat-spotted rollers, worn rollers, incorrect roller weight, and symptoms like poor acceleration, no top speed, and sluggish takeoff.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What variator-related symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Poor acceleration — scooter is sluggish off the line", "next": "check_sluggish_acceleration" },
+          { "text": "Cannot reach full top speed", "next": "check_no_top_speed" },
+          { "text": "Engine revs too high at cruising speed", "next": "check_high_revs" },
+          { "text": "Hesitation or flat spot during acceleration", "next": "check_flat_spot" },
+          { "text": "Routine variator inspection — no symptoms", "next": "inspect_rollers" }
+        ]
+      },
+      {
+        "id": "check_sluggish_acceleration",
+        "type": "question",
+        "text": "When did the sluggish acceleration start?",
+        "safety": "green",
+        "options": [
+          { "text": "Gradually got worse over time", "next": "inspect_rollers" },
+          { "text": "Started after recent CVT work or roller change", "next": "check_roller_weight" },
+          { "text": "Suddenly became sluggish", "next": "check_belt_condition" }
+        ]
+      },
+      {
+        "id": "check_no_top_speed",
+        "type": "question",
+        "text": "How much top speed have you lost?",
+        "safety": "green",
+        "options": [
+          { "text": "Gradual decline — lost 5-15 km/h (3-10 mph) over time", "next": "inspect_rollers" },
+          { "text": "Significant loss — 15+ km/h (10+ mph) slower than before", "next": "check_belt_condition" },
+          { "text": "Top speed dropped after changing rollers or belt", "next": "check_roller_weight" }
+        ]
+      },
+      {
+        "id": "check_high_revs",
+        "type": "question",
+        "text": "At what speed does the engine rev higher than expected?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine revs high at all speeds — never fully shifts out", "next": "inspect_rollers" },
+          { "text": "Engine revs high only at top speed", "next": "check_belt_condition" },
+          { "text": "Started after changing rollers or belt", "next": "check_roller_weight" }
+        ]
+      },
+      {
+        "id": "check_flat_spot",
+        "type": "check",
+        "text": "Check for a flat spot in acceleration caused by variator issues.",
+        "safety": "yellow",
+        "warning": "Ensure the engine is off and the CVT area has cooled before removing the cover.",
+        "instructions": "A hesitation or flat spot during acceleration often indicates flat-spotted variator rollers. When rollers develop flat spots, they do not roll smoothly up the variator ramp, causing the variator to stick momentarily during ratio changes. Remove the CVT cover and variator face to access the rollers. Inspect each roller individually — roll them on a flat surface. A healthy roller rolls smoothly in a straight line. A flat-spotted roller wobbles or does not roll at all.",
+        "next": "flat_spot_result"
+      },
+      {
+        "id": "flat_spot_result",
+        "type": "question",
+        "text": "Did you find flat spots on the rollers?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — one or more rollers have flat spots", "next": "solution_replace_rollers" },
+          { "text": "No — rollers are round but may be worn", "next": "check_roller_diameter" },
+          { "text": "Rollers look fine", "next": "check_ramp_plate" }
+        ]
+      },
+      {
+        "id": "inspect_rollers",
+        "type": "check",
+        "text": "Remove and inspect the variator rollers.",
+        "safety": "yellow",
+        "warning": "The variator nut is typically torqued to a high specification. Use the correct holding tool to prevent the variator from spinning while removing the nut. Do not use an impact wrench on the variator unless you have the proper holding tool in place.",
+        "instructions": "Remove the CVT cover, then remove the variator nut and pull off the variator face. The rollers sit in the ramp channels behind the variator face. Remove all rollers and line them up. Check each roller for: flat spots (most common wear pattern — the roller develops a flat surface instead of staying round), oval or egg shape, surface cracking, and reduced diameter. Roll each one on a flat surface — they should roll smoothly without wobbling. Count them to ensure none are missing or broken apart inside the variator.",
+        "next": "roller_inspection_result"
+      },
+      {
+        "id": "roller_inspection_result",
+        "type": "question",
+        "text": "What condition are the variator rollers in?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots on one or more rollers", "next": "solution_replace_rollers" },
+          { "text": "Rollers are oval-shaped or unevenly worn", "next": "solution_replace_rollers" },
+          { "text": "Rollers appear round but may be smaller than new", "next": "check_roller_diameter" },
+          { "text": "Rollers look like new", "next": "check_ramp_plate" }
+        ]
+      },
+      {
+        "id": "check_roller_diameter",
+        "type": "check",
+        "text": "Measure the roller diameter.",
+        "safety": "green",
+        "instructions": "Using a caliper, measure the diameter of each roller and compare to the specification in your service manual. Typical scooter rollers are 15mm-20mm in diameter when new (varies by model). If any roller is more than 0.5mm smaller than the new specification, it has worn significantly and the set should be replaced. Even if they appear round, reduced diameter means the rollers sit lower in the ramp channels, which changes the variator ratio and reduces performance.",
+        "next": "roller_diameter_result"
+      },
+      {
+        "id": "roller_diameter_result",
+        "type": "question",
+        "text": "Are the rollers within specification?",
+        "safety": "green",
+        "options": [
+          { "text": "One or more rollers are undersize", "next": "solution_replace_rollers" },
+          { "text": "All rollers are within specification", "next": "check_ramp_plate" }
+        ]
+      },
+      {
+        "id": "check_roller_weight",
+        "type": "check",
+        "text": "Verify the roller weight is correct for your scooter.",
+        "safety": "green",
+        "instructions": "Weigh one of the rollers on a precise scale (a kitchen scale that reads in grams is sufficient). Compare the weight to your service manual specification. Roller weights typically range from 6g to 15g depending on the scooter model and engine size. Lighter rollers shift later (higher RPM, better acceleration, lower top speed). Heavier rollers shift earlier (lower RPM, less acceleration, higher top speed). Using the wrong weight rollers is a common mistake after a CVT service. If you recently changed the rollers, verify you installed the correct weight for your model.",
+        "next": "roller_weight_result"
+      },
+      {
+        "id": "roller_weight_result",
+        "type": "question",
+        "text": "Is the roller weight correct for your scooter?",
+        "safety": "green",
+        "options": [
+          { "text": "Rollers are the wrong weight — too heavy", "next": "solution_wrong_weight_heavy" },
+          { "text": "Rollers are the wrong weight — too light", "next": "solution_wrong_weight_light" },
+          { "text": "Roller weight matches specification", "next": "check_ramp_plate" }
+        ]
+      },
+      {
+        "id": "check_ramp_plate",
+        "type": "check",
+        "text": "Inspect the variator ramp plate and slider.",
+        "safety": "green",
+        "instructions": "Examine the variator ramp plate (the surface the rollers ride on inside the variator). Look for grooves, scoring, or steps worn into the ramp surface by the rollers. Deep grooves prevent the rollers from moving smoothly, causing jerky shifting and flat spots in acceleration. Also check the variator slider (guide bushing) — it should slide smoothly on the variator shaft without excessive play. Worn sliders cause the variator face to wobble, leading to uneven belt wear.",
+        "next": "ramp_plate_result"
+      },
+      {
+        "id": "ramp_plate_result",
+        "type": "question",
+        "text": "What is the condition of the ramp plate and slider?",
+        "safety": "green",
+        "options": [
+          { "text": "Ramp plate has deep grooves or scoring", "next": "solution_replace_ramp_plate" },
+          { "text": "Slider is worn or has excessive play", "next": "solution_replace_slider" },
+          { "text": "Both ramp plate and slider look good", "next": "solution_other_causes" }
+        ]
+      },
+      {
+        "id": "check_belt_condition",
+        "type": "check",
+        "text": "Check if the CVT belt is causing the performance loss.",
+        "safety": "yellow",
+        "warning": "Allow the CVT to cool before inspection. Do not run the engine with the CVT cover off.",
+        "instructions": "Before blaming the rollers, check the CVT belt. A worn belt that has narrowed beyond its service limit will ride deeper in the pulleys, changing the effective gear ratio. Measure the belt width with a caliper and compare to the specification. Also check for glazing (shiny contact surfaces), cracks, and fraying. A slipping belt mimics many variator symptoms.",
+        "next": "belt_condition_result"
+      },
+      {
+        "id": "belt_condition_result",
+        "type": "question",
+        "text": "Is the CVT belt in good condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is worn, glazed, or below width specification", "next": "solution_replace_belt_too" },
+          { "text": "Belt is in good condition", "next": "inspect_rollers" }
+        ]
+      },
+      {
+        "id": "solution_replace_rollers",
+        "type": "solution",
+        "text": "The variator rollers are worn and need replacement.",
+        "safety": "yellow",
+        "warning": "Always replace rollers as a complete set — never mix old and new rollers. Mismatched rollers cause vibration and uneven variator operation.",
+        "action": "Replace all variator rollers with a new set of the correct weight",
+        "details": "Purchase a set of rollers matching your scooter's specification (correct diameter, width, and weight — check your service manual). Replace all rollers at once, even if only some are worn. Clean the variator ramp channels before installing new rollers. Apply a thin smear of high-temperature grease to each roller to aid initial break-in if specified by the manufacturer (some manufacturers recommend dry installation). Reinstall the variator face and torque the nut to specification. Rollers typically last 5,000-10,000 miles depending on riding conditions. Replace the CVT belt at the same time if it is near its service limit."
+      },
+      {
+        "id": "solution_wrong_weight_heavy",
+        "type": "solution",
+        "text": "The rollers are too heavy for your scooter.",
+        "safety": "green",
+        "action": "Replace with the correct weight rollers specified for your model",
+        "details": "Rollers that are too heavy cause the variator to shift out (upshift) too early, resulting in the engine running at lower RPMs than designed. This causes poor acceleration and a boggy feeling off the line, though it may slightly increase top speed. The engine cannot reach its powerband before the CVT shifts to a higher ratio. Replace with the correct weight specified in your service manual. If you are intentionally tuning, adjust roller weight in 0.5g-1g increments and test ride between changes."
+      },
+      {
+        "id": "solution_wrong_weight_light",
+        "type": "solution",
+        "text": "The rollers are too light for your scooter.",
+        "safety": "green",
+        "action": "Replace with the correct weight rollers specified for your model",
+        "details": "Rollers that are too light cause the variator to shift out (upshift) too late or not fully, resulting in the engine revving higher than normal. This may improve acceleration but reduces top speed because the CVT never reaches its highest ratio. The engine will seem to rev high at cruising speed. Replace with the correct weight specified in your service manual. If you are intentionally tuning, adjust roller weight in 0.5g-1g increments and test ride between changes."
+      },
+      {
+        "id": "solution_replace_ramp_plate",
+        "type": "solution",
+        "text": "The variator ramp plate is worn and needs replacement.",
+        "safety": "green",
+        "action": "Replace the variator ramp plate",
+        "details": "Grooves worn into the ramp plate prevent the rollers from moving freely, causing hesitation and flat spots in the acceleration. The rollers follow the grooves instead of rolling smoothly along the ramp surface. Replace the ramp plate with a new OEM or quality aftermarket part. Always install new rollers at the same time — old rollers that created the grooves may be worn to match the groove pattern and will quickly damage a new ramp plate. Clean all components before reassembly."
+      },
+      {
+        "id": "solution_replace_slider",
+        "type": "solution",
+        "text": "The variator slider bushing is worn.",
+        "safety": "green",
+        "action": "Replace the variator slider (guide bushing)",
+        "details": "A worn slider allows the variator face to wobble on the shaft, causing uneven belt wear and inconsistent ratio changes. Replace the slider with a new OEM part. When installing, ensure the slider moves freely on the variator shaft without binding. Check the shaft surface for scoring or wear — a damaged shaft will quickly wear out a new slider. Lubricate the slider as specified by the manufacturer (some use a dry Teflon coating, others use light grease)."
+      },
+      {
+        "id": "solution_replace_belt_too",
+        "type": "solution",
+        "text": "The CVT belt is worn and is causing the performance issue.",
+        "safety": "yellow",
+        "warning": "Use the correct belt specification for your scooter model. An incorrect belt length or width will cause drivability problems.",
+        "action": "Replace the CVT belt and inspect the rollers at the same time",
+        "details": "A worn belt changes the effective gear ratios of the CVT, mimicking variator problems. Replace the belt with the correct OEM or quality aftermarket belt. While the CVT is open, inspect the rollers, ramp plate, and clutch — this is the ideal time to service all CVT components together. Clean the pulley faces with brake cleaner before installing the new belt. Ride gently for the first 20-30 miles to allow the belt to seat properly."
+      },
+      {
+        "id": "solution_other_causes",
+        "type": "solution",
+        "text": "The variator components appear to be in good condition. The issue may be elsewhere.",
+        "safety": "green",
+        "action": "Check the rear clutch assembly, torque driver, and engine performance",
+        "details": "If the variator rollers, ramp plate, and slider are all in good condition, the performance issue may be caused by: a worn rear clutch (worn shoes, weak springs, scored drum), a faulty torque driver (contra spring), an exhaust restriction, an air filter that needs cleaning or replacement, or an engine mechanical issue (low compression, valve adjustment needed). Check the clutch assembly next, then verify the engine is running properly with good compression and clean air and fuel delivery."
+      }
+    ]
+  }
+}

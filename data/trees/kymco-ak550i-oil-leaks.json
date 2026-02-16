@@ -1,0 +1,262 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and consumption on the Kymco AK 550i 550cc liquid-cooled parallel-twin maxi-scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil dripping", "next": "find_leak" },
+          { "text": "Level drops, no visible leak", "next": "check_burning" },
+          { "text": "Oil weeping / seeping", "next": "check_gaskets" },
+          { "text": "Milky oil", "next": "solution_coolant_mix" }
+        ]
+      },
+      {
+        "id": "find_leak",
+        "type": "check",
+        "text": "Locate the leak",
+        "safety": "green",
+        "instructions": "Degrease the engine, run it, and inspect. The AK 550i parallel-twin has more potential leak points than a single: (1) Drain plug, (2) Valve cover gasket(s) — both cylinders, (3) Crankcase mating surface, (4) Crank seals, (5) Oil filter housing, (6) Cylinder base gaskets. Distinguish oil from coolant — oil is dark/amber, coolant is green/pink and sweet-smelling.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Leak source?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug", "next": "check_plug" },
+          { "text": "Valve cover", "next": "solution_vc" },
+          { "text": "Seal / crankcase", "next": "solution_seal" },
+          { "text": "Oil filter area", "next": "solution_filter" },
+          { "text": "Unknown source", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Check drain plug",
+        "safety": "green",
+        "instructions": "Check: (1) Plug tightness — should be torqued to spec, (2) Crush washer condition — replace at every oil change, (3) Thread condition — stripped threads require repair.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Drain plug?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose", "next": "solution_tighten" },
+          { "text": "Bad washer", "next": "solution_washer" },
+          { "text": "Stripped threads", "next": "solution_threads" }
+        ]
+      },
+      {
+        "id": "check_burning",
+        "type": "check",
+        "text": "Check for oil burning",
+        "safety": "green",
+        "instructions": "The AK 550i twin: (1) Blue smoke from exhaust = burning oil — check both at startup and under acceleration, (2) Oil-fouled spark plugs — check BOTH plugs (if only one is oily, that specific cylinder has the issue), (3) Oil in the air box — breather overpressure, (4) Check for coolant/oil mixing (milky oil) since this is liquid-cooled.",
+        "next": "burn_result"
+      },
+      {
+        "id": "burn_result",
+        "type": "question",
+        "text": "Burning signs?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue smoke", "next": "check_smoke_when" },
+          { "text": "One plug oily", "next": "check_single_cyl" },
+          { "text": "Oil in air box", "next": "solution_breather" },
+          { "text": "No burning signs", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_smoke_when",
+        "type": "check",
+        "text": "When does smoke appear?",
+        "safety": "yellow",
+        "warning": "Professional diagnosis helpful for internal engine issues.",
+        "instructions": "Startup/deceleration smoke = valve stem seals (oil drips past seals at rest or decel vacuum). Acceleration smoke = piston rings worn. Compression test both cylinders: should be 10-14 bar, within 10% of each other. Low compression + smoke = rings.",
+        "next": "smoke_result"
+      },
+      {
+        "id": "smoke_result",
+        "type": "question",
+        "text": "Smoke pattern?",
+        "safety": "green",
+        "options": [
+          { "text": "Startup/deceleration", "next": "solution_seals" },
+          { "text": "Under acceleration", "next": "solution_rings" }
+        ]
+      },
+      {
+        "id": "check_single_cyl",
+        "type": "check",
+        "text": "Diagnose single cylinder oil issue",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may be needed.",
+        "instructions": "One oily plug on the twin means that specific cylinder has an oil consumption issue while the other is fine. Compare compression between cylinders. If one is significantly lower, that cylinder has worn rings or valve seals. This is a major advantage of twin diagnostics — you can compare cylinders directly.",
+        "next": "single_result"
+      },
+      {
+        "id": "single_result",
+        "type": "question",
+        "text": "Compression comparison?",
+        "safety": "green",
+        "options": [
+          { "text": "One low, one normal", "next": "solution_single_rebuild" },
+          { "text": "Both similar", "next": "solution_seals" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect gaskets and seals",
+        "safety": "green",
+        "instructions": "The AK 550i parallel-twin has many more gasket surfaces than a single: (1) Both valve covers, (2) Cylinder base gaskets, (3) Crankcase mating surface (long on a twin), (4) Oil pan if separate, (5) Various cover gaskets. Look for oil seepage at all mating surfaces. Light seeping is common on higher-mileage engines.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Gasket finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover seeping", "next": "solution_vc" },
+          { "text": "Base gasket seeping", "next": "solution_base_gasket" },
+          { "text": "Crankcase joint", "next": "solution_case_gasket" },
+          { "text": "Multiple areas", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Tighten Drain Plug",
+        "safety": "green",
+        "action": "Torque drain plug to spec.",
+        "details": "Do not overtighten — the AK 550i engine case is aluminum. Use a torque wrench."
+      },
+      {
+        "id": "solution_washer",
+        "type": "solution",
+        "text": "Replace Drain Plug Washer",
+        "safety": "green",
+        "action": "Replace crush washer.",
+        "details": "Replace at every oil change. Use correct size for the AK 550i drain plug."
+      },
+      {
+        "id": "solution_threads",
+        "type": "solution",
+        "text": "Repair Stripped Threads",
+        "safety": "yellow",
+        "warning": "Must be done properly to avoid further damage.",
+        "action": "Install helicoil or oversized drain plug.",
+        "details": "Keep metal chips out of the engine during repair. Clean thoroughly. An oversized plug is the simplest fix; helicoil is the proper repair."
+      },
+      {
+        "id": "solution_vc",
+        "type": "solution",
+        "text": "Replace Valve Cover Gasket",
+        "safety": "green",
+        "action": "Replace valve cover gasket(s).",
+        "details": "The twin has two valve covers or one larger cover depending on engine design. Replace gasket(s) and torque to spec. Consider checking valve clearances while the cover is off."
+      },
+      {
+        "id": "solution_seal",
+        "type": "solution",
+        "text": "Replace Crankshaft Seal",
+        "safety": "yellow",
+        "warning": "Requires special tools (puller/driver).",
+        "action": "Replace the leaking crank seal.",
+        "details": "Intermediate repair. The AK 550i crankshaft is longer for the twin configuration, which means the seals handle more shaft deflection."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Fix Oil Filter Leak",
+        "safety": "green",
+        "action": "Check and reseat or replace oil filter.",
+        "details": "Ensure the old O-ring was removed before installing a new filter. The AK 550i uses a larger filter than single-cylinder models. Tighten per spec — hand-tight plus specified turn."
+      },
+      {
+        "id": "solution_uv",
+        "type": "solution",
+        "text": "Use UV Dye to Find Leak",
+        "safety": "green",
+        "action": "Add UV dye to oil, run 15-20 min, inspect with UV light.",
+        "details": "UV dye is the best method for finding small leaks on the complex AK 550i twin engine. Check all gasket surfaces, seals, and the oil filter under UV light."
+      },
+      {
+        "id": "solution_breather",
+        "type": "solution",
+        "text": "Service Crankcase Breather",
+        "safety": "green",
+        "action": "Clean breather system and check PCV valve if equipped.",
+        "details": "A clogged breather causes crankcase pressure buildup, which forces oil past seals and into the air box. Clean the breather hose and any check valves. If it recurs, test compression on both cylinders — excessive blowby causes overpressure."
+      },
+      {
+        "id": "solution_seals",
+        "type": "solution",
+        "text": "Replace Valve Stem Seals",
+        "safety": "yellow",
+        "warning": "Requires head removal on both cylinders or specialized tools.",
+        "action": "Replace valve stem seals.",
+        "details": "The AK 550i twin has more valves than a single — more seals to replace. Check valve guides for wear while seals are being replaced. Professional repair recommended."
+      },
+      {
+        "id": "solution_rings",
+        "type": "solution",
+        "text": "Top-End Rebuild",
+        "safety": "yellow",
+        "warning": "Intermediate to advanced repair.",
+        "action": "Replace piston rings on both cylinders. Check bore for scoring.",
+        "details": "A twin top-end rebuild is more involved than a single. Both cylinders should be serviced even if only one is low. Check bore for scoring — may need honing or oversized pistons."
+      },
+      {
+        "id": "solution_single_rebuild",
+        "type": "solution",
+        "text": "Single Cylinder Rebuild",
+        "safety": "yellow",
+        "warning": "Professional diagnosis recommended.",
+        "action": "Rebuild the affected cylinder.",
+        "details": "One cylinder low = that cylinder's rings or valve seals. A leak-down test identifies whether it is rings (air escapes through crankcase) or valves (air escapes through intake/exhaust). Rebuild that cylinder; inspect the other while apart."
+      },
+      {
+        "id": "solution_base_gasket",
+        "type": "solution",
+        "text": "Replace Base Gasket",
+        "safety": "yellow",
+        "warning": "Requires cylinder removal — significant repair.",
+        "action": "Replace the cylinder base gasket.",
+        "details": "This requires removing the cylinder(s). Clean mating surfaces carefully. Check cylinder and piston condition while apart. Professional repair recommended."
+      },
+      {
+        "id": "solution_case_gasket",
+        "type": "solution",
+        "text": "Reseal Crankcase",
+        "safety": "yellow",
+        "warning": "Major repair — requires engine disassembly.",
+        "action": "Reseal crankcase joint.",
+        "details": "The AK 550i crankcase joint is long (twin) and may use a liquid gasket maker. This requires significant disassembly. Professional repair recommended unless experienced."
+      },
+      {
+        "id": "solution_coolant_mix",
+        "type": "solution",
+        "text": "Coolant in Oil",
+        "safety": "red",
+        "warning": "Stop riding immediately. Coolant in oil destroys crankshaft and rod bearings.",
+        "action": "Head gasket replacement required.",
+        "details": "Milky oil on the AK 550i parallel-twin = coolant mixing with oil via a failed head gasket. The twin's head gasket seals between both cylinders and multiple oil/coolant passages. Stop immediately, do not run the engine. Flush oil system thoroughly after gasket replacement. Have the head checked for flatness/warping."
+      }
+    ]
+  }
+}

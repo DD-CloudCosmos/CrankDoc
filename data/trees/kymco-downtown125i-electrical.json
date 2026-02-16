@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco Downtown 125i including lighting, charging, and wiring.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working", "next": "check_bulbs" },
+          { "text": "Battery keeps dying", "next": "check_charging" },
+          { "text": "Intermittent electrical issues", "next": "check_connectors" },
+          { "text": "Completely dead", "next": "check_main" }
+        ]
+      },
+      {
+        "id": "check_bulbs",
+        "type": "check",
+        "text": "Check bulbs and fuses",
+        "safety": "green",
+        "instructions": "Check affected bulb and corresponding fuse. The Downtown 125i has more lighting circuits than basic scooters (projector headlight, LED running lights on some models). Replace blown components with correct ratings.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_fixed" },
+          { "text": "No", "next": "check_switches" },
+          { "text": "Fuse blows again", "next": "solution_short" }
+        ]
+      },
+      {
+        "id": "check_switches",
+        "type": "check",
+        "text": "Check switches and wiring",
+        "safety": "yellow",
+        "warning": "Disconnect battery before probing.",
+        "instructions": "Test switches and check for 12V at the bulb socket. The Downtown 125i has a more complex wiring harness than basic scooters. Check connectors for corrosion, especially behind the front fairing where water can collect.",
+        "next": "sw_result"
+      },
+      {
+        "id": "sw_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad switch", "next": "solution_switch" },
+          { "text": "Wiring fault", "next": "solution_wiring" },
+          { "text": "Ground issue", "next": "solution_ground" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Test charging system",
+        "safety": "yellow",
+        "warning": "Keep hands clear while running.",
+        "instructions": "Engine at 3,000+ RPM: measure battery voltage. Should be 13.5-14.8V. The Downtown 125i has a liquid-cooled engine with a higher-output charging system. Below 13.0V = not charging. Above 15.0V = overcharging.",
+        "next": "charge_result"
+      },
+      {
+        "id": "charge_result",
+        "type": "question",
+        "text": "Charging voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V", "next": "check_stator" },
+          { "text": "Normal", "next": "solution_drain" },
+          { "text": "Above 15.0V", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test stator",
+        "safety": "yellow",
+        "warning": "AC voltage — don't touch while running.",
+        "instructions": "Disconnect stator connector. Measure AC at 3,000 RPM. Should be 30-60V AC. Zero = stator failed. Good AC = reg/rec failed.",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "Stator output?",
+        "safety": "green",
+        "options": [
+          { "text": "No AC", "next": "solution_stator" },
+          { "text": "Good AC", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Inspect connectors",
+        "safety": "green",
+        "instructions": "The Downtown 125i has more connectors than basic scooters. Check all: battery, harness under seat, behind front fairing, handlebar switches, engine ground. Clean with contact cleaner, apply dielectric grease.",
+        "next": "conn_result"
+      },
+      {
+        "id": "conn_result",
+        "type": "question",
+        "text": "Resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_conn" },
+          { "text": "No", "next": "solution_harness" }
+        ]
+      },
+      {
+        "id": "check_main",
+        "type": "check",
+        "text": "Check battery and main fuse",
+        "safety": "yellow",
+        "warning": "Dead system may indicate major short.",
+        "instructions": "Check terminal tightness, main fuse, battery voltage. If all good but no power, check ignition switch.",
+        "next": "main_result"
+      },
+      {
+        "id": "main_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose terminal", "next": "solution_terminals" },
+          { "text": "Blown fuse", "next": "solution_main_fuse" },
+          { "text": "Dead battery", "next": "solution_battery" },
+          { "text": "All OK, no power", "next": "solution_ign" }
+        ]
+      },
+      {
+        "id": "solution_fixed",
+        "type": "solution",
+        "text": "Light Fixed",
+        "safety": "green",
+        "action": "Bulb or fuse replaced successfully.",
+        "details": "Keep spares. Check regulator output if bulbs blow often."
+      },
+      {
+        "id": "solution_short",
+        "type": "solution",
+        "text": "Short Circuit",
+        "safety": "red",
+        "warning": "Fire risk. Professional diagnosis recommended.",
+        "action": "Find and repair short.",
+        "details": "Disconnect loads to isolate. Check for bare wires behind front fairing and under seat."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Replace Switch",
+        "safety": "green",
+        "action": "Replace faulty switch assembly.",
+        "details": "Apply dielectric grease to new connector."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Repair Wiring",
+        "safety": "yellow",
+        "warning": "Solder and heat-shrink for permanent repairs.",
+        "action": "Find and repair damaged wire.",
+        "details": "Check grommets and body panel pinch points."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Fix Ground",
+        "safety": "green",
+        "action": "Clean and secure ground connection.",
+        "details": "Clean to bare metal, dielectric grease."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Parasitic Drain",
+        "safety": "green",
+        "action": "Find parasitic drain.",
+        "details": "Should be under 30mA with ignition off. Pull fuses to identify circuit."
+      },
+      {
+        "id": "solution_regrec",
+        "type": "solution",
+        "text": "Replace Reg/Rec",
+        "safety": "yellow",
+        "warning": "Overcharging damages everything.",
+        "action": "Replace regulator/rectifier.",
+        "details": "Clean mount for heat dissipation. Verify output after."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Requires flywheel puller.",
+        "action": "Replace failed stator.",
+        "details": "Located inside magneto cover. Intermediate repair."
+      },
+      {
+        "id": "solution_conn",
+        "type": "solution",
+        "text": "Connectors Fixed",
+        "safety": "green",
+        "action": "Problem resolved by cleaning connections.",
+        "details": "Check every 6 months. Dielectric grease prevents recurrence."
+      },
+      {
+        "id": "solution_harness",
+        "type": "solution",
+        "text": "Harness Inspection",
+        "safety": "yellow",
+        "warning": "May need professional help.",
+        "action": "Inspect full wiring harness.",
+        "details": "Wiggle sections while monitoring fault. Check steering column flex point."
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Terminals Fixed",
+        "safety": "green",
+        "action": "Terminals cleaned and secured.",
+        "details": "Wire brush, reconnect, dielectric grease."
+      },
+      {
+        "id": "solution_main_fuse",
+        "type": "solution",
+        "text": "Main Fuse Replaced",
+        "safety": "yellow",
+        "warning": "If it blows again, major short exists.",
+        "action": "Replace with same rating.",
+        "details": "Do not upsize."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Replace Battery",
+        "safety": "green",
+        "action": "Install new battery.",
+        "details": "Check charging system after install."
+      },
+      {
+        "id": "solution_ign",
+        "type": "solution",
+        "text": "Ignition Switch",
+        "safety": "yellow",
+        "warning": "Faulty switch can overheat.",
+        "action": "Test and replace ignition switch.",
+        "details": "Check for 12V pass-through when key ON."
+      }
+    ]
+  }
+}

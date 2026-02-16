@@ -1,0 +1,211 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose rough idle, stalling, and poor low-speed running on the Kymco Like 125i scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the idle issue present on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine idles rough and vibrates excessively", "next": "check_idle_speed" },
+          { "text": "Engine stalls when coming to a stop or at traffic lights", "next": "check_idle_speed" },
+          { "text": "Idle surges up and down rhythmically", "next": "check_vacuum_leaks" },
+          { "text": "Engine dies immediately after starting", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_idle_speed",
+        "type": "check",
+        "text": "Check and adjust the idle speed",
+        "safety": "green",
+        "instructions": "Warm the Like 125i engine to operating temperature (3-5 minutes of idle). The correct idle speed is approximately 1,500-1,700 RPM. Locate the idle speed adjuster — it is typically a screw or knob on the throttle body. Turn clockwise to raise idle, counterclockwise to lower. If you do not have a tachometer, adjust until the engine runs smoothly without stalling when the throttle is released.",
+        "next": "idle_result"
+      },
+      {
+        "id": "idle_result",
+        "type": "question",
+        "text": "Were you able to set a stable idle?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — idle is now smooth", "next": "solution_idle_adjusted" },
+          { "text": "No — idle is still rough or unstable", "next": "check_air_filter" },
+          { "text": "Idle keeps dropping and engine stalls", "next": "check_iacv" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter",
+        "safety": "green",
+        "instructions": "The air filter on the Like 125i is in the air box, typically accessed by removing a plastic cover on the left side. Pull out the filter element. A clogged filter restricts airflow and causes rich running, rough idle, and poor performance. The Like 125i filter should be checked every 2,000 km and replaced every 4,000-6,000 km.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the air filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is dirty or clogged", "next": "solution_replace_filter" },
+          { "text": "Filter is clean", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_vacuum_leaks",
+        "type": "check",
+        "text": "Check for intake vacuum leaks",
+        "safety": "yellow",
+        "warning": "Do not spray flammable chemicals near a hot engine.",
+        "instructions": "A surging idle is often caused by an intake vacuum leak. With the engine idling, spray a small amount of contact cleaner around the intake manifold boot (between throttle body and cylinder head). If the idle changes when you spray a certain spot, that is the leak. Also check all small vacuum hoses for cracks or loose connections. Rubber intake boots harden and crack with age on scooters.",
+        "next": "vacuum_result"
+      },
+      {
+        "id": "vacuum_result",
+        "type": "question",
+        "text": "Did you find a vacuum leak?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — found a leak", "next": "solution_vacuum_leak" },
+          { "text": "No leaks found", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_iacv",
+        "type": "check",
+        "text": "Check the Idle Air Control Valve (IACV)",
+        "safety": "green",
+        "instructions": "The Like 125i uses an electronically controlled IACV to regulate idle speed. It is mounted on the throttle body. When you turn the ignition on, you may hear a faint clicking as it initializes. If the IACV is clogged with carbon deposits, the engine cannot maintain idle. Remove the IACV, inspect for carbon buildup, and clean with throttle body cleaner. Make sure the connector is firmly attached.",
+        "next": "iacv_result"
+      },
+      {
+        "id": "iacv_result",
+        "type": "question",
+        "text": "What did you find with the IACV?",
+        "safety": "green",
+        "options": [
+          { "text": "IACV was clogged — cleaned it", "next": "solution_iacv_cleaned" },
+          { "text": "IACV does not respond electrically", "next": "solution_iacv_replace" },
+          { "text": "IACV seems fine", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality and freshness",
+        "safety": "yellow",
+        "warning": "Gasoline is flammable. Do not check fuel near ignition sources.",
+        "instructions": "Stale or contaminated fuel is a very common idle problem on scooters, especially those that sit for extended periods. Check: (1) How old is the fuel? Gasoline degrades after 30-60 days, (2) Does it smell stale or like varnish? (3) Any visible water or sediment? The Like 125i is fuel-injected and sensitive to poor fuel quality.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "What is the fuel condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel is old or smells stale", "next": "solution_fresh_fuel" },
+          { "text": "Fuel has water or sediment", "next": "solution_drain_fuel" },
+          { "text": "Fuel is fresh and clean", "next": "check_spark_plug" }
+        ]
+      },
+      {
+        "id": "check_spark_plug",
+        "type": "check",
+        "text": "Inspect the spark plug",
+        "safety": "green",
+        "instructions": "Remove the spark plug from the Like 125i. The standard plug is typically NGK CR7HSA. Inspect: (1) Black/sooty — rich running (dirty air filter or injector issue), (2) White/grey — lean running (vacuum leak or fuel delivery issue), (3) Tan/brown — correct mixture. Check the gap (0.6-0.7mm) and replace if fouled or worn.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "What is the spark plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Plug is fouled or worn", "next": "solution_replace_plug" },
+          { "text": "Plug looks fine", "next": "solution_injector_service" }
+        ]
+      },
+      {
+        "id": "solution_idle_adjusted",
+        "type": "solution",
+        "text": "Idle Speed Adjusted",
+        "safety": "green",
+        "action": "The idle speed has been set correctly on the Like 125i.",
+        "details": "The correct idle speed is 1,500-1,700 RPM when warmed up. If it drifts again quickly, there may be an underlying issue with the IACV or a vacuum leak."
+      },
+      {
+        "id": "solution_replace_filter",
+        "type": "solution",
+        "text": "Replace the Air Filter",
+        "safety": "green",
+        "action": "Replace the dirty air filter with a new element.",
+        "details": "A clogged filter causes rich running and rough idle. Replace with an OEM or quality aftermarket filter. Check every 2,000 km and replace every 4,000-6,000 km (more often in dusty conditions)."
+      },
+      {
+        "id": "solution_vacuum_leak",
+        "type": "solution",
+        "text": "Repair the Vacuum Leak",
+        "safety": "green",
+        "action": "Replace the cracked intake boot or damaged vacuum hose.",
+        "details": "The rubber intake boot between the throttle body and cylinder head hardens with age and heat. Replace it if cracked or no longer pliable. Tighten all hose clamps. After repair, reset the idle speed."
+      },
+      {
+        "id": "solution_iacv_cleaned",
+        "type": "solution",
+        "text": "IACV Cleaned",
+        "safety": "green",
+        "action": "Reinstall the cleaned IACV and adjust idle speed.",
+        "details": "Carbon buildup on the IACV is common from short trips and city riding. After cleaning, the ECU may need a minute to relearn idle position. Clean the IACV every 10,000 km as preventative maintenance."
+      },
+      {
+        "id": "solution_iacv_replace",
+        "type": "solution",
+        "text": "Replace the IACV",
+        "safety": "green",
+        "action": "Replace the failed IACV with a new OEM unit.",
+        "details": "If the IACV does not respond to power and cleaning does not help, it has failed electrically. Use an OEM Kymco replacement. After installation, the ECU needs a few idle cycles to calibrate."
+      },
+      {
+        "id": "solution_fresh_fuel",
+        "type": "solution",
+        "text": "Replace with Fresh Fuel",
+        "safety": "yellow",
+        "warning": "Dispose of old fuel at a hazardous waste facility.",
+        "action": "Drain old fuel and refill with fresh unleaded gasoline.",
+        "details": "The Like 125i has approximately a 6.5-liter tank. If the fuel was very old, add injector cleaner to the first tank of fresh fuel. After refueling, let the pump prime before starting."
+      },
+      {
+        "id": "solution_drain_fuel",
+        "type": "solution",
+        "text": "Drain Contaminated Fuel",
+        "safety": "yellow",
+        "warning": "Water-contaminated fuel can damage the fuel injector and pump.",
+        "action": "Drain all contaminated fuel and refill with fresh fuel.",
+        "details": "Water in fuel causes misfires and rough running. Drain completely and check the fuel cap seal for cracks. A damaged cap gasket allows water entry during rain."
+      },
+      {
+        "id": "solution_replace_plug",
+        "type": "solution",
+        "text": "Replace the Spark Plug",
+        "safety": "green",
+        "action": "Install a new NGK CR7HSA spark plug.",
+        "details": "Gap to 0.6-0.7mm. Replace every 4,000-6,000 km. If the old plug was heavily fouled, investigate the root cause (dirty air filter, leaking injector, or oil burning)."
+      },
+      {
+        "id": "solution_injector_service",
+        "type": "solution",
+        "text": "Fuel Injector Service",
+        "safety": "green",
+        "action": "Use fuel system cleaner or have the injector professionally cleaned.",
+        "details": "If all other checks pass, the fuel injector may be partially clogged or not atomizing properly. Add a quality fuel injector cleaner (Techron) to a full tank of fresh fuel. If the problem persists, the injector may need ultrasonic cleaning or replacement."
+      }
+    ]
+  }
+}

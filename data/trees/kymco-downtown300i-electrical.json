@@ -1,0 +1,260 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 300i",
+  "title": "Electrical Issues",
+  "description": "Diagnose electrical problems on the Kymco Downtown 300i including lighting, charging, and wiring.",
+  "category": "electrical",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What electrical issue on your Downtown 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Lights not working", "next": "check_bulbs" },
+          { "text": "Battery keeps dying", "next": "check_charging" },
+          { "text": "Intermittent issues", "next": "check_connectors" },
+          { "text": "Completely dead", "next": "check_main" }
+        ]
+      },
+      {
+        "id": "check_bulbs",
+        "type": "check",
+        "text": "Check bulbs and fuses",
+        "safety": "green",
+        "instructions": "The Downtown 300i has comprehensive lighting. Check affected bulb and fuse. Some models use LED or projector headlights. LED units are not bulb-replaceable — the entire unit must be replaced if failed.",
+        "next": "bulb_result"
+      },
+      {
+        "id": "bulb_result",
+        "type": "question",
+        "text": "Fixed?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_fixed" },
+          { "text": "No", "next": "check_switches" },
+          { "text": "Fuse blows", "next": "solution_short" }
+        ]
+      },
+      {
+        "id": "check_switches",
+        "type": "check",
+        "text": "Check switches and wiring",
+        "safety": "yellow",
+        "warning": "Disconnect battery first.",
+        "instructions": "Test switches, check for 12V at socket. The Downtown 300i has a larger wiring harness. Check connectors behind front fairing and under seat for corrosion.",
+        "next": "sw_result"
+      },
+      {
+        "id": "sw_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad switch", "next": "solution_switch" },
+          { "text": "Wiring fault", "next": "solution_wiring" },
+          { "text": "Ground issue", "next": "solution_ground" }
+        ]
+      },
+      {
+        "id": "check_charging",
+        "type": "check",
+        "text": "Test charging",
+        "safety": "yellow",
+        "warning": "Keep clear of moving parts.",
+        "instructions": "Engine at 3,000+ RPM: battery should read 13.5-14.8V. The Downtown 300i has a higher-output alternator/stator for the bigger engine.",
+        "next": "charge_result"
+      },
+      {
+        "id": "charge_result",
+        "type": "question",
+        "text": "Voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 13.0V", "next": "check_stator" },
+          { "text": "Normal", "next": "solution_drain" },
+          { "text": "Above 15.0V", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_stator",
+        "type": "check",
+        "text": "Test stator",
+        "safety": "yellow",
+        "warning": "AC voltage — caution.",
+        "instructions": "Disconnect stator, measure AC at 3,000 RPM. Should see 40-80V AC on the 300i (higher output than 125 models).",
+        "next": "stator_result"
+      },
+      {
+        "id": "stator_result",
+        "type": "question",
+        "text": "Stator?",
+        "safety": "green",
+        "options": [
+          { "text": "No AC", "next": "solution_stator" },
+          { "text": "Good AC", "next": "solution_regrec" }
+        ]
+      },
+      {
+        "id": "check_connectors",
+        "type": "check",
+        "text": "Check connectors",
+        "safety": "green",
+        "instructions": "Clean all connectors. The 300i has more electronics and sensors than basic scooters. Check battery, harness, handlebar, and ECU connectors.",
+        "next": "conn_result"
+      },
+      {
+        "id": "conn_result",
+        "type": "question",
+        "text": "Resolved?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_conn" },
+          { "text": "No", "next": "solution_harness" }
+        ]
+      },
+      {
+        "id": "check_main",
+        "type": "check",
+        "text": "Check battery and main fuse",
+        "safety": "yellow",
+        "warning": "Major short possible.",
+        "instructions": "Check terminals, main fuse (30A), voltage. If Smart Key equipped, check key fob battery.",
+        "next": "main_result"
+      },
+      {
+        "id": "main_result",
+        "type": "question",
+        "text": "Findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Terminal loose", "next": "solution_terminals" },
+          { "text": "Fuse blown", "next": "solution_fuse" },
+          { "text": "Dead battery", "next": "solution_battery" },
+          { "text": "All OK, no power", "next": "solution_ign" }
+        ]
+      },
+      {
+        "id": "solution_fixed",
+        "type": "solution",
+        "text": "Fixed",
+        "safety": "green",
+        "action": "Bulb/fuse replaced.",
+        "details": "Keep spares. Check regulator if bulbs blow often."
+      },
+      {
+        "id": "solution_short",
+        "type": "solution",
+        "text": "Short Circuit",
+        "safety": "red",
+        "warning": "Fire risk.",
+        "action": "Find and repair short.",
+        "details": "Isolate by disconnecting loads."
+      },
+      {
+        "id": "solution_switch",
+        "type": "solution",
+        "text": "Replace Switch",
+        "safety": "green",
+        "action": "Replace switch assembly.",
+        "details": "Dielectric grease on connector."
+      },
+      {
+        "id": "solution_wiring",
+        "type": "solution",
+        "text": "Wiring Repair",
+        "safety": "yellow",
+        "warning": "Solder and heat-shrink.",
+        "action": "Find and repair damaged wire.",
+        "details": "Check behind fairing and under seat."
+      },
+      {
+        "id": "solution_ground",
+        "type": "solution",
+        "text": "Fix Ground",
+        "safety": "green",
+        "action": "Clean and secure ground.",
+        "details": "Bare metal, dielectric grease."
+      },
+      {
+        "id": "solution_drain",
+        "type": "solution",
+        "text": "Find Parasitic Drain",
+        "safety": "green",
+        "action": "Check for drain (under 30mA normal).",
+        "details": "Pull fuses to identify circuit."
+      },
+      {
+        "id": "solution_regrec",
+        "type": "solution",
+        "text": "Replace Reg/Rec",
+        "safety": "yellow",
+        "warning": "Overcharging damages electronics.",
+        "action": "Replace regulator/rectifier.",
+        "details": "Clean mount, verify output after."
+      },
+      {
+        "id": "solution_stator",
+        "type": "solution",
+        "text": "Replace Stator",
+        "safety": "yellow",
+        "warning": "Flywheel puller needed.",
+        "action": "Replace stator.",
+        "details": "Intermediate repair."
+      },
+      {
+        "id": "solution_conn",
+        "type": "solution",
+        "text": "Connectors Fixed",
+        "safety": "green",
+        "action": "Connectors cleaned.",
+        "details": "Check every 6 months."
+      },
+      {
+        "id": "solution_harness",
+        "type": "solution",
+        "text": "Harness Check",
+        "safety": "yellow",
+        "warning": "May need professional help.",
+        "action": "Full harness inspection.",
+        "details": "Wiggle test while monitoring circuit."
+      },
+      {
+        "id": "solution_terminals",
+        "type": "solution",
+        "text": "Terminals Fixed",
+        "safety": "green",
+        "action": "Cleaned and tightened.",
+        "details": "Dielectric grease."
+      },
+      {
+        "id": "solution_fuse",
+        "type": "solution",
+        "text": "Replace Fuse",
+        "safety": "yellow",
+        "warning": "Same rating only.",
+        "action": "Replace main fuse.",
+        "details": "If it blows again, major short."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Replace Battery",
+        "safety": "green",
+        "action": "New battery.",
+        "details": "Correct type. Check charging after."
+      },
+      {
+        "id": "solution_ign",
+        "type": "solution",
+        "text": "Ignition Switch",
+        "safety": "yellow",
+        "warning": "May be integrated with Smart Key system.",
+        "action": "Test ignition switch or Smart Key receiver.",
+        "details": "Check for 12V pass-through. Smart Key models: check receiver module and fob battery."
+      }
+    ]
+  }
+}

@@ -1,0 +1,364 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Brake System Diagnosis",
+  "description": "Diagnose brake system issues on scooters including disc brakes (front), drum brakes (rear), combined braking systems, pad and shoe replacement, brake fluid, squealing, spongy lever, and dragging brakes.",
+  "category": "brakes",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What brake problem are you experiencing?",
+        "safety": "red",
+        "warning": "Brakes are critical safety components. If you are unsure about any brake repair, have a professional do the work. Never ride with brakes you are not confident in.",
+        "options": [
+          { "text": "Spongy or soft brake lever / no stopping power", "next": "check_which_brake_spongy" },
+          { "text": "Squealing, squeaking, or grinding noise when braking", "next": "check_brake_noise" },
+          { "text": "Brakes are dragging — wheel does not spin freely", "next": "check_which_brake_dragging" },
+          { "text": "Brake lever pulls all the way to the grip", "next": "check_disc_fluid_level" },
+          { "text": "Rear drum brake feels weak or pedal has excessive travel", "next": "check_drum_adjustment" }
+        ]
+      },
+      {
+        "id": "check_which_brake_spongy",
+        "type": "question",
+        "text": "Which brake feels spongy or weak?",
+        "safety": "green",
+        "options": [
+          { "text": "Front brake (disc — lever on right handlebar)", "next": "check_disc_fluid_level" },
+          { "text": "Rear brake (drum — lever on left handlebar or foot pedal)", "next": "check_drum_adjustment" },
+          { "text": "Both brakes (combined braking system / CBS)", "next": "check_cbs_system" }
+        ]
+      },
+      {
+        "id": "check_disc_fluid_level",
+        "type": "check",
+        "text": "Check the front disc brake fluid level and condition.",
+        "safety": "red",
+        "warning": "Brake fluid is corrosive to paint and plastic. Wipe up any spills immediately. Use only the brake fluid type specified on the reservoir cap (usually DOT 4). Never mix different fluid types.",
+        "instructions": "Locate the front brake fluid reservoir on the right handlebar (it has a small sight glass or a removable cap). Check the fluid level — it should be between the MIN and MAX lines. Check the fluid color through the sight glass: fresh fluid is clear to light amber; dark brown or black fluid is old and degraded and absorbs moisture. If the fluid level is very low or the reservoir is empty, there may be a leak or the brake pads may be worn to the limit (as pads wear, fluid fills the space behind the extending caliper piston, lowering the reservoir level).",
+        "next": "disc_fluid_result"
+      },
+      {
+        "id": "disc_fluid_result",
+        "type": "question",
+        "text": "What is the brake fluid level and condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Very low or empty", "next": "check_disc_brake_leak" },
+          { "text": "Dark or old fluid but level is OK", "next": "solution_bleed_disc_brakes" },
+          { "text": "Fluid looks fine and level is OK", "next": "check_disc_pad_thickness" }
+        ]
+      },
+      {
+        "id": "check_disc_brake_leak",
+        "type": "check",
+        "text": "Inspect the disc brake system for fluid leaks.",
+        "safety": "red",
+        "warning": "Do NOT ride the scooter if there is a brake fluid leak. This is a critical safety issue. Transport it to a shop if you cannot repair it yourself.",
+        "instructions": "Follow the brake line from the master cylinder (on the handlebar) to the caliper (on the front wheel). Look for wet spots, drips, or stains along the brake line, at the banjo bolt connections (where the line connects to the caliper and master cylinder), at the caliper around the piston seals, and at the master cylinder body. Also inspect the brake line itself for cracks, bulges, or swelling — rubber brake lines deteriorate with age.",
+        "next": "disc_leak_result"
+      },
+      {
+        "id": "disc_leak_result",
+        "type": "question",
+        "text": "Did you find any brake fluid leaks?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leak found at line, caliper, or master cylinder", "next": "solution_disc_brake_leak" },
+          { "text": "No visible leaks", "next": "check_disc_pad_thickness" }
+        ]
+      },
+      {
+        "id": "check_disc_pad_thickness",
+        "type": "check",
+        "text": "Check the front disc brake pad thickness.",
+        "safety": "yellow",
+        "warning": "If pads are worn to bare metal, do not ride. The brake disc will be damaged and stopping distance will be severely compromised.",
+        "instructions": "Look at the front brake caliper — most scooter calipers have an opening or inspection window where you can see the brake pads and disc. Check the thickness of the friction material (the dark pad material, not the metal backing plate). Most pads have a wear groove — if the groove is no longer visible, the pads need replacement. Minimum pad thickness is typically 1mm of friction material. If you cannot see the pads clearly, the caliper may need to be removed for inspection.",
+        "next": "disc_pad_result"
+      },
+      {
+        "id": "disc_pad_result",
+        "type": "question",
+        "text": "How much friction material is left on the front brake pads?",
+        "safety": "green",
+        "options": [
+          { "text": "Pads are thin or wear groove is gone", "next": "solution_replace_disc_pads" },
+          { "text": "Pads have plenty of material", "next": "solution_bleed_disc_brakes" }
+        ]
+      },
+      {
+        "id": "check_drum_adjustment",
+        "type": "check",
+        "text": "Check the rear drum brake adjustment.",
+        "safety": "yellow",
+        "warning": "Ensure the scooter is on its center stand and stable before working on the rear brake.",
+        "instructions": "Most scooter rear drum brakes have an external adjustment mechanism — a wing nut, star adjuster, or threaded rod at the brake panel on the rear wheel hub. Turn the adjuster to take up slack in the brake cable or linkage. The brake lever or pedal should have about 10-20mm of free play before the brake starts to engage. If the adjuster is at its maximum limit and the brake still feels weak, the brake shoes inside the drum are worn. Also check the brake cable for fraying, kinking, or sticking — a seized cable prevents full brake engagement.",
+        "next": "drum_adjustment_result"
+      },
+      {
+        "id": "drum_adjustment_result",
+        "type": "question",
+        "text": "Were you able to adjust the rear drum brake?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — adjustment improved the brake feel", "next": "solution_drum_adjusted" },
+          { "text": "Adjuster is at maximum and brake is still weak", "next": "check_drum_shoes" },
+          { "text": "Brake cable is frayed, kinked, or sticking", "next": "solution_replace_brake_cable" }
+        ]
+      },
+      {
+        "id": "check_drum_shoes",
+        "type": "check",
+        "text": "Inspect the drum brake shoes for wear.",
+        "safety": "yellow",
+        "warning": "Brake dust from drum brakes may contain harmful materials. Avoid breathing the dust. Do not use compressed air to clean the drum — use brake cleaner and a rag.",
+        "instructions": "Remove the rear wheel to access the drum brake panel. The brake shoes are curved friction pads that press outward against the inside of the drum. Check the thickness of the friction material on the shoes — most shoes have a wear limit line or groove. If the friction material is worn to or below this line, the shoes need replacement. Also inspect the drum surface (inside the wheel hub) for scoring, grooves, or an uneven surface. Light glazing is normal, but deep grooves require drum replacement or machining.",
+        "next": "drum_shoes_result"
+      },
+      {
+        "id": "drum_shoes_result",
+        "type": "question",
+        "text": "What is the condition of the drum brake shoes and drum?",
+        "safety": "green",
+        "options": [
+          { "text": "Brake shoes are worn below the limit", "next": "solution_replace_drum_shoes" },
+          { "text": "Drum surface is scored or grooved", "next": "solution_drum_service" },
+          { "text": "Shoes and drum look OK", "next": "solution_drum_clean" }
+        ]
+      },
+      {
+        "id": "check_brake_noise",
+        "type": "question",
+        "text": "Which brake is making the noise, and what does it sound like?",
+        "safety": "green",
+        "options": [
+          { "text": "Front disc brake — high-pitched squealing", "next": "solution_disc_squeal" },
+          { "text": "Front disc brake — grinding or metal-on-metal", "next": "solution_disc_pads_gone" },
+          { "text": "Rear drum brake — squealing or scraping", "next": "solution_drum_noise" }
+        ]
+      },
+      {
+        "id": "check_which_brake_dragging",
+        "type": "question",
+        "text": "Which wheel is not spinning freely?",
+        "safety": "green",
+        "options": [
+          { "text": "Front wheel — disc brake is dragging", "next": "check_disc_dragging" },
+          { "text": "Rear wheel — drum brake is dragging", "next": "check_drum_dragging" }
+        ]
+      },
+      {
+        "id": "check_disc_dragging",
+        "type": "check",
+        "text": "Check the front disc brake for causes of dragging.",
+        "safety": "yellow",
+        "warning": "A dragging disc brake generates heat. If the disc or caliper is very hot after riding, wait for it to cool before touching.",
+        "instructions": "Put the scooter on its center stand and spin the front wheel. It should rotate freely with only very slight pad contact (a light brushing sound is normal). If the wheel is difficult to spin or stops quickly, the caliper piston may be seized or sticking. Remove the caliper and try to push the piston back into the bore with a flat tool — it should move back smoothly with moderate pressure. If the piston is very difficult to push back or does not retract at all, the piston or its seal is seized. Also check that the brake disc is not warped by watching it spin past a fixed reference point.",
+        "next": "disc_dragging_result"
+      },
+      {
+        "id": "disc_dragging_result",
+        "type": "question",
+        "text": "What is causing the front brake to drag?",
+        "safety": "green",
+        "options": [
+          { "text": "Caliper piston is seized or sticking", "next": "solution_rebuild_caliper" },
+          { "text": "Brake disc is warped", "next": "solution_warped_disc" },
+          { "text": "Not sure — wheel barely drags", "next": "solution_minor_disc_drag" }
+        ]
+      },
+      {
+        "id": "check_drum_dragging",
+        "type": "check",
+        "text": "Check the rear drum brake for causes of dragging.",
+        "safety": "green",
+        "instructions": "With the scooter on the center stand, spin the rear wheel. If it drags, first check the drum brake adjustment — the cable may be too tight or not returning fully. Check the brake lever or pedal return spring — if the spring is broken or weak, the brake does not fully release. Also check the brake cable for smooth operation — pull and release the brake lever and observe if the cable returns to its rest position. If the cable sticks, it needs lubrication or replacement. Inside the drum, the return springs on the brake shoes may be broken or stretched, preventing the shoes from fully retracting.",
+        "next": "drum_dragging_result"
+      },
+      {
+        "id": "drum_dragging_result",
+        "type": "question",
+        "text": "What is causing the rear drum brake to drag?",
+        "safety": "green",
+        "options": [
+          { "text": "Brake cable is too tight or sticking", "next": "solution_drum_cable_drag" },
+          { "text": "Return springs are broken or stretched", "next": "solution_replace_drum_shoes" },
+          { "text": "Brake shoes appear swollen or warped", "next": "solution_replace_drum_shoes" }
+        ]
+      },
+      {
+        "id": "check_cbs_system",
+        "type": "check",
+        "text": "Check the combined braking system (CBS) for issues.",
+        "safety": "red",
+        "warning": "Combined braking systems are complex. If the CBS is not functioning correctly, both brakes are affected. Have it inspected by a qualified technician if you are unsure.",
+        "instructions": "Many scooters use a combined braking system (CBS) where applying one brake also partially engages the other. This uses either a proportioning valve or a mechanical linkage. If both brakes feel spongy, check the brake fluid level in the shared reservoir (if applicable). Also check for air in the CBS valve or lines — the entire system may need bleeding. On systems with a proportioning valve, the valve can malfunction and restrict fluid flow. Note: CBS systems must be bled in a specific sequence — check your service manual for the correct bleeding procedure.",
+        "next": "cbs_result"
+      },
+      {
+        "id": "cbs_result",
+        "type": "question",
+        "text": "What did you find with the CBS system?",
+        "safety": "green",
+        "options": [
+          { "text": "Low brake fluid in the system", "next": "check_disc_brake_leak" },
+          { "text": "System seems to have air in the lines", "next": "solution_bleed_cbs" },
+          { "text": "Not sure — CBS seems complex", "next": "solution_cbs_professional" }
+        ]
+      },
+      {
+        "id": "solution_disc_brake_leak",
+        "type": "solution",
+        "text": "A brake fluid leak must be repaired immediately.",
+        "safety": "red",
+        "warning": "Do NOT ride the scooter until the leak is repaired. Transport it to a shop if needed.",
+        "action": "Repair the leak source and bleed the brake system",
+        "details": "Common leak sources: deteriorated rubber brake lines (replace with new OEM lines), loose or damaged banjo bolts (tighten or replace with new crush washers), worn caliper piston seal (rebuild the caliper with a new seal kit), or a failing master cylinder (rebuild or replace). After any brake repair, the system must be completely bled to remove all air. Use fresh brake fluid of the correct type (DOT 4 is most common on scooters). If you are not experienced with brake work, have a professional do the repair — brakes are critical safety components."
+      },
+      {
+        "id": "solution_replace_disc_pads",
+        "type": "solution",
+        "text": "The front disc brake pads need replacement.",
+        "safety": "red",
+        "warning": "Always replace pads as a complete set (both pads in the caliper). Bed in new pads gently — avoid hard braking for the first 50-100 km (30-60 miles). After installing new pads, pump the brake lever several times before riding to ensure the pads contact the disc.",
+        "action": "Replace the front disc brake pads",
+        "details": "Remove the caliper (usually two bolts), slide out the old pads, and push the caliper piston back into the bore to make room for the new, thicker pads. Open the brake fluid reservoir cap slightly before pushing the piston back to allow fluid to flow back in. Install the new pads, reattach the caliper, and top off the brake fluid. Pump the lever several times before riding — the first squeeze may go to the grip as the pads take up the space. Use OEM or quality aftermarket pads rated for your riding style. Semi-metallic pads offer good all-around performance for scooter use."
+      },
+      {
+        "id": "solution_bleed_disc_brakes",
+        "type": "solution",
+        "text": "The disc brake system needs bleeding to remove air from the lines.",
+        "safety": "red",
+        "warning": "Improper brake bleeding can leave air in the system, resulting in poor braking. If you are not confident in the procedure, have a professional do it.",
+        "action": "Bleed the front disc brake system with fresh fluid",
+        "details": "Attach a clear hose to the caliper bleed nipple and submerge the other end in a container with some brake fluid. Pump the brake lever several times, hold it in, crack open the bleed nipple, close the nipple, then release the lever. Repeat until no air bubbles come out of the hose and the fluid runs clear. Keep the reservoir topped up during bleeding — never let it run dry or you will introduce more air. Use fresh brake fluid of the correct type. Brake fluid should be replaced every 2 years as it absorbs moisture over time, which lowers its boiling point."
+      },
+      {
+        "id": "solution_drum_adjusted",
+        "type": "solution",
+        "text": "The rear drum brake is now properly adjusted.",
+        "safety": "green",
+        "action": "Test the brake and monitor for future adjustment needs",
+        "details": "Take a short test ride at low speed to verify the rear brake is working properly. Drum brakes need periodic adjustment as the shoes wear — this is normal maintenance. Check the adjustment every 1,000-2,000 miles or whenever you notice increased lever travel. If the brake reaches maximum adjustment again quickly, the shoes are nearing the end of their life and should be replaced at the next service. Also lubricate the brake cable periodically to keep it operating smoothly."
+      },
+      {
+        "id": "solution_replace_brake_cable",
+        "type": "solution",
+        "text": "The rear brake cable needs replacement.",
+        "safety": "yellow",
+        "warning": "A frayed brake cable can snap without warning. Replace it immediately if you see any fraying.",
+        "action": "Replace the rear brake cable",
+        "details": "A frayed, kinked, or sticking brake cable must be replaced. Obtain the correct cable for your scooter model (cables are not universal — length and routing must match). Route the new cable following the same path as the old one, avoiding sharp bends that can cause sticking. After installation, adjust the free play to 10-20mm at the lever. Lubricate the new cable with cable lubricant. Test the brake by squeezing and releasing the lever — it should engage smoothly and spring back fully when released."
+      },
+      {
+        "id": "solution_replace_drum_shoes",
+        "type": "solution",
+        "text": "The rear drum brake shoes need replacement.",
+        "safety": "yellow",
+        "warning": "Brake dust may contain harmful materials. Do not blow it out with compressed air — use brake cleaner and a damp cloth. Wear gloves and work in a ventilated area.",
+        "action": "Replace the drum brake shoes",
+        "details": "Replace the shoes as a set (never replace just one shoe). When removing the old shoes, take note of the spring arrangement for reassembly (take a photo if needed). Clean inside the drum with brake cleaner and a cloth. Inspect the drum surface — if scored, have it machined or replace the wheel. Install the new shoes with fresh return springs if included in the kit. Adjust the brake after installation. Bed in new shoes gently for the first 50-100 km (30-60 miles) — avoid hard stops. New shoes will improve dramatically after the bed-in period."
+      },
+      {
+        "id": "solution_drum_service",
+        "type": "solution",
+        "text": "The brake drum is scored and needs service.",
+        "safety": "red",
+        "warning": "A severely scored drum reduces braking effectiveness and can cause the brake to grab or pull. Do not ride with a badly scored drum.",
+        "action": "Have the drum machined or replace the rear wheel hub",
+        "details": "Light scoring of the drum surface is normal and does not affect braking significantly. Deep grooves or an uneven surface mean the drum needs machining (turning on a lathe to restore a smooth surface) or the rear wheel hub needs replacement. After machining, the drum must still be within the maximum diameter specification — if it exceeds this, it is too thin and must be replaced. Always install new brake shoes after drum machining. On many scooters, the drum is integral to the rear wheel hub, so replacement means a new rear wheel hub."
+      },
+      {
+        "id": "solution_drum_clean",
+        "type": "solution",
+        "text": "The drum brake shoes and drum are in good condition but may need cleaning.",
+        "safety": "yellow",
+        "warning": "Use only brake cleaner on brake components. Do not use lubricants, degreasers, or solvents that leave a residue — they will contaminate the friction surfaces.",
+        "action": "Clean the drum brake components and reassemble",
+        "details": "If the shoes and drum look good but the brake feels weak, the friction surfaces may be glazed or contaminated. Lightly scuff the shoe friction material with medium sandpaper (120 grit) and clean the drum interior with brake cleaner. Lubricate the pivot points and cam mechanism with high-temperature brake grease (do not get any on the friction surfaces). Check that the return springs are not stretched or weak. Reassemble, adjust, and test. If the brake still feels weak after cleaning and adjustment, the shoes may need replacement despite appearing OK — glazed shoes lose grip."
+      },
+      {
+        "id": "solution_disc_squeal",
+        "type": "solution",
+        "text": "The front disc brake is squealing.",
+        "safety": "green",
+        "action": "Inspect pads for glazing and clean the braking surfaces",
+        "details": "Disc brake squeal on scooters is common and usually not dangerous. Common causes: glazed pads (scuff with 120-grit sandpaper), dust or debris on the disc (clean with brake cleaner), new pads not yet bedded in (ride gently for 50-100 km to break them in), or caliper not sliding freely. If the squeal is persistent, check that the caliper mounting bolts are properly torqued and the caliper slides smoothly on its pins. Applying a thin layer of brake anti-squeal compound to the back of the pads (never on the friction surface) can also help."
+      },
+      {
+        "id": "solution_disc_pads_gone",
+        "type": "solution",
+        "text": "The disc brake pads are completely worn — metal is grinding on the disc.",
+        "safety": "red",
+        "warning": "STOP RIDING IMMEDIATELY. You have minimal braking ability and the disc is being damaged.",
+        "action": "Replace brake pads immediately and inspect the disc for damage",
+        "details": "Grinding means the friction material is completely gone and the metal backing plates are contacting the disc. This is extremely dangerous. Replace the pads immediately. Inspect the disc for deep grooves and measure its thickness — the minimum thickness is usually engraved on the disc. If the disc is below minimum thickness or severely grooved, it must be replaced along with the pads. Do not ride the scooter until the brakes are fully repaired and tested."
+      },
+      {
+        "id": "solution_drum_noise",
+        "type": "solution",
+        "text": "The rear drum brake is making noise.",
+        "safety": "yellow",
+        "warning": "If the drum brake is making a grinding noise, the shoes may be worn through to the metal. Stop riding and inspect.",
+        "action": "Clean and inspect the drum brake components",
+        "details": "Drum brake noise on scooters is usually caused by: dust and dirt inside the drum (clean with brake cleaner), glazed shoe surfaces (scuff with sandpaper), worn shoe friction material scraping on the drum, or loose or broken springs allowing the shoes to rattle. Remove the rear wheel, inspect the shoes for wear, clean all components with brake cleaner, and check the springs. If the shoes are worn, replace them. A slight scraping sound when first applying a drum brake after riding in wet conditions is normal — moisture on the drum causes temporary noise."
+      },
+      {
+        "id": "solution_rebuild_caliper",
+        "type": "solution",
+        "text": "The front brake caliper piston is seized and needs rebuilding.",
+        "safety": "red",
+        "warning": "A seized caliper generates extreme heat and can cause brake failure. Do not ride until repaired.",
+        "action": "Rebuild or replace the front brake caliper",
+        "details": "A seized caliper piston is caused by corrosion, dirt, or old brake fluid damaging the piston seal. Remove the caliper, extract the piston (using compressed air or brake lever pressure with the line still connected), and inspect the piston bore for corrosion or scoring. If the bore is smooth, rebuild with a new seal kit. If the bore is pitted or scored, replace the caliper. After rebuilding, flush the entire brake system with fresh fluid and bleed thoroughly. To prevent future seizure, replace brake fluid every 2 years."
+      },
+      {
+        "id": "solution_warped_disc",
+        "type": "solution",
+        "text": "The front brake disc is warped.",
+        "safety": "red",
+        "warning": "A warped disc causes pulsation and uneven braking. Replace it — do not attempt to straighten it.",
+        "action": "Replace the brake disc",
+        "details": "A warped disc causes pulsation in the brake lever, uneven pad wear, and reduced braking efficiency. Disc warping is caused by excessive heat (prolonged braking, riding the brake down hills) or by tightening the wheel with the brake applied. Replace the disc with a new OEM part. Install new brake pads at the same time. To prevent future warping: avoid holding the brake while stopped after hard braking (heat builds with no airflow), and never spray cold water on a hot disc."
+      },
+      {
+        "id": "solution_minor_disc_drag",
+        "type": "solution",
+        "text": "A very slight amount of disc brake drag is normal.",
+        "safety": "green",
+        "action": "Monitor the drag — slight contact is normal on scooter disc brakes",
+        "details": "A small amount of pad-to-disc contact is normal, especially on single-piston calipers common on scooters. The piston does not fully retract — it relies on the seal to pull it back slightly. If the drag is very light (wheel still spins freely but with a faint brushing sound), this is normal. If the drag causes the wheel to stop quickly or the disc gets noticeably hot after a short ride, the caliper needs service. Check that the caliper slides freely on its pins — clean and grease the slide pins if they are stiff."
+      },
+      {
+        "id": "solution_drum_cable_drag",
+        "type": "solution",
+        "text": "The rear drum brake cable is too tight or not returning properly.",
+        "safety": "green",
+        "action": "Adjust the cable free play and lubricate or replace the cable",
+        "details": "Back off the drum brake adjuster to create 10-20mm of free play at the lever. If the cable does not return freely when the lever is released, it is sticking inside the cable housing due to corrosion or lack of lubrication. Apply cable lubricant using a cable luber tool (attaches to the end of the cable and forces lubricant through the housing). If lubrication does not help, the cable is corroded internally and must be replaced. Also check that the brake arm return spring on the drum panel is intact and pulling the arm back to the rest position."
+      },
+      {
+        "id": "solution_bleed_cbs",
+        "type": "solution",
+        "text": "The combined braking system needs bleeding.",
+        "safety": "red",
+        "warning": "CBS systems MUST be bled in a specific sequence — bleeding in the wrong order can trap air in the proportioning valve. Follow your service manual exactly.",
+        "action": "Bleed the combined braking system per the service manual procedure",
+        "details": "CBS systems have a specific bleeding sequence that varies by manufacturer. Typically you must bleed the secondary brake caliper first, then the proportioning valve (if it has a bleed nipple), then the primary caliper. Using the wrong sequence can trap air in the CBS valve, which will not clear with further bleeding. Use fresh DOT 4 brake fluid and the standard bleed procedure at each bleed point. If you do not have the service manual or are not familiar with CBS bleeding, have a dealer or qualified technician do it. After bleeding, test both brakes carefully at low speed."
+      },
+      {
+        "id": "solution_cbs_professional",
+        "type": "solution",
+        "text": "The combined braking system should be inspected by a professional.",
+        "safety": "red",
+        "warning": "Do not ride the scooter with a malfunctioning combined braking system — both brakes may be compromised.",
+        "action": "Take the scooter to a dealer or qualified mechanic for CBS diagnosis",
+        "details": "Combined braking systems involve proportioning valves, secondary master cylinders, or mechanical linkages that distribute braking force between front and rear brakes. These systems are more complex than standard independent brakes and require specific knowledge and often special tools to diagnose and repair. A qualified technician can check the CBS valve operation, bleed the system in the correct sequence, and verify that both brakes are receiving the correct proportion of braking force. Do not attempt to bypass or modify the CBS system."
+      }
+    ]
+  }
+}

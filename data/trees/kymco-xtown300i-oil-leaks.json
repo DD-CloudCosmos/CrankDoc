@@ -1,0 +1,159 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "X-Town 300i",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and consumption on the Kymco X-Town 300i 276cc liquid-cooled scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your X-Town 300i?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil dripping", "next": "find_leak" },
+          { "text": "Level drops, no visible leak", "next": "check_burning" },
+          { "text": "Oil weeping", "next": "check_gaskets" },
+          { "text": "Milky oil", "next": "solution_coolant_mix" }
+        ]
+      },
+      {
+        "id": "find_leak",
+        "type": "check",
+        "text": "Locate leak",
+        "safety": "green",
+        "instructions": "Degrease, run, inspect. Common X-Town 300i leak points: drain plug, valve cover gasket, crankcase, crank seals. Distinguish oil from coolant (color/smell).",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Source?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug", "next": "check_plug" },
+          { "text": "Valve cover", "next": "solution_vc" },
+          { "text": "Seal", "next": "solution_seal" },
+          { "text": "Unknown", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "check_plug",
+        "type": "check",
+        "text": "Drain plug",
+        "safety": "green",
+        "instructions": "Tightness, washer, threads.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plug?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose", "next": "solution_tighten" },
+          { "text": "Bad washer", "next": "solution_washer" },
+          { "text": "Stripped", "next": "solution_threads" }
+        ]
+      },
+      {
+        "id": "check_burning",
+        "type": "check",
+        "text": "Check burning",
+        "safety": "green",
+        "instructions": "Blue smoke, oil-fouled plug, oil in air box. Also check for coolant/oil mixing on this liquid-cooled engine.",
+        "next": "burn_result"
+      },
+      {
+        "id": "burn_result",
+        "type": "question",
+        "text": "Signs?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue smoke", "next": "check_smoke_when" },
+          { "text": "Oil in air box", "next": "solution_breather" },
+          { "text": "No signs", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_smoke_when",
+        "type": "check",
+        "text": "When does smoke appear?",
+        "safety": "yellow",
+        "warning": "Professional diagnosis helpful.",
+        "instructions": "Startup/decel = seals. Acceleration = rings. Compression test: 11-14 bar.",
+        "next": "smoke_result"
+      },
+      {
+        "id": "smoke_result",
+        "type": "question",
+        "text": "Pattern?",
+        "safety": "green",
+        "options": [
+          { "text": "Startup/decel", "next": "solution_seals" },
+          { "text": "Acceleration", "next": "solution_rings" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect gaskets",
+        "safety": "green",
+        "instructions": "Valve cover, base, covers. Look for oil seepage.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Where?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover", "next": "solution_vc" },
+          { "text": "Other gasket", "next": "solution_gasket" },
+          { "text": "Multiple", "next": "solution_uv" }
+        ]
+      },
+      {
+        "id": "solution_tighten", "type": "solution", "text": "Tightened", "safety": "green", "action": "Plug tightened.", "details": "Torque to spec."
+      },
+      {
+        "id": "solution_washer", "type": "solution", "text": "Washer", "safety": "green", "action": "New washer.", "details": "Replace at every change."
+      },
+      {
+        "id": "solution_threads", "type": "solution", "text": "Threads", "safety": "yellow", "warning": "Proper repair.", "action": "Helicoil.", "details": "Keep chips out."
+      },
+      {
+        "id": "solution_vc", "type": "solution", "text": "Valve Cover Gasket", "safety": "green", "action": "Replace.", "details": "Easy. Check valves while off."
+      },
+      {
+        "id": "solution_seal", "type": "solution", "text": "Crank Seal", "safety": "yellow", "warning": "Needs puller.", "action": "Replace seal.", "details": "Intermediate."
+      },
+      {
+        "id": "solution_uv", "type": "solution", "text": "UV Dye", "safety": "green", "action": "Add dye, inspect with UV.", "details": "Run 15-20 min."
+      },
+      {
+        "id": "solution_breather", "type": "solution", "text": "Breather", "safety": "green", "action": "Clean breather.", "details": "Test compression if recurs."
+      },
+      {
+        "id": "solution_seals", "type": "solution", "text": "Valve Seals", "safety": "yellow", "warning": "Head removal.", "action": "Replace.", "details": "Check guides."
+      },
+      {
+        "id": "solution_rings", "type": "solution", "text": "Top-End Rebuild", "safety": "yellow", "warning": "Intermediate/advanced.", "action": "New rings, bore service.", "details": "276cc parts cost more than 125."
+      },
+      {
+        "id": "solution_gasket", "type": "solution", "text": "Replace Gasket", "safety": "yellow", "warning": "May need part removal.", "action": "Replace.", "details": "Clean surfaces."
+      },
+      {
+        "id": "solution_coolant_mix",
+        "type": "solution",
+        "text": "Coolant in Oil",
+        "safety": "red",
+        "warning": "Stop riding. Bearing damage.",
+        "action": "Head gasket replacement.",
+        "details": "Milky oil = coolant mixing. Stop immediately. Replace gasket, flush oil thoroughly."
+      }
+    ]
+  }
+}

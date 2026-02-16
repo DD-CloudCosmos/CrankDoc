@@ -1,0 +1,226 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and excessive oil consumption on the Kymco Like 125i scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Visible oil dripping or pooling under the scooter", "next": "check_leak_source" },
+          { "text": "Oil level drops between changes but no visible leak", "next": "check_burning" },
+          { "text": "Oil weeping from engine (wet but not dripping)", "next": "check_gaskets" },
+          { "text": "Oil spray on the underside", "next": "check_leak_source" }
+        ]
+      },
+      {
+        "id": "check_leak_source",
+        "type": "check",
+        "text": "Locate the oil leak source",
+        "safety": "green",
+        "instructions": "Clean the engine with degreaser. Run for a few minutes, then inspect with a flashlight. Oil runs downward, so the source is above the drip. Common leak spots on the Like 125i: (1) Oil drain plug, (2) Valve cover gasket, (3) Crankcase seams, (4) Crankshaft seals (left/right), (5) Oil filter screen cap.",
+        "next": "leak_result"
+      },
+      {
+        "id": "leak_result",
+        "type": "question",
+        "text": "Where is the oil coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Drain plug area", "next": "check_drain_plug" },
+          { "text": "Valve cover area", "next": "solution_valve_cover" },
+          { "text": "Crankcase seam", "next": "solution_crankcase_gasket" },
+          { "text": "Crankshaft seal area", "next": "solution_crank_seal" },
+          { "text": "Cannot pinpoint — need more help", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "check_drain_plug",
+        "type": "check",
+        "text": "Inspect the oil drain plug",
+        "safety": "green",
+        "instructions": "Check: (1) Is the plug tight? Torque to 20-25 Nm, (2) Is the crush washer in place and undamaged? (3) Are threads stripped from over-tightening? The drain plug on the Like 125i is on the bottom of the crankcase.",
+        "next": "drain_result"
+      },
+      {
+        "id": "drain_result",
+        "type": "question",
+        "text": "What is the drain plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Plug was loose", "next": "solution_tighten_plug" },
+          { "text": "Crush washer damaged", "next": "solution_new_washer" },
+          { "text": "Threads stripped", "next": "solution_thread_repair" }
+        ]
+      },
+      {
+        "id": "check_burning",
+        "type": "check",
+        "text": "Check for oil burning",
+        "safety": "green",
+        "instructions": "If oil disappears without external leaks, the engine is burning it. Check: (1) Blue/grey exhaust smoke (especially during acceleration/deceleration), (2) Oily residue at the exhaust tip, (3) Oil-fouled spark plug, (4) Oil in the air filter box (indicates crankcase breather issue or blow-by from worn rings).",
+        "next": "burning_result"
+      },
+      {
+        "id": "burning_result",
+        "type": "question",
+        "text": "What signs of burning did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue exhaust smoke", "next": "check_valve_vs_rings" },
+          { "text": "Oil-fouled spark plug", "next": "check_valve_vs_rings" },
+          { "text": "Oil in air filter box", "next": "solution_breather" },
+          { "text": "No visible smoke but oil drops", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_valve_vs_rings",
+        "type": "check",
+        "text": "Determine if valve seals or piston rings",
+        "safety": "yellow",
+        "warning": "Both conditions benefit from professional diagnosis.",
+        "instructions": "Valve seal wear: smoke mainly on startup or deceleration. Ring wear: smoke under acceleration, continuous, with low compression. Do a compression test — Like 125i should produce 10-12 bar (145-175 PSI). Low compression + smoke = rings. Normal compression + smoke on decel = valve seals.",
+        "next": "seal_result"
+      },
+      {
+        "id": "seal_result",
+        "type": "question",
+        "text": "When does smoke appear?",
+        "safety": "green",
+        "options": [
+          { "text": "Startup or deceleration — valve seals", "next": "solution_valve_seals" },
+          { "text": "Under acceleration — rings", "next": "solution_rings" },
+          { "text": "Low compression confirmed", "next": "solution_rings" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect gaskets for weeping",
+        "safety": "green",
+        "instructions": "Look for oil residue along gasket seams: (1) Valve cover gasket — most common, (2) Cylinder base gasket, (3) Crankcase cover gaskets. Weeping attracts dirt and looks messy but may not drip.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Where is the weeping?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover", "next": "solution_valve_cover" },
+          { "text": "Cylinder base", "next": "solution_base_gasket" },
+          { "text": "Crankcase cover", "next": "solution_cover_gasket" },
+          { "text": "Multiple locations", "next": "solution_uv_dye" }
+        ]
+      },
+      {
+        "id": "solution_tighten_plug",
+        "type": "solution",
+        "text": "Drain Plug Tightened",
+        "safety": "green",
+        "action": "Tightened the drain plug. Clean area and monitor.",
+        "details": "Torque to 20-25 Nm. Use a torque wrench. Do not overtighten."
+      },
+      {
+        "id": "solution_new_washer",
+        "type": "solution",
+        "text": "Replace Crush Washer",
+        "safety": "green",
+        "action": "Replace the drain plug crush washer.",
+        "details": "Replace at every oil change. Reused washers leak. These are inexpensive — keep spares on hand."
+      },
+      {
+        "id": "solution_thread_repair",
+        "type": "solution",
+        "text": "Repair Stripped Threads",
+        "safety": "yellow",
+        "warning": "Stripped threads worsen if not repaired. Do not use oversized bolts as a fix.",
+        "action": "Install a thread repair insert (Helicoil or similar).",
+        "details": "Drill, tap, and install a threaded insert. Keep metal chips out of the crankcase. Alternatively, use an oversize drain plug with a rubber seal as a temporary fix."
+      },
+      {
+        "id": "solution_valve_cover",
+        "type": "solution",
+        "text": "Replace Valve Cover Gasket",
+        "safety": "green",
+        "action": "Replace the valve cover gasket.",
+        "details": "Easy and inexpensive repair. Clean both surfaces. Tighten bolts evenly in a cross pattern (10-12 Nm). Good time to check valve clearances."
+      },
+      {
+        "id": "solution_crankcase_gasket",
+        "type": "solution",
+        "text": "Crankcase Gasket Repair",
+        "safety": "yellow",
+        "warning": "Splitting crankcase halves requires full engine disassembly — advanced repair.",
+        "action": "If the leak is at the crankcase mating surface, the gasket has failed.",
+        "details": "Minor weeping can be monitored. Significant leaks require splitting the cases — this is usually done during a major overhaul."
+      },
+      {
+        "id": "solution_crank_seal",
+        "type": "solution",
+        "text": "Replace Crankshaft Seal",
+        "safety": "yellow",
+        "warning": "Requires flywheel or CVT variator removal. Use proper puller tools.",
+        "action": "Replace the leaking crankshaft oil seal.",
+        "details": "Pry out old seal carefully, press new seal in squarely. Apply oil to the seal lip before installation. Intermediate repair requiring a flywheel puller."
+      },
+      {
+        "id": "solution_uv_dye",
+        "type": "solution",
+        "text": "Use UV Dye to Find Leak",
+        "safety": "green",
+        "action": "Add UV dye to the oil and use a UV light to find the leak.",
+        "details": "Run the engine for 15-20 minutes, then inspect with a UV flashlight. The dye glows brightly at leak points. Safe for use in engine oil."
+      },
+      {
+        "id": "solution_breather",
+        "type": "solution",
+        "text": "Service Crankcase Breather",
+        "safety": "green",
+        "action": "Clean or replace the crankcase breather valve and hose.",
+        "details": "Oil in the air box indicates breather issues or excessive blow-by from worn rings. Clean the breather system first. If the problem recurs, compression test the engine — low compression means worn rings."
+      },
+      {
+        "id": "solution_valve_seals",
+        "type": "solution",
+        "text": "Replace Valve Stem Seals",
+        "safety": "yellow",
+        "warning": "Requires cylinder head removal.",
+        "action": "Replace the intake and exhaust valve stem seals.",
+        "details": "Remove the head, use a valve spring compressor to access seals. Check valve guides for wear — new seals on worn guides won't solve the problem."
+      },
+      {
+        "id": "solution_rings",
+        "type": "solution",
+        "text": "Top-End Rebuild",
+        "safety": "yellow",
+        "warning": "Intermediate to advanced repair.",
+        "action": "Rebuild the top end with new piston rings.",
+        "details": "Remove head and cylinder. Measure bore for wear. Light hone and new rings if within spec. Re-bore with oversize piston if worn. Replace valve seals and head gasket at the same time."
+      },
+      {
+        "id": "solution_base_gasket",
+        "type": "solution",
+        "text": "Replace Cylinder Base Gasket",
+        "safety": "yellow",
+        "warning": "Requires removing the head and cylinder.",
+        "action": "Replace the cylinder base gasket.",
+        "details": "Clean mating surfaces with a plastic scraper. Inspect piston and rings while cylinder is off."
+      },
+      {
+        "id": "solution_cover_gasket",
+        "type": "solution",
+        "text": "Replace Crankcase Cover Gasket",
+        "safety": "green",
+        "action": "Replace the cover gasket.",
+        "details": "Remove cover bolts, separate, clean surfaces, install new gasket. Some covers use liquid gasket sealant — apply in a thin, even bead. Allow curing time before adding oil."
+      }
+    ]
+  }
+}

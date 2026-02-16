@@ -1,0 +1,174 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Downtown 125i",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss on the Kymco Downtown 125i with CVT drivetrain emphasis.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your Downtown 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration from stop", "next": "check_belt" },
+          { "text": "Engine revs high, scooter barely moves", "next": "check_clutch" },
+          { "text": "Reduced top speed", "next": "check_rollers" },
+          { "text": "Power bogs under load", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The Downtown 125i belt is a critical wear item. Check for cracks, fraying, glazing, width reduction. The Downtown 125i uses a wider/longer belt than basic 125cc scooters due to its larger engine bay. Replace every 10,000-15,000 km.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Worn or damaged", "next": "solution_belt" },
+          { "text": "OK", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Inspect variator rollers",
+        "safety": "green",
+        "instructions": "Remove variator face plate. The Downtown 125i uses roller weights in the variator. Check for flat spots, deformation, uneven wear. Flat-spotted rollers cause hesitation and poor ratio changes. Check stock weight specification in the service manual.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots or damage", "next": "solution_rollers" },
+          { "text": "Round and uniform", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect clutch",
+        "safety": "green",
+        "instructions": "Remove rear clutch assembly. Check shoes (min 2mm friction material), springs, and bell. The Downtown 125i clutch handles more power than basic scooters. Worn or glazed clutch = high revs with no acceleration.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch findings?",
+        "safety": "green",
+        "options": [
+          { "text": "Shoes worn/glazed", "next": "solution_clutch" },
+          { "text": "Weak springs", "next": "solution_springs" },
+          { "text": "OK", "next": "check_filter" }
+        ]
+      },
+      {
+        "id": "check_filter",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "Clogged filter = rich running, bogging, power loss. The Downtown 125i used for daily commuting accumulates dirt faster. Replace if dirty.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "Filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust",
+        "safety": "yellow",
+        "warning": "Hot — inspect cold only.",
+        "instructions": "Blocked catalytic converter or carbon-packed muffler causes major power loss. Check flow. Try loosening header temporarily.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Exhaust flow?",
+        "safety": "green",
+        "options": [
+          { "text": "Restricted", "next": "solution_exhaust" },
+          { "text": "Free flowing", "next": "solution_valves" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace Belt",
+        "safety": "green",
+        "action": "Replace CVT belt.",
+        "details": "Use correct size for Downtown 125i (longer than basic scooter belts). Inspect rollers and clutch at the same time."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Rollers",
+        "safety": "green",
+        "action": "Replace all rollers as a set.",
+        "details": "Use stock weight. Never mix old and new. Grease variator boss."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Replace Clutch",
+        "safety": "green",
+        "action": "Replace clutch shoes or assembly.",
+        "details": "Also replace bell if grooved."
+      },
+      {
+        "id": "solution_springs",
+        "type": "solution",
+        "text": "Replace Springs",
+        "safety": "green",
+        "action": "Replace clutch springs.",
+        "details": "Weak springs cause early engagement."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Filter",
+        "safety": "green",
+        "action": "Install new air filter.",
+        "details": "Most common power loss cause. Replace every 4,000-6,000 km."
+      },
+      {
+        "id": "solution_exhaust",
+        "type": "solution",
+        "text": "Service Exhaust",
+        "safety": "yellow",
+        "warning": "Let exhaust cool.",
+        "action": "Replace blocked catalytic converter or muffler.",
+        "details": "Do not remove cat (may be illegal)."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Check Valves",
+        "safety": "yellow",
+        "warning": "Cold engine, TDC compression.",
+        "action": "Check and adjust valve clearances.",
+        "details": "Tight valves reduce compression. Check every 8,000-12,000 km."
+      }
+    ]
+  }
+}

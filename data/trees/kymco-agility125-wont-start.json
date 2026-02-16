@@ -1,0 +1,218 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Won't Start",
+  "description": "Diagnose a no-start condition on the Kymco Agility 125 scooter, covering battery, starter, fuel, and ignition checks.",
+  "category": "electrical",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What happens when you press the start button?",
+        "safety": "green",
+        "options": [
+          { "text": "Nothing at all — no sound, no lights", "next": "check_battery" },
+          { "text": "Lights come on but starter does not turn", "next": "check_kill_switch" },
+          { "text": "Starter cranks but engine does not fire", "next": "check_fuel_pump" },
+          { "text": "Starter clicks but does not spin", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_battery",
+        "type": "check",
+        "text": "Check the battery voltage",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working near the battery. Battery acid is corrosive.",
+        "instructions": "Locate the battery under the floorboard or seat on the Kymco Agility 125. Using a multimeter set to DC volts, measure across the battery terminals. A healthy battery should read 12.4V or higher. Below 12.0V the starter will not have enough power to crank. Check the terminal connections for corrosion — clean with a wire brush if needed. If the battery is below 12.0V, charge it with an appropriate charger before continuing.",
+        "next": "battery_result"
+      },
+      {
+        "id": "battery_result",
+        "type": "question",
+        "text": "What is the battery voltage?",
+        "safety": "green",
+        "options": [
+          { "text": "Below 12.0V — battery is dead or very low", "next": "solution_charge_battery" },
+          { "text": "12.0V-12.3V — battery is weak", "next": "solution_charge_battery" },
+          { "text": "12.4V or higher — battery is good", "next": "check_main_fuse" }
+        ]
+      },
+      {
+        "id": "check_main_fuse",
+        "type": "check",
+        "text": "Check the main fuse",
+        "safety": "yellow",
+        "warning": "Always turn the ignition off before checking or replacing fuses.",
+        "instructions": "The Kymco Agility 125 has a main fuse (typically 15A or 20A) located near the battery. Remove the fuse and inspect it visually — the metal strip inside should be intact. If it is blown (broken strip or blackened), replace it with a fuse of the same rating. Also check the ignition fuse (usually 10A). If fuses blow repeatedly, there is a short circuit that must be found before continuing.",
+        "next": "fuse_result"
+      },
+      {
+        "id": "fuse_result",
+        "type": "question",
+        "text": "Are the fuses intact?",
+        "safety": "green",
+        "options": [
+          { "text": "Main fuse is blown", "next": "solution_replace_fuse" },
+          { "text": "All fuses are good", "next": "check_kill_switch" }
+        ]
+      },
+      {
+        "id": "check_kill_switch",
+        "type": "check",
+        "text": "Check the kill switch and safety interlocks",
+        "safety": "green",
+        "instructions": "The Kymco Agility 125 has several safety interlocks that prevent starting: (1) The engine kill switch on the right handlebar must be in the RUN position, (2) The side stand switch prevents starting when the stand is down — retract the side stand fully, (3) Make sure the brake lever (left or right) is squeezed while pressing the start button, as some models require a brake input to engage the starter. Toggle the kill switch back and forth a few times to clean the contacts.",
+        "next": "kill_switch_result"
+      },
+      {
+        "id": "kill_switch_result",
+        "type": "question",
+        "text": "Did checking the switches and interlocks help?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — engine now cranks or starts", "next": "solution_switch_fixed" },
+          { "text": "No — still no response from starter", "next": "check_starter_relay" }
+        ]
+      },
+      {
+        "id": "check_starter_relay",
+        "type": "check",
+        "text": "Check the starter relay",
+        "safety": "yellow",
+        "warning": "Do not bypass the starter relay by bridging terminals unless you understand the risk of the engine starting unexpectedly.",
+        "instructions": "The starter relay (solenoid) on the Agility 125 is usually located near the battery. When you press the start button, you should hear a clear click from the relay. If you hear a click but the starter does not turn, the relay contacts may be worn or the starter motor itself may be faulty. If there is no click at all, check for 12V at the relay trigger wire (small wire) when the start button is pressed. No voltage means a wiring or switch issue upstream.",
+        "next": "starter_relay_result"
+      },
+      {
+        "id": "starter_relay_result",
+        "type": "question",
+        "text": "What did you find with the starter relay?",
+        "safety": "green",
+        "options": [
+          { "text": "Relay clicks but starter does not spin", "next": "solution_starter_motor" },
+          { "text": "No click — no voltage at relay trigger wire", "next": "solution_wiring_issue" },
+          { "text": "Relay clicks, starter spins, but engine won't fire", "next": "check_fuel_pump" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump",
+        "type": "check",
+        "text": "Check fuel delivery",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Do not work near open flames or sparks when checking fuel system components.",
+        "instructions": "When you turn the ignition key to ON (before pressing start), listen for the fuel pump priming — you should hear a brief whirring or buzzing sound for 2-3 seconds from under the seat or near the fuel tank. If you do not hear the pump prime, check the fuel pump fuse. Make sure there is fuel in the tank (the Agility 125 fuel gauge can be inaccurate when low). If the pump primes but the engine still will not fire, move on to checking spark.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Is the fuel pump priming?",
+        "safety": "green",
+        "options": [
+          { "text": "No pump sound at all", "next": "solution_fuel_pump" },
+          { "text": "Pump primes but engine won't fire", "next": "check_spark" },
+          { "text": "Tank is empty", "next": "solution_add_fuel" }
+        ]
+      },
+      {
+        "id": "check_spark",
+        "type": "check",
+        "text": "Check for spark",
+        "safety": "yellow",
+        "warning": "The ignition system produces high voltage. Do not touch the spark plug wire or coil while cranking. Keep fingers away from the electrode end of the plug.",
+        "instructions": "Remove the spark plug from the Agility 125 cylinder head using the correct spark plug wrench. Reconnect the spark plug cap to the removed plug. Ground the plug body against the engine (hold the plug against a bare metal part of the engine with insulated pliers). Have someone crank the engine — you should see a bright blue spark at the plug electrode. A weak orange/yellow spark or no spark indicates an ignition problem. The Agility 125 uses a CDI ignition system.",
+        "next": "spark_result"
+      },
+      {
+        "id": "spark_result",
+        "type": "question",
+        "text": "Is there a good spark?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong blue spark", "next": "solution_compression_or_timing" },
+          { "text": "Weak or no spark", "next": "solution_ignition_issue" }
+        ]
+      },
+      {
+        "id": "solution_charge_battery",
+        "type": "solution",
+        "text": "Charge or Replace the Battery",
+        "safety": "green",
+        "action": "Charge the battery fully using a smart charger, or replace it if it will not hold a charge.",
+        "details": "The Kymco Agility 125 uses a small 12V battery (typically YTX7A-BS or equivalent). Charge it with a 1-2 amp smart charger until the charger indicates a full charge. If the battery will not hold 12.4V after charging, it needs replacement. Scooter batteries typically last 2-3 years. After charging, if the scooter starts but the battery dies again quickly, check the charging system (stator and regulator/rectifier)."
+      },
+      {
+        "id": "solution_replace_fuse",
+        "type": "solution",
+        "text": "Replace the Blown Fuse",
+        "safety": "yellow",
+        "warning": "Never replace a fuse with a higher-rated one. This can cause wiring damage or fire.",
+        "action": "Replace the blown fuse with one of the same amperage rating.",
+        "details": "Replace the fuse and attempt to start. If the new fuse blows immediately, there is a short circuit in the system — do not keep replacing fuses. Common short circuit causes include pinched wiring under the seat or bodywork, a corroded connector, or a faulty component. A short circuit should be diagnosed by following the wiring from the fuse to find the damaged section."
+      },
+      {
+        "id": "solution_switch_fixed",
+        "type": "solution",
+        "text": "Safety Interlock Resolved",
+        "safety": "green",
+        "action": "The safety switch or interlock was preventing the engine from starting.",
+        "details": "If the side stand switch was the issue, make sure the stand retracts fully and the switch plunger moves freely. Spray the switch with contact cleaner if it sticks. If the kill switch was the issue, toggle it several times to clean the internal contacts. If you had to squeeze the brake lever to start, this is normal operation on the Agility 125."
+      },
+      {
+        "id": "solution_starter_motor",
+        "type": "solution",
+        "text": "Starter Motor Fault",
+        "safety": "yellow",
+        "warning": "Do not attempt to disassemble the starter motor unless you are comfortable with electrical components.",
+        "action": "The starter motor is likely faulty and needs repair or replacement.",
+        "details": "If the relay clicks but the starter does not turn, the starter motor may have worn brushes, a seized armature, or a bad connection at the motor. On the Agility 125, the starter motor is accessible from the right side of the engine. Check the heavy cable connection at the motor first — it may be loose or corroded. If the connection is good, the starter motor itself needs to be removed for testing or replacement. A rebuilt or new starter motor for this scooter is typically affordable."
+      },
+      {
+        "id": "solution_wiring_issue",
+        "type": "solution",
+        "text": "Wiring or Switch Problem",
+        "safety": "yellow",
+        "warning": "Wiring repairs must be done with the ignition off. Use proper connectors — not electrical tape alone.",
+        "action": "Trace the wiring from the start button to the starter relay to find the break.",
+        "details": "No voltage at the relay trigger wire when pressing start means the signal is not reaching the relay. Check: (1) the start button connector at the handlebar switch cluster, (2) the wiring harness connectors under the front panel, (3) the side stand switch connector, (4) the brake switch connector. Look for corroded, loose, or disconnected plugs. Water ingress into handlebar switch housings is common on scooters."
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "Fuel Pump Not Working",
+        "safety": "yellow",
+        "warning": "Do not run the fuel pump outside the tank with fuel present — fire risk.",
+        "action": "Check the fuel pump fuse and wiring. Replace the fuel pump if it has failed.",
+        "details": "First check the fuel pump fuse. If the fuse is good, check for 12V at the fuel pump connector when the ignition is turned on. If voltage is present but the pump does not run, the pump has failed and needs replacement. Fuel pumps on scooters can fail due to running the tank very low (which causes the pump to overheat) or from contaminated fuel."
+      },
+      {
+        "id": "solution_add_fuel",
+        "type": "solution",
+        "text": "Fuel Tank Empty",
+        "safety": "green",
+        "action": "Add fresh fuel to the tank.",
+        "details": "The Kymco Agility 125 has approximately a 7-liter fuel tank. The fuel gauge can read inaccurately when the tank is nearly empty. Add at least 2 liters of fresh regular unleaded gasoline. After refueling, turn the ignition on and wait 3-5 seconds for the fuel pump to prime before pressing the start button. It may take a few extra cranks for fuel to reach the injector after running dry."
+      },
+      {
+        "id": "solution_ignition_issue",
+        "type": "solution",
+        "text": "Ignition System Fault",
+        "safety": "yellow",
+        "warning": "The CDI unit and ignition coil handle high voltage. Do not test them with the engine running unless you understand the risks.",
+        "action": "Replace the spark plug first. If still no spark, check the CDI unit, ignition coil, and pickup coil.",
+        "details": "Start with the simplest fix: replace the spark plug with the correct type (typically NGK CR7HSA for the Agility 125, gap 0.6-0.7mm). If a new plug still has no spark, check the ignition coil for cracks or damage. Then check the CDI unit — these are solid-state and can fail without warning. Also check the pickup coil (pulser) on the magneto for correct resistance (consult the service manual for specs). A faulty CDI is a common no-spark cause on Kymco scooters."
+      },
+      {
+        "id": "solution_compression_or_timing",
+        "type": "solution",
+        "text": "Compression or Timing Issue",
+        "safety": "yellow",
+        "warning": "A compression test requires removing the spark plug and using a dedicated gauge. Be careful of hot engine components.",
+        "action": "Perform a compression test. If compression is low, the engine may need top-end work.",
+        "details": "If you have spark and fuel but the engine will not fire, the issue is likely compression or valve timing. Perform a compression test — the Agility 125 should produce approximately 10-12 bar (145-175 PSI). Low compression can indicate worn piston rings, a leaking head gasket, or incorrect valve clearance. Check that the valve clearances are within spec (intake: 0.10mm, exhaust: 0.15mm — verify with the service manual). Excessively tight valves that do not fully close will cause a no-start condition."
+      }
+    ]
+  }
+}

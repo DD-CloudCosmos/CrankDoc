@@ -1,0 +1,385 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Exhaust and Catalytic Converter",
+  "description": "Diagnose exhaust system issues on scooters including exhaust leaks, catalytic converter failure, heat shield rattle, carbon buildup, backfiring, exhaust gasket leaks, and emission test failure.",
+  "category": "exhaust",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What exhaust system symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Loud exhaust — louder than normal", "next": "check_exhaust_leak_location" },
+          { "text": "Rattling or buzzing noise from the exhaust", "next": "check_rattle_source" },
+          { "text": "Loss of power with possible exhaust smell", "next": "check_cat_blockage" },
+          { "text": "Backfiring or popping on deceleration", "next": "check_backfire" },
+          { "text": "Failed emissions test or strong exhaust smell", "next": "check_emissions" },
+          { "text": "Rust holes or visible damage to the exhaust", "next": "check_exhaust_condition" }
+        ]
+      },
+      {
+        "id": "check_exhaust_leak_location",
+        "type": "check",
+        "text": "Locate the exhaust leak.",
+        "safety": "yellow",
+        "warning": "The exhaust system becomes extremely hot during operation. Allow the scooter to cool completely before touching any exhaust components. Exhaust gases contain carbon monoxide — never run the engine in an enclosed space.",
+        "instructions": "Start the engine and let it idle. Carefully listen along the exhaust system from the engine to the tailpipe to identify where the noise is loudest. Common leak locations on scooters: the exhaust header-to-cylinder joint (where the exhaust pipe connects to the engine), the joint between the header pipe and the catalytic converter or muffler, and rusted-through sections of the exhaust pipe. You can hold a gloved hand near (not touching) joints to feel for exhaust pulses. You can also use a piece of cardboard — hold it near suspected leak areas and watch for it to flutter from exhaust pressure.",
+        "next": "exhaust_leak_result"
+      },
+      {
+        "id": "exhaust_leak_result",
+        "type": "question",
+        "text": "Where is the exhaust leak?",
+        "safety": "green",
+        "options": [
+          { "text": "At the header-to-cylinder connection", "next": "solution_header_gasket" },
+          { "text": "At a joint between pipe sections or at the muffler connection", "next": "solution_exhaust_joint_leak" },
+          { "text": "Through a rust hole or crack in the pipe itself", "next": "check_exhaust_condition" },
+          { "text": "Cannot pinpoint the leak location", "next": "solution_exhaust_inspection" }
+        ]
+      },
+      {
+        "id": "check_rattle_source",
+        "type": "check",
+        "text": "Identify the source of the exhaust rattle.",
+        "safety": "yellow",
+        "warning": "Do not attempt to tighten or adjust exhaust components while the engine is running or the exhaust is hot.",
+        "instructions": "With the engine off and the exhaust cool, tap gently along the exhaust system with a rubber mallet or your knuckles. Listen for anything loose. Common rattle sources on scooters: a loose heat shield (the thin metal cover that protects body panels from exhaust heat), a broken internal baffle inside the muffler (shake the muffler and listen for loose pieces), loose exhaust mounting bolts or hangers, or the catalytic converter substrate breaking apart inside its housing (sounds like a metallic rattle from inside the cat). Also start the engine and rev it — rattles that appear only at certain RPMs may be resonance-related.",
+        "next": "rattle_result"
+      },
+      {
+        "id": "rattle_result",
+        "type": "question",
+        "text": "What is causing the rattle?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose heat shield", "next": "solution_heat_shield" },
+          { "text": "Broken baffle inside the muffler", "next": "solution_muffler_replace" },
+          { "text": "Loose mounting bolts or hangers", "next": "solution_tighten_mounts" },
+          { "text": "Rattle from inside the catalytic converter", "next": "check_cat_blockage" }
+        ]
+      },
+      {
+        "id": "check_cat_blockage",
+        "type": "check",
+        "text": "Check for a blocked or failing catalytic converter.",
+        "safety": "yellow",
+        "warning": "A blocked catalytic converter causes extreme heat buildup in the exhaust system. If the exhaust pipe or cat housing is glowing red, shut off the engine immediately and do not touch anything until it cools.",
+        "instructions": "A blocked catalytic converter restricts exhaust flow, causing power loss, overheating, and poor performance. Symptoms include: significant power loss (especially at higher RPMs), a rotten egg smell (hydrogen sulfide) from the exhaust, the exhaust system getting unusually hot, and the engine running roughly or stalling. To test: with the engine at normal operating temperature, hold your hand near the tailpipe outlet (not touching) — you should feel steady exhaust pulses. Weak or almost no exhaust output suggests a blockage. You can also remove the oxygen sensor from the exhaust and start the engine — if performance improves dramatically, the cat is likely blocked.",
+        "next": "cat_blockage_result"
+      },
+      {
+        "id": "cat_blockage_result",
+        "type": "question",
+        "text": "Does the catalytic converter appear to be blocked or failing?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — very weak exhaust output and/or power loss", "next": "solution_replace_cat" },
+          { "text": "Rattling from inside the cat (substrate broken)", "next": "solution_replace_cat" },
+          { "text": "Rotten egg smell but exhaust flow seems OK", "next": "solution_cat_sulfur" },
+          { "text": "No signs of blockage — exhaust flows normally", "next": "check_carbon_buildup" }
+        ]
+      },
+      {
+        "id": "check_carbon_buildup",
+        "type": "check",
+        "text": "Check for carbon buildup in the exhaust system.",
+        "safety": "yellow",
+        "warning": "Never insert anything into the exhaust while the engine is running. Allow the system to cool completely.",
+        "instructions": "Scooter exhaust systems, especially on smaller engines (50cc-150cc) that spend a lot of time at low RPM in urban traffic, can develop significant carbon buildup over time. Look inside the tailpipe with a flashlight — excessive black, crusty carbon deposits restrict exhaust flow. Also check the exhaust port on the engine cylinder (where the exhaust pipe attaches) for carbon buildup that narrows the port opening. Carbon buildup causes gradual power loss, poor high-RPM performance, and increased fuel consumption.",
+        "next": "carbon_result"
+      },
+      {
+        "id": "carbon_result",
+        "type": "question",
+        "text": "Is there significant carbon buildup?",
+        "safety": "green",
+        "options": [
+          { "text": "Heavy carbon deposits visible in the exhaust or port", "next": "solution_carbon_cleaning" },
+          { "text": "Minimal carbon — exhaust looks relatively clean inside", "next": "solution_exhaust_other" }
+        ]
+      },
+      {
+        "id": "check_backfire",
+        "type": "question",
+        "text": "When does the backfiring or popping occur?",
+        "safety": "green",
+        "options": [
+          { "text": "On deceleration (closing the throttle)", "next": "check_exhaust_leak_decel" },
+          { "text": "During acceleration or under load", "next": "check_fuel_mixture_backfire" },
+          { "text": "At startup or when the engine is cold", "next": "solution_cold_backfire" }
+        ]
+      },
+      {
+        "id": "check_exhaust_leak_decel",
+        "type": "check",
+        "text": "Check for exhaust leaks causing deceleration popping.",
+        "safety": "yellow",
+        "warning": "The exhaust is hot after riding. Allow it to cool before inspection.",
+        "instructions": "Deceleration popping (a rhythmic pop-pop-pop sound when you roll off the throttle) is usually caused by a lean condition during deceleration or an exhaust leak near the engine. When the throttle is closed, the mixture goes lean and unburned fuel and air enter the exhaust. If there is a leak at the header gasket or any upstream exhaust joint, fresh air is drawn in during the low-pressure deceleration pulses, causing the unburned mixture to ignite in the exhaust pipe. Check the header-to-cylinder gasket and all exhaust joints for leaks.",
+        "next": "decel_pop_result"
+      },
+      {
+        "id": "decel_pop_result",
+        "type": "question",
+        "text": "Did you find an exhaust leak near the engine?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — leak at the header gasket or joint", "next": "solution_header_gasket" },
+          { "text": "No leaks found", "next": "solution_decel_pop_normal" }
+        ]
+      },
+      {
+        "id": "check_fuel_mixture_backfire",
+        "type": "check",
+        "text": "Check for fuel mixture issues causing backfire under load.",
+        "safety": "yellow",
+        "warning": "Backfiring under acceleration can indicate a serious lean condition that may damage the engine. Do not ride the scooter hard until the cause is identified.",
+        "instructions": "Backfiring during acceleration typically indicates a lean fuel mixture (not enough fuel for the amount of air). Common causes on scooters: a clogged fuel filter restricting fuel flow, a dirty or failing fuel injector, a vacuum leak at the intake boot (cracked rubber boot between throttle body and engine), or a clogged air passage in the throttle body. On EFI scooters, check for stored fault codes that may indicate a sensor issue (oxygen sensor, MAP sensor, or TPS) causing incorrect fuel delivery.",
+        "next": "accel_backfire_result"
+      },
+      {
+        "id": "accel_backfire_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Cracked or loose intake boot — air leak found", "next": "solution_intake_leak" },
+          { "text": "Fault codes stored in the ECU", "next": "solution_ecu_fault" },
+          { "text": "No obvious cause found", "next": "solution_fuel_system_service" }
+        ]
+      },
+      {
+        "id": "check_emissions",
+        "type": "question",
+        "text": "What emission-related symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Failed an emissions test — readings too high", "next": "check_emission_readings" },
+          { "text": "Black smoke from the exhaust", "next": "solution_running_rich" },
+          { "text": "Blue or white smoke from the exhaust", "next": "solution_oil_burning" },
+          { "text": "Strong fuel smell from the exhaust", "next": "solution_running_rich" }
+        ]
+      },
+      {
+        "id": "check_emission_readings",
+        "type": "question",
+        "text": "Which emission reading failed?",
+        "safety": "green",
+        "options": [
+          { "text": "High CO (carbon monoxide) — running rich", "next": "solution_running_rich" },
+          { "text": "High HC (hydrocarbons) — incomplete combustion", "next": "solution_high_hc" },
+          { "text": "High NOx (nitrogen oxides)", "next": "solution_high_nox" },
+          { "text": "Not sure — just told it failed", "next": "solution_emissions_service" }
+        ]
+      },
+      {
+        "id": "check_exhaust_condition",
+        "type": "check",
+        "text": "Inspect the exhaust system for physical damage and corrosion.",
+        "safety": "green",
+        "instructions": "Visually inspect the entire exhaust system from the engine to the tailpipe. Look for: rust holes (especially on the underside where road spray collects), cracks at welds or bends, dents or impact damage, loose or missing mounting brackets, and deteriorated gaskets at joints. Scooter exhaust systems are particularly prone to rust because they are low to the ground and exposed to road spray, salt, and moisture. Tap suspect areas with a screwdriver handle — thin, corroded metal will sound hollow or may flake away.",
+        "next": "exhaust_condition_result"
+      },
+      {
+        "id": "exhaust_condition_result",
+        "type": "question",
+        "text": "What is the overall condition of the exhaust?",
+        "safety": "green",
+        "options": [
+          { "text": "Small rust holes or minor damage — may be repairable", "next": "solution_exhaust_repair" },
+          { "text": "Extensive rust, multiple holes, or structural damage", "next": "solution_exhaust_replace" },
+          { "text": "Exhaust looks OK externally but leaks from joints", "next": "solution_exhaust_joint_leak" }
+        ]
+      },
+      {
+        "id": "solution_header_gasket",
+        "type": "solution",
+        "text": "The exhaust header gasket is leaking.",
+        "safety": "yellow",
+        "warning": "The header bolts on the cylinder head may be corroded and difficult to remove. Use penetrating oil and work carefully to avoid snapping the bolts or stripping the threads.",
+        "action": "Replace the exhaust header gasket and check the header bolts",
+        "details": "Remove the header pipe from the engine cylinder. Replace the exhaust gasket (a metal ring, copper crush gasket, or composite gasket depending on the model) with a new OEM gasket. Clean the mating surfaces on both the cylinder exhaust port and the header pipe flange to ensure a good seal. Inspect the header bolts or studs for corrosion or damaged threads. Reinstall and tighten to the torque specification in your service manual. If the header flange itself is warped (common on scooters that have been run with a leaking gasket for a long time), it may need to be machined flat or replaced."
+      },
+      {
+        "id": "solution_exhaust_joint_leak",
+        "type": "solution",
+        "text": "An exhaust joint is leaking between pipe sections.",
+        "safety": "yellow",
+        "warning": "Exhaust clamps and springs may be rusted and break during removal. Have replacements available.",
+        "action": "Replace the gasket or seal at the leaking joint and tighten the clamp or spring",
+        "details": "Exhaust joints on scooters are sealed with either a gasket, a spring-loaded collar, or an exhaust band clamp. Disassemble the joint, clean both mating surfaces, and install a new gasket or seal. If the joint uses springs, check that the springs are not stretched or broken — weak springs allow the joint to separate under exhaust pressure. Tighten band clamps evenly. Apply a thin layer of exhaust sealant paste to the joint before assembly for a better seal. After reassembly, start the engine and check the joint for leaks."
+      },
+      {
+        "id": "solution_exhaust_inspection",
+        "type": "solution",
+        "text": "A thorough exhaust inspection is needed to find the leak.",
+        "safety": "green",
+        "action": "Have the exhaust system inspected on a lift or take it to a shop",
+        "details": "If you cannot pinpoint the exhaust leak from above, the leak may be on the underside of the exhaust system where it is difficult to see or reach. A shop with a lift can inspect the entire system easily. Another technique: temporarily block the tailpipe partially (with a rag, not completely sealed) and listen for the hissing sound of the leak while the engine idles. Smoke machines (used for EVAP leak testing) can also be used to find exhaust leaks by feeding smoke into the system and watching where it escapes."
+      },
+      {
+        "id": "solution_heat_shield",
+        "type": "solution",
+        "text": "A loose heat shield is causing the rattle.",
+        "safety": "yellow",
+        "warning": "Heat shields protect body panels and your legs from exhaust heat. Do not simply remove them — they serve an important safety function.",
+        "action": "Re-secure or replace the loose heat shield",
+        "details": "Heat shields on scooters are typically thin metal covers attached with screws, clips, or spot welds. If the fasteners are loose, tighten them. If spot welds have broken, the shield can be reattached with stainless steel hose clamps or new screws into existing holes. If the heat shield is severely rusted or damaged, replace it. As a temporary fix, a large stainless steel hose clamp around the shield and pipe can stop the rattle until a proper repair is made. Do not use wire or zip ties near the exhaust — they will melt or burn."
+      },
+      {
+        "id": "solution_muffler_replace",
+        "type": "solution",
+        "text": "The muffler has internal damage and needs replacement.",
+        "safety": "green",
+        "action": "Replace the muffler",
+        "details": "A muffler with a broken internal baffle cannot be repaired — the baffle is integral to the muffler construction and cannot be accessed without cutting it open. A broken baffle changes the exhaust sound (usually louder and more tinny) and may affect backpressure. Replace the muffler with an OEM unit or a quality aftermarket muffler designed for your scooter model. Ensure the replacement provides the correct backpressure — a muffler with too little restriction can lean out the fuel mixture on fuel-injected scooters and cause the check engine light to illuminate."
+      },
+      {
+        "id": "solution_tighten_mounts",
+        "type": "solution",
+        "text": "Loose exhaust mounting hardware is causing vibration noise.",
+        "safety": "green",
+        "action": "Tighten all exhaust mounting bolts and replace any missing or broken hardware",
+        "details": "Check every bolt, nut, clamp, and hanger bracket on the exhaust system. Exhaust vibration and heat cycling cause fasteners to loosen over time. Tighten all mounting points to specification. Replace any missing bolts, broken hangers, or worn rubber mounting grommets. If the rubber exhaust mount grommets are hardened or torn, they no longer isolate vibration and should be replaced. After tightening everything, start the engine and verify the rattle is gone."
+      },
+      {
+        "id": "solution_replace_cat",
+        "type": "solution",
+        "text": "The catalytic converter has failed and needs replacement.",
+        "safety": "yellow",
+        "warning": "A failing catalytic converter generates extreme heat. Do not park the scooter over dry grass, leaves, or other flammable materials while the cat is failing. On some models, a glowing red cat housing can melt nearby plastic body panels.",
+        "action": "Replace the catalytic converter",
+        "details": "A blocked or broken catalytic converter must be replaced. On most scooters, the cat is integrated into the exhaust pipe between the header and the muffler, and may be part of a one-piece exhaust assembly. Replace with an OEM or approved aftermarket catalytic converter. In many regions, replacing the cat with a non-catalytic pipe is illegal and will cause emissions test failure. After replacement, also investigate why the cat failed — common causes include a rich-running engine (deposits foul the catalyst), oil burning (coats and destroys the catalyst), or using leaded fuel. Fix the root cause to prevent the new cat from failing prematurely."
+      },
+      {
+        "id": "solution_cat_sulfur",
+        "type": "solution",
+        "text": "A rotten egg smell from the exhaust may indicate a rich mixture or sulfur in the fuel.",
+        "safety": "green",
+        "action": "Check the fuel mixture and fuel quality",
+        "details": "The rotten egg (hydrogen sulfide) smell occurs when a catalytic converter processes sulfur compounds from the fuel. Some fuel contains more sulfur than others. If the smell is occasional and mild, try switching to a different fuel brand or a higher-quality fuel. If the smell is persistent and strong, the engine may be running rich (sending excess fuel to the cat), which amplifies the sulfur smell. Check the air filter, oxygen sensor, and fuel system for issues causing a rich condition. On carbureted scooters, the main jet may be too large."
+      },
+      {
+        "id": "solution_carbon_cleaning",
+        "type": "solution",
+        "text": "The exhaust system has significant carbon buildup that needs cleaning.",
+        "safety": "yellow",
+        "warning": "Do not use open flame to burn carbon out of the exhaust — this can damage the catalytic converter and is a fire hazard.",
+        "action": "Clean the exhaust port and pipe of carbon deposits",
+        "details": "For the exhaust port on the cylinder: carefully remove carbon buildup with a gasket scraper or wooden dowel, being careful not to score the metal surface or let carbon fall into the cylinder. For the exhaust pipe: remove it from the scooter and soak it in a degreaser solution. For stubborn carbon in the header pipe, a chain or ball-and-chain cleaning tool (inserted into the pipe and shaken) can break loose heavy deposits. To prevent future buildup, periodically ride at higher RPMs for extended periods (highway riding or open roads) — this helps burn off carbon that accumulates during low-speed urban commuting."
+      },
+      {
+        "id": "solution_exhaust_other",
+        "type": "solution",
+        "text": "The exhaust appears clean — the power loss may have another cause.",
+        "safety": "green",
+        "action": "Check the engine and fuel system rather than the exhaust",
+        "details": "If the exhaust system is not restricted by carbon or a blocked cat, the power loss may be caused by: a dirty air filter restricting intake airflow, worn CVT belt or rollers reducing power transfer, low engine compression (worn rings or valves), a partially clogged fuel filter, or incorrect valve clearances. Perform basic engine diagnostics: check compression, inspect the air filter, check the spark plug condition, and verify the CVT components are in good shape."
+      },
+      {
+        "id": "solution_decel_pop_normal",
+        "type": "solution",
+        "text": "Some deceleration popping is normal on fuel-injected scooters.",
+        "safety": "green",
+        "action": "Monitor the popping — mild popping with no exhaust leaks is usually normal",
+        "details": "Fuel-injected scooters with catalytic converters are tuned to run slightly lean for emissions compliance. During deceleration, the ECU cuts or reduces fuel while the throttle is closed, and the air injection system (if equipped) introduces fresh air into the exhaust to help the cat operate. This can cause mild popping sounds. If the popping is occasional and the scooter runs well otherwise, it is normal behavior. If the popping is excessive, loud, or accompanied by a loss of performance, there may be a vacuum leak, a faulty oxygen sensor, or an issue with the air injection system."
+      },
+      {
+        "id": "solution_intake_leak",
+        "type": "solution",
+        "text": "An intake air leak is causing a lean mixture and backfiring.",
+        "safety": "green",
+        "action": "Replace the cracked intake boot or seal the leak",
+        "details": "The rubber intake boot between the throttle body and the engine cylinder head hardens and cracks with age and heat exposure. Replace it with a new OEM boot. Also check all vacuum hoses connected to the intake tract. After replacing the boot, the lean condition should be resolved and backfiring should stop. On carbureted scooters, also check the carburetor mounting and any O-rings in the intake path."
+      },
+      {
+        "id": "solution_ecu_fault",
+        "type": "solution",
+        "text": "Stored fault codes are affecting fuel delivery and causing backfiring.",
+        "safety": "green",
+        "action": "Diagnose and repair the component indicated by the fault code",
+        "details": "Read the fault codes and address the specific component that is failing. Common codes that cause backfiring include: oxygen sensor fault (incorrect mixture feedback), MAP or MAF sensor fault (incorrect air measurement), TPS fault (incorrect throttle position reading), and intake air temperature sensor fault. Replace the faulty sensor, clear the codes, and test ride. If the codes return, there may be a wiring issue between the sensor and the ECU."
+      },
+      {
+        "id": "solution_fuel_system_service",
+        "type": "solution",
+        "text": "The fuel system needs a thorough service to resolve the backfiring.",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work in a ventilated area away from ignition sources.",
+        "action": "Service the fuel injector, fuel filter, and throttle body",
+        "details": "If no specific fault is found but backfiring persists, a comprehensive fuel system service may be needed: replace the fuel filter, clean or replace the fuel injector (professional ultrasonic cleaning restores injector spray patterns), clean the throttle body and idle air control valve, replace the spark plug, and check the valve clearances. This combination of maintenance items often resolves drivability issues that have developed gradually. After the service, clear any stored codes and test ride."
+      },
+      {
+        "id": "solution_cold_backfire",
+        "type": "solution",
+        "text": "Cold-start backfiring is usually related to the enrichment system.",
+        "safety": "green",
+        "action": "Check the cold enrichment system and spark plug condition",
+        "details": "Backfiring at startup or when cold typically means the air-fuel mixture is incorrect during cold enrichment. On EFI scooters, check the coolant temperature sensor — if it gives incorrect readings, the ECU provides the wrong amount of fuel. On carbureted scooters, the auto-choke may not be operating correctly. Also check the spark plug — a fouled or worn plug struggles to ignite the rich cold mixture reliably, causing intermittent misfires that are heard as backfires. See the Cold Start Diagnosis tree for detailed cold-start troubleshooting."
+      },
+      {
+        "id": "solution_running_rich",
+        "type": "solution",
+        "text": "The engine is running rich — too much fuel for the amount of air.",
+        "safety": "green",
+        "action": "Check and replace the air filter, oxygen sensor, and fuel system components",
+        "details": "A rich-running engine produces black smoke, high CO readings, poor fuel economy, and carbon fouling of the spark plug. Common causes: clogged air filter (most common and easiest to check), faulty oxygen sensor (stuck high, telling ECU to add fuel), leaking fuel injector (dripping fuel when it should be closed), or a faulty coolant temperature sensor (telling ECU the engine is always cold, so it adds extra fuel). Check the air filter first, then the O2 sensor, then the injector. On carbureted scooters, the float level or main jet may be incorrect."
+      },
+      {
+        "id": "solution_oil_burning",
+        "type": "solution",
+        "text": "Blue or white smoke indicates the engine is burning oil.",
+        "safety": "yellow",
+        "warning": "Excessive oil burning can foul the spark plug and damage the catalytic converter. Address it before it causes secondary failures.",
+        "action": "Check engine oil level, valve seals, and piston rings",
+        "details": "Blue smoke means engine oil is entering the combustion chamber. Common causes on scooters: worn valve stem seals (oil seeps down the valve guides into the cylinder — blue smoke is worst at startup after sitting), worn piston rings (oil passes the rings — blue smoke is worst under acceleration or load), or overfilled engine oil (excess oil is forced past the rings). Check the oil level first — overfilling is a common mistake. If the oil level is correct, a compression test and leak-down test can help determine if the rings or valve seals are the issue. Valve seal replacement is relatively straightforward; worn rings require an engine top-end rebuild."
+      },
+      {
+        "id": "solution_high_hc",
+        "type": "solution",
+        "text": "High hydrocarbon emissions indicate incomplete combustion.",
+        "safety": "green",
+        "action": "Check spark plug, ignition, and fuel mixture",
+        "details": "High HC readings mean fuel is not being fully burned. Causes: worn or fouled spark plug (weak spark cannot ignite the mixture completely), incorrect fuel mixture (too rich or too lean), low compression (combustion pressure too low to burn the mixture efficiently), or a failing catalytic converter (cat is not converting remaining HC). Replace the spark plug, check the air filter, verify the fuel mixture (spark plug color test), and perform a compression test. If the cat has failed, it must be replaced to pass the emissions test."
+      },
+      {
+        "id": "solution_high_nox",
+        "type": "solution",
+        "text": "High NOx emissions indicate excessive combustion temperatures.",
+        "safety": "green",
+        "action": "Check the cooling system, EGR system (if equipped), and for lean conditions",
+        "details": "High NOx is caused by high combustion temperatures. On scooters, this is usually caused by: a lean fuel mixture (running lean increases combustion temperature), a malfunctioning exhaust gas recirculation (EGR) valve if equipped, an overheating engine (check coolant level, thermostat, and fan operation on liquid-cooled scooters), or carbon buildup in the combustion chamber (hot spots ignite the mixture at higher temperatures). Address any lean conditions first. On air-cooled scooters, ensure the cooling fins are clean and airflow is not obstructed."
+      },
+      {
+        "id": "solution_emissions_service",
+        "type": "solution",
+        "text": "A comprehensive emissions service is recommended.",
+        "safety": "green",
+        "action": "Have the scooter serviced for emissions compliance",
+        "details": "To prepare a scooter for an emissions test: replace the spark plug, replace the air filter, change the engine oil, ensure the engine is at full operating temperature before the test, check for stored fault codes and resolve any, and verify the catalytic converter is functioning. A tuneup before the emissions test resolves most failures. If the scooter still fails after a tuneup, the catalytic converter may need replacement. Some regions offer re-testing at reduced or no cost after repairs — check with your local testing authority."
+      },
+      {
+        "id": "solution_exhaust_repair",
+        "type": "solution",
+        "text": "The exhaust has minor damage that may be repairable.",
+        "safety": "yellow",
+        "warning": "Exhaust repair involves working with potentially sharp, corroded metal. Wear gloves and eye protection.",
+        "action": "Repair the damaged section with exhaust repair products or welding",
+        "details": "Small rust holes or cracks can be temporarily repaired with high-temperature exhaust repair tape, exhaust putty (epoxy that hardens and withstands heat), or exhaust bandage (a fiberglass wrap with heat-activated resin). For a more permanent repair, the damaged section can be welded by a muffler shop. These repairs are temporary and the exhaust will continue to deteriorate around the repair. Plan for eventual replacement. If the exhaust has multiple holes or extensive thin spots, replacement is more cost-effective than multiple repairs."
+      },
+      {
+        "id": "solution_exhaust_replace",
+        "type": "solution",
+        "text": "The exhaust system is extensively damaged and needs full replacement.",
+        "safety": "green",
+        "action": "Replace the exhaust system",
+        "details": "On many scooters, the exhaust system is a single assembly from header to tailpipe (including the catalytic converter and muffler). Replace it with an OEM unit or a quality aftermarket system designed for your model. Ensure the replacement includes a catalytic converter if required by law in your region. Stainless steel aftermarket exhausts resist corrosion much better than stock mild steel units. When installing, use new gaskets at all joints. Torque header bolts to specification. To extend the life of the new exhaust, spray it with high-temperature paint or undercoat to protect against road spray and moisture."
+      }
+    ]
+  }
+}

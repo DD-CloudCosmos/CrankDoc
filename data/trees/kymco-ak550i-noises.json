@@ -1,0 +1,392 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Unusual Noises",
+  "description": "Diagnose unusual noises on the Kymco AK 550i 550cc parallel-twin maxi-scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "Where does the noise come from on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "CVT area", "next": "cvt_type" },
+          { "text": "Cylinder head / top end", "next": "check_valves" },
+          { "text": "Lower engine", "next": "check_bottom" },
+          { "text": "Exhaust", "next": "check_exhaust" },
+          { "text": "Cooling system", "next": "check_cooling" },
+          { "text": "Front end / suspension", "next": "check_front" }
+        ]
+      },
+      {
+        "id": "cvt_type",
+        "type": "question",
+        "text": "What kind of CVT noise?",
+        "safety": "green",
+        "options": [
+          { "text": "Slapping/flapping", "next": "check_belt" },
+          { "text": "Rattling", "next": "check_rollers" },
+          { "text": "Squealing", "next": "check_clutch" },
+          { "text": "Grinding", "next": "check_debris" }
+        ]
+      },
+      {
+        "id": "check_belt",
+        "type": "check",
+        "text": "Inspect CVT belt",
+        "safety": "green",
+        "instructions": "Remove CVT cover. The AK 550i uses a heavy-duty wide belt designed to handle the 550cc twin's significant torque. Check for: cracks, fraying, glazing, chunk missing, width reduction. A worn belt on the AK 550i is a serious safety concern due to the power involved. Replace immediately if any damage.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "Belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Damaged/worn", "next": "solution_belt" },
+          { "text": "Looks fine", "next": "check_rollers" }
+        ]
+      },
+      {
+        "id": "check_rollers",
+        "type": "check",
+        "text": "Check variator rollers",
+        "safety": "green",
+        "instructions": "Remove variator cover. Check rollers for flat spots or uneven wear. The AK 550i uses heavier rollers than any other Kymco scooter to match the twin's power. Uneven wear causes rattling and poor CVT shifting.",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "Roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Flat spots", "next": "solution_rollers" },
+          { "text": "OK", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Check clutch assembly",
+        "safety": "green",
+        "instructions": "The AK 550i clutch handles the most power of any Kymco CVT. Check: (1) Clutch shoes for glazing or wear, (2) Clutch bell for grooves, (3) Springs for fatigue, (4) Driven pulley and contra spring.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "Clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Glazed shoes", "next": "solution_clutch" },
+          { "text": "Grooved bell", "next": "solution_bell" },
+          { "text": "Driven pulley issue", "next": "solution_driven" }
+        ]
+      },
+      {
+        "id": "check_debris",
+        "type": "check",
+        "text": "Check CVT for debris",
+        "safety": "green",
+        "instructions": "Remove CVT cover. Look for broken pieces, loose hardware, belt fragments. Clean out all dust and debris. Check that the cover gasket is intact.",
+        "next": "debris_result"
+      },
+      {
+        "id": "debris_result",
+        "type": "question",
+        "text": "Debris found?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes", "next": "solution_clean_cvt" },
+          { "text": "No", "next": "check_belt" }
+        ]
+      },
+      {
+        "id": "check_valves",
+        "type": "check",
+        "text": "Check valve train",
+        "safety": "yellow",
+        "warning": "Cold engine only for clearance checks.",
+        "instructions": "The AK 550i parallel-twin has valve adjustments on BOTH cylinders. Ticking = valve clearance issue. Timing chain rattle = chain stretch or tensioner. Check clearances per service manual. Both cylinders should be checked independently. Listen carefully to determine if noise is from one cylinder or both.",
+        "next": "valve_result"
+      },
+      {
+        "id": "valve_result",
+        "type": "question",
+        "text": "Valve train finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Loose clearances", "next": "solution_valves" },
+          { "text": "Cam chain noise", "next": "solution_chain" },
+          { "text": "Valves in spec", "next": "check_bottom" }
+        ]
+      },
+      {
+        "id": "check_bottom",
+        "type": "check",
+        "text": "Check bottom end",
+        "safety": "yellow",
+        "warning": "Serious noise = stop riding. Professional diagnosis recommended.",
+        "instructions": "The AK 550i parallel-twin has a crankshaft with connecting rods for both cylinders plus a balance shaft. Deep knock = rod bearing failure. Rattle that fades when warm = piston slap. Whine = gear noise (primary drive or balance shaft). Check oil level first — low oil causes bearing noise.",
+        "next": "bottom_result"
+      },
+      {
+        "id": "bottom_result",
+        "type": "question",
+        "text": "Noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Deep knock", "next": "solution_bottom" },
+          { "text": "Rattle (fades warm)", "next": "solution_piston" },
+          { "text": "Whine/gear noise", "next": "solution_gear" },
+          { "text": "None found", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check exhaust system",
+        "safety": "yellow",
+        "warning": "Exhaust is hot — inspect cold only.",
+        "instructions": "The AK 550i has a 2-into-1 exhaust with catalytic converter. Check: (1) Header gaskets at both cylinder connections, (2) Header bolts, (3) Catalytic converter rattle (broken internals), (4) Muffler baffles. Ticking at cold startup that goes away when warm = exhaust leak at header.",
+        "next": "exh_result"
+      },
+      {
+        "id": "exh_result",
+        "type": "question",
+        "text": "Exhaust finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Header leak", "next": "solution_header" },
+          { "text": "Loose hardware", "next": "solution_tighten" },
+          { "text": "Cat rattling", "next": "solution_cat" },
+          { "text": "Muffler rattle", "next": "solution_muffler" }
+        ]
+      },
+      {
+        "id": "check_cooling",
+        "type": "check",
+        "text": "Check cooling system noises",
+        "safety": "green",
+        "instructions": "The AK 550i is liquid-cooled with a large radiator. Gurgling = air in system. Hissing = pressure leak. Whining = water pump bearing. Clicking = fan relay cycling. The twin generates more heat, so cooling system noises are more noticeable.",
+        "next": "cool_result"
+      },
+      {
+        "id": "cool_result",
+        "type": "question",
+        "text": "Cooling noise type?",
+        "safety": "green",
+        "options": [
+          { "text": "Gurgling", "next": "solution_bleed" },
+          { "text": "Hissing", "next": "solution_cool_leak" },
+          { "text": "Whining", "next": "solution_pump" }
+        ]
+      },
+      {
+        "id": "check_front",
+        "type": "check",
+        "text": "Check front suspension",
+        "safety": "green",
+        "instructions": "The AK 550i has inverted (USD) front forks on some models. Check: (1) Fork seals for leaks (oil on stanchions), (2) Steering head bearings for play (grab forks, push/pull), (3) Clunking over bumps = worn bushings. The AK 550i is heavier than most scooters, which stresses front-end components more.",
+        "next": "front_result"
+      },
+      {
+        "id": "front_result",
+        "type": "question",
+        "text": "Front end?",
+        "safety": "green",
+        "options": [
+          { "text": "Fork seal leak", "next": "solution_fork" },
+          { "text": "Loose head bearings", "next": "solution_headbearing" },
+          { "text": "Clunking", "next": "solution_bushings" }
+        ]
+      },
+      {
+        "id": "solution_belt",
+        "type": "solution",
+        "text": "Replace CVT Belt",
+        "safety": "green",
+        "action": "Replace the CVT belt immediately.",
+        "details": "Use the correct AK 550i heavy-duty belt. A failing belt on the powerful AK 550i can break suddenly and cause loss of drive. Replace every 15,000-20,000 km as preventive maintenance."
+      },
+      {
+        "id": "solution_rollers",
+        "type": "solution",
+        "text": "Replace Variator Rollers",
+        "safety": "green",
+        "action": "Replace all rollers as a set.",
+        "details": "Use OEM weight for the AK 550i — heavier than other Kymco models. Replace as a complete set for even wear."
+      },
+      {
+        "id": "solution_clutch",
+        "type": "solution",
+        "text": "Service Clutch",
+        "safety": "green",
+        "action": "Replace clutch shoes.",
+        "details": "Sand bell lightly if glazed. The AK 550i clutch handles significant power — use quality replacement shoes."
+      },
+      {
+        "id": "solution_bell",
+        "type": "solution",
+        "text": "Replace Clutch Bell",
+        "safety": "green",
+        "action": "Replace bell and shoes together.",
+        "details": "A grooved bell chews through new shoes quickly. Replace both for a proper repair."
+      },
+      {
+        "id": "solution_driven",
+        "type": "solution",
+        "text": "Service Driven Pulley",
+        "safety": "green",
+        "action": "Service or replace driven pulley components.",
+        "details": "Clean, grease splines, replace worn sliders and contra spring if needed."
+      },
+      {
+        "id": "solution_clean_cvt",
+        "type": "solution",
+        "text": "Clean CVT Case",
+        "safety": "green",
+        "action": "Remove debris and identify its source.",
+        "details": "Belt fragments = belt is failing. Metal pieces = bearing or component failure. Clean thoroughly before reassembly."
+      },
+      {
+        "id": "solution_valves",
+        "type": "solution",
+        "text": "Adjust Valve Clearances",
+        "safety": "yellow",
+        "warning": "Cold engine. Find TDC per cylinder.",
+        "action": "Adjust valve clearances on both cylinders.",
+        "details": "The parallel-twin has valves on both cylinders that need independent adjustment. Follow the service manual firing order for TDC positioning."
+      },
+      {
+        "id": "solution_chain",
+        "type": "solution",
+        "text": "Cam Chain Service",
+        "safety": "yellow",
+        "warning": "Timing risk if chain or tensioner fails.",
+        "action": "Replace cam chain tensioner or chain.",
+        "details": "Start with the tensioner — cheaper and more commonly the issue. If chain is stretched, full replacement is needed (top-end disassembly)."
+      },
+      {
+        "id": "solution_bottom",
+        "type": "solution",
+        "text": "Bottom End Failure",
+        "safety": "red",
+        "warning": "Stop riding immediately. Continued running causes catastrophic damage.",
+        "action": "Professional engine repair.",
+        "details": "Rod bearing knock on the twin requires full engine teardown. This is a major repair — professional recommended."
+      },
+      {
+        "id": "solution_piston",
+        "type": "solution",
+        "text": "Piston Slap",
+        "safety": "yellow",
+        "warning": "Monitor closely — indicates cylinder wear.",
+        "action": "Monitor and plan for top-end rebuild.",
+        "details": "Piston slap that fades when warm is normal wear indication. Not immediately dangerous but indicates the engine is wearing. Plan for a rebuild."
+      },
+      {
+        "id": "solution_gear",
+        "type": "solution",
+        "text": "Gear/Balance Shaft Noise",
+        "safety": "yellow",
+        "warning": "Professional diagnosis recommended.",
+        "action": "Have gear train inspected.",
+        "details": "The AK 550i has primary drive gears and a balance shaft. Gear whine can increase with wear. Professional inspection recommended as this requires crankcase splitting."
+      },
+      {
+        "id": "solution_header",
+        "type": "solution",
+        "text": "Replace Header Gaskets",
+        "safety": "yellow",
+        "warning": "Bolts may seize from heat cycles.",
+        "action": "Replace header gaskets at both cylinder ports.",
+        "details": "The 2-into-1 exhaust connects to both cylinders. Use penetrating oil on bolts before removal. Clean mating surfaces thoroughly."
+      },
+      {
+        "id": "solution_tighten",
+        "type": "solution",
+        "text": "Tighten Exhaust Hardware",
+        "safety": "green",
+        "action": "Tighten all exhaust bolts and mount points.",
+        "details": "Apply anti-seize to threads. Vibration from the twin can loosen hardware over time."
+      },
+      {
+        "id": "solution_cat",
+        "type": "solution",
+        "text": "Replace Catalytic Converter",
+        "safety": "yellow",
+        "warning": "Hot component.",
+        "action": "Replace the catalytic converter.",
+        "details": "Rattling internals means the catalyst substrate has broken apart. This also causes power loss and potential exhaust blockage."
+      },
+      {
+        "id": "solution_muffler",
+        "type": "solution",
+        "text": "Replace Muffler",
+        "safety": "green",
+        "action": "Replace the muffler.",
+        "details": "Broken internal baffles cause rattling. Not repairable — replacement needed."
+      },
+      {
+        "id": "solution_bleed",
+        "type": "solution",
+        "text": "Bleed Cooling System",
+        "safety": "yellow",
+        "warning": "Cold engine only for cap removal.",
+        "action": "Bleed air from the cooling system.",
+        "details": "Fill radiator, run engine with cap off, top off as air escapes. The AK 550i cooling system has more volume than single-cylinder scooters — may need more time to fully bleed."
+      },
+      {
+        "id": "solution_cool_leak",
+        "type": "solution",
+        "text": "Fix Coolant Pressure Leak",
+        "safety": "yellow",
+        "warning": "Pressurized system.",
+        "action": "Find and fix the pressure leak.",
+        "details": "Check hoses, clamps, radiator cap, water pump seal. Use a cooling system pressure tester."
+      },
+      {
+        "id": "solution_pump",
+        "type": "solution",
+        "text": "Replace Water Pump",
+        "safety": "yellow",
+        "warning": "Drain coolant first.",
+        "action": "Replace the water pump.",
+        "details": "A whining pump bearing will eventually seize, causing rapid overheating. Replace before failure."
+      },
+      {
+        "id": "solution_fork",
+        "type": "solution",
+        "text": "Replace Fork Seals",
+        "safety": "yellow",
+        "warning": "Fork oil is messy. Proper tools needed.",
+        "action": "Replace fork seals.",
+        "details": "The AK 550i forks are larger diameter than typical scooters. Use correct seal size and fork oil weight per service manual."
+      },
+      {
+        "id": "solution_headbearing",
+        "type": "solution",
+        "text": "Adjust/Replace Steering Head Bearings",
+        "safety": "yellow",
+        "warning": "Loose bearings affect handling safety.",
+        "action": "Adjust or replace steering head bearings.",
+        "details": "The heavy AK 550i puts more load on head bearings than lighter scooters. Tapered roller bearings may need adjustment or replacement."
+      },
+      {
+        "id": "solution_bushings",
+        "type": "solution",
+        "text": "Replace Suspension Bushings",
+        "safety": "yellow",
+        "warning": "Worn bushings affect handling.",
+        "action": "Replace worn bushings or linkage components.",
+        "details": "Check both front and rear suspension mounting points. The AK 550i's weight accelerates bushing wear."
+      }
+    ]
+  }
+}

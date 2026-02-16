@@ -1,0 +1,269 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "AK 550i",
+  "title": "Stalls / Rough Idle",
+  "description": "Diagnose stalling and rough idle on the Kymco AK 550i 550cc liquid-cooled parallel-twin maxi-scooter.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the stalling/rough idle present on your AK 550i?",
+        "safety": "green",
+        "options": [
+          { "text": "Dies at idle", "next": "check_idle" },
+          { "text": "Rough/uneven idle", "next": "check_plugs" },
+          { "text": "Stalls when hot", "next": "check_hot" },
+          { "text": "Stalls when cold only", "next": "check_cold" }
+        ]
+      },
+      {
+        "id": "check_idle",
+        "type": "check",
+        "text": "Check idle system",
+        "safety": "green",
+        "instructions": "The AK 550i has an ECU-controlled idle via an idle air control valve (IACV) or electronic throttle. Normal idle is approximately 1,300-1,500 RPM on the Noodoe tachometer. Check for vacuum leaks at both throttle body boots and intake manifold joints. Listen for hissing. Clean the IACV with throttle body cleaner.",
+        "next": "idle_result"
+      },
+      {
+        "id": "idle_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Vacuum leak found", "next": "solution_vacuum" },
+          { "text": "Dirty IACV", "next": "solution_iacv" },
+          { "text": "No obvious cause", "next": "check_plugs" }
+        ]
+      },
+      {
+        "id": "check_plugs",
+        "type": "check",
+        "text": "Check spark plugs",
+        "safety": "green",
+        "instructions": "The AK 550i has TWO spark plugs — one per cylinder. Remove both and compare. Both should have a light tan color. If one is fouled (black/oily) and the other is clean, that cylinder has a specific issue. Gap per spec. Replace if worn or fouled.",
+        "next": "plug_result"
+      },
+      {
+        "id": "plug_result",
+        "type": "question",
+        "text": "Plugs?",
+        "safety": "green",
+        "options": [
+          { "text": "Both fouled", "next": "solution_plugs" },
+          { "text": "One fouled", "next": "check_single_cyl" },
+          { "text": "Both OK", "next": "check_air" }
+        ]
+      },
+      {
+        "id": "check_single_cyl",
+        "type": "check",
+        "text": "Check single cylinder issue",
+        "safety": "yellow",
+        "warning": "Professional diagnosis may help.",
+        "instructions": "One fouled plug on a twin means that cylinder is running rich or has poor combustion. Check: (1) injector for that cylinder — clogged or leaking, (2) coil for that cylinder, (3) compression on that cylinder vs the good one. Compare readings.",
+        "next": "single_result"
+      },
+      {
+        "id": "single_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad injector", "next": "solution_injector" },
+          { "text": "Bad coil", "next": "solution_coil" },
+          { "text": "Low compression one cyl", "next": "solution_single_comp" }
+        ]
+      },
+      {
+        "id": "check_air",
+        "type": "check",
+        "text": "Check air filter",
+        "safety": "green",
+        "instructions": "Locate the air filter under the seat. The AK 550i uses a paper element filter. Check for dirt, oil contamination, or damage. A restricted filter affects both cylinders equally. Replace if dirty.",
+        "next": "air_result"
+      },
+      {
+        "id": "air_result",
+        "type": "question",
+        "text": "Filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Dirty/clogged", "next": "solution_filter" },
+          { "text": "Clean", "next": "check_fuel_quality" }
+        ]
+      },
+      {
+        "id": "check_fuel_quality",
+        "type": "check",
+        "text": "Check fuel quality",
+        "safety": "yellow",
+        "warning": "Fuel is flammable.",
+        "instructions": "Drain a small sample. Check for water (settles to bottom), rust particles, or stale smell. The AK 550i with its twin needs consistent fuel delivery to both cylinders. Bad fuel causes uneven running.",
+        "next": "fuel_result"
+      },
+      {
+        "id": "fuel_result",
+        "type": "question",
+        "text": "Fuel?",
+        "safety": "green",
+        "options": [
+          { "text": "Contaminated", "next": "solution_fuel" },
+          { "text": "Clean", "next": "solution_ecu" }
+        ]
+      },
+      {
+        "id": "check_hot",
+        "type": "check",
+        "text": "Hot stalling diagnosis",
+        "safety": "yellow",
+        "warning": "Hot engine — burn risk.",
+        "instructions": "Hot stalling on the AK 550i: (1) Check coolant level — overheating causes stalling (liquid-cooled twin generates significant heat), (2) Check radiator fan operation, (3) Check fuel pressure — vapor lock in heat, (4) Check coolant temp sensor — bad reading causes wrong fueling. Monitor temp gauge on Noodoe display.",
+        "next": "hot_result"
+      },
+      {
+        "id": "hot_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Overheating", "next": "solution_cooling" },
+          { "text": "Fan not running", "next": "solution_fan" },
+          { "text": "Temp normal, still stalls", "next": "solution_temp_sensor" }
+        ]
+      },
+      {
+        "id": "check_cold",
+        "type": "check",
+        "text": "Cold stalling diagnosis",
+        "safety": "green",
+        "instructions": "Cold stalling on the AK 550i: the ECU provides a cold-start enrichment. If it stalls cold, check: (1) Coolant temp sensor reading (ECU uses this for enrichment), (2) IACV function — should open wider when cold, (3) Battery voltage — weak battery = weak spark on twin.",
+        "next": "cold_result"
+      },
+      {
+        "id": "cold_result",
+        "type": "question",
+        "text": "Finding?",
+        "safety": "green",
+        "options": [
+          { "text": "Bad temp sensor", "next": "solution_temp_sensor" },
+          { "text": "Sticky IACV", "next": "solution_iacv" },
+          { "text": "Weak battery", "next": "solution_battery" }
+        ]
+      },
+      {
+        "id": "solution_vacuum",
+        "type": "solution",
+        "text": "Fix Vacuum Leak",
+        "safety": "green",
+        "action": "Replace or re-seal the leaking component.",
+        "details": "Check both throttle body boots and all vacuum lines. Even a small leak on one cylinder causes uneven idle on the twin."
+      },
+      {
+        "id": "solution_iacv",
+        "type": "solution",
+        "text": "Clean/Replace IACV",
+        "safety": "green",
+        "action": "Clean with throttle body cleaner. Replace if faulty.",
+        "details": "Carbon buildup restricts idle air. Clean with electrical-safe cleaner. Do not use abrasives."
+      },
+      {
+        "id": "solution_plugs",
+        "type": "solution",
+        "text": "Replace Spark Plugs",
+        "safety": "green",
+        "action": "Replace both plugs.",
+        "details": "Always replace both plugs on a twin for even combustion. Gap to spec. Use OEM-recommended plug type."
+      },
+      {
+        "id": "solution_injector",
+        "type": "solution",
+        "text": "Clean/Replace Injector",
+        "safety": "yellow",
+        "warning": "Fuel system — fire risk.",
+        "action": "Clean or replace the faulty injector.",
+        "details": "The AK 550i has one injector per cylinder. Try injector cleaner additive first, then professional ultrasonic cleaning, then replacement."
+      },
+      {
+        "id": "solution_coil",
+        "type": "solution",
+        "text": "Replace Ignition Coil",
+        "safety": "yellow",
+        "warning": "High voltage.",
+        "action": "Replace the faulty coil.",
+        "details": "Swap coils between cylinders to confirm diagnosis. If the misfire moves, the coil is bad."
+      },
+      {
+        "id": "solution_single_comp",
+        "type": "solution",
+        "text": "Single Cylinder Compression Loss",
+        "safety": "yellow",
+        "warning": "Professional repair likely needed.",
+        "action": "Investigate compression loss on affected cylinder.",
+        "details": "Low compression on one cylinder of the twin = valve issue, ring wear, or head gasket on that side. Professional top-end inspection recommended."
+      },
+      {
+        "id": "solution_filter",
+        "type": "solution",
+        "text": "Replace Air Filter",
+        "safety": "green",
+        "action": "Replace air filter element.",
+        "details": "Replace every 6,000-8,000 km per service schedule. Use OEM or quality aftermarket."
+      },
+      {
+        "id": "solution_fuel",
+        "type": "solution",
+        "text": "Drain Bad Fuel",
+        "safety": "yellow",
+        "warning": "Dispose fuel properly.",
+        "action": "Drain tank and refill with fresh fuel.",
+        "details": "Use fuel stabilizer if scooter sits for extended periods. The AK 550i's fuel-injected twin is sensitive to fuel quality."
+      },
+      {
+        "id": "solution_ecu",
+        "type": "solution",
+        "text": "ECU/Sensor Diagnosis",
+        "safety": "yellow",
+        "warning": "Professional diagnosis recommended.",
+        "action": "Check ECU fault codes via diagnostic port.",
+        "details": "The AK 550i ECU manages both cylinders. Check TPS, MAP sensor, O2 sensor, and crank position sensor. Dealer scan tool may be needed."
+      },
+      {
+        "id": "solution_cooling",
+        "type": "solution",
+        "text": "Fix Cooling Issue",
+        "safety": "yellow",
+        "warning": "Do not open radiator cap when hot.",
+        "action": "Address overheating — see Overheating diagnostic tree.",
+        "details": "The twin generates more heat than single-cylinder scooters. Ensure cooling system is working properly."
+      },
+      {
+        "id": "solution_fan",
+        "type": "solution",
+        "text": "Fix Radiator Fan",
+        "safety": "green",
+        "action": "Check fuse, connector, and fan motor.",
+        "details": "Fan should activate at ~95-100C. Test with direct 12V. Replace motor if dead."
+      },
+      {
+        "id": "solution_temp_sensor",
+        "type": "solution",
+        "text": "Replace Coolant Temp Sensor",
+        "safety": "yellow",
+        "warning": "Drain some coolant first.",
+        "action": "Replace the coolant temperature sensor.",
+        "details": "A faulty sensor gives the ECU wrong readings, causing incorrect fuel mixture for both cylinders. Causes hot stalls or cold stalls depending on failure mode."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "Charge/Replace Battery",
+        "safety": "green",
+        "action": "Charge or replace battery.",
+        "details": "The twin needs strong cranking power and consistent voltage for both ignition coils. Weak battery = weak spark = rough idle."
+      }
+    ]
+  }
+}

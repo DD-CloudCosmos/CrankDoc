@@ -1,0 +1,299 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Cold Start / Automatic Enrichment Issues",
+  "description": "Diagnose cold start problems on scooters including EFI cold start enrichment, automatic choke systems on carbureted models, cold start valve issues, and cold-weather starting difficulties.",
+  "category": "fuel",
+  "difficulty": "beginner",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What cold start problem are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine won't start when cold", "next": "check_fuel_type" },
+          { "text": "Engine starts but dies immediately when cold", "next": "check_enrichment_system" },
+          { "text": "Engine runs very rough or misfires until warmed up", "next": "check_rough_cold" },
+          { "text": "Engine floods when trying to start cold", "next": "check_flooding" },
+          { "text": "Engine idles too high when cold and won't come down", "next": "check_high_idle" }
+        ]
+      },
+      {
+        "id": "check_fuel_type",
+        "type": "question",
+        "text": "Is your scooter fuel-injected (EFI) or carbureted?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel-injected (EFI) — most scooters from 2010 onward", "next": "check_efi_cold_start" },
+          { "text": "Carbureted — older scooters or some budget models", "next": "check_carb_auto_choke" },
+          { "text": "I'm not sure", "next": "check_unsure_fuel_system" }
+        ]
+      },
+      {
+        "id": "check_unsure_fuel_system",
+        "type": "check",
+        "text": "Determine if your scooter is fuel-injected or carbureted.",
+        "safety": "green",
+        "instructions": "Look at the intake side of the engine (where air enters). A carbureted scooter will have a round carburetor body with an air filter box connected by a rubber boot. You may see a choke lever or an auto-choke unit (a small cylindrical device with wires attached to the carburetor). A fuel-injected scooter will have a throttle body with an electrical connector for the injector and no separate choke mechanism. Also check for a fuel pump — EFI scooters have an electric fuel pump (you may hear it prime when you turn on the ignition). Your owner's manual will also specify the fuel system type.",
+        "next": "check_fuel_type"
+      },
+      {
+        "id": "check_efi_cold_start",
+        "type": "check",
+        "text": "Check EFI cold start enrichment components.",
+        "safety": "yellow",
+        "warning": "Do not spray starting fluid into a fuel-injected scooter — it can damage the oxygen sensor and catalytic converter.",
+        "instructions": "EFI scooters use a coolant temperature sensor (or air temperature sensor) to tell the ECU the engine is cold. The ECU then enriches the fuel mixture automatically. Check the following: Turn on the ignition — you should hear the fuel pump prime for 2-3 seconds. If you do not hear the pump, the fuel delivery may be the issue. Check if the engine warning light (MIL) is on — a stored fault code may point to the temperature sensor or another component. Verify that the battery has sufficient voltage (12.4V or above) — a weak battery causes sluggish cranking that prevents cold starts.",
+        "next": "efi_cold_result"
+      },
+      {
+        "id": "efi_cold_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "No fuel pump priming sound when ignition is turned on", "next": "solution_fuel_pump" },
+          { "text": "Engine warning light is on", "next": "solution_efi_fault" },
+          { "text": "Battery voltage is low or cranking is slow", "next": "solution_battery" },
+          { "text": "Fuel pump primes, no warning light, battery is good", "next": "check_coolant_temp_sensor" }
+        ]
+      },
+      {
+        "id": "check_coolant_temp_sensor",
+        "type": "check",
+        "text": "Check the coolant temperature sensor (CTS) for proper operation.",
+        "safety": "green",
+        "instructions": "The coolant temperature sensor tells the ECU the engine temperature so it can adjust the fuel mixture. If the sensor is faulty and reports the engine is already warm when it is actually cold, the ECU will not provide cold enrichment. The CTS is usually located on the cylinder head or near the thermostat housing. Unplug the sensor connector and measure the resistance across the sensor terminals with a multimeter set to ohms. A cold engine (ambient temperature, approximately 20 degrees C / 68 degrees F) should read roughly 2,000-3,000 ohms. A warm engine should read roughly 200-300 ohms. Check your service manual for exact values.",
+        "next": "cts_result"
+      },
+      {
+        "id": "cts_result",
+        "type": "question",
+        "text": "Is the coolant temperature sensor reading correct for a cold engine?",
+        "safety": "green",
+        "options": [
+          { "text": "Reading is far off specification or open/shorted", "next": "solution_replace_cts" },
+          { "text": "Reading is within specification", "next": "solution_efi_further" }
+        ]
+      },
+      {
+        "id": "check_carb_auto_choke",
+        "type": "check",
+        "text": "Check the automatic choke (auto-bystarter) on the carburetor.",
+        "safety": "green",
+        "instructions": "Most carbureted scooters use an electrically heated automatic choke (also called an auto-bystarter). It is a small cylindrical unit mounted on the carburetor with an electrical connector. When the engine is cold, a wax element inside the choke unit is contracted, holding open an enrichment circuit. As electricity flows through the heater, the wax expands and gradually closes the enrichment circuit over 3-5 minutes. To test: with the engine cold, disconnect the auto-choke electrical connector. The plunger at the bottom of the choke unit should be extended (pushed out). If you can push it in easily with your finger, the choke is stuck open. If it is already retracted with a cold engine, the choke is stuck closed.",
+        "next": "auto_choke_result"
+      },
+      {
+        "id": "auto_choke_result",
+        "type": "question",
+        "text": "What is the condition of the auto-choke?",
+        "safety": "green",
+        "options": [
+          { "text": "Plunger is retracted (stuck closed) even when cold", "next": "solution_replace_auto_choke" },
+          { "text": "Plunger moves in easily — no spring tension", "next": "solution_replace_auto_choke" },
+          { "text": "Plunger is extended and firm when cold — seems OK", "next": "check_carb_condition" }
+        ]
+      },
+      {
+        "id": "check_carb_condition",
+        "type": "check",
+        "text": "Check the carburetor for clogged jets affecting cold start.",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Work in a well-ventilated area away from ignition sources. Have a fire extinguisher nearby.",
+        "instructions": "If the auto-choke appears to be working but the scooter still will not start cold, the carburetor enrichment circuit may be blocked. The cold start circuit has a separate fuel passage and jet that can become clogged with old fuel deposits or varnish. This requires removing and cleaning the carburetor. Drain the float bowl and inspect the fuel inside — if it looks dark, smells stale, or has varnish deposits, the fuel has gone bad and is likely clogging the jets. Ethanol-blended fuel is particularly prone to gumming in scooter carburetors.",
+        "next": "carb_condition_result"
+      },
+      {
+        "id": "carb_condition_result",
+        "type": "question",
+        "text": "What did you find in the carburetor?",
+        "safety": "green",
+        "options": [
+          { "text": "Old, stale, or varnished fuel in the float bowl", "next": "solution_clean_carb" },
+          { "text": "Fuel looks clean but engine still won't start cold", "next": "solution_carb_overhaul" }
+        ]
+      },
+      {
+        "id": "check_enrichment_system",
+        "type": "question",
+        "text": "Is your scooter fuel-injected or carbureted?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuel-injected (EFI)", "next": "check_coolant_temp_sensor" },
+          { "text": "Carbureted", "next": "check_carb_auto_choke" }
+        ]
+      },
+      {
+        "id": "check_rough_cold",
+        "type": "check",
+        "text": "Check for causes of rough cold running.",
+        "safety": "green",
+        "instructions": "An engine that runs rough until warm may have: a spark plug that is fouled or worn (carbon deposits cause misfires that clear up as the engine warms), an air leak at the intake manifold (the rubber boot between the carburetor or throttle body and the engine hardens and cracks with age, creating a lean condition that is more pronounced when cold), or a valve clearance issue (tight valves seal poorly when cold). Check the spark plug condition first — it is the easiest to inspect. Then check the intake boot for cracks or hardening.",
+        "next": "rough_cold_result"
+      },
+      {
+        "id": "rough_cold_result",
+        "type": "question",
+        "text": "What did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Spark plug is fouled, oily, or heavily deposited", "next": "solution_spark_plug" },
+          { "text": "Intake boot is cracked or hardened", "next": "solution_intake_boot" },
+          { "text": "Both look fine", "next": "solution_valve_clearance" }
+        ]
+      },
+      {
+        "id": "check_flooding",
+        "type": "question",
+        "text": "What signs of flooding are you seeing?",
+        "safety": "green",
+        "options": [
+          { "text": "Strong fuel smell and wet spark plug", "next": "solution_flooded_engine" },
+          { "text": "Fuel dripping from the carburetor overflow", "next": "solution_stuck_float" },
+          { "text": "Engine cranks but won't fire — smells like fuel", "next": "solution_flooded_engine" }
+        ]
+      },
+      {
+        "id": "check_high_idle",
+        "type": "question",
+        "text": "How long does the high idle persist after starting?",
+        "safety": "green",
+        "options": [
+          { "text": "2-5 minutes then comes down — this seems excessive", "next": "solution_normal_warmup" },
+          { "text": "Stays high for 10+ minutes or never comes down", "next": "solution_stuck_enrichment" },
+          { "text": "Idle hunts up and down during warmup", "next": "solution_intake_boot" }
+        ]
+      },
+      {
+        "id": "solution_fuel_pump",
+        "type": "solution",
+        "text": "The fuel pump is not priming, preventing cold starts.",
+        "safety": "yellow",
+        "warning": "Fuel is flammable. Do not test the fuel pump near ignition sources.",
+        "action": "Check the fuel pump relay, fuse, and pump itself",
+        "details": "First check the fuel pump fuse (refer to your service manual for location). If the fuse is good, check for voltage at the fuel pump connector when the ignition is turned on — you should see battery voltage for 2-3 seconds during priming. If there is voltage but the pump does not run, the pump has failed and needs replacement. If there is no voltage, check the fuel pump relay. On some scooters, the ECU controls the fuel pump relay — a faulty ECU or a wiring issue can prevent the pump from running. Fuel pumps on scooters are usually located inside or near the fuel tank."
+      },
+      {
+        "id": "solution_efi_fault",
+        "type": "solution",
+        "text": "The engine warning light indicates a stored fault code.",
+        "safety": "green",
+        "action": "Read the fault codes using a diagnostic scanner or the built-in blink code method",
+        "details": "Many scooters allow you to read fault codes by counting the blinks of the engine warning light with the ignition on and engine off (the procedure varies by manufacturer — check your service manual). Some require an OBD-II scanner or a manufacturer-specific diagnostic tool. Common cold-start-related fault codes include: coolant temperature sensor (CTS) out of range, intake air temperature (IAT) sensor fault, oxygen sensor error, or fuel injector circuit failure. The fault code will direct you to the specific component to inspect and replace."
+      },
+      {
+        "id": "solution_battery",
+        "type": "solution",
+        "text": "A weak battery is preventing proper cold starting.",
+        "safety": "yellow",
+        "warning": "Wear eye protection when working with batteries. Battery acid is corrosive.",
+        "action": "Charge or replace the battery",
+        "details": "Cold engines require more cranking power than warm engines. A battery that is borderline may start a warm engine but fail on a cold start. Charge the battery fully with a smart charger and retest. If the battery is more than 3 years old or will not hold a charge above 12.4V, replace it. On fuel-injected scooters, a low battery voltage also causes the fuel pump and injectors to operate at reduced pressure and flow, further hindering cold starts. Maintaining the battery on a tender between rides prevents this common issue."
+      },
+      {
+        "id": "solution_replace_cts",
+        "type": "solution",
+        "text": "The coolant temperature sensor is faulty.",
+        "safety": "green",
+        "action": "Replace the coolant temperature sensor",
+        "details": "A faulty CTS that reports incorrect temperature to the ECU will cause cold start problems because the ECU cannot properly enrich the mixture for cold conditions. Replace the sensor with an OEM part (aftermarket sensors sometimes have incorrect resistance curves for scooter ECUs). After replacement, clear any stored fault codes. The scooter should now start and idle properly when cold, as the ECU will receive accurate temperature data and provide the correct enrichment."
+      },
+      {
+        "id": "solution_efi_further",
+        "type": "solution",
+        "text": "The CTS is OK — further EFI diagnosis is needed.",
+        "safety": "green",
+        "action": "Check the idle air control valve, injector, and air intake for issues",
+        "details": "If the CTS is reading correctly but cold starts are still problematic, check the idle air control valve (IACV) — it controls extra air during cold idle and can become clogged with carbon. Clean it with throttle body cleaner. Check that the fuel injector is spraying properly by removing it and observing its spray pattern while cranking (into a container, away from ignition sources). Also verify the air filter is clean and the throttle body is not excessively dirty. If all these check out, the ECU may need reprogramming or the cold-start fuel map may need adjustment by a dealer."
+      },
+      {
+        "id": "solution_replace_auto_choke",
+        "type": "solution",
+        "text": "The automatic choke unit is faulty.",
+        "safety": "green",
+        "action": "Replace the automatic choke (auto-bystarter) unit",
+        "details": "The automatic choke is a wear item that fails over time. The internal wax element can crack, the heating element can burn out, or the plunger can seize from corrosion. Replace it with an OEM or quality aftermarket unit. After installation, verify it operates correctly: with a cold engine, the plunger should be extended (enrichment circuit open). Start the engine and after 3-5 minutes of idling, the plunger should gradually retract as the heater warms the wax element. If you hear the engine idle drop slightly after a few minutes, the choke is working correctly."
+      },
+      {
+        "id": "solution_clean_carb",
+        "type": "solution",
+        "text": "The carburetor is clogged with old fuel deposits.",
+        "safety": "yellow",
+        "warning": "Use carburetor cleaner in a well-ventilated area. It is toxic and flammable. Wear gloves and eye protection.",
+        "action": "Clean the carburetor thoroughly and replace stale fuel",
+        "details": "Remove the carburetor and disassemble it. Soak the body in carburetor cleaner and use compressed air to blow through all passages and jets, paying special attention to the cold start enrichment circuit (a separate small passage near the choke plunger seat). Replace any O-rings or gaskets. Drain all old fuel from the tank and fuel line. Refill with fresh fuel. If the scooter sits for extended periods, add a fuel stabilizer to prevent future varnish buildup. Consider running the carburetor dry before storage by turning off the fuel petcock and letting the engine stall."
+      },
+      {
+        "id": "solution_carb_overhaul",
+        "type": "solution",
+        "text": "The carburetor may need a more thorough overhaul.",
+        "safety": "yellow",
+        "warning": "Carburetor work requires attention to small parts and correct reassembly. Take photos during disassembly to aid reassembly.",
+        "action": "Perform a full carburetor overhaul or have it professionally cleaned",
+        "details": "If basic cleaning did not resolve the cold start issue, the carburetor may have internal wear or damage that requires a full rebuild. A carburetor rebuild kit (available for most common scooter carburetors) includes all gaskets, O-rings, needle valve, and often a replacement float. Pay close attention to the float level setting — an incorrect float level changes the fuel mixture at all temperatures. If you are not comfortable with carburetor work, a small engine shop or scooter specialist can clean and rebuild the carburetor for a reasonable cost."
+      },
+      {
+        "id": "solution_spark_plug",
+        "type": "solution",
+        "text": "The spark plug is fouled or worn, causing cold-start misfires.",
+        "safety": "green",
+        "action": "Replace the spark plug",
+        "details": "A fouled spark plug struggles to ignite the rich cold-start mixture, causing rough running until the engine warms up and the mixture leans out. Replace the plug with the correct type and gap specified in your service manual. Scooter spark plugs are inexpensive and should be replaced regularly (every 3,000-5,000 miles for copper plugs, longer for iridium). If the plug is consistently fouling, investigate the root cause: the mixture may be too rich (clogged air filter, faulty enrichment system), or the engine may be burning oil (worn piston rings or valve seals)."
+      },
+      {
+        "id": "solution_intake_boot",
+        "type": "solution",
+        "text": "The intake manifold boot is cracked or hardened, causing an air leak.",
+        "safety": "green",
+        "action": "Replace the intake manifold boot",
+        "details": "The rubber boot between the carburetor or throttle body and the engine cylinder head hardens and cracks over time due to heat and age. A cracked boot allows unmetered air into the engine, leaning out the mixture. This lean condition is more pronounced when cold because the enrichment system cannot compensate for the extra air. Replace the boot with a new OEM part. Also check and replace any vacuum hoses connected to the intake tract. After replacement, the engine should idle smoothly at all temperatures."
+      },
+      {
+        "id": "solution_valve_clearance",
+        "type": "solution",
+        "text": "Valve clearance may be out of specification, affecting cold running.",
+        "safety": "yellow",
+        "warning": "Valve clearance adjustment requires removing the valve cover and measuring with feeler gauges. Only attempt this if you are comfortable with the procedure.",
+        "action": "Check and adjust valve clearances per your service manual",
+        "details": "Valves that are too tight do not fully close when cold (metal expands as it heats, so a tight valve may seal once warm but leak when cold). This causes low compression and rough running when cold that improves as the engine warms. Scooter engines (typically single-cylinder) have simple valve adjustment procedures — usually accessible by removing a small cover. Check the clearances with the engine cold using feeler gauges. Scooter valve clearances are typically 0.05-0.10mm intake and 0.08-0.12mm exhaust, but always refer to your service manual for exact specifications."
+      },
+      {
+        "id": "solution_flooded_engine",
+        "type": "solution",
+        "text": "The engine is flooded with excess fuel.",
+        "safety": "yellow",
+        "warning": "Do not continue cranking a flooded engine — you will drain the battery and wash oil from the cylinder walls.",
+        "action": "Clear the flooded engine and identify the cause",
+        "details": "To clear a flooded engine: remove the spark plug and crank the engine for a few seconds to expel excess fuel from the cylinder. Dry or replace the spark plug. On fuel-injected scooters, hold the throttle wide open while cranking — many ECUs enter a clear-flood mode that cuts fuel when the throttle is fully open. On carbureted scooters, turn off the fuel petcock (if equipped) and crank with the throttle open. Once started, investigate why it flooded: a stuck auto-choke, leaking injector, stuck carburetor float, or excessive cranking without starting (often caused by a weak spark or dead battery)."
+      },
+      {
+        "id": "solution_stuck_float",
+        "type": "solution",
+        "text": "The carburetor float is stuck, causing fuel overflow.",
+        "safety": "yellow",
+        "warning": "Fuel leaking from the carburetor overflow is a fire hazard. Do not start the engine until the leak is resolved.",
+        "action": "Clean or replace the carburetor float needle valve",
+        "details": "Fuel dripping from the carburetor overflow tube means the float needle valve is not seating properly, allowing fuel to continuously flow into the float bowl and overflow. This is commonly caused by dirt on the needle valve seat, a worn needle valve tip, or a stuck or saturated float (on scooters with foam or plastic floats). Remove the carburetor float bowl, inspect the float for damage or fuel absorption, and clean or replace the needle valve. Tap the carburetor body gently near the float — sometimes this temporarily unseats a stuck needle. If the problem recurs, a carburetor rebuild kit with a new needle valve is the permanent fix."
+      },
+      {
+        "id": "solution_normal_warmup",
+        "type": "solution",
+        "text": "A slightly elevated cold idle for a few minutes is normal behavior.",
+        "safety": "green",
+        "action": "No repair needed — this is normal cold enrichment behavior",
+        "details": "Both fuel-injected and carbureted scooters intentionally run at a higher idle speed when cold. The enrichment system provides extra fuel and the idle speed is raised to prevent stalling during warmup. On EFI scooters, the ECU gradually reduces the enrichment as the coolant temperature rises. On carbureted scooters, the auto-choke gradually closes over 3-5 minutes. An idle that is 200-500 RPM above normal for the first 2-5 minutes is perfectly normal. If it bothers you, avoid riding until the idle settles to its normal warm speed."
+      },
+      {
+        "id": "solution_stuck_enrichment",
+        "type": "solution",
+        "text": "The cold enrichment system is not disengaging after warmup.",
+        "safety": "green",
+        "action": "Inspect the auto-choke or idle air control valve",
+        "details": "If the idle stays high for more than 5-10 minutes after starting, the enrichment system is stuck. On carbureted scooters, the auto-choke heater element may have failed — the plunger never retracts because it never heats up. Test by checking for voltage at the choke connector with the engine running (should have battery voltage). On EFI scooters, the idle air control valve (IACV) may be stuck open, or the coolant temperature sensor may not be reading the rising temperature correctly. Clean the IACV with throttle body cleaner and recheck the CTS resistance at operating temperature (should drop to 200-300 ohms when warm)."
+      }
+    ]
+  }
+}

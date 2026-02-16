@@ -1,0 +1,174 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Like 125i",
+  "title": "Loss of Power / Sluggish Acceleration",
+  "description": "Diagnose power loss, sluggish acceleration, and poor top speed on the Kymco Like 125i scooter with emphasis on CVT drivetrain.",
+  "category": "drivetrain",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How does the power loss present on your Like 125i?",
+        "safety": "green",
+        "options": [
+          { "text": "Slow acceleration from a stop", "next": "check_cvt_belt" },
+          { "text": "Engine revs high but scooter barely moves", "next": "check_clutch" },
+          { "text": "Top speed is reduced", "next": "check_cvt_rollers" },
+          { "text": "Power bogs or cuts out under load", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_cvt_belt",
+        "type": "check",
+        "text": "Inspect the CVT drive belt",
+        "safety": "green",
+        "instructions": "Remove the CVT cover on the left side of the Like 125i. Inspect the drive belt for cracks, fraying, glazing, or reduced width. A new belt is approximately 18mm wide — replace if significantly narrower. A worn belt cannot grip the pulleys properly, causing sluggish acceleration. The Like 125i CVT belt should be replaced every 8,000-12,000 km.",
+        "next": "belt_result"
+      },
+      {
+        "id": "belt_result",
+        "type": "question",
+        "text": "What is the CVT belt condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Belt is cracked, frayed, or visibly worn", "next": "solution_replace_belt" },
+          { "text": "Belt looks OK", "next": "check_cvt_rollers" }
+        ]
+      },
+      {
+        "id": "check_cvt_rollers",
+        "type": "check",
+        "text": "Inspect the variator rollers",
+        "safety": "green",
+        "instructions": "With the CVT cover off, remove the variator face plate. The Like 125i typically has 6 roller weights inside the variator. Inspect for flat spots (rollers should be perfectly round), uneven wear, or deformation. Flat-spotted rollers cannot move smoothly in the ramps, causing poor acceleration and reduced top speed. Check the weight — stock rollers are typically 12-13 grams (15x12mm).",
+        "next": "roller_result"
+      },
+      {
+        "id": "roller_result",
+        "type": "question",
+        "text": "What is the roller condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Rollers have flat spots or are deformed", "next": "solution_replace_rollers" },
+          { "text": "Rollers look round and uniform", "next": "check_clutch" }
+        ]
+      },
+      {
+        "id": "check_clutch",
+        "type": "check",
+        "text": "Inspect the centrifugal clutch",
+        "safety": "green",
+        "instructions": "Remove the rear clutch assembly. Inspect the clutch shoes for adequate friction material (at least 2mm), glazing, or damage. Check the clutch springs for stretch or discoloration. Inspect the clutch bell (outer drum) for grooves. Worn clutch components cause the clutch to slip — the engine revs high but power is not transmitted to the wheel.",
+        "next": "clutch_result"
+      },
+      {
+        "id": "clutch_result",
+        "type": "question",
+        "text": "What did you find with the clutch?",
+        "safety": "green",
+        "options": [
+          { "text": "Clutch pads are worn or glazed", "next": "solution_replace_clutch" },
+          { "text": "Springs are weak or broken", "next": "solution_replace_springs" },
+          { "text": "Clutch looks OK", "next": "check_air_filter" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Check the air filter",
+        "safety": "green",
+        "instructions": "A heavily clogged air filter starves the engine of air, causing rich running, bogging, and noticeable power loss. Remove and inspect the filter element. Replace if dirty, oil-soaked, or restricted. This is the simplest and most commonly overlooked cause of power loss on scooters.",
+        "next": "filter_result"
+      },
+      {
+        "id": "filter_result",
+        "type": "question",
+        "text": "What is the air filter condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is dirty or clogged", "next": "solution_replace_filter" },
+          { "text": "Filter is clean", "next": "check_exhaust" }
+        ]
+      },
+      {
+        "id": "check_exhaust",
+        "type": "check",
+        "text": "Check for exhaust blockage",
+        "safety": "yellow",
+        "warning": "The exhaust gets extremely hot. Only inspect when cold.",
+        "instructions": "A partially blocked exhaust causes significant power loss. Check exhaust flow from the tailpipe while running. Common issues on the Like 125i: clogged catalytic converter, carbon buildup in the muffler over many kilometers. If you suspect blockage, temporarily loosen the exhaust header to see if power improves.",
+        "next": "exhaust_result"
+      },
+      {
+        "id": "exhaust_result",
+        "type": "question",
+        "text": "Is the exhaust restricted?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — poor flow or power improves with header loosened", "next": "solution_exhaust" },
+          { "text": "No — exhaust flows freely", "next": "solution_valve_check" }
+        ]
+      },
+      {
+        "id": "solution_replace_belt",
+        "type": "solution",
+        "text": "Replace the CVT Belt",
+        "safety": "green",
+        "action": "Replace the worn CVT belt with the correct size for the Like 125i.",
+        "details": "Use an OEM or quality aftermarket belt. When replacing, also inspect rollers and clutch as preventative maintenance. A new belt immediately restores proper acceleration and top speed."
+      },
+      {
+        "id": "solution_replace_rollers",
+        "type": "solution",
+        "text": "Replace the Variator Rollers",
+        "safety": "green",
+        "action": "Replace all 6 rollers as a complete set.",
+        "details": "Never mix old and new rollers. Use the stock weight (12-13g, 15x12mm) unless you have a specific tuning goal. Also inspect the variator ramp plate and slider guides for wear. Apply molybdenum grease to the variator boss shaft."
+      },
+      {
+        "id": "solution_replace_clutch",
+        "type": "solution",
+        "text": "Replace the Clutch Shoes",
+        "safety": "green",
+        "action": "Replace worn clutch shoes or the complete clutch assembly.",
+        "details": "If the clutch bell has deep grooves, replace it along with the shoes. Lightly sand the bell interior with 120-grit to remove glaze before installing new shoes."
+      },
+      {
+        "id": "solution_replace_springs",
+        "type": "solution",
+        "text": "Replace the Clutch Springs",
+        "safety": "green",
+        "action": "Replace all clutch springs as a set.",
+        "details": "Weak springs cause early clutch engagement at low RPM, making acceleration feel sluggish. Replace all springs together. Stock springs are recommended for normal use."
+      },
+      {
+        "id": "solution_replace_filter",
+        "type": "solution",
+        "text": "Replace the Air Filter",
+        "safety": "green",
+        "action": "Install a new air filter element.",
+        "details": "Replace with an OEM filter. Check every 2,000 km, replace every 4,000-6,000 km. You should notice immediate improvement in throttle response."
+      },
+      {
+        "id": "solution_exhaust",
+        "type": "solution",
+        "text": "Service or Replace the Exhaust",
+        "safety": "yellow",
+        "warning": "Allow exhaust to cool completely before working on it.",
+        "action": "Clean or replace the blocked exhaust component.",
+        "details": "If the catalytic converter is blocked, it must be replaced. Carbon-clogged mufflers are best replaced. A free-flowing exhaust restores lost power."
+      },
+      {
+        "id": "solution_valve_check",
+        "type": "solution",
+        "text": "Valve Clearance Check Recommended",
+        "safety": "yellow",
+        "warning": "Valve adjustment requires removing the valve cover and using feeler gauges.",
+        "action": "Check and adjust valve clearances on the Like 125i.",
+        "details": "If all CVT and fuel checks are normal, tight valves may be reducing compression and power. Typical specs: intake 0.10mm, exhaust 0.15mm (verify with manual). Check every 8,000-12,000 km. Scooter valves tend to tighten over time."
+      }
+    ]
+  }
+}

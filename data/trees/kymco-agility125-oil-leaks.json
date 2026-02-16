@@ -1,0 +1,244 @@
+{
+  "motorcycle_make": "Kymco",
+  "motorcycle_model": "Agility 125",
+  "title": "Oil Consumption / Leaks",
+  "description": "Diagnose oil leaks and excessive oil consumption on the Kymco Agility 125 scooter.",
+  "category": "engine",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "How is the oil issue presenting on your Agility 125?",
+        "safety": "green",
+        "options": [
+          { "text": "Visible oil dripping or pooling under the scooter", "next": "check_leak_location" },
+          { "text": "Oil level drops between changes but no visible leak", "next": "check_burning_oil" },
+          { "text": "Oil weeping from engine surfaces (wet but not dripping)", "next": "check_gaskets" },
+          { "text": "Oil spray or mist on the underside of the scooter", "next": "check_leak_location" }
+        ]
+      },
+      {
+        "id": "check_leak_location",
+        "type": "check",
+        "text": "Locate the source of the oil leak",
+        "safety": "green",
+        "instructions": "Clean the engine thoroughly with degreaser so you can identify where fresh oil appears. Run the engine for a few minutes, then inspect. Common leak locations on the Agility 125: (1) Oil drain plug on the bottom of the engine, (2) Valve cover gasket on the cylinder head, (3) Crankcase mating surfaces, (4) Oil filter cover or screen cap (if applicable), (5) Crankshaft seals (left and right side). Use a flashlight and look for the wet spot that is highest on the engine — oil runs downward, so the source is above the drip point.",
+        "next": "leak_location_result"
+      },
+      {
+        "id": "leak_location_result",
+        "type": "question",
+        "text": "Where is the oil coming from?",
+        "safety": "green",
+        "options": [
+          { "text": "Oil drain plug area", "next": "check_drain_plug" },
+          { "text": "Valve cover / cylinder head area", "next": "solution_valve_cover_gasket" },
+          { "text": "Crankcase seam or mating surface", "next": "solution_crankcase_gasket" },
+          { "text": "Around the crankshaft seal (left or right side)", "next": "solution_crank_seal" },
+          { "text": "Cannot pinpoint the exact source", "next": "check_uv_dye" }
+        ]
+      },
+      {
+        "id": "check_drain_plug",
+        "type": "check",
+        "text": "Inspect the oil drain plug",
+        "safety": "green",
+        "instructions": "The oil drain plug is on the bottom of the engine crankcase. Check: (1) Is the plug tight? It should be snug but not overtightened (typically 20-25 Nm), (2) Is the crush washer (sealing washer) in place and in good condition? A reused or damaged washer will not seal properly, (3) Are the drain plug threads damaged (stripped)? Cross-threaded or stripped drain plug threads are a common problem from over-tightening.",
+        "next": "drain_plug_result"
+      },
+      {
+        "id": "drain_plug_result",
+        "type": "question",
+        "text": "What is the drain plug condition?",
+        "safety": "green",
+        "options": [
+          { "text": "Plug was loose — tightened it", "next": "solution_drain_plug_tightened" },
+          { "text": "Crush washer is damaged or missing", "next": "solution_replace_washer" },
+          { "text": "Threads are stripped", "next": "solution_stripped_threads" }
+        ]
+      },
+      {
+        "id": "check_burning_oil",
+        "type": "check",
+        "text": "Check for signs of oil burning",
+        "safety": "green",
+        "instructions": "If the oil level drops without visible external leaks, the engine is likely burning oil internally. Check: (1) Blue or grey smoke from the exhaust, especially during acceleration or deceleration — this is burning oil, (2) Oily residue around the exhaust tip, (3) The spark plug — remove it and check for oily, wet fouling (indicates oil entering the combustion chamber), (4) Check the air filter box — oil in the air box can indicate worn crankcase breather valve or excessive crankcase pressure from worn rings.",
+        "next": "burning_result"
+      },
+      {
+        "id": "burning_result",
+        "type": "question",
+        "text": "What signs of oil burning did you find?",
+        "safety": "green",
+        "options": [
+          { "text": "Blue smoke from the exhaust", "next": "check_valve_seals" },
+          { "text": "Spark plug is oily or oil-fouled", "next": "check_valve_seals" },
+          { "text": "Oil in the air filter box", "next": "solution_breather_issue" },
+          { "text": "No visible smoke but oil disappears", "next": "check_gaskets" }
+        ]
+      },
+      {
+        "id": "check_valve_seals",
+        "type": "check",
+        "text": "Check for worn valve stem seals or piston rings",
+        "safety": "yellow",
+        "warning": "Determining whether oil burning is from valve seals or piston rings requires careful observation. Both conditions benefit from professional diagnosis.",
+        "instructions": "To differentiate: (1) Valve stem seal wear: blue smoke mainly on startup or deceleration (oil seeps past the seals when the engine is idle or on closed throttle), (2) Piston ring wear: blue smoke under acceleration and continuous burning, with poor compression. Perform a compression test — the Agility 125 should produce 10-12 bar (145-175 PSI). Low compression plus oil burning strongly indicates worn piston rings. Normal compression plus oil burning on deceleration points to valve seals.",
+        "next": "valve_seal_result"
+      },
+      {
+        "id": "valve_seal_result",
+        "type": "question",
+        "text": "When does the smoke appear?",
+        "safety": "green",
+        "options": [
+          { "text": "Mainly on startup or deceleration — valve seals", "next": "solution_valve_seals" },
+          { "text": "Under acceleration and continuously — rings", "next": "solution_piston_rings" },
+          { "text": "Not sure — compression test showed low reading", "next": "solution_piston_rings" }
+        ]
+      },
+      {
+        "id": "check_gaskets",
+        "type": "check",
+        "text": "Inspect engine gaskets and seals",
+        "safety": "green",
+        "instructions": "Oil weeping (wet surfaces without dripping) is typically from degraded gaskets. On the Agility 125, inspect: (1) Valve cover gasket — the most common weep point, (2) Cylinder base gasket — between the cylinder and crankcase, (3) Right crankcase cover gasket (clutch cover side), (4) Left crankcase cover (magneto side). Look for oil residue along the gasket seams. Weeping gaskets may not drip but they attract dirt and grime, making the engine look dirty.",
+        "next": "gasket_result"
+      },
+      {
+        "id": "gasket_result",
+        "type": "question",
+        "text": "Where is the gasket weeping?",
+        "safety": "green",
+        "options": [
+          { "text": "Valve cover gasket", "next": "solution_valve_cover_gasket" },
+          { "text": "Cylinder base gasket", "next": "solution_base_gasket" },
+          { "text": "Crankcase cover gasket", "next": "solution_crankcase_cover" },
+          { "text": "Multiple locations or cannot determine", "next": "check_uv_dye" }
+        ]
+      },
+      {
+        "id": "check_uv_dye",
+        "type": "check",
+        "text": "Use UV dye to find the leak",
+        "safety": "green",
+        "instructions": "If you cannot pinpoint the leak source visually, add UV leak detection dye to the engine oil. Run the engine for 15-20 minutes, then use a UV flashlight to inspect the engine. The dye will glow brightly at the leak point, making even small seeps easy to see. UV dye kits are available at auto parts stores and are safe for use in engine oil. This is the most reliable way to find elusive leaks.",
+        "next": "uv_dye_result"
+      },
+      {
+        "id": "uv_dye_result",
+        "type": "question",
+        "text": "What did the UV dye reveal?",
+        "safety": "green",
+        "options": [
+          { "text": "Leak at a gasket or seal — now identified", "next": "solution_gasket_repair" },
+          { "text": "No external leak found — oil is being burned internally", "next": "check_valve_seals" }
+        ]
+      },
+      {
+        "id": "solution_drain_plug_tightened",
+        "type": "solution",
+        "text": "Drain Plug Tightened",
+        "safety": "green",
+        "action": "The drain plug has been tightened. Monitor for further leaking.",
+        "details": "Clean the area thoroughly and check again after riding. The drain plug should be tightened to the correct torque (typically 20-25 Nm for the Agility 125). Do not overtighten — this can strip the threads or crack the crankcase. Always use a torque wrench for the drain plug."
+      },
+      {
+        "id": "solution_replace_washer",
+        "type": "solution",
+        "text": "Replace the Drain Plug Crush Washer",
+        "safety": "green",
+        "action": "Replace the drain plug crush washer with a new one.",
+        "details": "The crush washer (usually aluminum or copper) deforms when tightened to create a seal. It should be replaced at every oil change. Reusing a crush washer often leads to leaks. These washers are very inexpensive — keep a supply on hand. Install the new washer and tighten the plug to the specified torque."
+      },
+      {
+        "id": "solution_stripped_threads",
+        "type": "solution",
+        "text": "Repair Stripped Drain Plug Threads",
+        "safety": "yellow",
+        "warning": "Stripped drain plug threads will worsen if not repaired. Do not use a larger bolt as a temporary fix.",
+        "action": "Repair the stripped threads using a thread repair kit (Helicoil or Time-Sert).",
+        "details": "A thread repair kit installs a new threaded insert into the crankcase, restoring the original thread size. Helicoil kits for common drain plug sizes are available at auto parts stores. The repair involves drilling out the damaged threads, tapping new threads, and installing the insert. This can be done with the engine in the scooter but requires care to keep metal chips out of the crankcase. Alternatively, some drain plug repair kits use an oversized plug with a rubber seal."
+      },
+      {
+        "id": "solution_valve_cover_gasket",
+        "type": "solution",
+        "text": "Replace the Valve Cover Gasket",
+        "safety": "green",
+        "action": "Replace the valve cover gasket.",
+        "details": "The valve cover gasket is an easy and inexpensive replacement on the Agility 125. Remove the valve cover bolts, lift off the cover, remove the old gasket, and install a new one. Clean both mating surfaces before installing the new gasket. Tighten the cover bolts evenly in a cross pattern to the specified torque (usually 10-12 Nm). Do not overtighten — the aluminum cover warps easily. This is a good time to also check the valve clearances."
+      },
+      {
+        "id": "solution_crankcase_gasket",
+        "type": "solution",
+        "text": "Replace the Crankcase Gasket",
+        "safety": "yellow",
+        "warning": "Splitting the crankcase halves is an advanced repair requiring full engine disassembly. This is usually done only during a major overhaul.",
+        "action": "If the leak is at the crankcase mating surface, the crankcase gasket or sealant has failed.",
+        "details": "The crankcase halves are sealed with a gasket or liquid gasket sealant. Replacing this requires splitting the engine cases, which means a full teardown. If the leak is minor (weeping only), cleaning the area and monitoring may be acceptable. For a significant leak, the engine must come apart. This is a job best left to a professional unless you are experienced with engine internals."
+      },
+      {
+        "id": "solution_crank_seal",
+        "type": "solution",
+        "text": "Replace the Crankshaft Seal",
+        "safety": "yellow",
+        "warning": "Crankshaft seal replacement requires removing the flywheel (left side) or clutch assembly (right side). Use proper puller tools.",
+        "action": "Replace the leaking crankshaft oil seal.",
+        "details": "Crankshaft seals prevent oil from leaking out along the crankshaft where it exits the crankcase. The left-side seal is behind the magneto flywheel; the right-side seal is behind the CVT variator assembly. Pry out the old seal carefully without damaging the crankshaft surface, and press the new seal in squarely. Apply a thin coat of oil to the seal lip before installation. This is an intermediate repair requiring a flywheel puller."
+      },
+      {
+        "id": "solution_breather_issue",
+        "type": "solution",
+        "text": "Service the Crankcase Breather System",
+        "safety": "green",
+        "action": "Check and clean the crankcase breather valve and hose.",
+        "details": "Oil in the air filter box indicates the crankcase breather is pushing oil vapor into the intake. This can be caused by: (1) A clogged breather hose or valve — clean or replace it, (2) Excessive crankcase pressure from worn piston rings (blow-by) — this requires a compression test to confirm. Clean the air filter box, replace the filter element if oil-contaminated, and check the breather hose routing. If the problem recurs quickly, worn rings are the likely root cause."
+      },
+      {
+        "id": "solution_valve_seals",
+        "type": "solution",
+        "text": "Replace the Valve Stem Seals",
+        "safety": "yellow",
+        "warning": "Valve stem seal replacement requires removing the cylinder head. Take care not to drop the valves into the cylinder.",
+        "action": "Replace the intake and exhaust valve stem seals.",
+        "details": "Valve stem seals prevent oil from running down the valve stems into the combustion chamber. On the Agility 125, remove the cylinder head, then use a valve spring compressor to remove the valve springs and access the seals. Replace both intake and exhaust seals. While the head is off, inspect the valve guides for wear (excessive play). New seals with worn guides will not solve the problem — guides would also need replacement."
+      },
+      {
+        "id": "solution_piston_rings",
+        "type": "solution",
+        "text": "Top-End Rebuild — Piston Rings and Cylinder",
+        "safety": "yellow",
+        "warning": "A top-end rebuild requires removing the cylinder head, cylinder, and piston. This is an intermediate to advanced repair.",
+        "action": "Rebuild the top end with new piston rings, and have the cylinder honed or replaced.",
+        "details": "Worn piston rings allow oil to pass into the combustion chamber, causing blue smoke and oil consumption. Remove the cylinder head and cylinder. Measure the cylinder bore for wear and out-of-round condition. If the cylinder is still within spec, a light hone and new rings may suffice. If the bore is worn beyond spec, the cylinder needs re-boring (with an oversize piston) or replacement. Also replace the valve stem seals and head gasket while the engine is apart."
+      },
+      {
+        "id": "solution_base_gasket",
+        "type": "solution",
+        "text": "Replace the Cylinder Base Gasket",
+        "safety": "yellow",
+        "warning": "Cylinder removal is required. Take care not to damage the mating surfaces.",
+        "action": "Replace the cylinder base gasket.",
+        "details": "The cylinder base gasket seals between the cylinder and the crankcase. Remove the cylinder head and cylinder to access this gasket. Clean both mating surfaces thoroughly — use a plastic scraper to avoid gouging the aluminum. Install the new gasket and reassemble. This is a good time to inspect the piston and rings while the cylinder is off."
+      },
+      {
+        "id": "solution_crankcase_cover",
+        "type": "solution",
+        "text": "Replace the Crankcase Cover Gasket",
+        "safety": "green",
+        "action": "Replace the leaking crankcase cover gasket.",
+        "details": "Crankcase cover gaskets (right side or left side) are straightforward to replace. Remove the cover bolts, separate the cover, clean both surfaces, and install a new gasket. Some covers use liquid gasket sealant instead of a cut gasket — use a quality silicone gasket maker applied in a thin, even bead. Allow the sealant to cure for the recommended time before adding oil and running the engine."
+      },
+      {
+        "id": "solution_gasket_repair",
+        "type": "solution",
+        "text": "Repair the Identified Leak",
+        "safety": "green",
+        "action": "Now that the leak source is identified via UV dye, replace the appropriate gasket or seal.",
+        "details": "With the exact leak location confirmed, refer to the specific gasket or seal replacement procedure for that area of the engine. The most common leak points on the Agility 125 are the valve cover gasket, drain plug washer, and crankshaft seals. Address the leak promptly — even small oil leaks will worsen over time and low oil is dangerous for an air-cooled engine that depends on oil for cooling."
+      }
+    ]
+  }
+}

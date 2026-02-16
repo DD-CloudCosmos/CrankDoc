@@ -1,0 +1,422 @@
+{
+  "motorcycle_make": null,
+  "motorcycle_model": null,
+  "title": "Scooter Fuel System Diagnosis (EFI)",
+  "description": "Diagnose fuel system issues on fuel-injected (EFI) scooters. Covers fuel pump priming, fuel pressure, injector testing, fuel filter, EFI warning light, oxygen sensor, and throttle body cleaning.",
+  "category": "fuel",
+  "difficulty": "intermediate",
+  "tree_data": {
+    "nodes": [
+      {
+        "id": "start",
+        "type": "question",
+        "text": "What fuel system symptom are you experiencing?",
+        "safety": "green",
+        "options": [
+          { "text": "Engine cranks but won't start — no fuel delivery", "next": "check_fuel_pump_prime" },
+          { "text": "Engine runs rough, hesitates, or misfires", "next": "check_rough_running" },
+          { "text": "Poor fuel economy", "next": "check_poor_economy" },
+          { "text": "Engine warning light (MIL) is on", "next": "check_warning_light" },
+          { "text": "Engine stalls at idle or in traffic", "next": "check_idle_stalling" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump_prime",
+        "type": "check",
+        "text": "Check if the fuel pump is priming when the ignition is turned on.",
+        "safety": "yellow",
+        "warning": "Fuel is highly flammable. Do not smoke or use open flames near the fuel system. Have a fire extinguisher available when working with fuel components.",
+        "instructions": "Turn the ignition key to ON (do not press the starter button). Listen carefully near the fuel tank or under the seat area — you should hear the fuel pump run for 2-3 seconds as it primes the fuel system. Some scooters have the fuel pump inside the fuel tank; others have it externally mounted near the tank. If you do not hear the pump prime, the fuel pump may have failed, or there may be an electrical issue preventing it from running. Also check: is there fuel in the tank? (it sounds obvious, but fuel gauges can be inaccurate).",
+        "next": "fuel_pump_prime_result"
+      },
+      {
+        "id": "fuel_pump_prime_result",
+        "type": "question",
+        "text": "Did you hear the fuel pump prime?",
+        "safety": "green",
+        "options": [
+          { "text": "No — no pump sound at all", "next": "check_fuel_pump_circuit" },
+          { "text": "Yes — pump primes but engine still won't start", "next": "check_fuel_delivery" },
+          { "text": "Pump makes a buzzing or whining noise continuously", "next": "solution_fuel_pump_failing" }
+        ]
+      },
+      {
+        "id": "check_fuel_pump_circuit",
+        "type": "check",
+        "text": "Check the fuel pump electrical circuit.",
+        "safety": "yellow",
+        "warning": "Disconnect the fuel pump connector before testing. Do not create sparks near fuel components.",
+        "instructions": "Check the fuel pump fuse first (location varies — check your service manual or the fuse box cover). If the fuse is blown, replace it and test again. If it blows again, there is a short in the fuel pump circuit. If the fuse is good, locate the fuel pump electrical connector and check for battery voltage (12V) at the connector when the ignition is turned on. The voltage is only present for 2-3 seconds during priming, so you may need a helper to turn the key while you measure. If there is voltage but the pump does not run, the pump itself has failed. If there is no voltage, check the fuel pump relay.",
+        "next": "fuel_pump_circuit_result"
+      },
+      {
+        "id": "fuel_pump_circuit_result",
+        "type": "question",
+        "text": "What did you find in the fuel pump circuit?",
+        "safety": "green",
+        "options": [
+          { "text": "Fuse is blown", "next": "solution_fuel_pump_fuse" },
+          { "text": "Voltage present at connector but pump does not run", "next": "solution_replace_fuel_pump" },
+          { "text": "No voltage at the pump connector", "next": "solution_fuel_pump_relay" }
+        ]
+      },
+      {
+        "id": "check_fuel_delivery",
+        "type": "check",
+        "text": "Verify fuel is reaching the injector.",
+        "safety": "yellow",
+        "warning": "Fuel under pressure will spray when lines are disconnected. Have rags ready to catch spilled fuel. Work in a ventilated area away from ignition sources.",
+        "instructions": "If the fuel pump primes but the engine still will not start, fuel may not be reaching the injector due to a clogged fuel filter or a kinked fuel line. On many scooters, the fuel filter is a small inline filter in the fuel line between the tank and the throttle body, or it is built into the fuel pump assembly. Inspect the fuel line for kinks, cracks, or blockages. If you can safely access the fuel line near the throttle body, briefly disconnect it while priming the pump — fuel should flow freely. If flow is weak or absent, the filter or line is blocked.",
+        "next": "fuel_delivery_result"
+      },
+      {
+        "id": "fuel_delivery_result",
+        "type": "question",
+        "text": "Is fuel reaching the throttle body area?",
+        "safety": "green",
+        "options": [
+          { "text": "No flow or very weak flow", "next": "solution_fuel_filter" },
+          { "text": "Good fuel flow but engine still won't start", "next": "check_injector" }
+        ]
+      },
+      {
+        "id": "check_injector",
+        "type": "check",
+        "text": "Check if the fuel injector is firing.",
+        "safety": "yellow",
+        "warning": "Do not touch the injector connector while cranking. The ECU controls the injector with pulsed signals.",
+        "instructions": "With the engine cranking, you should be able to hear or feel the injector clicking rapidly. Place a long screwdriver shaft against the injector body and put your ear to the handle — you should hear a rapid clicking pattern as the ECU pulses the injector open and closed. If you do not hear clicking, the injector may be electrically faulty, or the ECU may not be commanding it (possibly due to a sensor fault preventing the ECU from entering injection mode, such as a missing crank position sensor signal). Check for voltage at the injector connector during cranking.",
+        "next": "injector_result"
+      },
+      {
+        "id": "injector_result",
+        "type": "question",
+        "text": "Is the injector clicking during cranking?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — injector is clicking but engine won't start", "next": "solution_other_no_start" },
+          { "text": "No — injector is not clicking", "next": "solution_injector_circuit" }
+        ]
+      },
+      {
+        "id": "check_rough_running",
+        "type": "question",
+        "text": "When does the rough running occur?",
+        "safety": "green",
+        "options": [
+          { "text": "All the time — at idle and while riding", "next": "check_spark_plug" },
+          { "text": "Only during acceleration or under load", "next": "check_throttle_body" },
+          { "text": "Only at idle — runs fine at higher RPM", "next": "check_idle_stalling" },
+          { "text": "Only when the engine is cold", "next": "solution_cold_running" }
+        ]
+      },
+      {
+        "id": "check_spark_plug",
+        "type": "check",
+        "text": "Inspect the spark plug for signs of fuel system issues.",
+        "safety": "green",
+        "instructions": "Remove the spark plug and examine its tip. The spark plug condition tells you a lot about the fuel mixture: a light tan or gray color indicates a correct mixture; black, sooty deposits indicate a rich mixture (too much fuel or not enough air); white or blistered electrodes indicate a lean mixture (not enough fuel or too much air); wet, fuel-soaked plug indicates flooding or injector leak. Also check the plug gap and condition — a worn or fouled plug can mimic fuel system problems by causing misfires.",
+        "next": "spark_plug_result"
+      },
+      {
+        "id": "spark_plug_result",
+        "type": "question",
+        "text": "What does the spark plug look like?",
+        "safety": "green",
+        "options": [
+          { "text": "Black and sooty — running rich", "next": "check_air_filter" },
+          { "text": "White or blistered — running lean", "next": "solution_lean_condition" },
+          { "text": "Wet with fuel — flooding", "next": "solution_injector_leaking" },
+          { "text": "Light tan — mixture looks correct", "next": "check_throttle_body" }
+        ]
+      },
+      {
+        "id": "check_air_filter",
+        "type": "check",
+        "text": "Inspect the air filter.",
+        "safety": "green",
+        "instructions": "A clogged air filter restricts airflow to the engine, causing a rich fuel mixture. On most scooters, the air filter box is located under the seat or in the frame near the CVT cover. Open the air filter box (usually held by clips or screws) and remove the filter element. Hold it up to a light — you should be able to see some light through a clean filter. A heavily soiled filter that blocks all light needs replacement. Also check for debris, water, or oil inside the air filter box. Scooter air filters should be checked every 2,000-3,000 miles and replaced at least once a year.",
+        "next": "air_filter_result"
+      },
+      {
+        "id": "air_filter_result",
+        "type": "question",
+        "text": "What is the condition of the air filter?",
+        "safety": "green",
+        "options": [
+          { "text": "Filter is dirty, oily, or completely blocked", "next": "solution_replace_air_filter" },
+          { "text": "Filter is clean", "next": "check_o2_sensor" }
+        ]
+      },
+      {
+        "id": "check_o2_sensor",
+        "type": "check",
+        "text": "Check the oxygen sensor for proper operation.",
+        "safety": "yellow",
+        "warning": "The oxygen sensor is located in the exhaust pipe and becomes extremely hot during operation. Allow the exhaust to cool completely before handling.",
+        "instructions": "The oxygen (O2) sensor monitors exhaust gases and sends a signal to the ECU to adjust the fuel mixture. A faulty O2 sensor can cause rich or lean running. The sensor is usually located in the exhaust header pipe or near the catalytic converter. Check the sensor connector for corrosion, damage, or disconnection. If you have a multimeter, you can monitor the O2 sensor voltage with the engine running — it should fluctuate between approximately 0.1V and 0.9V as the ECU adjusts the mixture. A sensor stuck at a fixed voltage (high or low) is faulty.",
+        "next": "o2_sensor_result"
+      },
+      {
+        "id": "o2_sensor_result",
+        "type": "question",
+        "text": "Is the oxygen sensor functioning normally?",
+        "safety": "green",
+        "options": [
+          { "text": "Sensor is disconnected, damaged, or stuck at a fixed voltage", "next": "solution_replace_o2" },
+          { "text": "Sensor voltage is fluctuating normally", "next": "check_throttle_body" }
+        ]
+      },
+      {
+        "id": "check_throttle_body",
+        "type": "check",
+        "text": "Inspect the throttle body for carbon buildup.",
+        "safety": "yellow",
+        "warning": "Use only throttle body cleaner — do not use carburetor cleaner on throttle bodies as it can damage the throttle position sensor and rubber seals.",
+        "instructions": "Carbon deposits build up on the throttle plate and bore over time, restricting airflow and causing rough idle, hesitation, and poor response. Access the throttle body by removing the air intake duct or air filter box connection. With the engine off, manually open the throttle plate and inspect the bore and plate edges for black carbon deposits. A thin film is normal, but thick deposits that prevent the plate from closing fully are a problem. Also check the idle air control valve (IACV) port — a small passage near the throttle plate that can become clogged.",
+        "next": "throttle_body_result"
+      },
+      {
+        "id": "throttle_body_result",
+        "type": "question",
+        "text": "Is there significant carbon buildup on the throttle body?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — heavy carbon deposits", "next": "solution_clean_throttle_body" },
+          { "text": "No — throttle body is relatively clean", "next": "solution_further_diagnosis" }
+        ]
+      },
+      {
+        "id": "check_poor_economy",
+        "type": "question",
+        "text": "How much worse is your fuel economy compared to normal?",
+        "safety": "green",
+        "options": [
+          { "text": "Significantly worse — using much more fuel than before", "next": "check_air_filter" },
+          { "text": "Slightly worse — gradual decline over time", "next": "check_tire_pressure_economy" },
+          { "text": "Just bought the scooter — not sure what's normal", "next": "solution_economy_baseline" }
+        ]
+      },
+      {
+        "id": "check_tire_pressure_economy",
+        "type": "check",
+        "text": "Check basic factors affecting fuel economy.",
+        "safety": "green",
+        "instructions": "Before investigating the fuel system, check these common causes of poor fuel economy: tire pressures (underinflated tires increase rolling resistance significantly — check both tires when cold and inflate to specification), air filter condition (a dirty filter restricts airflow and enriches the mixture), brake drag (spin both wheels with the scooter on a stand — they should rotate freely), and CVT belt condition (a slipping belt wastes energy). Also consider whether your riding habits have changed — frequent hard acceleration and stop-and-go riding use much more fuel than steady-speed riding.",
+        "next": "basic_economy_result"
+      },
+      {
+        "id": "basic_economy_result",
+        "type": "question",
+        "text": "Did you find any basic issues affecting fuel economy?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — tire pressure, air filter, or brake drag issue found", "next": "solution_basic_economy_fix" },
+          { "text": "No — all basics check out", "next": "check_o2_sensor" }
+        ]
+      },
+      {
+        "id": "check_warning_light",
+        "type": "check",
+        "text": "Read the engine fault codes.",
+        "safety": "green",
+        "instructions": "When the engine warning light (MIL / check engine light) is on, the ECU has stored one or more diagnostic trouble codes (DTCs). These codes point to the specific sensor or circuit that has a problem. On many scooters, you can read the codes by: counting the blinks of the warning light with the ignition on and engine off (the number and pattern of blinks correspond to specific codes — check your service manual for the blink code procedure and code definitions), or using an OBD-II scanner. Some scooter brands require a manufacturer-specific diagnostic tool. Write down the code(s) and look up their meaning in your service manual or CrankDoc's DTC lookup.",
+        "next": "warning_light_result"
+      },
+      {
+        "id": "warning_light_result",
+        "type": "question",
+        "text": "Were you able to read the fault codes?",
+        "safety": "green",
+        "options": [
+          { "text": "Yes — code relates to fuel injector or fuel pump", "next": "solution_injector_circuit" },
+          { "text": "Yes — code relates to oxygen sensor", "next": "solution_replace_o2" },
+          { "text": "Yes — code relates to throttle position sensor", "next": "solution_tps" },
+          { "text": "Yes — code relates to coolant or air temperature sensor", "next": "solution_temp_sensor" },
+          { "text": "Could not read codes or code is not listed above", "next": "solution_dealer_scan" }
+        ]
+      },
+      {
+        "id": "check_idle_stalling",
+        "type": "question",
+        "text": "Does the engine stall only at idle, or also at low speeds in traffic?",
+        "safety": "green",
+        "options": [
+          { "text": "Only at idle — stalls when stopped", "next": "check_throttle_body" },
+          { "text": "Stalls in traffic at low speeds too", "next": "check_spark_plug" },
+          { "text": "Stalls when the engine is hot", "next": "solution_vapor_lock" }
+        ]
+      },
+      {
+        "id": "solution_fuel_pump_fuse",
+        "type": "solution",
+        "text": "The fuel pump fuse is blown.",
+        "safety": "yellow",
+        "warning": "If the replacement fuse blows immediately, do not install a higher-rated fuse. There is a short circuit that must be found and repaired.",
+        "action": "Replace the fuel pump fuse and test — if it blows again, check the fuel pump wiring for a short",
+        "details": "Replace the fuse with the correct amperage rating (check the fuse box cover or service manual). If the new fuse holds, the old one may have been faulty or blown from a temporary power spike. If the new fuse blows immediately, there is a short circuit in the fuel pump wiring or the fuel pump motor has seized. Inspect the fuel pump wiring for damage, chafing against the frame, or water intrusion in the connectors. If the wiring is fine, the fuel pump motor itself has likely shorted and needs replacement."
+      },
+      {
+        "id": "solution_replace_fuel_pump",
+        "type": "solution",
+        "text": "The fuel pump has failed and needs replacement.",
+        "safety": "yellow",
+        "warning": "Relieve fuel system pressure before disconnecting fuel lines. Fuel is flammable — work in a ventilated area.",
+        "action": "Replace the fuel pump assembly",
+        "details": "On most scooters, the fuel pump is an in-tank or near-tank unit that includes the pump motor, fuel level sender, and pre-filter. Replace it as a complete assembly with an OEM or quality aftermarket part. When installing, ensure the fuel line connections are secure and do not leak. Prime the system by turning the ignition on and off several times (without cranking) to fill the lines. Check for leaks before starting the engine. Fuel pump failure on scooters is often caused by running the tank very low — the fuel cools and lubricates the pump, so running on fumes accelerates wear."
+      },
+      {
+        "id": "solution_fuel_pump_relay",
+        "type": "solution",
+        "text": "The fuel pump relay or ECU is not activating the fuel pump.",
+        "safety": "green",
+        "action": "Check and replace the fuel pump relay; verify ECU power and ground",
+        "details": "The fuel pump relay is controlled by the ECU. If the relay is faulty, the pump will not receive power. Locate the relay (often in a relay box under the seat or near the battery) and swap it with an identical relay from another circuit to test. If swapping resolves the issue, the relay is bad — replace it. If the relay swap does not help, the ECU may not be sending the signal to the relay. Check that the ECU has power, ground, and is receiving a signal from the kill switch and key-on circuit. A faulty kill switch, kickstand safety switch, or tilt sensor can prevent the ECU from commanding the fuel pump."
+      },
+      {
+        "id": "solution_fuel_pump_failing",
+        "type": "solution",
+        "text": "The fuel pump is running but may be losing pressure.",
+        "safety": "yellow",
+        "warning": "A continuously running fuel pump may indicate the system cannot build pressure. Check for fuel leaks.",
+        "action": "Test fuel pressure and replace the pump if pressure is low",
+        "details": "A fuel pump that buzzes or whines continuously (rather than priming for 2-3 seconds and stopping) may be struggling to build pressure due to a worn pump, a leaking fuel line, a faulty pressure regulator, or a severely clogged filter. If you have a fuel pressure gauge, connect it to the fuel rail to verify the pressure matches specification (typically 35-45 PSI for most scooter EFI systems — check your manual). Low pressure means the pump, filter, or regulator needs attention. A pump that runs continuously without stopping may also indicate a fuel pressure regulator stuck open."
+      },
+      {
+        "id": "solution_fuel_filter",
+        "type": "solution",
+        "text": "The fuel filter or fuel line is restricted.",
+        "safety": "yellow",
+        "warning": "Fuel will spill when disconnecting the filter. Have rags ready and work in a ventilated area.",
+        "action": "Replace the fuel filter and inspect the fuel lines",
+        "details": "Replace the inline fuel filter with a new one of the correct specification. On scooters with the filter built into the fuel pump assembly, replace the pump assembly or the serviceable filter element. Inspect all fuel lines for kinks, cracks, or deterioration — rubber fuel lines harden and crack with age. Replace any damaged lines with fuel-rated hose. After reconnecting, prime the system and check for leaks before starting the engine. Scooter fuel filters should be replaced at the intervals specified in your service manual, typically every 6,000-12,000 miles."
+      },
+      {
+        "id": "solution_other_no_start",
+        "type": "solution",
+        "text": "The fuel system appears to be working — the no-start issue is likely elsewhere.",
+        "safety": "green",
+        "action": "Check the ignition system (spark) and engine compression",
+        "details": "If the fuel pump is priming, fuel is reaching the injector, and the injector is clicking, the fuel system is delivering fuel. The no-start issue is most likely: no spark (check the spark plug for spark by grounding it against the engine while cranking — you should see a blue spark), low compression (a compression test should show at least 100-120 PSI for most scooter engines), or incorrect ignition timing (a faulty crank position sensor can prevent spark timing even though the injector fires). Check spark first — it is the most common cause of no-start when fuel delivery is confirmed."
+      },
+      {
+        "id": "solution_injector_circuit",
+        "type": "solution",
+        "text": "The fuel injector or its circuit has a fault.",
+        "safety": "yellow",
+        "warning": "Do not apply direct battery voltage to the injector — it is controlled by the ECU with pulsed signals.",
+        "action": "Check the injector connector, wiring, and resistance; replace the injector if faulty",
+        "details": "Check the injector electrical connector for corrosion or damage. Measure the injector coil resistance with a multimeter (disconnect it first) — typical resistance is 10-16 ohms for high-impedance injectors. An open circuit (infinite resistance) or very low resistance means the injector coil is faulty. If the injector resistance is correct but it is not clicking, the ECU may not be driving it — check for a crank position sensor signal, as many ECUs will not fire the injector without a valid crank signal. If the injector is clicking but fuel is not spraying, it may be clogged — professional ultrasonic cleaning or replacement is needed."
+      },
+      {
+        "id": "solution_replace_air_filter",
+        "type": "solution",
+        "text": "A dirty air filter is restricting airflow and causing rich running.",
+        "safety": "green",
+        "action": "Replace the air filter element",
+        "details": "Replace the air filter with a new OEM or quality aftermarket element. Do not attempt to clean and reuse a paper element filter — once saturated with dirt and oil, they cannot be fully restored. Foam element filters (used on some scooters) can be washed with mild soap, dried, and re-oiled with filter oil. After replacing the filter, also clean inside the air filter box to remove any debris. A clean air filter improves fuel economy, throttle response, and engine longevity. Check the filter at every service interval and replace at least once a year."
+      },
+      {
+        "id": "solution_replace_o2",
+        "type": "solution",
+        "text": "The oxygen sensor is faulty and needs replacement.",
+        "safety": "yellow",
+        "warning": "The O2 sensor is in the hot exhaust pipe. Allow the exhaust to cool completely before removal. Use a proper O2 sensor socket to avoid damaging the sensor or wiring.",
+        "action": "Replace the oxygen sensor",
+        "details": "Replace the O2 sensor with an OEM or direct-fit aftermarket sensor. Apply anti-seize compound to the threads to prevent seizing in the exhaust pipe. Torque to specification. After replacement, clear any stored fault codes. The ECU will need a few minutes of driving to re-learn the fuel mixture using the new sensor's signal. O2 sensors have a typical lifespan of 30,000-50,000 miles. Symptoms of a failing O2 sensor include poor fuel economy, rough running, rich or lean exhaust, and a check engine light."
+      },
+      {
+        "id": "solution_lean_condition",
+        "type": "solution",
+        "text": "The engine is running lean — not enough fuel for the amount of air.",
+        "safety": "yellow",
+        "warning": "A lean-running engine can overheat and cause serious damage. Do not ride the scooter hard until the lean condition is resolved.",
+        "action": "Check for air leaks in the intake, low fuel pressure, and clogged injector",
+        "details": "A lean condition is caused by either too much air or not enough fuel. Check for intake air leaks: spray a small amount of starter fluid around the intake boot, throttle body gaskets, and vacuum hose connections with the engine idling. If the idle speed changes when you spray a connection, there is a leak at that point. Check fuel pressure if you have a gauge. Inspect the injector spray pattern. Also verify the air filter is not missing or incorrectly installed. A cracked or loose intake boot is the most common cause of lean running on scooters."
+      },
+      {
+        "id": "solution_injector_leaking",
+        "type": "solution",
+        "text": "The fuel injector may be leaking, flooding the engine.",
+        "safety": "yellow",
+        "warning": "A leaking injector drips fuel into the cylinder and intake, creating a fire risk. Do not ignore this issue.",
+        "action": "Replace the fuel injector or its O-ring seals",
+        "details": "An injector that leaks fuel when it should be closed causes flooding, hard starting, fouled spark plugs, and fuel-washed cylinders (diluting the oil). Remove the injector and inspect the O-ring seals — cracked or hardened O-rings allow external leaks. To test for internal leaks, connect the injector to fuel pressure with the engine off and hold a paper towel under the tip — no fuel should drip. If fuel drips, the injector pintle is not sealing and the injector needs replacement or professional servicing."
+      },
+      {
+        "id": "solution_clean_throttle_body",
+        "type": "solution",
+        "text": "The throttle body needs cleaning.",
+        "safety": "yellow",
+        "warning": "Use only throttle body cleaner, not carburetor cleaner. Do not spray cleaner directly onto the throttle position sensor. Do not force the throttle plate open if it is electronically controlled (ride-by-wire).",
+        "action": "Clean the throttle body bore, plate, and idle air control valve passage",
+        "details": "With the air intake duct disconnected, spray throttle body cleaner on the throttle plate and bore. Use a soft cloth or brush to remove carbon deposits. Pay special attention to the edges of the throttle plate where it contacts the bore — carbon here prevents full closure and causes erratic idle. Also clean the idle air control valve (IACV) passage — a small port near the throttle plate that allows air to bypass the plate at idle. If accessible, remove and clean the IACV itself. After cleaning, the idle may be slightly different — some ECUs need a few drive cycles to re-learn the idle position."
+      },
+      {
+        "id": "solution_tps",
+        "type": "solution",
+        "text": "The throttle position sensor (TPS) has a fault.",
+        "safety": "green",
+        "action": "Inspect, adjust, or replace the throttle position sensor",
+        "details": "The TPS tells the ECU how far the throttle is open. A faulty TPS sends incorrect or erratic signals, causing hesitation, surging, poor idle, and rich or lean conditions. Check the TPS connector for corrosion. With a multimeter, measure the TPS output voltage: at closed throttle it should read approximately 0.4-0.8V, and at wide-open throttle approximately 4.0-4.5V. The voltage should increase smoothly as you open the throttle — any dead spots or jumps indicate a worn sensor. Replace with an OEM part and recalibrate per your service manual if required."
+      },
+      {
+        "id": "solution_temp_sensor",
+        "type": "solution",
+        "text": "A temperature sensor is reporting incorrect values.",
+        "safety": "green",
+        "action": "Replace the faulty coolant or air temperature sensor",
+        "details": "The ECU uses the coolant temperature sensor (CTS) and intake air temperature (IAT) sensor to calculate the correct fuel mixture. If either reports incorrect values, the ECU will deliver the wrong amount of fuel. Replace the faulty sensor with an OEM part. After replacement, clear any stored fault codes and verify the engine runs correctly. Temperature sensors are inexpensive and easy to replace on most scooters."
+      },
+      {
+        "id": "solution_dealer_scan",
+        "type": "solution",
+        "text": "A dealer or specialist diagnostic scan is recommended.",
+        "safety": "green",
+        "action": "Have a dealer or qualified scooter mechanic read and diagnose the fault codes",
+        "details": "Some fault codes require manufacturer-specific diagnostic tools to read and interpret. A dealer or specialist can read all stored and pending codes, view live sensor data, and perform actuator tests (commanding individual components to activate). This level of diagnosis is often the quickest path to resolving complex EFI issues. Bring any notes you have about the symptoms — when they occur, how long they have been present, and any recent work done on the scooter."
+      },
+      {
+        "id": "solution_cold_running",
+        "type": "solution",
+        "text": "Rough running only when cold is usually a cold enrichment or sensor issue.",
+        "safety": "green",
+        "action": "Check the coolant temperature sensor and spark plug condition",
+        "details": "If the engine runs rough only when cold and smooths out after warming up, the cold enrichment system may not be operating correctly (ECU not providing enough enrichment), the coolant temperature sensor may be giving incorrect readings, or the spark plug may be fouled and struggling to ignite the rich cold mixture. Start by checking the spark plug — replace it if fouled. Then check the CTS resistance when cold (should be 2,000-3,000 ohms at room temperature). See the Cold Start Diagnosis tree for detailed cold-start troubleshooting."
+      },
+      {
+        "id": "solution_vapor_lock",
+        "type": "solution",
+        "text": "The scooter may be experiencing heat-related fuel delivery issues.",
+        "safety": "yellow",
+        "warning": "An engine that stalls in traffic due to fuel issues can be dangerous. Avoid heavy traffic riding until resolved.",
+        "action": "Check fuel line routing, heat shielding, and fuel pump operation when hot",
+        "details": "Scooters with under-seat fuel tanks and engines generating significant heat can experience vapor lock in hot weather — fuel vaporizes in the fuel line before reaching the injector, starving the engine. Check that fuel lines are not routed close to the exhaust or engine cylinder. Ensure any heat shields are in place. Check the fuel pump pressure when the engine is hot (not just cold) — some fuel pumps lose pressure when hot. An insulating sleeve on the fuel line can help. If the problem is severe, aftermarket fuel line insulation or rerouting the lines away from heat sources may be necessary."
+      },
+      {
+        "id": "solution_basic_economy_fix",
+        "type": "solution",
+        "text": "A basic maintenance issue is causing poor fuel economy.",
+        "safety": "green",
+        "action": "Correct the identified issue and monitor fuel economy",
+        "details": "Correct the problem you found: inflate tires to the correct pressure, replace the air filter, free any dragging brakes, or address the CVT belt condition. After the fix, track your fuel consumption for at least two full tankfuls to see the improvement. Scooter fuel economy varies widely by model and engine size: a 50cc scooter typically gets 80-100 MPG (30-40 km/L), a 125cc gets 60-80 MPG (25-34 km/L), and a 150cc-300cc gets 50-70 MPG (21-30 km/L). Check your service manual for expected economy."
+      },
+      {
+        "id": "solution_economy_baseline",
+        "type": "solution",
+        "text": "Establish a fuel economy baseline for your scooter.",
+        "safety": "green",
+        "action": "Track your fuel consumption over several fill-ups to establish a baseline",
+        "details": "Fill the tank completely, reset the trip meter (or note the odometer), ride normally, and fill up again. Divide the distance by the fuel used to calculate your actual fuel economy. Do this for at least three fill-ups to get a reliable average. Compare to the manufacturer's published figure (usually in the owner's manual or on the manufacturer's website). Keep in mind that real-world economy is typically 10-20% less than the published figure due to city riding, stop-and-go traffic, and rider weight. If your actual economy is significantly worse than expected, begin diagnosis with the air filter and tire pressures."
+      },
+      {
+        "id": "solution_further_diagnosis",
+        "type": "solution",
+        "text": "The throttle body is clean — further diagnosis is needed.",
+        "safety": "green",
+        "action": "Check fuel pressure, compression, and valve clearances",
+        "details": "If the throttle body is clean, the fuel filter is clear, the air filter is fresh, and the O2 sensor is working, the rough running may be caused by: low fuel pressure (test with a gauge), low engine compression (perform a compression test — most scooter engines should read 100-150 PSI), incorrect valve clearances (tight valves cause poor running and eventual valve damage), or a failing ignition coil (intermittent spark). A compression test is a good next step — it takes only a few minutes and tells you the mechanical health of the engine."
+      }
+    ]
+  }
+}
