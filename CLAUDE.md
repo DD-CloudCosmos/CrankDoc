@@ -140,6 +140,20 @@ SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
 - **Never commit:** `.env.local`, `node_modules/`, `.next/`, Supabase service keys
 - **Always commit:** Test files alongside feature code
 
+### Verification Checklist
+
+After any code changes, run in order before committing:
+
+1. `npm run lint` — fix any lint errors
+2. `npm run test` — all tests must pass
+3. `npm run build` — build must succeed
+
+**Only commit if all three pass.** If any fail, fix before committing.
+
+### Git Workflow
+
+Always commit and push after successful verification (lint clean, tests pass, build succeeds). Do not wait to be reminded. Use conventional commit messages.
+
 ---
 
 ## Safety & Content Conventions
@@ -151,6 +165,26 @@ CrankDoc provides diagnostic guidance. All content must follow the safety framew
 - Disclaimer text must appear on every page with diagnostic content.
 - Never instruct users to defeat safety systems.
 - Never encourage work beyond the stated skill level of the tree.
+
+---
+
+## Planning Before Implementation
+
+- For multi-file or multi-step features, write a plan first and get user approval before coding.
+- For small bug fixes (< 3 files), proceed directly.
+
+---
+
+## Error Handling
+
+- Before editing any plan/tracking file (e.g., FIX_PLAN.md), verify write permissions first with a test write.
+- If a permission error or repeated API failure occurs (3+ attempts), **stop immediately** and report: what you were trying to do, the exact error, and what needs to be fixed. Do not retry more than 3 times.
+
+---
+
+## Non-Interactive Commands
+
+When running CLI tools (create-next-app, npx, etc.), always use non-interactive flags (`--yes`, `--no-git`, `--disable-git`, etc.). Never let a command hang waiting for user input.
 
 ---
 
