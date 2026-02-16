@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { RecallList } from '@/components/RecallList'
 
 export default function RecallsPage() {
@@ -10,7 +11,9 @@ export default function RecallsPage() {
         </p>
       </div>
 
-      <RecallList />
+      <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading...</div>}>
+        <RecallList />
+      </Suspense>
     </div>
   )
 }

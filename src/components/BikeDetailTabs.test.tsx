@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BikeDetailTabs } from './BikeDetailTabs'
@@ -165,13 +165,6 @@ const parkItRecall: Recall = {
   park_outside: false,
 }
 
-// Mock RecallCard since it's tested separately
-vi.mock('@/components/RecallCard', () => ({
-  RecallCard: ({ recall }: { recall: Recall }) => (
-    <div data-testid="recall-card">{recall.nhtsa_campaign_number}</div>
-  ),
-}))
-
 // --- Tests ---
 
 describe('BikeDetailTabs', () => {
@@ -213,8 +206,7 @@ describe('BikeDetailTabs', () => {
     )
 
     await user.click(screen.getByRole('tab', { name: 'Service' }))
-    // ServiceIntervalTable renders both desktop table + mobile cards, so text appears twice
-    expect(screen.getAllByText('Engine Oil Change').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('Engine Oil Change')).toBeInTheDocument()
   })
 
   it('switches to Fluids tab and shows fluid data', async () => {
@@ -404,7 +396,7 @@ describe('BikeDetailTabs', () => {
     expect(screen.getByRole('tab', { name: 'Recalls (1)' })).toBeInTheDocument()
   })
 
-  it('switches to Recalls tab and shows recall cards', async () => {
+  it('switches to Recalls tab and shows recalls in table', async () => {
     const user = userEvent.setup()
     render(
       <BikeDetailTabs
@@ -416,8 +408,9 @@ describe('BikeDetailTabs', () => {
     )
 
     await user.click(screen.getByRole('tab', { name: 'Recalls (1)' }))
-    expect(screen.getByTestId('recall-card')).toBeInTheDocument()
+    expect(screen.getByTestId('recall-table-row')).toBeInTheDocument()
     expect(screen.getByText('23V456')).toBeInTheDocument()
+    expect(screen.getByText('Fuel System')).toBeInTheDocument()
   })
 
   it('shows urgency banner when park-it recall is present', async () => {
@@ -449,7 +442,7 @@ describe('BikeDetailTabs', () => {
 
     // Should deduplicate to 1 recall since same campaign number
     await user.click(screen.getByRole('tab', { name: 'Recalls (1)' }))
-    expect(screen.getAllByTestId('recall-card')).toHaveLength(1)
+    expect(screen.getAllByTestId('recall-table-row')).toHaveLength(1)
   })
 
   it('does not show Recalls tab when recalls array is empty', () => {

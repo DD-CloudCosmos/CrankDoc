@@ -1,22 +1,28 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { RecallList } from './RecallList'
 
 const mockFetch = vi.fn()
 vi.stubGlobal('fetch', mockFetch)
 
-// Mock RecallCard since it's tested separately
-vi.mock('@/components/RecallCard', () => ({
-  RecallCard: ({ recall }: { recall: { nhtsa_campaign_number: string } }) => (
-    <div data-testid="recall-card">{recall.nhtsa_campaign_number}</div>
-  ),
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
 }))
 
-function mockApiResponse(recalls: unknown[], total: number, page = 1, totalPages = 1) {
-  mockFetch.mockResolvedValueOnce({
+function mockRecallsResponse(recalls: unknown[], total: number, page = 1, totalPages = 1) {
+  return {
     ok: true,
     json: async () => ({ recalls, total, page, totalPages }),
-  })
+  }
+}
+
+function mockFiltersResponse(makes: string[] = [], models: string[] = [], years: number[] = []) {
+  return {
+    ok: true,
+    json: async () => ({ makes, models, years }),
+  }
 }
 
 const mockRecalls = [
@@ -30,8 +36,8 @@ const mockRecalls = [
     model_year: 2021,
     component: 'ENGINE',
     summary: 'Engine may stall',
-    consequence: null,
-    remedy: null,
+    consequence: 'Risk of crash',
+    remedy: 'Dealers will update software',
     notes: null,
     report_received_date: '2024-01-15',
     park_it: false,
@@ -63,24 +69,31 @@ describe('RecallList', () => {
     vi.clearAllMocks()
   })
 
-  it('renders search inputs for make, model, and year', async () => {
-    mockApiResponse(mockRecalls, 2)
+  it('renders dropdown filters for make, model, and year', async () => {
+    // First call: filters API, Second call: recalls API
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse(['BMW', 'HONDA'], ['CBR600RR', 'R 1250 GS'], [2021, 2022]))
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
 
     render(<RecallList />)
 
-    expect(screen.getByPlaceholderText('Make (e.g., Honda)')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Model (e.g., CBR600RR)')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Year')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByLabelText('Filter by make')).toBeInTheDocument()
+    })
+    expect(screen.getByLabelText('Filter by model')).toBeInTheDocument()
+    expect(screen.getByLabelText('Filter by year')).toBeInTheDocument()
   })
 
   it('shows loading state initially', () => {
-    mockFetch.mockReturnValueOnce(new Promise(() => {}))
+    mockFetch.mockReturnValue(new Promise(() => {}))
     render(<RecallList />)
     expect(screen.getByText('Loading recalls...')).toBeInTheDocument()
   })
 
-  it('shows recalls after fetch', async () => {
-    mockApiResponse(mockRecalls, 2)
+  it('shows recalls in a table after fetch', async () => {
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
 
     render(<RecallList />)
 
@@ -92,7 +105,9 @@ describe('RecallList', () => {
   })
 
   it('shows empty state when no results', async () => {
-    mockApiResponse([], 0)
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse([], 0))
 
     render(<RecallList />)
 
@@ -102,12 +117,47 @@ describe('RecallList', () => {
   })
 
   it('shows error state when fetch fails', async () => {
-    mockFetch.mockResolvedValueOnce({ ok: false })
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce({ ok: false })
 
     render(<RecallList />)
 
     await waitFor(() => {
       expect(screen.getByText('Failed to load recalls. Please try again.')).toBeInTheDocument()
     })
+  })
+
+  it('shows PARK IT badge in flags column', async () => {
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('PARK IT')).toBeInTheDocument()
+    })
+  })
+
+  it('expands row on click to show details', async () => {
+    const user = userEvent.setup()
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('24V-001')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('recall-row')
+    await user.click(rows[0])
+
+    expect(screen.getByTestId('recall-detail')).toBeInTheDocument()
+    // Summary appears both in the table row (hidden lg:table-cell) and in the detail panel
+    expect(screen.getAllByText('Engine may stall').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('Risk of crash')).toBeInTheDocument()
   })
 })

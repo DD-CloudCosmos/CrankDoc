@@ -47,6 +47,24 @@ const NHTSA_MODEL_ALIASES = {
   'Ninja 400': ['Ninja 400', 'NINJA 400', 'EX400'],
 }
 
+function parseNhtsaDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return null
+  const trimmed = dateStr.trim()
+  if (!trimmed) return null
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed
+  const slashMatch = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
+  if (slashMatch) {
+    const [, mm, dd, yyyy] = slashMatch
+    return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`
+  }
+  const compactMatch = trimmed.match(/^(\d{4})(\d{2})(\d{2})$/)
+  if (compactMatch) {
+    const [, yyyy, mm, dd] = compactMatch
+    return `${yyyy}-${mm}-${dd}`
+  }
+  return null
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -99,7 +117,7 @@ function mapRecall(raw) {
     consequence: raw.Consequence || null,
     remedy: raw.Remedy || null,
     notes: raw.Notes || null,
-    report_received_date: raw.ReportReceivedDate || null,
+    report_received_date: parseNhtsaDate(raw.ReportReceivedDate),
     park_it: raw.parkIt === true || raw.parkIt === 'Y',
     park_outside: raw.parkOutSide === true || raw.parkOutSide === 'Y',
   }

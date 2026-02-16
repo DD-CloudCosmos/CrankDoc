@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { AlertTriangle } from 'lucide-react'
 import { createServerClient } from '@/lib/supabase/server'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -228,6 +229,23 @@ export default async function BikeDetailPage({ params }: PageProps) {
               {categoryDisplay}
             </Badge>
           </div>
+          {/* Recall badge */}
+          {(() => {
+            // Deduplicate recalls by campaign number for count
+            const uniqueCampaigns = new Set(recalls.map((r) => r.nhtsa_campaign_number))
+            const recallCount = uniqueCampaigns.size
+            if (recallCount === 0) return null
+            return (
+              <div className="mt-3">
+                <Link href={`/recalls?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}`}>
+                  <Badge variant="destructive" className="cursor-pointer text-sm">
+                    <AlertTriangle className="mr-1.5 h-4 w-4" />
+                    {recallCount} {recallCount === 1 ? 'Recall' : 'Recalls'}
+                  </Badge>
+                </Link>
+              </div>
+            )
+          })()}
           {trees.length > 0 && (
             <div className="mt-5">
               <Link href={`/diagnose?bike=${motorcycle.id}`}>

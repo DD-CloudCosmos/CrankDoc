@@ -33,8 +33,8 @@ const mockIntervals: ServiceInterval[] = [
 describe('ServiceIntervalTable', () => {
   it('renders all interval entries', () => {
     render(<ServiceIntervalTable intervals={mockIntervals} />)
-    expect(screen.getAllByText('Engine Oil Change')).toHaveLength(2) // table + card view
-    expect(screen.getAllByText('Spark Plugs')).toHaveLength(2)
+    expect(screen.getByText('Engine Oil Change')).toBeInTheDocument()
+    expect(screen.getByText('Spark Plugs')).toBeInTheDocument()
   })
 
   it('shows miles, km, and months values', () => {
@@ -42,13 +42,13 @@ describe('ServiceIntervalTable', () => {
     // toLocaleString formats vary by locale (5,000 vs 5.000)
     const formattedMiles = (5000).toLocaleString()
     const formattedKm = (8000).toLocaleString()
-    expect(screen.getAllByText(formattedMiles).length).toBeGreaterThan(0)
-    expect(screen.getAllByText(formattedKm).length).toBeGreaterThan(0)
+    expect(screen.getByText(formattedMiles)).toBeInTheDocument()
+    expect(screen.getByText(formattedKm)).toBeInTheDocument()
   })
 
   it('shows description when available', () => {
     render(<ServiceIntervalTable intervals={mockIntervals} />)
-    expect(screen.getAllByText('Replace engine oil and filter.').length).toBeGreaterThan(0)
+    expect(screen.getByText('Replace engine oil and filter.')).toBeInTheDocument()
   })
 
   it('shows empty state when no intervals', () => {
@@ -93,8 +93,8 @@ describe('ServiceIntervalTable', () => {
       },
     ]
     render(<ServiceIntervalTable intervals={intervalsWithTorque} />)
-    expect(screen.getAllByText('30 Nm').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('Torque:').length).toBeGreaterThan(0)
+    expect(screen.getByText('30 Nm')).toBeInTheDocument()
+    expect(screen.getByText('Torque:')).toBeInTheDocument()
   })
 
   it('displays fluid_spec when available', () => {
@@ -113,8 +113,8 @@ describe('ServiceIntervalTable', () => {
       },
     ]
     render(<ServiceIntervalTable intervals={intervalsWithFluid} />)
-    expect(screen.getAllByText('10W-40 Synthetic, 3.2L').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('Fluid:').length).toBeGreaterThan(0)
+    expect(screen.getByText('10W-40 Synthetic, 3.2L')).toBeInTheDocument()
+    expect(screen.getByText('Fluid:')).toBeInTheDocument()
   })
 
   it('displays both torque_spec and fluid_spec together', () => {
@@ -133,8 +133,8 @@ describe('ServiceIntervalTable', () => {
       },
     ]
     render(<ServiceIntervalTable intervals={intervalsWithBoth} />)
-    expect(screen.getAllByText('30 Nm').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('10W-40 Synthetic').length).toBeGreaterThan(0)
+    expect(screen.getByText('30 Nm')).toBeInTheDocument()
+    expect(screen.getByText('10W-40 Synthetic')).toBeInTheDocument()
   })
 
   it('does not display specs section when both torque_spec and fluid_spec are null', () => {
