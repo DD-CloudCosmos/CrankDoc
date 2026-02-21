@@ -5,7 +5,12 @@
  *
  * Reads DTC code JSON files from data/dtc/ and upserts them into Supabase.
  *
- * Usage: node scripts/import-dtc.js
+ * Usage: node scripts/import-dtc.js [--filter <pattern>]
+ *
+ * Options:
+ *   --filter obdii    Import only OBD-II generic code files (obdii-*.json)
+ *   --filter mfr      Import only manufacturer-specific files (non-obdii)
+ *   (no flag)         Import all files
  *
  * JSON file format (array of objects):
  * [
@@ -76,11 +81,20 @@ async function importFile(filePath) {
 
     const { error } = await supabase
       .from('dtc_codes')
-      .insert(rows)
+      .upsert(rows, { onConflict: 'code', ignoreDuplicates: false })
 
     if (error) {
-      console.error(`  FAIL batch ${i}-${i + batch.length} in ${fileName}: ${error.message}`)
-      failed += batch.length
+      // Fall back to insert if upsert fails (e.g., no unique constraint on code)
+      const { error: insertError } = await supabase
+        .from('dtc_codes')
+        .insert(rows)
+
+      if (insertError) {
+        console.error(`  FAIL batch ${i}-${i + batch.length} in ${fileName}: ${insertError.message}`)
+        failed += batch.length
+      } else {
+        success += batch.length
+      }
     } else {
       success += batch.length
     }
@@ -99,7 +113,19 @@ async function main() {
     process.exit(1)
   }
 
-  const files = fs.readdirSync(DTC_DIR).filter((f) => f.endsWith('.json')).sort()
+  // Parse --filter flag
+  const filterIdx = process.argv.indexOf('--filter')
+  const filter = filterIdx !== -1 ? process.argv[filterIdx + 1] : null
+
+  let files = fs.readdirSync(DTC_DIR).filter((f) => f.endsWith('.json')).sort()
+
+  if (filter === 'obdii') {
+    files = files.filter((f) => f.startsWith('obdii-'))
+    console.log('Filter: OBD-II generic codes only\n')
+  } else if (filter === 'mfr') {
+    files = files.filter((f) => !f.startsWith('obdii-'))
+    console.log('Filter: Manufacturer-specific codes only\n')
+  }
 
   if (files.length === 0) {
     console.log('No JSON files found in data/dtc/')
