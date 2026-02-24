@@ -9,17 +9,17 @@ interface GlossaryCategoryFilterProps {
 
 const CATEGORIES = [
   { label: 'All', value: '' },
-  { label: 'Engine', value: 'Engine' },
-  { label: 'Electrical', value: 'Electrical' },
-  { label: 'Fuel', value: 'Fuel' },
-  { label: 'Transmission', value: 'Transmission' },
-  { label: 'Brakes', value: 'Brakes' },
-  { label: 'Chassis', value: 'Chassis' },
-  { label: 'Suspension', value: 'Suspension' },
-  { label: 'Exhaust', value: 'Exhaust' },
-  { label: 'Cooling', value: 'Cooling' },
-  { label: 'Tools', value: 'Tools' },
-  { label: 'General', value: 'General' },
+  { label: 'Engine', value: 'engine' },
+  { label: 'Electrical', value: 'electrical' },
+  { label: 'Fuel', value: 'fuel' },
+  { label: 'Transmission', value: 'transmission' },
+  { label: 'Brakes', value: 'brakes' },
+  { label: 'Chassis', value: 'chassis' },
+  { label: 'Suspension', value: 'suspension' },
+  { label: 'Exhaust', value: 'exhaust' },
+  { label: 'Cooling', value: 'cooling' },
+  { label: 'Tools', value: 'tools' },
+  { label: 'General', value: 'general' },
 ]
 
 export function GlossaryCategoryFilter({ activeCategory, onChange }: GlossaryCategoryFilterProps) {
