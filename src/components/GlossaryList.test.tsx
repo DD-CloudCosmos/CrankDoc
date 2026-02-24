@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { GlossaryList } from './GlossaryList'
 
@@ -21,9 +21,9 @@ const mockTerms = [
     definition: 'A device that blends air and fuel.',
     category: 'Fuel',
     subcategory: null,
-    aliases: ['carb'],
+    aliases: ['carb', 'carburettor'],
     related_terms: ['Fuel Injector'],
-    illustration_url: null,
+    illustration_url: '/illustrations/carburetor.svg',
     applies_to: null,
     difficulty: 'intermediate',
     created_at: '2024-01-01T00:00:00Z',
@@ -49,7 +49,7 @@ describe('GlossaryList', () => {
     vi.clearAllMocks()
   })
 
-  it('renders terms after fetch', async () => {
+  it('renders terms in a table after fetch', async () => {
     mockApiResponse(mockTerms, 2)
 
     render(<GlossaryList />)
@@ -59,6 +59,7 @@ describe('GlossaryList', () => {
     })
     expect(screen.getByText('Spark Plug')).toBeInTheDocument()
     expect(screen.getByText('Showing 2 of 2 terms')).toBeInTheDocument()
+    expect(screen.getAllByTestId('glossary-row')).toHaveLength(2)
   })
 
   it('shows loading state initially', () => {
@@ -150,9 +151,8 @@ describe('GlossaryList', () => {
     })
 
     mockApiResponse([], 0)
-    // Click the "Engine" category button — find it in the filter area (not the badge)
     const engineButtons = screen.getAllByText('Engine')
-    const filterButton = engineButtons.find((el) => el.closest('button') && !el.closest('[class*="badge"]'))
+    const filterButton = engineButtons.find((el) => el.closest('button') && !el.closest('table'))
     expect(filterButton).toBeDefined()
 
     await user.click(filterButton!)
@@ -198,7 +198,6 @@ describe('GlossaryList', () => {
       expect(screen.getByText('Carburetor')).toBeInTheDocument()
     })
 
-    // Click a letter first
     mockApiResponse(mockTerms, 1)
     await user.click(screen.getByText('C'))
 
@@ -210,7 +209,6 @@ describe('GlossaryList', () => {
       expect(hasLetterCall).toBe(true)
     }, { timeout: 2000 })
 
-    // Now type in search — letter should be cleared
     mockApiResponse(mockTerms, 1)
     await user.type(screen.getByPlaceholderText(/search motorcycle terms/i), 'test')
 
@@ -233,7 +231,6 @@ describe('GlossaryList', () => {
       expect(screen.getByText('Carburetor')).toBeInTheDocument()
     })
 
-    // Type a search query first
     mockApiResponse(mockTerms, 1)
     await user.type(screen.getByPlaceholderText(/search motorcycle terms/i), 'carb')
 
@@ -245,7 +242,6 @@ describe('GlossaryList', () => {
       expect(hasSearchCall).toBe(true)
     }, { timeout: 2000 })
 
-    // Click a letter — search state should be cleared
     mockApiResponse(mockTerms, 1)
     await user.click(screen.getByText('B'))
 
@@ -256,5 +252,103 @@ describe('GlossaryList', () => {
       expect(url).toContain('letter=B')
       expect(url).not.toContain('q=')
     }, { timeout: 2000 })
+  })
+
+  it('expands row on click to show details', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    expect(screen.queryByTestId('glossary-detail')).not.toBeInTheDocument()
+
+    const rows = screen.getAllByTestId('glossary-row')
+    await user.click(rows[0])
+
+    const detail = screen.getByTestId('glossary-detail')
+    expect(detail).toBeInTheDocument()
+    expect(within(detail).getByText('A device that blends air and fuel.')).toBeInTheDocument()
+    expect(within(detail).getByText('Also known as: carb, carburettor')).toBeInTheDocument()
+    expect(within(detail).getByText('See also:')).toBeInTheDocument()
+    expect(within(detail).getByText('Fuel Injector')).toBeInTheDocument()
+  })
+
+  it('collapses row when clicked again', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+
+    // Expand
+    await user.click(rows[0])
+    expect(screen.getByTestId('glossary-detail')).toBeInTheDocument()
+
+    // Collapse
+    await user.click(rows[0])
+    expect(screen.queryByTestId('glossary-detail')).not.toBeInTheDocument()
+  })
+
+  it('shows illustration in expanded row when illustration_url is set', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    await user.click(rows[0])
+
+    const detail = screen.getByTestId('glossary-detail')
+    const img = within(detail).getByAltText('Carburetor')
+    expect(img).toBeInTheDocument()
+    expect(img).toHaveAttribute('src', '/illustrations/carburetor.svg')
+  })
+
+  it('does not show illustration for terms without illustration_url', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Spark Plug')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    await user.click(rows[1])
+
+    const detail = screen.getByTestId('glossary-detail')
+    expect(within(detail).queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  it('shows category and difficulty badges in expanded row', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    await user.click(rows[0])
+
+    const detail = screen.getByTestId('glossary-detail')
+    expect(within(detail).getByText('Fuel')).toBeInTheDocument()
+    expect(within(detail).getByText('Intermediate')).toBeInTheDocument()
   })
 })
