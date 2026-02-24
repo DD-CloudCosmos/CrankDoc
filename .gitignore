@@ -51,5 +51,8 @@ next-env.d.ts
 *.png
 !public/*.png
 
+# Supabase CLI temp
+supabase/.temp/
+
 # Dev logs
 dev-server.log
