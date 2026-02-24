@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Terminal nut (top) -->
+  <rect x="140" y="12" width="20" height="15" rx="2" fill="none" stroke="#333333" stroke-width="2"/>
+  <line x1="145" y1="12" x2="155" y2="12" stroke="#333333" stroke-width="2"/>
+  <!-- Insulator (ceramic) -->
+  <path d="M135,27 L135,80 Q135,85 140,85 L160,85 Q165,85 165,80 L165,27 Z" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Insulator ribs -->
+  <path d="M135,40 Q150,44 165,40" fill="none" stroke="#333333" stroke-width="1"/>
+  <path d="M135,52 Q150,56 165,52" fill="none" stroke="#333333" stroke-width="1"/>
+  <path d="M135,64 Q150,68 165,64" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Metal shell / hex -->
+  <path d="M125,85 L175,85 L175,120 L125,120 Z" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Hex wrench flats -->
+  <line x1="130" y1="95" x2="170" y2="95" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="130" y1="110" x2="170" y2="110" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Gasket/washer -->
+  <rect x="123" y="120" width="54" height="5" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Thread area -->
+  <rect x="133" y="125" width="34" height="30" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Thread lines -->
+  <line x1="133" y1="130" x2="167" y2="133" stroke="#333333" stroke-width="0.8"/>
+  <line x1="133" y1="136" x2="167" y2="139" stroke="#333333" stroke-width="0.8"/>
+  <line x1="133" y1="142" x2="167" y2="145" stroke="#333333" stroke-width="0.8"/>
+  <line x1="133" y1="148" x2="167" y2="151" stroke="#333333" stroke-width="0.8"/>
+  <!-- Center electrode -->
+  <rect x="147" y="155" width="6" height="12" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Ground electrode -->
+  <path d="M133,155 L133,170 L147,170" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Spark gap -->
+  <line x1="147" y1="167" x2="147" y2="170" stroke="#FF6600" stroke-width="1.5" stroke-dasharray="1,1"/>
+  <!-- Callouts -->
+  <line x1="168" y1="55" x2="210" y2="40" stroke="#999" stroke-width="0.8"/>
+  <text x="212" y="43" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Insulator</text>
+  <line x1="178" y1="103" x2="210" y2="90" stroke="#999" stroke-width="0.8"/>
+  <text x="212" y="93" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Hex shell</text>
+  <line x1="170" y1="140" x2="210" y2="140" stroke="#999" stroke-width="0.8"/>
+  <text x="212" y="143" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Threads</text>
+  <line x1="133" y1="170" x2="90" y2="170" stroke="#999" stroke-width="0.8"/>
+  <text x="48" y="173" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Ground</text>
+  <line x1="150" y1="168" x2="90" y2="155" stroke="#999" stroke-width="0.8"/>
+  <text x="58" y="155" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Gap</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Spark Plug</text>
+</svg>

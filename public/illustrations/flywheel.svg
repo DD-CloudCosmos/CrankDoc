@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Flywheel outer rim -->
+  <circle cx="150" cy="100" r="75" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Inner rim -->
+  <circle cx="150" cy="100" r="60" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Center hub -->
+  <circle cx="150" cy="100" r="20" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Keyway -->
+  <rect x="148" y="78" width="4" height="8" fill="#333333"/>
+  <!-- Taper bore -->
+  <circle cx="150" cy="100" r="12" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Magnets (on inner rim, alternating N/S) -->
+  <rect x="140" y="30" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <text x="150" y="38" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">N</text>
+  <rect x="195" y="45" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(40, 205, 50)"/>
+  <text x="205" y="53" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">S</text>
+  <rect x="215" y="85" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(80, 225, 90)"/>
+  <text x="222" y="95" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">N</text>
+  <rect x="205" y="135" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(130, 215, 140)"/>
+  <text x="210" y="140" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">S</text>
+  <rect x="140" y="160" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <text x="150" y="168" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">N</text>
+  <rect x="80" y="140" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(-40, 90, 145)"/>
+  <text x="88" y="143" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">S</text>
+  <rect x="65" y="85" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(-80, 75, 90)"/>
+  <text x="78" y="95" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">N</text>
+  <rect x="78" y="45" width="20" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5" transform="rotate(-40, 88, 50)"/>
+  <text x="90" y="53" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="7" fill="#666">S</text>
+  <!-- Spoke/lightening holes -->
+  <circle cx="130" cy="65" r="6" fill="none" stroke="#333333" stroke-width="0.8"/>
+  <circle cx="170" cy="65" r="6" fill="none" stroke="#333333" stroke-width="0.8"/>
+  <circle cx="130" cy="135" r="6" fill="none" stroke="#333333" stroke-width="0.8"/>
+  <circle cx="170" cy="135" r="6" fill="none" stroke="#333333" stroke-width="0.8"/>
+  <!-- Callouts -->
+  <line x1="165" y1="30" x2="245" y2="18" stroke="#999" stroke-width="0.8"/>
+  <text x="247" y="21" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Magnet</text>
+  <line x1="150" y1="80" x2="245" y2="55" stroke="#999" stroke-width="0.8"/>
+  <text x="247" y="58" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Keyway</text>
+  <line x1="175" y1="100" x2="245" y2="100" stroke="#999" stroke-width="0.8"/>
+  <text x="247" y="103" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Taper bore</text>
+  <!-- Label -->
+  <text x="150" y="194" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Flywheel (Magneto Rotor)</text>
+</svg>

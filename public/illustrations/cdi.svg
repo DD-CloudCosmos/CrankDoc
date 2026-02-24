@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- CDI box body -->
+  <rect x="60" y="35" width="180" height="95" rx="6" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Potting/sealed appearance -->
+  <rect x="65" y="40" width="170" height="85" rx="4" fill="none" stroke="#333333" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <!-- Label on unit -->
+  <text x="150" y="70" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#333" font-weight="bold">CDI</text>
+  <text x="150" y="85" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#666">Capacitor Discharge</text>
+  <text x="150" y="96" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#666">Ignition</text>
+  <!-- Connector block (bottom, multi-pin) -->
+  <rect x="95" y="130" width="110" height="22" rx="3" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Individual pins -->
+  <rect x="105" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <rect x="120" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <rect x="135" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <rect x="150" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <rect x="165" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <rect x="180" y="135" width="8" height="12" rx="1" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Wire harness lines -->
+  <path d="M109,152 L109,165 Q109,175 100,175 L50,175" stroke="#333333" stroke-width="1"/>
+  <path d="M124,152 L124,168 Q124,175 115,175 L50,175" stroke="#333333" stroke-width="1"/>
+  <path d="M139,152 L139,170 Q139,175 130,175 L50,175" stroke="#333333" stroke-width="1"/>
+  <path d="M154,152 L154,170 Q154,175 164,175 L250,175" stroke="#333333" stroke-width="1"/>
+  <path d="M169,152 L169,168 Q169,175 179,175 L250,175" stroke="#333333" stroke-width="1"/>
+  <path d="M184,152 L184,165 Q184,175 194,175 L250,175" stroke="#333333" stroke-width="1"/>
+  <!-- Wire labels -->
+  <text x="38" y="172" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">To stator</text>
+  <text x="252" y="172" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">To coil</text>
+  <!-- Mounting tabs -->
+  <circle cx="70" cy="42" r="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="230" cy="42" r="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="150" y1="130" x2="150" y2="118" stroke="#999" stroke-width="0.8"/>
+  <text x="252" y="130" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Multi-pin connector</text>
+  <line x1="205" y1="130" x2="250" y2="130" stroke="#999" stroke-width="0.8"/>
+  <!-- Mounting callout -->
+  <line x1="235" y1="42" x2="260" y2="28" stroke="#999" stroke-width="0.8"/>
+  <text x="262" y="31" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Mount</text>
+  <!-- Label -->
+  <text x="150" y="193" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">CDI Unit</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Variator half (cross-section, V-shape) -->
+  <!-- Fixed face (right half) -->
+  <path d="M200,40 L200,160 L150,100 Z" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Movable face (left half) -->
+  <path d="M100,50 L100,150 L150,100 Z" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Central shaft -->
+  <rect x="145" y="35" width="10" height="130" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Roller weights (in ramp area of movable face) -->
+  <circle cx="115" cy="70" r="8" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="115" cy="100" r="8" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="115" cy="130" r="8" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Ramp plate (behind rollers) -->
+  <path d="M100,50 L125,62" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <path d="M100,150 L125,138" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Belt sitting in the V -->
+  <rect x="135" y="80" width="25" height="40" rx="3" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Movement arrows (rollers push outward) -->
+  <path d="M108,70 L95,65" stroke="#999" stroke-width="1"/>
+  <path d="M95,65 L97,70 L92,67" fill="#999" stroke="none"/>
+  <path d="M108,130 L95,135" stroke="#999" stroke-width="1"/>
+  <path d="M95,135 L97,130 L92,133" fill="#999" stroke="none"/>
+  <!-- Gap arrows showing faces can move -->
+  <path d="M100,42 L90,42" stroke="#999" stroke-width="1"/>
+  <path d="M90,42 L93,39 L93,45" fill="#999"/>
+  <!-- Callouts -->
+  <line x1="123" y1="100" x2="40" y2="100" stroke="#999" stroke-width="0.8"/>
+  <text x="15" y="96" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Roller</text>
+  <text x="15" y="108" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">weights</text>
+  <line x1="160" y1="100" x2="250" y2="85" stroke="#999" stroke-width="0.8"/>
+  <text x="252" y="88" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Belt</text>
+  <line x1="200" y1="80" x2="250" y2="60" stroke="#999" stroke-width="0.8"/>
+  <text x="252" y="63" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Fixed face</text>
+  <line x1="100" y1="42" x2="40" y2="30" stroke="#999" stroke-width="0.8"/>
+  <text x="15" y="28" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Movable face</text>
+  <!-- Label -->
+  <text x="150" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Variator (Cross-Section)</text>
+</svg>

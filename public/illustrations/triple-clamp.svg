@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Top view of triple clamp -->
+  <!-- Upper clamp plate -->
+  <path d="M50,80 Q50,60 80,55 L220,55 Q250,60 250,80 L250,120 Q250,140 220,145 L80,145 Q50,140 50,120 Z" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Steering stem hole (center) -->
+  <circle cx="150" cy="100" r="18" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Steering stem nut -->
+  <circle cx="150" cy="100" r="12" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Left fork tube clamp -->
+  <circle cx="80" cy="100" r="20" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="80" cy="100" r="14" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Right fork tube clamp -->
+  <circle cx="220" cy="100" r="20" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="220" cy="100" r="14" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Pinch bolt slots (left) -->
+  <line x1="60" y1="98" x2="60" y2="102" stroke="#333333" stroke-width="2"/>
+  <line x1="56" y1="100" x2="64" y2="100" stroke="#333333" stroke-width="1"/>
+  <!-- Pinch bolt slots (right) -->
+  <line x1="240" y1="98" x2="240" y2="102" stroke="#333333" stroke-width="2"/>
+  <line x1="236" y1="100" x2="244" y2="100" stroke="#333333" stroke-width="1"/>
+  <!-- Handlebar mounting holes -->
+  <circle cx="110" cy="72" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="110" cy="128" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="190" cy="72" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="190" cy="128" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="150" y1="82" x2="150" y2="35" stroke="#999" stroke-width="0.8"/>
+  <text x="150" y="30" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Steering stem</text>
+  <line x1="80" y1="78" x2="80" y2="30" stroke="#999" stroke-width="0.8"/>
+  <text x="80" y="25" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Fork tube</text>
+  <line x1="56" y1="100" x2="30" y2="100" stroke="#999" stroke-width="0.8"/>
+  <text x="20" y="96" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Pinch</text>
+  <text x="20" y="108" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">bolt</text>
+  <line x1="190" y1="128" x2="190" y2="165" stroke="#999" stroke-width="0.8"/>
+  <text x="190" y="175" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Bar mount</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Triple Clamp (Top View)</text>
+</svg>

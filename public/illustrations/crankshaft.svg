@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Main journal (center) -->
+  <ellipse cx="150" cy="100" rx="12" ry="20" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Left main journal -->
+  <ellipse cx="50" cy="100" rx="12" ry="18" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Right main journal -->
+  <ellipse cx="250" cy="100" rx="12" ry="18" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Crank web/counterweights -->
+  <path d="M62,100 Q80,60 100,65 L100,70 Q85,75 75,100 Q85,125 100,130 L100,135 Q80,140 62,100" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M138,100 Q120,60 100,65 L100,70 Q115,75 125,100 Q115,125 100,130 L100,135 Q120,140 138,100" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Right side webs -->
+  <path d="M162,100 Q180,55 200,60 L200,65 Q185,70 175,100 Q185,130 200,135 L200,140 Q180,145 162,100" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M238,100 Q220,55 200,60 L200,65 Q215,70 225,100 Q215,130 200,135 L200,140 Q220,145 238,100" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Crank pin -->
+  <circle cx="100" cy="68" r="6" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="200" cy="62" r="6" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Center line -->
+  <line x1="30" y1="100" x2="270" y2="100" stroke="#999" stroke-width="0.5" stroke-dasharray="4,3"/>
+  <!-- Callouts -->
+  <line x1="100" y1="65" x2="100" y2="30" stroke="#999" stroke-width="0.8"/>
+  <text x="100" y="25" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Crank pin</text>
+  <line x1="85" y1="135" x2="85" y2="165" stroke="#999" stroke-width="0.8"/>
+  <text x="85" y="173" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Counterweight</text>
+  <line x1="50" y1="118" x2="50" y2="155" stroke="#999" stroke-width="0.8"/>
+  <text x="50" y="163" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Main journal</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Crankshaft (Side View)</text>
+</svg>

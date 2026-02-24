@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Carburetor body (cross-section) -->
+  <rect x="70" y="30" width="160" height="100" rx="4" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Venturi/throat -->
+  <path d="M70,50 L110,50 Q150,70 190,50 L230,50" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M70,80 L110,80 Q150,60 190,80 L230,80" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Air intake (left) -->
+  <path d="M40,45 L70,45 L70,85 L40,85" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <text x="30" y="69" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#666">Air</text>
+  <!-- To engine (right) -->
+  <path d="M230,45 L260,45 L260,85 L230,85" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <text x="275" y="69" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#666">Engine</text>
+  <!-- Slide/needle -->
+  <rect x="145" y="15" width="10" height="45" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <line x1="150" y1="60" x2="150" y2="75" stroke="#333333" stroke-width="1.5"/>
+  <!-- Main jet -->
+  <rect x="146" y="95" width="8" height="12" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Float bowl -->
+  <rect x="90" y="130" width="120" height="40" rx="3" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Fuel level -->
+  <line x1="95" y1="150" x2="205" y2="150" stroke="#333333" stroke-width="1" stroke-dasharray="3,2"/>
+  <!-- Float -->
+  <ellipse cx="120" cy="148" rx="15" ry="6" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <ellipse cx="180" cy="148" rx="15" ry="6" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Float pivot -->
+  <circle cx="150" cy="135" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <line x1="120" y1="142" x2="147" y2="135" stroke="#333333" stroke-width="1"/>
+  <line x1="153" y1="135" x2="180" y2="142" stroke="#333333" stroke-width="1"/>
+  <!-- Connection tube -->
+  <line x1="150" y1="107" x2="150" y2="130" stroke="#333333" stroke-width="1.5"/>
+  <!-- Callouts -->
+  <line x1="155" y1="30" x2="200" y2="18" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="18" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Throttle slide</text>
+  <line x1="150" y1="101" x2="110" y2="110" stroke="#999" stroke-width="0.8"/>
+  <text x="75" y="115" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Main jet</text>
+  <!-- Label -->
+  <text x="150" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Carburetor (Cross-Section)</text>
+</svg>

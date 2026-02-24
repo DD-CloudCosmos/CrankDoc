@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Outer disc circle -->
+  <circle cx="150" cy="95" r="80" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Inner braking surface edge -->
+  <circle cx="150" cy="95" r="60" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Center hub -->
+  <circle cx="150" cy="95" r="25" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="150" cy="95" r="15" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Mounting bolt holes -->
+  <circle cx="150" cy="75" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="169" cy="84" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="169" cy="106" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="150" cy="115" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="131" cy="106" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="131" cy="84" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Ventilation/lightening slots (curved) -->
+  <path d="M100,65 Q110,80 105,95" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M120,40 Q135,55 128,72" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M165,35 Q175,50 175,68" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M200,60 Q200,78 195,90" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M210,100 Q200,115 192,120" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M185,140 Q172,145 162,142" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M140,155 Q128,148 122,138" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M100,130 Q100,118 105,108" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Callouts -->
+  <line x1="195" y1="50" x2="250" y2="30" stroke="#999" stroke-width="0.8"/>
+  <text x="252" y="33" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Ventilation slot</text>
+  <line x1="150" y1="75" x2="150" y2="30" stroke="#999" stroke-width="0.8"/>
+  <text x="150" y="22" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Bolt holes</text>
+  <line x1="210" y1="95" x2="250" y2="95" stroke="#999" stroke-width="0.8"/>
+  <text x="252" y="98" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Braking surface</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Disc Rotor (Brake Disc)</text>
+</svg>

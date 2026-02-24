@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Drive pulley (front, smaller) -->
+  <ellipse cx="80" cy="100" rx="30" ry="40" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="80" cy="100" r="8" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Driven pulley (rear, larger) -->
+  <ellipse cx="220" cy="100" rx="45" ry="55" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="220" cy="100" r="10" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- V-belt (top run) -->
+  <line x1="80" y1="60" x2="220" y2="45" stroke="#333333" stroke-width="3"/>
+  <!-- V-belt (bottom run) -->
+  <line x1="80" y1="140" x2="220" y2="155" stroke="#333333" stroke-width="3"/>
+  <!-- Belt wrapping around drive pulley -->
+  <path d="M80,60 Q50,60 50,100 Q50,140 80,140" fill="none" stroke="#333333" stroke-width="3"/>
+  <!-- Belt wrapping around driven pulley -->
+  <path d="M220,45 Q265,45 265,100 Q265,155 220,155" fill="none" stroke="#333333" stroke-width="3"/>
+  <!-- Pulley V-groove detail (drive) -->
+  <path d="M68,80 L80,100 L68,120" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <path d="M92,80 L80,100 L92,120" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Pulley V-groove detail (driven) -->
+  <path d="M205,70 L220,100 L205,130" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <path d="M235,70 L220,100 L235,130" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Direction arrows -->
+  <path d="M140,55 L150,50 L150,60" fill="#999" stroke="none"/>
+  <path d="M160,152 L150,157 L150,147" fill="#999" stroke="none"/>
+  <!-- Callouts -->
+  <line x1="80" y1="60" x2="80" y2="25" stroke="#999" stroke-width="0.8"/>
+  <text x="80" y="18" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Drive pulley</text>
+  <line x1="220" y1="45" x2="220" y2="20" stroke="#999" stroke-width="0.8"/>
+  <text x="220" y="14" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Driven pulley</text>
+  <line x1="150" y1="50" x2="150" y2="35" stroke="#999" stroke-width="0.8"/>
+  <text x="150" y="30" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">V-belt</text>
+  <!-- Label -->
+  <text x="150" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">CVT Belt &amp; Pulleys</text>
+</svg>

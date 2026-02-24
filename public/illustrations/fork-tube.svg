@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Outer tube (lower, slider) -->
+  <rect x="100" y="80" width="50" height="100" rx="3" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Inner tube (upper, stanchion) -->
+  <rect x="108" y="15" width="34" height="90" rx="2" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Fork cap (top) -->
+  <rect x="105" y="10" width="40" height="10" rx="3" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Dust seal -->
+  <rect x="98" y="78" width="54" height="6" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Oil seal -->
+  <rect x="100" y="86" width="50" height="8" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <line x1="105" y1="90" x2="145" y2="90" stroke="#333333" stroke-width="0.8" stroke-dasharray="2,1"/>
+  <!-- Damper rod (inside, dashed) -->
+  <line x1="125" y1="25" x2="125" y2="165" stroke="#333333" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- Spring (inside) -->
+  <path d="M112,30 L138,40 L112,50 L138,60 L112,70 L138,80" stroke="#333333" stroke-width="1" fill="none"/>
+  <!-- Fork oil level indicator -->
+  <rect x="103" y="130" width="44" height="40" fill="none" stroke="#333333" stroke-width="0" />
+  <line x1="103" y1="140" x2="147" y2="140" stroke="#999" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <text x="152" y="143" font-family="Inter, Arial, sans-serif" font-size="8" fill="#999">Oil level</text>
+  <!-- Axle lug (bottom) -->
+  <rect x="110" y="175" width="30" height="10" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="125" cy="180" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="145" y1="50" x2="200" y2="35" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="38" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Inner tube</text>
+  <line x1="152" y1="130" x2="200" y2="115" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="118" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Outer tube</text>
+  <line x1="152" y1="89" x2="200" y2="80" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="83" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Oil seal</text>
+  <line x1="98" y1="81" x2="68" y2="70" stroke="#999" stroke-width="0.8"/>
+  <text x="45" y="68" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Dust seal</text>
+  <line x1="120" y1="55" x2="68" y2="45" stroke="#999" stroke-width="0.8"/>
+  <text x="50" y="42" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Spring</text>
+  <!-- Label -->
+  <text x="150" y="195" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Fork Tube (Cross-Section)</text>
+</svg>
