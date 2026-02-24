@@ -21,7 +21,7 @@ describe('GlossaryCategoryFilter', () => {
   })
 
   it('highlights the active category', () => {
-    const { container } = render(<GlossaryCategoryFilter activeCategory="Engine" onChange={vi.fn()} />)
+    const { container } = render(<GlossaryCategoryFilter activeCategory="engine" onChange={vi.fn()} />)
     const allButtons = container.querySelectorAll('button')
     expect(allButtons.length).toBe(12)
     const engineButton = screen.getByText('Engine').closest('button')
@@ -34,7 +34,7 @@ describe('GlossaryCategoryFilter', () => {
     render(<GlossaryCategoryFilter activeCategory="" onChange={onChange} />)
 
     await user.click(screen.getByText('Brakes'))
-    expect(onChange).toHaveBeenCalledWith('Brakes')
+    expect(onChange).toHaveBeenCalledWith('brakes')
 
     await user.click(screen.getByText('All'))
     expect(onChange).toHaveBeenCalledWith('')

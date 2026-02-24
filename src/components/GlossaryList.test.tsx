@@ -160,7 +160,7 @@ describe('GlossaryList', () => {
     await waitFor(() => {
       const calls = mockFetch.mock.calls
       const hasCatCall = calls.some((call: unknown[]) =>
-        typeof call[0] === 'string' && call[0].includes('category=Engine')
+        typeof call[0] === 'string' && call[0].includes('category=engine')
       )
       expect(hasCatCall).toBe(true)
     }, { timeout: 2000 })
