@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Main box body -->
+  <rect x="60" y="40" width="180" height="100" rx="5" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Heat sink fins (top) -->
+  <line x1="75" y1="40" x2="75" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="95" y1="40" x2="95" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="115" y1="40" x2="115" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="135" y1="40" x2="135" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="155" y1="40" x2="155" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="175" y1="40" x2="175" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="195" y1="40" x2="195" y2="25" stroke="#333333" stroke-width="2"/>
+  <line x1="215" y1="40" x2="215" y2="25" stroke="#333333" stroke-width="2"/>
+  <!-- Top plate connecting fins -->
+  <line x1="70" y1="25" x2="220" y2="25" stroke="#333333" stroke-width="1.5"/>
+  <!-- Mounting holes -->
+  <circle cx="75" cy="55" r="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="225" cy="55" r="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Connector pins (bottom) -->
+  <rect x="90" y="140" width="12" height="20" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="115" y="140" width="12" height="20" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="140" y="140" width="12" height="20" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="165" y="140" width="12" height="20" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="190" y="140" width="12" height="20" rx="1" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Pin labels -->
+  <text x="96" y="172" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">AC</text>
+  <text x="121" y="172" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">AC</text>
+  <text x="146" y="172" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">AC</text>
+  <text x="171" y="172" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">B+</text>
+  <text x="196" y="172" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#666">GND</text>
+  <!-- Internal label on box -->
+  <text x="150" y="85" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#333" font-weight="bold">R/R</text>
+  <text x="150" y="100" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#666">MOSFET</text>
+  <!-- Schematic hint inside -->
+  <path d="M100,108 L110,115 L120,108 L130,115" fill="none" stroke="#333333" stroke-width="1"/>
+  <path d="M150,108 L160,115 L170,108 L180,115 L190,108" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="145" y1="25" x2="145" y2="14" stroke="#999" stroke-width="0.8"/>
+  <text x="145" y="10" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Heat sink fins</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Rectifier / Regulator</text>
+</svg>

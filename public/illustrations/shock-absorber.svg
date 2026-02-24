@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Upper mount eye -->
+  <circle cx="150" cy="22" r="8" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="150" cy="22" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Shaft (damper rod) -->
+  <rect x="146" y="30" width="8" height="40" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Damper body -->
+  <rect x="132" y="68" width="36" height="55" rx="4" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Reservoir (piggyback) -->
+  <rect x="172" y="72" width="18" height="45" rx="4" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M168,85 L172,85" stroke="#333333" stroke-width="1"/>
+  <path d="M168,95 L172,95" stroke="#333333" stroke-width="1"/>
+  <!-- Preload adjuster (top of damper) -->
+  <rect x="137" y="63" width="26" height="8" rx="2" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Spring -->
+  <path d="M120,50 L180,60 L120,70 L180,80 L120,90 L180,100 L120,110 L180,120 L120,130 L180,140" stroke="#333333" stroke-width="1.5" fill="none"/>
+  <!-- Spring perch (top) -->
+  <rect x="118" y="45" width="64" height="6" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Spring perch (bottom) -->
+  <rect x="118" y="140" width="64" height="6" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Lower clevis -->
+  <path d="M140,146 L140,165 L160,165 L160,146" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Lower mount eye -->
+  <circle cx="150" cy="175" r="8" fill="none" stroke="#333333" stroke-width="2"/>
+  <circle cx="150" cy="175" r="3" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="158" y1="22" x2="220" y2="15" stroke="#999" stroke-width="0.8"/>
+  <text x="222" y="18" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Upper mount</text>
+  <line x1="120" y1="90" x2="60" y2="80" stroke="#999" stroke-width="0.8"/>
+  <text x="28" y="83" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Spring</text>
+  <line x1="190" y1="95" x2="230" y2="95" stroke="#999" stroke-width="0.8"/>
+  <text x="232" y="98" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Reservoir</text>
+  <line x1="168" y1="95" x2="220" y2="120" stroke="#999" stroke-width="0.8"/>
+  <text x="222" y="123" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Damper body</text>
+  <!-- Label -->
+  <text x="150" y="195" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Shock Absorber</text>
+</svg>

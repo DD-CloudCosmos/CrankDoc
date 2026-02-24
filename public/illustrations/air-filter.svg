@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Air filter element (panel type, cross-section) -->
+  <!-- Outer frame -->
+  <rect x="60" y="40" width="180" height="110" rx="6" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Rubber gasket/seal edge -->
+  <rect x="55" y="38" width="190" height="6" rx="3" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="55" y="146" width="190" height="6" rx="3" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Pleated filter media -->
+  <path d="M75,48 L80,140 L85,48 L90,140 L95,48 L100,140 L105,48 L110,140 L115,48 L120,140 L125,48 L130,140 L135,48 L140,140 L145,48 L150,140 L155,48 L160,140 L165,48 L170,140 L175,48 L180,140 L185,48 L190,140 L195,48 L200,140 L205,48 L210,140 L215,48 L220,140 L225,48" stroke="#333333" stroke-width="1" fill="none"/>
+  <!-- Wire mesh support (subtle) -->
+  <line x1="65" y1="95" x2="235" y2="95" stroke="#333333" stroke-width="0.5" stroke-dasharray="2,4"/>
+  <!-- Airflow arrows (top to bottom) -->
+  <path d="M100,20 L100,35" stroke="#999" stroke-width="1"/>
+  <polygon points="97,35 100,40 103,35" fill="#999"/>
+  <path d="M150,20 L150,35" stroke="#999" stroke-width="1"/>
+  <polygon points="147,35 150,40 153,35" fill="#999"/>
+  <path d="M200,20 L200,35" stroke="#999" stroke-width="1"/>
+  <polygon points="197,35 200,40 203,35" fill="#999"/>
+  <!-- Clean air arrows (out the bottom) -->
+  <path d="M100,155 L100,170" stroke="#999" stroke-width="1"/>
+  <polygon points="97,170 100,175 103,170" fill="#999"/>
+  <path d="M150,155 L150,170" stroke="#999" stroke-width="1"/>
+  <polygon points="147,170 150,175 153,170" fill="#999"/>
+  <path d="M200,155 L200,170" stroke="#999" stroke-width="1"/>
+  <polygon points="197,170 200,175 203,170" fill="#999"/>
+  <!-- Labels -->
+  <text x="150" y="15" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#999">Dirty air</text>
+  <text x="150" y="185" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" fill="#999">Clean air</text>
+  <!-- Callouts -->
+  <line x1="232" y1="95" x2="262" y2="80" stroke="#999" stroke-width="0.8"/>
+  <text x="264" y="83" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Pleated media</text>
+  <line x1="245" y1="43" x2="265" y2="43" stroke="#999" stroke-width="0.8"/>
+  <text x="267" y="46" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Seal</text>
+  <!-- Label -->
+  <text x="150" y="198" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Air Filter Element</text>
+</svg>

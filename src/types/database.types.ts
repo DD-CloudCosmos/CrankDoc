@@ -6,6 +6,7 @@
  * supabase/migrations/001_initial_schema.sql
  * supabase/migrations/002_phase5_schema.sql
  * supabase/migrations/004_recalls_schema.sql
+ * supabase/migrations/005_glossary_schema.sql
  *
  * To regenerate from live database (after schema changes):
  * ```bash
@@ -311,6 +312,50 @@ export interface Database {
           created_at?: string
         }
       }
+      glossary_terms: {
+        Row: {
+          id: string
+          term: string
+          slug: string
+          definition: string
+          category: string
+          subcategory: string | null
+          aliases: string[] | null
+          related_terms: string[] | null
+          illustration_url: string | null
+          applies_to: string[] | null
+          difficulty: 'beginner' | 'intermediate' | 'advanced' | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          term: string
+          slug: string
+          definition: string
+          category: string
+          subcategory?: string | null
+          aliases?: string[] | null
+          related_terms?: string[] | null
+          illustration_url?: string | null
+          applies_to?: string[] | null
+          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          term?: string
+          slug?: string
+          definition?: string
+          category?: string
+          subcategory?: string | null
+          aliases?: string[] | null
+          related_terms?: string[] | null
+          illustration_url?: string | null
+          applies_to?: string[] | null
+          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
+          created_at?: string
+        }
+      }
       motorcycle_images: {
         Row: {
           id: string
@@ -362,6 +407,7 @@ export type ServiceInterval = Tables<'service_intervals'>
 export type TechnicalDocument = Tables<'technical_documents'>
 export type Recall = Tables<'recalls'>
 export type MotorcycleImage = Tables<'motorcycle_images'>
+export type GlossaryTerm = Tables<'glossary_terms'>
 
 // Decision tree node types (for tree_data JSONB structure)
 export interface DecisionTreeNode {

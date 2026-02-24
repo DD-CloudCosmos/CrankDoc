@@ -1,0 +1,4521 @@
+[
+  {
+    "term": "Piston",
+    "slug": "piston",
+    "definition": "A cylindrical metal component that moves up and down inside the engine cylinder. It compresses the air-fuel mixture and transfers combustion force to the crankshaft via the connecting rod.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "engine piston"
+    ],
+    "related_terms": [
+      "connecting-rod",
+      "piston-ring",
+      "wrist-pin",
+      "cylinder"
+    ],
+    "illustration_url": "/illustrations/piston.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Crankshaft",
+    "slug": "crankshaft",
+    "definition": "The main rotating shaft in the engine that converts the up-and-down motion of the pistons into rotational motion. It spins and ultimately drives the transmission and rear wheel.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "crank"
+    ],
+    "related_terms": [
+      "connecting-rod",
+      "flywheel",
+      "main-bearing",
+      "big-end-bearing"
+    ],
+    "illustration_url": "/illustrations/crankshaft.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Camshaft",
+    "slug": "camshaft",
+    "definition": "A shaft with oval-shaped lobes (cams) that opens and closes the intake and exhaust valves in time with the piston movement. Driven by a timing chain or belt from the crankshaft.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "cam"
+    ],
+    "related_terms": [
+      "valve",
+      "timing-chain",
+      "rocker-arm",
+      "dohc",
+      "sohc"
+    ],
+    "illustration_url": "/illustrations/camshaft.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Valve",
+    "slug": "valve",
+    "definition": "A mushroom-shaped metal component in the cylinder head that opens and closes to let the air-fuel mixture in (intake valve) and exhaust gases out (exhaust valve).",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "engine valve",
+      "poppet valve"
+    ],
+    "related_terms": [
+      "camshaft",
+      "valve-spring",
+      "valve-seal",
+      "cylinder-head"
+    ],
+    "illustration_url": "/illustrations/valve.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Head Gasket",
+    "slug": "head-gasket",
+    "definition": "A seal between the cylinder head and the engine block that prevents coolant, oil, and combustion gases from leaking between them. A blown head gasket causes overheating and loss of power.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "cylinder head gasket"
+    ],
+    "related_terms": [
+      "cylinder-head",
+      "engine-block"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "DOHC",
+    "slug": "dohc",
+    "definition": "Stands for Dual Overhead Camshaft. An engine design with two camshafts in the cylinder head — one operates the intake valves and the other the exhaust valves. Common in sport and performance bikes.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "dual overhead cam",
+      "double overhead cam"
+    ],
+    "related_terms": [
+      "camshaft",
+      "sohc",
+      "ohv",
+      "valve"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "SOHC",
+    "slug": "sohc",
+    "definition": "Stands for Single Overhead Camshaft. An engine design with one camshaft in the cylinder head that operates both intake and exhaust valves, often through rocker arms. Simpler and lighter than DOHC.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "single overhead cam"
+    ],
+    "related_terms": [
+      "camshaft",
+      "dohc",
+      "rocker-arm",
+      "valve"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "OHV",
+    "slug": "ohv",
+    "definition": "Stands for Overhead Valve. An engine design where the camshaft is in the engine block and operates the valves in the head through pushrods and rocker arms. Used in Harley-Davidson V-twins.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "overhead valve",
+      "pushrod engine"
+    ],
+    "related_terms": [
+      "camshaft",
+      "rocker-arm",
+      "valve"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Connecting Rod",
+    "slug": "connecting-rod",
+    "definition": "The metal link between the piston and the crankshaft. It transfers the force from the piston's up-and-down motion to the crankshaft's rotation.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "con rod",
+      "conrod"
+    ],
+    "related_terms": [
+      "piston",
+      "crankshaft",
+      "wrist-pin",
+      "big-end-bearing"
+    ],
+    "illustration_url": "/illustrations/connecting-rod.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Cylinder",
+    "slug": "cylinder",
+    "definition": "The tube-shaped chamber in the engine block where the piston moves up and down. The walls must be smooth and round for the piston rings to seal properly.",
+    "category": "engine",
+    "subcategory": "block",
+    "aliases": [
+      "engine cylinder",
+      "bore"
+    ],
+    "related_terms": [
+      "piston",
+      "cylinder-head",
+      "bore-and-stroke"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Bore",
+    "slug": "bore",
+    "definition": "The internal diameter of the engine cylinder, measured in millimeters. A larger bore allows a bigger piston and more displacement.",
+    "category": "engine",
+    "subcategory": "block",
+    "aliases": [
+      "cylinder bore"
+    ],
+    "related_terms": [
+      "stroke",
+      "bore-and-stroke",
+      "cylinder",
+      "displacement-cc"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Stroke",
+    "slug": "stroke",
+    "definition": "The distance the piston travels from the top of the cylinder (TDC) to the bottom (BDC), measured in millimeters. Combined with bore, it determines engine displacement.",
+    "category": "engine",
+    "subcategory": "block",
+    "aliases": [
+      "piston stroke"
+    ],
+    "related_terms": [
+      "bore",
+      "tdc",
+      "bdc",
+      "bore-and-stroke"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Compression Ratio",
+    "slug": "compression-ratio",
+    "definition": "The ratio of the cylinder volume when the piston is at the bottom versus the top. Higher ratios (like 12:1) produce more power but require higher-octane fuel.",
+    "category": "engine",
+    "subcategory": "performance",
+    "aliases": [],
+    "related_terms": [
+      "piston",
+      "cylinder",
+      "tdc",
+      "bdc"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Timing Chain",
+    "slug": "timing-chain",
+    "definition": "A metal chain that connects the crankshaft to the camshaft(s), ensuring the valves open and close at exactly the right time relative to the piston position.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "cam chain"
+    ],
+    "related_terms": [
+      "camshaft",
+      "crankshaft",
+      "timing-belt",
+      "valve"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Timing Belt",
+    "slug": "timing-belt",
+    "definition": "A toothed rubber belt used instead of a chain to drive the camshaft from the crankshaft. Quieter than a chain but must be replaced at set intervals to prevent engine damage.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "cam belt"
+    ],
+    "related_terms": [
+      "timing-chain",
+      "camshaft",
+      "crankshaft"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Rocker Arm",
+    "slug": "rocker-arm",
+    "definition": "A pivoting lever in the cylinder head that transfers the camshaft lobe's push to open the valve. Acts as an intermediary between the cam and the valve stem.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "rocker"
+    ],
+    "related_terms": [
+      "camshaft",
+      "valve",
+      "sohc",
+      "ohv"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Valve Spring",
+    "slug": "valve-spring",
+    "definition": "A coil spring that sits around the valve stem and pushes the valve closed after the camshaft has opened it. Ensures the valve seats firmly and seals the combustion chamber.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [],
+    "related_terms": [
+      "valve",
+      "camshaft",
+      "valve-seal"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Valve Seal",
+    "slug": "valve-seal",
+    "definition": "A small rubber seal around the valve stem that prevents oil from leaking down into the combustion chamber. Worn seals cause blue smoke from the exhaust.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "valve stem seal"
+    ],
+    "related_terms": [
+      "valve",
+      "valve-spring",
+      "cylinder-head"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Cylinder Head",
+    "slug": "cylinder-head",
+    "definition": "The top part of the engine that bolts onto the cylinder block. It contains the valves, camshaft(s), spark plug, and combustion chamber. Removing it is a major engine job.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "head"
+    ],
+    "related_terms": [
+      "valve",
+      "camshaft",
+      "head-gasket",
+      "spark-plug"
+    ],
+    "illustration_url": "/illustrations/cylinder-head.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Engine Block",
+    "slug": "engine-block",
+    "definition": "The main body of the engine containing the cylinders and the crankcase. All other engine components bolt onto or fit inside this casting.",
+    "category": "engine",
+    "subcategory": "block",
+    "aliases": [
+      "cylinder block",
+      "block"
+    ],
+    "related_terms": [
+      "cylinder",
+      "crankcase",
+      "head-gasket"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Crankcase",
+    "slug": "crankcase",
+    "definition": "The lower part of the engine that houses the crankshaft and holds the engine oil. On many motorcycles, it also contains the transmission gears.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "cases",
+      "engine cases"
+    ],
+    "related_terms": [
+      "crankshaft",
+      "oil-pump",
+      "oil-pan"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Oil Pump",
+    "slug": "oil-pump",
+    "definition": "A mechanical pump driven by the engine that circulates oil through the engine to lubricate and cool moving parts. Low oil pressure usually means the pump is worn or oil level is low.",
+    "category": "engine",
+    "subcategory": "lubrication",
+    "aliases": [],
+    "related_terms": [
+      "oil-filter",
+      "oil-pan",
+      "crankcase"
+    ],
+    "illustration_url": "/illustrations/oil-pump.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Oil Filter",
+    "slug": "oil-filter",
+    "definition": "A replaceable filter that removes metal particles, dirt, and carbon from the engine oil as it circulates. Should be changed at every oil change.",
+    "category": "engine",
+    "subcategory": "lubrication",
+    "aliases": [],
+    "related_terms": [
+      "oil-pump",
+      "oil-pan"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Oil Pan",
+    "slug": "oil-pan",
+    "definition": "The reservoir at the bottom of the engine that collects and stores engine oil. Also called the sump. It has a drain plug for oil changes.",
+    "category": "engine",
+    "subcategory": "lubrication",
+    "aliases": [
+      "sump",
+      "oil sump"
+    ],
+    "related_terms": [
+      "oil-pump",
+      "oil-filter",
+      "crankcase"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Piston Ring",
+    "slug": "piston-ring",
+    "definition": "Thin metal rings that fit into grooves around the piston. They seal the combustion chamber, control oil consumption, and transfer heat from the piston to the cylinder wall. Usually two compression rings and one oil ring per piston.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "ring",
+      "compression ring"
+    ],
+    "related_terms": [
+      "piston",
+      "cylinder"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Wrist Pin",
+    "slug": "wrist-pin",
+    "definition": "The hardened steel pin that connects the piston to the connecting rod, allowing the rod to pivot as the piston moves. Also called a gudgeon pin.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "gudgeon pin",
+      "piston pin"
+    ],
+    "related_terms": [
+      "piston",
+      "connecting-rod"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Big End Bearing",
+    "slug": "big-end-bearing",
+    "definition": "The bearing at the bottom of the connecting rod where it attaches to the crankshaft. Allows the rod to rotate smoothly on the crank journal. Wear causes a knocking noise.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "rod bearing",
+      "con rod bearing"
+    ],
+    "related_terms": [
+      "connecting-rod",
+      "crankshaft",
+      "main-bearing"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Main Bearing",
+    "slug": "main-bearing",
+    "definition": "The bearings that support the crankshaft in the engine cases, allowing it to spin freely. Worn main bearings cause rumbling noises and low oil pressure.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "crank bearing"
+    ],
+    "related_terms": [
+      "crankshaft",
+      "big-end-bearing",
+      "crankcase"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Flywheel",
+    "slug": "flywheel",
+    "definition": "A heavy spinning disc attached to the crankshaft that stores rotational energy and smooths out the power pulses from the pistons. On magneto ignition systems, it also carries the magnets for the stator.",
+    "category": "engine",
+    "subcategory": "bottom-end",
+    "aliases": [
+      "magneto flywheel"
+    ],
+    "related_terms": [
+      "crankshaft",
+      "stator",
+      "starter-motor"
+    ],
+    "illustration_url": "/illustrations/flywheel.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Starter Motor",
+    "slug": "starter-motor",
+    "definition": "An electric motor that spins the engine to start it when you press the start button. It engages with a gear on the flywheel or a starter clutch.",
+    "category": "engine",
+    "subcategory": "starting",
+    "aliases": [
+      "starter",
+      "electric starter"
+    ],
+    "related_terms": [
+      "flywheel",
+      "starter-relay",
+      "battery"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Decompressor",
+    "slug": "decompressor",
+    "definition": "A mechanism that slightly opens a valve during cranking to reduce compression, making the engine easier to start. Found on many large single-cylinder and twin engines.",
+    "category": "engine",
+    "subcategory": "starting",
+    "aliases": [
+      "auto decompressor",
+      "decompression release"
+    ],
+    "related_terms": [
+      "valve",
+      "camshaft",
+      "compression-ratio"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Reed Valve",
+    "slug": "reed-valve",
+    "definition": "A one-way valve made of thin flexible metal or carbon fiber petals. Used on two-stroke engines and some scooter intake systems to control the flow of air-fuel mixture into the crankcase.",
+    "category": "engine",
+    "subcategory": "intake",
+    "aliases": [
+      "reed block",
+      "reed petals"
+    ],
+    "related_terms": [
+      "two-stroke",
+      "crankcase",
+      "carburetor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Air Filter",
+    "slug": "air-filter",
+    "definition": "A paper, foam, or cotton element that cleans the air before it enters the engine. A clogged filter restricts airflow, causing poor performance and rich running.",
+    "category": "engine",
+    "subcategory": "intake",
+    "aliases": [
+      "air cleaner",
+      "intake filter"
+    ],
+    "illustration_url": "/illustrations/air-filter.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Throttle Cable",
+    "slug": "throttle-cable",
+    "definition": "A braided steel cable that connects the throttle grip on the handlebar to the carburetor or throttle body. Pulling the grip opens the throttle via this cable.",
+    "category": "engine",
+    "subcategory": "intake",
+    "aliases": [
+      "accelerator cable"
+    ],
+    "related_terms": [
+      "throttle-body",
+      "carburetor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Intake Manifold",
+    "slug": "intake-manifold",
+    "definition": "The passage or tube that connects the carburetor or throttle body to the cylinder head. It routes the air-fuel mixture into the combustion chamber.",
+    "category": "engine",
+    "subcategory": "intake",
+    "aliases": [
+      "inlet manifold",
+      "intake boot"
+    ],
+    "related_terms": [
+      "throttle-body",
+      "carburetor",
+      "cylinder-head"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Gasket",
+    "slug": "gasket",
+    "definition": "A shaped seal placed between two mating surfaces to prevent leaks of oil, coolant, or combustion gases. Made from paper, rubber, metal, or composite materials.",
+    "category": "engine",
+    "subcategory": "sealing",
+    "aliases": [
+      "engine gasket"
+    ],
+    "related_terms": [
+      "head-gasket",
+      "exhaust-gasket"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Engine Mount",
+    "slug": "engine-mount",
+    "definition": "Bolts and brackets that secure the engine to the motorcycle frame. They absorb vibration and must be tightened to the correct torque specification.",
+    "category": "engine",
+    "subcategory": "mounting",
+    "aliases": [
+      "motor mount"
+    ],
+    "related_terms": [
+      "frame",
+      "torque-spec"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Valve Clearance",
+    "slug": "valve-clearance",
+    "definition": "The small gap between the camshaft lobe (or rocker arm) and the valve stem when the valve is fully closed. Must be checked and adjusted at service intervals using feeler gauges.",
+    "category": "engine",
+    "subcategory": "top-end",
+    "aliases": [
+      "valve lash",
+      "tappet clearance"
+    ],
+    "related_terms": [
+      "valve",
+      "camshaft",
+      "feeler-gauge",
+      "rocker-arm"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Four-Stroke",
+    "slug": "four-stroke",
+    "definition": "An engine type that completes a power cycle in four piston strokes: intake, compression, combustion, and exhaust. Each cycle requires two full crankshaft revolutions. Most modern motorcycles and scooters use this design.",
+    "category": "engine",
+    "subcategory": "type",
+    "aliases": [
+      "4-stroke",
+      "four-cycle"
+    ],
+    "related_terms": [
+      "two-stroke",
+      "piston",
+      "crankshaft"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Two-Stroke",
+    "slug": "two-stroke",
+    "definition": "An engine type that completes a power cycle in just two piston strokes (one up, one down). Simpler and lighter than four-stroke but produces more emissions. Uses oil mixed with fuel for lubrication.",
+    "category": "engine",
+    "subcategory": "type",
+    "aliases": [
+      "2-stroke",
+      "two-cycle"
+    ],
+    "related_terms": [
+      "four-stroke",
+      "reed-valve",
+      "piston"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Stator",
+    "slug": "stator",
+    "definition": "The stationary part of the motorcycle's charging system, mounted inside the engine case. Contains wire coils that generate AC electricity as the flywheel magnets spin past them.",
+    "category": "electrical",
+    "subcategory": "charging",
+    "aliases": [
+      "stator coil",
+      "generator"
+    ],
+    "related_terms": [
+      "rectifier-regulator",
+      "flywheel",
+      "battery"
+    ],
+    "illustration_url": "/illustrations/stator.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "CDI",
+    "slug": "cdi",
+    "definition": "Stands for Capacitor Discharge Ignition. An electronic ignition module that stores energy in a capacitor and releases it to the ignition coil, creating a spark at the spark plug. Common on smaller engines.",
+    "category": "electrical",
+    "subcategory": "ignition",
+    "aliases": [
+      "CDI unit",
+      "CDI box",
+      "capacitor discharge ignition"
+    ],
+    "related_terms": [
+      "ignition-coil",
+      "spark-plug",
+      "ecu"
+    ],
+    "illustration_url": "/illustrations/cdi.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "ECU",
+    "slug": "ecu",
+    "definition": "Stands for Electronic Control Unit. The motorcycle's computer that manages fuel injection timing, ignition timing, and other engine functions based on sensor inputs like throttle position and engine temperature.",
+    "category": "electrical",
+    "subcategory": "engine-management",
+    "aliases": [
+      "engine control unit",
+      "ECM",
+      "engine control module"
+    ],
+    "related_terms": [
+      "fuel-injector",
+      "throttle-position-sensor",
+      "o2-sensor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Relay",
+    "slug": "relay",
+    "definition": "An electrically operated switch that uses a small current to control a larger current. For example, the starter relay uses the small current from the start button to switch on the high-current starter motor circuit.",
+    "category": "electrical",
+    "subcategory": "switching",
+    "aliases": [
+      "electrical relay"
+    ],
+    "related_terms": [
+      "fuse",
+      "starter-relay",
+      "wiring-harness"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuse",
+    "slug": "fuse",
+    "definition": "A safety device with a thin wire that melts and breaks the circuit if too much current flows, protecting the wiring and components from damage. Each fuse is rated for a specific amperage.",
+    "category": "electrical",
+    "subcategory": "protection",
+    "aliases": [
+      "blade fuse",
+      "glass fuse"
+    ],
+    "related_terms": [
+      "fuse-box",
+      "relay",
+      "wiring-harness"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Rectifier/Regulator",
+    "slug": "rectifier-regulator",
+    "definition": "A combined unit that converts the stator's AC output to DC (rectifier) and limits the voltage to ~14V (regulator) to safely charge the battery and power the electrical system.",
+    "category": "electrical",
+    "subcategory": "charging",
+    "aliases": [
+      "reg/rec",
+      "voltage regulator",
+      "rectifier"
+    ],
+    "related_terms": [
+      "stator",
+      "battery",
+      "charging-system"
+    ],
+    "illustration_url": "/illustrations/rectifier-regulator.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Battery",
+    "slug": "battery",
+    "definition": "A rechargeable 12-volt battery that stores electrical energy to start the engine and power lights, horn, and accessories when the engine is off or at low RPM. Most bikes use AGM or lithium batteries.",
+    "category": "electrical",
+    "subcategory": "power",
+    "aliases": [
+      "motorcycle battery",
+      "12V battery"
+    ],
+    "related_terms": [
+      "stator",
+      "rectifier-regulator",
+      "starter-motor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Ignition Coil",
+    "slug": "ignition-coil",
+    "definition": "A transformer that converts the battery's 12 volts into the 20,000+ volts needed to create a spark at the spark plug. Each cylinder typically has its own coil or shares one with another cylinder.",
+    "category": "electrical",
+    "subcategory": "ignition",
+    "aliases": [
+      "coil",
+      "spark coil",
+      "coil pack"
+    ],
+    "related_terms": [
+      "spark-plug",
+      "spark-plug-cap",
+      "cdi",
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Spark Plug",
+    "slug": "spark-plug",
+    "definition": "A device screwed into the cylinder head that produces an electrical spark to ignite the compressed air-fuel mixture. The gap between its electrodes must be set correctly for proper ignition.",
+    "category": "electrical",
+    "subcategory": "ignition",
+    "aliases": [
+      "plug"
+    ],
+    "related_terms": [
+      "ignition-coil",
+      "spark-plug-cap",
+      "cylinder-head"
+    ],
+    "illustration_url": "/illustrations/spark-plug.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Spark Plug Cap",
+    "slug": "spark-plug-cap",
+    "definition": "The rubber or silicone boot that connects the ignition coil wire to the top of the spark plug. It insulates the high-voltage connection and must fit snugly to prevent misfires.",
+    "category": "electrical",
+    "subcategory": "ignition",
+    "aliases": [
+      "plug cap",
+      "plug boot"
+    ],
+    "related_terms": [
+      "spark-plug",
+      "ignition-coil"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Wiring Harness",
+    "slug": "wiring-harness",
+    "definition": "The organized bundle of electrical wires and connectors that routes power and signals between all the motorcycle's electrical components. Damage or corrosion here causes hard-to-find electrical problems.",
+    "category": "electrical",
+    "subcategory": "wiring",
+    "aliases": [
+      "loom",
+      "wire loom",
+      "harness"
+    ],
+    "related_terms": [
+      "connector",
+      "fuse",
+      "relay"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Connector",
+    "slug": "connector",
+    "definition": "A plug-and-socket junction in the wiring harness that allows electrical wires to be joined or separated. Corroded or loose connectors are a common cause of electrical faults.",
+    "category": "electrical",
+    "subcategory": "wiring",
+    "aliases": [
+      "electrical connector",
+      "plug connector"
+    ],
+    "related_terms": [
+      "wiring-harness",
+      "ground-wire"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Kill Switch",
+    "slug": "kill-switch",
+    "definition": "A handlebar-mounted switch that cuts the ignition circuit to stop the engine immediately. Used for normal shutdown and as an emergency cutoff. Also called the engine stop switch.",
+    "category": "electrical",
+    "subcategory": "switching",
+    "aliases": [
+      "engine stop switch",
+      "engine cutoff"
+    ],
+    "related_terms": [
+      "ignition-coil",
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Starter Relay",
+    "slug": "starter-relay",
+    "definition": "A heavy-duty relay (solenoid) that connects the battery directly to the starter motor when you press the start button. A clicking sound with no cranking often means this relay is faulty.",
+    "category": "electrical",
+    "subcategory": "starting",
+    "aliases": [
+      "starter solenoid",
+      "starter switch"
+    ],
+    "related_terms": [
+      "starter-motor",
+      "battery",
+      "relay"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Charging System",
+    "slug": "charging-system",
+    "definition": "The combination of the stator, rectifier/regulator, and battery that generates, regulates, and stores electrical power. A faulty charging system leads to a dead battery.",
+    "category": "electrical",
+    "subcategory": "charging",
+    "aliases": [],
+    "related_terms": [
+      "stator",
+      "rectifier-regulator",
+      "battery"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Headlight",
+    "slug": "headlight",
+    "definition": "The main forward-facing light on the motorcycle. Modern bikes use halogen, LED, or projector-type headlights. Must be properly aimed for safe night riding.",
+    "category": "electrical",
+    "subcategory": "lighting",
+    "aliases": [
+      "headlamp",
+      "front light"
+    ],
+    "related_terms": [
+      "tail-light",
+      "turn-signal"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Tail Light",
+    "slug": "tail-light",
+    "definition": "The red rear light that makes the motorcycle visible from behind. Includes a brighter brake light function that activates when either brake is applied.",
+    "category": "electrical",
+    "subcategory": "lighting",
+    "aliases": [
+      "tail lamp",
+      "rear light",
+      "brake light"
+    ],
+    "related_terms": [
+      "headlight",
+      "turn-signal"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Turn Signal",
+    "slug": "turn-signal",
+    "definition": "Amber flashing lights at the front and rear of the motorcycle used to indicate turning direction. Controlled by a handlebar switch. Also called indicators or blinkers.",
+    "category": "electrical",
+    "subcategory": "lighting",
+    "aliases": [
+      "indicator",
+      "blinker",
+      "flasher"
+    ],
+    "related_terms": [
+      "headlight",
+      "tail-light",
+      "relay"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Horn",
+    "slug": "horn",
+    "definition": "An electrical warning device mounted on the motorcycle that produces a loud sound when the horn button is pressed. Required by law on road-legal motorcycles.",
+    "category": "electrical",
+    "subcategory": "accessories",
+    "aliases": [
+      "motorcycle horn"
+    ],
+    "related_terms": [
+      "relay",
+      "fuse"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuse Box",
+    "slug": "fuse-box",
+    "definition": "A central housing that holds all the motorcycle's fuses in one accessible location. Each fuse protects a specific circuit. Usually found under the seat or near the battery.",
+    "category": "electrical",
+    "subcategory": "protection",
+    "aliases": [
+      "fuse panel",
+      "fuse block"
+    ],
+    "related_terms": [
+      "fuse",
+      "relay",
+      "wiring-harness"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Ground Wire",
+    "slug": "ground-wire",
+    "definition": "A wire that connects electrical components back to the battery's negative terminal, usually through the frame. A bad ground connection causes dim lights, intermittent failures, and starting problems.",
+    "category": "electrical",
+    "subcategory": "wiring",
+    "aliases": [
+      "earth wire",
+      "ground cable",
+      "negative lead"
+    ],
+    "related_terms": [
+      "battery",
+      "wiring-harness",
+      "connector"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Alternator",
+    "slug": "alternator",
+    "definition": "An electrical generator that produces AC power as the engine runs. On motorcycles, this function is usually performed by a stator and rotor (flywheel) rather than a separate alternator unit.",
+    "category": "electrical",
+    "subcategory": "charging",
+    "aliases": [
+      "generator"
+    ],
+    "related_terms": [
+      "stator",
+      "rectifier-regulator",
+      "charging-system"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Carburetor",
+    "slug": "carburetor",
+    "definition": "A mechanical device that mixes air and fuel in the correct ratio for the engine. Uses the venturi effect to draw fuel from a bowl as air flows through it. Being replaced by fuel injection on modern bikes.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "carb",
+      "carburettor"
+    ],
+    "related_terms": [
+      "throttle-body",
+      "jet-main",
+      "jet-pilot",
+      "float-bowl",
+      "choke"
+    ],
+    "illustration_url": "/illustrations/carburetor.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fuel Injector",
+    "slug": "fuel-injector",
+    "definition": "An electronically controlled valve that sprays a precise amount of fuel into the intake port or throttle body. Controlled by the ECU based on sensor data for optimal air-fuel ratio.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "injector",
+      "FI"
+    ],
+    "related_terms": [
+      "ecu",
+      "throttle-body",
+      "fuel-rail",
+      "fuel-pressure-regulator"
+    ],
+    "illustration_url": "/illustrations/fuel-injector.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Throttle Body",
+    "slug": "throttle-body",
+    "definition": "The housing containing a butterfly valve that controls airflow into the engine. On fuel-injected bikes, it replaces the carburetor and works with the fuel injector and ECU.",
+    "category": "fuel",
+    "subcategory": "air-intake",
+    "aliases": [
+      "TB",
+      "throttle housing"
+    ],
+    "related_terms": [
+      "fuel-injector",
+      "throttle-position-sensor",
+      "ecu"
+    ],
+    "illustration_url": "/illustrations/throttle-body.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Petcock",
+    "slug": "petcock",
+    "definition": "A manual or vacuum-operated fuel valve between the fuel tank and carburetor. Has positions for ON, OFF, and RESERVE. Found on carbureted bikes but not on fuel-injected models.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "fuel tap",
+      "fuel valve",
+      "fuel cock"
+    ],
+    "related_terms": [
+      "carburetor",
+      "fuel-line",
+      "fuel-filter"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Choke",
+    "slug": "choke",
+    "definition": "A device on carbureted engines that restricts airflow to create a richer fuel mixture for cold starting. Operated by a lever or cable. Must be turned off once the engine warms up.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "choke lever",
+      "cold start lever"
+    ],
+    "related_terms": [
+      "carburetor",
+      "enrichener",
+      "air-fuel-mixture"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuel Pump",
+    "slug": "fuel-pump",
+    "definition": "An electric or mechanical pump that delivers fuel from the tank to the carburetor or fuel injectors under pressure. Fuel-injected bikes require an electric pump to maintain fuel pressure.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "petrol pump",
+      "fuel delivery pump"
+    ],
+    "related_terms": [
+      "fuel-filter",
+      "fuel-line",
+      "fuel-pressure-regulator"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuel Filter",
+    "slug": "fuel-filter",
+    "definition": "A small filter in the fuel line or inside the fuel tank that catches dirt and debris before they reach the carburetor or fuel injectors. A clogged filter causes fuel starvation.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "inline fuel filter",
+      "petrol filter"
+    ],
+    "related_terms": [
+      "fuel-pump",
+      "fuel-line",
+      "carburetor",
+      "fuel-injector"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuel Line",
+    "slug": "fuel-line",
+    "definition": "The hose or tube that carries fuel from the tank to the engine's fuel system. Can be rubber, braided, or rigid metal. Must be checked for cracks and leaks regularly.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "fuel hose",
+      "petrol line"
+    ],
+    "related_terms": [
+      "fuel-pump",
+      "fuel-filter",
+      "petcock"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Float Bowl",
+    "slug": "float-bowl",
+    "definition": "A small reservoir at the bottom of the carburetor that maintains a constant fuel level using a float and needle valve. If the float sticks, fuel overflows and floods the engine.",
+    "category": "fuel",
+    "subcategory": "carburetion",
+    "aliases": [
+      "float chamber"
+    ],
+    "related_terms": [
+      "carburetor",
+      "needle-valve",
+      "jet-main"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Main Jet",
+    "slug": "jet-main",
+    "definition": "A brass jet in the carburetor with a precisely sized hole that meters fuel flow at medium to full throttle. Changing jet size adjusts the mixture for altitude or modifications.",
+    "category": "fuel",
+    "subcategory": "carburetion",
+    "aliases": [
+      "main jet"
+    ],
+    "related_terms": [
+      "carburetor",
+      "jet-pilot",
+      "float-bowl",
+      "air-fuel-mixture"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Pilot Jet",
+    "slug": "jet-pilot",
+    "definition": "A small brass jet in the carburetor that controls fuel flow at idle and low throttle openings. A clogged pilot jet is the most common cause of hard starting and rough idle on carbureted bikes.",
+    "category": "fuel",
+    "subcategory": "carburetion",
+    "aliases": [
+      "slow jet",
+      "idle jet"
+    ],
+    "related_terms": [
+      "carburetor",
+      "jet-main",
+      "air-fuel-mixture"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Needle Valve",
+    "slug": "needle-valve",
+    "definition": "A tapered valve in the carburetor's float bowl that opens and closes to maintain the correct fuel level. When the float rises, the needle closes to stop fuel flow.",
+    "category": "fuel",
+    "subcategory": "carburetion",
+    "aliases": [
+      "float needle",
+      "inlet valve"
+    ],
+    "related_terms": [
+      "float-bowl",
+      "carburetor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Air-Fuel Mixture",
+    "slug": "air-fuel-mixture",
+    "definition": "The ratio of air to fuel entering the engine. The ideal stoichiometric ratio is 14.7:1 (air:fuel by weight). Too rich means too much fuel; too lean means too much air — both cause problems.",
+    "category": "fuel",
+    "subcategory": "tuning",
+    "aliases": [
+      "AFR",
+      "air-fuel ratio",
+      "mixture"
+    ],
+    "related_terms": [
+      "carburetor",
+      "fuel-injector",
+      "o2-sensor",
+      "jet-main"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fuel Rail",
+    "slug": "fuel-rail",
+    "definition": "A pipe or manifold that distributes pressurized fuel to all the fuel injectors evenly. Found on multi-cylinder fuel-injected engines.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [],
+    "related_terms": [
+      "fuel-injector",
+      "fuel-pressure-regulator",
+      "fuel-pump"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Fuel Pressure Regulator",
+    "slug": "fuel-pressure-regulator",
+    "definition": "A device that maintains constant fuel pressure in the fuel rail regardless of engine load. Excess fuel is returned to the tank. Incorrect pressure causes running problems.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "FPR",
+      "pressure regulator"
+    ],
+    "related_terms": [
+      "fuel-rail",
+      "fuel-pump",
+      "fuel-injector"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Throttle Position Sensor",
+    "slug": "throttle-position-sensor",
+    "definition": "An electronic sensor mounted on the throttle body that tells the ECU how far open the throttle is. The ECU uses this information to calculate how much fuel to inject.",
+    "category": "fuel",
+    "subcategory": "sensors",
+    "aliases": [
+      "TPS"
+    ],
+    "related_terms": [
+      "throttle-body",
+      "ecu",
+      "fuel-injector"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Idle Speed Control",
+    "slug": "idle-speed-control",
+    "definition": "A valve or motor controlled by the ECU that adjusts airflow to maintain a steady idle speed regardless of engine temperature and electrical load.",
+    "category": "fuel",
+    "subcategory": "engine-management",
+    "aliases": [
+      "ISC",
+      "idle air control",
+      "IAC"
+    ],
+    "related_terms": [
+      "ecu",
+      "throttle-body"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Enrichener",
+    "slug": "enrichener",
+    "definition": "A device on some carbureted scooters and motorcycles that adds extra fuel for cold starting, similar to a choke but works differently — it opens an additional fuel passage instead of restricting air.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "cold start enrichener"
+    ],
+    "related_terms": [
+      "choke",
+      "carburetor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fuel Injection",
+    "slug": "fuel-injection",
+    "definition": "A system that uses electronically controlled injectors to deliver fuel to the engine, replacing the carburetor. Provides better fuel economy, easier starting, and lower emissions than carburetion.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "FI",
+      "EFI",
+      "electronic fuel injection"
+    ],
+    "related_terms": [
+      "fuel-injector",
+      "ecu",
+      "throttle-body",
+      "carburetion"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Carburetion",
+    "slug": "carburetion",
+    "definition": "The process of mixing air and fuel using a carburetor. Older technology but still found on many small-displacement motorcycles and scooters. Requires periodic cleaning and adjustment.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "carbureted system"
+    ],
+    "related_terms": [
+      "carburetor",
+      "fuel-injection",
+      "jet-main",
+      "jet-pilot"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Clutch",
+    "slug": "clutch",
+    "definition": "A set of friction plates and steel plates inside the engine that connects and disconnects the engine's power from the transmission. Squeezing the clutch lever disengages it for shifting gears.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [
+      "clutch assembly"
+    ],
+    "related_terms": [
+      "clutch-cable",
+      "clutch-lever",
+      "friction-plate",
+      "steel-plate",
+      "clutch-basket",
+      "clutch-spring"
+    ],
+    "illustration_url": "/illustrations/clutch-assembly.svg",
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Gearbox",
+    "slug": "gearbox",
+    "definition": "The set of gears inside the engine case that allows the rider to select different gear ratios. Lower gears provide more torque for acceleration; higher gears allow higher speeds at lower RPM.",
+    "category": "transmission",
+    "subcategory": "gears",
+    "aliases": [
+      "transmission",
+      "gear box"
+    ],
+    "related_terms": [
+      "shift-fork",
+      "gear-selector",
+      "countershaft",
+      "output-shaft"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Chain",
+    "slug": "chain",
+    "definition": "A roller chain that transfers power from the gearbox output sprocket to the rear wheel sprocket. Must be kept clean, lubricated, and adjusted to the correct tension.",
+    "category": "transmission",
+    "subcategory": "final-drive",
+    "aliases": [
+      "drive chain",
+      "roller chain"
+    ],
+    "related_terms": [
+      "sprocket",
+      "chain-sprocket"
+    ],
+    "illustration_url": "/illustrations/chain-sprocket.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Sprocket",
+    "slug": "sprocket",
+    "definition": "A toothed wheel that the chain wraps around. The front (countershaft) sprocket is small and the rear wheel sprocket is large. Changing sprocket sizes alters acceleration vs. top speed.",
+    "category": "transmission",
+    "subcategory": "final-drive",
+    "aliases": [
+      "drive sprocket",
+      "chain sprocket"
+    ],
+    "related_terms": [
+      "chain",
+      "countershaft",
+      "chain-sprocket"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "CVT Belt",
+    "slug": "cvt-belt",
+    "definition": "A rubber and kevlar V-shaped belt used in scooter automatic transmissions. It rides between two variable-diameter pulleys to provide continuously variable gear ratios without shifting.",
+    "category": "transmission",
+    "subcategory": "cvt",
+    "aliases": [
+      "drive belt",
+      "V-belt",
+      "variator belt"
+    ],
+    "related_terms": [
+      "variator",
+      "centrifugal-clutch",
+      "torque-converter"
+    ],
+    "illustration_url": "/illustrations/cvt-belt.svg",
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Variator",
+    "slug": "variator",
+    "definition": "The front pulley assembly in a scooter CVT transmission. As engine speed increases, roller weights push outward, closing the pulley halves and effectively changing the gear ratio higher.",
+    "category": "transmission",
+    "subcategory": "cvt",
+    "aliases": [
+      "front pulley",
+      "variator assembly"
+    ],
+    "related_terms": [
+      "cvt-belt",
+      "centrifugal-clutch"
+    ],
+    "illustration_url": "/illustrations/variator.svg",
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Shift Fork",
+    "slug": "shift-fork",
+    "definition": "A metal fork inside the gearbox that slides gears along the shafts to engage different gear ratios when the rider operates the shift lever. Bent forks cause difficulty shifting.",
+    "category": "transmission",
+    "subcategory": "gears",
+    "aliases": [
+      "selector fork"
+    ],
+    "related_terms": [
+      "gearbox",
+      "gear-selector"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Gear Selector",
+    "slug": "gear-selector",
+    "definition": "The mechanism connected to the shift lever (foot pedal) that rotates a drum or moves shift forks to select gears. The standard motorcycle pattern is 1-N-2-3-4-5-6.",
+    "category": "transmission",
+    "subcategory": "gears",
+    "aliases": [
+      "shift mechanism",
+      "selector drum"
+    ],
+    "related_terms": [
+      "gearbox",
+      "shift-fork"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Clutch Cable",
+    "slug": "clutch-cable",
+    "definition": "A braided steel cable that connects the clutch lever on the handlebar to the clutch release mechanism on the engine. Requires periodic adjustment as the clutch wears.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [],
+    "related_terms": [
+      "clutch",
+      "clutch-lever"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Clutch Lever",
+    "slug": "clutch-lever",
+    "definition": "The lever on the left handlebar that the rider squeezes to disengage the clutch for shifting gears or stopping. Some bikes use a hydraulic clutch instead of a cable.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [],
+    "related_terms": [
+      "clutch",
+      "clutch-cable"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Final Drive",
+    "slug": "final-drive",
+    "definition": "The last stage of power transfer from the gearbox to the rear wheel. Can be chain, belt, or shaft drive. Each type has different maintenance needs.",
+    "category": "transmission",
+    "subcategory": "final-drive",
+    "aliases": [],
+    "related_terms": [
+      "chain",
+      "belt-drive",
+      "shaft-drive"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Shaft Drive",
+    "slug": "shaft-drive",
+    "definition": "A final drive system using a driveshaft and bevel gears instead of a chain. Low maintenance but heavier. Common on touring bikes and some BMW models.",
+    "category": "transmission",
+    "subcategory": "final-drive",
+    "aliases": [
+      "cardan drive",
+      "driveshaft"
+    ],
+    "related_terms": [
+      "final-drive",
+      "chain",
+      "belt-drive"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Belt Drive",
+    "slug": "belt-drive",
+    "definition": "A final drive system using a toothed rubber belt instead of a chain. Quieter and cleaner than chain drive, requires no lubrication. Used on many Harley-Davidsons and some scooters.",
+    "category": "transmission",
+    "subcategory": "final-drive",
+    "aliases": [
+      "toothed belt drive"
+    ],
+    "related_terms": [
+      "final-drive",
+      "chain",
+      "shaft-drive"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Countershaft",
+    "slug": "countershaft",
+    "definition": "The gearbox output shaft that carries the front sprocket. Power flows from the engine through the gearbox to this shaft, then via chain or belt to the rear wheel.",
+    "category": "transmission",
+    "subcategory": "gears",
+    "aliases": [
+      "output shaft",
+      "mainshaft"
+    ],
+    "related_terms": [
+      "gearbox",
+      "sprocket",
+      "chain"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Centrifugal Clutch",
+    "slug": "centrifugal-clutch",
+    "definition": "An automatic clutch used in scooter CVT systems that engages when engine RPM rises above a set speed. Uses weighted shoes that swing outward with centrifugal force to grip a drum.",
+    "category": "transmission",
+    "subcategory": "cvt",
+    "aliases": [
+      "auto clutch",
+      "scooter clutch"
+    ],
+    "related_terms": [
+      "cvt-belt",
+      "variator"
+    ],
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Clutch Basket",
+    "slug": "clutch-basket",
+    "definition": "The outer housing of the clutch assembly that is driven by the engine via a gear. The friction plates have tabs that sit in its slots. Worn slots cause clutch drag and jerky engagement.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [
+      "clutch outer",
+      "outer basket"
+    ],
+    "related_terms": [
+      "clutch",
+      "friction-plate"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Friction Plate",
+    "slug": "friction-plate",
+    "definition": "A disc with friction material bonded to both sides that sits in the clutch assembly. When compressed against steel plates by the clutch springs, it transfers engine power to the transmission.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [
+      "clutch friction plate",
+      "clutch disc"
+    ],
+    "related_terms": [
+      "clutch",
+      "steel-plate",
+      "clutch-spring",
+      "clutch-basket"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Steel Plate",
+    "slug": "steel-plate",
+    "definition": "A plain steel disc that alternates with friction plates in the clutch pack. Has tabs on its outer or inner edge that lock it to the clutch hub or basket.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [
+      "clutch steel plate",
+      "drive plate"
+    ],
+    "related_terms": [
+      "clutch",
+      "friction-plate",
+      "clutch-spring"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Clutch Spring",
+    "slug": "clutch-spring",
+    "definition": "Springs that press the friction and steel plates together in the clutch assembly. Stiffer springs give a heavier clutch pull. Some bikes use a single diaphragm spring instead of multiple coil springs.",
+    "category": "transmission",
+    "subcategory": "clutch",
+    "aliases": [],
+    "related_terms": [
+      "clutch",
+      "friction-plate",
+      "steel-plate"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Brake Caliper",
+    "slug": "brake-caliper",
+    "definition": "The clamp-like device mounted on the fork or swingarm that squeezes the brake pads against the disc rotor to slow the wheel. Can be single-piston, dual-piston, or multi-piston.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "caliper",
+      "brake clamp"
+    ],
+    "related_terms": [
+      "brake-pad",
+      "disc-rotor",
+      "master-cylinder",
+      "brake-line"
+    ],
+    "illustration_url": "/illustrations/brake-caliper.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Disc Rotor",
+    "slug": "disc-rotor",
+    "definition": "The flat metal disc bolted to the wheel hub that the brake pads grip to slow the motorcycle. Made of steel or stainless steel, often with holes or slots for heat dissipation.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "brake disc",
+      "brake rotor",
+      "rotor"
+    ],
+    "related_terms": [
+      "brake-caliper",
+      "brake-pad",
+      "floating-rotor"
+    ],
+    "illustration_url": "/illustrations/disc-rotor.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Pad",
+    "slug": "brake-pad",
+    "definition": "A block of friction material in a metal backing plate that presses against the disc rotor to create stopping force. Available in organic, sintered, or semi-metallic compounds.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "pad",
+      "disc pad"
+    ],
+    "related_terms": [
+      "brake-caliper",
+      "disc-rotor",
+      "sintered-pad",
+      "organic-pad"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Master Cylinder",
+    "slug": "master-cylinder",
+    "definition": "A hydraulic pump operated by the brake lever (front) or brake pedal (rear) that pressurizes brake fluid and pushes it through the brake lines to the caliper pistons.",
+    "category": "brakes",
+    "subcategory": "hydraulics",
+    "aliases": [
+      "brake master cylinder"
+    ],
+    "related_terms": [
+      "brake-caliper",
+      "brake-fluid",
+      "brake-line",
+      "brake-lever"
+    ],
+    "illustration_url": "/illustrations/master-cylinder.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "ABS",
+    "slug": "abs",
+    "definition": "Stands for Anti-lock Braking System. An electronic system that rapidly releases and reapplies brake pressure to prevent wheel lockup during hard braking, helping maintain control.",
+    "category": "brakes",
+    "subcategory": "safety",
+    "aliases": [
+      "anti-lock braking system",
+      "anti-lock brakes"
+    ],
+    "related_terms": [
+      "brake-caliper",
+      "master-cylinder",
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Fluid",
+    "slug": "brake-fluid",
+    "definition": "A special hydraulic fluid (DOT 3, 4, or 5.1) used in the brake system. It transfers force from the master cylinder to the calipers. Absorbs moisture over time and must be replaced every 1-2 years.",
+    "category": "brakes",
+    "subcategory": "hydraulics",
+    "aliases": [
+      "DOT fluid",
+      "hydraulic fluid"
+    ],
+    "related_terms": [
+      "master-cylinder",
+      "brake-line",
+      "brake-bleeder"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Line",
+    "slug": "brake-line",
+    "definition": "The hose that carries pressurized brake fluid from the master cylinder to the caliper. Stock lines are rubber; aftermarket braided stainless steel lines give a firmer feel.",
+    "category": "brakes",
+    "subcategory": "hydraulics",
+    "aliases": [
+      "brake hose",
+      "hydraulic line"
+    ],
+    "related_terms": [
+      "master-cylinder",
+      "brake-caliper",
+      "brake-fluid"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Lever",
+    "slug": "brake-lever",
+    "definition": "The lever on the right handlebar that operates the front brake master cylinder. Squeezing it applies the front brake. Adjustable on many bikes for different hand sizes.",
+    "category": "brakes",
+    "subcategory": "controls",
+    "aliases": [
+      "front brake lever"
+    ],
+    "related_terms": [
+      "master-cylinder",
+      "brake-caliper"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Pedal",
+    "slug": "brake-pedal",
+    "definition": "The foot-operated lever on the right side of the motorcycle that applies the rear brake. On scooters, the rear brake is often a left-hand lever instead.",
+    "category": "brakes",
+    "subcategory": "controls",
+    "aliases": [
+      "rear brake pedal",
+      "foot brake"
+    ],
+    "related_terms": [
+      "master-cylinder",
+      "brake-caliper"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Drum Brake",
+    "slug": "drum-brake",
+    "definition": "An older brake design where shoes press outward against the inside of a drum built into the wheel hub. Still used on rear wheels of some budget motorcycles and scooters.",
+    "category": "brakes",
+    "subcategory": "drum-brakes",
+    "aliases": [
+      "drum"
+    ],
+    "related_terms": [
+      "brake-shoe",
+      "disc-rotor",
+      "brake-caliper"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Shoe",
+    "slug": "brake-shoe",
+    "definition": "A curved friction element used in drum brakes. The shoes press outward against the inside of the drum when the brake is applied. Replaced when the friction material wears thin.",
+    "category": "brakes",
+    "subcategory": "drum-brakes",
+    "aliases": [
+      "drum brake shoe"
+    ],
+    "related_terms": [
+      "drum-brake"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Brake Bleeder",
+    "slug": "brake-bleeder",
+    "definition": "A small valve on the brake caliper (or master cylinder) used to purge air bubbles from the brake system. Air in the lines causes a spongy brake feel.",
+    "category": "brakes",
+    "subcategory": "hydraulics",
+    "aliases": [
+      "bleeder valve",
+      "bleed nipple"
+    ],
+    "related_terms": [
+      "brake-caliper",
+      "brake-fluid",
+      "master-cylinder"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Floating Rotor",
+    "slug": "floating-rotor",
+    "definition": "A brake disc mounted with small bobbins that allow it to move slightly side-to-side. This ensures even pad contact and better heat management compared to a solid-mount rotor.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "floating disc"
+    ],
+    "related_terms": [
+      "disc-rotor",
+      "brake-caliper",
+      "brake-pad"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Sintered Pad",
+    "slug": "sintered-pad",
+    "definition": "A brake pad made from metal particles fused under heat and pressure. Offers strong braking in wet conditions and high temperatures but wears rotors faster than organic pads.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "sintered brake pad",
+      "metallic pad"
+    ],
+    "related_terms": [
+      "brake-pad",
+      "organic-pad",
+      "disc-rotor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Organic Pad",
+    "slug": "organic-pad",
+    "definition": "A brake pad made from non-metallic materials like rubber, kevlar, and carbon. Quieter and gentler on rotors but wears faster and fades more in extreme heat compared to sintered pads.",
+    "category": "brakes",
+    "subcategory": "disc-brakes",
+    "aliases": [
+      "organic brake pad",
+      "resin pad"
+    ],
+    "related_terms": [
+      "brake-pad",
+      "sintered-pad",
+      "disc-rotor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Frame",
+    "slug": "frame",
+    "definition": "The structural backbone of the motorcycle that everything bolts to — engine, suspension, bodywork, and controls. Common types include steel tube, aluminum twin-spar, and trellis frames.",
+    "category": "chassis",
+    "subcategory": "structure",
+    "aliases": [
+      "motorcycle frame",
+      "chassis"
+    ],
+    "related_terms": [
+      "subframe",
+      "headstock",
+      "swingarm",
+      "engine-mount"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Swingarm",
+    "slug": "swingarm",
+    "definition": "The pivoting arm that holds the rear wheel axle and allows the rear suspension to move up and down. Made of steel or aluminum, it connects to the frame at the swingarm pivot.",
+    "category": "chassis",
+    "subcategory": "rear",
+    "aliases": [
+      "swing arm"
+    ],
+    "related_terms": [
+      "frame",
+      "swingarm-pivot",
+      "rear-axle",
+      "shock-absorber"
+    ],
+    "illustration_url": "/illustrations/swingarm.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Triple Clamp",
+    "slug": "triple-clamp",
+    "definition": "The pair of aluminum brackets (upper and lower) that hold the fork tubes and connect them to the steering stem. The handlebars mount to the upper triple clamp.",
+    "category": "chassis",
+    "subcategory": "steering",
+    "aliases": [
+      "triple tree",
+      "yoke",
+      "fork clamp"
+    ],
+    "related_terms": [
+      "fork-tube",
+      "headstock",
+      "steering-head-bearing",
+      "handlebar"
+    ],
+    "illustration_url": "/illustrations/triple-clamp.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Headstock",
+    "slug": "headstock",
+    "definition": "The tube at the front of the frame through which the steering stem passes. It contains the steering head bearings that allow the forks and front wheel to turn.",
+    "category": "chassis",
+    "subcategory": "steering",
+    "aliases": [
+      "steering head",
+      "head tube"
+    ],
+    "related_terms": [
+      "frame",
+      "triple-clamp",
+      "steering-head-bearing"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Subframe",
+    "slug": "subframe",
+    "definition": "A smaller frame section bolted to the main frame that supports the seat, tail section, and rear fender. On some bikes it is a separate removable piece.",
+    "category": "chassis",
+    "subcategory": "structure",
+    "aliases": [
+      "rear subframe",
+      "tail frame"
+    ],
+    "related_terms": [
+      "frame",
+      "seat"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Steering Head Bearing",
+    "slug": "steering-head-bearing",
+    "definition": "Tapered roller or ball bearings in the headstock that allow the forks to turn smoothly. Worn bearings cause notchy steering or play in the front end.",
+    "category": "chassis",
+    "subcategory": "steering",
+    "aliases": [
+      "head bearing",
+      "neck bearing",
+      "steering bearing"
+    ],
+    "related_terms": [
+      "headstock",
+      "triple-clamp"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Axle",
+    "slug": "axle",
+    "definition": "A steel shaft that passes through the wheel hub and holds the wheel in the fork (front) or swingarm (rear). Must be tightened to the correct torque.",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "wheel axle",
+      "axle shaft"
+    ],
+    "related_terms": [
+      "wheel-bearing",
+      "rim",
+      "hub"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Wheel Bearing",
+    "slug": "wheel-bearing",
+    "definition": "Sealed bearings pressed into the wheel hub that allow the wheel to spin freely on the axle. Worn bearings cause a grinding noise and wobbly wheel.",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "hub bearing"
+    ],
+    "related_terms": [
+      "axle",
+      "hub",
+      "rim"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Rim",
+    "slug": "rim",
+    "definition": "The outer hoop of the wheel that the tire mounts onto. Can be cast aluminum (one-piece), or spoked with a separate rim laced to the hub.",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "wheel rim"
+    ],
+    "related_terms": [
+      "spoke",
+      "hub",
+      "axle"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Spoke",
+    "slug": "spoke",
+    "definition": "Thin steel wires that connect the hub to the rim on wire-spoked wheels. Must be kept properly tensioned for the wheel to stay true (round and straight).",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "wheel spoke"
+    ],
+    "related_terms": [
+      "rim",
+      "hub"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Hub",
+    "slug": "hub",
+    "definition": "The center part of the wheel that contains the bearings and mounts to the axle. On disc brake wheels, the brake rotor bolts to the hub.",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "wheel hub"
+    ],
+    "related_terms": [
+      "axle",
+      "wheel-bearing",
+      "rim",
+      "disc-rotor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Footpeg",
+    "slug": "footpeg",
+    "definition": "A small platform or peg mounted to the frame where the rider and passenger rest their feet. Rider pegs are near the controls; passenger pegs are further back.",
+    "category": "chassis",
+    "subcategory": "ergonomics",
+    "aliases": [
+      "foot peg",
+      "footrest"
+    ],
+    "related_terms": [
+      "frame"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Handlebar",
+    "slug": "handlebar",
+    "definition": "The bar mounted to the upper triple clamp that the rider grips to steer. Carries the controls for throttle, brakes, clutch, lights, horn, and switches.",
+    "category": "chassis",
+    "subcategory": "ergonomics",
+    "aliases": [
+      "bars",
+      "handlebars"
+    ],
+    "related_terms": [
+      "triple-clamp",
+      "riser",
+      "throttle-cable",
+      "clutch-lever",
+      "brake-lever"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Riser",
+    "slug": "riser",
+    "definition": "Spacer blocks between the upper triple clamp and the handlebars that raise the bar height for a more upright riding position. Taller risers equal a more comfortable reach.",
+    "category": "chassis",
+    "subcategory": "ergonomics",
+    "aliases": [
+      "handlebar riser",
+      "bar riser"
+    ],
+    "related_terms": [
+      "handlebar",
+      "triple-clamp"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fairing",
+    "slug": "fairing",
+    "definition": "Plastic or fiberglass body panels that cover the frame and engine to reduce wind resistance and protect the rider. Sport bikes have full fairings; naked bikes have none.",
+    "category": "chassis",
+    "subcategory": "bodywork",
+    "aliases": [
+      "body panel",
+      "cowling"
+    ],
+    "related_terms": [
+      "frame",
+      "fender"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fender",
+    "slug": "fender",
+    "definition": "A cover over the top of the wheel that stops mud, water, and debris from spraying onto the rider and engine. Most bikes have both front and rear fenders.",
+    "category": "chassis",
+    "subcategory": "bodywork",
+    "aliases": [
+      "mudguard",
+      "mud guard"
+    ],
+    "related_terms": [
+      "fairing",
+      "frame"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fuel Tank",
+    "slug": "fuel-tank",
+    "definition": "The container that holds the motorcycle's fuel supply. Mounted on top of the frame between the seat and handlebars on most bikes. Scooters often have under-seat fuel tanks.",
+    "category": "chassis",
+    "subcategory": "bodywork",
+    "aliases": [
+      "tank",
+      "gas tank",
+      "petrol tank"
+    ],
+    "related_terms": [
+      "petcock",
+      "fuel-pump",
+      "fuel-line"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Seat",
+    "slug": "seat",
+    "definition": "The padded area where the rider (and sometimes passenger) sits. Can be one-piece or split into separate rider and pillion seats.",
+    "category": "chassis",
+    "subcategory": "ergonomics",
+    "aliases": [
+      "saddle",
+      "motorcycle seat"
+    ],
+    "related_terms": [
+      "subframe"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Center Stand",
+    "slug": "center-stand",
+    "definition": "A folding stand under the middle of the motorcycle that lifts both wheels off the ground. Makes maintenance tasks like chain lubrication and wheel removal easier.",
+    "category": "chassis",
+    "subcategory": "stands",
+    "aliases": [
+      "centre stand",
+      "main stand"
+    ],
+    "related_terms": [
+      "side-stand"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Side Stand",
+    "slug": "side-stand",
+    "definition": "A folding leg on the left side of the motorcycle that props it up when parked, leaning it to the left. Most bikes have a safety switch that prevents starting with the stand down in gear.",
+    "category": "chassis",
+    "subcategory": "stands",
+    "aliases": [
+      "kickstand",
+      "prop stand",
+      "jiffy stand"
+    ],
+    "related_terms": [
+      "center-stand"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Swingarm Pivot",
+    "slug": "swingarm-pivot",
+    "definition": "The bolt and bearing assembly where the swingarm attaches to the frame. Allows the swingarm to pivot up and down as the rear suspension compresses.",
+    "category": "chassis",
+    "subcategory": "rear",
+    "aliases": [
+      "pivot bolt",
+      "swingarm bearing"
+    ],
+    "related_terms": [
+      "swingarm",
+      "frame",
+      "shock-absorber"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Rear Axle",
+    "slug": "rear-axle",
+    "definition": "The shaft that passes through the rear wheel hub and mounts the wheel in the swingarm. On chain-drive bikes, it can be adjusted to set chain tension.",
+    "category": "chassis",
+    "subcategory": "wheels",
+    "aliases": [
+      "rear wheel axle"
+    ],
+    "related_terms": [
+      "axle",
+      "swingarm",
+      "wheel-bearing"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fork",
+    "slug": "fork",
+    "definition": "The telescopic front suspension assembly consisting of two tubes that slide into each other. Contains springs and oil to absorb bumps. Holds the front wheel and allows steering.",
+    "category": "suspension",
+    "subcategory": "front",
+    "aliases": [
+      "front fork",
+      "forks",
+      "telescopic fork"
+    ],
+    "related_terms": [
+      "fork-tube",
+      "fork-oil",
+      "fork-seal",
+      "triple-clamp"
+    ],
+    "illustration_url": "/illustrations/fork-tube.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Shock Absorber",
+    "slug": "shock-absorber",
+    "definition": "A spring-and-damper unit in the rear suspension that absorbs bumps and controls the speed of suspension movement. Can be a single monoshock or a pair of twin shocks.",
+    "category": "suspension",
+    "subcategory": "rear",
+    "aliases": [
+      "shock",
+      "rear shock",
+      "damper"
+    ],
+    "related_terms": [
+      "monoshock",
+      "twin-shock",
+      "preload",
+      "damping",
+      "rebound"
+    ],
+    "illustration_url": "/illustrations/shock-absorber.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Preload",
+    "slug": "preload",
+    "definition": "The amount a suspension spring is compressed before any weight is placed on the bike. Increasing preload stiffens the initial feel and raises ride height. Adjusted with a collar or knob.",
+    "category": "suspension",
+    "subcategory": "adjustment",
+    "aliases": [
+      "spring preload"
+    ],
+    "related_terms": [
+      "shock-absorber",
+      "spring-rate",
+      "damping"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Damping",
+    "slug": "damping",
+    "definition": "The resistance that slows down suspension movement using oil forced through valves. Controls how quickly the suspension compresses (compression damping) and returns (rebound damping).",
+    "category": "suspension",
+    "subcategory": "adjustment",
+    "aliases": [
+      "dampening"
+    ],
+    "related_terms": [
+      "rebound",
+      "shock-absorber",
+      "fork-oil"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Rebound",
+    "slug": "rebound",
+    "definition": "The speed at which the suspension extends back to its normal position after being compressed by a bump. Too fast causes the bike to bounce; too slow keeps it packed down.",
+    "category": "suspension",
+    "subcategory": "adjustment",
+    "aliases": [
+      "rebound damping"
+    ],
+    "related_terms": [
+      "damping",
+      "shock-absorber",
+      "preload"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Spring Rate",
+    "slug": "spring-rate",
+    "definition": "A measurement (in kg/mm or lb/in) of how much force is needed to compress a spring by a set distance. Heavier riders need stiffer (higher rate) springs.",
+    "category": "suspension",
+    "subcategory": "adjustment",
+    "aliases": [
+      "rate"
+    ],
+    "related_terms": [
+      "preload",
+      "progressive-spring",
+      "shock-absorber"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Fork Oil",
+    "slug": "fork-oil",
+    "definition": "Special hydraulic oil inside the fork tubes that provides damping as it flows through internal valves. Different viscosity (weight) oils change how the forks feel. Must be changed periodically.",
+    "category": "suspension",
+    "subcategory": "front",
+    "aliases": [
+      "fork fluid"
+    ],
+    "related_terms": [
+      "fork",
+      "fork-seal",
+      "damping"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fork Seal",
+    "slug": "fork-seal",
+    "definition": "A rubber seal at the top of the lower fork tube that keeps the fork oil inside and dirt outside. A leaking seal drips oil onto the brake and must be replaced promptly.",
+    "category": "suspension",
+    "subcategory": "front",
+    "aliases": [
+      "fork oil seal"
+    ],
+    "related_terms": [
+      "fork",
+      "fork-oil",
+      "fork-tube"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fork Tube",
+    "slug": "fork-tube",
+    "definition": "The chromed upper tube of a telescopic fork that slides into the lower leg. Must be straight and free of pits or scratches, or the fork seals will leak.",
+    "category": "suspension",
+    "subcategory": "front",
+    "aliases": [
+      "stanchion",
+      "inner tube"
+    ],
+    "related_terms": [
+      "fork",
+      "fork-seal",
+      "triple-clamp"
+    ],
+    "illustration_url": "/illustrations/fork-tube.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Progressive Spring",
+    "slug": "progressive-spring",
+    "definition": "A suspension spring with coils spaced unevenly — closer together at one end and farther apart at the other. Provides a soft ride over small bumps but gets stiffer for big hits.",
+    "category": "suspension",
+    "subcategory": "springs",
+    "aliases": [
+      "progressive rate spring"
+    ],
+    "related_terms": [
+      "spring-rate",
+      "fork",
+      "shock-absorber"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Monoshock",
+    "slug": "monoshock",
+    "definition": "A single rear shock absorber mounted centrally, usually connected to the swingarm through a linkage system. The standard rear suspension design on most modern sport and street bikes.",
+    "category": "suspension",
+    "subcategory": "rear",
+    "aliases": [
+      "mono shock",
+      "single shock"
+    ],
+    "related_terms": [
+      "shock-absorber",
+      "twin-shock",
+      "linkage",
+      "swingarm"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Twin Shock",
+    "slug": "twin-shock",
+    "definition": "A pair of shock absorbers, one on each side of the rear wheel. An older design still found on cruisers, retro bikes, and some budget models.",
+    "category": "suspension",
+    "subcategory": "rear",
+    "aliases": [
+      "twin shocks",
+      "dual shocks"
+    ],
+    "related_terms": [
+      "shock-absorber",
+      "monoshock",
+      "swingarm"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Linkage",
+    "slug": "linkage",
+    "definition": "A system of levers and pivots connecting the monoshock to the swingarm. Provides a progressive suspension rate — softer at the start of travel and firmer toward full compression.",
+    "category": "suspension",
+    "subcategory": "rear",
+    "aliases": [
+      "suspension linkage",
+      "link arm",
+      "rocker arm linkage"
+    ],
+    "related_terms": [
+      "monoshock",
+      "swingarm",
+      "swingarm-pivot"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Steering Damper",
+    "slug": "steering-damper",
+    "definition": "A small hydraulic damper that resists rapid handlebar movements to prevent tank-slappers (speed wobbles). Mounted between the frame and the triple clamp or forks.",
+    "category": "suspension",
+    "subcategory": "steering",
+    "aliases": [
+      "stabilizer",
+      "steering stabilizer"
+    ],
+    "related_terms": [
+      "triple-clamp",
+      "headstock"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Air Suspension",
+    "slug": "air-suspension",
+    "definition": "A suspension system that uses air pressure instead of (or in addition to) metal springs. Ride height and firmness can be adjusted by adding or releasing air via a valve.",
+    "category": "suspension",
+    "subcategory": "adjustment",
+    "aliases": [
+      "air shock",
+      "air fork"
+    ],
+    "related_terms": [
+      "shock-absorber",
+      "preload",
+      "spring-rate"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Header Pipe",
+    "slug": "header-pipe",
+    "definition": "The exhaust pipe that connects directly to the cylinder head exhaust port. Carries hot exhaust gases from the engine to the muffler. Gets extremely hot during operation.",
+    "category": "exhaust",
+    "subcategory": "piping",
+    "aliases": [
+      "header",
+      "exhaust header",
+      "downpipe"
+    ],
+    "related_terms": [
+      "muffler",
+      "exhaust-gasket",
+      "catalytic-converter"
+    ],
+    "illustration_url": "/illustrations/header-pipe.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Muffler",
+    "slug": "muffler",
+    "definition": "The end section of the exhaust system that reduces noise using internal baffles and packing material. Also called the silencer. Aftermarket mufflers can change the sound and power output.",
+    "category": "exhaust",
+    "subcategory": "silencing",
+    "aliases": [
+      "silencer",
+      "exhaust can",
+      "slip-on"
+    ],
+    "related_terms": [
+      "header-pipe",
+      "baffle",
+      "slip-on-exhaust"
+    ],
+    "illustration_url": "/illustrations/muffler.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Catalytic Converter",
+    "slug": "catalytic-converter",
+    "definition": "A device in the exhaust system that reduces harmful emissions by converting toxic gases into less harmful ones using a chemical catalyst. Required by emissions regulations.",
+    "category": "exhaust",
+    "subcategory": "emissions",
+    "aliases": [
+      "cat",
+      "catalyst",
+      "catalyzer"
+    ],
+    "related_terms": [
+      "header-pipe",
+      "o2-sensor",
+      "muffler"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Baffle",
+    "slug": "baffle",
+    "definition": "A perforated tube or set of plates inside the muffler that slows and redirects exhaust gases to reduce noise. Removing baffles makes the exhaust louder but may affect performance.",
+    "category": "exhaust",
+    "subcategory": "silencing",
+    "aliases": [
+      "exhaust baffle",
+      "muffler insert"
+    ],
+    "related_terms": [
+      "muffler"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Heat Shield",
+    "slug": "heat-shield",
+    "definition": "A metal or ceramic cover over the exhaust pipes or muffler that protects the rider, bodywork, and nearby components from extreme exhaust heat.",
+    "category": "exhaust",
+    "subcategory": "protection",
+    "aliases": [
+      "exhaust guard",
+      "pipe guard"
+    ],
+    "related_terms": [
+      "header-pipe",
+      "muffler"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Exhaust Gasket",
+    "slug": "exhaust-gasket",
+    "definition": "A heat-resistant seal between the header pipe and the cylinder head that prevents exhaust gas leaks. A blown exhaust gasket causes a ticking or hissing sound from the engine.",
+    "category": "exhaust",
+    "subcategory": "sealing",
+    "aliases": [
+      "header gasket"
+    ],
+    "related_terms": [
+      "header-pipe",
+      "cylinder-head",
+      "gasket"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "O2 Sensor",
+    "slug": "o2-sensor",
+    "definition": "An oxygen sensor in the exhaust pipe that measures how much unburned oxygen is in the exhaust gases. The ECU uses this data to adjust the air-fuel mixture for optimal combustion.",
+    "category": "exhaust",
+    "subcategory": "emissions",
+    "aliases": [
+      "oxygen sensor",
+      "lambda sensor",
+      "O2"
+    ],
+    "related_terms": [
+      "ecu",
+      "air-fuel-mixture",
+      "catalytic-converter"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Decat Pipe",
+    "slug": "decat-pipe",
+    "definition": "A straight section of exhaust pipe used to replace the catalytic converter, usually for racing or track use. Removing the cat is illegal for road use in most countries.",
+    "category": "exhaust",
+    "subcategory": "piping",
+    "aliases": [
+      "de-cat",
+      "decat",
+      "cat delete pipe"
+    ],
+    "related_terms": [
+      "catalytic-converter",
+      "header-pipe"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Slip-On Exhaust",
+    "slug": "slip-on-exhaust",
+    "definition": "An aftermarket muffler that replaces only the end can (silencer) section, bolting onto the existing header pipe. Easier and cheaper to install than a full exhaust system.",
+    "category": "exhaust",
+    "subcategory": "aftermarket",
+    "aliases": [
+      "slip-on",
+      "bolt-on exhaust"
+    ],
+    "related_terms": [
+      "muffler",
+      "header-pipe"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Radiator",
+    "slug": "radiator",
+    "definition": "A heat exchanger with thin fins and tubes that cools the engine coolant by exposing it to airflow as the bike moves. Located at the front of liquid-cooled motorcycles.",
+    "category": "cooling",
+    "subcategory": "heat-exchange",
+    "aliases": [
+      "rad"
+    ],
+    "related_terms": [
+      "coolant",
+      "thermostat",
+      "water-pump",
+      "cooling-fan",
+      "radiator-cap"
+    ],
+    "illustration_url": "/illustrations/radiator.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Thermostat",
+    "slug": "thermostat",
+    "definition": "A temperature-controlled valve in the cooling system that stays closed when the engine is cold (to warm up faster) and opens to allow coolant flow to the radiator once the engine reaches operating temperature.",
+    "category": "cooling",
+    "subcategory": "regulation",
+    "aliases": [
+      "coolant thermostat"
+    ],
+    "related_terms": [
+      "radiator",
+      "coolant",
+      "water-pump"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Water Pump",
+    "slug": "water-pump",
+    "definition": "A mechanical pump driven by the engine that circulates coolant through the engine passages and radiator. A failed water pump causes rapid overheating.",
+    "category": "cooling",
+    "subcategory": "circulation",
+    "aliases": [
+      "coolant pump"
+    ],
+    "related_terms": [
+      "radiator",
+      "coolant",
+      "thermostat"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Coolant",
+    "slug": "coolant",
+    "definition": "A mixture of water and antifreeze (ethylene glycol) that circulates through liquid-cooled engines to absorb and dissipate heat. Also prevents freezing and corrosion inside the cooling system.",
+    "category": "cooling",
+    "subcategory": "fluid",
+    "aliases": [
+      "antifreeze",
+      "engine coolant",
+      "radiator fluid"
+    ],
+    "related_terms": [
+      "radiator",
+      "water-pump",
+      "coolant-hose",
+      "expansion-tank"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Cooling Fan",
+    "slug": "cooling-fan",
+    "definition": "An electric fan mounted behind the radiator that turns on automatically when coolant temperature gets too high, usually in slow traffic or at idle when there is not enough airflow.",
+    "category": "cooling",
+    "subcategory": "heat-exchange",
+    "aliases": [
+      "radiator fan",
+      "electric fan"
+    ],
+    "related_terms": [
+      "radiator",
+      "fan-switch",
+      "thermostat"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Radiator Cap",
+    "slug": "radiator-cap",
+    "definition": "A pressure-rated cap on the radiator or expansion tank that maintains system pressure (typically 1.1-1.3 bar). Higher pressure raises the boiling point of the coolant. Never open when hot.",
+    "category": "cooling",
+    "subcategory": "regulation",
+    "aliases": [
+      "pressure cap"
+    ],
+    "related_terms": [
+      "radiator",
+      "expansion-tank",
+      "coolant"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Coolant Hose",
+    "slug": "coolant-hose",
+    "definition": "Rubber or silicone hoses that carry coolant between the engine, radiator, and water pump. Should be checked for cracks, swelling, and soft spots regularly.",
+    "category": "cooling",
+    "subcategory": "circulation",
+    "aliases": [
+      "radiator hose",
+      "water hose"
+    ],
+    "related_terms": [
+      "radiator",
+      "water-pump",
+      "coolant"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Expansion Tank",
+    "slug": "expansion-tank",
+    "definition": "A small reservoir connected to the radiator that collects coolant as it expands when hot and returns it as it cools. The coolant level should be checked here, not at the radiator.",
+    "category": "cooling",
+    "subcategory": "regulation",
+    "aliases": [
+      "overflow tank",
+      "recovery tank",
+      "header tank"
+    ],
+    "related_terms": [
+      "radiator",
+      "coolant",
+      "radiator-cap"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Fan Switch",
+    "slug": "fan-switch",
+    "definition": "A temperature sensor that activates the electric cooling fan when coolant temperature exceeds a set threshold (typically 95-105 degrees Celsius). A faulty switch can cause overheating.",
+    "category": "cooling",
+    "subcategory": "regulation",
+    "aliases": [
+      "thermo switch",
+      "fan sensor"
+    ],
+    "related_terms": [
+      "cooling-fan",
+      "radiator",
+      "thermostat"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Oil Cooler",
+    "slug": "oil-cooler",
+    "definition": "A small radiator-like heat exchanger that cools engine oil. Found on high-performance and air-cooled engines where oil temperature can get very high.",
+    "category": "cooling",
+    "subcategory": "heat-exchange",
+    "aliases": [
+      "engine oil cooler"
+    ],
+    "related_terms": [
+      "radiator",
+      "oil-pump",
+      "oil-filter"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Torque Wrench",
+    "slug": "torque-wrench",
+    "definition": "A wrench that measures and limits the twisting force (torque) applied to a bolt. Essential for tightening engine bolts, axle nuts, and brake calipers to the manufacturer's specification.",
+    "category": "tools",
+    "subcategory": "fastening",
+    "aliases": [
+      "click torque wrench"
+    ],
+    "related_terms": [
+      "torque-spec",
+      "socket-set"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Feeler Gauge",
+    "slug": "feeler-gauge",
+    "definition": "A set of thin metal blades of known thickness used to measure small gaps, especially valve clearance. You slide blades between two surfaces until you find the one that fits snugly.",
+    "category": "tools",
+    "subcategory": "measuring",
+    "aliases": [
+      "feeler blade",
+      "gap gauge"
+    ],
+    "related_terms": [
+      "valve-clearance"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Multimeter",
+    "slug": "multimeter",
+    "definition": "An electronic instrument that measures voltage, current, and resistance. Used to diagnose electrical problems like dead batteries, faulty sensors, and broken wires.",
+    "category": "tools",
+    "subcategory": "electrical",
+    "aliases": [
+      "digital multimeter",
+      "DMM",
+      "volt-ohm meter"
+    ],
+    "related_terms": [
+      "battery",
+      "stator",
+      "wiring-harness"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Compression Tester",
+    "slug": "compression-tester",
+    "definition": "A gauge that screws into the spark plug hole to measure cylinder compression pressure during cranking. Low readings indicate worn rings, valves, or a blown head gasket.",
+    "category": "tools",
+    "subcategory": "diagnostic",
+    "aliases": [
+      "compression gauge"
+    ],
+    "related_terms": [
+      "piston-ring",
+      "valve",
+      "head-gasket",
+      "leak-down-tester"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Leak-Down Tester",
+    "slug": "leak-down-tester",
+    "definition": "A tool that pressurizes the cylinder with compressed air and measures how much leaks past the rings, valves, or head gasket. More precise than a compression test for pinpointing problems.",
+    "category": "tools",
+    "subcategory": "diagnostic",
+    "aliases": [
+      "cylinder leakage tester"
+    ],
+    "related_terms": [
+      "compression-tester",
+      "piston-ring",
+      "valve"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Chain Tool",
+    "slug": "chain-tool",
+    "definition": "A specialized tool for breaking (removing) and riveting motorcycle drive chain links. Used when replacing or shortening a chain.",
+    "category": "tools",
+    "subcategory": "chain",
+    "aliases": [
+      "chain breaker",
+      "chain press",
+      "chain riveter"
+    ],
+    "related_terms": [
+      "chain"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Tire Iron",
+    "slug": "tire-iron",
+    "definition": "A flat, curved lever used to pry the tire bead off the wheel rim during tire changes. Usually used in pairs or threes. Care must be taken not to pinch the inner tube.",
+    "category": "tools",
+    "subcategory": "wheels",
+    "aliases": [
+      "tire lever",
+      "tyre lever",
+      "tire spoon"
+    ],
+    "related_terms": [
+      "rim"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Valve Spring Compressor",
+    "slug": "valve-spring-compressor",
+    "definition": "A specialized tool that compresses the valve spring so the small keepers (collets) can be removed or installed. Required for valve seal replacement or valve jobs.",
+    "category": "tools",
+    "subcategory": "engine",
+    "aliases": [
+      "spring compressor"
+    ],
+    "related_terms": [
+      "valve-spring",
+      "valve",
+      "valve-seal"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Bearing Puller",
+    "slug": "bearing-puller",
+    "definition": "A tool with gripping jaws that hooks behind a bearing to extract it from a housing. Used for removing wheel bearings, steering head bearings, and other press-fit bearings.",
+    "category": "tools",
+    "subcategory": "extraction",
+    "aliases": [
+      "blind bearing puller",
+      "slide hammer"
+    ],
+    "related_terms": [
+      "wheel-bearing",
+      "steering-head-bearing"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Impact Wrench",
+    "slug": "impact-wrench",
+    "definition": "A power tool that delivers high-torque rotational blows to loosen stubborn fasteners like axle nuts and flywheel bolts. Available in air-powered and electric versions.",
+    "category": "tools",
+    "subcategory": "fastening",
+    "aliases": [
+      "impact gun",
+      "rattle gun"
+    ],
+    "related_terms": [
+      "socket-set",
+      "torque-wrench"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Socket Set",
+    "slug": "socket-set",
+    "definition": "A collection of cylindrical sockets in various sizes that fit onto a ratchet handle to turn bolts and nuts. The most frequently used tool set in motorcycle maintenance.",
+    "category": "tools",
+    "subcategory": "fastening",
+    "aliases": [
+      "ratchet and socket set"
+    ],
+    "related_terms": [
+      "torque-wrench",
+      "allen-key"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Allen Key",
+    "slug": "allen-key",
+    "definition": "An L-shaped hexagonal wrench used for bolts with hexagonal recesses in the head. Very common on motorcycles for fairings, levers, mirrors, and many engine covers.",
+    "category": "tools",
+    "subcategory": "fastening",
+    "aliases": [
+      "hex key",
+      "hex wrench",
+      "Allen wrench"
+    ],
+    "related_terms": [
+      "torx",
+      "socket-set"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Torx",
+    "slug": "torx",
+    "definition": "A star-shaped fastener drive pattern used on some motorcycle bolts, especially on European bikes like BMW and KTM. Requires matching Torx bits or keys.",
+    "category": "tools",
+    "subcategory": "fastening",
+    "aliases": [
+      "Torx key",
+      "star bit",
+      "star drive"
+    ],
+    "related_terms": [
+      "allen-key",
+      "socket-set"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Thread Locker",
+    "slug": "thread-locker",
+    "definition": "A liquid adhesive applied to bolt threads to prevent them from vibrating loose. Blue (medium) allows removal with hand tools; red (high strength) requires heat to remove.",
+    "category": "tools",
+    "subcategory": "chemicals",
+    "aliases": [
+      "Loctite",
+      "threadlock"
+    ],
+    "related_terms": [
+      "torque-spec"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Caliper (Measuring)",
+    "slug": "caliper-measuring",
+    "definition": "A precision measuring tool used to check brake disc thickness, bore diameter, and other dimensions. Digital calipers give readings in both millimeters and inches.",
+    "category": "tools",
+    "subcategory": "measuring",
+    "aliases": [
+      "vernier caliper",
+      "digital caliper"
+    ],
+    "related_terms": [
+      "micrometer",
+      "disc-rotor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Micrometer",
+    "slug": "micrometer",
+    "definition": "A precision measuring instrument more accurate than a caliper, used to measure small dimensions like valve stem diameter, piston diameter, and cylinder bore. Reads to 0.01mm.",
+    "category": "tools",
+    "subcategory": "measuring",
+    "aliases": [
+      "outside micrometer",
+      "mike"
+    ],
+    "related_terms": [
+      "caliper-measuring",
+      "bore"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Service Manual",
+    "slug": "service-manual",
+    "definition": "The official manufacturer's manual containing all specifications, procedures, torque values, and wiring diagrams for a specific motorcycle model. The most important reference for any repair.",
+    "category": "tools",
+    "subcategory": "reference",
+    "aliases": [
+      "workshop manual",
+      "repair manual",
+      "factory manual"
+    ],
+    "related_terms": [
+      "torque-spec"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Diagnostic Scanner",
+    "slug": "diagnostic-scanner",
+    "definition": "An electronic device that connects to the motorcycle's diagnostic port to read and clear DTC fault codes, view sensor data, and perform system tests.",
+    "category": "tools",
+    "subcategory": "diagnostic",
+    "aliases": [
+      "OBD scanner",
+      "fault code reader",
+      "diagnostic tool"
+    ],
+    "related_terms": [
+      "dtc",
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "OEM",
+    "slug": "oem",
+    "definition": "Stands for Original Equipment Manufacturer. Refers to parts made by or for the motorcycle manufacturer. OEM parts are guaranteed to fit and meet factory specifications.",
+    "category": "general",
+    "subcategory": "terminology",
+    "aliases": [
+      "original equipment manufacturer",
+      "genuine parts"
+    ],
+    "related_terms": [
+      "aftermarket"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Aftermarket",
+    "slug": "aftermarket",
+    "definition": "Parts and accessories made by companies other than the original motorcycle manufacturer. Can be cheaper or higher-performance than OEM, but quality varies widely.",
+    "category": "general",
+    "subcategory": "terminology",
+    "aliases": [
+      "third-party",
+      "non-OEM"
+    ],
+    "related_terms": [
+      "oem"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "VIN",
+    "slug": "vin",
+    "definition": "Stands for Vehicle Identification Number. A unique 17-character code stamped on the frame that identifies the motorcycle's make, model, year, and production details. Used for registration, insurance, and recalls.",
+    "category": "general",
+    "subcategory": "identification",
+    "aliases": [
+      "vehicle identification number",
+      "chassis number",
+      "frame number"
+    ],
+    "related_terms": [],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Torque Spec",
+    "slug": "torque-spec",
+    "definition": "The manufacturer's specified tightening force for a particular bolt, measured in Newton-meters (Nm) or foot-pounds (ft-lb). Over-tightening can strip threads; under-tightening allows bolts to loosen.",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [
+      "torque specification",
+      "torque setting",
+      "torque value"
+    ],
+    "related_terms": [
+      "torque-wrench",
+      "service-manual"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "DTC",
+    "slug": "dtc",
+    "definition": "Stands for Diagnostic Trouble Code. An alphanumeric code stored by the ECU when a sensor reading is out of range. Read with a diagnostic scanner. Example: P0301 means cylinder 1 misfire.",
+    "category": "general",
+    "subcategory": "diagnostics",
+    "aliases": [
+      "diagnostic trouble code",
+      "fault code",
+      "error code"
+    ],
+    "related_terms": [
+      "ecu",
+      "diagnostic-scanner"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "RPM",
+    "slug": "rpm",
+    "definition": "Stands for Revolutions Per Minute. Measures how fast the engine crankshaft is spinning. Displayed on the tachometer. Redline is the maximum safe RPM.",
+    "category": "general",
+    "subcategory": "measurements",
+    "aliases": [
+      "revolutions per minute",
+      "revs"
+    ],
+    "related_terms": [
+      "crankshaft",
+      "tdc"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "TDC",
+    "slug": "tdc",
+    "definition": "Stands for Top Dead Center. The highest point the piston reaches in the cylinder. An important reference point for setting valve timing, ignition timing, and checking valve clearance.",
+    "category": "general",
+    "subcategory": "reference-points",
+    "aliases": [
+      "top dead center",
+      "top dead centre"
+    ],
+    "related_terms": [
+      "bdc",
+      "piston",
+      "crankshaft",
+      "valve-clearance"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "BDC",
+    "slug": "bdc",
+    "definition": "Stands for Bottom Dead Center. The lowest point the piston reaches in the cylinder. Together with TDC, it defines the piston's stroke length.",
+    "category": "general",
+    "subcategory": "reference-points",
+    "aliases": [
+      "bottom dead center",
+      "bottom dead centre"
+    ],
+    "related_terms": [
+      "tdc",
+      "piston",
+      "stroke"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Bore x Stroke",
+    "slug": "bore-and-stroke",
+    "definition": "The engine dimensions listed as cylinder diameter times piston travel (e.g., 67mm x 42.5mm). These two measurements determine the engine's displacement.",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [
+      "bore and stroke"
+    ],
+    "related_terms": [
+      "bore",
+      "stroke",
+      "displacement-cc"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Displacement (CC)",
+    "slug": "displacement-cc",
+    "definition": "The total volume swept by all pistons in the engine, measured in cubic centimeters (cc). Calculated from bore, stroke, and number of cylinders. A 600cc engine has 600 cubic centimeters total.",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [
+      "engine displacement",
+      "cubic capacity",
+      "CC",
+      "engine size"
+    ],
+    "related_terms": [
+      "bore",
+      "stroke",
+      "bore-and-stroke"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Horsepower",
+    "slug": "horsepower",
+    "definition": "A unit measuring the engine's power output. One horsepower equals 746 watts. Higher horsepower means more top-end speed potential. Measured at the crankshaft (bhp) or rear wheel (whp).",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [
+      "HP",
+      "bhp",
+      "brake horsepower"
+    ],
+    "related_terms": [
+      "torque-general",
+      "rpm"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Torque",
+    "slug": "torque-general",
+    "definition": "A rotational twisting force measured in Newton-meters (Nm) or foot-pounds (ft-lb). Higher torque means stronger acceleration, especially at low RPM. Not the same as horsepower.",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [
+      "engine torque",
+      "Nm",
+      "ft-lb"
+    ],
+    "related_terms": [
+      "horsepower",
+      "rpm"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Chain and Sprocket",
+    "slug": "chain-sprocket",
+    "definition": "The complete final drive assembly consisting of the front sprocket, rear sprocket, and drive chain. All three components should be replaced together when worn.",
+    "category": "general",
+    "subcategory": "maintenance",
+    "aliases": [
+      "chain and sprockets",
+      "chain kit"
+    ],
+    "related_terms": [
+      "chain",
+      "sprocket",
+      "final-drive"
+    ],
+    "illustration_url": "/illustrations/chain-sprocket.svg",
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Torque Converter",
+    "slug": "torque-converter",
+    "definition": "A fluid coupling in some scooter and automatic motorcycle transmissions that transfers engine power to the drivetrain. Allows the engine to idle without stalling while stationary.",
+    "category": "general",
+    "subcategory": "transmission",
+    "aliases": [],
+    "related_terms": [
+      "cvt-belt",
+      "centrifugal-clutch"
+    ],
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Bore x Stroke Ratio",
+    "slug": "bore-stroke-ratio",
+    "definition": "The relationship between cylinder bore and piston stroke. An oversquare engine (bore > stroke) revs higher; an undersquare engine (stroke > bore) produces more torque at lower RPM.",
+    "category": "general",
+    "subcategory": "specifications",
+    "aliases": [],
+    "related_terms": [
+      "bore",
+      "stroke",
+      "bore-and-stroke"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Voltage Regulator",
+    "slug": "voltage-regulator",
+    "definition": "A component that limits the electrical system output to a safe voltage (typically 14-14.5V) to protect the battery and electronics from overcharging. Often combined with the rectifier.",
+    "category": "electrical",
+    "subcategory": "charging",
+    "aliases": [
+      "regulator"
+    ],
+    "related_terms": [
+      "rectifier-regulator",
+      "stator",
+      "battery"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Indicator Relay",
+    "slug": "indicator-relay",
+    "definition": "A small electronic or mechanical flasher unit that makes the turn signals blink on and off at a set rate. LED indicators may need a special relay to flash at the correct speed.",
+    "category": "electrical",
+    "subcategory": "lighting",
+    "aliases": [
+      "flasher relay",
+      "turn signal relay",
+      "blinker relay"
+    ],
+    "related_terms": [
+      "turn-signal",
+      "relay"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Ignition Switch",
+    "slug": "ignition-switch",
+    "definition": "The key-operated switch that activates the motorcycle electrical system. Turning the key to ON powers the ECU, lights, and instruments. Some modern bikes use keyless ignition.",
+    "category": "electrical",
+    "subcategory": "switching",
+    "aliases": [
+      "key switch",
+      "main switch"
+    ],
+    "related_terms": [
+      "kill-switch",
+      "battery",
+      "wiring-harness"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Instrument Cluster",
+    "slug": "instrument-cluster",
+    "definition": "The dashboard display that shows the rider speed, RPM (tachometer), fuel level, temperature, warning lights, and other information. Modern bikes use LCD or TFT screens.",
+    "category": "electrical",
+    "subcategory": "instruments",
+    "aliases": [
+      "dashboard",
+      "gauge cluster",
+      "speedo"
+    ],
+    "related_terms": [
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Kickstart Lever",
+    "slug": "kickstart-lever",
+    "definition": "A foot-operated lever that mechanically turns the engine over to start it without a battery or electric starter. Still found on many small scooters and off-road bikes as a backup.",
+    "category": "electrical",
+    "subcategory": "starting",
+    "aliases": [
+      "kick starter",
+      "kick lever"
+    ],
+    "related_terms": [
+      "starter-motor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Vacuum Line",
+    "slug": "vacuum-line",
+    "definition": "A small rubber hose that carries engine vacuum (negative pressure) to operate components like the petcock, fuel pump, or emission controls. Cracked or disconnected lines cause running issues.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "vacuum hose"
+    ],
+    "related_terms": [
+      "petcock",
+      "carburetor"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Fuel Tank Breather",
+    "slug": "fuel-tank-breather",
+    "definition": "A small vent that allows air into the fuel tank as fuel is consumed. If blocked, a vacuum forms in the tank and fuel stops flowing to the engine, causing stalling.",
+    "category": "fuel",
+    "subcategory": "fuel-delivery",
+    "aliases": [
+      "tank vent",
+      "breather hose"
+    ],
+    "related_terms": [
+      "fuel-tank",
+      "fuel-line"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Roller Weights",
+    "slug": "roller-weights",
+    "definition": "Small cylindrical weights inside the scooter variator that are flung outward by centrifugal force as RPM increases, pushing the variator closed to change the gear ratio higher.",
+    "category": "transmission",
+    "subcategory": "cvt",
+    "aliases": [
+      "variator rollers",
+      "CVT weights"
+    ],
+    "related_terms": [
+      "variator",
+      "cvt-belt"
+    ],
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Contra Spring",
+    "slug": "contra-spring",
+    "definition": "A spring in the rear (driven) pulley of a scooter CVT that controls how quickly the belt moves to a higher ratio. A stiffer contra spring delays upshift for more acceleration.",
+    "category": "transmission",
+    "subcategory": "cvt",
+    "aliases": [
+      "torque spring",
+      "contra"
+    ],
+    "related_terms": [
+      "variator",
+      "cvt-belt",
+      "centrifugal-clutch"
+    ],
+    "applies_to": [
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Quickshifter",
+    "slug": "quickshifter",
+    "definition": "An electronic device that momentarily cuts ignition or fuel during upshifts so the rider can change gears without using the clutch or closing the throttle. Found on sport bikes.",
+    "category": "transmission",
+    "subcategory": "gears",
+    "aliases": [
+      "quick shifter",
+      "auto blipper"
+    ],
+    "related_terms": [
+      "gearbox",
+      "ecu",
+      "clutch"
+    ],
+    "applies_to": [
+      "motorcycle"
+    ],
+    "difficulty": "advanced"
+  },
+  {
+    "term": "Full Exhaust System",
+    "slug": "full-exhaust-system",
+    "definition": "A complete aftermarket exhaust that replaces everything from the headers to the muffler. Offers the biggest performance gains but requires ECU tuning for optimal results.",
+    "category": "exhaust",
+    "subcategory": "aftermarket",
+    "aliases": [
+      "full system",
+      "complete exhaust"
+    ],
+    "related_terms": [
+      "header-pipe",
+      "muffler",
+      "slip-on-exhaust",
+      "ecu"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "intermediate"
+  },
+  {
+    "term": "Combined Braking",
+    "slug": "combined-braking",
+    "definition": "A system where applying one brake also partially applies the other. Common on scooters -- pressing the left lever applies both front and rear brakes proportionally for safer stopping.",
+    "category": "brakes",
+    "subcategory": "safety",
+    "aliases": [
+      "CBS",
+      "linked brakes",
+      "combined brake system"
+    ],
+    "related_terms": [
+      "abs",
+      "brake-caliper",
+      "master-cylinder"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Pre-Delivery Inspection",
+    "slug": "pre-delivery-inspection",
+    "definition": "A checklist of setup and safety checks performed on a new motorcycle before delivering it to the customer. Includes fluid levels, tire pressures, bolt torques, and controls adjustment.",
+    "category": "general",
+    "subcategory": "maintenance",
+    "aliases": [
+      "PDI",
+      "dealer prep"
+    ],
+    "related_terms": [
+      "service-manual",
+      "torque-spec"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Break-In Period",
+    "slug": "break-in-period",
+    "definition": "The first 500-1000 km of a new or rebuilt engine where you ride gently, vary RPM, and avoid sustained high speed. Allows piston rings and bearings to seat properly for long engine life.",
+    "category": "general",
+    "subcategory": "maintenance",
+    "aliases": [
+      "running-in period",
+      "break in"
+    ],
+    "related_terms": [
+      "piston-ring",
+      "service-manual"
+    ],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  },
+  {
+    "term": "Wire Wheel Brush",
+    "slug": "wire-wheel-brush",
+    "definition": "A rotating brush made of stiff wire strands used with a drill or bench grinder to remove rust, paint, and corrosion from metal parts before refinishing or inspection.",
+    "category": "tools",
+    "subcategory": "cleaning",
+    "aliases": [
+      "wire brush",
+      "wire wheel"
+    ],
+    "related_terms": [],
+    "applies_to": [
+      "motorcycle",
+      "scooter"
+    ],
+    "difficulty": "beginner"
+  }
+]

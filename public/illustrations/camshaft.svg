@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Shaft center line -->
+  <line x1="30" y1="100" x2="270" y2="100" stroke="#999" stroke-width="0.5" stroke-dasharray="4,3"/>
+  <!-- Main shaft -->
+  <rect x="30" y="92" width="240" height="16" rx="8" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Cam lobes -->
+  <path d="M70,92 Q70,60 80,55 Q90,52 90,92" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M120,92 Q118,58 130,50 Q142,58 140,92" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M170,92 Q168,55 180,48 Q192,55 190,92" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M220,92 Q218,60 228,55 Q238,60 240,92" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Journal bearings -->
+  <rect x="45" y="88" width="12" height="24" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="150" y="88" width="12" height="24" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <rect x="248" y="88" width="12" height="24" rx="2" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Drive sprocket end -->
+  <circle cx="30" cy="100" r="14" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="30" cy="100" r="8" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Callouts -->
+  <line x1="130" y1="50" x2="130" y2="28" stroke="#999" stroke-width="0.8"/>
+  <text x="130" y="22" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Cam lobe</text>
+  <line x1="51" y1="112" x2="51" y2="145" stroke="#999" stroke-width="0.8"/>
+  <text x="51" y="155" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Journal</text>
+  <line x1="30" y1="115" x2="30" y2="145" stroke="#999" stroke-width="0.8"/>
+  <text x="30" y="155" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Sprocket</text>
+  <!-- Label -->
+  <text x="150" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Camshaft with Lobes</text>
+</svg>

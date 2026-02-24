@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Exploded view: plates separated vertically -->
+  <!-- Clutch basket (outer) - bottom -->
+  <ellipse cx="100" cy="165" rx="45" ry="12" fill="none" stroke="#333333" stroke-width="2"/>
+  <path d="M55,165 L55,155 Q55,145 100,145 Q145,145 145,155 L145,165" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Friction plate 1 -->
+  <ellipse cx="100" cy="130" rx="40" ry="10" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <ellipse cx="100" cy="130" rx="20" ry="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Cross-hatching on friction plate -->
+  <line x1="68" y1="127" x2="75" y2="133" stroke="#333333" stroke-width="0.5"/>
+  <line x1="80" y1="124" x2="87" y2="130" stroke="#333333" stroke-width="0.5"/>
+  <line x1="113" y1="124" x2="120" y2="130" stroke="#333333" stroke-width="0.5"/>
+  <line x1="125" y1="127" x2="132" y2="133" stroke="#333333" stroke-width="0.5"/>
+  <!-- Steel plate 1 -->
+  <ellipse cx="100" cy="110" rx="38" ry="9" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <ellipse cx="100" cy="110" rx="22" ry="6" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Friction plate 2 -->
+  <ellipse cx="100" cy="90" rx="40" ry="10" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <ellipse cx="100" cy="90" rx="20" ry="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <line x1="68" y1="87" x2="75" y2="93" stroke="#333333" stroke-width="0.5"/>
+  <line x1="125" y1="87" x2="132" y2="93" stroke="#333333" stroke-width="0.5"/>
+  <!-- Steel plate 2 -->
+  <ellipse cx="100" cy="70" rx="38" ry="9" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <ellipse cx="100" cy="70" rx="22" ry="6" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Pressure plate (top) -->
+  <ellipse cx="100" cy="48" rx="42" ry="11" fill="none" stroke="#333333" stroke-width="2"/>
+  <ellipse cx="100" cy="48" rx="18" ry="5" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Springs on pressure plate -->
+  <circle cx="78" cy="45" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="100" cy="40" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="122" cy="45" r="4" fill="none" stroke="#333333" stroke-width="1"/>
+  <!-- Center hub (dashed line through) -->
+  <line x1="100" y1="35" x2="100" y2="175" stroke="#999" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <!-- Exploded arrows -->
+  <line x1="100" y1="55" x2="100" y2="62" stroke="#999" stroke-width="0.5"/>
+  <line x1="100" y1="78" x2="100" y2="82" stroke="#999" stroke-width="0.5"/>
+  <line x1="100" y1="98" x2="100" y2="103" stroke="#999" stroke-width="0.5"/>
+  <line x1="100" y1="118" x2="100" y2="122" stroke="#999" stroke-width="0.5"/>
+  <!-- Callouts -->
+  <line x1="142" y1="48" x2="200" y2="35" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="38" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Pressure plate</text>
+  <line x1="140" y1="90" x2="200" y2="80" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="83" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Friction plate</text>
+  <line x1="138" y1="110" x2="200" y2="110" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="113" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Steel plate</text>
+  <line x1="145" y1="160" x2="200" y2="155" stroke="#999" stroke-width="0.8"/>
+  <text x="202" y="158" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Clutch basket</text>
+  <!-- Label -->
+  <text x="150" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Clutch Assembly (Exploded)</text>
+</svg>

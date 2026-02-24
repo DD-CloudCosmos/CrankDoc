@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#FAFAFA"/>
+  <!-- Sprocket body -->
+  <circle cx="150" cy="100" r="55" fill="none" stroke="#333333" stroke-width="2"/>
+  <!-- Center bore -->
+  <circle cx="150" cy="100" r="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Sprocket teeth (simplified, around the circumference) -->
+  <!-- Top teeth -->
+  <path d="M145,45 L150,38 L155,45" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M132,48 L135,40 L140,47" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M158,47 L163,40 L166,48" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Right teeth -->
+  <path d="M200,85 L208,82 L205,90" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M203,98 L212,97 L206,104" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M200,112 L208,115 L203,120" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Bottom teeth -->
+  <path d="M155,153 L150,162 L145,153" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M168,150 L165,158 L160,151" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M140,151 L135,158 L130,150" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Left teeth -->
+  <path d="M100,112 L92,115 L95,108" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M97,98 L88,97 L94,90" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <path d="M100,85 L92,82 L97,78" fill="none" stroke="#333333" stroke-width="1.5"/>
+  <!-- Chain (wrapping around right side and going off) -->
+  <path d="M150,38 Q210,38 220,60 Q230,85 220,100 Q220,130 200,155 L150,162" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+  <!-- Chain links (small rectangles along the chain) -->
+  <rect x="195" y="47" width="10" height="6" rx="1" fill="none" stroke="#333333" stroke-width="1" transform="rotate(25, 200, 50)"/>
+  <rect x="215" y="70" width="10" height="6" rx="1" fill="none" stroke="#333333" stroke-width="1" transform="rotate(70, 220, 73)"/>
+  <rect x="218" y="95" width="10" height="6" rx="1" fill="none" stroke="#333333" stroke-width="1" transform="rotate(90, 223, 98)"/>
+  <rect x="210" y="120" width="10" height="6" rx="1" fill="none" stroke="#333333" stroke-width="1" transform="rotate(115, 215, 123)"/>
+  <rect x="195" y="145" width="10" height="6" rx="1" fill="none" stroke="#333333" stroke-width="1" transform="rotate(145, 200, 148)"/>
+  <!-- Chain extending away -->
+  <line x1="155" y1="38" x2="270" y2="38" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+  <line x1="145" y1="162" x2="30" y2="162" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+  <!-- Link pins -->
+  <circle cx="170" cy="38" r="2" fill="#333333"/>
+  <circle cx="190" cy="38" r="2" fill="#333333"/>
+  <circle cx="210" cy="38" r="2" fill="#333333"/>
+  <circle cx="230" cy="38" r="2" fill="#333333"/>
+  <circle cx="250" cy="38" r="2" fill="#333333"/>
+  <!-- Callouts -->
+  <line x1="150" y1="85" x2="60" y2="55" stroke="#999" stroke-width="0.8"/>
+  <text x="30" y="52" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Sprocket</text>
+  <line x1="240" y1="38" x2="255" y2="20" stroke="#999" stroke-width="0.8"/>
+  <text x="257" y="18" font-family="Inter, Arial, sans-serif" font-size="10" fill="#666">Chain</text>
+  <!-- Label -->
+  <text x="150" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#666">Chain &amp; Sprocket</text>
+</svg>
