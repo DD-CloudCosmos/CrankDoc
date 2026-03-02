@@ -104,6 +104,7 @@ export interface Database {
           tire_rear?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       diagnostic_trees: {
         Row: {
@@ -136,6 +137,7 @@ export interface Database {
           tree_data?: Json
           created_at?: string
         }
+        Relationships: []
       }
       dtc_codes: {
         Row: {
@@ -183,6 +185,7 @@ export interface Database {
           fix_reference?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       service_intervals: {
         Row: {
@@ -221,6 +224,7 @@ export interface Database {
           fluid_spec?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       technical_documents: {
         Row: {
@@ -256,6 +260,7 @@ export interface Database {
           source_attribution?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       recalls: {
         Row: {
@@ -312,6 +317,7 @@ export interface Database {
           park_outside?: boolean
           created_at?: string
         }
+        Relationships: []
       }
       glossary_terms: {
         Row: {
@@ -356,6 +362,7 @@ export interface Database {
           difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
           created_at?: string
         }
+        Relationships: []
       }
       motorcycle_images: {
         Row: {
@@ -385,6 +392,7 @@ export interface Database {
           source_attribution?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       document_sources: {
         Row: {
@@ -441,6 +449,7 @@ export interface Database {
           processed_at?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       document_chunks: {
         Row: {
@@ -491,6 +500,7 @@ export interface Database {
           content_type?: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
           created_at?: string
         }
+        Relationships: []
       }
       extraction_jobs: {
         Row: {
@@ -544,6 +554,7 @@ export interface Database {
           created_at?: string
           completed_at?: string | null
         }
+        Relationships: []
       }
     }
     Views: Record<string, never>

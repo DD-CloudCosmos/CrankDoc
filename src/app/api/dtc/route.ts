@@ -45,7 +45,7 @@ export async function GET(request: Request): Promise<NextResponse<DtcApiResponse
     }
 
     if (severity) {
-      query = query.eq('severity', severity)
+      query = query.eq('severity', severity as 'low' | 'medium' | 'high' | 'critical')
     }
 
     const { data, error, count } = await query
