@@ -9,6 +9,7 @@ import { QuickSpecs } from '@/components/QuickSpecs'
 import { BikeDetailTabs } from '@/components/BikeDetailTabs'
 import { GenerationNavSelector } from '@/components/GenerationNavSelector'
 import { SafeDisclaimer } from '@/components/SafeDisclaimer'
+import { BikeAskAI } from '@/components/BikeAskAI'
 import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument, Recall } from '@/types/database.types'
 
 interface PageProps {
@@ -246,13 +247,14 @@ export default async function BikeDetailPage({ params }: PageProps) {
               </div>
             )
           })()}
-          {trees.length > 0 && (
-            <div className="mt-5">
+          <div className="mt-5 flex flex-wrap gap-3">
+            {trees.length > 0 && (
               <Link href={`/diagnose?bike=${motorcycle.id}`}>
                 <Button size="lg" className="w-full md:w-auto">Start Diagnosing</Button>
               </Link>
-            </div>
-          )}
+            )}
+            <BikeAskAI motorcycleId={motorcycle.id} make={make} model={model} />
+          </div>
         </div>
       </div>
 

@@ -153,7 +153,17 @@ export async function POST(request: Request): Promise<Response> {
     })
   }
 
-  // Step 4: Assemble prompt and stream the LLM response
+  // Step 4: Build source citations from matched chunks
+  const sources = chunks.map((chunk) => ({
+    sectionTitle: chunk.sectionTitle,
+    pageNumbers: chunk.pageNumbers,
+    contentType: chunk.contentType,
+    make: chunk.make,
+    model: chunk.model,
+    similarity: chunk.similarity,
+  }))
+
+  // Step 5: Assemble prompt and stream the LLM response
   const userPrompt = assembleRagPrompt(query, chunks)
 
   const result = streamText({
@@ -163,5 +173,31 @@ export async function POST(request: Request): Promise<Response> {
     maxOutputTokens: 2000,
   })
 
-  return result.toTextStreamResponse()
+  // Stream the AI response, then append source metadata after completion
+  const encoder = new TextEncoder()
+  const aiStream = result.toTextStreamResponse().body!
+
+  const outputStream = new ReadableStream({
+    async start(controller) {
+      const reader = aiStream.getReader()
+      try {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          controller.enqueue(value)
+        }
+        // Append sources as JSON after a delimiter
+        controller.enqueue(encoder.encode('\n---SOURCES---\n'))
+        controller.enqueue(encoder.encode(JSON.stringify(sources)))
+      } catch (err) {
+        controller.error(err)
+      } finally {
+        controller.close()
+      }
+    },
+  })
+
+  return new Response(outputStream, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  })
 }

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Search, Database, FileText, Scan, BookOpen } from 'lucide-react'
+import { Search, Database, FileText, Scan, BookOpen, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HowItWorks } from '@/components/HowItWorks'
 import { FeatureHighlight } from '@/components/FeatureHighlight'
@@ -73,6 +73,12 @@ export default function Home() {
             title="DTC Codes"
             description="Search and look up diagnostic trouble codes to understand what your motorcycle is telling you."
             href="/dtc"
+          />
+          <FeatureHighlight
+            icon={<Sparkles className="h-10 w-10 md:h-8 md:w-8 text-primary" />}
+            title="Smart Search"
+            description="Ask AI-powered questions about motorcycle maintenance, specs, and diagnostics using our reference library."
+            href="/search"
           />
           <FeatureHighlight
             icon={<BookOpen className="h-10 w-10 md:h-8 md:w-8 text-primary" />}

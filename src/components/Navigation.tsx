@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Database, FileText, BookOpen, AlertTriangle } from "lucide-react";
+import { Home, Search, Database, FileText, BookOpen, AlertTriangle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -10,6 +10,11 @@ const navItems = [
     name: "Home",
     href: "/",
     icon: Home,
+  },
+  {
+    name: "Ask AI",
+    href: "/search",
+    icon: Sparkles,
   },
   {
     name: "Diagnose",

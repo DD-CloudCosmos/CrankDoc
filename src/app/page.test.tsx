@@ -33,13 +33,14 @@ describe('Home page', () => {
     expect(screen.getByText('How It Works')).toBeInTheDocument()
   })
 
-  it('renders all four feature highlights', () => {
+  it('renders all feature highlights', () => {
     render(<Home />)
     expect(screen.getByText('Features')).toBeInTheDocument()
     expect(screen.getByText('Diagnose')).toBeInTheDocument()
     expect(screen.getByText('Bikes')).toBeInTheDocument()
     expect(screen.getByText('VIN Decoder')).toBeInTheDocument()
     expect(screen.getByText('DTC Codes')).toBeInTheDocument()
+    expect(screen.getByText('Smart Search')).toBeInTheDocument()
   })
 
   it('renders the safety disclaimer', () => {

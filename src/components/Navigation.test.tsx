@@ -11,6 +11,7 @@ describe('Navigation', () => {
     render(<Navigation />)
     // Each item appears in both mobile and desktop navs
     expect(screen.getAllByText('Home').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Ask AI').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Diagnose').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Bikes').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('DTC').length).toBeGreaterThanOrEqual(1)
@@ -22,6 +23,7 @@ describe('Navigation', () => {
     const links = screen.getAllByRole('link')
     const hrefs = links.map((link) => link.getAttribute('href'))
     expect(hrefs).toContain('/')
+    expect(hrefs).toContain('/search')
     expect(hrefs).toContain('/diagnose')
     expect(hrefs).toContain('/bikes')
     expect(hrefs).toContain('/dtc')
