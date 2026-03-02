@@ -12,7 +12,12 @@
  * ```tsx
  * import { createServerClient } from '@/lib/supabase'
  * ```
+ *
+ * @example Admin / Service Role (server-side only)
+ * ```tsx
+ * import { createServiceClient } from '@/lib/supabase'
+ * ```
  */
 
 export { createClient } from './client'
-export { createServerClient } from './server'
+export { createServerClient, createServiceClient } from './server'

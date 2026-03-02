@@ -60,18 +60,40 @@ export function createServerClient() {
 }
 
 /**
- * TODO: Add createServiceClient() when admin operations are needed
+ * Create a Supabase client with service role privileges for server-side admin operations
  *
- * This will use SUPABASE_SERVICE_ROLE_KEY and bypass RLS policies.
- * Only use for trusted server-side operations (never expose to browser).
+ * This client bypasses Row Level Security (RLS) policies. Only use for trusted
+ * server-side operations such as admin pages, background jobs, or data migrations.
+ * Never expose the service role key to the browser.
  *
- * @example
+ * @returns Supabase client instance configured with service role key
+ * @throws Error if environment variables are not set
+ *
+ * @example API Route (admin)
  * ```tsx
- * // Future implementation
- * export function createServiceClient() {
- *   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
- *   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
- *   return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey)
+ * import { createServiceClient } from '@/lib/supabase/server'
+ *
+ * export async function DELETE(request: Request) {
+ *   const supabase = createServiceClient()
+ *   // Bypasses RLS — use with caution
+ *   await supabase.from('bikes').delete().eq('id', someId)
  * }
  * ```
  */
+export function createServiceClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      'Missing Supabase environment variables. Check that NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set in .env.local'
+    )
+  }
+
+  return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  })
+}
