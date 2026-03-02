@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "db:migrate": "node scripts/migrate-rest.js",
     "db:verify": "node scripts/verify-schema-rest.js",
-    "db:test": "node scripts/test-api.js"
+    "db:test": "node scripts/test-api.js",
+    "scrape:specs": "tsx scripts/scrape-bike-specs.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.51",
@@ -36,6 +37,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/jsdom": "^28.0.0",
     "@types/node": "^20",
     "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
