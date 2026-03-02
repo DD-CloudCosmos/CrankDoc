@@ -60,18 +60,28 @@ export function createServerClient() {
 }
 
 /**
- * TODO: Add createServiceClient() when admin operations are needed
+ * Create a Supabase client with the service role key (bypasses RLS).
  *
- * This will use SUPABASE_SERVICE_ROLE_KEY and bypass RLS policies.
- * Only use for trusted server-side operations (never expose to browser).
+ * Only use for trusted server-side operations: RAG ingestion,
+ * extraction jobs, and admin tasks. Never expose to the browser.
  *
- * @example
- * ```tsx
- * // Future implementation
- * export function createServiceClient() {
- *   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
- *   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
- *   return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey)
- * }
- * ```
+ * @returns Supabase client instance configured with service role key
+ * @throws Error if environment variables are not set
  */
+export function createServiceClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      'Missing Supabase environment variables. Check that NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set in .env.local'
+    )
+  }
+
+  return createSupabaseClient<Database>(supabaseUrl, serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  })
+}

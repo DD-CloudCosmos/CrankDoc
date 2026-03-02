@@ -7,6 +7,7 @@
  * supabase/migrations/002_phase5_schema.sql
  * supabase/migrations/004_recalls_schema.sql
  * supabase/migrations/005_glossary_schema.sql
+ * supabase/migrations/006_rag_schema.sql
  *
  * To regenerate from live database (after schema changes):
  * ```bash
@@ -385,9 +386,191 @@ export interface Database {
           created_at?: string
         }
       }
+      document_sources: {
+        Row: {
+          id: string
+          title: string
+          source_type: 'pdf' | 'scan' | 'web' | 'manual_entry'
+          file_path: string | null
+          file_hash: string | null
+          motorcycle_id: string | null
+          make: string | null
+          model: string | null
+          year_start: number | null
+          year_end: number | null
+          manual_type: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
+          total_pages: number | null
+          processing_status: 'pending' | 'processing' | 'completed' | 'failed'
+          processing_error: string | null
+          processed_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          source_type: 'pdf' | 'scan' | 'web' | 'manual_entry'
+          file_path?: string | null
+          file_hash?: string | null
+          motorcycle_id?: string | null
+          make?: string | null
+          model?: string | null
+          year_start?: number | null
+          year_end?: number | null
+          manual_type?: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
+          total_pages?: number | null
+          processing_status?: 'pending' | 'processing' | 'completed' | 'failed'
+          processing_error?: string | null
+          processed_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          source_type?: 'pdf' | 'scan' | 'web' | 'manual_entry'
+          file_path?: string | null
+          file_hash?: string | null
+          motorcycle_id?: string | null
+          make?: string | null
+          model?: string | null
+          year_start?: number | null
+          year_end?: number | null
+          manual_type?: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
+          total_pages?: number | null
+          processing_status?: 'pending' | 'processing' | 'completed' | 'failed'
+          processing_error?: string | null
+          processed_at?: string | null
+          created_at?: string
+        }
+      }
+      document_chunks: {
+        Row: {
+          id: string
+          document_source_id: string
+          chunk_index: number
+          content: string
+          content_length: number
+          embedding: number[]
+          motorcycle_id: string | null
+          make: string | null
+          model: string | null
+          section_title: string | null
+          section_hierarchy: string[] | null
+          page_numbers: number[] | null
+          content_type: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          document_source_id: string
+          chunk_index: number
+          content: string
+          content_length: number
+          embedding: number[]
+          motorcycle_id?: string | null
+          make?: string | null
+          model?: string | null
+          section_title?: string | null
+          section_hierarchy?: string[] | null
+          page_numbers?: number[] | null
+          content_type?: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          document_source_id?: string
+          chunk_index?: number
+          content?: string
+          content_length?: number
+          embedding?: number[]
+          motorcycle_id?: string | null
+          make?: string | null
+          model?: string | null
+          section_title?: string | null
+          section_hierarchy?: string[] | null
+          page_numbers?: number[] | null
+          content_type?: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
+          created_at?: string
+        }
+      }
+      extraction_jobs: {
+        Row: {
+          id: string
+          document_source_id: string
+          extraction_type: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
+          target_table: string
+          status: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
+          result_data: Json | null
+          review_notes: string | null
+          error_message: string | null
+          chunks_used: string[] | null
+          llm_model: string | null
+          prompt_tokens: number | null
+          completion_tokens: number | null
+          cost_usd: number | null
+          created_at: string
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          document_source_id: string
+          extraction_type: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
+          target_table: string
+          status?: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
+          result_data?: Json | null
+          review_notes?: string | null
+          error_message?: string | null
+          chunks_used?: string[] | null
+          llm_model?: string | null
+          prompt_tokens?: number | null
+          completion_tokens?: number | null
+          cost_usd?: number | null
+          created_at?: string
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          document_source_id?: string
+          extraction_type?: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
+          target_table?: string
+          status?: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
+          result_data?: Json | null
+          review_notes?: string | null
+          error_message?: string | null
+          chunks_used?: string[] | null
+          llm_model?: string | null
+          prompt_tokens?: number | null
+          completion_tokens?: number | null
+          cost_usd?: number | null
+          created_at?: string
+          completed_at?: string | null
+        }
+      }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      match_document_chunks: {
+        Args: {
+          query_embedding: string
+          match_count: number
+          filter_motorcycle_id: string | null
+          filter_make: string | null
+          filter_model: string | null
+          filter_content_type: string | null
+          similarity_threshold: number
+        }
+        Returns: {
+          id: string
+          content: string
+          section_title: string | null
+          section_hierarchy: string[] | null
+          page_numbers: number[] | null
+          content_type: string
+          make: string | null
+          model: string | null
+          similarity: number
+        }[]
+      }
+    }
     Enums: Record<string, never>
   }
 }
@@ -408,6 +591,9 @@ export type TechnicalDocument = Tables<'technical_documents'>
 export type Recall = Tables<'recalls'>
 export type MotorcycleImage = Tables<'motorcycle_images'>
 export type GlossaryTerm = Tables<'glossary_terms'>
+export type DocumentSource = Tables<'document_sources'>
+export type DocumentChunk = Tables<'document_chunks'>
+export type ExtractionJob = Tables<'extraction_jobs'>
 
 // Decision tree node types (for tree_data JSONB structure)
 export interface DecisionTreeNode {

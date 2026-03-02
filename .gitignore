@@ -56,3 +56,6 @@ supabase/.temp/
 
 # Dev logs
 dev-server.log
+
+# RAG source documents (PDFs, scanned books — do not commit)
+data/manuals/
