@@ -2,355 +2,263 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import DiagnosePage from './page'
 import { createServerClient } from '@/lib/supabase/server'
-import type { DiagnosticTree } from '@/types/database.types'
 
 vi.mock('@/lib/supabase/server', () => ({
   createServerClient: vi.fn(),
 }))
 
-describe('DiagnosePage', () => {
-  const mockTrees: DiagnosticTree[] = [
-    {
-      id: 'tree-1',
-      motorcycle_id: 'moto-1',
-      title: "Engine Won't Start",
-      description: 'Diagnosis for non-starting engine.',
-      category: 'electrical',
-      difficulty: 'beginner',
-      tree_data: { nodes: [] },
-      created_at: '2024-01-01T00:00:00Z',
-    },
-    {
-      id: 'tree-2',
-      motorcycle_id: 'moto-2',
-      title: "Won't Idle / Stalls",
-      description: 'Diagnose idle issues.',
-      category: 'fuel',
-      difficulty: 'intermediate',
-      tree_data: { nodes: [] },
-      created_at: '2024-01-01T00:00:00Z',
-    },
-  ]
+vi.mock('next/link', () => ({
+  default: ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}))
 
-  const mockMotorcycle = {
+const mockMotorcycles = [
+  {
     id: 'moto-1',
     make: 'Honda',
     model: 'CBR600RR',
     year_start: 2007,
     year_end: 2012,
     category: 'sport',
-    generation: '2007-2012',
+    generation: 'EFI 2007-2012',
+    displacement_cc: 599,
+    engine_type: 'Inline-4',
+    image_url: null,
+    fuel_system: 'EFI',
+    dry_weight_kg: 186,
+    horsepower: 118,
+    torque_nm: 66,
+    fuel_capacity_liters: 18,
+    oil_capacity_liters: 3.4,
+    coolant_capacity_liters: null,
+    valve_clearance_intake: null,
+    valve_clearance_exhaust: null,
+    spark_plug: null,
+    tire_front: null,
+    tire_rear: null,
     created_at: '2024-01-01T00:00:00Z',
-  }
+  },
+  {
+    id: 'moto-2',
+    make: 'Yamaha',
+    model: 'MT-07',
+    year_start: 2014,
+    year_end: null,
+    category: 'naked',
+    generation: null,
+    displacement_cc: 689,
+    engine_type: 'Parallel-Twin',
+    image_url: null,
+    fuel_system: 'EFI',
+    dry_weight_kg: 182,
+    horsepower: 73,
+    torque_nm: 67,
+    fuel_capacity_liters: 14,
+    oil_capacity_liters: 3.0,
+    coolant_capacity_liters: null,
+    valve_clearance_intake: null,
+    valve_clearance_exhaust: null,
+    spark_plug: null,
+    tire_front: null,
+    tire_rear: null,
+    created_at: '2024-01-01T00:00:00Z',
+  },
+]
 
+const mockTrees = [
+  {
+    id: 'tree-1',
+    motorcycle_id: 'moto-1',
+    title: "Engine Won't Start",
+    description: 'Diagnosis for non-starting engine.',
+    category: 'electrical',
+    difficulty: 'beginner',
+    tree_data: { nodes: [] },
+    created_at: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'tree-2',
+    motorcycle_id: 'moto-2',
+    title: "Won't Idle / Stalls",
+    description: 'Diagnose idle issues.',
+    category: 'fuel',
+    difficulty: 'intermediate',
+    tree_data: { nodes: [] },
+    created_at: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'tree-3',
+    motorcycle_id: null,
+    title: 'General Maintenance Check',
+    description: 'Universal maintenance guide.',
+    category: 'general',
+    difficulty: 'beginner',
+    tree_data: { nodes: [] },
+    created_at: '2024-01-01T00:00:00Z',
+  },
+]
+
+describe('DiagnosePage', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  function makeUnfilteredClient(data: DiagnosticTree[] | null, error: { message: string } | null = null) {
-    return {
-      from: vi.fn(() => ({
-        select: vi.fn(() => ({
-          order: vi.fn(() => ({
-            data,
-            error,
-          })),
-          or: vi.fn(() => ({
-            order: vi.fn(() => ({
-              data,
-              error,
+  describe('Step 1 — no bike param', () => {
+    function makeStep1Client() {
+      return {
+        from: vi.fn((table: string) => {
+          if (table === 'motorcycles') {
+            return {
+              select: vi.fn(() => ({
+                order: vi.fn(() => ({
+                  data: mockMotorcycles,
+                  error: null,
+                })),
+              })),
+            }
+          }
+          // diagnostic_trees — for tree counts
+          return {
+            select: vi.fn(() => ({
+              data: mockTrees,
+              error: null,
             })),
-          })),
-          eq: vi.fn(() => ({
-            single: vi.fn(() => ({
-              data: null,
-              error: { code: 'PGRST116', message: 'Not found' },
+          }
+        }),
+      }
+    }
+
+    it('renders the step indicator at step 1', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep1Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
+      // Step 1 is active — "Select" label visible, step indicator renders "1"
+      expect(screen.getByText('Select')).toBeInTheDocument()
+      expect(screen.getByText('Symptom')).toBeInTheDocument()
+      expect(screen.getByText('Fix')).toBeInTheDocument()
+    })
+
+    it('renders the bike selector with motorcycles', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep1Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
+      expect(screen.getByText('Select Your Motorcycle')).toBeInTheDocument()
+      expect(screen.getByText('Honda CBR600RR')).toBeInTheDocument()
+      expect(screen.getByText('Yamaha MT-07')).toBeInTheDocument()
+    })
+
+    it('renders category filter buttons', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep1Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
+      expect(screen.getByRole('button', { name: 'All' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Sport' })).toBeInTheDocument()
+    })
+
+    it('renders general guides link', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep1Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
+      expect(screen.getByText(/Browse general guides/)).toBeInTheDocument()
+    })
+  })
+
+  describe('Step 2 — specific bike param', () => {
+    function makeStep2Client() {
+      return {
+        from: vi.fn((table: string) => {
+          if (table === 'motorcycles') {
+            return {
+              select: vi.fn(() => ({
+                eq: vi.fn(() => ({
+                  single: vi.fn(() => ({
+                    data: mockMotorcycles[0],
+                    error: null,
+                  })),
+                })),
+              })),
+            }
+          }
+          // diagnostic_trees for specific bike
+          return {
+            select: vi.fn(() => ({
+              eq: vi.fn(() => ({
+                order: vi.fn(() => ({
+                  order: vi.fn(() => ({
+                    data: [mockTrees[0]],
+                    error: null,
+                  })),
+                })),
+              })),
+            })),
+          }
+        }),
+      }
+    }
+
+    it('renders the step indicator at step 2', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep2Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
+      expect(screen.getByText('Select')).toBeInTheDocument()
+      expect(screen.getByText('Symptom')).toBeInTheDocument()
+    })
+
+    it('renders the symptom list with bike context', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep2Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
+      expect(screen.getByText('Honda CBR600RR')).toBeInTheDocument()
+      expect(screen.getByText(/What's the problem/i)).toBeInTheDocument()
+    })
+
+    it('shows Change link back to bike selection', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep2Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
+      expect(screen.getByRole('link', { name: /change/i })).toHaveAttribute('href', '/diagnose')
+    })
+
+    it('renders tree rows', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeStep2Client() as never)
+
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
+      expect(screen.getByText("Engine Won't Start")).toBeInTheDocument()
+    })
+  })
+
+  describe('Step 2 — general mode', () => {
+    function makeGeneralClient() {
+      return {
+        from: vi.fn(() => ({
+          select: vi.fn(() => ({
+            is: vi.fn(() => ({
+              order: vi.fn(() => ({
+                order: vi.fn(() => ({
+                  data: [mockTrees[2]],
+                  error: null,
+                })),
+              })),
             })),
           })),
         })),
-      })),
+      }
     }
-  }
 
-  it('renders the page title', async () => {
-    vi.mocked(createServerClient).mockReturnValue(makeUnfilteredClient(mockTrees) as never)
+    it('renders general guides context bar', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeGeneralClient() as never)
 
-    render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
-    expect(screen.getByRole('heading', { name: /diagnostic trees/i, level: 1 })).toBeInTheDocument()
-  })
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'general' }) }))
+      expect(screen.getByText('General Guides')).toBeInTheDocument()
+      expect(screen.getByText('Universal troubleshooting for all motorcycles')).toBeInTheDocument()
+    })
 
-  it('displays diagnostic trees when data is loaded', async () => {
-    vi.mocked(createServerClient).mockReturnValue(makeUnfilteredClient(mockTrees) as never)
+    it('renders universal trees', async () => {
+      vi.mocked(createServerClient).mockReturnValue(makeGeneralClient() as never)
 
-    render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
-    expect(screen.getByText("Engine Won't Start")).toBeInTheDocument()
-    expect(screen.getByText("Won't Idle / Stalls")).toBeInTheDocument()
-  })
-
-  it('displays empty state when no trees exist', async () => {
-    vi.mocked(createServerClient).mockReturnValue(makeUnfilteredClient([]) as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
-    expect(screen.getByText(/no diagnostic trees available yet/i)).toBeInTheDocument()
-  })
-
-  it('displays error message when query fails', async () => {
-    vi.mocked(createServerClient).mockReturnValue(
-      makeUnfilteredClient(null, { message: 'Query failed' }) as never
-    )
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
-    expect(screen.getByText(/error loading diagnostic trees/i)).toBeInTheDocument()
-  })
-
-  it('shows no badge or filter when no query param is provided', async () => {
-    vi.mocked(createServerClient).mockReturnValue(makeUnfilteredClient(mockTrees) as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({}) }))
-    expect(screen.queryByText('View all guides')).not.toBeInTheDocument()
-    expect(screen.queryByText('Honda CBR600RR')).not.toBeInTheDocument()
-  })
-
-  it('displays motorcycle name badge when filtered by bike', async () => {
-    const filteredTrees = [mockTrees[0]]
-    const mockClient = {
-      from: vi.fn((table: string) => {
-        if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              eq: vi.fn(() => ({
-                single: vi.fn(() => ({
-                  data: mockMotorcycle,
-                  error: null,
-                })),
-              })),
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-              or: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  data: filteredTrees,
-                  error: null,
-                })),
-              })),
-            })),
-          }
-        }
-        return {
-          select: vi.fn(() => ({
-            or: vi.fn(() => ({
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-            })),
-            order: vi.fn(() => ({
-              data: filteredTrees,
-              error: null,
-            })),
-          })),
-        }
-      }),
-    }
-    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
-    expect(screen.getByText('Honda CBR600RR')).toBeInTheDocument()
-  })
-
-  it('shows "View all guides" button when filtered', async () => {
-    const filteredTrees = [mockTrees[0]]
-    const mockClient = {
-      from: vi.fn((table: string) => {
-        if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              eq: vi.fn(() => ({
-                single: vi.fn(() => ({
-                  data: mockMotorcycle,
-                  error: null,
-                })),
-              })),
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-              or: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  data: filteredTrees,
-                  error: null,
-                })),
-              })),
-            })),
-          }
-        }
-        return {
-          select: vi.fn(() => ({
-            or: vi.fn(() => ({
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-            })),
-            order: vi.fn(() => ({
-              data: filteredTrees,
-              error: null,
-            })),
-          })),
-        }
-      }),
-    }
-    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
-    expect(screen.getByText('View all guides')).toBeInTheDocument()
-  })
-
-  it('renders filtered trees when bike query param is provided', async () => {
-    const filteredTrees = [mockTrees[0]]
-    const mockClient = {
-      from: vi.fn((table: string) => {
-        if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              eq: vi.fn(() => ({
-                single: vi.fn(() => ({
-                  data: mockMotorcycle,
-                  error: null,
-                })),
-              })),
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-              or: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  data: filteredTrees,
-                  error: null,
-                })),
-              })),
-            })),
-          }
-        }
-        return {
-          select: vi.fn(() => ({
-            or: vi.fn(() => ({
-              order: vi.fn(() => ({
-                data: filteredTrees,
-                error: null,
-              })),
-            })),
-            order: vi.fn(() => ({
-              data: filteredTrees,
-              error: null,
-            })),
-          })),
-        }
-      }),
-    }
-    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
-    expect(screen.getByText("Engine Won't Start")).toBeInTheDocument()
-    expect(screen.queryByText("Won't Idle / Stalls")).not.toBeInTheDocument()
-  })
-
-  it('handles invalid bike ID gracefully', async () => {
-    const mockClient = {
-      from: vi.fn((table: string) => {
-        if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              eq: vi.fn(() => ({
-                single: vi.fn(() => ({
-                  data: null,
-                  error: { code: 'PGRST116', message: 'Not found' },
-                })),
-              })),
-              order: vi.fn(() => ({
-                data: [],
-                error: null,
-              })),
-              or: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  data: [],
-                  error: null,
-                })),
-              })),
-            })),
-          }
-        }
-        return {
-          select: vi.fn(() => ({
-            or: vi.fn(() => ({
-              order: vi.fn(() => ({
-                data: [],
-                error: null,
-              })),
-            })),
-            order: vi.fn(() => ({
-              data: [],
-              error: null,
-            })),
-          })),
-        }
-      }),
-    }
-    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'invalid-id' }) }))
-    // Page should still render without crashing
-    expect(screen.getByRole('heading', { name: /diagnostic trees/i, level: 1 })).toBeInTheDocument()
-    // No badge shown since motorcycle wasn't found
-    expect(screen.queryByText('View all guides')).not.toBeInTheDocument()
-  })
-
-  it('shows filtered empty state when bike has no trees', async () => {
-    const mockClient = {
-      from: vi.fn((table: string) => {
-        if (table === 'motorcycles') {
-          return {
-            select: vi.fn(() => ({
-              eq: vi.fn(() => ({
-                single: vi.fn(() => ({
-                  data: mockMotorcycle,
-                  error: null,
-                })),
-              })),
-              order: vi.fn(() => ({
-                data: [],
-                error: null,
-              })),
-              or: vi.fn(() => ({
-                order: vi.fn(() => ({
-                  data: [],
-                  error: null,
-                })),
-              })),
-            })),
-          }
-        }
-        return {
-          select: vi.fn(() => ({
-            or: vi.fn(() => ({
-              order: vi.fn(() => ({
-                data: [],
-                error: null,
-              })),
-            })),
-            order: vi.fn(() => ({
-              data: [],
-              error: null,
-            })),
-          })),
-        }
-      }),
-    }
-    vi.mocked(createServerClient).mockReturnValue(mockClient as never)
-
-    render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'moto-1' }) }))
-    expect(screen.getByText(/no diagnostic trees available for this motorcycle yet/i)).toBeInTheDocument()
-    expect(screen.getByText('View all diagnostic guides')).toBeInTheDocument()
+      render(await DiagnosePage({ searchParams: Promise.resolve({ bike: 'general' }) }))
+      expect(screen.getByText('General Maintenance Check')).toBeInTheDocument()
+    })
   })
 })
