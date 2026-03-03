@@ -112,6 +112,12 @@ async function main() {
   const { parseWebContent } = await import('../src/lib/rag/documentParser')
   const { chunkDocument } = await import('../src/lib/rag/chunker')
   const { generateBatchEmbeddings, createOpenAIClient } = await import('../src/lib/rag/embeddings')
+  const { registerParser, getParser } = await import('../src/lib/scraper/parsers/parserRegistry')
+  const { parseMotorcycleSpecsHtml } = await import('../src/lib/scraper/parsers/motorcyclespecsParser')
+  const { isUrlAllowed } = await import('../src/lib/scraper/robotsChecker')
+
+  // Register parsers
+  registerParser('motorcyclespecs', parseMotorcycleSpecsHtml)
 
   const bikes = filterBikes(args.bikes)
   console.log(`\n  Found ${bikes.length} bike(s) to scrape\n`)
@@ -162,6 +168,14 @@ async function main() {
         }
       }
 
+      // Step 1.5: Robots.txt check
+      const robotsAllowed = await isUrlAllowed(source.url)
+      if (!robotsAllowed) {
+        console.log('  SKIPPED: blocked by robots.txt')
+        totalSourcesSkipped++
+        continue
+      }
+
       // Step 2: Fetch
       console.log('  [1/5] Fetching...')
       let fetchResult
@@ -189,7 +203,20 @@ async function main() {
           console.log(`    Sections: ${wikiResult.sections.length}`)
           console.log(`    Full text length: ${parsedText.length} chars`)
         }
+      } else if (source.parserId && getParser(source.parserId)) {
+        // Use registered parser for known source types
+        const parser = getParser(source.parserId)!
+        const parseResult = await parser(fetchResult.html, fetchResult.title)
+        parsedText = parseResult.fullText
+        title = fetchResult.title
+
+        if (args.verbose) {
+          console.log(`    Parser: ${source.parserId}`)
+          console.log(`    Sections: ${parseResult.sections.length}`)
+          console.log(`    Full text length: ${parsedText.length} chars`)
+        }
       } else {
+        // Generic fallback for unknown sources
         const webDoc = await parseWebContent(fetchResult.html, fetchResult.title)
         parsedText = webDoc.pages.map((p) => p.text).join('\n\n')
         title = fetchResult.title
