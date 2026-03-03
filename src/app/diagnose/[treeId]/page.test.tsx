@@ -60,7 +60,7 @@ const mockTreeRow = {
 const mockUniversalTree = {
   ...mockTreeRow,
   id: 'tree-universal',
-  motorcycle_id: null,
+  motorcycle_id: null as string | null,
   title: 'General Maintenance',
 }
 
@@ -70,7 +70,7 @@ const mockMotorcycle = {
   model: 'CBR600RR',
 }
 
-function makeClientForTree(tree: typeof mockTreeRow, motorcycle: typeof mockMotorcycle | null = mockMotorcycle) {
+function makeClientForTree(tree: typeof mockTreeRow | typeof mockUniversalTree, motorcycle: typeof mockMotorcycle | null = mockMotorcycle) {
   return {
     from: vi.fn((table: string) => {
       if (table === 'diagnostic_trees') {
