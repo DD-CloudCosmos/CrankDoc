@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { generateEmbedding, generateBatchEmbeddings, createOpenAIClient } from './embeddings'
 import { EMBEDDING_DIMENSIONS } from './rag.types'
