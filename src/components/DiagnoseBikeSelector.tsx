@@ -37,11 +37,9 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
         {CATEGORIES.map((cat) => (
           <Button
             key={cat}
-            variant={selectedCategory === cat ? 'default' : 'outline'}
+            variant={selectedCategory === cat ? 'pill-active' : 'pill'}
             size="sm"
-            className={selectedCategory === cat
-              ? 'rounded-[999px] bg-[#1F1F1F] text-white shrink-0'
-              : 'rounded-[999px] bg-background text-foreground border-border shrink-0'}
+            className="shrink-0"
             onClick={() => setSelectedCategory(cat)}
           >
             {cat}

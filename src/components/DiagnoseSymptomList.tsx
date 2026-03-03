@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ChevronRight, Zap, Cog, Fuel, Thermometer, CircleStop, ArrowUpDown, Wind, Power, Settings, Wrench } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
 import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 import type { LucideIcon } from 'lucide-react'
 
@@ -40,18 +41,6 @@ function groupTreesByCategory(trees: DiagnosticTree[]): Record<string, Diagnosti
   return grouped
 }
 
-function difficultyVariant(difficulty: string): 'secondary' | 'default' | 'destructive' | 'outline' {
-  switch (difficulty) {
-    case 'beginner':
-      return 'secondary'
-    case 'intermediate':
-      return 'default'
-    case 'advanced':
-      return 'destructive'
-    default:
-      return 'outline'
-  }
-}
 
 export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListProps) {
   const grouped = groupTreesByCategory(trees)
@@ -108,7 +97,11 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
                           <div>
                             <span className="font-semibold">{tree.title}</span>
                             {tree.description && <p className="text-sm text-muted-foreground line-clamp-2">{tree.description}</p>}
-                            {tree.difficulty && <Badge variant={difficultyVariant(tree.difficulty)}>{tree.difficulty}</Badge>}
+                            {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
+                              <Badge variant="outline" className={DIFFICULTY_STYLES[tree.difficulty].badgeClass}>
+                                {DIFFICULTY_STYLES[tree.difficulty].label}
+                              </Badge>
+                            )}
                           </div>
                           <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
                         </div>

@@ -18,11 +18,7 @@ interface GlossaryApiResponse {
   totalPages: number
 }
 
-const DIFFICULTY_STYLES: Record<string, { borderClass: string; label: string }> = {
-  beginner: { borderClass: 'border-green-500 text-green-700', label: 'Beginner' },
-  intermediate: { borderClass: 'border-amber-500 text-amber-700', label: 'Intermediate' },
-  advanced: { borderClass: 'border-red-500 text-red-700', label: 'Advanced' },
-}
+import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
 
 export function GlossaryList() {
   const [terms, setTerms] = useState<GlossaryTerm[]>([])
@@ -149,8 +145,8 @@ export function GlossaryList() {
                 <TableHead className="w-8"></TableHead>
                 <TableHead>Term</TableHead>
                 <TableHead className="hidden md:table-cell">Definition</TableHead>
-                <TableHead className="hidden sm:table-cell">Category</TableHead>
-                <TableHead className="hidden md:table-cell">Difficulty</TableHead>
+                <TableHead className="hidden sm:table-cell w-[120px]">Category</TableHead>
+                <TableHead className="hidden md:table-cell w-[120px]">Difficulty</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -175,11 +171,11 @@ export function GlossaryList() {
                         {term.definition}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <Badge variant="outline">{term.category}</Badge>
+                        <Badge variant="outline" className="min-w-[80px]">{term.category}</Badge>
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
                         {difficultyStyle && (
-                          <Badge variant="outline" className={difficultyStyle.borderClass}>
+                          <Badge variant="outline" className={`min-w-[80px] ${difficultyStyle.badgeClass}`}>
                             {difficultyStyle.label}
                           </Badge>
                         )}
@@ -197,7 +193,7 @@ export function GlossaryList() {
                               <div className="flex gap-2 md:hidden">
                                 <Badge variant="outline">{term.category}</Badge>
                                 {difficultyStyle && (
-                                  <Badge variant="outline" className={difficultyStyle.borderClass}>
+                                  <Badge variant="outline" className={difficultyStyle.badgeClass}>
                                     {difficultyStyle.label}
                                   </Badge>
                                 )}

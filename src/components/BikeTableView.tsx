@@ -99,7 +99,7 @@ export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps
             <TableRow className="border-b border-border bg-muted/30 hover:bg-muted/30">
               <SortHeader label="Motorcycle" field="make" currentSort={sort} currentDir={sortDir} />
               <SortHeader label="Years" field="year_start" currentSort={sort} currentDir={sortDir} />
-              <TableHead className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <TableHead className="w-[120px] text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Category
               </TableHead>
               <SortHeader label="Displacement" field="displacement_cc" currentSort={sort} currentDir={sortDir} className="text-right" />
@@ -136,7 +136,7 @@ export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps
                   <TableCell>
                     <Link href={`/bikes/${moto.id}`}>
                       {moto.category && (
-                        <Badge variant={categoryVariant(moto.category)}>
+                        <Badge variant={categoryVariant(moto.category)} className="min-w-[80px]">
                           {moto.category.charAt(0).toUpperCase() + moto.category.slice(1)}
                         </Badge>
                       )}

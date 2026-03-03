@@ -29,9 +29,8 @@ export function DtcManufacturerFilter({ activeManufacturer, onChange }: DtcManuf
         {MANUFACTURERS.map((mfr) => (
           <Button
             key={mfr.value}
-            variant={activeManufacturer === mfr.value ? 'default' : 'outline'}
+            variant={activeManufacturer === mfr.value ? 'pill-active' : 'pill'}
             size="sm"
-            className={activeManufacturer === mfr.value ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground'}
             onClick={() => onChange(mfr.value)}
           >
             {mfr.label}
