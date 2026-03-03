@@ -1,5 +1,6 @@
+import Link from 'next/link'
 import { Database, Search, CheckCircle } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 const steps = [
   {
@@ -24,7 +25,13 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section>
+    <section
+      className="bg-secondary rounded-[24px] p-8 sm:p-12"
+      style={{
+        animation: 'riseIn 0.6s ease-out both',
+        animationDelay: '200ms',
+      }}
+    >
       <h2 className="mb-8 text-center text-2xl font-bold sm:text-3xl">
         How It Works
       </h2>
@@ -32,20 +39,28 @@ export function HowItWorks() {
         {steps.map((step) => {
           const Icon = step.icon
           return (
-            <Card key={step.number} className="relative">
-              <CardContent className="flex flex-col items-center gap-3 p-6 text-center">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1F1F1F] text-sm font-bold text-white">
-                  {step.number}
-                </div>
-                <Icon className="h-8 w-8 text-primary" />
-                <h3 className="text-lg font-semibold">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {step.description}
-                </p>
-              </CardContent>
-            </Card>
+            <div key={step.number} className="flex flex-col items-center gap-3 text-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1F1F1F] text-sm font-bold text-white">
+                {step.number}
+              </div>
+              <Icon className="h-8 w-8 text-primary" />
+              <h3 className="text-lg font-semibold">{step.title}</h3>
+              <p className="text-sm text-muted-foreground">
+                {step.description}
+              </p>
+            </div>
           )
         })}
+      </div>
+
+      {/* CTA Section */}
+      <div className="mt-10 border-t border-border/50 pt-10 text-center">
+        <Button asChild size="lg" className="h-14 w-full rounded-[999px] px-10 text-lg sm:w-auto">
+          <Link href="/diagnose">Start Diagnosing &rarr;</Link>
+        </Button>
+        <p className="mt-3 text-sm text-muted-foreground">
+          No account needed. Free forever.
+        </p>
       </div>
     </section>
   )

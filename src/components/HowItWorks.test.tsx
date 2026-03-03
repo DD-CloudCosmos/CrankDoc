@@ -28,4 +28,15 @@ describe('HowItWorks', () => {
     expect(screen.getByText(/pick the issue you are experiencing/i)).toBeInTheDocument()
     expect(screen.getByText(/walk through guided questions/i)).toBeInTheDocument()
   })
+
+  it('renders the CTA button linking to /diagnose', () => {
+    render(<HowItWorks />)
+    const cta = screen.getByRole('link', { name: /start diagnosing/i })
+    expect(cta).toHaveAttribute('href', '/diagnose')
+  })
+
+  it('renders the helper text', () => {
+    render(<HowItWorks />)
+    expect(screen.getByText(/no account needed/i)).toBeInTheDocument()
+  })
 })
