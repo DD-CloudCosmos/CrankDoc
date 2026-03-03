@@ -347,11 +347,12 @@ describe('scanLocalManuals', () => {
 
     const results = await scanLocalManuals(mockReader)
 
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(2)
-    expect(results[0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
-    expect(results[0].parsed.manualType).toBe('owners_manual')
-    expect(results[1].filename).toBe('kymco-ak550-service.pdf')
-    expect(results[1].parsed.manualType).toBe('service_manual')
+    expect(results![0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
+    expect(results![0].parsed.manualType).toBe('owners_manual')
+    expect(results![1].filename).toBe('kymco-ak550-service.pdf')
+    expect(results![1].parsed.manualType).toBe('service_manual')
   })
 
   it('returns null when directory does not exist', async () => {
@@ -371,7 +372,8 @@ describe('scanLocalManuals', () => {
 
     const results = await scanLocalManuals(mockReader)
 
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(1)
-    expect(results[0].filename).toBe('kymco-like125i-service.pdf')
+    expect(results![0].filename).toBe('kymco-like125i-service.pdf')
   })
 })
