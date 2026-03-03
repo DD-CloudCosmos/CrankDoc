@@ -8,9 +8,9 @@ describe('CoverageIndicator', () => {
     expect(screen.getByText('Ingested')).toBeInTheDocument()
   })
 
-  it('renders "Local Only" label for local_only status', () => {
+  it('renders "Uploaded" label for local_only status', () => {
     render(<CoverageIndicator status="local_only" />)
-    expect(screen.getByText('Local Only')).toBeInTheDocument()
+    expect(screen.getByText('Uploaded')).toBeInTheDocument()
   })
 
   it('renders "Missing" label for missing status', () => {

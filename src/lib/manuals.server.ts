@@ -1,49 +1,49 @@
 /**
  * Manual Coverage — Server-Only Functions
  *
- * Supabase fetchers and filesystem scanning for the admin manual coverage dashboard.
- * These use Node.js APIs (fs, path) and Supabase server client — only import from
- * Server Components and API routes, never from client components.
+ * Supabase fetchers and Storage listing for the admin manual coverage dashboard.
+ * Uses Supabase server client — only import from Server Components and API routes,
+ * never from client components.
  */
 
 import { createServerClient } from '@/lib/supabase/server'
 import { parseManualFilename } from '@/lib/manuals'
 import type { Motorcycle, DocumentSource } from '@/types/database.types'
-import type { LocalManualFile } from '@/lib/manuals'
+import type { StorageManualFile } from '@/lib/manuals'
 
-// --- Local Filesystem Scanning ---
+// --- Supabase Storage Listing ---
+
+const STORAGE_BUCKET = 'service-manuals'
 
 /**
- * Scan the `data/manuals/` directory for local PDF files.
- * Returns [] on Vercel or if the directory doesn't exist.
- *
- * Accepts an optional `readDir` function for testing.
+ * List PDF files in the `service-manuals` Supabase Storage bucket.
+ * Parses each filename to extract make/model/type metadata.
+ * Returns null if the bucket doesn't exist or listing fails.
  */
-export async function scanLocalManuals(
-  readDir?: (dir: string) => Promise<string[]>
-): Promise<LocalManualFile[] | null> {
+export async function listStorageManuals(): Promise<StorageManualFile[] | null> {
   try {
-    const reader = readDir ?? (async (dir: string) => {
-      const fs = await import('fs/promises')
-      const entries = await fs.readdir(dir)
-      return entries as string[]
-    })
+    const supabase = createServerClient()
+    const { data, error } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .list('', { limit: 1000, sortBy: { column: 'name', order: 'asc' } })
 
-    const path = await import('path')
-    const manualsDir = path.join(process.cwd(), 'data', 'manuals')
-    const files = await reader(manualsDir)
+    if (error) {
+      console.error('Error listing storage manuals:', error.message)
+      return null
+    }
 
-    const results: LocalManualFile[] = []
-    for (const file of files) {
-      const parsed = parseManualFilename(file)
+    if (!data) return null
+
+    const results: StorageManualFile[] = []
+    for (const file of data) {
+      if (!file.name.endsWith('.pdf')) continue
+      const parsed = parseManualFilename(file.name)
       if (parsed) {
-        results.push({ filename: file, parsed })
+        results.push({ filename: file.name, parsed })
       }
     }
     return results
   } catch {
-    // ENOENT on Vercel or if directory doesn't exist — return null to distinguish
-    // from "directory exists but no parseable files" (which returns [])
     return null
   }
 }

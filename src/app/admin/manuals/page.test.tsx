@@ -5,7 +5,7 @@ import type { ModelCoverageRow, CoverageSummary, ManualCoverageCell } from '@/li
 // Mock the manuals modules
 const mockFetchMotorcycles = vi.fn()
 const mockFetchDocumentSources = vi.fn()
-const mockScanLocalManuals = vi.fn()
+const mockListStorageManuals = vi.fn()
 const mockBuildCoverageMatrix = vi.fn()
 
 vi.mock('@/lib/manuals', () => ({
@@ -22,7 +22,7 @@ vi.mock('@/lib/manuals', () => ({
 vi.mock('@/lib/manuals.server', () => ({
   fetchMotorcycles: (...args: unknown[]) => mockFetchMotorcycles(...args),
   fetchDocumentSources: (...args: unknown[]) => mockFetchDocumentSources(...args),
-  scanLocalManuals: (...args: unknown[]) => mockScanLocalManuals(...args),
+  listStorageManuals: (...args: unknown[]) => mockListStorageManuals(...args),
 }))
 
 function makeCell(status: 'ingested' | 'local_only' | 'missing'): ManualCoverageCell {
@@ -69,7 +69,7 @@ describe('AdminManualsPage', () => {
     modelsWithManuals: 1,
     totalModels: 2,
     totalDocumentSources: 1,
-    localPdfCount: 2,
+    storagePdfCount: 2,
     overallCoveragePercent: 25,
   }
 
@@ -77,7 +77,7 @@ describe('AdminManualsPage', () => {
     vi.clearAllMocks()
     mockFetchMotorcycles.mockResolvedValue([])
     mockFetchDocumentSources.mockResolvedValue([])
-    mockScanLocalManuals.mockResolvedValue([])
+    mockListStorageManuals.mockResolvedValue([])
     mockBuildCoverageMatrix.mockReturnValue({ rows: mockRows, summary: mockSummary })
   })
 
