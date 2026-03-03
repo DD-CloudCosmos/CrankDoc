@@ -185,8 +185,9 @@ function createEmptyCell(): ManualCoverageCell {
 export function buildCoverageMatrix(
   motorcycles: Motorcycle[],
   documentSources: DocumentSource[],
-  localManuals: LocalManualFile[]
+  localManuals: LocalManualFile[] | null
 ): { rows: ModelCoverageRow[]; summary: CoverageSummary } {
+  const localFiles = localManuals ?? []
   // Group motorcycles by normalized make+model
   const modelGroups = new Map<
     string,
@@ -245,7 +246,7 @@ export function buildCoverageMatrix(
       }
 
       // Check local files for this model + manual_type
-      const matchingFiles = localManuals.filter(
+      const matchingFiles = localFiles.filter(
         (file) =>
           file.parsed.manualType === manualType &&
           localFileMatchesModel(file, group.make, group.model)
@@ -298,8 +299,8 @@ export function buildCoverageMatrix(
   const summary: CoverageSummary = {
     modelsWithManuals,
     totalModels: rows.length,
-    totalDocumentSources: documentSources.length,
-    localPdfCount: localManuals.length,
+    totalDocumentSources: documentSources.filter(d => d.manual_type !== null).length,
+    localPdfCount: localManuals !== null ? localManuals.length : null,
     overallCoveragePercent: totalCells > 0 ? Math.round((filledCells / totalCells) * 100) : 0,
   }
 

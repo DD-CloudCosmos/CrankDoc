@@ -38,7 +38,7 @@ export function CoverageSummaryCards({ summary }: CoverageSummaryCardsProps) {
       <StatCard
         label="Documents Ingested"
         value={String(summary.totalDocumentSources)}
-        sublabel="in document_sources table"
+        sublabel="with manual type assigned"
       />
       <StatCard
         label="Local PDFs"

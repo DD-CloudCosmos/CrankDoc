@@ -21,7 +21,7 @@ import type { LocalManualFile } from '@/lib/manuals'
  */
 export async function scanLocalManuals(
   readDir?: (dir: string) => Promise<string[]>
-): Promise<LocalManualFile[]> {
+): Promise<LocalManualFile[] | null> {
   try {
     const reader = readDir ?? (async (dir: string) => {
       const fs = await import('fs/promises')
@@ -42,8 +42,9 @@ export async function scanLocalManuals(
     }
     return results
   } catch {
-    // ENOENT on Vercel or if directory doesn't exist
-    return []
+    // ENOENT on Vercel or if directory doesn't exist — return null to distinguish
+    // from "directory exists but no parseable files" (which returns [])
+    return null
   }
 }
 

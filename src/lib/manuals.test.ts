@@ -261,6 +261,36 @@ describe('buildCoverageMatrix', () => {
     expect(summary.overallCoveragePercent).toBe(13)
   })
 
+  it('only counts document sources with manual_type in totalDocumentSources', () => {
+    const motorcycles = [makeMotorcycle()]
+    const docs = [
+      makeDocSource({ id: 'ds-1', manual_type: 'service_manual' }),
+      makeDocSource({ id: 'ds-2', manual_type: null }),
+      makeDocSource({ id: 'ds-3', manual_type: null }),
+    ]
+
+    const { summary } = buildCoverageMatrix(motorcycles, docs, [])
+
+    expect(summary.totalDocumentSources).toBe(1)
+  })
+
+  it('sets localPdfCount to null when localManuals is null', () => {
+    const motorcycles = [makeMotorcycle()]
+    const { summary } = buildCoverageMatrix(motorcycles, [], null)
+
+    expect(summary.localPdfCount).toBeNull()
+  })
+
+  it('still computes coverage correctly when localManuals is null', () => {
+    const motorcycles = [makeMotorcycle()]
+    const docs = [makeDocSource({ motorcycle_id: '1', manual_type: 'service_manual' })]
+
+    const { rows } = buildCoverageMatrix(motorcycles, docs, null)
+
+    expect(rows[0].coverage.service_manual.status).toBe('ingested')
+    expect(rows[0].coverage.owners_manual.status).toBe('missing')
+  })
+
   it('sorts rows by make then model', () => {
     const motorcycles = [
       makeMotorcycle({ id: '2', make: 'Yamaha', model: 'MT-07' }),
@@ -317,19 +347,20 @@ describe('scanLocalManuals', () => {
 
     const results = await scanLocalManuals(mockReader)
 
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(2)
-    expect(results[0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
-    expect(results[0].parsed.manualType).toBe('owners_manual')
-    expect(results[1].filename).toBe('kymco-ak550-service.pdf')
-    expect(results[1].parsed.manualType).toBe('service_manual')
+    expect(results![0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
+    expect(results![0].parsed.manualType).toBe('owners_manual')
+    expect(results![1].filename).toBe('kymco-ak550-service.pdf')
+    expect(results![1].parsed.manualType).toBe('service_manual')
   })
 
-  it('returns empty array when directory does not exist', async () => {
+  it('returns null when directory does not exist', async () => {
     const mockReader = vi.fn().mockRejectedValue(new Error('ENOENT'))
 
     const results = await scanLocalManuals(mockReader)
 
-    expect(results).toEqual([])
+    expect(results).toBeNull()
   })
 
   it('filters out non-parseable files', async () => {
@@ -341,7 +372,8 @@ describe('scanLocalManuals', () => {
 
     const results = await scanLocalManuals(mockReader)
 
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(1)
-    expect(results[0].filename).toBe('kymco-like125i-service.pdf')
+    expect(results![0].filename).toBe('kymco-like125i-service.pdf')
   })
 })
