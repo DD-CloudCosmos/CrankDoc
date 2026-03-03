@@ -1,38 +1,50 @@
-import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase/server'
-import { DiagnosticTreeCard } from '@/components/DiagnosticTreeCard'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import type { DiagnosticTree, Motorcycle } from '@/types/database.types'
+import { DiagnoseStepIndicator } from '@/components/DiagnoseStepIndicator'
+import { DiagnoseBikeSelector } from '@/components/DiagnoseBikeSelector'
+import { DiagnoseSymptomList } from '@/components/DiagnoseSymptomList'
+import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-async function getDiagnosticTrees(bikeId?: string): Promise<{ data: DiagnosticTree[] | null; error: string | null }> {
+async function getAllMotorcycles(): Promise<Motorcycle[]> {
   const supabase = createServerClient()
-
-  let query = supabase
-    .from('diagnostic_trees')
+  const { data, error } = await supabase
+    .from('motorcycles')
     .select('*')
-
-  if (bikeId) {
-    query = query.or(`motorcycle_id.eq.${bikeId},motorcycle_id.is.null`)
-  }
-
-  const { data, error } = await query.order('title')
+    .order('make')
 
   if (error) {
-    console.error('Error fetching diagnostic trees:', error)
-    return { data: null, error: error.message }
+    console.error('Error fetching motorcycles:', error)
+    return []
   }
 
-  return { data, error: null }
+  return data ?? []
+}
+
+async function getTreeCounts(): Promise<Record<string, number>> {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from('diagnostic_trees')
+    .select('id, motorcycle_id')
+
+  if (error) {
+    console.error('Error fetching tree counts:', error)
+    return {}
+  }
+
+  const counts: Record<string, number> = {}
+  for (const tree of data ?? []) {
+    if (tree.motorcycle_id) {
+      counts[tree.motorcycle_id] = (counts[tree.motorcycle_id] || 0) + 1
+    }
+  }
+  return counts
 }
 
 async function getMotorcycle(id: string): Promise<Motorcycle | null> {
   const supabase = createServerClient()
-
   const { data, error } = await supabase
     .from('motorcycles')
     .select('*')
@@ -46,70 +58,70 @@ async function getMotorcycle(id: string): Promise<Motorcycle | null> {
   return data
 }
 
+async function getTreesForBike(bikeId: string): Promise<DiagnosticTree[]> {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from('diagnostic_trees')
+    .select('*')
+    .eq('motorcycle_id', bikeId)
+    .order('category')
+    .order('title')
+
+  if (error) {
+    console.error('Error fetching trees for bike:', error)
+    return []
+  }
+
+  return data ?? []
+}
+
+async function getUniversalTrees(): Promise<DiagnosticTree[]> {
+  const supabase = createServerClient()
+  const { data, error } = await supabase
+    .from('diagnostic_trees')
+    .select('*')
+    .is('motorcycle_id', null)
+    .order('category')
+    .order('title')
+
+  if (error) {
+    console.error('Error fetching universal trees:', error)
+    return []
+  }
+
+  return data ?? []
+}
+
 export default async function DiagnosePage({ searchParams }: PageProps) {
   const params = await searchParams
   const bikeId = typeof params.bike === 'string' ? params.bike : undefined
 
-  const [{ data: trees, error }, motorcycle] = await Promise.all([
-    getDiagnosticTrees(bikeId),
-    bikeId ? getMotorcycle(bikeId) : Promise.resolve(null),
+  // Step 2: Bike selected (specific or general)
+  if (bikeId) {
+    const isGeneral = bikeId === 'general'
+    const [motorcycle, trees] = await Promise.all([
+      isGeneral ? Promise.resolve(null) : getMotorcycle(bikeId),
+      isGeneral ? getUniversalTrees() : getTreesForBike(bikeId),
+    ])
+
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <DiagnoseStepIndicator currentStep={2} bikeId={bikeId} />
+        <DiagnoseSymptomList motorcycle={motorcycle} trees={trees} bikeId={bikeId} />
+      </div>
+    )
+  }
+
+  // Step 1: Select your motorcycle
+  const [motorcycles, treeCounts] = await Promise.all([
+    getAllMotorcycles(),
+    getTreeCounts(),
   ])
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">Diagnostic Trees</h1>
-        <p className="text-muted-foreground">
-          Step-by-step troubleshooting for common motorcycle issues
-        </p>
-
-        {motorcycle && (
-          <div className="mt-3 flex items-center gap-3">
-            <Badge variant="secondary">
-              {motorcycle.make} {motorcycle.model}
-            </Badge>
-            <Link href="/diagnose">
-              <Button variant="ghost" size="sm">View all guides</Button>
-            </Link>
-          </div>
-        )}
-      </div>
-
-      {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center">
-          <p className="text-red-700">Error loading diagnostic trees</p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Failed to fetch diagnostic trees from database. Please try again later.
-          </p>
-        </div>
-      )}
-
-      {!error && trees && trees.length === 0 && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
-          <p className="text-lg text-muted-foreground">
-            {motorcycle
-              ? 'No diagnostic trees available for this motorcycle yet'
-              : 'No diagnostic trees available yet'}
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {motorcycle ? (
-              <Link href="/diagnose" className="underline hover:text-foreground">
-                View all diagnostic guides
-              </Link>
-            ) : (
-              'Check back soon as we add troubleshooting guides.'
-            )}
-          </p>
-        </div>
-      )}
-
-      {!error && trees && trees.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {trees.map((tree) => (
-            <DiagnosticTreeCard key={tree.id} tree={tree} />
-          ))}
-        </div>
-      )}
+      <DiagnoseStepIndicator currentStep={1} />
+      <DiagnoseBikeSelector motorcycles={motorcycles} treeCounts={treeCounts} />
     </div>
   )
 }
