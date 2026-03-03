@@ -23,6 +23,8 @@ export interface SourceConfig {
   label: string
   /** Wikipedia page title for API usage (only for sourceType 'wikipedia') */
   wikiPageTitle?: string
+  /** Parser ID for non-Wikipedia sources (e.g., 'motorcyclespecs' for motorcyclespecs.co.za) */
+  parserId?: string
 }
 
 /** Result of fetching a single URL. */

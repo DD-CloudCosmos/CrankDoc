@@ -2,8 +2,8 @@
  * Bike URL Configuration
  *
  * Static mapping of all target motorcycles to their public data sources.
- * Wikipedia (CC-BY-SA licensed) is the primary source. Manufacturer product
- * pages serve as fallback for models with limited Wikipedia coverage.
+ * Wikipedia (CC-BY-SA licensed) is the primary source. motorcyclespecs.co.za
+ * provides structured spec tables as a secondary source.
  */
 
 import type { BikeConfig } from './scraper.types'
@@ -25,6 +25,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'Wikipedia - Honda CBR600RR',
         wikiPageTitle: 'Honda_CBR600RR',
       },
+      {
+        url: 'https://www.motorcyclespecs.co.za/model/Honda/honda_cbr600rr_04.html',
+        sourceType: 'spec_database',
+        label: 'MotorcycleSpecs - Honda CBR600RR',
+        parserId: 'motorcyclespecs',
+      },
     ],
   },
   {
@@ -39,6 +45,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         sourceType: 'wikipedia',
         label: 'Wikipedia - Yamaha MT-07',
         wikiPageTitle: 'Yamaha_MT-07',
+      },
+      {
+        url: 'https://www.motorcyclespecs.co.za/model/yamaha/yamaha_mt%2007_21.html',
+        sourceType: 'spec_database',
+        label: 'MotorcycleSpecs - Yamaha MT-07',
+        parserId: 'motorcyclespecs',
       },
     ],
   },
@@ -55,6 +67,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'Wikipedia - Harley-Davidson Sportster',
         wikiPageTitle: 'Harley-Davidson_Sportster',
       },
+      {
+        url: 'https://www.motorcyclespecs.co.za/model/h-d/harley_davidson_sporter_883_iron_20.html',
+        sourceType: 'spec_database',
+        label: 'MotorcycleSpecs - Harley-Davidson Sportster 883',
+        parserId: 'motorcyclespecs',
+      },
     ],
   },
   {
@@ -70,6 +88,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'Wikipedia - Kawasaki Ninja 400',
         wikiPageTitle: 'Kawasaki_Ninja_400',
       },
+      {
+        url: 'https://www.motorcyclespecs.co.za/model/kawasaki/kawasaki_ninja_400_23.html',
+        sourceType: 'spec_database',
+        label: 'MotorcycleSpecs - Kawasaki Ninja 400',
+        parserId: 'motorcyclespecs',
+      },
     ],
   },
   {
@@ -84,6 +108,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         sourceType: 'wikipedia',
         label: 'Wikipedia - BMW R1250GS',
         wikiPageTitle: 'BMW_R1250GS',
+      },
+      {
+        url: 'https://www.motorcyclespecs.co.za/model/bmw/bmw-r1250gs-19.html',
+        sourceType: 'spec_database',
+        label: 'MotorcycleSpecs - BMW R1250GS',
+        parserId: 'motorcyclespecs',
       },
     ],
   },
