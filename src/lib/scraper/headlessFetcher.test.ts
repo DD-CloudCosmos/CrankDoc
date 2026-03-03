@@ -24,6 +24,7 @@ describe('headlessFetcher', () => {
       goto: vi.fn().mockResolvedValue({ status: () => 200 }),
       content: vi.fn().mockResolvedValue('<html><body>Hello</body></html>'),
       title: vi.fn().mockResolvedValue('Test Page'),
+      waitForTimeout: vi.fn().mockResolvedValue(undefined),
     }
     const mockContext = {
       newPage: vi.fn().mockResolvedValue(mockPage),
@@ -52,6 +53,7 @@ describe('headlessFetcher', () => {
       goto: vi.fn().mockResolvedValue({ status: () => 403 }),
       content: vi.fn(),
       title: vi.fn(),
+      waitForTimeout: vi.fn().mockResolvedValue(undefined),
     }
     const mockContext = {
       newPage: vi.fn().mockResolvedValue(mockPage),

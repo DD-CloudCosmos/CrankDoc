@@ -45,7 +45,7 @@ export async function fetchWithHeadless(url: string): Promise<FetchResult> {
  */
 async function fetchWithPlaywright(url: string): Promise<FetchResult> {
   const { chromium } = await import('playwright')
-  const browser = await chromium.launch({ headless: true })
+  const browser = await chromium.launch({ headless: true, channel: 'chrome' })
 
   try {
     const context = await browser.newContext({
@@ -54,9 +54,12 @@ async function fetchWithPlaywright(url: string): Promise<FetchResult> {
     const page = await context.newPage()
 
     const response = await page.goto(url, {
-      waitUntil: 'networkidle',
+      waitUntil: 'load',
       timeout: 30000,
     })
+
+    // Give JS frameworks a moment to render content after page load
+    await page.waitForTimeout(3000)
 
     const statusCode = response?.status() ?? 0
     if (statusCode >= 400) {

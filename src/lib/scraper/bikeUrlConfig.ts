@@ -59,7 +59,7 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         parserId: 'motorcyclespecs',
       },
       {
-        url: 'https://www.yamahamotorsports.com/sport/models/mt-07',
+        url: 'https://yamahamotorsports.com/models/mt-07/specs',
         sourceType: 'manufacturer',
         label: 'Yamaha - MT-07',
         parserId: 'yamaha',
@@ -85,12 +85,7 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'MotorcycleSpecs - Harley-Davidson Sportster 883',
         parserId: 'motorcyclespecs',
       },
-      {
-        url: 'https://www.harley-davidson.com/us/en/motorcycles/sportster.html',
-        sourceType: 'manufacturer',
-        label: 'Harley-Davidson - Sportster',
-        parserId: 'harley',
-      },
+      // Harley-Davidson Sportster 883 discontinued in 2022 — no live manufacturer page
     ],
   },
   {
@@ -113,7 +108,7 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         parserId: 'motorcyclespecs',
       },
       {
-        url: 'https://www.kawasaki.com/en-us/motorcycle/ninja/sport/ninja-400',
+        url: 'https://www.kawasaki.co.uk/en/products/Supersport/2023/Ninja_400/specifications',
         sourceType: 'manufacturer',
         label: 'Kawasaki - Ninja 400',
         parserId: 'kawasaki',
@@ -139,12 +134,7 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'MotorcycleSpecs - BMW R1250GS',
         parserId: 'motorcyclespecs',
       },
-      {
-        url: 'https://www.bmw-motorrad.com/en/models/adventure/r1250gs.html',
-        sourceType: 'manufacturer',
-        label: 'BMW Motorrad - R1250GS',
-        parserId: 'bmw',
-      },
+      // BMW R1250GS discontinued — replaced by R1300GS, no live spec page
     ],
   },
 
