@@ -13,7 +13,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE IF NOT EXISTS document_sources (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
-  source_type TEXT NOT NULL CHECK (source_type IN ('pdf', 'scan', 'web', 'manual_entry')),
+  source_type TEXT NOT NULL CHECK (source_type IN ('pdf', 'scan', 'web', 'manual_entry', 'database')),
   file_path TEXT,
   file_hash TEXT,
   motorcycle_id UUID REFERENCES motorcycles(id) ON DELETE SET NULL,

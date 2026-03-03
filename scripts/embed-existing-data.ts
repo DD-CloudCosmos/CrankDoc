@@ -1,19 +1,17 @@
 #!/usr/bin/env npx tsx
 
 /**
- * CrankDoc Existing Data Embedding Script
+ * Embed Existing Database Content
  *
- * Embeds CrankDoc's existing database content (diagnostic trees, DTC codes,
- * glossary terms, motorcycle specs) into the document_chunks table for
- * RAG search. This makes semantic search work even before any manuals
- * are ingested.
+ * Reads diagnostic trees, DTC codes, glossary terms, and motorcycle
+ * specs from Supabase and embeds them into the vector database for
+ * RAG search.
  *
  * Usage:
  *   npx tsx scripts/embed-existing-data.ts
- *   npx tsx scripts/embed-existing-data.ts --type trees
- *   npx tsx scripts/embed-existing-data.ts --type dtc
- *   npx tsx scripts/embed-existing-data.ts --type glossary
- *   npx tsx scripts/embed-existing-data.ts --type specs
+ *   npx tsx scripts/embed-existing-data.ts --dry-run
+ *   npx tsx scripts/embed-existing-data.ts --force
+ *   npx tsx scripts/embed-existing-data.ts --verbose
  */
 
 import path from 'path'
@@ -38,334 +36,912 @@ if (!OPENAI_API_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
-const BATCH_SIZE = 50
-const DATA_SOURCE_TITLE = 'CrankDoc Existing Database'
+const EMBED_BATCH_SIZE = 50
 
-type DataType = 'trees' | 'dtc' | 'glossary' | 'specs'
-const ALL_TYPES: DataType[] = ['trees', 'dtc', 'glossary', 'specs']
+// ---------------------------------------------------------------------------
+// CLI argument parsing
+// ---------------------------------------------------------------------------
 
-function parseArgs(): DataType[] {
+interface CliArgs {
+  dryRun: boolean
+  force: boolean
+  verbose: boolean
+}
+
+function parseArgs(): CliArgs {
   const args = process.argv.slice(2)
-
-  if (args.length === 0) return ALL_TYPES
-
-  const parsed: Record<string, string> = {}
-  for (let i = 0; i < args.length; i += 2) {
-    const key = args[i].replace(/^--/, '')
-    parsed[key] = args[i + 1] || ''
+  const parsed: CliArgs = {
+    dryRun: false,
+    force: false,
+    verbose: false,
   }
 
-  const type = parsed.type as DataType
-  if (!ALL_TYPES.includes(type)) {
-    console.error(`Invalid type: ${type}. Must be one of: ${ALL_TYPES.join(', ')}`)
-    process.exit(1)
+  for (let i = 0; i < args.length; i++) {
+    switch (args[i]) {
+      case '--dry-run':
+        parsed.dryRun = true
+        break
+      case '--force':
+        parsed.force = true
+        break
+      case '--verbose':
+        parsed.verbose = true
+        break
+      default:
+        console.error(`Unknown flag: ${args[i]}`)
+        console.error(
+          'Usage: npx tsx scripts/embed-existing-data.ts [--dry-run] [--force] [--verbose]'
+        )
+        process.exit(1)
+    }
   }
 
-  return [type]
+  return parsed
 }
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function getOrCreateDocumentSource(): Promise<string> {
-  // Check if we already have a source for existing data
-  const { data: existing } = await supabase
-    .from('document_sources')
-    .select('id')
-    .eq('title', DATA_SOURCE_TITLE)
-    .eq('source_type', 'manual_entry')
-    .limit(1)
+// ---------------------------------------------------------------------------
+// Types for Supabase query results
+// ---------------------------------------------------------------------------
 
-  if (existing && existing.length > 0) {
-    return existing[0].id
-  }
-
-  const { data: created, error } = await supabase
-    .from('document_sources')
-    .insert({
-      title: DATA_SOURCE_TITLE,
-      source_type: 'manual_entry',
-      processing_status: 'processing',
-      total_pages: 0,
-    })
-    .select('id')
-    .single()
-
-  if (error || !created) {
-    console.error('Failed to create document source:', error?.message)
-    process.exit(1)
-  }
-
-  return created.id
+interface DiagnosticTree {
+  id: string
+  title: string
+  description: string | null
+  category: string | null
+  difficulty: string | null
+  motorcycle_id: string | null
+  tree_data: {
+    nodes: Array<{
+      id: string
+      type: string
+      text: string
+      safety?: string
+      instructions?: string
+      warning?: string
+      options?: Array<{ text: string; next: string }>
+    }>
+  } | null
 }
 
-async function embedAndStore(
-  texts: string[],
-  metadata: Array<{
-    contentType: string
-    sectionTitle: string | null
-    make: string | null
-    model: string | null
-  }>,
-  documentSourceId: string,
-  startIndex: number
-): Promise<{ stored: number; tokens: number }> {
-  const { generateBatchEmbeddings, createOpenAIClient } = await import('../src/lib/rag/embeddings')
-  const openai = createOpenAIClient()
+interface DtcCode {
+  id: string
+  code: string
+  description: string | null
+  category: string | null
+  manufacturer: string | null
+  common_causes: string[] | null
+  severity: string | null
+  system: string | null
+  diagnostic_method: string | null
+  fix_reference: string | null
+}
 
-  let totalStored = 0
-  let totalTokens = 0
+interface GlossaryTerm {
+  id: string
+  term: string
+  definition: string | null
+  category: string | null
+}
 
-  for (let i = 0; i < texts.length; i += BATCH_SIZE) {
-    const batchTexts = texts.slice(i, i + BATCH_SIZE)
-    const batchMeta = metadata.slice(i, i + BATCH_SIZE)
+interface Motorcycle {
+  id: string
+  make: string
+  model: string
+  year_start: number | null
+  year_end: number | null
+  category: string | null
+}
 
-    try {
-      const result = await generateBatchEmbeddings(batchTexts, openai)
-      totalTokens += result.totalTokens
+interface ServiceInterval {
+  id: string
+  motorcycle_id: string
+  service_name: string
+  interval_miles: number | null
+  interval_km: number | null
+  interval_months: number | null
+  description: string | null
+  torque_spec: string | null
+  fluid_spec: string | null
+}
 
-      const rows = batchTexts.map((text, idx) => ({
-        document_source_id: documentSourceId,
-        chunk_index: startIndex + i + idx,
-        content: text,
-        content_length: text.length,
-        embedding: JSON.stringify(result.embeddings[idx]),
-        make: batchMeta[idx].make,
-        model: batchMeta[idx].model,
-        section_title: batchMeta[idx].sectionTitle,
-        section_hierarchy: [] as string[],
-        page_numbers: [] as number[],
-        content_type: batchMeta[idx].contentType,
-      }))
+// ---------------------------------------------------------------------------
+// Text builders — create human-readable text from DB records
+// ---------------------------------------------------------------------------
 
-      const { error } = await supabase.from('document_chunks').insert(rows)
+function buildTreeText(tree: DiagnosticTree): string {
+  const parts: string[] = []
 
-      if (error) {
-        console.error(`    Batch insert failed: ${error.message}`)
-      } else {
-        totalStored += rows.length
+  parts.push(tree.title)
+
+  if (tree.description) {
+    parts.push(tree.description)
+  }
+
+  if (tree.category) {
+    parts.push(`Category: ${tree.category}`)
+  }
+
+  if (tree.difficulty) {
+    parts.push(`Difficulty: ${tree.difficulty}`)
+  }
+
+  if (tree.tree_data?.nodes) {
+    const nodeTexts: string[] = []
+    for (const node of tree.tree_data.nodes) {
+      let nodeText = `${node.type}: ${node.text}`
+
+      if (node.instructions) {
+        nodeText += `\n${node.instructions}`
       }
-    } catch (err) {
-      console.error(`    Embedding batch failed: ${err instanceof Error ? err.message : err}`)
+
+      if (node.warning) {
+        nodeText += `\nWARNING: ${node.warning}`
+      }
+
+      if (node.options) {
+        for (const opt of node.options) {
+          nodeText += `\n- ${opt.text}`
+        }
+      }
+
+      nodeTexts.push(nodeText)
     }
 
-    // Rate limit pause
-    if (i + BATCH_SIZE < texts.length) {
+    parts.push('Diagnostic Steps:')
+    parts.push(nodeTexts.join('\n\n'))
+  }
+
+  return parts.join('\n\n')
+}
+
+function buildDtcText(dtc: DtcCode): string {
+  const parts: string[] = []
+
+  parts.push(`DTC ${dtc.code}: ${dtc.description || 'No description'}`)
+
+  if (dtc.manufacturer) {
+    parts.push(`Manufacturer: ${dtc.manufacturer}`)
+  }
+
+  if (dtc.category) {
+    parts.push(`Category: ${dtc.category}`)
+  }
+
+  if (dtc.severity) {
+    parts.push(`Severity: ${dtc.severity}`)
+  }
+
+  if (dtc.system) {
+    parts.push(`System: ${dtc.system}`)
+  }
+
+  if (dtc.common_causes && dtc.common_causes.length > 0) {
+    parts.push(
+      `Possible Causes:\n${dtc.common_causes.map((c) => `- ${c}`).join('\n')}`
+    )
+  }
+
+  if (dtc.diagnostic_method) {
+    parts.push(`Diagnostic Method: ${dtc.diagnostic_method}`)
+  }
+
+  if (dtc.fix_reference) {
+    parts.push(`Fix Reference: ${dtc.fix_reference}`)
+  }
+
+  return parts.join('\n\n')
+}
+
+function buildGlossaryText(term: GlossaryTerm): string {
+  const parts: string[] = []
+
+  parts.push(`${term.term}: ${term.definition || 'No definition'}`)
+
+  if (term.category) {
+    parts.push(`Category: ${term.category}`)
+  }
+
+  return parts.join('\n\n')
+}
+
+function buildMotorcycleText(
+  moto: Motorcycle,
+  intervals: ServiceInterval[]
+): string {
+  const parts: string[] = []
+
+  const yearRange = moto.year_end
+    ? `${moto.year_start}-${moto.year_end}`
+    : moto.year_start
+      ? `${moto.year_start}`
+      : 'Unknown year'
+
+  parts.push(`${moto.make} ${moto.model} (${yearRange})`)
+
+  if (moto.category) {
+    parts.push(`Category: ${moto.category}`)
+  }
+
+  if (intervals.length > 0) {
+    const intervalTexts = intervals.map((i) => {
+      const lineParts = [i.service_name]
+
+      if (i.interval_km) {
+        lineParts.push(`Every ${i.interval_km} km`)
+      }
+      if (i.interval_miles) {
+        lineParts.push(`/ ${i.interval_miles} miles`)
+      }
+      if (i.interval_months) {
+        lineParts.push(`/ ${i.interval_months} months`)
+      }
+      if (i.description) {
+        lineParts.push(`— ${i.description}`)
+      }
+      if (i.torque_spec) {
+        lineParts.push(`Torque: ${i.torque_spec}`)
+      }
+      if (i.fluid_spec) {
+        lineParts.push(`Fluid: ${i.fluid_spec}`)
+      }
+
+      return lineParts.join(' ')
+    })
+
+    parts.push(`Service Intervals:\n${intervalTexts.join('\n')}`)
+  }
+
+  return parts.join('\n\n')
+}
+
+// ---------------------------------------------------------------------------
+// Dedup check helper
+// ---------------------------------------------------------------------------
+
+async function sourceExists(filePath: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('document_sources')
+    .select('id')
+    .eq('source_type', 'database')
+    .eq('file_path', filePath)
+    .limit(1)
+
+  return !!(data && data.length > 0)
+}
+
+// ---------------------------------------------------------------------------
+// Chunking + embedding + storage pipeline for one content item
+// ---------------------------------------------------------------------------
+
+interface ChunkFn {
+  (
+    pages: Array<{ pageNumber: number; text: string; isScanned: boolean }>,
+    metadata: {
+      make: string
+      model: string
+      yearStart: number
+      yearEnd: number | null
+      manualType: string
+    }
+  ): Array<{
+    content: string
+    chunkIndex: number
+    contentType: string
+    sectionTitle: string | null
+    sectionHierarchy: string[]
+    pageNumbers: number[]
+    contentLength: number
+  }>
+}
+
+interface GenBatchFn {
+  (
+    texts: string[],
+    client: import('openai').default
+  ): Promise<{ embeddings: number[][]; totalTokens: number }>
+}
+
+interface EmbedItemParams {
+  title: string
+  filePath: string
+  text: string
+  contentTypeOverride: string | null
+  make: string | null
+  model: string | null
+  yearStart: number | null
+  yearEnd: number | null
+  motorcycleId: string | null
+  args: CliArgs
+  chunkDocument: ChunkFn
+  generateBatchEmbeddings: GenBatchFn
+  openai: import('openai').default | null
+}
+
+interface EmbedItemResult {
+  chunks: number
+  tokens: number
+  cost: number
+  skipped: boolean
+}
+
+async function embedItem(params: EmbedItemParams): Promise<EmbedItemResult> {
+  const {
+    title,
+    filePath,
+    text,
+    contentTypeOverride,
+    make,
+    model,
+    yearStart,
+    yearEnd,
+    motorcycleId,
+    args,
+    chunkDocument,
+    generateBatchEmbeddings: genBatchEmbed,
+    openai,
+  } = params
+
+  // Dedup check
+  if (!args.force) {
+    const exists = await sourceExists(filePath)
+    if (exists) {
+      if (args.verbose) {
+        console.log(`    SKIP: already embedded (${filePath})`)
+      }
+      return { chunks: 0, tokens: 0, cost: 0, skipped: true }
+    }
+  }
+
+  // Build pages array for the chunker
+  const pages = [{ pageNumber: 1, text, isScanned: false }]
+
+  // Chunk the text
+  const chunks = chunkDocument(pages, {
+    make: make || 'Universal',
+    model: model || 'All Models',
+    yearStart: yearStart || 0,
+    yearEnd: yearEnd,
+    manualType: 'database',
+  })
+
+  if (chunks.length === 0) {
+    if (args.verbose) {
+      console.log(`    SKIP: no chunks produced for "${title}"`)
+    }
+    return { chunks: 0, tokens: 0, cost: 0, skipped: true }
+  }
+
+  if (args.dryRun) {
+    if (args.verbose) {
+      console.log(`    [DRY RUN] "${title}" -> ${chunks.length} chunks`)
+      for (const chunk of chunks.slice(0, 2)) {
+        console.log(
+          `      Chunk ${chunk.chunkIndex} (${chunk.contentType}): ${chunk.content.substring(0, 120)}...`
+        )
+      }
+    }
+    // Estimate tokens: ~1 token per 4 chars
+    const estimatedTokens = Math.ceil(text.length / 4)
+    return {
+      chunks: chunks.length,
+      tokens: estimatedTokens,
+      cost: (estimatedTokens / 1_000_000) * 0.02,
+      skipped: false,
+    }
+  }
+
+  // Generate embeddings
+  const chunkTexts = chunks.map((c) => c.content)
+  let allEmbeddings: number[][] = []
+  let totalTokens = 0
+
+  for (let i = 0; i < chunkTexts.length; i += EMBED_BATCH_SIZE) {
+    const batch = chunkTexts.slice(i, i + EMBED_BATCH_SIZE)
+
+    const result = await genBatchEmbed(batch, openai!)
+    allEmbeddings = allEmbeddings.concat(result.embeddings)
+    totalTokens += result.totalTokens
+
+    if (i + EMBED_BATCH_SIZE < chunkTexts.length) {
       await sleep(200)
     }
   }
 
-  return { stored: totalStored, tokens: totalTokens }
-}
+  const cost = (totalTokens / 1_000_000) * 0.02
 
-async function embedDiagnosticTrees(documentSourceId: string): Promise<{ stored: number; tokens: number }> {
-  console.log('\n  Embedding diagnostic trees...')
-
-  const { data: trees, error } = await supabase
-    .from('diagnostic_trees')
-    .select('id, title, description, category, tree_data, motorcycle_id')
-
-  if (error || !trees) {
-    console.error(`    Failed to fetch trees: ${error?.message}`)
-    return { stored: 0, tokens: 0 }
-  }
-
-  console.log(`    Found ${trees.length} trees`)
-
-  // Build text content from each tree: title + description + node texts
-  const texts: string[] = []
-  const metadata: Array<{ contentType: string; sectionTitle: string | null; make: string | null; model: string | null }> = []
-
-  for (const tree of trees) {
-    const treeData = tree.tree_data as { nodes?: Array<{ text?: string; type?: string }> }
-    const nodeTexts = treeData.nodes
-      ? treeData.nodes.map((n) => n.text || '').filter(Boolean).join('\n')
-      : ''
-
-    const text = [
-      `Diagnostic Tree: ${tree.title}`,
-      tree.description ? `Description: ${tree.description}` : '',
-      tree.category ? `Category: ${tree.category}` : '',
-      nodeTexts,
-    ].filter(Boolean).join('\n')
-
-    texts.push(text)
-    metadata.push({
-      contentType: 'procedure',
-      sectionTitle: tree.title,
-      make: null,
-      model: null,
+  // Create document_sources record
+  const { data: docSource, error: docError } = await supabase
+    .from('document_sources')
+    .insert({
+      title,
+      source_type: 'database',
+      file_path: filePath,
+      file_hash: null,
+      make,
+      model,
+      year_start: yearStart,
+      year_end: yearEnd,
+      manual_type: null,
+      total_pages: 1,
+      processing_status: 'processing',
     })
+    .select('id')
+    .single()
+
+  if (docError || !docSource) {
+    console.error(
+      `    FAILED to create document source: ${docError?.message}`
+    )
+    return { chunks: 0, tokens: totalTokens, cost, skipped: false }
   }
 
-  return embedAndStore(texts, metadata, documentSourceId, 0)
-}
+  // Insert chunks
+  let insertedCount = 0
+  let failedCount = 0
 
-async function embedDtcCodes(documentSourceId: string): Promise<{ stored: number; tokens: number }> {
-  console.log('\n  Embedding DTC codes...')
+  for (let i = 0; i < chunks.length; i += EMBED_BATCH_SIZE) {
+    const batch = chunks
+      .slice(i, i + EMBED_BATCH_SIZE)
+      .map((chunk, idx) => ({
+        document_source_id: docSource.id,
+        chunk_index: i + idx,
+        content: chunk.content,
+        content_length: chunk.contentLength,
+        embedding: JSON.stringify(allEmbeddings[i + idx]),
+        motorcycle_id: motorcycleId,
+        make,
+        model,
+        section_title: chunk.sectionTitle,
+        section_hierarchy: chunk.sectionHierarchy,
+        page_numbers: chunk.pageNumbers,
+        content_type: contentTypeOverride || chunk.contentType,
+      }))
 
-  const { data: codes, error } = await supabase
-    .from('dtc_codes')
-    .select('code, description, category, common_causes, manufacturer, system, diagnostic_method')
+    const { error } = await supabase.from('document_chunks').insert(batch)
 
-  if (error || !codes) {
-    console.error(`    Failed to fetch DTC codes: ${error?.message}`)
-    return { stored: 0, tokens: 0 }
-  }
-
-  console.log(`    Found ${codes.length} DTC codes`)
-
-  const texts: string[] = []
-  const metadata: Array<{ contentType: string; sectionTitle: string | null; make: string | null; model: string | null }> = []
-
-  for (const code of codes) {
-    const parts = [
-      `DTC Code: ${code.code}`,
-      `Description: ${code.description}`,
-      code.category ? `Category: ${code.category}` : '',
-      code.system ? `System: ${code.system}` : '',
-      code.manufacturer ? `Manufacturer: ${code.manufacturer}` : '',
-      code.common_causes ? `Common causes: ${code.common_causes.join(', ')}` : '',
-      code.diagnostic_method ? `Diagnostic method: ${code.diagnostic_method}` : '',
-    ].filter(Boolean)
-
-    texts.push(parts.join('\n'))
-    metadata.push({
-      contentType: 'prose',
-      sectionTitle: `DTC ${code.code}`,
-      make: code.manufacturer,
-      model: null,
-    })
-  }
-
-  return embedAndStore(texts, metadata, documentSourceId, 10000)
-}
-
-async function embedGlossaryTerms(documentSourceId: string): Promise<{ stored: number; tokens: number }> {
-  console.log('\n  Embedding glossary terms...')
-
-  const { data: terms, error } = await supabase
-    .from('glossary_terms')
-    .select('term, definition, category, aliases')
-
-  if (error || !terms) {
-    console.error(`    Failed to fetch glossary terms: ${error?.message}`)
-    return { stored: 0, tokens: 0 }
-  }
-
-  console.log(`    Found ${terms.length} glossary terms`)
-
-  const texts: string[] = []
-  const metadata: Array<{ contentType: string; sectionTitle: string | null; make: string | null; model: string | null }> = []
-
-  for (const term of terms) {
-    const parts = [
-      `Term: ${term.term}`,
-      `Definition: ${term.definition}`,
-      term.category ? `Category: ${term.category}` : '',
-      term.aliases && term.aliases.length > 0 ? `Also known as: ${term.aliases.join(', ')}` : '',
-    ].filter(Boolean)
-
-    texts.push(parts.join('\n'))
-    metadata.push({
-      contentType: 'prose',
-      sectionTitle: term.term,
-      make: null,
-      model: null,
-    })
-  }
-
-  return embedAndStore(texts, metadata, documentSourceId, 20000)
-}
-
-async function embedMotorcycleSpecs(documentSourceId: string): Promise<{ stored: number; tokens: number }> {
-  console.log('\n  Embedding motorcycle specs...')
-
-  const { data: bikes, error } = await supabase
-    .from('motorcycles')
-    .select('*')
-
-  if (error || !bikes) {
-    console.error(`    Failed to fetch motorcycles: ${error?.message}`)
-    return { stored: 0, tokens: 0 }
-  }
-
-  console.log(`    Found ${bikes.length} motorcycles`)
-
-  const texts: string[] = []
-  const metadata: Array<{ contentType: string; sectionTitle: string | null; make: string | null; model: string | null }> = []
-
-  for (const bike of bikes) {
-    const specs = [
-      `${bike.make} ${bike.model} (${bike.year_start}-${bike.year_end || 'present'})`,
-      bike.engine_type ? `Engine: ${bike.engine_type}` : '',
-      bike.displacement_cc ? `Displacement: ${bike.displacement_cc}cc` : '',
-      bike.horsepower ? `Horsepower: ${bike.horsepower} HP` : '',
-      bike.torque_nm ? `Torque: ${bike.torque_nm} Nm` : '',
-      bike.oil_capacity_liters ? `Oil capacity: ${bike.oil_capacity_liters}L` : '',
-      bike.coolant_capacity_liters ? `Coolant capacity: ${bike.coolant_capacity_liters}L` : '',
-      bike.valve_clearance_intake ? `Valve clearance intake: ${bike.valve_clearance_intake}` : '',
-      bike.valve_clearance_exhaust ? `Valve clearance exhaust: ${bike.valve_clearance_exhaust}` : '',
-      bike.spark_plug ? `Spark plug: ${bike.spark_plug}` : '',
-      bike.tire_front ? `Front tire: ${bike.tire_front}` : '',
-      bike.tire_rear ? `Rear tire: ${bike.tire_rear}` : '',
-      bike.fuel_capacity_liters ? `Fuel capacity: ${bike.fuel_capacity_liters}L` : '',
-      bike.dry_weight_kg ? `Dry weight: ${bike.dry_weight_kg}kg` : '',
-    ].filter(Boolean)
-
-    texts.push(specs.join('\n'))
-    metadata.push({
-      contentType: 'spec_table',
-      sectionTitle: `${bike.make} ${bike.model} Specifications`,
-      make: bike.make,
-      model: bike.model,
-    })
-  }
-
-  return embedAndStore(texts, metadata, documentSourceId, 30000)
-}
-
-async function main() {
-  const types = parseArgs()
-
-  console.log('\nCrankDoc Existing Data Embedding')
-  console.log('=================================\n')
-  console.log(`  Types to embed: ${types.join(', ')}`)
-
-  const documentSourceId = await getOrCreateDocumentSource()
-  console.log(`  Document source ID: ${documentSourceId}`)
-
-  let totalStored = 0
-  let totalTokens = 0
-
-  const handlers: Record<DataType, (id: string) => Promise<{ stored: number; tokens: number }>> = {
-    trees: embedDiagnosticTrees,
-    dtc: embedDtcCodes,
-    glossary: embedGlossaryTerms,
-    specs: embedMotorcycleSpecs,
-  }
-
-  for (const type of types) {
-    const result = await handlers[type](documentSourceId)
-    totalStored += result.stored
-    totalTokens += result.tokens
-    console.log(`    Stored: ${result.stored}, Tokens: ${result.tokens}`)
+    if (error) {
+      console.error(`    Batch insert failed: ${error.message}`)
+      failedCount += batch.length
+    } else {
+      insertedCount += batch.length
+    }
   }
 
   // Update document source status
+  const finalStatus = failedCount === 0 ? 'completed' : 'failed'
   await supabase
     .from('document_sources')
     .update({
-      processing_status: 'completed',
+      processing_status: finalStatus,
       processed_at: new Date().toISOString(),
+      processing_error:
+        failedCount > 0
+          ? `${failedCount} chunks failed to insert`
+          : null,
     })
-    .eq('id', documentSourceId)
+    .eq('id', docSource.id)
 
-  console.log('\n=================================')
-  console.log(`Done: ${totalStored} chunks embedded`)
-  console.log(`Total tokens: ${totalTokens}`)
-  console.log(`Estimated cost: $${((totalTokens / 1_000_000) * 0.02).toFixed(6)}`)
+  return { chunks: insertedCount, tokens: totalTokens, cost, skipped: false }
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
+async function main() {
+  const args = parseArgs()
+
+  console.log('\nCrankDoc Database Content Embedder')
+  console.log('===================================\n')
+  console.log(`  Force:   ${args.force}`)
+  console.log(`  Dry run: ${args.dryRun}`)
+  console.log(`  Verbose: ${args.verbose}`)
+
+  // Dynamic imports (same pattern as scrape-bike-specs.ts)
+  const { chunkDocument } = await import('../src/lib/rag/chunker')
+  const { generateBatchEmbeddings, createOpenAIClient } = await import(
+    '../src/lib/rag/embeddings'
+  )
+
+  const openai = args.dryRun ? null : createOpenAIClient()
+
+  let totalChunks = 0
+  let totalTokens = 0
+  let totalCost = 0
+  let totalSkipped = 0
+  let totalFailed = 0
+
+  // =========================================================================
+  // 1. Diagnostic Trees
+  // =========================================================================
+  console.log('\n--- Diagnostic Trees ---')
+
+  const { data: trees, error: treesError } = await supabase
+    .from('diagnostic_trees')
+    .select(
+      'id, title, description, category, difficulty, motorcycle_id, tree_data'
+    )
+
+  if (treesError) {
+    console.error(
+      `  FAILED to query diagnostic_trees: ${treesError.message}`
+    )
+    totalFailed++
+  } else if (!trees || trees.length === 0) {
+    console.log('  No diagnostic trees found')
+  } else {
+    console.log(`  Found ${trees.length} diagnostic trees`)
+
+    // Cache motorcycle lookups to avoid repeated queries
+    const motorcycleCache = new Map<string, Motorcycle>()
+    let sectionSkipped = 0
+
+    for (let i = 0; i < trees.length; i++) {
+      const tree = trees[i] as DiagnosticTree
+
+      let make: string | null = null
+      let model: string | null = null
+      let yearStart: number | null = null
+      let yearEnd: number | null = null
+      const motorcycleId: string | null = tree.motorcycle_id
+
+      if (motorcycleId) {
+        if (!motorcycleCache.has(motorcycleId)) {
+          const { data: moto } = await supabase
+            .from('motorcycles')
+            .select('id, make, model, year_start, year_end, category')
+            .eq('id', motorcycleId)
+            .limit(1)
+            .single()
+
+          if (moto) {
+            motorcycleCache.set(motorcycleId, moto as Motorcycle)
+          }
+        }
+
+        const moto = motorcycleCache.get(motorcycleId)
+        if (moto) {
+          make = moto.make
+          model = moto.model
+          yearStart = moto.year_start
+          yearEnd = moto.year_end
+        }
+      }
+
+      const text = buildTreeText(tree)
+      const filePath = `diagnostic_tree:${tree.id}`
+
+      if (args.verbose) {
+        console.log(
+          `  [${i + 1}/${trees.length}] ${tree.title} (${text.length} chars)`
+        )
+      }
+
+      try {
+        const result = await embedItem({
+          title: `Diagnostic: ${tree.title}`,
+          filePath,
+          text,
+          contentTypeOverride: null, // let chunker detect
+          make,
+          model,
+          yearStart,
+          yearEnd,
+          motorcycleId,
+          args,
+          chunkDocument,
+          generateBatchEmbeddings,
+          openai,
+        })
+
+        if (result.skipped) {
+          totalSkipped++
+          sectionSkipped++
+        } else {
+          totalChunks += result.chunks
+          totalTokens += result.tokens
+          totalCost += result.cost
+        }
+      } catch (error) {
+        console.error(
+          `    FAILED: ${error instanceof Error ? error.message : String(error)}`
+        )
+        totalFailed++
+      }
+
+      // Rate limit between items when actually embedding
+      if (!args.dryRun && i < trees.length - 1) {
+        await sleep(100)
+      }
+    }
+
+    console.log(
+      `  Trees done: ${trees.length} total, ${sectionSkipped} skipped`
+    )
+  }
+
+  // =========================================================================
+  // 2. DTC Codes (grouped by manufacturer)
+  // =========================================================================
+  console.log('\n--- DTC Codes ---')
+
+  const { data: dtcCodes, error: dtcError } = await supabase
+    .from('dtc_codes')
+    .select(
+      'id, code, description, category, manufacturer, common_causes, severity, system, diagnostic_method, fix_reference'
+    )
+
+  if (dtcError) {
+    console.error(`  FAILED to query dtc_codes: ${dtcError.message}`)
+    totalFailed++
+  } else if (!dtcCodes || dtcCodes.length === 0) {
+    console.log('  No DTC codes found')
+  } else {
+    console.log(`  Found ${dtcCodes.length} DTC codes`)
+
+    // Group by manufacturer for more meaningful chunking
+    const byManufacturer = new Map<string, DtcCode[]>()
+
+    for (const dtc of dtcCodes as DtcCode[]) {
+      const mfr = dtc.manufacturer || 'Universal'
+      if (!byManufacturer.has(mfr)) {
+        byManufacturer.set(mfr, [])
+      }
+      byManufacturer.get(mfr)!.push(dtc)
+    }
+
+    let dtcGroupIndex = 0
+    const dtcGroupTotal = byManufacturer.size
+    let sectionSkipped = 0
+
+    for (const [manufacturer, codes] of byManufacturer) {
+      dtcGroupIndex++
+
+      const text = codes
+        .map((dtc) => buildDtcText(dtc))
+        .join('\n\n---\n\n')
+      const filePath = `dtc_codes:${manufacturer.toLowerCase().replace(/\s+/g, '-')}`
+
+      if (args.verbose) {
+        console.log(
+          `  [${dtcGroupIndex}/${dtcGroupTotal}] ${manufacturer}: ${codes.length} codes (${text.length} chars)`
+        )
+      }
+
+      try {
+        const result = await embedItem({
+          title: `DTC Codes: ${manufacturer}`,
+          filePath,
+          text,
+          contentTypeOverride: 'spec_table',
+          make: manufacturer === 'Universal' ? null : manufacturer,
+          model: null,
+          yearStart: null,
+          yearEnd: null,
+          motorcycleId: null,
+          args,
+          chunkDocument,
+          generateBatchEmbeddings,
+          openai,
+        })
+
+        if (result.skipped) {
+          totalSkipped++
+          sectionSkipped++
+        } else {
+          totalChunks += result.chunks
+          totalTokens += result.tokens
+          totalCost += result.cost
+        }
+      } catch (error) {
+        console.error(
+          `    FAILED: ${error instanceof Error ? error.message : String(error)}`
+        )
+        totalFailed++
+      }
+
+      if (!args.dryRun && dtcGroupIndex < dtcGroupTotal) {
+        await sleep(100)
+      }
+    }
+
+    console.log(
+      `  DTC groups done: ${dtcGroupTotal} total, ${sectionSkipped} skipped`
+    )
+  }
+
+  // =========================================================================
+  // 3. Glossary Terms (grouped by category)
+  // =========================================================================
+  console.log('\n--- Glossary Terms ---')
+
+  const { data: glossaryTerms, error: glossaryError } = await supabase
+    .from('glossary_terms')
+    .select('id, term, definition, category')
+
+  if (glossaryError) {
+    console.error(
+      `  FAILED to query glossary_terms: ${glossaryError.message}`
+    )
+    totalFailed++
+  } else if (!glossaryTerms || glossaryTerms.length === 0) {
+    console.log('  No glossary terms found')
+  } else {
+    console.log(`  Found ${glossaryTerms.length} glossary terms`)
+
+    // Group by category for meaningful chunking
+    const byCategory = new Map<string, GlossaryTerm[]>()
+
+    for (const term of glossaryTerms as GlossaryTerm[]) {
+      const cat = term.category || 'General'
+      if (!byCategory.has(cat)) {
+        byCategory.set(cat, [])
+      }
+      byCategory.get(cat)!.push(term)
+    }
+
+    let glossaryGroupIndex = 0
+    const glossaryGroupTotal = byCategory.size
+    let sectionSkipped = 0
+
+    for (const [category, terms] of byCategory) {
+      glossaryGroupIndex++
+
+      const text = terms
+        .map((t) => buildGlossaryText(t))
+        .join('\n\n---\n\n')
+      const filePath = `glossary:${category.toLowerCase().replace(/\s+/g, '-')}`
+
+      if (args.verbose) {
+        console.log(
+          `  [${glossaryGroupIndex}/${glossaryGroupTotal}] ${category}: ${terms.length} terms (${text.length} chars)`
+        )
+      }
+
+      try {
+        const result = await embedItem({
+          title: `Glossary: ${category}`,
+          filePath,
+          text,
+          contentTypeOverride: null, // prose
+          make: null,
+          model: null,
+          yearStart: null,
+          yearEnd: null,
+          motorcycleId: null,
+          args,
+          chunkDocument,
+          generateBatchEmbeddings,
+          openai,
+        })
+
+        if (result.skipped) {
+          totalSkipped++
+          sectionSkipped++
+        } else {
+          totalChunks += result.chunks
+          totalTokens += result.tokens
+          totalCost += result.cost
+        }
+      } catch (error) {
+        console.error(
+          `    FAILED: ${error instanceof Error ? error.message : String(error)}`
+        )
+        totalFailed++
+      }
+
+      if (!args.dryRun && glossaryGroupIndex < glossaryGroupTotal) {
+        await sleep(100)
+      }
+    }
+
+    console.log(
+      `  Glossary groups done: ${glossaryGroupTotal} total, ${sectionSkipped} skipped`
+    )
+  }
+
+  // =========================================================================
+  // 4. Motorcycle Specs + Service Intervals
+  // =========================================================================
+  console.log('\n--- Motorcycle Specs ---')
+
+  const { data: motorcycles, error: motoError } = await supabase
+    .from('motorcycles')
+    .select('id, make, model, year_start, year_end, category')
+
+  if (motoError) {
+    console.error(`  FAILED to query motorcycles: ${motoError.message}`)
+    totalFailed++
+  } else if (!motorcycles || motorcycles.length === 0) {
+    console.log('  No motorcycles found')
+  } else {
+    console.log(`  Found ${motorcycles.length} motorcycles`)
+    let sectionSkipped = 0
+
+    for (let i = 0; i < motorcycles.length; i++) {
+      const moto = motorcycles[i] as Motorcycle
+
+      // Fetch service intervals for this motorcycle
+      const { data: intervals } = await supabase
+        .from('service_intervals')
+        .select(
+          'id, motorcycle_id, service_name, interval_miles, interval_km, interval_months, description, torque_spec, fluid_spec'
+        )
+        .eq('motorcycle_id', moto.id)
+
+      const serviceIntervals = (intervals || []) as ServiceInterval[]
+      const text = buildMotorcycleText(moto, serviceIntervals)
+      const filePath = `motorcycle:${moto.id}`
+
+      if (args.verbose) {
+        console.log(
+          `  [${i + 1}/${motorcycles.length}] ${moto.make} ${moto.model} — ${serviceIntervals.length} intervals (${text.length} chars)`
+        )
+      }
+
+      try {
+        const result = await embedItem({
+          title: `${moto.make} ${moto.model} Specs`,
+          filePath,
+          text,
+          contentTypeOverride: 'spec_table',
+          make: moto.make,
+          model: moto.model,
+          yearStart: moto.year_start,
+          yearEnd: moto.year_end,
+          motorcycleId: moto.id,
+          args,
+          chunkDocument,
+          generateBatchEmbeddings,
+          openai,
+        })
+
+        if (result.skipped) {
+          totalSkipped++
+          sectionSkipped++
+        } else {
+          totalChunks += result.chunks
+          totalTokens += result.tokens
+          totalCost += result.cost
+        }
+      } catch (error) {
+        console.error(
+          `    FAILED: ${error instanceof Error ? error.message : String(error)}`
+        )
+        totalFailed++
+      }
+
+      if (!args.dryRun && i < motorcycles.length - 1) {
+        await sleep(100)
+      }
+    }
+
+    console.log(
+      `  Motorcycles done: ${motorcycles.length} total, ${sectionSkipped} skipped`
+    )
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  console.log(`\n${'='.repeat(60)}`)
+  console.log('SUMMARY')
+  console.log('='.repeat(60))
+  console.log(`  Total chunks:  ${totalChunks}`)
+  console.log(`  Total skipped: ${totalSkipped}`)
+  console.log(`  Total failed:  ${totalFailed}`)
+  console.log(`  Total tokens:  ${totalTokens}`)
+  console.log(`  Total cost:    $${totalCost.toFixed(6)}`)
+
+  if (args.dryRun) {
+    console.log('\n  (DRY RUN — no data was written or embedded)')
+  }
+
+  console.log()
 }
 
 main().catch((err) => {
