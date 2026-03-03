@@ -1,5 +1,5 @@
 import { buildCoverageMatrix } from '@/lib/manuals'
-import { fetchMotorcycles, fetchDocumentSources, scanLocalManuals } from '@/lib/manuals.server'
+import { fetchMotorcycles, fetchDocumentSources, listStorageManuals } from '@/lib/manuals.server'
 import { CoverageSummaryCards } from '@/components/admin/CoverageSummaryCards'
 import { ManualCoverageMatrix } from '@/components/admin/ManualCoverageMatrix'
 
@@ -11,19 +11,19 @@ export default async function AdminManualsPage() {
     modelsWithManuals: 0,
     totalModels: 0,
     totalDocumentSources: 0,
-    localPdfCount: null,
+    storagePdfCount: null,
     overallCoveragePercent: 0,
   }
   let error: string | null = null
 
   try {
-    const [motorcycles, documentSources, localManuals] = await Promise.all([
+    const [motorcycles, documentSources, storageManuals] = await Promise.all([
       fetchMotorcycles(),
       fetchDocumentSources(),
-      scanLocalManuals(),
+      listStorageManuals(),
     ])
 
-    const result = buildCoverageMatrix(motorcycles, documentSources, localManuals)
+    const result = buildCoverageMatrix(motorcycles, documentSources, storageManuals)
     rows = result.rows
     summary = result.summary
   } catch (err) {

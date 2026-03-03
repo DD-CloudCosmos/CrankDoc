@@ -38,12 +38,12 @@ export function CoverageSummaryCards({ summary }: CoverageSummaryCardsProps) {
       <StatCard
         label="Documents Ingested"
         value={String(summary.totalDocumentSources)}
-        sublabel="in document_sources table"
+        sublabel="with manual type assigned"
       />
       <StatCard
-        label="Local PDFs"
-        value={summary.localPdfCount !== null ? String(summary.localPdfCount) : 'N/A'}
-        sublabel={summary.localPdfCount !== null ? 'in data/manuals/' : 'not available in production'}
+        label="Storage PDFs"
+        value={summary.storagePdfCount !== null ? String(summary.storagePdfCount) : 'N/A'}
+        sublabel={summary.storagePdfCount !== null ? 'in Supabase Storage' : 'not available'}
       />
       <StatCard
         label="Coverage Score"

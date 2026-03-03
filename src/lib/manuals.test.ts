@@ -4,7 +4,7 @@ import {
   normalizeForMatch,
   buildCoverageMatrix,
 } from './manuals'
-import { scanLocalManuals } from './manuals.server'
+import { listStorageManuals } from './manuals.server'
 import type { Motorcycle, DocumentSource } from '@/types/database.types'
 
 describe('parseManualFilename', () => {
@@ -256,9 +256,39 @@ describe('buildCoverageMatrix', () => {
     expect(summary.totalModels).toBe(2)
     expect(summary.modelsWithManuals).toBe(1)
     expect(summary.totalDocumentSources).toBe(1)
-    expect(summary.localPdfCount).toBe(0)
+    expect(summary.storagePdfCount).toBe(0)
     // 1 filled cell out of 8 total (2 models × 4 types) = 12.5% → rounded to 13%
     expect(summary.overallCoveragePercent).toBe(13)
+  })
+
+  it('only counts document sources with manual_type in totalDocumentSources', () => {
+    const motorcycles = [makeMotorcycle()]
+    const docs = [
+      makeDocSource({ id: 'ds-1', manual_type: 'service_manual' }),
+      makeDocSource({ id: 'ds-2', manual_type: null }),
+      makeDocSource({ id: 'ds-3', manual_type: null }),
+    ]
+
+    const { summary } = buildCoverageMatrix(motorcycles, docs, [])
+
+    expect(summary.totalDocumentSources).toBe(1)
+  })
+
+  it('sets storagePdfCount to null when storageManuals is null', () => {
+    const motorcycles = [makeMotorcycle()]
+    const { summary } = buildCoverageMatrix(motorcycles, [], null)
+
+    expect(summary.storagePdfCount).toBeNull()
+  })
+
+  it('still computes coverage correctly when storageManuals is null', () => {
+    const motorcycles = [makeMotorcycle()]
+    const docs = [makeDocSource({ motorcycle_id: '1', manual_type: 'service_manual' })]
+
+    const { rows } = buildCoverageMatrix(motorcycles, docs, null)
+
+    expect(rows[0].coverage.service_manual.status).toBe('ingested')
+    expect(rows[0].coverage.owners_manual.status).toBe('missing')
   })
 
   it('sorts rows by make then model', () => {
@@ -307,41 +337,75 @@ describe('buildCoverageMatrix', () => {
   })
 })
 
-describe('scanLocalManuals', () => {
-  it('returns parsed manual files from directory listing', async () => {
-    const mockReader = vi.fn().mockResolvedValue([
-      'honda-cbr600rr-owners-2007.pdf',
-      'kymco-ak550-service.pdf',
-      'readme.txt',
-    ])
+// Mock Supabase server client for listStorageManuals tests
+const mockStorageList = vi.fn()
+vi.mock('@/lib/supabase/server', () => ({
+  createServerClient: () => ({
+    storage: {
+      from: () => ({
+        list: (...args: unknown[]) => mockStorageList(...args),
+      }),
+    },
+  }),
+}))
 
-    const results = await scanLocalManuals(mockReader)
+describe('listStorageManuals', () => {
+  it('returns parsed manual files from storage listing', async () => {
+    mockStorageList.mockResolvedValue({
+      data: [
+        { name: 'honda-cbr600rr-owners-2007.pdf' },
+        { name: 'kymco-ak550-service.pdf' },
+        { name: '.emptyFolderPlaceholder' },
+      ],
+      error: null,
+    })
 
+    const results = await listStorageManuals()
+
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(2)
-    expect(results[0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
-    expect(results[0].parsed.manualType).toBe('owners_manual')
-    expect(results[1].filename).toBe('kymco-ak550-service.pdf')
-    expect(results[1].parsed.manualType).toBe('service_manual')
+    expect(results![0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
+    expect(results![0].parsed.manualType).toBe('owners_manual')
+    expect(results![1].filename).toBe('kymco-ak550-service.pdf')
+    expect(results![1].parsed.manualType).toBe('service_manual')
   })
 
-  it('returns empty array when directory does not exist', async () => {
-    const mockReader = vi.fn().mockRejectedValue(new Error('ENOENT'))
+  it('returns null when storage listing fails', async () => {
+    mockStorageList.mockResolvedValue({
+      data: null,
+      error: { message: 'Bucket not found' },
+    })
 
-    const results = await scanLocalManuals(mockReader)
+    const results = await listStorageManuals()
 
-    expect(results).toEqual([])
+    expect(results).toBeNull()
   })
 
   it('filters out non-parseable files', async () => {
-    const mockReader = vi.fn().mockResolvedValue([
-      'notes.txt',
-      'photo.jpg',
-      'kymco-like125i-service.pdf',
-    ])
+    mockStorageList.mockResolvedValue({
+      data: [
+        { name: 'notes.txt' },
+        { name: 'photo.jpg' },
+        { name: 'kymco-like125i-service.pdf' },
+      ],
+      error: null,
+    })
 
-    const results = await scanLocalManuals(mockReader)
+    const results = await listStorageManuals()
 
+    expect(results).not.toBeNull()
     expect(results).toHaveLength(1)
-    expect(results[0].filename).toBe('kymco-like125i-service.pdf')
+    expect(results![0].filename).toBe('kymco-like125i-service.pdf')
+  })
+
+  it('returns null when data is null without error', async () => {
+    mockStorageList.mockResolvedValue({
+      data: null,
+      error: null,
+    })
+
+    const results = await listStorageManuals()
+
+    expect(results).toBeNull()
   })
 })
