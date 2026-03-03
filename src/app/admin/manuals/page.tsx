@@ -3,6 +3,8 @@ import { fetchMotorcycles, fetchDocumentSources, scanLocalManuals } from '@/lib/
 import { CoverageSummaryCards } from '@/components/admin/CoverageSummaryCards'
 import { ManualCoverageMatrix } from '@/components/admin/ManualCoverageMatrix'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminManualsPage() {
   let rows: Awaited<ReturnType<typeof buildCoverageMatrix>>['rows'] = []
   let summary: Awaited<ReturnType<typeof buildCoverageMatrix>>['summary'] = {

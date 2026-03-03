@@ -15,6 +15,7 @@ describe('Navigation', () => {
     expect(screen.getAllByText('Bikes').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('DTC').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Glossary').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Admin').length).toBeGreaterThanOrEqual(1)
   })
 
   it('renders nav links with correct hrefs', () => {
@@ -26,6 +27,7 @@ describe('Navigation', () => {
     expect(hrefs).toContain('/bikes')
     expect(hrefs).toContain('/dtc')
     expect(hrefs).toContain('/glossary')
+    expect(hrefs).toContain('/admin')
   })
 
   it('applies active styling to the current route on desktop', () => {
