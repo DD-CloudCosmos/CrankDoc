@@ -52,7 +52,7 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
         {filteredMotorcycles.map((moto, index) => (
           <Link href={`/diagnose?bike=${moto.id}`} key={moto.id}>
             <div
-              className="rounded-[16px] border border-border bg-background px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors"
+              className="rounded-[16px] border border-border bg-card px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors"
               style={{ animation: 'riseIn 0.6s ease-out both', animationDelay: `${index * 0.05}s` }}
             >
               <div>

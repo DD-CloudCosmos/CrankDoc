@@ -139,9 +139,10 @@ export function BikeDetailTabs({
 
   return (
     <>
+      <div className="overflow-hidden rounded-[24px] border border-border bg-card">
       {/* Tab bar */}
       {showTabBar && (
-        <div className="mb-4 flex gap-2 border-b border-border" role="tablist">
+        <div className="flex gap-2 border-b border-border px-2 pt-2" role="tablist">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -161,6 +162,7 @@ export function BikeDetailTabs({
       )}
 
       {/* Tab content */}
+      <div className="p-4">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
       {displayTab === 'service' && <ServiceIntervalTable intervals={serviceIntervals} />}
       {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
@@ -173,6 +175,8 @@ export function BikeDetailTabs({
       {displayTab === 'recalls' && (
         <RecallsContent recalls={deduplicatedRecalls} />
       )}
+      </div>
+      </div>
 
       {/* Lightbox overlay */}
       {lightboxDoc && (
