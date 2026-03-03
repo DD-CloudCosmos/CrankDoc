@@ -13,7 +13,7 @@ const statusConfig = {
     textClass: 'text-green-700 dark:text-green-400',
   },
   local_only: {
-    label: 'Local Only',
+    label: 'Uploaded',
     dotClass: 'bg-amber-500',
     textClass: 'text-amber-700 dark:text-amber-400',
   },

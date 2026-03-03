@@ -54,7 +54,7 @@ describe('ManualCoverageMatrix', () => {
     render(<ManualCoverageMatrix rows={rows} />)
     // One ingested + one local_only across desktop + mobile views
     expect(screen.getAllByText('Ingested').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Local Only').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Uploaded').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Missing').length).toBeGreaterThanOrEqual(1)
   })
 

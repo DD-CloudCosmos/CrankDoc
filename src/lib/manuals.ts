@@ -35,7 +35,7 @@ export interface CoverageSummary {
   modelsWithManuals: number
   totalModels: number
   totalDocumentSources: number
-  localPdfCount: number | null
+  storagePdfCount: number | null
   overallCoveragePercent: number
 }
 
@@ -46,7 +46,7 @@ export interface ParsedManualFilename {
   year: number | null
 }
 
-export interface LocalManualFile {
+export interface StorageManualFile {
   filename: string
   parsed: ParsedManualFilename
 }
@@ -139,9 +139,9 @@ export function normalizeForMatch(str: string): string {
 
 // --- Coverage Matrix Builder ---
 
-/** Check if a local manual file matches a given make+model */
-function localFileMatchesModel(
-  file: LocalManualFile,
+/** Check if a storage manual file matches a given make+model */
+function storageFileMatchesModel(
+  file: StorageManualFile,
   make: string,
   model: string
 ): boolean {
@@ -185,9 +185,9 @@ function createEmptyCell(): ManualCoverageCell {
 export function buildCoverageMatrix(
   motorcycles: Motorcycle[],
   documentSources: DocumentSource[],
-  localManuals: LocalManualFile[] | null
+  storageManuals: StorageManualFile[] | null
 ): { rows: ModelCoverageRow[]; summary: CoverageSummary } {
-  const localFiles = localManuals ?? []
+  const storageFiles = storageManuals ?? []
   // Group motorcycles by normalized make+model
   const modelGroups = new Map<
     string,
@@ -245,11 +245,11 @@ export function buildCoverageMatrix(
         })
       }
 
-      // Check local files for this model + manual_type
-      const matchingFiles = localFiles.filter(
+      // Check storage files for this model + manual_type
+      const matchingFiles = storageFiles.filter(
         (file) =>
           file.parsed.manualType === manualType &&
-          localFileMatchesModel(file, group.make, group.model)
+          storageFileMatchesModel(file, group.make, group.model)
       )
       for (const file of matchingFiles) {
         cell.localFiles.push(file.filename)
@@ -300,7 +300,7 @@ export function buildCoverageMatrix(
     modelsWithManuals,
     totalModels: rows.length,
     totalDocumentSources: documentSources.filter(d => d.manual_type !== null).length,
-    localPdfCount: localManuals !== null ? localManuals.length : null,
+    storagePdfCount: storageManuals !== null ? storageManuals.length : null,
     overallCoveragePercent: totalCells > 0 ? Math.round((filledCells / totalCells) * 100) : 0,
   }
 
