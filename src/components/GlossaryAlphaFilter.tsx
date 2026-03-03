@@ -13,9 +13,8 @@ export function GlossaryAlphaFilter({ activeLetter, onChange }: GlossaryAlphaFil
   return (
     <div className="flex flex-nowrap gap-1 overflow-x-auto">
       <Button
-        variant={activeLetter === '' ? 'default' : 'outline'}
+        variant={activeLetter === '' ? 'pill-active' : 'pill'}
         size="sm"
-        className={activeLetter === '' ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground'}
         onClick={() => onChange('')}
       >
         All
@@ -23,9 +22,8 @@ export function GlossaryAlphaFilter({ activeLetter, onChange }: GlossaryAlphaFil
       {LETTERS.map((letter) => (
         <Button
           key={letter}
-          variant={activeLetter === letter ? 'default' : 'outline'}
+          variant={activeLetter === letter ? 'pill-active' : 'pill'}
           size="sm"
-          className={activeLetter === letter ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground'}
           onClick={() => onChange(letter)}
         >
           {letter}

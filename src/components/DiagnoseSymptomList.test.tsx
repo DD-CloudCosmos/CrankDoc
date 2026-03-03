@@ -104,15 +104,15 @@ describe('DiagnoseSymptomList', () => {
 
   it('renders difficulty badges', () => {
     render(<DiagnoseSymptomList motorcycle={mockMotorcycle} trees={mockTrees} bikeId="moto-1" />)
-    expect(screen.getByText('beginner')).toBeInTheDocument()
-    expect(screen.getByText('intermediate')).toBeInTheDocument()
-    expect(screen.getByText('advanced')).toBeInTheDocument()
+    expect(screen.getByText('Beginner')).toBeInTheDocument()
+    expect(screen.getByText('Intermediate')).toBeInTheDocument()
+    expect(screen.getByText('Advanced')).toBeInTheDocument()
   })
 
   it('does not render difficulty badge when difficulty is null', () => {
     render(<DiagnoseSymptomList motorcycle={mockMotorcycle} trees={mockTrees} bikeId="moto-1" />)
     // tree-4 has difficulty: null — only 3 badges should render
-    const badges = screen.getAllByText(/^(beginner|intermediate|advanced)$/)
+    const badges = screen.getAllByText(/^(Beginner|Intermediate|Advanced)$/)
     expect(badges).toHaveLength(3)
   })
 

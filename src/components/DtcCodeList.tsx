@@ -17,28 +17,7 @@ interface DtcApiResponse {
   totalPages: number
 }
 
-const SEVERITY_CONFIG: Record<string, { label: string; dotClass: string; badgeClass: string }> = {
-  low: {
-    label: 'Low',
-    dotClass: 'bg-green-500',
-    badgeClass: 'border-green-500/30 text-green-400',
-  },
-  medium: {
-    label: 'Medium',
-    dotClass: 'bg-amber-500',
-    badgeClass: 'border-amber-500/30 text-amber-400',
-  },
-  high: {
-    label: 'High',
-    dotClass: 'bg-orange-500',
-    badgeClass: 'border-orange-500/30 text-orange-400',
-  },
-  critical: {
-    label: 'Critical',
-    dotClass: 'bg-red-500',
-    badgeClass: 'border-red-500/30 text-red-400',
-  },
-}
+import { SEVERITY_STYLES } from '@/lib/badgeStyles'
 
 export function DtcCodeList() {
   const [codes, setCodes] = useState<DtcCode[]>([])
@@ -156,15 +135,15 @@ export function DtcCodeList() {
                 <TableHead className="w-8"></TableHead>
                 <TableHead>Code</TableHead>
                 <TableHead className="hidden sm:table-cell">Manufacturer</TableHead>
-                <TableHead className="hidden sm:table-cell">Severity</TableHead>
-                <TableHead className="hidden md:table-cell">Category</TableHead>
+                <TableHead className="hidden sm:table-cell w-[120px]">Severity</TableHead>
+                <TableHead className="hidden md:table-cell w-[120px]">Category</TableHead>
                 <TableHead>Description</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {codes.map((code) => {
                 const isExpanded = expandedIds.has(code.id)
-                const severityConfig = code.severity ? SEVERITY_CONFIG[code.severity] : null
+                const severityConfig = code.severity ? SEVERITY_STYLES[code.severity] : null
 
                 return (
                   <Fragment key={code.id}>
@@ -190,7 +169,7 @@ export function DtcCodeList() {
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         {severityConfig && (
-                          <Badge variant="outline" className={severityConfig.badgeClass}>
+                          <Badge variant="outline" className={`min-w-[80px] ${severityConfig.badgeClass}`}>
                             <span className={`mr-1.5 inline-block h-2 w-2 rounded-full ${severityConfig.dotClass}`} />
                             {severityConfig.label}
                           </Badge>
@@ -198,7 +177,7 @@ export function DtcCodeList() {
                       </TableCell>
                       <TableCell className="hidden md:table-cell">
                         {code.category && (
-                          <Badge variant="outline">{code.category}</Badge>
+                          <Badge variant="outline" className="min-w-[80px]">{code.category}</Badge>
                         )}
                       </TableCell>
                       <TableCell className="max-w-xs truncate">{code.description}</TableCell>

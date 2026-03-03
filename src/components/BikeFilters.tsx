@@ -109,9 +109,8 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
           {CATEGORIES.map((category) => (
             <Button
               key={category}
-              variant={currentCategory === category ? 'default' : 'outline'}
+              variant={currentCategory === category ? 'pill-active' : 'pill'}
               size="sm"
-              className={currentCategory === category ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground border-border'}
               onClick={() => updateFilter('category', currentCategory === category ? null : category)}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -127,9 +126,8 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
           {availableMakes.map((make) => (
             <Button
               key={make}
-              variant={currentMake === make ? 'default' : 'outline'}
+              variant={currentMake === make ? 'pill-active' : 'pill'}
               size="sm"
-              className={currentMake === make ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground border-border'}
               onClick={() => updateFilter('make', currentMake === make ? null : make)}
             >
               {make}

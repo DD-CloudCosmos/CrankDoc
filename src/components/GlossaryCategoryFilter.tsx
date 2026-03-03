@@ -28,9 +28,8 @@ export function GlossaryCategoryFilter({ activeCategory, onChange }: GlossaryCat
       {CATEGORIES.map((cat) => (
         <Button
           key={cat.value}
-          variant={activeCategory === cat.value ? 'default' : 'outline'}
+          variant={activeCategory === cat.value ? 'pill-active' : 'pill'}
           size="sm"
-          className={activeCategory === cat.value ? 'rounded-[999px] bg-[#1F1F1F] text-white' : 'rounded-[999px] bg-background text-foreground'}
           onClick={() => onChange(cat.value)}
         >
           {cat.label}

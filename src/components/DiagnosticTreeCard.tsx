@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
 import type { DiagnosticTree } from '@/types/database.types'
 import { ChevronRight } from 'lucide-react'
 
@@ -9,18 +10,6 @@ interface DiagnosticTreeCardProps {
   motorcycleName?: string
 }
 
-const difficultyVariant = (difficulty: string | null) => {
-  switch (difficulty) {
-    case 'beginner':
-      return 'secondary'
-    case 'intermediate':
-      return 'default'
-    case 'advanced':
-      return 'destructive'
-    default:
-      return 'outline'
-  }
-}
 
 export function DiagnosticTreeCard({ tree, motorcycleName }: DiagnosticTreeCardProps) {
   return (
@@ -37,9 +26,9 @@ export function DiagnosticTreeCard({ tree, motorcycleName }: DiagnosticTreeCardP
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap items-center gap-2">
-            {tree.difficulty && (
-              <Badge variant={difficultyVariant(tree.difficulty)}>
-                {tree.difficulty}
+            {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
+              <Badge variant="outline" className={DIFFICULTY_STYLES[tree.difficulty].badgeClass}>
+                {DIFFICULTY_STYLES[tree.difficulty].label}
               </Badge>
             )}
             {tree.category && (
