@@ -2,7 +2,9 @@
  * Manual Coverage — Types, Filename Parsing, and Coverage Matrix
  *
  * Pure data logic for the admin manual coverage dashboard.
- * No React or UI concerns — just types and functions.
+ * No Node.js or server dependencies — safe to import from client components.
+ *
+ * Server-only functions (Supabase fetchers, filesystem scanning) are in manuals.server.ts.
  */
 
 import type { Motorcycle, DocumentSource } from '@/types/database.types'
@@ -42,6 +44,11 @@ export interface ParsedManualFilename {
   model: string
   manualType: ManualType
   year: number | null
+}
+
+export interface LocalManualFile {
+  filename: string
+  parsed: ParsedManualFilename
 }
 
 export const MANUAL_TYPES: ManualType[] = [
@@ -128,70 +135,6 @@ export function parseManualFilename(filename: string): ParsedManualFilename | nu
 /** Normalize a string for fuzzy matching: lowercase, remove spaces/hyphens/punctuation */
 export function normalizeForMatch(str: string): string {
   return str.toLowerCase().replace(/[\s\-_.]/g, '')
-}
-
-// --- Local Filesystem Scanning ---
-
-export interface LocalManualFile {
-  filename: string
-  parsed: ParsedManualFilename
-}
-
-/**
- * Scan the `data/manuals/` directory for local PDF files.
- * Returns [] on Vercel or if the directory doesn't exist.
- */
-export async function scanLocalManuals(): Promise<LocalManualFile[]> {
-  try {
-    const fs = await import('fs/promises')
-    const path = await import('path')
-    const manualsDir = path.join(process.cwd(), 'data', 'manuals')
-    const files = await fs.readdir(manualsDir)
-
-    const results: LocalManualFile[] = []
-    for (const file of files) {
-      const parsed = parseManualFilename(file)
-      if (parsed) {
-        results.push({ filename: file, parsed })
-      }
-    }
-    return results
-  } catch {
-    // ENOENT on Vercel or if directory doesn't exist
-    return []
-  }
-}
-
-// --- Supabase Fetchers ---
-
-export async function fetchMotorcycles(): Promise<Motorcycle[]> {
-  const { createServerClient } = await import('@/lib/supabase/server')
-  const supabase = createServerClient()
-  const { data, error } = await supabase
-    .from('motorcycles')
-    .select('*')
-    .order('make', { ascending: true })
-    .order('model', { ascending: true })
-
-  if (error) {
-    console.error('Error fetching motorcycles:', error)
-    throw new Error('Failed to fetch motorcycles')
-  }
-  return data || []
-}
-
-export async function fetchDocumentSources(): Promise<DocumentSource[]> {
-  const { createServerClient } = await import('@/lib/supabase/server')
-  const supabase = createServerClient()
-  const { data, error } = await supabase
-    .from('document_sources')
-    .select('*')
-
-  if (error) {
-    console.error('Error fetching document sources:', error)
-    throw new Error('Failed to fetch document sources')
-  }
-  return data || []
 }
 
 // --- Coverage Matrix Builder ---

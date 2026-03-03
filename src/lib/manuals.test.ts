@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import {
   parseManualFilename,
   normalizeForMatch,
   buildCoverageMatrix,
-  scanLocalManuals,
 } from './manuals'
+import { scanLocalManuals } from './manuals.server'
 import type { Motorcycle, DocumentSource } from '@/types/database.types'
 
 describe('parseManualFilename', () => {
@@ -308,25 +308,40 @@ describe('buildCoverageMatrix', () => {
 })
 
 describe('scanLocalManuals', () => {
-  it('returns parsed manual files from the real data/manuals directory', async () => {
-    const results = await scanLocalManuals()
+  it('returns parsed manual files from directory listing', async () => {
+    const mockReader = vi.fn().mockResolvedValue([
+      'honda-cbr600rr-owners-2007.pdf',
+      'kymco-ak550-service.pdf',
+      'readme.txt',
+    ])
 
-    // We know there are real PDFs in data/manuals/
-    expect(results.length).toBeGreaterThan(0)
+    const results = await scanLocalManuals(mockReader)
 
-    // Check a known file is parsed correctly
-    const ak550 = results.find((r) => r.filename === 'kymco-ak550-service.pdf')
-    expect(ak550).toBeDefined()
-    expect(ak550!.parsed.manualType).toBe('service_manual')
-    expect(ak550!.parsed.make).toBe('kymco')
+    expect(results).toHaveLength(2)
+    expect(results[0].filename).toBe('honda-cbr600rr-owners-2007.pdf')
+    expect(results[0].parsed.manualType).toBe('owners_manual')
+    expect(results[1].filename).toBe('kymco-ak550-service.pdf')
+    expect(results[1].parsed.manualType).toBe('service_manual')
   })
 
-  it('only returns parseable PDF files', async () => {
-    const results = await scanLocalManuals()
+  it('returns empty array when directory does not exist', async () => {
+    const mockReader = vi.fn().mockRejectedValue(new Error('ENOENT'))
 
-    for (const file of results) {
-      expect(file.filename).toMatch(/\.pdf$/)
-      expect(file.parsed).not.toBeNull()
-    }
+    const results = await scanLocalManuals(mockReader)
+
+    expect(results).toEqual([])
+  })
+
+  it('filters out non-parseable files', async () => {
+    const mockReader = vi.fn().mockResolvedValue([
+      'notes.txt',
+      'photo.jpg',
+      'kymco-like125i-service.pdf',
+    ])
+
+    const results = await scanLocalManuals(mockReader)
+
+    expect(results).toHaveLength(1)
+    expect(results[0].filename).toBe('kymco-like125i-service.pdf')
   })
 })

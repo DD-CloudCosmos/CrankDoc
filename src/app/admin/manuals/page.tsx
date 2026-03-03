@@ -1,4 +1,5 @@
-import { fetchMotorcycles, fetchDocumentSources, scanLocalManuals, buildCoverageMatrix } from '@/lib/manuals'
+import { buildCoverageMatrix } from '@/lib/manuals'
+import { fetchMotorcycles, fetchDocumentSources, scanLocalManuals } from '@/lib/manuals.server'
 import { CoverageSummaryCards } from '@/components/admin/CoverageSummaryCards'
 import { ManualCoverageMatrix } from '@/components/admin/ManualCoverageMatrix'
 

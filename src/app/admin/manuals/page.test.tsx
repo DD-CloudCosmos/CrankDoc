@@ -2,16 +2,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import type { ModelCoverageRow, CoverageSummary, ManualCoverageCell } from '@/lib/manuals'
 
-// Mock the entire manuals module to avoid dynamic import issues
+// Mock the manuals modules
 const mockFetchMotorcycles = vi.fn()
 const mockFetchDocumentSources = vi.fn()
 const mockScanLocalManuals = vi.fn()
 const mockBuildCoverageMatrix = vi.fn()
 
 vi.mock('@/lib/manuals', () => ({
-  fetchMotorcycles: (...args: unknown[]) => mockFetchMotorcycles(...args),
-  fetchDocumentSources: (...args: unknown[]) => mockFetchDocumentSources(...args),
-  scanLocalManuals: (...args: unknown[]) => mockScanLocalManuals(...args),
   buildCoverageMatrix: (...args: unknown[]) => mockBuildCoverageMatrix(...args),
   MANUAL_TYPES: ['service_manual', 'owners_manual', 'parts_catalog', 'tsb'],
   MANUAL_TYPE_LABELS: {
@@ -20,6 +17,12 @@ vi.mock('@/lib/manuals', () => ({
     parts_catalog: 'Parts',
     tsb: 'TSB',
   },
+}))
+
+vi.mock('@/lib/manuals.server', () => ({
+  fetchMotorcycles: (...args: unknown[]) => mockFetchMotorcycles(...args),
+  fetchDocumentSources: (...args: unknown[]) => mockFetchDocumentSources(...args),
+  scanLocalManuals: (...args: unknown[]) => mockScanLocalManuals(...args),
 }))
 
 function makeCell(status: 'ingested' | 'local_only' | 'missing'): ManualCoverageCell {
