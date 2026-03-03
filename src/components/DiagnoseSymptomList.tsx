@@ -93,7 +93,7 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
                   <div className="space-y-2">
                     {categoryTrees.map((tree) => (
                       <Link href={`/diagnose/${tree.id}`} key={tree.id}>
-                        <div className="rounded-[16px] border border-border bg-background px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors">
+                        <div className="rounded-[16px] border border-border bg-card px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors">
                           <div>
                             <span className="font-semibold">{tree.title}</span>
                             {tree.description && <p className="text-sm text-muted-foreground line-clamp-2">{tree.description}</p>}
