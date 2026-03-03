@@ -114,10 +114,23 @@ async function main() {
   const { generateBatchEmbeddings, createOpenAIClient } = await import('../src/lib/rag/embeddings')
   const { registerParser, getParser } = await import('../src/lib/scraper/parsers/parserRegistry')
   const { parseMotorcycleSpecsHtml } = await import('../src/lib/scraper/parsers/motorcyclespecsParser')
+  const { parseHondaHtml } = await import('../src/lib/scraper/parsers/hondaParser')
+  const { parseYamahaHtml } = await import('../src/lib/scraper/parsers/yamahaParser')
+  const { parseKawasakiHtml } = await import('../src/lib/scraper/parsers/kawasakiParser')
+  const { parseBmwHtml } = await import('../src/lib/scraper/parsers/bmwParser')
+  const { parseHarleyHtml } = await import('../src/lib/scraper/parsers/harleyParser')
+  const { parseKymcoHtml } = await import('../src/lib/scraper/parsers/kymcoParser')
   const { isUrlAllowed } = await import('../src/lib/scraper/robotsChecker')
+  const { fetchWithHeadless } = await import('../src/lib/scraper/headlessFetcher')
 
   // Register parsers
   registerParser('motorcyclespecs', parseMotorcycleSpecsHtml)
+  registerParser('honda', parseHondaHtml)
+  registerParser('yamaha', parseYamahaHtml)
+  registerParser('kawasaki', parseKawasakiHtml)
+  registerParser('bmw', parseBmwHtml)
+  registerParser('harley', parseHarleyHtml)
+  registerParser('kymco', parseKymcoHtml)
 
   const bikes = filterBikes(args.bikes)
   console.log(`\n  Found ${bikes.length} bike(s) to scrape\n`)
@@ -176,11 +189,15 @@ async function main() {
         continue
       }
 
-      // Step 2: Fetch
+      // Step 2: Fetch (use headless browser for manufacturer sites)
       console.log('  [1/5] Fetching...')
       let fetchResult
       try {
-        fetchResult = await fetchPageContent(source)
+        if (source.sourceType === 'manufacturer') {
+          fetchResult = await fetchWithHeadless(source.url)
+        } else {
+          fetchResult = await fetchPageContent(source)
+        }
         console.log(`  Fetched: ${fetchResult.contentLength} chars, title: "${fetchResult.title}"`)
       } catch (error) {
         console.error(`  FAILED to fetch: ${error instanceof Error ? error.message : String(error)}`)

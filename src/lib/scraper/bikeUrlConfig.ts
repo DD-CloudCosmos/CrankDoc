@@ -31,6 +31,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'MotorcycleSpecs - Honda CBR600RR',
         parserId: 'motorcyclespecs',
       },
+      {
+        url: 'https://powersports.honda.com/motorcycle/supersport/cbr600rr',
+        sourceType: 'manufacturer',
+        label: 'Honda - CBR600RR',
+        parserId: 'honda',
+      },
     ],
   },
   {
@@ -51,6 +57,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         sourceType: 'spec_database',
         label: 'MotorcycleSpecs - Yamaha MT-07',
         parserId: 'motorcyclespecs',
+      },
+      {
+        url: 'https://www.yamahamotorsports.com/sport/models/mt-07',
+        sourceType: 'manufacturer',
+        label: 'Yamaha - MT-07',
+        parserId: 'yamaha',
       },
     ],
   },
@@ -73,6 +85,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'MotorcycleSpecs - Harley-Davidson Sportster 883',
         parserId: 'motorcyclespecs',
       },
+      {
+        url: 'https://www.harley-davidson.com/us/en/motorcycles/sportster.html',
+        sourceType: 'manufacturer',
+        label: 'Harley-Davidson - Sportster',
+        parserId: 'harley',
+      },
     ],
   },
   {
@@ -94,6 +112,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         label: 'MotorcycleSpecs - Kawasaki Ninja 400',
         parserId: 'motorcyclespecs',
       },
+      {
+        url: 'https://www.kawasaki.com/en-us/motorcycle/ninja/sport/ninja-400',
+        sourceType: 'manufacturer',
+        label: 'Kawasaki - Ninja 400',
+        parserId: 'kawasaki',
+      },
     ],
   },
   {
@@ -114,6 +138,12 @@ export const BIKE_CONFIGS: BikeConfig[] = [
         sourceType: 'spec_database',
         label: 'MotorcycleSpecs - BMW R1250GS',
         parserId: 'motorcyclespecs',
+      },
+      {
+        url: 'https://www.bmw-motorrad.com/en/models/adventure/r1250gs.html',
+        sourceType: 'manufacturer',
+        label: 'BMW Motorrad - R1250GS',
+        parserId: 'bmw',
       },
     ],
   },
