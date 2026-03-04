@@ -48,7 +48,7 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
   return (
     <div className="space-y-4" style={{ animation: 'riseIn 0.6s ease-out both' }}>
       {/* Bike context bar */}
-      <div className="rounded-[24px] bg-secondary p-4 flex items-center justify-between">
+      <div className="rounded-[24px] bg-card border border-border shadow-[var(--shadow-soft)] p-4 flex items-center justify-between">
         <div>
           {motorcycle ? (
             <>
@@ -90,18 +90,20 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
                     <Icon className="h-4 w-4 text-muted-foreground" />
                     <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{config.label}</h3>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {categoryTrees.map((tree) => (
                       <Link href={`/diagnose/${tree.id}`} key={tree.id}>
                         <div className="rounded-[16px] border border-border bg-card px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors">
-                          <div>
+                          <div className="min-h-[3.5rem] flex flex-col justify-center">
                             <span className="font-semibold">{tree.title}</span>
-                            {tree.description && <p className="text-sm text-muted-foreground line-clamp-2">{tree.description}</p>}
-                            {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
-                              <Badge variant="outline" className={DIFFICULTY_STYLES[tree.difficulty].badgeClass}>
-                                {DIFFICULTY_STYLES[tree.difficulty].label}
-                              </Badge>
-                            )}
+                            {tree.description && <p className="text-sm text-muted-foreground line-clamp-1">{tree.description}</p>}
+                            <div className="mt-1 h-5">
+                              {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
+                                <Badge variant="outline" className={`${DIFFICULTY_STYLES[tree.difficulty].badgeClass} min-w-[6.5rem] text-center`}>
+                                  {DIFFICULTY_STYLES[tree.difficulty].label}
+                                </Badge>
+                              )}
+                            </div>
                           </div>
                           <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
                         </div>
