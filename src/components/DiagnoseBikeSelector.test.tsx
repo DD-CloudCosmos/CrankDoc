@@ -223,11 +223,12 @@ describe('DiagnoseBikeSelector', () => {
     expect(screen.queryByText('Kymco Agility 125')).not.toBeInTheDocument()
   })
 
-  it('does not show tree count when count is 0 or missing', () => {
+  it('shows "No guides yet" when tree count is 0 or missing', () => {
     const emptyTreeCounts: Record<string, number> = {}
     render(<DiagnoseBikeSelector motorcycles={mockMotorcycles} treeCounts={emptyTreeCounts} />)
 
-    // Should not show any "N guides" text (but "Browse general guides" is still there)
-    expect(screen.queryByText(/\d+ guides/)).not.toBeInTheDocument()
+    // Should show "No guides yet" for all motorcycles
+    const noGuides = screen.getAllByText('No guides yet')
+    expect(noGuides).toHaveLength(mockMotorcycles.length)
   })
 })

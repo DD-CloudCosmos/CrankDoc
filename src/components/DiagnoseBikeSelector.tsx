@@ -39,7 +39,7 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
             key={cat}
             variant={selectedCategory === cat ? 'pill-active' : 'pill'}
             size="sm"
-            className="shrink-0"
+            className="shrink-0 min-w-[5.25rem]"
             onClick={() => setSelectedCategory(cat)}
           >
             {cat}
@@ -48,7 +48,7 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
       </div>
 
       {/* Bike list */}
-      <div className="space-y-2">
+      <div className="space-y-3">
         {filteredMotorcycles.map((moto, index) => (
           <Link href={`/diagnose?bike=${moto.id}`} key={moto.id}>
             <div
@@ -62,9 +62,9 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
                   {moto.category && ` · ${capitalize(moto.category)}`}
                   {moto.displacement_cc && ` · ${moto.displacement_cc}cc`}
                 </div>
-                {treeCounts[moto.id] && (
-                  <span className="text-xs text-muted-foreground">{treeCounts[moto.id]} guides</span>
-                )}
+                <span className="text-xs text-muted-foreground">
+                  {treeCounts[moto.id] ? `${treeCounts[moto.id]} guides` : 'No guides yet'}
+                </span>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
             </div>
