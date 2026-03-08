@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { AlertTriangle } from 'lucide-react'
@@ -13,6 +14,33 @@ import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, Tech
 
 interface PageProps {
   params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params
+  const supabase = createServerClient()
+  const { data: motorcycle } = await supabase
+    .from('motorcycles')
+    .select('make, model, year_start, year_end, category')
+    .eq('id', id)
+    .single()
+
+  if (!motorcycle) {
+    return { title: 'Bike Not Found | CrankDoc' }
+  }
+
+  const title = `${motorcycle.make} ${motorcycle.model} Specs | CrankDoc`
+  const description = `Detailed specs, diagnostic trees, service intervals, and recalls for the ${motorcycle.make} ${motorcycle.model} (${motorcycle.year_start}-${motorcycle.year_end || 'present'}).`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
+  }
 }
 
 async function getMotorcycle(id: string): Promise<Motorcycle | null> {

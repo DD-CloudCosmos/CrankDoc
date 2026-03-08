@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase/server'
@@ -9,6 +10,45 @@ import type { Motorcycle, DiagnosticTree, DecisionTreeData } from '@/types/datab
 
 interface PageProps {
   params: Promise<{ treeId: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { treeId } = await params
+  const supabase = createServerClient()
+  const { data: tree } = await supabase
+    .from('diagnostic_trees')
+    .select('title, motorcycle_id')
+    .eq('id', treeId)
+    .single()
+
+  if (!tree) {
+    return { title: 'Diagnostic Tree | CrankDoc' }
+  }
+
+  let bikeName = 'Universal'
+  if (tree.motorcycle_id) {
+    const { data: motorcycle } = await supabase
+      .from('motorcycles')
+      .select('make, model')
+      .eq('id', tree.motorcycle_id)
+      .single()
+    if (motorcycle) {
+      bikeName = `${motorcycle.make} ${motorcycle.model}`
+    }
+  }
+
+  const title = `${tree.title} — ${bikeName} | CrankDoc`
+  const description = `Step-by-step diagnostic guide: ${tree.title} for ${bikeName}. Follow guided troubleshooting to find and fix the issue.`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
+  }
 }
 
 async function getTree(treeId: string): Promise<DiagnosticTree | null> {
