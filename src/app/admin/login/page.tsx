@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input'
 function AdminLoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const from = searchParams.get('from') || '/admin'
+  const rawFrom = searchParams.get('from') || '/admin'
+  const from = rawFrom.startsWith('/admin') ? rawFrom : '/admin'
 
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

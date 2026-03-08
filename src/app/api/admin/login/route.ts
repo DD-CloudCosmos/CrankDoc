@@ -23,13 +23,10 @@ export async function POST(request: Request) {
       )
     }
 
-    // Timing-safe comparison to prevent timing attacks
-    const passwordBuffer = Buffer.from(password)
-    const adminPasswordBuffer = Buffer.from(adminPassword)
-
-    const isMatch =
-      passwordBuffer.length === adminPasswordBuffer.length &&
-      crypto.timingSafeEqual(passwordBuffer, adminPasswordBuffer)
+    // Hash before comparing to prevent length oracle and timing attacks
+    const passwordHash = crypto.createHash('sha256').update(password).digest()
+    const adminHash = crypto.createHash('sha256').update(adminPassword).digest()
+    const isMatch = crypto.timingSafeEqual(passwordHash, adminHash)
 
     if (!isMatch) {
       return NextResponse.json(
