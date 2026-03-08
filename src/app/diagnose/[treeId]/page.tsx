@@ -1,10 +1,9 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase/server'
 import { TreeWalker } from '@/components/TreeWalker'
 import { DiagnoseStepIndicator } from '@/components/DiagnoseStepIndicator'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { BackButton } from '@/components/BackButton'
 import type { Motorcycle, DiagnosticTree, DecisionTreeData } from '@/types/database.types'
 
 interface PageProps {
@@ -70,11 +69,7 @@ export default async function DiagnoseTreePage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-8">
       <DiagnoseStepIndicator currentStep={3} bikeId={tree.motorcycle_id || undefined} />
       <div className="mb-6">
-        <Link href={backHref}>
-          <Button variant="ghost" size="sm" className="mb-4">
-            &larr; Back to symptoms
-          </Button>
-        </Link>
+        <BackButton href={backHref} label="Back to symptoms" />
 
         <div className="flex flex-wrap items-center gap-2">
           {motorcycleName && (

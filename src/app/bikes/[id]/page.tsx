@@ -9,6 +9,7 @@ import { QuickSpecs } from '@/components/QuickSpecs'
 import { BikeDetailTabs } from '@/components/BikeDetailTabs'
 import { GenerationNavSelector } from '@/components/GenerationNavSelector'
 import { SafeDisclaimer } from '@/components/SafeDisclaimer'
+import { BackButton } from '@/components/BackButton'
 import type { Motorcycle, DiagnosticTree, ServiceInterval, MotorcycleImage, TechnicalDocument, Recall } from '@/types/database.types'
 
 interface PageProps {
@@ -201,11 +202,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
     <div className="container mx-auto px-4 py-8">
       {/* Back button */}
       <div className="mb-6">
-        <Link href="/bikes">
-          <Button variant="ghost" size="sm" className="mb-4">
-            ← Back to all bikes
-          </Button>
-        </Link>
+        <BackButton href="/bikes" label="Back to all bikes" />
       </div>
 
       {/* Hero section */}
