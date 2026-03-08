@@ -141,6 +141,14 @@ async function getRecalls(make: string, model: string, yearStart: number, yearEn
   return data ?? []
 }
 
+function getSettledValue<T>(result: PromiseSettledResult<T>, fallback: T): T {
+  if (result.status === 'fulfilled') {
+    return result.value
+  }
+  console.error('Query failed, using fallback:', result.reason)
+  return fallback
+}
+
 export default async function BikeDetailPage({ params }: PageProps) {
   const { id } = await params
   const motorcycle = await getMotorcycle(id)
@@ -151,8 +159,8 @@ export default async function BikeDetailPage({ params }: PageProps) {
 
   const { make, model, year_start, year_end, category, generation } = motorcycle
 
-  // Fetch all data in parallel
-  const [generations, primaryImage, technicalDocs, trees, serviceIntervals, recalls] = await Promise.all([
+  // Fetch all data in parallel — use allSettled so one failure doesn't break the page
+  const results = await Promise.allSettled([
     getGenerations(make, model),
     getPrimaryImage(motorcycle.id),
     getTechnicalDocuments(motorcycle.id),
@@ -160,6 +168,13 @@ export default async function BikeDetailPage({ params }: PageProps) {
     getServiceIntervals(motorcycle.id),
     getRecalls(make, model, year_start, year_end),
   ])
+
+  const generations = getSettledValue(results[0], [] as Motorcycle[])
+  const primaryImage = getSettledValue(results[1], null as MotorcycleImage | null)
+  const technicalDocs = getSettledValue(results[2], [] as TechnicalDocument[])
+  const trees = getSettledValue(results[3], [] as DiagnosticTree[])
+  const serviceIntervals = getSettledValue(results[4], [] as ServiceInterval[])
+  const recalls = getSettledValue(results[5], [] as Recall[])
 
   // Format year range
   const yearRange = year_end ? `${year_start}-${year_end}` : `${year_start}-present`
