@@ -27,7 +27,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 
 ### High Priority
 - [ ] Smart search UI (cross-feature search)
-- [ ] PWA configuration (installable, offline caching)
+- [-] PWA configuration (installable, offline caching) (🏗️ 2026-03-09, Kai)
 - [ ] Mechanic tester recruitment and feedback loop
 
 ### Medium Priority

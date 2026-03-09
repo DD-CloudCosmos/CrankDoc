@@ -6,6 +6,7 @@ import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistratio
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { Analytics } from "@/components/Analytics";
 import { JsonLd } from "@/components/JsonLd";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { generateWebApplicationSchema } from "@/lib/structuredData";
 
 const inter = Inter({
@@ -35,6 +36,11 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   other: {
     'theme-color': '#F2E8D8',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+  },
+  icons: {
+    apple: '/icons/icon-192.png',
   },
 };
 
@@ -55,6 +61,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <JsonLd data={generateWebApplicationSchema()} />
+        <OfflineIndicator />
         <div className="flex min-h-screen flex-col">
           <Navigation />
           <main id="main-content" className="flex-1 pb-16 md:pb-0">{children}</main>
