@@ -23,6 +23,13 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 - [x] Standardize filter UI — pills everywhere, remove dropdown selects (✅ 2026-03-09)
 - [x] Error styling → CSS variables (✅ 2026-03-09)
 
+### Sprint 4: Post-Ship Review Fixes ✅ 2026-03-09
+- [x] Fix OfflineIndicator hydration mismatch — P0 (✅ 2026-03-09)
+- [x] Search API: sanitize query, fix NaN limit, fix tree deep-link — P1 (✅ 2026-03-09)
+- [x] Mobile nav: consolidate to 5 items + More popover — P1 (✅ 2026-03-09)
+- [x] Service worker: remove eager skipWaiting, fix interval leak — P1 (✅ 2026-03-09)
+- [x] Search test coverage: 6 new tests for edge cases — P1 (✅ 2026-03-09)
+
 ## Next Iteration: v0.5 — Polish & Launch Prep
 
 ### High Priority

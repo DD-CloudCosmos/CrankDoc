@@ -10,6 +10,7 @@
 - **Complexity:** S
 - **Status:** 🏗️ 2026-03-08 — NEEDS MARCUS
 
+
 ## Ready
 
 
@@ -96,3 +97,18 @@
 
 ### TODO-004: Clean up stale branches (✅ 2026-03-09)
 - Deleted 10 remote branches (5 claude/*, 4 feature/*, 1 fix/*). Deleted 13 stale local branches. Pruned remote tracking refs. Only `origin/master` remains remotely.
+
+### TODO-021: Fix OfflineIndicator hydration mismatch (✅ 2026-03-09)
+- P0 fix. Changed useState initializer to `false`, added useEffect to sync navigator.onLine on mount. No hydration mismatch.
+
+### TODO-022: Search API security fixes (✅ 2026-03-09)
+- P1 fix. Added `sanitizeQuery()` for PostgREST injection prevention. Fixed NaN limit fallback. Fixed tree deep-links to `/diagnose/:id`. 2 new tests.
+
+### TODO-023: Mobile nav overflow fix (✅ 2026-03-09)
+- P1 fix. Consolidated mobile bottom nav from 8 to 5 items (Home, Diagnose, Bikes, Search, More). More button opens popover with DTC, Glossary, Recalls, Admin. Desktop unchanged. 16 tests.
+
+### TODO-024: Service worker fixes (✅ 2026-03-09)
+- P1 fix. Removed eager `skipWaiting()` from install handler (message-based only). Fixed interval cleanup leak with useRef.
+
+### TODO-025: Search test coverage (✅ 2026-03-09)
+- Added 6 new tests: useSearch network error + abort behavior, DesktopSearch Escape + click-outside, SearchOverlay interactions. 897 total tests passing.

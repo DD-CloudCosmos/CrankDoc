@@ -3,21 +3,7 @@ import { render, screen, act } from '@testing-library/react'
 import { OfflineIndicator } from './OfflineIndicator'
 
 describe('OfflineIndicator', () => {
-  let onlineListeners: Array<() => void> = []
-  let offlineListeners: Array<() => void> = []
-
   beforeEach(() => {
-    onlineListeners = []
-    offlineListeners = []
-
-    vi.spyOn(window, 'addEventListener').mockImplementation(
-      (event: string, handler: unknown) => {
-        if (event === 'online') onlineListeners.push(handler as () => void)
-        if (event === 'offline') offlineListeners.push(handler as () => void)
-      }
-    )
-    vi.spyOn(window, 'removeEventListener').mockImplementation(() => {})
-
     // Default to online
     Object.defineProperty(navigator, 'onLine', {
       value: true,
@@ -30,6 +16,24 @@ describe('OfflineIndicator', () => {
     vi.restoreAllMocks()
   })
 
+  function goOffline() {
+    Object.defineProperty(navigator, 'onLine', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
+    window.dispatchEvent(new Event('offline'))
+  }
+
+  function goOnline() {
+    Object.defineProperty(navigator, 'onLine', {
+      value: true,
+      writable: true,
+      configurable: true,
+    })
+    window.dispatchEvent(new Event('online'))
+  }
+
   it('renders nothing when online', () => {
     const { container } = render(<OfflineIndicator />)
     expect(container.firstChild).toBeNull()
@@ -39,7 +43,7 @@ describe('OfflineIndicator', () => {
     render(<OfflineIndicator />)
 
     act(() => {
-      offlineListeners.forEach((fn) => fn())
+      goOffline()
     })
 
     expect(
@@ -54,7 +58,7 @@ describe('OfflineIndicator', () => {
 
     // Go offline first
     act(() => {
-      offlineListeners.forEach((fn) => fn())
+      goOffline()
     })
 
     expect(
@@ -65,7 +69,7 @@ describe('OfflineIndicator', () => {
 
     // Come back online
     act(() => {
-      onlineListeners.forEach((fn) => fn())
+      goOnline()
     })
 
     expect(screen.getByText('Back online')).toBeInTheDocument()
@@ -107,10 +111,10 @@ describe('OfflineIndicator', () => {
 
     // Go offline then online
     act(() => {
-      offlineListeners.forEach((fn) => fn())
+      goOffline()
     })
     act(() => {
-      onlineListeners.forEach((fn) => fn())
+      goOnline()
     })
 
     expect(screen.getByText('Back online')).toBeInTheDocument()

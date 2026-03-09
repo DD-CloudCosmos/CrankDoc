@@ -1,39 +1,46 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useSyncExternalStore } from 'react'
+
+function subscribeOnlineStatus(callback: () => void) {
+  window.addEventListener('online', callback)
+  window.addEventListener('offline', callback)
+  return () => {
+    window.removeEventListener('online', callback)
+    window.removeEventListener('offline', callback)
+  }
+}
+
+function getOnlineSnapshot() {
+  return navigator.onLine
+}
+
+function getServerSnapshot() {
+  return true
+}
 
 export function OfflineIndicator() {
-  const [isOffline, setIsOffline] = useState(false)
+  const isOnline = useSyncExternalStore(
+    subscribeOnlineStatus,
+    getOnlineSnapshot,
+    getServerSnapshot
+  )
+  const isOffline = !isOnline
   const [showBackOnline, setShowBackOnline] = useState(false)
 
-  // Sync initial online state after hydration
+  // Subscribe to online event to trigger "back online" banner
   useEffect(() => {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) {
-      setIsOffline(true)
-    }
+    const handleOnline = () => setShowBackOnline(true)
+    window.addEventListener('online', handleOnline)
+    return () => window.removeEventListener('online', handleOnline)
   }, [])
 
-  const handleOffline = useCallback(() => {
-    setIsOffline(true)
-    setShowBackOnline(false)
-  }, [])
-
-  const handleOnline = useCallback(() => {
-    setIsOffline(false)
-    setShowBackOnline(true)
+  // Auto-hide "back online" after 3 seconds
+  useEffect(() => {
+    if (!showBackOnline) return
     const timer = setTimeout(() => setShowBackOnline(false), 3000)
     return () => clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener('offline', handleOffline)
-    window.addEventListener('online', handleOnline)
-
-    return () => {
-      window.removeEventListener('offline', handleOffline)
-      window.removeEventListener('online', handleOnline)
-    }
-  }, [handleOffline, handleOnline])
+  }, [showBackOnline])
 
   if (!isOffline && !showBackOnline) {
     return null
