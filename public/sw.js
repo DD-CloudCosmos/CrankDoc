@@ -19,8 +19,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
   )
-  // Activate new SW immediately instead of waiting
-  self.skipWaiting()
 })
 
 self.addEventListener('fetch', (event) => {
