@@ -3,10 +3,15 @@
 import { useState, useEffect, useCallback } from 'react'
 
 export function OfflineIndicator() {
-  const [isOffline, setIsOffline] = useState(
-    () => typeof navigator !== 'undefined' && !navigator.onLine
-  )
+  const [isOffline, setIsOffline] = useState(false)
   const [showBackOnline, setShowBackOnline] = useState(false)
+
+  // Sync initial online state after hydration
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      setIsOffline(true)
+    }
+  }, [])
 
   const handleOffline = useCallback(() => {
     setIsOffline(true)
