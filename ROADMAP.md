@@ -1,6 +1,29 @@
 # Project Roadmap
 
-## Current Iteration: v0.5 — Polish & Content Expansion
+## Current Iteration: v0.4.1 — UX/UI Audit Fixes
+
+Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before resuming v0.5 features.
+
+### Sprint 1: Ship-Blocking (Infrastructure + Data)
+- [x] Force Vercel redeploy — serve current master (✅ 2026-03-08)
+- [-] Seed production Supabase — all 18 bikes, 119 trees, full dataset (🏗️ 2026-03-08, Marcus)
+- [ ] Add npm seed scripts to package.json (Kai)
+- [ ] Verify production — re-test all P0 findings (Priya)
+
+### Sprint 2: High Priority Code Fixes (P0-4 + P1s) ✅ 2026-03-09
+- [x] Admin auth middleware — protect `/admin/*` routes (✅ 2026-03-09)
+- [x] Suspense/loading states on server pages — bikes, bike detail, diagnose (✅ 2026-03-08)
+- [x] Error handling — `Promise.allSettled()` on bike detail page (✅ 2026-03-08)
+- [x] Dynamic SEO metadata — bike detail + diagnose tree pages (✅ 2026-03-08)
+- [x] Standardize back navigation — `BackButton` component with lucide icon (✅ 2026-03-08)
+
+### Sprint 3: Medium Priority Polish (P2s) ✅ 2026-03-09
+- [x] Accessibility pass — aria-live, keyboard nav, skip link (✅ 2026-03-09)
+- [x] Touch target sizing — 44px minimum for all interactive elements (✅ 2026-03-09)
+- [x] Standardize filter UI — pills everywhere, remove dropdown selects (✅ 2026-03-09)
+- [x] Error styling → CSS variables (✅ 2026-03-09)
+
+## Next Iteration: v0.5 — Polish & Content Expansion
 
 ### High Priority
 - [ ] Smart search UI (cross-feature search)
