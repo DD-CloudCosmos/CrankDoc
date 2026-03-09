@@ -56,3 +56,11 @@
 ## Blocked
 
 ## Done (this iteration)
+
+### TODO-019: Standardize filter UI
+- **Agent:** Elena (Frontend)
+- **Branch:** `fix/TODO-019-filter-consistency`
+- **Acceptance criteria:** Recalls page uses pill button filters matching BikeFilters pattern instead of dropdown selects. Make, Model (cascading), and Year filters all use pills.
+- **Dependencies:** None
+- **Complexity:** S
+- **Completed:** 2026-03-09
