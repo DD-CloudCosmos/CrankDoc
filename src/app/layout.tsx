@@ -48,10 +48,16 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased bg-background text-foreground`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-[16px] focus:bg-[#1F1F1F] focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to main content
+        </a>
         <JsonLd data={generateWebApplicationSchema()} />
         <div className="flex min-h-screen flex-col">
           <Navigation />
-          <main className="flex-1 pb-16 md:pb-0">{children}</main>
+          <main id="main-content" className="flex-1 pb-16 md:pb-0">{children}</main>
         </div>
         <InstallPrompt />
         <ServiceWorkerRegistration />

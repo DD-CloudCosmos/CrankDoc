@@ -114,14 +114,14 @@ export function GlossaryList() {
       <GlossaryCategoryFilter activeCategory={category} onChange={handleCategoryChange} />
 
       {loading && (
-        <div className="flex items-center justify-center p-8">
+        <div className="flex items-center justify-center p-8" aria-live="polite">
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           <span className="ml-2 text-muted-foreground">Loading glossary terms...</span>
         </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center" aria-live="polite">
           <p className="text-red-700">{error}</p>
         </div>
       )}
@@ -159,6 +159,15 @@ export function GlossaryList() {
                     <TableRow
                       className="cursor-pointer"
                       onClick={() => toggleExpanded(term.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          toggleExpanded(term.id)
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-expanded={isExpanded}
                       data-testid="glossary-row"
                     >
                       <TableCell className="w-8 pr-0">
@@ -243,7 +252,8 @@ export function GlossaryList() {
                                   style={{ aspectRatio: '3/2' }}
                                 />
                                 <span className="absolute bottom-2 right-2 rounded-full bg-black/50 p-1.5 text-white opacity-0 transition-opacity group-hover:opacity-100">
-                                  <ZoomIn className="h-4 w-4" />
+                                  <ZoomIn className="h-4 w-4" aria-hidden="true" />
+                                  <span className="sr-only">Zoom illustration</span>
                                 </span>
                               </button>
                             )}

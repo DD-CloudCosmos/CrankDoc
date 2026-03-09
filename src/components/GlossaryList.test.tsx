@@ -334,6 +334,67 @@ describe('GlossaryList', () => {
     expect(within(detail).queryByRole('img')).not.toBeInTheDocument()
   })
 
+  it('has aria-expanded attribute on expandable rows', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    expect(rows[0]).toHaveAttribute('aria-expanded', 'false')
+
+    await user.click(rows[0])
+    expect(rows[0]).toHaveAttribute('aria-expanded', 'true')
+
+    await user.click(rows[0])
+    expect(rows[0]).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('expands row on Enter key press', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    rows[0].focus()
+    await user.keyboard('{Enter}')
+
+    expect(screen.getByTestId('glossary-detail')).toBeInTheDocument()
+  })
+
+  it('expands row on Space key press', async () => {
+    const user = userEvent.setup()
+    mockApiResponse(mockTerms, 2)
+
+    render(<GlossaryList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('Carburetor')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('glossary-row')
+    rows[0].focus()
+    await user.keyboard(' ')
+
+    expect(screen.getByTestId('glossary-detail')).toBeInTheDocument()
+  })
+
+  it('has aria-live on loading state', () => {
+    mockFetch.mockReturnValueOnce(new Promise(() => {}))
+    render(<GlossaryList />)
+    const loadingEl = screen.getByText('Loading glossary terms...').closest('div')
+    expect(loadingEl).toHaveAttribute('aria-live', 'polite')
+  })
+
   it('shows category and difficulty badges in expanded row', async () => {
     const user = userEvent.setup()
     mockApiResponse(mockTerms, 2)

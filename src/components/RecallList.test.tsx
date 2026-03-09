@@ -140,6 +140,51 @@ describe('RecallList', () => {
     })
   })
 
+  it('has aria-live on loading state', () => {
+    mockFetch.mockReturnValue(new Promise(() => {}))
+    render(<RecallList />)
+    const loadingEl = screen.getByText('Loading recalls...').closest('div')
+    expect(loadingEl).toHaveAttribute('aria-live', 'polite')
+  })
+
+  it('has aria-expanded attribute on expandable rows', async () => {
+    const user = userEvent.setup()
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('24V-001')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('recall-row')
+    expect(rows[0]).toHaveAttribute('aria-expanded', 'false')
+
+    await user.click(rows[0])
+    expect(rows[0]).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  it('expands row on Enter key press', async () => {
+    const user = userEvent.setup()
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse())
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByText('24V-001')).toBeInTheDocument()
+    })
+
+    const rows = screen.getAllByTestId('recall-row')
+    rows[0].focus()
+    await user.keyboard('{Enter}')
+
+    expect(screen.getByTestId('recall-detail')).toBeInTheDocument()
+  })
+
   it('expands row on click to show details', async () => {
     const user = userEvent.setup()
     mockFetch

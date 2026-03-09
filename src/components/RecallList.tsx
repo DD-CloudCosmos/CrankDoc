@@ -165,14 +165,14 @@ export function RecallList() {
       </div>
 
       {loading && (
-        <div className="flex items-center justify-center p-8">
+        <div className="flex items-center justify-center p-8" aria-live="polite">
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           <span className="ml-2 text-muted-foreground">Loading recalls...</span>
         </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center" aria-live="polite">
           <p className="text-red-700">{error}</p>
         </div>
       )}
@@ -211,6 +211,15 @@ export function RecallList() {
                     <TableRow
                       className="cursor-pointer"
                       onClick={() => toggleExpanded(recall.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          toggleExpanded(recall.id)
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-expanded={isExpanded}
                       data-testid="recall-row"
                     >
                       <TableCell className="w-8 pr-0">

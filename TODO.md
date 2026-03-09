@@ -56,3 +56,11 @@
 ## Blocked
 
 ## Done (this iteration)
+
+### TODO-017: Accessibility pass
+- **Agent:** Jake (UI/UX)
+- **Branch:** `fix/TODO-017-accessibility`
+- **Acceptance criteria:** Skip-to-content link, aria-live on loading/error states, keyboard navigation for expandable rows, sr-only text for icon-only elements.
+- **Dependencies:** None
+- **Complexity:** S
+- **Completed:** 2026-03-09
