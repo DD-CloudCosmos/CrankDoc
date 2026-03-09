@@ -26,7 +26,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 ## Next Iteration: v0.5 — Polish & Launch Prep
 
 ### High Priority
-- [ ] Smart search UI (cross-feature search)
+- [x] Smart search UI (cross-feature search) (✅ 2026-03-09)
 - [ ] PWA configuration (installable, offline caching)
 - [ ] Mechanic tester recruitment and feedback loop
 

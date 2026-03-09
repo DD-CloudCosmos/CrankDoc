@@ -29,13 +29,6 @@
 
 ## Parked (from v0.5 backlog)
 
-### TODO-001: Smart search UI
-- **Agent:** Elena (Frontend)
-- **Branch:** `feat/TODO-001-smart-search`
-- **Acceptance criteria:** Cross-feature search bar that searches bikes, DTCs, glossary terms, and diagnostic trees from a single input. Results grouped by category.
-- **Dependencies:** None
-- **Complexity:** M
-
 ### TODO-002: PWA configuration
 - **Agent:** Kai (Infrastructure)
 - **Branch:** `feat/TODO-002-pwa-setup`
@@ -111,3 +104,6 @@
 
 ### TODO-020: Error styling to CSS variables (✅ 2026-03-09)
 - All error states now use `--destructive` CSS vars instead of hardcoded red classes. 9 source files + 2 test files updated.
+
+### TODO-001: Smart search UI (✅ 2026-03-09)
+- Cross-feature search bar searching bikes, DTCs, glossary, diagnostic trees, and recalls. API route with 5 parallel Supabase queries. 300ms debounced hook with AbortController. Desktop inline dropdown + mobile full-screen overlay. 49 new tests. 876 total tests passing.
