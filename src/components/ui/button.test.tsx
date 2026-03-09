@@ -60,6 +60,7 @@ describe('Button', () => {
     render(<Button size="sm">Small</Button>)
     const button = screen.getByRole('button', { name: /small/i })
     expect(button).toHaveClass('h-8')
+    expect(button).toHaveClass('min-h-[44px]')
   })
 
   it('renders with large size', () => {

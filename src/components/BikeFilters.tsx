@@ -66,8 +66,8 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
               variant="ghost"
               size="sm"
               className={currentView === 'table'
-                ? 'h-7 w-7 rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
-                : 'h-7 w-7 rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
+                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
+                : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
               onClick={() => updateFilter('view', 'table')}
               aria-label="Table view"
               aria-pressed={currentView === 'table'}
@@ -78,8 +78,8 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
               variant="ghost"
               size="sm"
               className={currentView === 'grid'
-                ? 'h-7 w-7 rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
-                : 'h-7 w-7 rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
+                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
+                : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
               onClick={() => updateFilter('view', 'grid')}
               aria-label="Grid view"
               aria-pressed={currentView === 'grid'}
