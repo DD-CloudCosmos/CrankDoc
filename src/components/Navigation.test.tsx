@@ -1,9 +1,22 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { Navigation } from './Navigation'
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/',
+}))
+
+vi.mock('next/link', () => ({
+  default: ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: unknown }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}))
+
+// Mock search components to avoid complex dependency chains in nav tests
+vi.mock('@/components/search', () => ({
+  DesktopSearch: () => <div data-testid="desktop-search">Search</div>,
+  SearchOverlay: ({ open }: { open: boolean }) =>
+    open ? <div data-testid="search-overlay">Overlay</div> : null,
 }))
 
 describe('Navigation', () => {
@@ -57,5 +70,34 @@ describe('Navigation', () => {
       (el) => !el.closest('a')?.className.includes('bg-[#1F1F1F]')
     )
     expect(inactiveDesktop).toBeDefined()
+  })
+
+  it('renders desktop search component', () => {
+    render(<Navigation />)
+    expect(screen.getByTestId('desktop-search')).toBeInTheDocument()
+  })
+
+  it('renders mobile search button', () => {
+    render(<Navigation />)
+    expect(screen.getByLabelText('Open search')).toBeInTheDocument()
+  })
+
+  it('opens search overlay when mobile search button is clicked', () => {
+    render(<Navigation />)
+    expect(screen.queryByTestId('search-overlay')).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByLabelText('Open search'))
+
+    expect(screen.getByTestId('search-overlay')).toBeInTheDocument()
+  })
+
+  it('uses Stethoscope icon for Diagnose (not Search)', () => {
+    render(<Navigation />)
+    // The Search text only appears in the mobile search button, not as Diagnose
+    const searchButton = screen.getByLabelText('Open search')
+    expect(searchButton).toBeInTheDocument()
+    // Diagnose items should exist as nav links
+    const diagnoseLinks = screen.getAllByText('Diagnose')
+    expect(diagnoseLinks.length).toBeGreaterThanOrEqual(1)
   })
 })

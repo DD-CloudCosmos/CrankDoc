@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Database, FileText, BookOpen, AlertTriangle, Wrench } from "lucide-react";
+import { Home, Search, Database, FileText, BookOpen, AlertTriangle, Wrench, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DesktopSearch } from "@/components/search";
+import { SearchOverlay } from "@/components/search";
 
 const navItems = [
   {
@@ -14,7 +17,7 @@ const navItems = [
   {
     name: "Diagnose",
     href: "/diagnose",
-    icon: Search,
+    icon: Stethoscope,
   },
   {
     name: "Bikes",
@@ -45,6 +48,7 @@ const navItems = [
 
 export function Navigation() {
   const pathname = usePathname();
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <>
@@ -68,7 +72,20 @@ export function Navigation() {
             </Link>
           );
         })}
+        {/* Search button — opens overlay */}
+        <button
+          type="button"
+          onClick={() => setSearchOpen(true)}
+          className="flex flex-col items-center justify-center gap-1 min-h-[44px] min-w-[44px] px-2 text-xs text-white opacity-60 transition-opacity hover:opacity-100"
+          aria-label="Open search"
+        >
+          <Search className="h-5 w-5" />
+          <span>Search</span>
+        </button>
       </nav>
+
+      {/* Mobile search overlay */}
+      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
 
       {/* Desktop: minimal top bar */}
       <nav className="hidden md:block">
@@ -91,6 +108,10 @@ export function Navigation() {
               </Link>
             );
           })}
+          {/* Desktop inline search */}
+          <div className="ml-auto">
+            <DesktopSearch />
+          </div>
         </div>
       </nav>
     </>

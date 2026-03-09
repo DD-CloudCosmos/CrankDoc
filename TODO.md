@@ -23,32 +23,10 @@
 
 ## Parked (from v0.5 backlog)
 
-### TODO-001: Smart search UI
-- **Agent:** Elena (Frontend)
-- **Branch:** `feat/TODO-001-smart-search`
-- **Acceptance criteria:** Cross-feature search bar that searches bikes, DTCs, glossary terms, and diagnostic trees from a single input. Results grouped by category.
-- **Dependencies:** None
-- **Complexity:** M
-
-### TODO-002: PWA enhancement (✅ 2026-03-09)
-- **Agent:** Kai (Infrastructure)
-- **Branch:** `feat/TODO-002-pwa-setup`
-- **Acceptance criteria:** App installable on mobile home screen. Service worker caches core pages and diagnostic tree data. Offline indicator when disconnected.
-- **Dependencies:** None
-- **Complexity:** M
-- **Status:** ✅ OfflineIndicator component, expanded SW caching (glossary/recalls/dtc + API network-first), iOS PWA metadata, SW update detection. 6 tests.
-
 ### TODO-003: README overhaul
 - **Agent:** Clara (Documentation)
 - **Branch:** `docs/TODO-003-readme`
 - **Acceptance criteria:** Replace boilerplate Next.js README with project-specific content: what CrankDoc is, screenshots, setup instructions, data seeding guide, architecture overview.
-- **Dependencies:** None
-- **Complexity:** S
-
-### TODO-004: Clean up stale branches
-- **Agent:** Kai (Infrastructure)
-- **Branch:** N/A (maintenance)
-- **Acceptance criteria:** Remove merged remote branches (feature/glossary, feature/home-redesign, feature/storage-manuals, feature/admin-manual-coverage, and old claude/* branches). Prune local tracking refs.
 - **Dependencies:** None
 - **Complexity:** S
 
@@ -109,3 +87,12 @@
 
 ### TODO-020: Error styling to CSS variables (✅ 2026-03-09)
 - All error states now use `--destructive` CSS vars instead of hardcoded red classes. 9 source files + 2 test files updated.
+
+### TODO-001: Smart search UI (✅ 2026-03-09)
+- Cross-feature search bar searching bikes, DTCs, glossary, diagnostic trees, and recalls. API route with 5 parallel Supabase queries. 300ms debounced hook with AbortController. Desktop inline dropdown + mobile full-screen overlay. 49 new tests. 876 total tests passing.
+
+### TODO-002: PWA enhancement (✅ 2026-03-09)
+- OfflineIndicator component, expanded SW caching (glossary/recalls/dtc + API network-first), iOS PWA metadata, SW update detection. 6 new tests.
+
+### TODO-004: Clean up stale branches (✅ 2026-03-09)
+- Deleted 10 remote branches (5 claude/*, 4 feature/*, 1 fix/*). Deleted 13 stale local branches. Pruned remote tracking refs. Only `origin/master` remains remotely.
