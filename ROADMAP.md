@@ -23,7 +23,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 - [x] Standardize filter UI — pills everywhere, remove dropdown selects (✅ 2026-03-09)
 - [x] Error styling → CSS variables (✅ 2026-03-09)
 
-## Next Iteration: v0.5 — Polish & Content Expansion
+## Next Iteration: v0.5 — Polish & Launch Prep
 
 ### High Priority
 - [ ] Smart search UI (cross-feature search)
@@ -38,16 +38,78 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 
 ### Low Priority
 - [ ] Learning Mode (explains "why" behind diagnostic steps)
-- [ ] User accounts and saved progress
-- [ ] Community-contributed diagnostic trees
+
+## v0.6 — Infrastructure & Environments
+
+### Domain & Hosting Setup
+- [ ] Configure `accept.crankdoc.app` as staging domain (GoDaddy CNAME → Vercel)
+- [ ] Configure `www.crankdoc.com` → redirect to `crankdoc.app`
+- [ ] Rename current Vercel project to `crankdoc-staging`
+- [ ] Keep `crankdoc.app` apex unconnected until production launch
+
+### Production Environment (at launch)
+- [ ] Create `crankdoc-prod` Vercel project
+- [ ] Create separate Supabase production project
+- [ ] Run migrations + seed scripts against prod Supabase
+- [ ] Point `crankdoc.app` at production Vercel project
+- [ ] Separate env vars per environment (Supabase keys, Stripe keys, admin secrets)
+
+## v1.0 — Commercialization & Paid Launch
+
+### Strategy: Freemium with Workshop Tiers
+
+**Free tier (acquisition funnel):**
+- Universal diagnostic trees (not bike-specific)
+- DTC code lookup (limited results)
+- Glossary + VIN decoder
+- Goal: get mechanics using the app daily, build habit
+
+**Pro tier — Individual Mechanic (~€9.99/mo):**
+- All model-specific diagnostic trees
+- Full DTC database (all manufacturers)
+- Service intervals with torque/fluid specs
+- Recalls monitoring for saved bikes
+- Offline mode (PWA with cached trees)
+- Priority new model coverage
+
+**Workshop tier (~€29.99/mo per seat):**
+- Everything in Pro
+- Multi-seat licensing (team management)
+- Workshop branding
+- Diagnostic history / job tracking
+- API access for integration with shop management systems
+
+### Technical Requirements for Monetization
+- [ ] User accounts — Supabase Auth (email + social login)
+- [ ] Subscription management — Stripe integration (checkout, billing portal, webhooks)
+- [ ] Entitlement system — middleware that checks subscription tier before serving gated content
+- [ ] Usage tracking — which features are used, conversion funnel analytics
+- [ ] Paywall UI — upgrade prompts on gated features, pricing page
+
+### Go-to-Market Strategy
+- [ ] **Validate pricing** — interview 5-10 mechanics at Scooter Point + online forums
+- [ ] **Beta program** — 20-50 free Pro accounts for early testers, collect feedback
+- [ ] **Content moat** — expand to 30+ models, 500+ trees before launch (hard to replicate)
+- [ ] **SEO landing pages** — "{Make} {Model} diagnostic guide" pages for organic traffic
+- [ ] **YouTube/TikTok** — short "how to diagnose X" videos linking to CrankDoc
+- [ ] **Motorcycle forum presence** — ADVRider, Reddit r/motorcycles, model-specific forums
+- [ ] **Workshop partnerships** — Scooter Point as first paying customer / case study
+- [ ] **Affiliate/referral** — mechanics refer other mechanics, get free months
+
+### Revenue Milestones
+- [ ] First paying customer
+- [ ] 100 free users (validates demand)
+- [ ] 10 Pro subscribers (validates willingness to pay)
+- [ ] 3 Workshop accounts (validates B2B angle)
+- [ ] €1,000 MRR (sustainable side project)
 
 ## Backlog
 - [ ] Wiring diagrams
-- [ ] Workshop management features (seat licensing, teams)
 - [ ] Hardware integration (OBD-II dongle pairing)
-- [ ] Monetization (freemium tiers, workshop licenses)
-- [ ] Multi-language / i18n
+- [ ] Multi-language / i18n (Dutch first, then German/French for Benelux)
 - [ ] Full native offline mode (Capacitor + SQLite)
+- [ ] AI-powered diagnosis (RAG + LLM suggesting probable causes)
+- [ ] Manufacturer partnerships (official service data licensing)
 
 ## Completed Iterations
 
