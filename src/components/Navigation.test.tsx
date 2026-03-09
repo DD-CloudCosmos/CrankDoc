@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Navigation } from './Navigation'
 
 vi.mock('next/navigation', () => ({
@@ -7,9 +8,13 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('next/link', () => ({
-  default: ({ children, href, ...props }: { children: React.ReactNode; href: string; [key: string]: unknown }) => (
-    <a href={href} {...props}>{children}</a>
-  ),
+  default: ({ children, href, onClick, ...props }: { children: React.ReactNode; href: string; onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void; [key: string]: unknown }) => {
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      onClick?.(e);
+    };
+    return <a href={href} {...props} onClick={handleClick}>{children}</a>;
+  },
 }))
 
 // Mock search components to avoid complex dependency chains in nav tests
@@ -20,15 +25,80 @@ vi.mock('@/components/search', () => ({
 }))
 
 describe('Navigation', () => {
-  it('renders all nav items', () => {
+  it('renders all nav items on desktop', () => {
     render(<Navigation />)
-    // Each item appears in both mobile and desktop navs
+    // Desktop nav shows all items
     expect(screen.getAllByText('Home').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Diagnose').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Bikes').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('DTC').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Glossary').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Admin').length).toBeGreaterThanOrEqual(1)
+    // Desktop shows these directly; mobile hides them behind More
+    expect(screen.getByText('DTC')).toBeInTheDocument()
+    expect(screen.getByText('Glossary')).toBeInTheDocument()
+    expect(screen.getByText('Admin')).toBeInTheDocument()
+  })
+
+  it('renders primary nav items in mobile bar', () => {
+    render(<Navigation />)
+    // Primary items appear in both mobile and desktop
+    expect(screen.getAllByText('Home').length).toBe(2)
+    expect(screen.getAllByText('Diagnose').length).toBe(2)
+    expect(screen.getAllByText('Bikes').length).toBe(2)
+  })
+
+  it('renders More button in mobile nav', () => {
+    render(<Navigation />)
+    expect(screen.getByLabelText('More navigation')).toBeInTheDocument()
+    expect(screen.getByText('More')).toBeInTheDocument()
+  })
+
+  it('hides secondary items until More is clicked', () => {
+    render(<Navigation />)
+    // DTC appears once (desktop only), not in mobile bar
+    expect(screen.getAllByText('DTC').length).toBe(1)
+    expect(screen.getAllByText('Glossary').length).toBe(1)
+    expect(screen.getAllByText('Recalls').length).toBe(1)
+    expect(screen.getAllByText('Admin').length).toBe(1)
+  })
+
+  it('More button opens popover with secondary nav items', () => {
+    render(<Navigation />)
+    const moreButton = screen.getByLabelText('More navigation')
+
+    fireEvent.click(moreButton)
+
+    // Now secondary items appear twice (desktop + popover)
+    expect(screen.getAllByText('DTC').length).toBe(2)
+    expect(screen.getAllByText('Glossary').length).toBe(2)
+    expect(screen.getAllByText('Recalls').length).toBe(2)
+    expect(screen.getAllByText('Admin').length).toBe(2)
+  })
+
+  it('clicking a link in More popover closes it', async () => {
+    const user = userEvent.setup()
+    render(<Navigation />)
+    const moreButton = screen.getByLabelText('More navigation')
+
+    await user.click(moreButton)
+    expect(screen.getAllByText('DTC').length).toBe(2)
+    expect(moreButton).toHaveAttribute('aria-expanded', 'true')
+
+    // Click the DTC link in the popover (second occurrence is the popover one)
+    const dtcLinks = screen.getAllByText('DTC')
+    const popoverLink = dtcLinks[1].closest('a')!
+    await user.click(popoverLink)
+
+    // Popover closed — aria-expanded should be false
+    expect(moreButton).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('More button has aria-expanded attribute', () => {
+    render(<Navigation />)
+    const moreButton = screen.getByLabelText('More navigation')
+
+    expect(moreButton).toHaveAttribute('aria-expanded', 'false')
+
+    fireEvent.click(moreButton)
+    expect(moreButton).toHaveAttribute('aria-expanded', 'true')
   })
 
   it('renders nav links with correct hrefs', () => {
@@ -89,6 +159,19 @@ describe('Navigation', () => {
     fireEvent.click(screen.getByLabelText('Open search'))
 
     expect(screen.getByTestId('search-overlay')).toBeInTheDocument()
+  })
+
+  it('closes More popover when search is opened', () => {
+    render(<Navigation />)
+    const moreButton = screen.getByLabelText('More navigation')
+
+    // Open More popover
+    fireEvent.click(moreButton)
+    expect(screen.getAllByText('DTC').length).toBe(2)
+
+    // Open search — should close More
+    fireEvent.click(screen.getByLabelText('Open search'))
+    expect(screen.getAllByText('DTC').length).toBe(1)
   })
 
   it('uses Stethoscope icon for Diagnose (not Search)', () => {
