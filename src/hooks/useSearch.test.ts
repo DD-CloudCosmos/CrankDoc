@@ -150,4 +150,49 @@ describe('useSearch', () => {
     expect(result.current.status).toBe('error')
     expect(result.current.error).toBeTruthy()
   })
+
+  it('sets error state when fetch throws a network error', async () => {
+    mockFetch.mockRejectedValueOnce(new TypeError('Failed to fetch'))
+
+    const { result } = renderHook(() => useSearch(300))
+
+    act(() => {
+      result.current.setQuery('honda')
+    })
+
+    await act(async () => {
+      vi.advanceTimersByTime(300)
+      await vi.runAllTimersAsync()
+    })
+
+    expect(result.current.status).toBe('error')
+    expect(result.current.error).toBe('Search failed. Please try again.')
+  })
+
+  it('aborts previous request when query changes rapidly', async () => {
+    const { result } = renderHook(() => useSearch(300))
+
+    // Type first query
+    act(() => {
+      result.current.setQuery('hon')
+    })
+
+    // Before debounce fires, type new query
+    act(() => {
+      result.current.setQuery('honda cbr')
+    })
+
+    // Advance past debounce — only the second query should fire
+    await act(async () => {
+      vi.advanceTimersByTime(300)
+      await vi.runAllTimersAsync()
+    })
+
+    // Only one fetch call (debounce collapsed both into the last one)
+    expect(mockFetch).toHaveBeenCalledTimes(1)
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining('q=honda%20cbr'),
+      expect.any(Object)
+    )
+  })
 })
