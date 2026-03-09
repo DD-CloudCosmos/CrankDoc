@@ -183,4 +183,17 @@ describe('GET /api/search', () => {
     const response = await GET(createRequest({ q: '   ' }))
     expect(response.status).toBe(400)
   })
+
+  it('uses default limit when limit is non-numeric', async () => {
+    const response = await GET(createRequest({ q: 'test', limit: 'abc' }))
+    expect(response.status).toBe(200)
+    // NaN || 3 = 3, so default limit of 3 is used
+    expect(mockLimit).toHaveBeenCalledWith('motorcycles', 3)
+  })
+
+  it('generates correct tree deep-link href', async () => {
+    const response = await GET(createRequest({ q: 'engine' }))
+    const body = await response.json()
+    expect(body.diagnosticTrees[0].href).toBe('/diagnose/tree-1')
+  })
 })

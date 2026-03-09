@@ -2,10 +2,15 @@ import { NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import type { SearchResponse, SearchResultItem } from '@/types/search.types'
 
+/** Strip characters that could manipulate PostgREST filter syntax */
+function sanitizeQuery(q: string): string {
+  return q.replace(/[,.()"'\\]/g, '')
+}
+
 export async function GET(request: Request): Promise<NextResponse<SearchResponse | { error: string }>> {
   const { searchParams } = new URL(request.url)
   const q = searchParams.get('q')?.trim() || ''
-  const limit = Math.min(10, Math.max(1, parseInt(searchParams.get('limit') || '3', 10)))
+  const limit = Math.min(10, Math.max(1, parseInt(searchParams.get('limit') || '3', 10) || 3))
 
   if (!q || q.length < 2) {
     return NextResponse.json(
@@ -16,6 +21,7 @@ export async function GET(request: Request): Promise<NextResponse<SearchResponse
 
   try {
     const supabase = createServerClient()
+    const safeQ = sanitizeQuery(q)
 
     // Run all 5 queries in parallel — partial failures return empty arrays
     const results = await Promise.allSettled([
@@ -23,35 +29,35 @@ export async function GET(request: Request): Promise<NextResponse<SearchResponse
       supabase
         .from('motorcycles')
         .select('id, make, model, year_start, year_end, category')
-        .or(`model.ilike.%${q}%,make.ilike.%${q}%`)
+        .or(`model.ilike.%${safeQ}%,make.ilike.%${safeQ}%`)
         .limit(limit),
 
       // 2. DTC Codes
       supabase
         .from('dtc_codes')
         .select('id, code, description, manufacturer')
-        .or(`code.ilike.%${q}%,description.ilike.%${q}%`)
+        .or(`code.ilike.%${safeQ}%,description.ilike.%${safeQ}%`)
         .limit(limit),
 
       // 3. Glossary Terms
       supabase
         .from('glossary_terms')
         .select('id, term, definition, slug')
-        .or(`term.ilike.%${q}%,definition.ilike.%${q}%`)
+        .or(`term.ilike.%${safeQ}%,definition.ilike.%${safeQ}%`)
         .limit(limit),
 
       // 4. Diagnostic Trees
       supabase
         .from('diagnostic_trees')
         .select('id, title, description, motorcycle_id')
-        .or(`title.ilike.%${q}%,description.ilike.%${q}%`)
+        .or(`title.ilike.%${safeQ}%,description.ilike.%${safeQ}%`)
         .limit(limit),
 
       // 5. Recalls
       supabase
         .from('recalls')
         .select('id, nhtsa_campaign_number, make, model, model_year, summary')
-        .or(`summary.ilike.%${q}%,component.ilike.%${q}%`)
+        .or(`summary.ilike.%${safeQ}%,component.ilike.%${safeQ}%`)
         .limit(limit),
     ])
 
@@ -93,7 +99,7 @@ export async function GET(request: Request): Promise<NextResponse<SearchResponse
       subtitle: t.description
         ? t.description.length > 80 ? `${t.description.slice(0, 80)}...` : t.description
         : 'Diagnostic guide',
-      href: `/diagnose?tree=${t.id}`,
+      href: `/diagnose/${t.id}`,
       category: 'diagnosticTrees' as const,
     }))
 
