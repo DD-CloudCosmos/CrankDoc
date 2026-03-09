@@ -23,7 +23,7 @@ describe('Badge', () => {
   it('renders with destructive variant', () => {
     render(<Badge variant="destructive">Destructive</Badge>)
     const badge = screen.getByText('Destructive')
-    expect(badge).toHaveClass('bg-red-500')
+    expect(badge).toHaveClass('bg-destructive')
   })
 
   it('renders with outline variant', () => {
