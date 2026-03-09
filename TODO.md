@@ -30,12 +30,13 @@
 - **Dependencies:** None
 - **Complexity:** M
 
-### TODO-002: PWA configuration
+### TODO-002: PWA enhancement (✅ 2026-03-09)
 - **Agent:** Kai (Infrastructure)
 - **Branch:** `feat/TODO-002-pwa-setup`
 - **Acceptance criteria:** App installable on mobile home screen. Service worker caches core pages and diagnostic tree data. Offline indicator when disconnected.
 - **Dependencies:** None
 - **Complexity:** M
+- **Status:** ✅ OfflineIndicator component, expanded SW caching (glossary/recalls/dtc + API network-first), iOS PWA metadata, SW update detection. 6 tests.
 
 ### TODO-003: README overhaul
 - **Agent:** Clara (Documentation)
