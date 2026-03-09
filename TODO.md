@@ -62,3 +62,6 @@
 
 ### TODO-018: Touch target sizing (✅ 2026-03-09)
 - 44px min touch targets on sm buttons, mobile nav, view toggles, glossary pills.
+
+### TODO-019: Standardize filter UI (✅ 2026-03-09)
+- Recalls page converted from dropdown selects to pill buttons. Cascading make→model filters.

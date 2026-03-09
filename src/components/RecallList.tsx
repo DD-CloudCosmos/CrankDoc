@@ -125,43 +125,92 @@ export function RecallList() {
       })
     : filterModels
 
+  const hasActiveFilters = make || model || year
+
+  const clearFilters = () => {
+    setMake('')
+    setModel('')
+    setYear('')
+    setPage(1)
+  }
+
   return (
     <div className="space-y-4">
-      {/* Dropdown filters */}
-      <div className="flex flex-wrap gap-3">
-        <select
-          value={make}
-          onChange={(e) => { setMake(e.target.value); setPage(1) }}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          aria-label="Filter by make"
-        >
-          <option value="">All Makes</option>
-          {filterMakes.map((m) => (
-            <option key={m} value={m}>{m}</option>
-          ))}
-        </select>
-        <select
-          value={model}
-          onChange={(e) => { setModel(e.target.value); setPage(1) }}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          aria-label="Filter by model"
-        >
-          <option value="">All Models</option>
-          {filteredModels.map((m) => (
-            <option key={m} value={m}>{m}</option>
-          ))}
-        </select>
-        <select
-          value={year}
-          onChange={(e) => { setYear(e.target.value); setPage(1) }}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
-          aria-label="Filter by year"
-        >
-          <option value="">All Years</option>
-          {filterYears.map((y) => (
-            <option key={y} value={String(y)}>{y}</option>
-          ))}
-        </select>
+      {/* Pill filters */}
+      <div className="rounded-[24px] bg-[#EADFCB] p-4 space-y-4" data-testid="recall-filters">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Filters</h2>
+          {hasActiveFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              Clear all
+            </Button>
+          )}
+        </div>
+
+        {/* Make filter */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-foreground">Make</label>
+          <div className="flex flex-wrap gap-2">
+            {filterMakes.map((m) => (
+              <Button
+                key={m}
+                variant={make === m ? 'pill-active' : 'pill'}
+                size="sm"
+                onClick={() => { setMake(make === m ? '' : m); setModel(''); setPage(1) }}
+              >
+                {m}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Model filter — only shown when a make is selected */}
+        {make && filteredModels.length > 0 && (
+          <div>
+            <label className="mb-2 block text-sm font-medium text-foreground">Model</label>
+            <div className="flex flex-wrap gap-2">
+              {filteredModels.map((m) => (
+                <Button
+                  key={m}
+                  variant={model === m ? 'pill-active' : 'pill'}
+                  size="sm"
+                  onClick={() => { setModel(model === m ? '' : m); setPage(1) }}
+                >
+                  {m}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Year filter */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-foreground">Year</label>
+          <div className="flex flex-wrap gap-2">
+            {filterYears.map((y) => (
+              <Button
+                key={y}
+                variant={year === String(y) ? 'pill-active' : 'pill'}
+                size="sm"
+                onClick={() => { setYear(year === String(y) ? '' : String(y)); setPage(1) }}
+              >
+                {y}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Result count */}
+        {!loading && !error && total > 0 && (
+          <p className="text-sm text-muted-foreground">
+            Showing {recalls.length} of {total} {total === 1 ? 'recall' : 'recalls'}
+          </p>
+        )}
       </div>
 
       {loading && (
@@ -187,9 +236,6 @@ export function RecallList() {
 
       {!loading && !error && recalls.length > 0 && (
         <>
-          <p className="text-sm text-foreground">
-            Showing {recalls.length} of {total} recalls
-          </p>
           <Table>
             <TableHeader>
               <TableRow>

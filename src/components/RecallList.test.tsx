@@ -69,7 +69,7 @@ describe('RecallList', () => {
     vi.clearAllMocks()
   })
 
-  it('renders dropdown filters for make, model, and year', async () => {
+  it('renders pill button filters for make and year', async () => {
     // First call: filters API, Second call: recalls API
     mockFetch
       .mockResolvedValueOnce(mockFiltersResponse(['BMW', 'HONDA'], ['CBR600RR', 'R 1250 GS'], [2021, 2022]))
@@ -78,10 +78,65 @@ describe('RecallList', () => {
     render(<RecallList />)
 
     await waitFor(() => {
-      expect(screen.getByLabelText('Filter by make')).toBeInTheDocument()
+      expect(screen.getByTestId('recall-filters')).toBeInTheDocument()
     })
-    expect(screen.getByLabelText('Filter by model')).toBeInTheDocument()
-    expect(screen.getByLabelText('Filter by year')).toBeInTheDocument()
+    // Make pills
+    expect(screen.getByRole('button', { name: 'BMW' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'HONDA' })).toBeInTheDocument()
+    // Year pills
+    expect(screen.getByRole('button', { name: '2021' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '2022' })).toBeInTheDocument()
+  })
+
+  it('shows model pills when a make is selected', async () => {
+    const user = userEvent.setup()
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse(['BMW', 'HONDA'], ['CBR600RR', 'R 1250 GS'], [2021, 2022]))
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'HONDA' })).toBeInTheDocument()
+    })
+
+    // Model pills should not be visible before selecting a make
+    expect(screen.queryByRole('button', { name: 'CBR600RR' })).not.toBeInTheDocument()
+
+    // Click a make pill — triggers a new fetch
+    mockFetch.mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+    await user.click(screen.getByRole('button', { name: 'HONDA' }))
+
+    // Model pills should now appear
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'CBR600RR' })).toBeInTheDocument()
+    })
+    expect(screen.getByRole('button', { name: 'R 1250 GS' })).toBeInTheDocument()
+  })
+
+  it('shows Clear all button when a filter is active', async () => {
+    const user = userEvent.setup()
+    mockFetch
+      .mockResolvedValueOnce(mockFiltersResponse(['BMW', 'HONDA'], [], [2021]))
+      .mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+
+    render(<RecallList />)
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'BMW' })).toBeInTheDocument()
+    })
+
+    // Clear all should not be visible initially
+    expect(screen.queryByRole('button', { name: 'Clear all' })).not.toBeInTheDocument()
+
+    // Click a make pill
+    mockFetch.mockResolvedValueOnce(mockRecallsResponse(mockRecalls, 2))
+    await user.click(screen.getByRole('button', { name: 'BMW' }))
+
+    // Clear all should appear
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Clear all' })).toBeInTheDocument()
+    })
   })
 
   it('shows loading state initially', () => {
