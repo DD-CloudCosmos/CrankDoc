@@ -221,8 +221,8 @@ export function RecallList() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-center" aria-live="polite">
-          <p className="text-red-700">{error}</p>
+        <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-8 text-center" aria-live="polite">
+          <p className="text-destructive">{error}</p>
         </div>
       )}
 

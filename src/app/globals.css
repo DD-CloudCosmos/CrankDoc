@@ -16,6 +16,8 @@
   --accent-foreground: #1F1F1F;
   --border: #D8CBB4;
   --input: #EADFCB;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
   --ring: #1F1F1F;
   --radius: 0.75rem;
   --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -36,6 +38,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
