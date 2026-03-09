@@ -13,7 +13,15 @@
     "db:migrate": "node scripts/migrate-rest.js",
     "db:verify": "node scripts/verify-schema-rest.js",
     "db:test": "node scripts/test-api.js",
-    "scrape:specs": "tsx scripts/scrape-bike-specs.ts"
+    "scrape:specs": "tsx scripts/scrape-bike-specs.ts",
+    "seed:motorcycles": "node scripts/reseed-motorcycles.js",
+    "seed:dtc": "node scripts/import-dtc.js",
+    "seed:trees": "node scripts/import-trees.js",
+    "seed:intervals": "node scripts/import-service-intervals.js",
+    "seed:tech-docs": "node scripts/seed-tech-docs.js",
+    "seed:glossary": "node scripts/import-glossary.js",
+    "seed:recalls": "node scripts/import-recalls.js",
+    "seed:all": "npm run seed:motorcycles && npm run seed:dtc && npm run seed:trees && npm run seed:intervals && npm run seed:tech-docs && npm run seed:glossary && npm run seed:recalls"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.51",
