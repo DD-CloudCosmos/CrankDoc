@@ -1,0 +1,53 @@
+{
+  "mcpServers": {
+    "stitch": {
+      "command": "npx",
+      "args": ["@_davideast/stitch-mcp", "proxy"]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if this Bash command is a DIRECT DATABASE OPERATION. Respond ONLY with a JSON object.\n\nBLOCK (respond {\"decision\": \"block\", \"reason\": \"Only Marcus (DBA) may execute database commands. Create a task for Marcus in TODO.md.\"}): Direct database CLI tools: psql, sqlcmd, mysql, sqlite3, mongosh, pgcli, mycli. Database dump/restore: pg_dump, pg_restore, mysqldump. ORM migration execution against a live database: drizzle-kit push, drizzle-kit migrate, prisma migrate deploy, prisma db push, knex migrate. Node/Python inline scripts with SQL (SELECT, INSERT, CREATE TABLE, ALTER TABLE, DROP).\n\nALLOW (respond {\"decision\": \"allow\"}): ALL gcloud commands (secrets, sql instances, sql databases, run, builds, iam) — these manage infrastructure, not execute queries. Storing or reading environment variables or secrets containing database URLs. echo, printf, cat writing connection strings. docker and docker-compose commands. npm, npx, node commands not executing inline SQL. drizzle-kit generate (local file generation, no DB connection). git, curl, terraform, firebase commands. ANY command that references a database URL without connecting to a database.\n\nKey rule: BLOCK commands that EXECUTE queries or MODIFY live schemas. ALLOW commands that MANAGE infrastructure or REFERENCE database URLs. When uncertain, ALLOW — the file guard provides a second layer."
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if this file is a database migration or raw SQL file. Respond ONLY with a JSON object.\n\nBLOCK (respond {\"decision\": \"block\", \"reason\": \"Database migration/SQL files are owned by Marcus (DBA). Create a task for Marcus in TODO.md.\"}): Files matching: migrations/*.sql, migrations/*.ts (migration execution files), db/migrations/*, *.sql (raw SQL scripts), prisma/schema.prisma, knex/migrations/*.\n\nALLOW (respond {\"decision\": \"allow\"}): ALL of the following: src/lib/db/schema.ts and src/lib/db/index.ts (TypeScript ORM definitions — these are application code), drizzle.config.ts (build config), Dockerfile, docker-compose.yml, .env files, cloudbuild.yaml, deploy workflows, any file under src/ that imports database modules, any configuration file referencing DATABASE_URL.\n\nKey rule: BLOCK actual migration SQL and schema definition files that directly control database structure. ALLOW TypeScript/JavaScript application code that uses the database layer."
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Context is about to be compacted. Before compaction: 1) If there are uncommitted changes, commit them with a wip: prefix. 2) Update TODO.md with current task status. 3) Write current work state to .claude/HANDOFF.md. Respond with a summary of what was preserved."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "agent",
+            "agent": "bob-compliance",
+            "prompt": "Run a compliance check. Read TODO.md, ROADMAP.md, CHANGELOG.md, docs/DECISIONS.md. Run git log --oneline --name-only -20. Verify: 1) State files reflect current work — no stale In Progress items, completed tasks dated, 2) Agent boundaries — only migration SQL and raw .sql files are Marcus-only (TypeScript ORM schemas are application code, infrastructure commands referencing DB URLs are Kai territory), 3) Task lifecycle — proper state transitions, acceptance criteria, 4) Git conventions — branch naming and commit format. Produce compliance report. Respond {ok: false} for BLOCK violations, {ok: true} otherwise."
+          }
+        ]
+      }
+    ]
+  }
+}
