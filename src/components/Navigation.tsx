@@ -59,7 +59,7 @@ export function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center gap-1 px-2 text-xs text-white transition-opacity",
+                "flex flex-col items-center justify-center gap-1 min-h-[44px] min-w-[44px] px-2 text-xs text-white transition-opacity",
                 isActive ? "opacity-100" : "opacity-60"
               )}
             >

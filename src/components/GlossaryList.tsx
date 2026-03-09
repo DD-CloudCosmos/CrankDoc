@@ -213,7 +213,7 @@ export function GlossaryList() {
                                       key={related}
                                       variant="ghost"
                                       size="sm"
-                                      className="h-auto px-2 py-0.5 text-xs"
+                                      className="h-auto min-h-[44px] px-2 py-0.5 text-xs"
                                       onClick={(e) => {
                                         e.stopPropagation()
                                         handleRelatedTermClick(related)

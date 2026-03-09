@@ -56,3 +56,11 @@
 ## Blocked
 
 ## Done (this iteration)
+
+### TODO-018: Touch target sizing
+- **Agent:** Priya (Accessibility)
+- **Branch:** `fix/TODO-018-touch-targets`
+- **Acceptance criteria:** All interactive elements meet WCAG 44px minimum touch target size. Small buttons, mobile nav icons, and filter pills updated.
+- **Dependencies:** None
+- **Complexity:** S
+- **Completed:** 2026-03-09
