@@ -1,15 +1,17 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function ServiceWorkerRegistration() {
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
           // Check for updates periodically (every 60 minutes)
-          const interval = setInterval(
+          intervalRef.current = setInterval(
             () => {
               registration.update().catch(() => {
                 // Silently ignore update check failures (offline, etc.)
@@ -33,12 +35,16 @@ export function ServiceWorkerRegistration() {
               }
             })
           })
-
-          return () => clearInterval(interval)
         })
         .catch((err) => {
           console.error('SW registration failed:', err)
         })
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
     }
   }, [])
 
