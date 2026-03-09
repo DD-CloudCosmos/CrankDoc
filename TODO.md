@@ -12,12 +12,6 @@
 
 ## Ready
 
-### TODO-010: Add npm seed scripts to package.json
-- **Agent:** Kai (Infrastructure)
-- **Branch:** `infra/TODO-010-seed-scripts`
-- **Acceptance criteria:** `npm run seed:all` runs all import scripts in correct order. Individual scripts also available (`seed:motorcycles`, `seed:trees`, `seed:dtc`, `seed:intervals`, `seed:glossary`, `seed:recalls`).
-- **Dependencies:** None
-- **Complexity:** S
 
 ### TODO-011: Verify production after deploy + seed
 - **Agent:** Priya (QA)
@@ -108,6 +102,9 @@
 
 ### TODO-019: Standardize filter UI (✅ 2026-03-09)
 - Recalls page converted from dropdown selects to pill buttons. Cascading make→model filters.
+
+### TODO-010: Add npm seed scripts to package.json (✅ 2026-03-09)
+- Added 8 npm scripts: `seed:motorcycles`, `seed:dtc`, `seed:trees`, `seed:intervals`, `seed:tech-docs`, `seed:glossary`, `seed:recalls`, `seed:all`. Order in `seed:all` respects FK dependencies (motorcycles first).
 
 ### TODO-020: Error styling to CSS variables (✅ 2026-03-09)
 - All error states now use `--destructive` CSS vars instead of hardcoded red classes. 9 source files + 2 test files updated.
