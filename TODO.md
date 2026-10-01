@@ -2,14 +2,6 @@
 
 ## In Progress
 
-### TODO-009: Seed production Supabase with all data
-- **Agent:** Marcus (DBA)
-- **Branch:** N/A (data operation)
-- **Acceptance criteria:** Production shows 18 motorcycles, 119 diagnostic trees, 664 DTCs, 205 service intervals, 205 glossary terms. Run all import scripts against production env.
-- **Dependencies:** None
-- **Complexity:** S
-- **Status:** 🏗️ 2026-03-08 — NEEDS MARCUS
-
 
 ## Ready
 
@@ -54,7 +46,18 @@
 
 ## Blocked
 
+### TODO-009: Seed production Supabase with all data
+- **Agent:** Marcus (DBA)
+- **Branch:** N/A (data operation)
+- **Acceptance criteria:** Production shows 18 motorcycles, 119 diagnostic trees, 664 DTCs, 205 service intervals, 205 glossary terms. Run all import scripts against production env.
+- **Dependencies:** None
+- **Complexity:** S
+- **Status:** ⛔ Blocked 2026-10-01 — requires production Supabase credentials (service role key), which are not available in cloud agent sessions. Must be run locally by David (`npm run seed:all` against prod env). Stalled since 2026-03-08.
+
 ## Done (this iteration)
+
+### TODO-026: Dependency security refresh (✅ 2026-10-01)
+- Next 16.1.6 → 16.3.8 (critical advisory), React 19.2.3 → 19.3.0, lockfile refreshed within semver ranges. `npm audit`: 28 → 0 vulnerabilities. Migrated deprecated `middleware.ts` → `proxy.ts` (Node runtime, fixes Edge `crypto` warning). Admin auth smoke-tested on `next start`.
 
 ### TODO-008: Force Vercel redeploy (✅ 2026-03-08)
 - Redeployed production. Nav, diagnose flow, PWA icons all verified working.

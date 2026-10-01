@@ -8,7 +8,7 @@ function tokensMatch(a: string, b: string): boolean {
   return crypto.timingSafeEqual(aHash, bHash)
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Only protect /admin routes (except the login page itself)
   if (
     request.nextUrl.pathname.startsWith('/admin') &&

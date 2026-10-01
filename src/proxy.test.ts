@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
-import { middleware } from './middleware'
+import { proxy } from './proxy'
 
 function createRequest(path: string, cookies?: Record<string, string>): NextRequest {
   const url = `http://localhost${path}`
@@ -15,7 +15,7 @@ function createRequest(path: string, cookies?: Record<string, string>): NextRequ
   return request
 }
 
-describe('Admin auth middleware', () => {
+describe('Admin auth proxy', () => {
   beforeEach(() => {
     vi.unstubAllEnvs()
   })
@@ -24,7 +24,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', 'test-secret')
 
     const request = createRequest('/admin')
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(307)
     const location = response.headers.get('location')
@@ -36,7 +36,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', 'test-secret')
 
     const request = createRequest('/admin/manuals')
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(307)
     const location = response.headers.get('location')
@@ -48,7 +48,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', 'test-secret')
 
     const request = createRequest('/admin', { 'admin-token': 'test-secret' })
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(200)
   })
@@ -57,7 +57,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', 'test-secret')
 
     const request = createRequest('/admin/login')
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(200)
   })
@@ -66,7 +66,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', 'test-secret')
 
     const request = createRequest('/admin', { 'admin-token': 'wrong-token' })
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(307)
   })
@@ -75,7 +75,7 @@ describe('Admin auth middleware', () => {
     vi.stubEnv('ADMIN_SESSION_SECRET', '')
 
     const request = createRequest('/admin', { 'admin-token': 'any-token' })
-    const response = middleware(request)
+    const response = proxy(request)
 
     expect(response.status).toBe(307)
   })
