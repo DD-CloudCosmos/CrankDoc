@@ -56,6 +56,9 @@
 
 ## Done (this iteration)
 
+### TODO-026: Dependency security refresh (✅ 2026-10-01)
+- Next 16.1.6 → 16.3.8 (critical advisory), React 19.2.3 → 19.3.0, lockfile refreshed within semver ranges. `npm audit`: 28 → 0 vulnerabilities. Migrated deprecated `middleware.ts` → `proxy.ts` (Node runtime, fixes Edge `crypto` warning). Admin auth smoke-tested on `next start`.
+
 ### TODO-008: Force Vercel redeploy (✅ 2026-03-08)
 - Redeployed production. Nav, diagnose flow, PWA icons all verified working.
 
