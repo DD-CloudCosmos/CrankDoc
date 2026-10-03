@@ -57,7 +57,7 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
 - Never run commands against the production database without explicit approval from David
 - Security-sensitive code (auth, input sanitising, secrets) gets a security review before merge
 - Frontend follows the established component patterns in `src/components/`
-- PRs are reviewed and merged by David
+- Claude merges its own PRs once CI is green — no need to ask David first
 - Components and tests are co-located (e.g., `BikeCard.tsx` + `BikeCard.test.tsx`)
 - Design system: see `Docs/CrankDoc-Brand-Style-Guidelines.md` (Apple-style, v0.5 makeover)
 - Use semantic colour tokens only (`bg-card`, `text-muted-foreground`, `bg-safe-background`, …) — never raw hex or Tailwind palette colours, so light and dark mode both work
