@@ -6,7 +6,6 @@ Motorcycle and scooter diagnostic decision tree web app. Mobile-first, Apple-sty
 
 **Type:** Full-stack web application
 **Stack:** Next.js 16.1.6 (App Router) + TypeScript + TailwindCSS 4 + shadcn/ui, Supabase (PostgreSQL), Vercel
-**Active agents:** All (Sofia, Marcus, Elena, Jake, Priya, Alex, Kai, Nina, Ravi, Clara, Bob)
 
 ## Architecture
 
@@ -14,7 +13,7 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
 
 ## Key Directories
 
-- `src/app/` — App Router pages and API routes (Elena + Alex)
+- `src/app/` — App Router pages and API routes
   - `src/app/bikes/` — Motorcycle database browser
   - `src/app/diagnose/` — Diagnostic tree flow (core feature)
   - `src/app/dtc/` — DTC code lookup
@@ -23,17 +22,17 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
   - `src/app/glossary/` — Technical glossary/lexicon
   - `src/app/admin/` — Admin dashboard (manual coverage)
   - `src/app/api/` — API routes (DTC, glossary, recalls, VIN, RAG)
-- `src/components/` — Reusable UI components with co-located tests (Elena + Jake)
+- `src/components/` — Reusable UI components with co-located tests
 - `src/components/ui/` — shadcn/ui primitives
 - `src/lib/` — Utilities, Supabase client, RAG, scraper, recalls logic
-- `src/hooks/` — Custom React hooks (Elena)
+- `src/hooks/` — Custom React hooks
 - `src/types/` — TypeScript type definitions (including Supabase generated types)
-- `src/test/` — Test setup and utilities (Nina)
+- `src/test/` — Test setup and utilities
 - `data/` — Seed data: trees (JSON), DTCs, service intervals, tech docs, images, manuals
 - `scripts/` — Import/seed scripts (trees, DTCs, intervals, motorcycles, tech docs, recalls, glossary)
-- `supabase/migrations/` — Database migrations (Marcus ONLY)
+- `supabase/migrations/` — Database migrations (one new file per schema change; never edit an applied migration)
 - `Docs/` — Project plan, brand guidelines, decisions, architecture plans
-- `.github/workflows/` — CI pipeline (Kai)
+- `.github/workflows/` — CI pipeline
 - `public/` — Static assets, icons, illustrations
 
 ## Common Commands
@@ -54,11 +53,11 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
 
 ## Conventions
 
-- Database/migration work goes through Marcus exclusively
-- Security-sensitive code requires Ravi's review
-- Frontend follows Elena's established component patterns
-- API contracts agreed between Elena and Alex before implementation
-- All PRs require relevant reviewer approval (see git-workflow)
+- Schema changes go in a new migration file in `supabase/migrations/`; never edit an applied migration
+- Never run commands against the production database without explicit approval from David
+- Security-sensitive code (auth, input sanitising, secrets) gets a security review before merge
+- Frontend follows the established component patterns in `src/components/`
+- PRs are reviewed and merged by David
 - Components and tests are co-located (e.g., `BikeCard.tsx` + `BikeCard.test.tsx`)
 - Design system: see `Docs/CrankDoc-Brand-Style-Guidelines.md` (Apple-style, v0.5 makeover)
 - Use semantic colour tokens only (`bg-card`, `text-muted-foreground`, `bg-safe-background`, …) — never raw hex or Tailwind palette colours, so light and dark mode both work

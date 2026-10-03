@@ -7,7 +7,6 @@
 
 
 ### TODO-011: Verify production after deploy + seed
-- **Agent:** Priya (QA)
 - **Branch:** N/A (verification)
 - **Acceptance criteria:** Re-test all 5 P0 findings from UX/UI audit. All resolved except TODO-012 (admin auth).
 - **Dependencies:** TODO-008, TODO-009
@@ -17,28 +16,24 @@
 ## Parked (from v0.5 backlog)
 
 ### TODO-003: README overhaul
-- **Agent:** Clara (Documentation)
 - **Branch:** `docs/TODO-003-readme`
 - **Acceptance criteria:** Replace boilerplate Next.js README with project-specific content: what CrankDoc is, screenshots, setup instructions, data seeding guide, architecture overview.
 - **Dependencies:** None
 - **Complexity:** S
 
 ### TODO-005: SEO and structured data audit
-- **Agent:** Elena (Frontend) + Clara (Documentation)
 - **Branch:** `feat/TODO-005-seo-audit`
 - **Acceptance criteria:** All pages have proper meta tags, Open Graph data, and JSON-LD structured data. Lighthouse SEO score ≥ 90.
 - **Dependencies:** None
 - **Complexity:** M
 
 ### TODO-006: Responsive design audit
-- **Agent:** Jake (UI/UX)
 - **Branch:** `fix/TODO-006-responsive-audit`
 - **Acceptance criteria:** All pages tested and fixed for 320px–428px viewport widths. No horizontal overflow, no unreadable text, no broken layouts on mobile.
 - **Dependencies:** None
 - **Complexity:** M
 
 ### TODO-007: Performance optimization
-- **Agent:** Alex (Backend) + Elena (Frontend)
 - **Branch:** `feat/TODO-007-performance`
 - **Acceptance criteria:** Lazy load images, optimize bundle size, add loading states. Lighthouse performance score ≥ 80 on mobile.
 - **Dependencies:** None

@@ -2,13 +2,13 @@
 
 ## Current Iteration: v0.4.1 — UX/UI Audit Fixes
 
-Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before resuming v0.5 features.
+Triggered by the UX/UI audit (2026-03-08). Fixing P0–P2 findings before resuming v0.5 features.
 
 ### Sprint 1: Ship-Blocking (Infrastructure + Data)
 - [x] Force Vercel redeploy — serve current master (✅ 2026-03-08)
 - [x] Seed production Supabase — data present; project was paused, restored (✅ 2026-10-03)
 - [x] Add npm seed scripts to package.json (✅ 2026-03-09)
-- [ ] Verify production — re-test all P0 findings (Priya)
+- [ ] Verify production — re-test all P0 findings
 
 ### Sprint 2: High Priority Code Fixes (P0-4 + P1s) ✅ 2026-03-09
 - [x] Admin auth middleware — protect `/admin/*` routes (✅ 2026-03-09)

@@ -1,7 +1,7 @@
 # Architecture Decision Records
 
 This file records significant technical decisions made during the project.
-Decisions are debated by agents following the debate protocol and synthesized by Sofia.
+Decisions are made by David; each entry records the context and rationale.
 
 ---
 

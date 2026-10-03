@@ -18,6 +18,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - Complete visual redesign: Apple-style tokens, system font (SF Pro / Inter), grouped lists, segmented controls, frosted navigation (#28)
 - Mobile tab bar: Home, Diagnose, Bikes, Codes, More; VIN decoder added to navigation (#28)
+- Dropped the multi-agent persona workflow: removed the persona hooks and replaced persona ownership rules in CLAUDE.md, TODO.md, ROADMAP.md and DECISIONS.md with plain conventions
 - Safety labels: Beginner-safe, Care required, Pro recommended (#28)
 
 ### Fixed
