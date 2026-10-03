@@ -1,0 +1,14 @@
+{
+  "id": "b4660699-fb60-4f70-b5c0-2008cb1000a0",
+  "make": "Honda",
+  "model": "CB1000R",
+  "year_start": 2008,
+  "year_end": 2008,
+  "generation": "SC60 (ABS equipment unconfirmed)",
+  "engine_type": "inline-4",
+  "displacement_cc": 998,
+  "category": "naked",
+  "fuel_system": "PGM-FI",
+  "tire_front": "120/70ZR17",
+  "tire_rear": "180/55ZR17"
+}

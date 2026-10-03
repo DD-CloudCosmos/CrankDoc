@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { supportsBrakeLesson } from '@/lib/cb1000r'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
@@ -128,7 +131,7 @@ export function BikeDetailTabs({
   const tabs: TabDef[] = [{ id: 'specs', label: 'Specs' }]
   if (serviceIntervals.length > 0) tabs.push({ id: 'service', label: 'Service' })
   if (fluidItems.length > 0) tabs.push({ id: 'fluids', label: 'Fluids' })
-  if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
+  if (wiringDocs.length > 0 || supportsBrakeLesson(motorcycle)) tabs.push({ id: 'wiring', label: 'Wiring' })
   if (deduplicatedRecalls.length > 0) tabs.push({ id: 'recalls', label: `Recalls (${deduplicatedRecalls.length})` })
 
   const [activeTab, setActiveTab] = useState<TabId>('specs')
@@ -170,6 +173,7 @@ export function BikeDetailTabs({
       {displayTab === 'wiring' && (
         <WiringContent
           docs={wiringDocs}
+          hasLesson={supportsBrakeLesson(motorcycle)}
           onOpenLightbox={setLightboxDoc}
         />
       )}
@@ -219,13 +223,23 @@ export function BikeDetailTabs({
 
 function WiringContent({
   docs,
+  hasLesson,
   onOpenLightbox,
 }: {
   docs: TechnicalDocument[]
+  hasLesson: boolean
   onOpenLightbox: (doc: TechnicalDocument) => void
 }) {
   return (
     <div className="space-y-4">
+      {hasLesson && <div className="rounded-[14px] bg-input p-4 space-y-3">
+        <h3 className="text-[19px] font-semibold">Follow the brake-light circuit</h3>
+        <p className="text-[15px] text-muted-foreground">Learn what the switches and wire colours mean, or trace the connections yourself. The brake-light subset is shared by the two 2008 factory sheets. Confirm ABS equipment before using the complete diagrams.</p>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild className="max-w-full whitespace-normal h-auto min-h-12"><Link href="/bikes/honda-cb1000r-sc60/brake-light">Teach me the brake-light circuit</Link></Button>
+          <Button asChild variant="outline" className="max-w-full whitespace-normal h-auto min-h-12"><Link href="/bikes/honda-cb1000r-sc60/brake-light?mode=explore">Explore connections</Link></Button>
+        </div>
+      </div>}
       {docs.map((doc) => (
         <div key={doc.id}>
           <button

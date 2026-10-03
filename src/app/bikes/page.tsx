@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase/server'
 import { BikeFilters } from '@/components/BikeFilters'
 import { BikeTableView } from '@/components/BikeTableView'
@@ -137,7 +138,7 @@ export default async function BikesPage({ searchParams }: PageProps) {
     error = err instanceof Error ? err.message : 'An unexpected error occurred'
   }
 
-  const availableMakes = await getAvailableMakes()
+  const availableMakes = await getAvailableMakes().catch(() => ['Honda'])
 
   return (
     <PageContainer>
@@ -145,6 +146,15 @@ export default async function BikesPage({ searchParams }: PageProps) {
         title="Bikes"
         subtitle="Specs, service intervals and guides for every model in CrankDoc."
       />
+
+      {(!category || category === 'naked') && (!make || make === 'Honda') && (!search || 'honda cb1000r sc60'.includes(search.toLowerCase())) && (
+        <Link href="/bikes/honda-cb1000r-sc60" className="mb-6 block rounded-[20px] bg-card p-5 shadow-card focus-visible:ring-2 focus-visible:ring-ring">
+          <p className="text-[13px] text-muted-foreground">NEW · CIRCUIT LEARNING</p>
+          <h2 className="mt-1 text-[21px] font-semibold">Honda CB1000R · SC60</h2>
+          <p className="mt-2 text-[15px] text-muted-foreground">2008 factory wiring reference and an interactive brake-light lesson.</p>
+          <p className="mt-3 text-[15px] text-link">View bike and learn the circuit →</p>
+        </Link>
+      )}
 
       <Suspense fallback={<div className="mb-6 h-11 animate-pulse rounded-[10px] bg-muted" />}>
         <BikeFilters availableMakes={availableMakes} totalCount={error ? undefined : motorcycles.length} />

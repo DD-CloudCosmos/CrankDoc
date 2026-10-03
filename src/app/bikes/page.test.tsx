@@ -228,3 +228,9 @@ describe('BikesPage', () => {
     expect(screen.getByText('Showing 2 motorcycles')).toBeInTheDocument()
   })
 })
+
+it('keeps the CB1000R reference accessible when database credentials are unavailable', async () => {
+  vi.mocked(createServerClient).mockImplementation(() => { throw new Error('Missing Supabase environment variables') })
+  render(await BikesPage({ searchParams: Promise.resolve({}) }))
+  expect(screen.getByRole('link', { name: /Honda CB1000R.*View bike/ })).toHaveAttribute('href', '/bikes/honda-cb1000r-sc60')
+})

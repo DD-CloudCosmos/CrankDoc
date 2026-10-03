@@ -468,3 +468,10 @@ describe('BikeDetailTabs', () => {
     expect(screen.queryByRole('tab', { name: /recalls/i })).not.toBeInTheDocument()
   })
 })
+
+it('offers the Honda lesson and Wiring tab without requiring uploaded database documents', async () => {
+  const user = userEvent.setup()
+  render(<BikeDetailTabs motorcycle={{ ...motoMinimal, model: 'CB1000R', year_start: 2008, year_end: 2008 }} documents={[]} serviceIntervals={[]} />)
+  await user.click(screen.getByRole('tab', { name: 'Wiring' }))
+  expect(screen.getByRole('link', { name: 'Teach me the brake-light circuit' })).toHaveAttribute('href', '/bikes/honda-cb1000r-sc60/brake-light')
+})

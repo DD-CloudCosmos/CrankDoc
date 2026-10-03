@@ -160,3 +160,10 @@ body {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Insulation colours are source data, independent of interface theme. */
+.wire-red { stroke: #b82020; }
+.wire-white { stroke: #fff; }
+.wire-black { stroke: #181818; }
+.wire-green { stroke: #16833c; }
+.wire-yellow { stroke: #f2cc21; }
