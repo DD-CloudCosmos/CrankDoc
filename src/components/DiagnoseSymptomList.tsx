@@ -3,6 +3,7 @@ import { ChevronRight, Zap, Cog, Fuel, Thermometer, CircleStop, ArrowUpDown, Win
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
+import { TreeSkillFlag } from '@/components/SkillNotice'
 import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 import type { LucideIcon } from 'lucide-react'
 
@@ -97,12 +98,13 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
                           <div className="min-h-[3.5rem] flex flex-col justify-center">
                             <span className="font-semibold">{tree.title}</span>
                             {tree.description && <p className="text-sm text-muted-foreground line-clamp-1">{tree.description}</p>}
-                            <div className="mt-1 h-5">
+                            <div className="mt-1 flex h-5 items-center gap-2">
                               {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
                                 <Badge variant="outline" className={`${DIFFICULTY_STYLES[tree.difficulty].badgeClass} min-w-[6.5rem] text-center`}>
                                   {DIFFICULTY_STYLES[tree.difficulty].label}
                                 </Badge>
                               )}
+                              <TreeSkillFlag difficulty={tree.difficulty} />
                             </div>
                           </div>
                           <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { GarageQuickPicks } from '@/components/GarageQuickPicks'
 import type { Motorcycle } from '@/types/database.types'
 
 const CATEGORIES = ['All', 'Sport', 'Naked', 'Cruiser', 'Adventure', 'Scooter'] as const
@@ -29,6 +30,7 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
       className="bg-card rounded-[24px] p-6 shadow-card"
       style={{ animation: 'riseIn 0.6s ease-out both' }}
     >
+      <GarageQuickPicks motorcycles={motorcycles} treeCounts={treeCounts} />
       <h2 className="text-xl font-bold">Select Your Motorcycle</h2>
       <p className="text-muted-foreground mb-4">Choose your bike to start</p>
 

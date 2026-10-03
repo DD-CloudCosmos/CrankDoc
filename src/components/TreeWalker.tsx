@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SafetyBadge } from '@/components/SafetyBadge'
+import { StepSkillNotice } from '@/components/SkillNotice'
 import type { DecisionTreeData } from '@/types/database.types'
 import { AlertTriangle, ArrowLeft, RotateCcw, ChevronRight, Wrench, CheckCircle } from 'lucide-react'
 
@@ -63,6 +64,8 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
           <p className="text-[15px] text-caution-foreground">{currentNode.warning}</p>
         </div>
       )}
+
+      <StepSkillNotice safety={currentNode.safety} />
 
       {/* Main Content Card */}
       <Card className="overflow-hidden">

@@ -49,6 +49,8 @@ interface ListRowProps {
   chevron?: boolean
   href?: string
   onClick?: () => void
+  /** Extra attributes for the row button, e.g. role="radio" and aria-checked */
+  buttonProps?: Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "className" | "type">
   className?: string
 }
 
@@ -61,6 +63,7 @@ export function ListRow({
   chevron,
   href,
   onClick,
+  buttonProps,
   className,
 }: ListRowProps) {
   const showChevron = chevron ?? Boolean(href)
@@ -99,7 +102,7 @@ export function ListRow({
 
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className={rowClassName}>
+      <button type="button" {...buttonProps} onClick={onClick} className={rowClassName}>
         {content}
       </button>
     )

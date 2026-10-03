@@ -85,3 +85,10 @@ describe('IconTile', () => {
     expect(tile).toHaveTextContent('i')
   })
 })
+
+describe('ListRow buttonProps', () => {
+  it('passes ARIA attributes to the row button', () => {
+    render(<ListRow label="Beginner" onClick={() => {}} buttonProps={{ role: 'radio', 'aria-checked': true }} />)
+    expect(screen.getByRole('radio', { name: /beginner/i })).toHaveAttribute('aria-checked', 'true')
+  })
+})
