@@ -1,4 +1,5 @@
 import React from 'react'
+import { CB1000RReference } from '@/components/CB1000RReference'
 import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
 import { cb1000rSpecSections, supportsBrakeLesson } from '@/lib/cb1000r'
 import type { Motorcycle } from '@/types/database.types'
@@ -54,6 +55,7 @@ function buildSections(motorcycle: Motorcycle): SpecSection[] {
 }
 
 export function SpecSheet({ motorcycle }: SpecSheetProps) {
+  if (supportsBrakeLesson(motorcycle)) return <CB1000RReference />
   const sections = buildSections(motorcycle)
 
   if (sections.length === 0) {
