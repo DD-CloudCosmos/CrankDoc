@@ -34,21 +34,21 @@ export function DiagnoseStepIndicator({ currentStep, bikeId }: DiagnoseStepIndic
               {isCompleted && href ? (
                 <Link
                   href={href}
-                  className="w-8 h-8 rounded-full bg-[#1F1F1F] text-white flex items-center justify-center"
+                  className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center"
                   aria-label={`Go back to ${step.label}`}
                 >
                   <Check className="w-4 h-4" />
                 </Link>
               ) : isCompleted ? (
-                <div className="w-8 h-8 rounded-full bg-[#1F1F1F] text-white flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
                   <Check className="w-4 h-4" />
                 </div>
               ) : isActive ? (
-                <div className="w-8 h-8 rounded-full bg-[#1F1F1F] text-white flex items-center justify-center ring-4 ring-[#EADFCB]">
+                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center ring-4 ring-primary/20">
                   {step.number}
                 </div>
               ) : (
-                <div className="w-8 h-8 rounded-full border-2 border-[#D8CBB4] flex items-center justify-center text-[#D8CBB4]">
+                <div className="w-8 h-8 rounded-full border-2 border-border flex items-center justify-center text-muted-foreground">
                   {step.number}
                 </div>
               )}
@@ -56,7 +56,7 @@ export function DiagnoseStepIndicator({ currentStep, bikeId }: DiagnoseStepIndic
               {/* Label */}
               <span
                 className={`text-xs mt-1 ${
-                  isFuture ? 'text-[#D8CBB4]' : 'text-[#1F1F1F]'
+                  isFuture ? 'text-muted-foreground' : 'text-foreground'
                 }`}
               >
                 {step.label}
@@ -67,7 +67,7 @@ export function DiagnoseStepIndicator({ currentStep, bikeId }: DiagnoseStepIndic
             {index < STEPS.length - 1 && (
               <div
                 className={`h-0.5 flex-1 mx-1 ${
-                  step.number < currentStep ? 'bg-[#1F1F1F]' : 'bg-[#D8CBB4]'
+                  step.number < currentStep ? 'bg-primary' : 'bg-border'
                 }`}
               />
             )}

@@ -63,4 +63,16 @@ describe('VinDecoder', () => {
 
     expect(await screen.findByText(/failed to decode vin/i)).toBeInTheDocument()
   })
+
+  it('submits when Enter is pressed in the VIN field', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ make: 'BMW', model: 'R 1250 GS', year: 2021 }),
+    })
+    const user = userEvent.setup()
+    render(<VinDecoder />)
+    await user.type(screen.getByRole('textbox', { name: 'Vehicle Identification Number' }), 'WB10J1300M6A12345{Enter}')
+    expect(mockFetch).toHaveBeenCalledWith('/api/vin?vin=WB10J1300M6A12345')
+    expect(await screen.findByText('R 1250 GS')).toBeInTheDocument()
+  })
 })

@@ -2,21 +2,33 @@
 
 import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { GroupedList, ListRow } from '@/components/ui/grouped-list'
 import { SafetyBadge } from '@/components/SafetyBadge'
-import type { DecisionTreeData } from '@/types/database.types'
-import { AlertTriangle, ArrowLeft, RotateCcw, ChevronRight, Wrench, CheckCircle } from 'lucide-react'
+import { StepSkillNotice } from '@/components/SkillNotice'
+import type { DecisionTreeData, DecisionTreeNode } from '@/types/database.types'
+import { AlertTriangle, ChevronLeft, RotateCcw, ChevronRight, Wrench, CheckCircle } from 'lucide-react'
 
 interface TreeWalkerProps {
   treeData: DecisionTreeData
   treeTitle: string
+  /** Hide the title when the page already shows it as its h1 */
+  showTitle?: boolean
 }
 
-export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
+/** Text of the option on `from` that leads to `toId`, used for the answers trail. */
+function answerText(from: DecisionTreeNode | undefined, toId: string): string | null {
+  if (!from) return null
+  if (from.type === 'question') return from.options?.find((o) => o.next === toId)?.text ?? null
+  // Check steps have a single "continue"; show what was checked
+  return from.text
+}
+
+export function TreeWalker({ treeData, treeTitle, showTitle = true }: TreeWalkerProps) {
   const [history, setHistory] = useState<string[]>(['start'])
 
+  const findNode = useCallback((id: string) => treeData.nodes.find((n) => n.id === id), [treeData])
   const currentNodeId = history[history.length - 1]
-  const currentNode = treeData.nodes.find((n) => n.id === currentNodeId)
+  const currentNode = findNode(currentNodeId)
   const stepNumber = history.length
 
   const navigateTo = useCallback((nodeId: string) => {
@@ -33,118 +45,129 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
 
   if (!currentNode) {
     return (
-      <Card>
-        <CardContent className="p-8 text-center">
-          <p className="text-muted-foreground">Error: Could not find diagnostic step.</p>
-          <Button onClick={restart} variant="outline" className="mt-4">
-            <RotateCcw className="mr-2 h-4 w-4" />
-            Start Over
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="rounded-[20px] bg-card p-8 text-center shadow-card">
+        <p className="text-muted-foreground">Error: Could not find diagnostic step.</p>
+        <Button onClick={restart} variant="secondary" className="mt-4">
+          <RotateCcw />
+          Start Over
+        </Button>
+      </div>
     )
   }
 
+  const trail = history
+    .slice(1)
+    .map((id, index) => answerText(findNode(history[index]), id))
+    .filter((text): text is string => Boolean(text))
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">{treeTitle}</h2>
-        <SafetyBadge level={currentNode.safety} />
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          {showTitle && <h2 className="text-[22px] font-semibold leading-tight tracking-[-0.02em]">{treeTitle}</h2>}
+          <p className="mt-1 text-[15px] text-muted-foreground" aria-live="polite">
+            Step {stepNumber}
+          </p>
+        </div>
+        <SafetyBadge level={currentNode.safety} className="mt-1 shrink-0" />
       </div>
 
-      {/* Progress */}
-      <p className="text-sm text-muted-foreground">Step {stepNumber}</p>
+      {/* Answers so far */}
+      {trail.length > 0 && (
+        <GroupedList header="Your answers">
+          {trail.map((text, index) => (
+            <ListRow
+              key={`${index}-${text}`}
+              label={<span className="text-[15px]">{text}</span>}
+              leading={<span aria-hidden="true" className="h-2 w-2 rounded-full bg-safe" />}
+            />
+          ))}
+        </GroupedList>
+      )}
+
+      <StepSkillNotice safety={currentNode.safety} />
 
       {/* Safety Warning */}
       {currentNode.warning && (
-        <div className="flex items-start gap-3 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-700" />
-          <p className="text-sm text-yellow-700">{currentNode.warning}</p>
+        <div role="note" className="flex items-start gap-3 rounded-[14px] bg-caution-background p-4">
+          <AlertTriangle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-caution-foreground" />
+          <p className="text-[15px] text-caution-foreground">{currentNode.warning}</p>
         </div>
       )}
 
-      {/* Main Content Card */}
-      <Card className="overflow-hidden">
-        <CardHeader>
-          <CardTitle className="text-lg">{currentNode.text}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Question Node — show options */}
-          {currentNode.type === 'question' && currentNode.options && (
-            <div className="space-y-2">
-              {currentNode.options.map((option) => (
-                <Button
-                  key={option.next}
-                  variant="outline"
-                  className="h-auto w-full justify-between whitespace-normal text-left"
-                  onClick={() => navigateTo(option.next)}
-                >
-                  <span>{option.text}</span>
-                  <ChevronRight className="h-4 w-4 shrink-0" />
-                </Button>
-              ))}
-            </div>
-          )}
+      {/* Current step */}
+      <section aria-labelledby="current-step" className="space-y-4">
+        <h3 id="current-step" className="text-[28px] font-bold leading-tight tracking-[-0.022em]">
+          {currentNode.text}
+        </h3>
 
-          {/* Check Node — show instructions + continue */}
-          {currentNode.type === 'check' && (
-            <div className="space-y-4">
-              {currentNode.instructions && (
-                <div className="rounded-lg bg-card p-4 shadow-[var(--shadow-soft)]">
-                  <p className="text-sm text-foreground">{currentNode.instructions}</p>
-                </div>
-              )}
-              {currentNode.next && (
-                <Button onClick={() => navigateTo(currentNode.next!)} className="w-full">
-                  Continue
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              )}
-            </div>
-          )}
+        {currentNode.type === 'question' && currentNode.options && (
+          <GroupedList>
+            {currentNode.options.map((option) => (
+              <ListRow
+                key={option.next}
+                label={option.text}
+                chevron
+                onClick={() => navigateTo(option.next)}
+              />
+            ))}
+          </GroupedList>
+        )}
 
-          {/* Solution Node — show action + details */}
-          {currentNode.type === 'solution' && (
-            <div className="space-y-4">
-              {currentNode.action && (
-                <div className="flex items-start gap-3 rounded-lg bg-card p-4 shadow-[var(--shadow-soft)]">
-                  <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                  <div>
-                    <p className="font-medium">{currentNode.action}</p>
-                  </div>
-                </div>
-              )}
-              {currentNode.details && (
-                <p className="text-sm text-muted-foreground">{currentNode.details}</p>
-              )}
-              <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3">
-                <CheckCircle className="h-5 w-5 text-green-700" />
-                <span className="text-sm text-green-700">Diagnosis complete</span>
+        {currentNode.type === 'check' && (
+          <div className="space-y-4">
+            {currentNode.instructions && (
+              <p className="rounded-[20px] bg-card p-5 text-[17px] leading-relaxed text-foreground shadow-card">
+                {currentNode.instructions}
+              </p>
+            )}
+            {currentNode.next && (
+              <Button onClick={() => navigateTo(currentNode.next!)} className="w-full rounded-[14px]">
+                Continue
+                <ChevronRight />
+              </Button>
+            )}
+          </div>
+        )}
+
+        {currentNode.type === 'solution' && (
+          <div className="space-y-4">
+            {currentNode.action && (
+              <div className="flex items-start gap-3 rounded-[20px] bg-card p-5 shadow-card">
+                <Wrench aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <p className="text-[17px] font-semibold">{currentNode.action}</p>
               </div>
+            )}
+            {currentNode.details && (
+              <p className="text-[17px] leading-relaxed text-muted-foreground">{currentNode.details}</p>
+            )}
+            <div className="flex items-center gap-2 rounded-[14px] bg-safe-background p-3.5">
+              <CheckCircle aria-hidden="true" className="h-5 w-5 text-safe-foreground" />
+              <span className="text-[15px] font-medium text-safe-foreground">Diagnosis complete</span>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        )}
+      </section>
 
-      {/* Navigation Buttons */}
-      <div className="flex gap-2">
+      {/* Navigation */}
+      <div className="flex flex-wrap gap-2">
         {history.length > 1 && (
-          <Button variant="outline" onClick={goBack}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button variant="secondary" onClick={goBack}>
+            <ChevronLeft />
             Back
           </Button>
         )}
         {currentNode.type === 'solution' && (
-          <Button variant="outline" onClick={restart}>
-            <RotateCcw className="mr-2 h-4 w-4" />
+          <Button variant="secondary" onClick={restart}>
+            <RotateCcw />
             Start Over
           </Button>
         )}
       </div>
 
       {/* Disclaimer */}
-      <p className="text-xs text-muted-foreground">
+      <p className="text-[13px] text-muted-foreground">
         CrankDoc provides diagnostic guidance for educational reference only. Always follow manufacturer service manual procedures.
       </p>
     </div>

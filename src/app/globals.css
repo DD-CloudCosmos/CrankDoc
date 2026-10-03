@@ -1,28 +1,95 @@
 @import "tailwindcss";
 
-/* Warm neutral editorial theme (Lumière-inspired) */
+/*
+ * CrankDoc design tokens — Apple-style system (v0.5 makeover).
+ * Light is the default; dark follows the OS setting (prefers-color-scheme).
+ * Components use the semantic names below (bg-card, text-muted-foreground, …),
+ * never raw hex values, so both themes stay in sync.
+ */
 :root {
-  --background: #F2E8D8;
-  --foreground: #1F1F1F;
+  --background: #F5F5F7;
+  --foreground: #1D1D1F;
   --card: #FFFFFF;
-  --card-foreground: #1F1F1F;
-  --primary: #1F1F1F;
+  --card-foreground: #1D1D1F;
+  --primary: #0071E3;
   --primary-foreground: #FFFFFF;
-  --secondary: #EADFCB;
-  --secondary-foreground: #1F1F1F;
-  --muted: #D8CBB4;
-  --muted-foreground: #6B6356;
-  --accent: #EADFCB;
-  --accent-foreground: #1F1F1F;
-  --border: #D8CBB4;
-  --input: #EADFCB;
-  --destructive: #DC2626;
+  --secondary: #E8E8ED;
+  --secondary-foreground: #1D1D1F;
+  --muted: #E8E8ED;
+  --muted-foreground: #6E6E73;
+  --accent: #E8E8ED;
+  --accent-foreground: #1D1D1F;
+  --border: #D2D2D7;
+  --separator: rgba(60, 60, 67, 0.29);
+  --input: rgba(118, 118, 128, 0.12);
+  --destructive: #D70015;
   --destructive-foreground: #FFFFFF;
-  --ring: #1F1F1F;
+  --ring: #0071E3;
+  --link: #0066CC;
+  --chevron: #C7C7CC;
+  --nav-glass: rgba(251, 251, 253, 0.8);
+  --inverse: #1D1D1F;
+  --inverse-foreground: #F5F5F7;
+
+  /* Safety ratings: dot/fill colour, readable text colour, tinted background */
+  --safe: #34C759;
+  --safe-foreground: #1E7A37;
+  --safe-background: rgba(52, 199, 89, 0.14);
+  --caution: #FFCC00;
+  --caution-foreground: #7A5600;
+  --caution-background: rgba(255, 204, 0, 0.18);
+  --danger: #FF3B30;
+  --danger-foreground: #C4221A;
+  --danger-background: rgba(255, 59, 48, 0.12);
+
   --radius: 0.75rem;
-  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.06);
-  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-float: 0 30px 80px rgba(0, 0, 0, 0.12), 0 4px 14px rgba(0, 0, 0, 0.05);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #F5F5F7;
+    --card: #1C1C1E;
+    --card-foreground: #F5F5F7;
+    --primary: #0A84FF;
+    --primary-foreground: #FFFFFF;
+    --secondary: #2C2C2E;
+    --secondary-foreground: #F5F5F7;
+    --muted: #2C2C2E;
+    --muted-foreground: #98989F;
+    --accent: #2C2C2E;
+    --accent-foreground: #F5F5F7;
+    --border: #38383A;
+    --separator: rgba(84, 84, 88, 0.65);
+    --input: rgba(118, 118, 128, 0.24);
+    --destructive: #FF453A;
+    --destructive-foreground: #FFFFFF;
+    --ring: #0A84FF;
+    --link: #2997FF;
+    --chevron: #5A5A5E;
+    --nav-glass: rgba(22, 22, 24, 0.8);
+    --inverse: #F5F5F7;
+    --inverse-foreground: #1D1D1F;
+
+    --safe: #30D158;
+    --safe-foreground: #30D158;
+    --safe-background: rgba(48, 209, 88, 0.16);
+    --caution: #FFD60A;
+    --caution-foreground: #FFD60A;
+    --caution-background: rgba(255, 214, 10, 0.16);
+    --danger: #FF453A;
+    --danger-foreground: #FF6961;
+    --danger-background: rgba(255, 69, 58, 0.18);
+
+    --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --shadow-float: 0 30px 80px rgba(0, 0, 0, 0.6);
+
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
@@ -41,15 +108,37 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-separator: var(--separator);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-inter);
+  --color-link: var(--link);
+  --color-chevron: var(--chevron);
+  --color-nav-glass: var(--nav-glass);
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-safe: var(--safe);
+  --color-safe-foreground: var(--safe-foreground);
+  --color-safe-background: var(--safe-background);
+  --color-caution: var(--caution);
+  --color-caution-foreground: var(--caution-foreground);
+  --color-caution-background: var(--caution-background);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-background: var(--danger-background);
+  --shadow-card: var(--shadow-card);
+  --shadow-float: var(--shadow-float);
+  /* System font first: SF Pro on Apple devices, Inter (self-hosted) elsewhere */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  /* Written out (not var(--font-sans)): @theme inline values are not emitted as CSS variables */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @keyframes riseIn {

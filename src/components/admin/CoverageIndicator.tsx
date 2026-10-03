@@ -9,17 +9,17 @@ interface CoverageIndicatorProps {
 const statusConfig = {
   ingested: {
     label: 'Ingested',
-    dotClass: 'bg-green-500',
-    textClass: 'text-green-700 dark:text-green-400',
+    dotClass: 'bg-safe',
+    textClass: 'text-safe-foreground',
   },
   local_only: {
     label: 'Uploaded',
-    dotClass: 'bg-amber-500',
-    textClass: 'text-amber-700 dark:text-amber-400',
+    dotClass: 'bg-caution',
+    textClass: 'text-caution-foreground',
   },
   missing: {
     label: 'Missing',
-    dotClass: 'bg-gray-300 dark:bg-gray-600',
+    dotClass: 'bg-border',
     textClass: 'text-muted-foreground',
   },
 } as const

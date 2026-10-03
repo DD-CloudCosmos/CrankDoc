@@ -8,7 +8,7 @@ interface ServiceIntervalTableProps {
 export function ServiceIntervalTable({ intervals }: ServiceIntervalTableProps) {
   if (intervals.length === 0) {
     return (
-      <div className="rounded-lg border border-border bg-card p-8 text-center">
+      <div className="p-8 text-center">
         <p className="text-muted-foreground">
           No service intervals available for this model.
         </p>

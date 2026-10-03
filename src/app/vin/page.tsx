@@ -1,16 +1,14 @@
 import { VinDecoder } from '@/components/VinDecoder'
+import { PageContainer, PageHeader } from '@/components/PageHeader'
 
 export default function VinPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">VIN Decoder</h1>
-        <p className="text-muted-foreground">
-          Decode your motorcycle&apos;s Vehicle Identification Number using NHTSA data
-        </p>
-      </div>
-
+    <PageContainer>
+      <PageHeader
+        title="VIN Decoder"
+        subtitle="Decode your motorcycle's Vehicle Identification Number using NHTSA data."
+      />
       <VinDecoder />
-    </div>
+    </PageContainer>
   )
 }

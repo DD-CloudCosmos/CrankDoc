@@ -48,6 +48,13 @@ describe('DtcManufacturerFilter', () => {
   it('renders correct number of buttons', () => {
     const { container } = render(<DtcManufacturerFilter activeManufacturer="" onChange={vi.fn()} />)
     const buttons = container.querySelectorAll('button')
-    expect(buttons.length).toBe(11) // All + 10 manufacturers
+    expect(buttons.length).toBe(12) // All + 11 manufacturers (one per data/dtc file)
+  })
+
+  it('filters KYMCO using the stored manufacturer value', async () => {
+    const onChange = vi.fn()
+    render(<DtcManufacturerFilter activeManufacturer="" onChange={onChange} />)
+    screen.getByRole('button', { name: 'KYMCO' }).click()
+    expect(onChange).toHaveBeenCalledWith('Kymco')
   })
 })

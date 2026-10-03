@@ -30,7 +30,7 @@ export function InstallPrompt() {
   }
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 z-40 flex items-center justify-between rounded-lg border border-border bg-card p-4 shadow-lg md:bottom-4">
+    <div className="fixed bottom-20 left-4 right-4 z-40 flex items-center justify-between rounded-[16px] bg-card p-4 shadow-float md:bottom-4">
       <div className="flex items-center gap-3">
         <Download className="h-5 w-5 text-primary" />
         <div>

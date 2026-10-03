@@ -92,7 +92,7 @@ describe('Table', () => {
     expect(table?.className).toContain('custom-class')
   })
 
-  it('wrapper has card background styling', () => {
+  it('wrapper only handles horizontal scrolling (the page supplies the card)', () => {
     const { container } = render(
       <Table>
         <TableBody>
@@ -103,14 +103,11 @@ describe('Table', () => {
       </Table>
     )
     const wrapper = container.firstElementChild as HTMLElement
-    expect(wrapper.className).toContain('bg-card')
-    expect(wrapper.className).toContain('rounded-[24px]')
-    expect(wrapper.className).toContain('border')
-    expect(wrapper.className).toContain('border-border')
-    expect(wrapper.className).toContain('shadow-[var(--shadow-soft)]')
+    expect(wrapper.className).toContain('overflow-auto')
+    expect(wrapper.className).not.toContain('bg-card')
   })
 
-  it('TableHeader has tinted background', () => {
+  it('TableHeader rows use hairline separators', () => {
     const { container } = render(
       <Table>
         <TableHeader>
@@ -126,7 +123,7 @@ describe('Table', () => {
       </Table>
     )
     const thead = container.querySelector('[data-slot="table-header"]')
-    expect(thead?.className).toContain('bg-muted/40')
+    expect(thead?.className).toContain('[&_tr]:border-separator')
   })
 
   it('applies custom className to TableRow', () => {

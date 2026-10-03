@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { GroupedList, ListRow } from '@/components/ui/grouped-list'
+import { GarageQuickPicks } from '@/components/GarageQuickPicks'
 import type { Motorcycle } from '@/types/database.types'
 
 const CATEGORIES = ['All', 'Sport', 'Naked', 'Cruiser', 'Adventure', 'Scooter'] as const
@@ -25,21 +25,21 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
     : motorcycles.filter((moto) => moto.category === selectedCategory.toLowerCase())
 
   return (
-    <div
-      className="bg-card rounded-[24px] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
-      style={{ animation: 'riseIn 0.6s ease-out both' }}
-    >
-      <h2 className="text-xl font-bold">Select Your Motorcycle</h2>
-      <p className="text-muted-foreground mb-4">Choose your bike to start</p>
+    <div style={{ animation: 'riseIn 0.4s ease-out both' }}>
+      <GarageQuickPicks motorcycles={motorcycles} treeCounts={treeCounts} />
+
+      <h2 className="text-[22px] font-semibold tracking-[-0.02em]">Select Your Motorcycle</h2>
+      <p className="mb-4 text-[15px] text-muted-foreground">Choose your bike to start</p>
 
       {/* Category pills - horizontal scroll */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
+      <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
         {CATEGORIES.map((cat) => (
           <Button
             key={cat}
             variant={selectedCategory === cat ? 'pill-active' : 'pill'}
             size="sm"
-            className="shrink-0 min-w-[5.25rem]"
+            className="shrink-0"
+            aria-pressed={selectedCategory === cat}
             onClick={() => setSelectedCategory(cat)}
           >
             {cat}
@@ -48,37 +48,34 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
       </div>
 
       {/* Bike list */}
-      <div className="space-y-3">
-        {filteredMotorcycles.map((moto, index) => (
-          <Link href={`/diagnose?bike=${moto.id}`} key={moto.id}>
-            <div
-              className="rounded-[16px] border border-border bg-card px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors"
-              style={{ animation: 'riseIn 0.6s ease-out both', animationDelay: `${index * 0.05}s` }}
-            >
-              <div>
-                <span className="font-semibold">{moto.make} {moto.model}</span>
-                <div className="text-sm text-muted-foreground">
+      {filteredMotorcycles.length > 0 && (
+        <GroupedList>
+          {filteredMotorcycles.map((moto) => (
+            <ListRow
+              key={moto.id}
+              href={`/diagnose?bike=${moto.id}`}
+              label={<span className="font-medium">{moto.make} {moto.model}</span>}
+              subtitle={
+                <span>
                   {moto.generation || `${moto.year_start}${moto.year_end ? `-${moto.year_end}` : '-present'}`}
                   {moto.category && ` · ${capitalize(moto.category)}`}
                   {moto.displacement_cc && ` · ${moto.displacement_cc}cc`}
-                </div>
-                <span className="text-xs text-muted-foreground">
+                </span>
+              }
+              detail={
+                <span className="text-[15px]">
                   {treeCounts[moto.id] ? `${treeCounts[moto.id]} guides` : 'No guides yet'}
                 </span>
-              </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-            </div>
-          </Link>
-        ))}
-      </div>
+              }
+            />
+          ))}
+        </GroupedList>
+      )}
 
-      {/* General guides separator */}
-      <div className="mt-6 border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground mb-2">Don&apos;t know your model?</p>
-        <Link href="/diagnose?bike=general" className="text-sm font-medium hover:underline">
-          Browse general guides →
-        </Link>
-      </div>
+      {/* General guides */}
+      <GroupedList header="Don't know your model?" className="mt-8">
+        <ListRow href="/diagnose?bike=general" label="Browse general guides" subtitle="Universal troubleshooting for all motorcycles" />
+      </GroupedList>
     </div>
   )
 }

@@ -25,7 +25,7 @@ export function SearchInput({
   onClear,
   isOpen,
   resultsId,
-  placeholder = 'Search bikes, DTCs, glossary...',
+  placeholder = 'Search bikes, codes, parts',
   autoFocus = false,
   className,
 }: SearchInputProps) {
@@ -51,7 +51,7 @@ export function SearchInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full rounded-[999px] border border-border bg-background pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        className="h-11 w-full rounded-[10px] border border-transparent bg-input pl-10 pr-10 text-[15px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
       />
       {value && (
         <button

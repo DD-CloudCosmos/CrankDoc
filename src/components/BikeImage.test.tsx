@@ -16,10 +16,10 @@ describe('BikeImage', () => {
     expect(img).toHaveAttribute('src', 'https://example.com/cbr600rr.jpg')
   })
 
-  it('applies warm-tone CSS filter to the image', () => {
+  it('shows the photo without colour filters', () => {
     render(<BikeImage image={mockImage} make="Honda" model="CBR600RR" />)
     const img = screen.getByAltText('Honda CBR600RR side profile')
-    expect(img.style.filter).toBe('sepia(15%) saturate(85%) brightness(102%)')
+    expect(img.style.filter).toBe('')
   })
 
   it('shows source attribution when available', () => {
@@ -97,7 +97,7 @@ describe('BikeImage', () => {
       <BikeImage make="Honda" model="CBR600RR" />
     )
     const wrapper = container.firstElementChild as HTMLElement
-    expect(wrapper.className).toContain('rounded-[24px]')
+    expect(wrapper.className).toContain('rounded-[20px]')
     expect(wrapper.className).not.toContain('w-10')
   })
 })

@@ -59,20 +59,20 @@ describe('Button', () => {
   it('renders with small size', () => {
     render(<Button size="sm">Small</Button>)
     const button = screen.getByRole('button', { name: /small/i })
-    expect(button).toHaveClass('h-8')
+    expect(button).toHaveClass('h-11')
     expect(button).toHaveClass('min-h-[44px]')
   })
 
   it('renders with large size', () => {
     render(<Button size="lg">Large</Button>)
     const button = screen.getByRole('button', { name: /large/i })
-    expect(button).toHaveClass('h-12')
+    expect(button).toHaveClass('h-14')
   })
 
   it('renders with icon size', () => {
     render(<Button size="icon" aria-label="icon button">X</Button>)
     const button = screen.getByRole('button', { name: /icon button/i })
-    expect(button).toHaveClass('h-12', 'w-12')
+    expect(button).toHaveClass('h-11', 'w-11')
   })
 
   it('applies custom className', () => {
@@ -85,7 +85,7 @@ describe('Button', () => {
     render(<Button disabled>Disabled</Button>)
     const button = screen.getByRole('button', { name: /disabled/i })
     expect(button).toBeDisabled()
-    expect(button).toHaveClass('disabled:opacity-50')
+    expect(button).toHaveClass('disabled:opacity-40')
   })
 
   it('renders as child component when asChild is true', () => {

@@ -27,4 +27,9 @@ describe('BackButton', () => {
     expect(svg).toBeInTheDocument()
     expect(svg).toHaveClass('h-4', 'w-4')
   })
+
+  it('uses ariaLabel as the accessible name when given', () => {
+    render(<BackButton href="/diagnose" label="Symptoms" ariaLabel="Back to symptoms" />)
+    expect(screen.getByRole('link', { name: 'Back to symptoms' })).toHaveAttribute('href', '/diagnose')
+  })
 })

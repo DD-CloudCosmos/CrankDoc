@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
@@ -9,10 +9,18 @@ import { JsonLd } from "@/components/JsonLd";
 import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { generateWebApplicationSchema } from "@/lib/structuredData";
 
+// Inter is only the fallback: Apple devices render the system font (SF Pro) first.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F5F5F7" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +43,6 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   other: {
-    'theme-color': '#F2E8D8',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
   },
@@ -50,13 +57,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body
-        className={`${inter.variable} antialiased bg-background text-foreground`}
+        className="antialiased bg-background text-foreground"
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-[16px] focus:bg-[#1F1F1F] focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-[12px] focus:bg-inverse focus:px-4 focus:py-2 focus:text-inverse-foreground"
         >
           Skip to main content
         </a>
@@ -64,7 +71,7 @@ export default function RootLayout({
         <OfflineIndicator />
         <div className="flex min-h-screen flex-col">
           <Navigation />
-          <main id="main-content" className="flex-1 pb-16 md:pb-0">{children}</main>
+          <main id="main-content" className="flex-1 pb-[calc(84px+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
         </div>
         <InstallPrompt />
         <ServiceWorkerRegistration />

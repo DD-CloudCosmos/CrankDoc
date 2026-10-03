@@ -14,9 +14,9 @@ export default function AdminLayout({
   return (
     <div>
       {/* Admin banner */}
-      <div className="border-b border-amber-300/30 bg-amber-50 dark:bg-amber-950/20">
-        <div className="container mx-auto flex items-center justify-between px-4 py-2">
-          <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
+      <div className="border-b border-separator bg-caution-background">
+        <div className="mx-auto flex max-w-[1024px] items-center justify-between px-4 py-2 md:px-[22px]">
+          <p className="text-sm font-medium text-caution-foreground">
             Admin Dashboard
           </p>
           <AdminLogoutButton />

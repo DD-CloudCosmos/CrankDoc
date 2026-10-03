@@ -2,6 +2,7 @@ import { buildCoverageMatrix } from '@/lib/manuals'
 import { fetchMotorcycles, fetchDocumentSources, listStorageManuals } from '@/lib/manuals.server'
 import { CoverageSummaryCards } from '@/components/admin/CoverageSummaryCards'
 import { ManualCoverageMatrix } from '@/components/admin/ManualCoverageMatrix'
+import { PageContainer, PageHeader } from '@/components/PageHeader'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,20 +32,16 @@ export default async function AdminManualsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">
-          Manual Coverage
-        </h1>
-        <p className="text-muted-foreground">
-          Track which models have service manuals, owner&apos;s manuals, parts catalogs, and TSBs
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title="Manual Coverage"
+        subtitle="Track which models have service manuals, owner's manuals, parts catalogs, and TSBs"
+      />
 
       {error && (
-        <div className="mb-6 rounded-lg border border-destructive/20 bg-destructive/10 p-4 text-destructive">
+        <div role="alert" className="mb-6 rounded-[14px] bg-danger-background p-4 text-danger-foreground">
           <p className="font-semibold">Error loading coverage data</p>
-          <p className="text-sm text-destructive">{error}</p>
+          <p className="text-[15px]">{error}</p>
         </div>
       )}
 
@@ -56,6 +53,6 @@ export default async function AdminManualsPage() {
           <ManualCoverageMatrix rows={rows} />
         </>
       )}
-    </div>
+    </PageContainer>
   )
 }

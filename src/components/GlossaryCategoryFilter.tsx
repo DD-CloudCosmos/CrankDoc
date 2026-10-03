@@ -24,7 +24,7 @@ const CATEGORIES = [
 
 export function GlossaryCategoryFilter({ activeCategory, onChange }: GlossaryCategoryFilterProps) {
   return (
-    <div className="flex flex-nowrap gap-2 overflow-x-auto">
+    <div className="-mx-4 flex flex-nowrap gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
       {CATEGORIES.map((cat) => (
         <Button
           key={cat.value}

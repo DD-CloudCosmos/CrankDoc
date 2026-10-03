@@ -1,8 +1,9 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TreeWalker } from './TreeWalker'
 import type { DecisionTreeData } from '@/types/database.types'
+import { GARAGE_STORAGE_KEY } from '@/lib/garage'
 
 const mockTreeData: DecisionTreeData = {
   nodes: [
@@ -190,6 +191,36 @@ describe('TreeWalker', () => {
 
   it('displays safety badge for current node', () => {
     render(<TreeWalker treeData={mockTreeData} treeTitle="Engine Won't Start" />)
-    expect(screen.getByText('Beginner Safe')).toBeInTheDocument()
+    expect(screen.getByText('Beginner-safe')).toBeInTheDocument()
+  })
+
+  it('shows the answers given so far', async () => {
+    const user = userEvent.setup()
+    render(<TreeWalker treeData={mockTreeData} treeTitle="Engine Won't Start" />)
+    expect(screen.queryByRole('heading', { name: 'Your answers' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByText('Yes, it cranks'))
+    await user.click(screen.getByRole('button', { name: /continue/i }))
+
+    const trail = screen.getByRole('heading', { name: 'Your answers' }).closest('section')!
+    expect(trail).toHaveTextContent('Yes, it cranks')
+    expect(trail).toHaveTextContent('Check battery voltage')
+  })
+
+  describe('with an experience level set', () => {
+    beforeEach(() => window.localStorage.clear())
+
+    it('flags a care-required step for beginners', async () => {
+      window.localStorage.setItem(GARAGE_STORAGE_KEY, JSON.stringify({ bikeIds: [], skill: 'beginner', onboarded: true }))
+      const user = userEvent.setup()
+      render(<TreeWalker treeData={mockTreeData} treeTitle="Engine Won't Start" />)
+      expect(screen.queryByText(/above the experience level/i)).not.toBeInTheDocument()
+
+      await user.click(screen.getByText('Yes, it cranks'))
+      await user.click(screen.getByRole('button', { name: /continue/i }))
+      expect(screen.getByText(/above the experience level/i)).toBeInTheDocument()
+      // The step is still fully shown
+      expect(screen.getByText('What is the voltage?')).toBeInTheDocument()
+    })
   })
 })

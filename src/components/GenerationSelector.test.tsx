@@ -72,7 +72,7 @@ describe('GenerationSelector', () => {
     const buttons = container.querySelectorAll('button')
     // Active button (gen-2) should have dark background class
     const gen2Button = screen.getByText('Gen 2').closest('button')!
-    expect(gen2Button.className).toContain('bg-[#1F1F1F]')
+    expect(gen2Button.className).toContain('bg-inverse')
 
     // Inactive buttons should have outline/background class
     const gen1Button = screen.getByText('Gen 1').closest('button')!

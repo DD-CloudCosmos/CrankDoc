@@ -36,7 +36,7 @@ export function SearchOverlay({ open, onOpenChange }: SearchOverlayProps) {
     <Dialog open={open} onOpenChange={(isOpen) => {
       if (!isOpen) handleClose()
     }}>
-      <DialogContent className="top-0 translate-y-0 rounded-none border-0 sm:top-[50%] sm:translate-y-[-50%] sm:rounded-lg h-[100dvh] sm:h-auto sm:max-h-[80vh] flex flex-col gap-0 p-0">
+      <DialogContent className="top-0 translate-y-0 rounded-none border-0 sm:top-[50%] sm:translate-y-[-50%] sm:rounded-[20px] h-[100dvh] sm:h-auto sm:max-h-[80vh] flex flex-col gap-0 p-0">
         <DialogTitle className="sr-only">Search CrankDoc</DialogTitle>
         <DialogDescription className="sr-only">
           Search across bikes, DTC codes, glossary terms, diagnostic guides, and recalls

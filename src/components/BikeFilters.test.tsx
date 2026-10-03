@@ -164,21 +164,22 @@ describe('BikeFilters', () => {
 
   it('renders view toggle buttons', () => {
     render(<BikeFilters availableMakes={[]} />)
-    expect(screen.getByRole('button', { name: /table view/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /grid view/i })).toBeInTheDocument()
+    expect(screen.getByRole('radiogroup', { name: 'View' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: /table/i })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: /grid/i })).toBeInTheDocument()
   })
 
   it('table view is active by default', () => {
     render(<BikeFilters availableMakes={[]} />)
-    const tableButton = screen.getByRole('button', { name: /table view/i })
-    expect(tableButton).toHaveAttribute('aria-pressed', 'true')
+    const tableButton = screen.getByRole('radio', { name: /table/i })
+    expect(tableButton).toHaveAttribute('aria-checked', 'true')
   })
 
   it('switches to grid view on click', async () => {
     const user = userEvent.setup()
     render(<BikeFilters availableMakes={[]} />)
 
-    const gridButton = screen.getByRole('button', { name: /grid view/i })
+    const gridButton = screen.getByRole('radio', { name: /grid/i })
     await user.click(gridButton)
 
     expect(mockPush).toHaveBeenCalledWith('/bikes?view=grid')
@@ -189,8 +190,8 @@ describe('BikeFilters', () => {
     vi.mocked(useSearchParams).mockReturnValue(searchParamsWithGrid as never)
 
     render(<BikeFilters availableMakes={[]} />)
-    const gridButton = screen.getByRole('button', { name: /grid view/i })
-    expect(gridButton).toHaveAttribute('aria-pressed', 'true')
+    const gridButton = screen.getByRole('radio', { name: /grid/i })
+    expect(gridButton).toHaveAttribute('aria-checked', 'true')
   })
 
   // --- Result count tests ---
