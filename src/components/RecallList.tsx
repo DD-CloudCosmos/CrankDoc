@@ -137,7 +137,7 @@ export function RecallList() {
   return (
     <div className="space-y-4">
       {/* Pill filters */}
-      <div className="rounded-[24px] bg-[#EADFCB] p-4 space-y-4" data-testid="recall-filters">
+      <div className="rounded-[20px] bg-card p-4 shadow-card space-y-4" data-testid="recall-filters">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Filters</h2>
           {hasActiveFilters && (
@@ -291,12 +291,12 @@ export function RecallList() {
                       <TableCell>
                         <div className="flex gap-1">
                           {recall.park_it && (
-                            <Badge className="bg-red-600 text-white hover:bg-red-600/80 text-xs">
+                            <Badge variant="danger">
                               PARK IT
                             </Badge>
                           )}
                           {recall.park_outside && (
-                            <Badge className="bg-amber-600 text-white hover:bg-amber-600/80 text-xs">
+                            <Badge variant="caution">
                               PARK OUTSIDE
                             </Badge>
                           )}
@@ -322,14 +322,14 @@ export function RecallList() {
 
                             {recall.consequence && (
                               <div>
-                                <p className="text-sm font-medium text-amber-400">Consequence</p>
+                                <p className="text-sm font-medium text-caution-foreground">Consequence</p>
                                 <p className="text-sm text-foreground">{recall.consequence}</p>
                               </div>
                             )}
 
                             {recall.remedy && (
                               <div>
-                                <p className="text-sm font-medium text-green-400">Remedy</p>
+                                <p className="text-sm font-medium text-safe-foreground">Remedy</p>
                                 <p className="text-sm text-foreground">{recall.remedy}</p>
                               </div>
                             )}

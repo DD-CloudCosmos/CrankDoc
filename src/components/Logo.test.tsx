@@ -1,28 +1,34 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { Logo } from './Logo'
+import { Logo, AppIcon } from './Logo'
 
 describe('Logo', () => {
-  it('renders the CrankDoc text', () => {
+  it('renders the CrankDoc wordmark', () => {
     render(<Logo />)
     expect(screen.getByText('CrankDoc')).toBeInTheDocument()
   })
 
-  it('renders as an h1 element', () => {
+  it('is not a heading, so pages keep their own h1', () => {
     render(<Logo />)
-    const heading = screen.getByRole('heading', { level: 1 })
-    expect(heading).toHaveTextContent('CrankDoc')
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
   })
 
-  it('applies default classes', () => {
-    render(<Logo />)
-    const heading = screen.getByText('CrankDoc')
-    expect(heading).toHaveClass('text-2xl', 'font-bold')
+  it('includes a decorative app icon', () => {
+    const { container } = render(<Logo />)
+    expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument()
   })
 
-  it('merges custom className with default classes', () => {
+  it('merges custom className', () => {
     render(<Logo className="custom-class" />)
-    const heading = screen.getByText('CrankDoc')
-    expect(heading).toHaveClass('text-2xl', 'font-bold', 'custom-class')
+    expect(screen.getByText('CrankDoc')).toHaveClass('font-semibold', 'custom-class')
+  })
+})
+
+describe('AppIcon', () => {
+  it('is hidden from screen readers and accepts a size class', () => {
+    const { container } = render(<AppIcon className="h-20 w-20" />)
+    const icon = container.firstChild as HTMLElement
+    expect(icon).toHaveAttribute('aria-hidden', 'true')
+    expect(icon).toHaveClass('h-20', 'w-20')
   })
 })

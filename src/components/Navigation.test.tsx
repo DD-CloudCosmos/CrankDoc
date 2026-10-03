@@ -1,19 +1,20 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, fireEvent, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Navigation } from './Navigation'
 
+const mockPathname = vi.fn(() => '/')
 vi.mock('next/navigation', () => ({
-  usePathname: () => '/',
+  usePathname: () => mockPathname(),
 }))
 
 vi.mock('next/link', () => ({
   default: ({ children, href, onClick, ...props }: { children: React.ReactNode; href: string; onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void; [key: string]: unknown }) => {
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-      e.preventDefault();
-      onClick?.(e);
-    };
-    return <a href={href} {...props} onClick={handleClick}>{children}</a>;
+      e.preventDefault()
+      onClick?.(e)
+    }
+    return <a href={href} {...props} onClick={handleClick}>{children}</a>
   },
 }))
 
@@ -24,122 +25,115 @@ vi.mock('@/components/search', () => ({
     open ? <div data-testid="search-overlay">Overlay</div> : null,
 }))
 
+function getTabBar() {
+  return screen.getByRole('navigation', { name: 'Tabs' })
+}
+
+function getDesktopNav() {
+  return screen.getByRole('navigation', { name: 'Primary' })
+}
+
 describe('Navigation', () => {
-  it('renders all nav items on desktop', () => {
-    render(<Navigation />)
-    // Desktop nav shows all items
-    expect(screen.getAllByText('Home').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Diagnose').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Bikes').length).toBeGreaterThanOrEqual(1)
-    // Desktop shows these directly; mobile hides them behind More
-    expect(screen.getByText('DTC')).toBeInTheDocument()
-    expect(screen.getByText('Glossary')).toBeInTheDocument()
-    expect(screen.getByText('Admin')).toBeInTheDocument()
+  beforeEach(() => {
+    mockPathname.mockReturnValue('/')
   })
 
-  it('renders primary nav items in mobile bar', () => {
+  it('renders the logo linking home', () => {
     render(<Navigation />)
-    // Primary items appear in both mobile and desktop
-    expect(screen.getAllByText('Home').length).toBe(2)
-    expect(screen.getAllByText('Diagnose').length).toBe(2)
-    expect(screen.getAllByText('Bikes').length).toBe(2)
+    expect(screen.getByRole('link', { name: 'CrankDoc home' })).toHaveAttribute('href', '/')
   })
 
-  it('renders More button in mobile nav', () => {
+  it('renders desktop links including VIN', () => {
     render(<Navigation />)
-    expect(screen.getByLabelText('More navigation')).toBeInTheDocument()
-    expect(screen.getByText('More')).toBeInTheDocument()
+    const nav = getDesktopNav()
+    for (const name of ['Diagnose', 'Bikes', 'Codes', 'Glossary', 'Recalls', 'VIN']) {
+      expect(within(nav).getByRole('link', { name })).toBeInTheDocument()
+    }
   })
 
-  it('hides secondary items until More is clicked', () => {
+  it('renders four tabs plus More in the mobile tab bar', () => {
     render(<Navigation />)
-    // DTC appears once (desktop only), not in mobile bar
-    expect(screen.getAllByText('DTC').length).toBe(1)
-    expect(screen.getAllByText('Glossary').length).toBe(1)
-    expect(screen.getAllByText('Recalls').length).toBe(1)
-    expect(screen.getAllByText('Admin').length).toBe(1)
+    const tabs = getTabBar()
+    for (const name of ['Home', 'Diagnose', 'Bikes', 'Codes']) {
+      expect(within(tabs).getByRole('link', { name })).toBeInTheDocument()
+    }
+    expect(within(tabs).getByLabelText('More navigation')).toBeInTheDocument()
   })
 
-  it('More button opens popover with secondary nav items', () => {
+  it('hides secondary items until More is opened', () => {
     render(<Navigation />)
-    const moreButton = screen.getByLabelText('More navigation')
-
-    fireEvent.click(moreButton)
-
-    // Now secondary items appear twice (desktop + popover)
-    expect(screen.getAllByText('DTC').length).toBe(2)
-    expect(screen.getAllByText('Glossary').length).toBe(2)
-    expect(screen.getAllByText('Recalls').length).toBe(2)
-    expect(screen.getAllByText('Admin').length).toBe(2)
+    const tabs = getTabBar()
+    expect(within(tabs).queryByRole('link', { name: 'VIN Decoder' })).not.toBeInTheDocument()
+    expect(within(tabs).queryByRole('link', { name: 'Admin' })).not.toBeInTheDocument()
   })
 
-  it('clicking a link in More popover closes it', async () => {
+  it('More opens a menu with Glossary, Recalls, VIN Decoder and Admin', () => {
+    render(<Navigation />)
+    fireEvent.click(screen.getByLabelText('More navigation'))
+    const tabs = getTabBar()
+    expect(within(tabs).getByRole('link', { name: 'Glossary' })).toHaveAttribute('href', '/glossary')
+    expect(within(tabs).getByRole('link', { name: 'Recalls' })).toHaveAttribute('href', '/recalls')
+    expect(within(tabs).getByRole('link', { name: 'VIN Decoder' })).toHaveAttribute('href', '/vin')
+    expect(within(tabs).getByRole('link', { name: 'Admin' })).toHaveAttribute('href', '/admin')
+  })
+
+  it('More toggles aria-expanded', () => {
+    render(<Navigation />)
+    const more = screen.getByLabelText('More navigation')
+    expect(more).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(more)
+    expect(more).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  it('clicking a link in the More menu closes it', async () => {
     const user = userEvent.setup()
     render(<Navigation />)
-    const moreButton = screen.getByLabelText('More navigation')
-
-    await user.click(moreButton)
-    expect(screen.getAllByText('DTC').length).toBe(2)
-    expect(moreButton).toHaveAttribute('aria-expanded', 'true')
-
-    // Click the DTC link in the popover (second occurrence is the popover one)
-    const dtcLinks = screen.getAllByText('DTC')
-    const popoverLink = dtcLinks[1].closest('a')!
-    await user.click(popoverLink)
-
-    // Popover closed — aria-expanded should be false
-    expect(moreButton).toHaveAttribute('aria-expanded', 'false')
+    const more = screen.getByLabelText('More navigation')
+    await user.click(more)
+    await user.click(within(getTabBar()).getByRole('link', { name: 'Admin' }))
+    expect(more).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('More button has aria-expanded attribute', () => {
+  it('Escape closes the More menu', async () => {
+    const user = userEvent.setup()
     render(<Navigation />)
-    const moreButton = screen.getByLabelText('More navigation')
-
-    expect(moreButton).toHaveAttribute('aria-expanded', 'false')
-
-    fireEvent.click(moreButton)
-    expect(moreButton).toHaveAttribute('aria-expanded', 'true')
+    const more = screen.getByLabelText('More navigation')
+    await user.click(more)
+    await user.keyboard('{Escape}')
+    expect(more).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('renders nav links with correct hrefs', () => {
+  it('clicking outside closes the More menu', async () => {
+    const user = userEvent.setup()
     render(<Navigation />)
-    const links = screen.getAllByRole('link')
-    const hrefs = links.map((link) => link.getAttribute('href'))
-    expect(hrefs).toContain('/')
-    expect(hrefs).toContain('/diagnose')
-    expect(hrefs).toContain('/bikes')
-    expect(hrefs).toContain('/dtc')
-    expect(hrefs).toContain('/glossary')
-    expect(hrefs).toContain('/admin')
+    const more = screen.getByLabelText('More navigation')
+    await user.click(more)
+    await user.click(screen.getByRole('link', { name: 'CrankDoc home' }))
+    expect(more).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('applies active styling to the current route on desktop', () => {
+  it('marks the current tab with aria-current and the accent colour', () => {
     render(<Navigation />)
-    // Desktop nav links with "Home" text — the active one gets bg-[#1F1F1F]
-    const homeLinks = screen.getAllByText('Home')
-    const desktopHomeLink = homeLinks.find((el) =>
-      el.closest('a')?.className.includes('bg-[#1F1F1F]')
-    )
-    expect(desktopHomeLink).toBeDefined()
+    const home = within(getTabBar()).getByRole('link', { name: 'Home' })
+    expect(home).toHaveAttribute('aria-current', 'page')
+    expect(home).toHaveClass('text-primary')
+    const bikes = within(getTabBar()).getByRole('link', { name: 'Bikes' })
+    expect(bikes).not.toHaveAttribute('aria-current')
+    expect(bikes).toHaveClass('text-muted-foreground')
   })
 
-  it('applies active opacity to the current route on mobile', () => {
+  it('treats nested routes as active', () => {
+    mockPathname.mockReturnValue('/bikes/abc-123')
     render(<Navigation />)
-    const homeLinks = screen.getAllByText('Home')
-    const mobileHomeLink = homeLinks.find((el) =>
-      el.closest('a')?.className.includes('opacity-100')
-    )
-    expect(mobileHomeLink).toBeDefined()
+    expect(within(getTabBar()).getByRole('link', { name: 'Bikes' })).toHaveAttribute('aria-current', 'page')
+    expect(within(getDesktopNav()).getByRole('link', { name: 'Bikes' })).toHaveAttribute('aria-current', 'page')
+    expect(within(getTabBar()).getByRole('link', { name: 'Home' })).not.toHaveAttribute('aria-current')
   })
 
-  it('applies inactive styling to non-active routes', () => {
+  it('highlights More when the current page lives behind it', () => {
+    mockPathname.mockReturnValue('/glossary')
     render(<Navigation />)
-    const diagnoseLinks = screen.getAllByText('Diagnose')
-    // At least one should have inactive desktop styling (text-foreground without bg-[#1F1F1F])
-    const inactiveDesktop = diagnoseLinks.find(
-      (el) => !el.closest('a')?.className.includes('bg-[#1F1F1F]')
-    )
-    expect(inactiveDesktop).toBeDefined()
+    expect(screen.getByLabelText('More navigation')).toHaveClass('text-primary')
   })
 
   it('renders desktop search component', () => {
@@ -147,40 +141,18 @@ describe('Navigation', () => {
     expect(screen.getByTestId('desktop-search')).toBeInTheDocument()
   })
 
-  it('renders mobile search button', () => {
-    render(<Navigation />)
-    expect(screen.getByLabelText('Open search')).toBeInTheDocument()
-  })
-
-  it('opens search overlay when mobile search button is clicked', () => {
+  it('opens search overlay from the mobile search button', () => {
     render(<Navigation />)
     expect(screen.queryByTestId('search-overlay')).not.toBeInTheDocument()
-
     fireEvent.click(screen.getByLabelText('Open search'))
-
     expect(screen.getByTestId('search-overlay')).toBeInTheDocument()
   })
 
-  it('closes More popover when search is opened', () => {
+  it('closes the More menu when search is opened', () => {
     render(<Navigation />)
-    const moreButton = screen.getByLabelText('More navigation')
-
-    // Open More popover
-    fireEvent.click(moreButton)
-    expect(screen.getAllByText('DTC').length).toBe(2)
-
-    // Open search — should close More
+    const more = screen.getByLabelText('More navigation')
+    fireEvent.click(more)
     fireEvent.click(screen.getByLabelText('Open search'))
-    expect(screen.getAllByText('DTC').length).toBe(1)
-  })
-
-  it('uses Stethoscope icon for Diagnose (not Search)', () => {
-    render(<Navigation />)
-    // The Search text only appears in the mobile search button, not as Diagnose
-    const searchButton = screen.getByLabelText('Open search')
-    expect(searchButton).toBeInTheDocument()
-    // Diagnose items should exist as nav links
-    const diagnoseLinks = screen.getAllByText('Diagnose')
-    expect(diagnoseLinks.length).toBeGreaterThanOrEqual(1)
+    expect(more).toHaveAttribute('aria-expanded', 'false')
   })
 })

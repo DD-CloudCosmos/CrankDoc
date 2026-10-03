@@ -5,7 +5,7 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8 sm:py-12">
       {/* Hero Card */}
       <div
-        className="mx-auto max-w-2xl rounded-[24px] bg-card p-8 text-center shadow-[0_20px_60px_rgba(0,0,0,0.12)] sm:p-12"
+        className="mx-auto max-w-2xl rounded-[24px] bg-card p-8 text-center shadow-card sm:p-12"
         style={{ animation: 'riseIn 0.6s ease-out both' }}
       >
         <h1 className="mb-4 text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">

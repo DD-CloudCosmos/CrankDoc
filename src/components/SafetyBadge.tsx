@@ -5,18 +5,23 @@ interface SafetyBadgeProps {
   className?: string
 }
 
+// Each safety level gets a coloured dot plus a text label, so the rating
+// never relies on colour alone.
 const safetyConfig = {
   green: {
-    label: 'Beginner Safe',
-    className: 'bg-green-50 text-green-700 border-green-200',
+    label: 'Beginner-safe',
+    className: 'bg-safe-background text-safe-foreground',
+    dotClassName: 'bg-safe',
   },
   yellow: {
-    label: 'Use Caution',
-    className: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+    label: 'Care required',
+    className: 'bg-caution-background text-caution-foreground',
+    dotClassName: 'bg-caution',
   },
   red: {
-    label: 'Professional Recommended',
-    className: 'bg-red-50 text-red-700 border-red-200',
+    label: 'Pro recommended',
+    className: 'bg-danger-background text-danger-foreground',
+    dotClassName: 'bg-danger',
   },
 } as const
 
@@ -25,12 +30,14 @@ export function SafetyBadge({ level, className }: SafetyBadgeProps) {
 
   return (
     <span
+      data-level={level}
       className={cn(
-        'inline-flex items-center rounded-[999px] border px-2.5 py-0.5 text-xs font-medium',
+        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[13px] font-semibold',
         config.className,
         className
       )}
     >
+      <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full', config.dotClassName)} />
       {config.label}
     </span>
   )

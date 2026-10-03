@@ -48,7 +48,7 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
   return (
     <div
       className={cn(
-        'overflow-hidden bg-gradient-to-b from-[#EADFCB] to-[#D8CBB4]',
+        'overflow-hidden bg-gradient-to-b from-secondary to-muted',
         isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[24px]',
         className
       )}
@@ -60,7 +60,7 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
         <svg
           viewBox="0 0 120 80"
           className={cn(
-            'text-[#8B7D6B]',
+            'text-muted-foreground',
             isThumbnail ? 'h-4 w-6' : 'h-16 w-24'
           )}
           fill="currentColor"
@@ -95,7 +95,7 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
           />
         </svg>
         {!isThumbnail && (
-          <span className="text-sm font-medium text-[#6B5E4F]">
+          <span className="text-sm font-medium text-muted-foreground">
             {make} {model}
           </span>
         )}

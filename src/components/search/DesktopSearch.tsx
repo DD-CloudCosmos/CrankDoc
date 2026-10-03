@@ -54,7 +54,7 @@ export function DesktopSearch() {
         resultsId="desktop-search-results"
       />
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[60vh] overflow-y-auto rounded-[12px] border border-border bg-background shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-[60vh] overflow-y-auto rounded-[14px] border border-border bg-card shadow-float">
           <SearchResults
             results={results}
             isLoading={isLoading}

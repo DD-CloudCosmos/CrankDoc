@@ -272,8 +272,8 @@ function RecallsContent({ recalls }: { recalls: Recall[] }) {
   return (
     <div className="space-y-4">
       {hasParkIt && (
-        <div className="rounded-lg border border-red-500/50 bg-red-950/30 p-4">
-          <p className="text-sm font-semibold text-red-400">
+        <div className="rounded-[14px] bg-danger-background p-4">
+          <p className="text-sm font-semibold text-danger-foreground">
             One or more recalls advise you to stop driving this vehicle immediately.
             Contact your dealer for a free repair.
           </p>
@@ -305,12 +305,12 @@ function RecallsContent({ recalls }: { recalls: Recall[] }) {
               <TableCell>
                 <div className="flex gap-1">
                   {recall.park_it && (
-                    <Badge className="bg-red-600 text-white hover:bg-red-600/80 text-xs">
+                    <Badge variant="danger">
                       PARK IT
                     </Badge>
                   )}
                   {recall.park_outside && (
-                    <Badge className="bg-amber-600 text-white hover:bg-amber-600/80 text-xs">
+                    <Badge variant="caution">
                       PARK OUTSIDE
                     </Badge>
                   )}

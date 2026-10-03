@@ -46,7 +46,7 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
   const hasActiveFilters = currentCategory || currentMake || currentSearch
 
   return (
-    <div className="mb-6 space-y-4 rounded-[24px] bg-[#EADFCB] p-4">
+    <div className="mb-6 space-y-4 rounded-[20px] bg-card p-4 shadow-card">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Filters</h2>
         <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
               variant="ghost"
               size="sm"
               className={currentView === 'table'
-                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
+                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-inverse p-0 text-inverse-foreground hover:bg-inverse hover:text-inverse-foreground'
                 : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
               onClick={() => updateFilter('view', 'table')}
               aria-label="Table view"
@@ -78,7 +78,7 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
               variant="ghost"
               size="sm"
               className={currentView === 'grid'
-                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-[#1F1F1F] p-0 text-white hover:bg-[#1F1F1F] hover:text-white'
+                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-inverse p-0 text-inverse-foreground hover:bg-inverse hover:text-inverse-foreground'
                 : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
               onClick={() => updateFilter('view', 'grid')}
               aria-label="Grid view"

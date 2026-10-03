@@ -16,7 +16,7 @@ export function AdminLogoutButton() {
       variant="ghost"
       size="sm"
       onClick={handleLogout}
-      className="text-amber-700 hover:text-amber-900 dark:text-amber-400 dark:hover:text-amber-200"
+      className="text-link hover:underline"
     >
       Logout
     </Button>

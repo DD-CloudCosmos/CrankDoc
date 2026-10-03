@@ -71,7 +71,7 @@ export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListPr
       </div>
 
       {/* Main content card with grouped trees */}
-      <div className="bg-card rounded-[24px] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+      <div className="bg-card rounded-[24px] p-6 shadow-card">
         <h2 className="text-xl font-bold mb-4">What&apos;s the problem?</h2>
 
         {trees.length === 0 ? (

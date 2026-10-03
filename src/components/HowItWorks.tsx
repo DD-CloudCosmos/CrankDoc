@@ -40,7 +40,7 @@ export function HowItWorks() {
           const Icon = step.icon
           return (
             <div key={step.number} className="flex flex-col items-center gap-3 text-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1F1F1F] text-sm font-bold text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                 {step.number}
               </div>
               <Icon className="h-8 w-8 text-primary" />

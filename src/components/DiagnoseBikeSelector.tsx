@@ -26,7 +26,7 @@ export function DiagnoseBikeSelector({ motorcycles, treeCounts }: DiagnoseBikeSe
 
   return (
     <div
-      className="bg-card rounded-[24px] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
+      className="bg-card rounded-[24px] p-6 shadow-card"
       style={{ animation: 'riseIn 0.6s ease-out both' }}
     >
       <h2 className="text-xl font-bold">Select Your Motorcycle</h2>

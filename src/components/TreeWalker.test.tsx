@@ -190,6 +190,6 @@ describe('TreeWalker', () => {
 
   it('displays safety badge for current node', () => {
     render(<TreeWalker treeData={mockTreeData} treeTitle="Engine Won't Start" />)
-    expect(screen.getByText('Beginner Safe')).toBeInTheDocument()
+    expect(screen.getByText('Beginner-safe')).toBeInTheDocument()
   })
 })

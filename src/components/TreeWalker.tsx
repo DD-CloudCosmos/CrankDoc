@@ -58,9 +58,9 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
 
       {/* Safety Warning */}
       {currentNode.warning && (
-        <div className="flex items-start gap-3 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-700" />
-          <p className="text-sm text-yellow-700">{currentNode.warning}</p>
+        <div className="flex items-start gap-3 rounded-[14px] bg-caution-background p-4">
+          <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-caution-foreground" />
+          <p className="text-[15px] text-caution-foreground">{currentNode.warning}</p>
         </div>
       )}
 
@@ -118,9 +118,9 @@ export function TreeWalker({ treeData, treeTitle }: TreeWalkerProps) {
               {currentNode.details && (
                 <p className="text-sm text-muted-foreground">{currentNode.details}</p>
               )}
-              <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3">
-                <CheckCircle className="h-5 w-5 text-green-700" />
-                <span className="text-sm text-green-700">Diagnosis complete</span>
+              <div className="flex items-center gap-2 rounded-[14px] bg-safe-background p-3">
+                <CheckCircle className="h-5 w-5 text-safe-foreground" />
+                <span className="text-[15px] text-safe-foreground">Diagnosis complete</span>
               </div>
             </div>
           )}
