@@ -1,0 +1,81 @@
+{
+  "sections": [
+    {"title":"Engine", "rows":[
+      {"label":"Engine type","value":"Liquid-cooled four-stroke inline-four; 16 valves; double overhead camshafts"},
+      {"label":"Displacement","value":"998 cc"},
+      {"label":"Bore × stroke","value":"75.0 × 56.5 mm"},
+      {"label":"Compression ratio","value":"11.2:1"},
+      {"label":"Fuel system","value":"Programmed Fuel Injection (PGM-FI); 36 mm throttle bore"},
+      {"label":"Unrestricted rated power","value":"92 kW (123.4 mechanical hp / 125 metric PS) at 10,000 rpm"},
+      {"label":"Unrestricted rated torque","value":"99 N·m at 7,750 rpm"},
+      {"label":"Idle speed","value":"1,200 ± 100 rpm"},
+      {"label":"Firing order","value":"1–2–4–3"},
+      {"label":"Lubrication","value":"Wet sump; forced pressure; trochoid pump"}
+    ]},
+    {"title":"Transmission", "rows":[
+      {"label":"Clutch","value":"Wet multi-plate; hydraulic operation"},
+      {"label":"Gearbox","value":"Constant-mesh six-speed; 1–N–2–3–4–5–6"},
+      {"label":"Primary reduction","value":"1.604 (77/48)"},
+      {"label":"Final reduction","value":"2.750 (44/16)"},
+      {"label":"Gear ratios, 1st to 6th","value":"2.538 / 1.941 / 1.578 / 1.363 / 1.217 / 1.115"},
+      {"label":"Drive chain","value":"DID50VA8-116YB"},
+      {"label":"Chain slack","value":"25–35 mm; ignition off, sidestand, transmission in neutral"}
+    ]},
+    {"title":"Chassis and dimensions", "rows":[
+      {"label":"Frame","value":"Diamond type"},
+      {"label":"Length × width × height","value":"2,105 × 785 × 1,095 mm; U (Australia/New Zealand) type length 2,115 mm"},
+      {"label":"Wheelbase","value":"1,445 mm"},
+      {"label":"Seat height","value":"825 mm"},
+      {"label":"Ground clearance","value":"130 mm"},
+      {"label":"Curb weight","value":"CB1000R: 217 kg; CB1000RA (ABS): 222 kg"},
+      {"label":"Maximum weight capacity","value":"188 kg"},
+      {"label":"Caster / trail","value":"25° / 99 mm"},
+      {"label":"Front suspension / axle travel","value":"Telescopic fork / 109 mm"},
+      {"label":"Rear suspension / axle travel","value":"Swingarm / 128 mm"}
+    ]},
+    {"title":"Tyres and brakes", "rows":[
+      {"label":"Front tyre","value":"120/70ZR17M/C (58W)"},
+      {"label":"Rear tyre","value":"180/55ZR17M/C (73W)"},
+      {"label":"Front pressure, cold","value":"250 kPa (36 psi), rider only or with passenger"},
+      {"label":"Rear pressure, cold","value":"290 kPa (42 psi), rider only or with passenger"},
+      {"label":"Tread service limits","value":"Front 1.5 mm; rear 2.0 mm (manual limits, not local legal limits)"},
+      {"label":"Brakes","value":"Front: hydraulic twin discs; rear: hydraulic single disc. CB1000RA adds Combined ABS."},
+      {"label":"Disc thickness, standard / limit","value":"Front 4.5 / 3.5 mm; rear 5.0 / 4.0 mm"}
+    ]},
+    {"title":"Maintenance settings", "rows":[
+      {"label":"Intake valve clearance","value":"0.16 ± 0.03 mm; cold engine below 35°C"},
+      {"label":"Exhaust valve clearance","value":"0.32 ± 0.03 mm; cold engine below 35°C"},
+      {"label":"Spark plugs","value":"NGK IMR9E-9HES or DENSO VUH27ES"},
+      {"label":"Spark plug gap","value":"0.80–0.90 mm; do not adjust the iridium plug gap"},
+      {"label":"Throttle grip free play","value":"2–6 mm"},
+      {"label":"Fork fluid level","value":"CB1000R: 91 mm; CB1000RA: 67 mm. Follow the fork filling procedure."},
+      {"label":"Fork initial settings","value":"Preload: 8 turns from minimum; rebound and compression: 2 turns out from full hard"},
+      {"label":"Rear shock initial settings","value":"Preload position 3; rebound 1½ turns out from full hard"}
+    ]},
+    {"title":"Electrical", "rows":[
+      {"label":"Battery","value":"12 V / 8.6 Ah"},
+      {"label":"Alternator output","value":"350 W at 5,000 rpm"},
+      {"label":"Ignition / starting","value":"Computer-controlled digital transistor ignition; electric starter"},
+      {"label":"Headlight","value":"12 V, 60/55 W"},
+      {"label":"Main fuse","value":"30 A"},
+      {"label":"Fuel injection / ignition fuse","value":"20 A"},
+      {"label":"Sub fuses","value":"10 A × 5; 20 A × 1"},
+      {"label":"CB1000RA additional ABS fuses","value":"Main 10 A; fail-safe relay 30 A; motor 30 A"}
+    ]},
+    {"title":"Selected service torques", "rows":[
+      {"label":"Engine oil drain bolt","value":"30 N·m"},
+      {"label":"Engine oil filter cartridge","value":"26 N·m; oil the threads and O-ring"},
+      {"label":"Spark plug","value":"16 N·m"},
+      {"label":"Drive sprocket bolt","value":"54 N·m"},
+      {"label":"Rear axle bearing-holder pinch bolt","value":"74 N·m; chain adjustment procedure, page 3-21"}
+    ]}
+  ],
+  "fluids": [
+    {"label":"Engine Oil","capacity":"2.7 L after draining; 3.0 L with filter; 3.6 L after disassembly","spec":"SAE 10W-30; API SG or higher, excluding energy-conserving oils; JASO T 903 MA."},
+    {"label":"Coolant","capacity":"3.0 L radiator and engine; 0.35 L reserve tank","spec":"Silicate-free ethylene glycol antifreeze; 1:1 with distilled water."},
+    {"label":"Fuel Tank","capacity":"17.0 L","spec":null},
+    {"label":"Brake Fluid","capacity":null,"spec":"DOT 4, front and rear. Use the procedure matching the ABS equipment."},
+    {"label":"Clutch Fluid","capacity":null,"spec":"DOT 4 brake fluid."},
+    {"label":"Fork Oil","capacity":"Per leg: CB1000R 511 ± 2.5 mL; CB1000RA 542 ± 2.5 mL","spec":"Honda ULTRA CUSHION OIL 10W or equivalent; follow the model-specific fluid-level procedure."}
+  ]
+}

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { supportsBrakeLesson } from '@/lib/cb1000r'
+import { cb1000rFluids, supportsBrakeLesson } from '@/lib/cb1000r'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
@@ -38,6 +38,7 @@ function getFluidItems(
   motorcycle: Motorcycle,
   serviceIntervals: ServiceInterval[]
 ): FluidItem[] {
+  if (supportsBrakeLesson(motorcycle)) return cb1000rFluids
   const items: FluidItem[] = []
 
   if (motorcycle.oil_capacity_liters) {
@@ -168,7 +169,10 @@ export function BikeDetailTabs({
       {/* Tab content */}
       <div className="overflow-hidden rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
-      {displayTab === 'service' && <ServiceIntervalTable intervals={serviceIntervals} />}
+      {displayTab === 'service' && <>
+        {supportsBrakeLesson(motorcycle) && <p className="mb-4 text-[13px] text-muted-foreground">Honda schedule, page 3-4. Use distance or time, whichever comes first. The first service is one-off; the other rows repeat. Perform pre-ride checks too. Honda recommends dealer service for wheels and steering bearings; marked work requires suitable tools, service information and mechanical qualifications.</p>}
+        <ServiceIntervalTable intervals={serviceIntervals} />
+      </>}
       {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
       {displayTab === 'wiring' && (
         <WiringContent
@@ -181,6 +185,21 @@ export function BikeDetailTabs({
         <RecallsContent recalls={deduplicatedRecalls} />
       )}
       </div>
+
+      {supportsBrakeLesson(motorcycle) && <details className="mt-4 rounded-[14px] bg-input p-4 text-[13px] text-muted-foreground">
+        <summary className="cursor-pointer font-medium text-foreground">Sources and model notes</summary>
+        <div className="mt-3 space-y-3">
+          <p>Factory specifications: manual pages 1-5 to 1-12. Maintenance schedule: 3-4; cold valve checks: 3-11; chain measurement and adjustment: 3-21. Whole-bike dry weight is not stated; the weights shown are curb weights.</p>
+          <p>The power and torque figures describe the unrestricted 2008–2017 SC60. Market-restricted motorcycles can differ. Check your motorcycle’s certificate and fitted equipment. CB1000RA has Combined Anti-lock Braking System (ABS); variant-specific quantities and diagrams are labelled.</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-3">
+            <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf" target="_blank" rel="noreferrer">Factory service manual</a>
+            <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf#page=80" target="_blank" rel="noreferrer">Original maintenance schedule</a>
+            <a className="text-link hover:underline" href="https://commons.wikimedia.org/wiki/File:Honda_CB_1000R_P7040106_01.JPG" target="_blank" rel="noreferrer">Photo: Addvisor / Wikimedia Commons</a>
+            <a className="text-link hover:underline" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">Photo licence: CC BY-SA 3.0</a>
+            <a className="text-link hover:underline" href="https://hondanews.eu/gb/en/motorcycles/media/pressreleases/196743/2020-honda-cb1000r-6" target="_blank" rel="noreferrer">Honda’s SC60 power comparison</a>
+          </div>
+        </div>
+      </details>}
 
       {/* Lightbox overlay */}
       {lightboxDoc && (

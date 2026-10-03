@@ -1,5 +1,6 @@
 import React from 'react'
 import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
+import { cb1000rSpecSections, supportsBrakeLesson } from '@/lib/cb1000r'
 import type { Motorcycle } from '@/types/database.types'
 
 interface SpecSheetProps {
@@ -23,6 +24,7 @@ function _formatSpec(value: number | string | null, unit: string): string | null
 }
 
 function buildSections(motorcycle: Motorcycle): SpecSection[] {
+  if (supportsBrakeLesson(motorcycle)) return cb1000rSpecSections
   const sections: SpecSection[] = []
 
   // Engine section

@@ -1,6 +1,6 @@
 # Honda SC60 brake-light source record
 
-Authoritative source: supplied Honda_CB1000R_Service_manual.pdf, April 2008 service manual, Section 22. PDF page 649 is manual 22-3 (CB1000R, non-ABS). PDF page 650 is manual 22-4 (CB1000RA, ABS). Both sheets have been visually checked for this subset. Public reference images retain the entire unmodified scan at 300 dpi (4813 × 3293 rendered pixels). Full manual is not committed.
+Authoritative source: supplied Honda_CB1000R_Service_manual.pdf, April 2008 service manual, Section 22. PDF page 649 is manual 22-3 (CB1000R, non-ABS). PDF page 650 is manual 22-4 (CB1000RA, ABS). Both sheets have been visually checked for this subset. Public reference images retain the entire unmodified scan at 300 dpi (4813 × 3293 rendered pixels). The unchanged full manual is now included at `public/manuals/honda-cb1000r-2008.pdf` for the expanded onboarding reference.
 
 ## Traced connections
 
@@ -29,9 +29,9 @@ The diagram shows no physical terminal numbering or connector orientation. Those
 
 ## Catalogue scope and uncertainty
 
-The checked-in catalogue entry is a 2008 manual reference, not a verified model-year decode of David’s bike. Its certificate was issued in July 2008 and lists SC60, CB1000R, 998 cc and 77 kW. The year segment in its frame number requires further verification; no full frame number, certificate photograph or personal registration data is included in the repository. ABS cannot be confirmed from the supplied photographs. Do not label the actual motorcycle definitively non-ABS or apply unrestricted power figures. Optional unsupported catalogue specs stay empty.
+The checked-in catalogue entry is a 2008 manual reference, not a verified model-year decode of David’s bike. Its certificate was issued in July 2008 and lists SC60, CB1000R, 998 cc and 77 kW. The year segment in its frame number requires further verification; no full frame number, certificate photograph or personal registration data is included in the repository. ABS cannot be confirmed from the supplied photographs. Do not label the actual motorcycle definitively non-ABS or apply unrestricted power figures. The expanded catalogue separates the unrestricted 92 kW / 99 N·m model rating from the owner’s 77 kW certificate. Whole-bike dry weight stays empty because the manual gives curb weight. See the onboarding source record for maintenance and specification provenance.
 
-The local bike page is available without a database import. The focused import script inserts the bike and documents into existing tables, skips existing matching records, and never runs the repository’s destructive reseed. It defaults to preview. Database credentials are absent in this checkout; live import has not been performed.
+The local bike page is available without a database import. The focused import script inserts missing bike, document, image and service rows into existing tables, fills only missing supported specifications on an exact 2008 match, and never runs the repository’s destructive reseed. Populated fields and existing primary photographs are preserved. It defaults to preview. Database credentials are absent in this checkout; live import has not been performed.
 
 ## Checks
 

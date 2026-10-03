@@ -30,7 +30,7 @@ Wire entries carry source colour codes and readable names. Preserve base and str
 
 Before coding the model, trace the complete brake-light subset against manual 22-3, uploaded PDF page 649: ignition supply, relevant main and branch fuses, both brake switches, their connectors, joined brake feed, rear lamp connector and ground return. Record each segment and source locator in a checked-in source note. Any unresolved connection or label blocks that segment from being represented as verified. Do not invent connector pin numbers, physical locations or photographs. A connector drawing’s terminal order is not a proven physical pin orientation.
 
-The factory view includes an unchanged image of page 22-3, with source attribution and a clear note that scan enlargement cannot recover lost detail. It is a visual reference, not a clickable whole-bike circuit. Only the traced subset is interactive. The complete non-ABS sheet is available inside the lesson; both variant sheets are available on the bike page. Keep the full manual out of Git, in line with the repository’s ignored `data/manuals/` convention. Include only the needed reference sheet.
+The factory view includes an unchanged image of page 22-3, with source attribution and a clear note that scan enlargement cannot recover lost detail. It is a visual reference, not a clickable whole-bike circuit. Only the traced subset is interactive. The complete non-ABS sheet is available inside the lesson; both variant sheets are available on the bike page. The initial lesson includes only the needed reference sheets. The subsequent full onboarding request adds the unchanged uploaded manual under `public/manuals/` so source procedures are accessible from the bike reference.
 
 ## Implementation boundaries
 

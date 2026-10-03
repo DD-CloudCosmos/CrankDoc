@@ -124,3 +124,14 @@ describe('SpecSheet', () => {
     expect(screen.getByText('Rear Tire')).toBeInTheDocument()
   })
 })
+
+it('shows the SC60 reference with curb weight and unrestricted power labelled', async () => {
+  const { cb1000r } = await import('@/lib/cb1000r')
+  render(<SpecSheet motorcycle={cb1000r} />)
+  expect(screen.getByText('Curb weight')).toBeInTheDocument()
+  expect(screen.getByText(/CB1000R: 217 kg; CB1000RA/)).toBeInTheDocument()
+  expect(screen.queryByText('Dry Weight')).not.toBeInTheDocument()
+  expect(screen.getByText(/92 kW.*123.4/)).toBeInTheDocument()
+  expect(screen.getByText(/250 kPa/)).toBeInTheDocument()
+  expect(screen.queryByText(/511/)).not.toBeInTheDocument()
+})
