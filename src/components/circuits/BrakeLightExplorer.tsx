@@ -42,7 +42,7 @@ export function BrakeLightExplorer({ initialMode = 'learn' }: BrakeLightExplorer
     <section className="space-y-5" aria-label="Brake-light circuit explorer">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div><p className="text-[13px] text-muted-foreground">CIRCUIT EXPLORER</p><h2 className="text-[24px] font-semibold tracking-tight">Why does the brake light turn on?</h2></div>
-        <SegmentedControl options={[{ value: 'learn', label: 'Teach me' }, { value: 'explore', label: 'Explore' }]} value={mode} onChange={setMode} aria-label="Learning mode" />
+        <SegmentedControl options={[{ value: 'learn', label: 'Teach me' }, { value: 'explore', label: 'Explore' }]} value={mode} onChange={setMode} className="shrink-0 whitespace-nowrap" aria-label="Learning mode" />
       </div>
       {mode === 'learn' && (
         <div className="rounded-[14px] bg-input p-4 space-y-3">
