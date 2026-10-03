@@ -19,11 +19,16 @@ interface DtcApiResponse {
 
 import { SEVERITY_STYLES } from '@/lib/badgeStyles'
 
-export function DtcCodeList() {
+interface DtcCodeListProps {
+  /** Pre-fill the search, e.g. from /dtc?q=P0107 */
+  initialQuery?: string
+}
+
+export function DtcCodeList({ initialQuery = '' }: DtcCodeListProps) {
   const [codes, setCodes] = useState<DtcCode[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(initialQuery)
   const [category, setCategory] = useState('')
   const [manufacturer, setManufacturer] = useState('')
   const [page, setPage] = useState(1)
@@ -99,7 +104,7 @@ export function DtcCodeList() {
 
   return (
     <div className="space-y-4">
-      <DtcSearch onSearch={handleSearch} />
+      <DtcSearch onSearch={handleSearch} defaultValue={initialQuery} />
       <DtcCategoryFilter activeCategory={category} onChange={handleCategoryChange} />
       <DtcManufacturerFilter activeManufacturer={manufacturer} onChange={handleManufacturerChange} />
 
@@ -111,14 +116,14 @@ export function DtcCodeList() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-8 text-center" aria-live="polite">
-          <p className="text-destructive">{error}</p>
+        <div role="alert" className="rounded-[14px] bg-danger-background p-8 text-center">
+          <p className="text-danger-foreground">{error}</p>
         </div>
       )}
 
       {!loading && !error && codes.length === 0 && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
-          <p className="text-foreground">
+        <div className="rounded-[20px] bg-card p-10 text-center shadow-card">
+          <p className="text-muted-foreground">
             {searchQuery || category || manufacturer ? 'No DTC codes match your search' : 'No DTC codes available'}
           </p>
         </div>
@@ -126,9 +131,10 @@ export function DtcCodeList() {
 
       {!loading && !error && codes.length > 0 && (
         <>
-          <p className="text-sm text-foreground">
+          <p className="text-[15px] text-muted-foreground" aria-live="polite">
             Showing {codes.length} of {total} codes
           </p>
+          <div className="overflow-hidden rounded-[20px] bg-card shadow-card">
           <Table>
             <TableHeader>
               <TableRow>
@@ -194,7 +200,7 @@ export function DtcCodeList() {
                     {isExpanded && (
                       <TableRow key={`${code.id}-detail`} data-testid="dtc-detail">
                         <TableCell />
-                        <TableCell colSpan={5} className="bg-muted/30">
+                        <TableCell colSpan={5} className="bg-background/60">
                           <div className="space-y-3 py-2">
                             <p className="text-sm text-foreground">{code.description}</p>
 
@@ -246,7 +252,7 @@ export function DtcCodeList() {
                             )}
 
                             {code.fix_reference && (
-                              <div className="border-t border-border pt-3">
+                              <div className="border-t border-separator pt-3">
                                 <p className="mb-1 text-xs font-medium uppercase text-muted-foreground">
                                   Fix Reference
                                 </p>
@@ -262,6 +268,7 @@ export function DtcCodeList() {
               })}
             </TableBody>
           </Table>
+          </div>
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-4 pt-4">

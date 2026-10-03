@@ -99,7 +99,7 @@ export function HomeHighlights() {
               From {SITE_STATS.dtcManufacturerCount} manufacturers, with what usually causes them.
             </p>
             <Link
-              href="/dtc"
+              href={`/dtc?q=${featuredCode.code}`}
               className="mt-auto block rounded-[16px] bg-[#2C2C2E] p-4 transition-colors hover:bg-[#3A3A3C]"
             >
               <div className="flex items-center justify-between">

@@ -137,30 +137,20 @@ export function RecallList() {
   return (
     <div className="space-y-4">
       {/* Pill filters */}
-      <div className="rounded-[20px] bg-card p-4 shadow-card space-y-4" data-testid="recall-filters">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Filters</h2>
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearFilters}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Clear all
-            </Button>
-          )}
-        </div>
+      <div className="space-y-4" data-testid="recall-filters">
 
         {/* Make filter */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-foreground">Make</label>
-          <div className="flex flex-wrap gap-2">
+        {filterMakes.length > 0 && (
+        <div role="group" aria-label="Make">
+          <p className="mb-1.5 text-[13px] uppercase text-muted-foreground">Make</p>
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
             {filterMakes.map((m) => (
               <Button
                 key={m}
                 variant={make === m ? 'pill-active' : 'pill'}
                 size="sm"
+                className="shrink-0"
+                aria-pressed={make === m}
                 onClick={() => { setMake(make === m ? '' : m); setModel(''); setPage(1) }}
               >
                 {m}
@@ -169,16 +159,20 @@ export function RecallList() {
           </div>
         </div>
 
+        )}
+
         {/* Model filter — only shown when a make is selected */}
         {make && filteredModels.length > 0 && (
-          <div>
-            <label className="mb-2 block text-sm font-medium text-foreground">Model</label>
-            <div className="flex flex-wrap gap-2">
+          <div role="group" aria-label="Model">
+            <p className="mb-1.5 text-[13px] uppercase text-muted-foreground">Model</p>
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
               {filteredModels.map((m) => (
                 <Button
                   key={m}
                   variant={model === m ? 'pill-active' : 'pill'}
                   size="sm"
+                  className="shrink-0"
+                  aria-pressed={model === m}
                   onClick={() => { setModel(model === m ? '' : m); setPage(1) }}
                 >
                   {m}
@@ -189,14 +183,17 @@ export function RecallList() {
         )}
 
         {/* Year filter */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-foreground">Year</label>
-          <div className="flex flex-wrap gap-2">
+        {filterYears.length > 0 && (
+        <div role="group" aria-label="Year">
+          <p className="mb-1.5 text-[13px] uppercase text-muted-foreground">Year</p>
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
             {filterYears.map((y) => (
               <Button
                 key={y}
                 variant={year === String(y) ? 'pill-active' : 'pill'}
                 size="sm"
+                className="shrink-0"
+                aria-pressed={year === String(y)}
                 onClick={() => { setYear(year === String(y) ? '' : String(y)); setPage(1) }}
               >
                 {y}
@@ -205,11 +202,24 @@ export function RecallList() {
           </div>
         </div>
 
-        {/* Result count */}
-        {!loading && !error && total > 0 && (
-          <p className="text-sm text-muted-foreground">
-            Showing {recalls.length} of {total} {total === 1 ? 'recall' : 'recalls'}
-          </p>
+        )}
+
+        {/* Result count + clear */}
+        {((!loading && !error && total > 0) || hasActiveFilters) && (
+          <div className="flex min-h-[44px] items-center justify-between gap-4">
+            {!loading && !error && total > 0 ? (
+              <p className="text-[15px] text-muted-foreground" aria-live="polite">
+                Showing {recalls.length} of {total} {total === 1 ? 'recall' : 'recalls'}
+              </p>
+            ) : (
+              <span />
+            )}
+            {hasActiveFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
+                Clear all
+              </Button>
+            )}
+          </div>
         )}
       </div>
 
@@ -221,14 +231,14 @@ export function RecallList() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-8 text-center" aria-live="polite">
-          <p className="text-destructive">{error}</p>
+        <div role="alert" className="rounded-[14px] bg-danger-background p-8 text-center">
+          <p className="text-danger-foreground">{error}</p>
         </div>
       )}
 
       {!loading && !error && recalls.length === 0 && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
-          <p className="text-foreground">
+        <div className="rounded-[20px] bg-card p-10 text-center shadow-card">
+          <p className="text-muted-foreground">
             {make || model || year ? 'No recalls match your search' : 'No recalls available'}
           </p>
         </div>
@@ -236,6 +246,7 @@ export function RecallList() {
 
       {!loading && !error && recalls.length > 0 && (
         <>
+          <div className="overflow-hidden rounded-[20px] bg-card shadow-card">
           <Table>
             <TableHeader>
               <TableRow>
@@ -306,7 +317,7 @@ export function RecallList() {
                     {isExpanded && (
                       <TableRow data-testid="recall-detail">
                         <TableCell />
-                        <TableCell colSpan={6} className="bg-muted/30">
+                        <TableCell colSpan={6} className="bg-background/60">
                           <div className="space-y-3 py-2">
                             {/* Mobile-only: date and vehicle */}
                             <div className="flex flex-wrap gap-2 sm:hidden text-sm">
@@ -349,6 +360,7 @@ export function RecallList() {
               })}
             </TableBody>
           </Table>
+          </div>
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-4 pt-4">

@@ -2,6 +2,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { DiagnoseStepIndicator } from '@/components/DiagnoseStepIndicator'
 import { DiagnoseBikeSelector } from '@/components/DiagnoseBikeSelector'
 import { DiagnoseSymptomList } from '@/components/DiagnoseSymptomList'
+import { PageContainer, PageHeader } from '@/components/PageHeader'
 import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 
 interface PageProps {
@@ -105,10 +106,11 @@ export default async function DiagnosePage({ searchParams }: PageProps) {
     ])
 
     return (
-      <div className="container mx-auto px-4 py-8">
+      <PageContainer narrow>
         <DiagnoseStepIndicator currentStep={2} bikeId={bikeId} />
+        <PageHeader title="Diagnose" className="mb-5" />
         <DiagnoseSymptomList motorcycle={motorcycle} trees={trees} bikeId={bikeId} />
-      </div>
+      </PageContainer>
     )
   }
 
@@ -119,9 +121,10 @@ export default async function DiagnosePage({ searchParams }: PageProps) {
   ])
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <PageContainer narrow>
       <DiagnoseStepIndicator currentStep={1} />
+      <PageHeader title="Diagnose" subtitle="Pick a bike, choose the symptom, and follow the steps." className="mb-5" />
       <DiagnoseBikeSelector motorcycles={motorcycles} treeCounts={treeCounts} />
-    </div>
+    </PageContainer>
   )
 }

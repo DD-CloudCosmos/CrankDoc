@@ -3,7 +3,8 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { List, LayoutGrid } from 'lucide-react'
+import { SegmentedControl } from '@/components/ui/segmented-control'
+import { List, LayoutGrid, Search } from 'lucide-react'
 
 const CATEGORIES = ['sport', 'naked', 'cruiser', 'adventure', 'scooter'] as const
 
@@ -46,102 +47,87 @@ export function BikeFilters({ availableMakes, totalCount }: BikeFiltersProps) {
   const hasActiveFilters = currentCategory || currentMake || currentSearch
 
   return (
-    <div className="mb-6 space-y-4 rounded-[20px] bg-card p-4 shadow-card">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Filters</h2>
-        <div className="flex items-center gap-2">
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearFilters}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Clear all
-            </Button>
-          )}
-          {/* View toggle */}
-          <div className="flex rounded-[12px] border border-border bg-background p-0.5" role="group" aria-label="View toggle">
-            <Button
-              variant="ghost"
-              size="sm"
-              className={currentView === 'table'
-                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-inverse p-0 text-inverse-foreground hover:bg-inverse hover:text-inverse-foreground'
-                : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
-              onClick={() => updateFilter('view', 'table')}
-              aria-label="Table view"
-              aria-pressed={currentView === 'table'}
-            >
-              <List className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className={currentView === 'grid'
-                ? 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] bg-inverse p-0 text-inverse-foreground hover:bg-inverse hover:text-inverse-foreground'
-                : 'h-11 w-11 min-h-[44px] min-w-[44px] rounded-[8px] p-0 text-muted-foreground hover:text-foreground'}
-              onClick={() => updateFilter('view', 'grid')}
-              aria-label="Grid view"
-              aria-pressed={currentView === 'grid'}
-            >
-              <LayoutGrid className="h-4 w-4" />
-            </Button>
-          </div>
+    <div className="mb-6 space-y-4">
+      {/* Search + view switch */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1">
+          <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search by make or model..."
+            value={currentSearch}
+            onChange={(e) => updateFilter('search', e.target.value || null)}
+            className="rounded-[10px] pl-9"
+            aria-label="Search motorcycles"
+          />
         </div>
-      </div>
-
-      {/* Search input */}
-      <div>
-        <Input
-          type="search"
-          placeholder="Search by make or model..."
-          value={currentSearch}
-          onChange={(e) => updateFilter('search', e.target.value || null)}
-          className="rounded-[999px] border-border bg-background"
-          aria-label="Search motorcycles"
+        <SegmentedControl
+          aria-label="View"
+          value={currentView === 'grid' ? 'grid' : 'table'}
+          onChange={(value) => updateFilter('view', value)}
+          options={[
+            { value: 'table', label: <><List aria-hidden="true" /><span>Table</span></> },
+            { value: 'grid', label: <><LayoutGrid aria-hidden="true" /><span>Grid</span></> },
+          ]}
         />
       </div>
 
-      {/* Category filter */}
-      <div>
-        <label className="mb-2 block text-sm font-medium text-foreground">Category</label>
-        <div className="flex flex-wrap gap-2">
-          {CATEGORIES.map((category) => (
-            <Button
-              key={category}
-              variant={currentCategory === category ? 'pill-active' : 'pill'}
-              size="sm"
-              onClick={() => updateFilter('category', currentCategory === category ? null : category)}
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <FilterRow label="Category">
+        {CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            variant={currentCategory === category ? 'pill-active' : 'pill'}
+            size="sm"
+            className="shrink-0"
+            aria-pressed={currentCategory === category}
+            onClick={() => updateFilter('category', currentCategory === category ? null : category)}
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </Button>
+        ))}
+      </FilterRow>
 
-      {/* Make filter */}
-      <div>
-        <label className="mb-2 block text-sm font-medium text-foreground">Make</label>
-        <div className="flex flex-wrap gap-2">
-          {availableMakes.map((make) => (
-            <Button
-              key={make}
-              variant={currentMake === make ? 'pill-active' : 'pill'}
-              size="sm"
-              onClick={() => updateFilter('make', currentMake === make ? null : make)}
-            >
-              {make}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <FilterRow label="Make">
+        {availableMakes.map((make) => (
+          <Button
+            key={make}
+            variant={currentMake === make ? 'pill-active' : 'pill'}
+            size="sm"
+            className="shrink-0"
+            aria-pressed={currentMake === make}
+            onClick={() => updateFilter('make', currentMake === make ? null : make)}
+          >
+            {make}
+          </Button>
+        ))}
+      </FilterRow>
 
-      {/* Result count */}
-      {totalCount !== undefined && (
-        <p className="text-sm text-muted-foreground" data-testid="result-count">
-          Showing {totalCount} {totalCount === 1 ? 'motorcycle' : 'motorcycles'}
-        </p>
+      {(totalCount !== undefined || hasActiveFilters) && (
+        <div className="flex min-h-[44px] items-center justify-between gap-4">
+          {totalCount !== undefined ? (
+            <p className="text-[15px] text-muted-foreground" data-testid="result-count" aria-live="polite">
+              Showing {totalCount} {totalCount === 1 ? 'motorcycle' : 'motorcycles'}
+            </p>
+          ) : (
+            <span />
+          )}
+          {hasActiveFilters && (
+            <Button variant="ghost" size="sm" onClick={clearFilters}>
+              Clear all
+            </Button>
+          )}
+        </div>
       )}
+    </div>
+  )
+}
+
+/** A labelled, horizontally scrolling row of filter pills. */
+function FilterRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div role="group" aria-label={label}>
+      <div className="mb-1.5 text-[13px] uppercase text-muted-foreground">{label}</div>
+      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">{children}</div>
     </div>
   )
 }

@@ -25,7 +25,7 @@ describe('HomeHighlights', () => {
   it('features a real fault code linking to the code lookup', () => {
     render(<HomeHighlights />)
     const link = screen.getByRole('link', { name: /p0107/i })
-    expect(link).toHaveAttribute('href', '/dtc')
+    expect(link).toHaveAttribute('href', '/dtc?q=P0107')
     expect(link).toHaveTextContent('MAP Sensor Circuit Low Voltage')
   })
 

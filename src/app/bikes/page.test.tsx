@@ -129,8 +129,8 @@ describe('BikesPage', () => {
 
     render(await BikesPage({ searchParams: Promise.resolve({}) }))
 
-    expect(screen.getByRole('heading', { name: /motorcycle database/i, level: 1 })).toBeInTheDocument()
-    expect(screen.getByText(/browse specifications and technical data/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Bikes', level: 1 })).toBeInTheDocument()
+    expect(screen.getByText(/specs, service intervals and guides/i)).toBeInTheDocument()
   })
 
   it('displays motorcycles when data is loaded', async () => {
@@ -212,7 +212,8 @@ describe('BikesPage', () => {
 
     render(await BikesPage({ searchParams: Promise.resolve({}) }))
 
-    expect(screen.getByText(/filters/i)).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Make' })).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Category' })).toBeInTheDocument()
   })
 
   it('shows result count in filters', async () => {

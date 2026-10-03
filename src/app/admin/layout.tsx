@@ -15,7 +15,7 @@ export default function AdminLayout({
     <div>
       {/* Admin banner */}
       <div className="border-b border-separator bg-caution-background">
-        <div className="container mx-auto flex items-center justify-between px-4 py-2">
+        <div className="mx-auto flex max-w-[1024px] items-center justify-between px-4 py-2 md:px-[22px]">
           <p className="text-sm font-medium text-caution-foreground">
             Admin Dashboard
           </p>

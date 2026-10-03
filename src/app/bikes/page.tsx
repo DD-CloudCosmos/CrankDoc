@@ -3,6 +3,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { BikeFilters } from '@/components/BikeFilters'
 import { BikeTableView } from '@/components/BikeTableView'
 import { BikeGridView } from '@/components/BikeGridView'
+import { PageContainer, PageHeader } from '@/components/PageHeader'
 import type { Motorcycle, MotorcycleImage } from '@/types/database.types'
 
 export type MotorcycleWithImage = Motorcycle & {
@@ -139,22 +140,20 @@ export default async function BikesPage({ searchParams }: PageProps) {
   const availableMakes = await getAvailableMakes()
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">Motorcycle Database</h1>
-        <p className="text-muted-foreground">
-          Browse specifications and technical data for various motorcycle models
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title="Bikes"
+        subtitle="Specs, service intervals and guides for every model in CrankDoc."
+      />
 
-      <Suspense fallback={<div>Loading filters...</div>}>
+      <Suspense fallback={<div className="mb-6 h-11 animate-pulse rounded-[10px] bg-muted" />}>
         <BikeFilters availableMakes={availableMakes} totalCount={error ? undefined : motorcycles.length} />
       </Suspense>
 
       {error && (
-        <div className="mb-6 rounded-lg border border-destructive/20 bg-destructive/10 p-4 text-destructive">
+        <div role="alert" className="mb-6 rounded-[14px] bg-danger-background p-4 text-danger-foreground">
           <p className="font-semibold">Error loading motorcycles</p>
-          <p className="text-sm text-destructive">{error}</p>
+          <p className="text-[15px]">{error}</p>
         </div>
       )}
 
@@ -163,6 +162,6 @@ export default async function BikesPage({ searchParams }: PageProps) {
       ) : !error ? (
         <BikeTableView motorcycles={motorcycles} sort={sort} sortDir={sortDir} />
       ) : null}
-    </div>
+    </PageContainer>
   )
 }

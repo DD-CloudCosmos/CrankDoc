@@ -1,4 +1,5 @@
-const CACHE_NAME = 'crankdoc-v2'
+// Bump on every visual redesign so installed apps drop stale pages
+const CACHE_NAME = 'crankdoc-v3'
 const STATIC_ASSETS = [
   '/',
   '/diagnose',
@@ -65,6 +66,25 @@ self.addEventListener('fetch', (event) => {
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(
       fetch(event.request).catch(() => caches.match(event.request))
+    )
+    return
+  }
+
+  // Network-first for page navigations, so a deploy is visible immediately;
+  // the cached copy is only used when offline
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            const cloned = response.clone()
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, cloned)
+            })
+          }
+          return response
+        })
+        .catch(() => caches.match(event.request))
     )
     return
   }

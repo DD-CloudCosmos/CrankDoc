@@ -19,18 +19,21 @@ const MANUFACTURERS = [
   { label: 'KTM', value: 'KTM' },
   { label: 'Triumph', value: 'Triumph' },
   { label: 'Indian/Polaris', value: 'Indian/Polaris' },
+  { label: 'KYMCO', value: 'Kymco' },
 ]
 
 export function DtcManufacturerFilter({ activeManufacturer, onChange }: DtcManufacturerFilterProps) {
   return (
-    <div className="space-y-1">
-      <p className="text-xs font-medium uppercase text-muted-foreground">Manufacturer</p>
-      <div className="flex flex-wrap gap-2">
+    <div role="group" aria-label="Manufacturer">
+      <p className="mb-1.5 text-[13px] uppercase text-muted-foreground">Manufacturer</p>
+      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
         {MANUFACTURERS.map((mfr) => (
           <Button
             key={mfr.value}
             variant={activeManufacturer === mfr.value ? 'pill-active' : 'pill'}
             size="sm"
+            className="shrink-0"
+            aria-pressed={activeManufacturer === mfr.value}
             onClick={() => onChange(mfr.value)}
           >
             {mfr.label}

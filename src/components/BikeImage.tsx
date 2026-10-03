@@ -21,7 +21,7 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
     return (
       <div className={cn(
         'overflow-hidden',
-        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[24px]',
+        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[20px]',
         className
       )}>
         <div className={cn(
@@ -33,7 +33,6 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
             src={image.image_url}
             alt={image.alt_text}
             className="h-full w-full object-cover"
-            style={{ filter: 'sepia(15%) saturate(85%) brightness(102%)' }}
           />
         </div>
         {!isThumbnail && image.source_attribution && (
@@ -49,7 +48,7 @@ export function BikeImage({ image, make, model, size = 'full', className }: Bike
     <div
       className={cn(
         'overflow-hidden bg-gradient-to-b from-secondary to-muted',
-        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[24px]',
+        isThumbnail ? 'w-10 h-7 rounded-[6px]' : 'rounded-[20px]',
         className
       )}
     >

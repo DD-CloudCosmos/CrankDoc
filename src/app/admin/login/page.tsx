@@ -41,9 +41,9 @@ function AdminLoginForm() {
   }
 
   return (
-    <div className="w-full max-w-sm rounded-[24px] border border-border bg-card p-8 shadow-sm">
+    <div className="w-full max-w-sm rounded-[20px] bg-card p-8 shadow-float">
       <div className="mb-6 text-center">
-        <h1 className="text-2xl font-bold text-foreground">Admin Access</h1>
+        <h1 className="text-[28px] font-bold tracking-[-0.02em] text-foreground">Admin Access</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Enter the admin password to continue
         </p>
@@ -69,7 +69,7 @@ function AdminLoginForm() {
         </div>
 
         {error && (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-danger-foreground" role="alert">
             {error}
           </p>
         )}
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
       <Suspense fallback={
-        <div className="w-full max-w-sm rounded-[24px] border border-border bg-card p-8 shadow-sm">
+        <div className="w-full max-w-sm rounded-[20px] bg-card p-8 shadow-float">
           <div className="text-center text-muted-foreground">Loading...</div>
         </div>
       }>

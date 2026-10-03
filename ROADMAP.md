@@ -38,7 +38,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 - [ ] Mechanic tester recruitment and feedback loop
 
 ### Medium Priority
-- [ ] Landing page / onboarding flow improvements
+- [x] Landing page / onboarding flow improvements — Apple-style makeover, My Garage onboarding (✅ 2026-10-03)
 - [ ] Performance optimization (lazy loading, image optimization)
 - [ ] SEO audit (meta tags, structured data for Google)
 - [ ] Responsive design audit — test on various phone sizes

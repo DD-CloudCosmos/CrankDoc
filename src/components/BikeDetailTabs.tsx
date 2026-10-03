@@ -139,30 +139,31 @@ export function BikeDetailTabs({
 
   return (
     <>
-      <div className="overflow-hidden rounded-[24px] border border-border bg-card">
-      {/* Tab bar */}
+      {/* Tab bar: segmented-control look, real tab semantics */}
       {showTabBar && (
-        <div className="flex gap-2 border-b border-border px-2 pt-2" role="tablist">
+        <div className="-mx-4 mb-4 overflow-x-auto px-4 md:mx-0 md:px-0">
+        <div className="inline-flex rounded-[10px] bg-input p-0.5" role="tablist" aria-label="Bike reference">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               role="tab"
               aria-selected={displayTab === tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`min-h-[40px] whitespace-nowrap rounded-[8px] px-4 text-[13px] font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 displayTab === tab.id
-                  ? 'border-b-2 border-primary text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
+                  ? 'bg-card text-foreground shadow-[0_3px_8px_rgba(0,0,0,0.12),0_3px_1px_rgba(0,0,0,0.04)]'
+                  : 'text-foreground/80 hover:text-foreground'
               }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
+        </div>
       )}
 
       {/* Tab content */}
-      <div className="p-4">
+      <div className="overflow-hidden rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
       {displayTab === 'service' && <ServiceIntervalTable intervals={serviceIntervals} />}
       {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
@@ -175,7 +176,6 @@ export function BikeDetailTabs({
       {displayTab === 'recalls' && (
         <RecallsContent recalls={deduplicatedRecalls} />
       )}
-      </div>
       </div>
 
       {/* Lightbox overlay */}
@@ -229,7 +229,7 @@ function WiringContent({
       {docs.map((doc) => (
         <div key={doc.id}>
           <button
-            className="w-full cursor-pointer overflow-hidden rounded-lg border border-border transition-opacity hover:opacity-90"
+            className="w-full cursor-pointer overflow-hidden rounded-[14px] border border-separator transition-opacity hover:opacity-90"
             onClick={() => onOpenLightbox(doc)}
             aria-label={`View ${doc.title} full size`}
           >

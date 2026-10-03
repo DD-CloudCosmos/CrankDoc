@@ -216,18 +216,11 @@ export default async function BikeDetailPage({ params }: PageProps) {
   // Category color mapping
   const categoryVariant = (cat: string | null) => {
     switch (cat) {
-      case 'sport':
-        return 'default'
-      case 'naked':
-        return 'secondary'
       case 'cruiser':
-        return 'outline'
-      case 'adventure':
-        return 'secondary'
       case 'scooter':
         return 'outline'
       default:
-        return 'default'
+        return 'secondary'
     }
   }
 
@@ -241,57 +234,41 @@ export default async function BikeDetailPage({ params }: PageProps) {
 
   const hasMultipleGenerations = generations.length > 1
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Back button */}
-      <div className="mb-6">
-        <BackButton href="/bikes" label="Back to all bikes" />
-      </div>
+  // Deduplicate recalls by campaign number for the count
+  const recallCount = new Set(recalls.map((r) => r.nhtsa_campaign_number)).size
 
-      {/* Hero section */}
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <BikeImage
-          image={primaryImage}
-          make={make}
-          model={model}
-          className="w-full"
-        />
-        <div className="flex flex-col justify-center">
-          <h1 className="mb-2 text-3xl font-bold tracking-tight">
-            {make} {model}
-          </h1>
-          <p className="text-xl text-muted-foreground">{yearRange}</p>
-          {generation && (
-            <p className="mt-1 text-base text-muted-foreground">{generation}</p>
-          )}
-          <div className="mt-3">
-            <Badge variant={categoryVariant(category)} className="text-base">
+  return (
+    <div className="mx-auto w-full max-w-[1024px] px-4 py-6 md:px-[22px] md:py-10">
+      <BackButton href="/bikes" label="Bikes" ariaLabel="Back to all bikes" />
+
+      {/* Hero */}
+      <div className="mb-8 mt-2 grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-10">
+        <BikeImage image={primaryImage} make={make} model={model} className="w-full" />
+        <div>
+          <p className="text-[17px] text-muted-foreground">{make}</p>
+          <h1 className="text-[40px] font-bold leading-tight tracking-[-0.03em] md:text-[48px]">{model}</h1>
+          <p className="mt-1 text-[17px] text-muted-foreground">
+            {yearRange}
+            {generation && ` · ${generation}`}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <Badge variant={categoryVariant(category)} className="text-[13px]">
               {categoryDisplay}
             </Badge>
-          </div>
-          {/* Recall badge */}
-          {(() => {
-            // Deduplicate recalls by campaign number for count
-            const uniqueCampaigns = new Set(recalls.map((r) => r.nhtsa_campaign_number))
-            const recallCount = uniqueCampaigns.size
-            if (recallCount === 0) return null
-            return (
-              <div className="mt-3">
-                <Link href={`/recalls?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}`}>
-                  <Badge variant="destructive" className="cursor-pointer text-sm">
-                    <AlertTriangle className="mr-1.5 h-4 w-4" />
-                    {recallCount} {recallCount === 1 ? 'Recall' : 'Recalls'}
-                  </Badge>
-                </Link>
-              </div>
-            )
-          })()}
-          {trees.length > 0 && (
-            <div className="mt-5">
-              <Link href={`/diagnose?bike=${motorcycle.id}`}>
-                <Button size="lg" className="w-full md:w-auto">Start Diagnosing</Button>
+            {recallCount > 0 && (
+              <Link
+                href={`/recalls?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}`}
+                className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full bg-danger-background px-3 text-[13px] font-semibold text-danger-foreground hover:opacity-90"
+              >
+                <AlertTriangle aria-hidden="true" className="h-4 w-4" />
+                {recallCount} {recallCount === 1 ? 'Recall' : 'Recalls'}
               </Link>
-            </div>
+            )}
+          </div>
+          {trees.length > 0 && (
+            <Button asChild className="mt-6 w-full md:w-auto">
+              <Link href={`/diagnose?bike=${motorcycle.id}`}>Start Diagnosing</Link>
+            </Button>
           )}
         </div>
       </div>
@@ -299,7 +276,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
       {/* Generation selector */}
       {hasMultipleGenerations && (
         <div className="mb-8">
-          <h2 className="mb-3 text-lg font-semibold">Generations</h2>
+          <h2 className="mb-3 text-[22px] font-semibold tracking-[-0.02em]">Generations</h2>
           <GenerationNavSelector
             generations={generationItems}
             activeGenerationId={motorcycle.id}
@@ -308,7 +285,7 @@ export default async function BikeDetailPage({ params }: PageProps) {
       )}
 
       {/* Quick Specs */}
-      <div className="mb-6">
+      <div className="mb-8">
         <QuickSpecs motorcycle={motorcycle} />
       </div>
 

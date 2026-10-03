@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { GroupedList, ListRow } from '@/components/ui/grouped-list'
 import type { VinDecodedResult } from '@/types/database.types'
 import { Scan, Loader2 } from 'lucide-react'
 
@@ -52,47 +52,49 @@ export function VinDecoder() {
     : []
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-2 sm:flex-row">
+    <div className="max-w-[640px] space-y-6">
+      <form
+        className="flex flex-col gap-3 sm:flex-row"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleDecode()
+        }}
+      >
         <div className="relative flex-1">
-          <Scan className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Scan aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="text"
+            aria-label="Vehicle Identification Number"
+            autoComplete="off"
+            spellCheck={false}
             placeholder="Enter 17-character VIN"
             value={vin}
             onChange={(e) => setVin(e.target.value.toUpperCase())}
             maxLength={17}
-            className="pl-10 font-mono uppercase"
+            className="h-12 rounded-[12px] pl-9 font-mono uppercase tracking-wider placeholder:font-sans placeholder:normal-case placeholder:tracking-normal"
           />
         </div>
-        <Button onClick={handleDecode} disabled={loading}>
-          {loading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : null}
+        <Button type="submit" disabled={loading}>
+          {loading ? <Loader2 className="animate-spin" aria-hidden="true" /> : null}
           Decode
         </Button>
-      </div>
+      </form>
+      <p className="text-[13px] text-muted-foreground">
+        {vin.length}/17 characters · Usually stamped on the steering head and printed on the frame label.
+      </p>
 
       {error && (
-        <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-4 text-center">
-          <p className="text-sm text-destructive">{error}</p>
+        <div role="alert" className="rounded-[14px] bg-danger-background p-4">
+          <p className="text-[15px] text-danger-foreground">{error}</p>
         </div>
       )}
 
       {result && displayFields.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Decoded VIN Results</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {displayFields.map(({ label, value }) => (
-              <div key={label} className="flex justify-between border-b border-border pb-2">
-                <span className="text-muted-foreground">{label}</span>
-                <span className="font-medium">{value}</span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+        <GroupedList header="Decoded VIN Results">
+          {displayFields.map(({ label, value }) => (
+            <ListRow key={label} label={label} detail={<span className="text-foreground">{value}</span>} />
+          ))}
+        </GroupedList>
       )}
     </div>
   )

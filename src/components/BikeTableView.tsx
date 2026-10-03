@@ -79,7 +79,7 @@ function categoryVariant(cat: string | null) {
 export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps) {
   if (motorcycles.length === 0) {
     return (
-      <div className="rounded-[24px] border border-border bg-card p-8 text-center">
+      <div className="rounded-[20px] bg-card p-10 text-center shadow-card">
         <p className="text-lg text-muted-foreground">
           No motorcycles found matching your filters.
         </p>
@@ -93,10 +93,10 @@ export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps
   return (
     <>
       {/* Desktop table */}
-      <div className="hidden overflow-hidden rounded-[24px] border border-border bg-card sm:block">
+      <div className="hidden overflow-hidden rounded-[20px] bg-card shadow-card sm:block">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-border bg-muted/30 hover:bg-muted/30">
+            <TableRow className="border-b border-separator hover:bg-transparent">
               <SortHeader label="Motorcycle" field="make" currentSort={sort} currentDir={sortDir} />
               <SortHeader label="Years" field="year_start" currentSort={sort} currentDir={sortDir} />
               <TableHead className="w-[120px] text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -165,7 +165,7 @@ export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps
       </div>
 
       {/* Mobile compact list */}
-      <div className="space-y-1 sm:hidden">
+      <div className="overflow-hidden rounded-[12px] bg-card shadow-card sm:hidden">
         {motorcycles.map((moto) => {
           const displacement = moto.displacement_cc ? `${moto.displacement_cc}cc` : null
           const hp = moto.horsepower ? `${moto.horsepower} hp` : null
@@ -175,7 +175,7 @@ export function BikeTableView({ motorcycles, sort, sortDir }: BikeTableViewProps
             <Link
               key={moto.id}
               href={`/bikes/${moto.id}`}
-              className="flex items-center gap-3 rounded-[12px] px-3 py-2.5 transition-colors hover:bg-accent/40"
+              className="flex min-h-[60px] items-center gap-3 border-b border-separator px-4 py-2.5 transition-colors last:border-b-0 hover:bg-accent/40"
             >
               <BikeImage
                 image={moto.primaryImage ?? null}

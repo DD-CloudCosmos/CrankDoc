@@ -15,7 +15,7 @@ export function SafeDisclaimer({ variant = 'compact' }: SafeDisclaimerProps) {
   }
 
   return (
-    <section className="rounded-lg border border-border p-4 sm:p-6">
+    <section className="rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       <div className="flex items-start gap-3">
         <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-caution-foreground" />
         <div>

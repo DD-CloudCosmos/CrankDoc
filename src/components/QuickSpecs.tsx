@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge'
 import type { Motorcycle } from '@/types/database.types'
 
 interface QuickSpecsProps {
@@ -37,12 +36,13 @@ export function QuickSpecs({ motorcycle }: QuickSpecsProps) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2" data-testid="quick-specs">
+    <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4" data-testid="quick-specs">
       {badges.map((badge) => (
-        <Badge key={badge.label} variant="outline" className="text-sm">
-          {badge.value}
-        </Badge>
+        <div key={badge.label} className="flex flex-col-reverse rounded-[16px] bg-card p-4 shadow-card">
+          <dt className="mt-0.5 text-[13px] text-muted-foreground">{badge.label}</dt>
+          <dd className="text-[24px] font-semibold tracking-[-0.02em]">{badge.value}</dd>
+        </div>
       ))}
-    </div>
+    </dl>
   )
 }

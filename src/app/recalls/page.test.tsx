@@ -10,7 +10,7 @@ vi.mock('@/components/RecallList', () => ({
 describe('RecallsPage', () => {
   it('renders the page title', () => {
     render(<RecallsPage />)
-    expect(screen.getByRole('heading', { name: /recall lookup/i, level: 1 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Recalls', level: 1 })).toBeInTheDocument()
   })
 
   it('renders the page description', () => {
