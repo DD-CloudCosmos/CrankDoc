@@ -20,8 +20,8 @@ export const cb1000rServiceIntervals: ServiceInterval[] = schedule.intervals.map
 }))
 export const cb1000rImage: MotorcycleImage = {
   id: 'b4660699-fb60-4f70-b5c0-2008cb1000a3', motorcycle_id: cb1000r.id,
-  image_url: record.image_url, alt_text: 'Early Honda CB1000R SC60 reference motorcycle in red, showing the original headlamp, inline-four engine and single-sided swingarm',
-  is_primary: true, source_attribution: 'Photo: Addvisor / Wikimedia Commons, CC BY-SA 3.0. Unchanged photograph; reference bike, not the owner’s motorcycle.', created_at: cb1000r.created_at,
+  image_url: record.image_url, alt_text: 'Honda CB1000R SC60 reference illustration in black, showing the early headlamp, inline-four engine and single-sided swingarm',
+  is_primary: true, source_attribution: 'AI-generated SC60 reference illustration for CrankDoc. Geometry references: Honda factory manual and Addvisor / Wikimedia Commons, CC BY-SA 3.0.', created_at: cb1000r.created_at,
 }
 
 export const cb1000rDocuments: TechnicalDocument[] = [

@@ -13,11 +13,11 @@ it('shows the bike reference and both correctly labelled factory diagrams', asyn
   expect(screen.getByAltText('CB1000RA - ABS (22-4)')).toBeInTheDocument()
 })
 
-it('onboards the bike with a real photo, schedule, precise fluids and source links', async () => {
+it('onboards the bike with a transparent illustration, schedule, precise fluids and source links', async () => {
   const user = userEvent.setup()
   render(<Page />)
-  expect(screen.getByAltText(/SC60 reference motorcycle/)).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: 'CC BY-SA 3.0' })).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/')
+  expect(screen.getByAltText(/SC60 reference illustration/)).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Reference photo licence: CC BY-SA 3.0' })).toHaveAttribute('href', 'https://creativecommons.org/licenses/by-sa/3.0/')
   expect(screen.getByText(/77 kW/)).toBeInTheDocument()
   expect(screen.getByText('Curb weight')).toBeInTheDocument()
   await user.click(screen.getByRole('tab', { name: 'Service' }))

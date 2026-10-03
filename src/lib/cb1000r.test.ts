@@ -33,9 +33,12 @@ describe('CB1000R catalogue reference', () => {
     expect(cb1000rServiceIntervals.every(item => item.motorcycle_id === cb1000r.id)).toBe(true)
     expect(new Set(cb1000rServiceIntervals.map(item => item.id)).size).toBe(cb1000rServiceIntervals.length)
   })
-  it('uses a real licensed SC60 photo with an honest caption', () => {
+  it('uses the transparent SC60 illustration with an honest caption', () => {
     expect(cb1000rImage.image_url).toBe(cb1000r.image_url)
-    expect(cb1000rImage.alt_text).toContain('reference motorcycle')
+    expect(cb1000rImage.image_url).toMatch(/\.png$/)
+    expect(cb1000rImage.alt_text).toContain('black')
+    expect(cb1000rImage.alt_text).toContain('illustration')
+    expect(cb1000rImage.source_attribution).toContain('AI-generated')
     expect(cb1000rImage.source_attribution).toContain('Addvisor')
     expect(cb1000rImage.source_attribution).toContain('CC BY-SA 3.0')
   })

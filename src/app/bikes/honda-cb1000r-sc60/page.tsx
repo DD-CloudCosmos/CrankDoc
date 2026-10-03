@@ -13,9 +13,9 @@ export default function CB1000RPage() {
     <Link href="/bikes" className="text-[15px] text-link hover:underline">All bikes</Link>
     <div className="my-6 grid items-center gap-6 md:grid-cols-2 md:gap-10">
       <figure>
-        <Image src={cb1000rImage.image_url} alt={cb1000rImage.alt_text} width={1984} height={1488} sizes="(min-width: 768px) 480px, 100vw" className="h-auto w-full rounded-[20px]" priority />
+        <Image src={cb1000rImage.image_url} alt={cb1000rImage.alt_text} width={1536} height={1024} sizes="(min-width: 768px) 480px, 100vw" className="h-auto w-full rounded-[20px]" priority />
         <figcaption className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
-          Early SC60 reference bike. Photo by <a href="https://commons.wikimedia.org/wiki/File:Honda_CB_1000R_P7040106_01.JPG" className="text-link hover:underline" target="_blank" rel="noreferrer">Addvisor / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/" className="text-link hover:underline" target="_blank" rel="noreferrer">CC BY-SA 3.0</a>. Unchanged photograph; colour and fitted accessories differ from your bike.
+          Honda CB1000R SC60 · reference illustration
         </figcaption>
       </figure>
       <PageHeader title="Honda CB1000R" subtitle="SC60 · 2008 manual reference · 998 cc inline-four" />

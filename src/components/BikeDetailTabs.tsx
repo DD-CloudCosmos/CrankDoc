@@ -190,12 +190,13 @@ export function BikeDetailTabs({
         <summary className="cursor-pointer font-medium text-foreground">Sources and model notes</summary>
         <div className="mt-3 space-y-3">
           <p>Factory specifications: manual pages 1-5 to 1-12. Maintenance schedule: 3-4; cold valve checks: 3-11; chain measurement and adjustment: 3-21. Whole-bike dry weight is not stated; the weights shown are curb weights.</p>
+          <p>The bike image is an AI-generated reference illustration guided by the early SC60 factory drawing and a real reference photograph. Its small mechanical details are not a substitute for the manual.</p>
           <p>The power and torque figures describe the unrestricted 2008–2017 SC60. Market-restricted motorcycles can differ. Check your motorcycle’s certificate and fitted equipment. CB1000RA has Combined Anti-lock Braking System (ABS); variant-specific quantities and diagrams are labelled.</p>
           <div className="flex flex-wrap gap-x-4 gap-y-3">
             <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf" target="_blank" rel="noreferrer">Factory service manual</a>
             <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf#page=80" target="_blank" rel="noreferrer">Original maintenance schedule</a>
-            <a className="text-link hover:underline" href="https://commons.wikimedia.org/wiki/File:Honda_CB_1000R_P7040106_01.JPG" target="_blank" rel="noreferrer">Photo: Addvisor / Wikimedia Commons</a>
-            <a className="text-link hover:underline" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">Photo licence: CC BY-SA 3.0</a>
+            <a className="text-link hover:underline" href="https://commons.wikimedia.org/wiki/File:Honda_CB_1000R_P7040106_01.JPG" target="_blank" rel="noreferrer">Reference photo: Addvisor / Wikimedia Commons</a>
+            <a className="text-link hover:underline" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">Reference photo licence: CC BY-SA 3.0</a>
             <a className="text-link hover:underline" href="https://hondanews.eu/gb/en/motorcycles/media/pressreleases/196743/2020-honda-cb1000r-6" target="_blank" rel="noreferrer">Honda’s SC60 power comparison</a>
           </div>
         </div>
