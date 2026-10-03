@@ -20,7 +20,7 @@ export default function CB1000RPage() {
       </figure>
       <PageHeader title="Honda CB1000R" subtitle="SC60 · 2008 manual reference · 998 cc inline-four" />
     </div>
-    <p className="mb-5 text-[15px] text-muted-foreground">ABS equipment is unconfirmed. Both factory diagrams are labelled by variant. This reference covers the supplied 2008 manual; it does not establish your bike’s model year from its certificate date. Your certificate lists 77 kW; the catalogue’s 92 kW rating is for the unrestricted model.</p>
+    <p className="mb-5 text-[15px] text-muted-foreground">Includes CB1000R and CB1000RA (ABS). Use the specifications and wiring diagram for the correct variant.</p>
     <BikeDetailTabs motorcycle={cb1000r} documents={cb1000rDocuments} serviceIntervals={cb1000rServiceIntervals} />
     <div className="mt-6"><SafeDisclaimer /></div>
   </PageContainer>

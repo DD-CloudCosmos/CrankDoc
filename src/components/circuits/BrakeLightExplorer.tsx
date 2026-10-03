@@ -98,7 +98,7 @@ export function BrakeLightExplorer({ initialMode = 'learn' }: BrakeLightExplorer
           </div>
           {hint && <p className="text-[15px] text-muted-foreground">{LESSON[step].hint}</p>}
         </>}
-        <p className="text-[13px] text-muted-foreground">Honda CB1000R / CB1000RA · 2008 manual · Brake-light subset shared by both factory sheets. Your bike’s ABS equipment is unconfirmed.</p>
+        <p className="text-[13px] text-muted-foreground">Honda CB1000R / CB1000RA · 2008 manual · Brake-light subset shared by both factory sheets. CB1000RA includes ABS; the brake-light lesson applies to both variants.</p>
       <p className="text-[13px] text-muted-foreground">{view === 'teaching' ? 'Blue dotted lines show completed paths, not measured voltage. A blue outline selects connected wire segments and stops at components. Small outlined boxes mark connector colour changes; arrows list the codes before and after them. Fuses and ground connections are assumed intact.' : 'Unchanged scan from the Honda service manual, page 22-3 (CB1000R). This full-bike reference is not interactive. Enlarging it cannot recover unreadable labels.'}</p>
         <p className="text-[13px] text-muted-foreground">Learning model only: the tail-light input, other fuse-box loads and the rest of the motorcycle are omitted. No physical connector pin numbers or orientation are inferred.</p>
       </div>}

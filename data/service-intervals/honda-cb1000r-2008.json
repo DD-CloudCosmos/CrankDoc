@@ -1,7 +1,7 @@
 {
   "motorcycle_make": "Honda",
   "motorcycle_model": "CB1000R",
-  "motorcycle_generation": "SC60 (ABS equipment unconfirmed)",
+  "motorcycle_generation": "SC60",
   "source": "Uploaded Honda CB1000R/RA 2008 service manual, page 3-4",
   "intervals": [
     {
