@@ -7,27 +7,10 @@ interface BikeGridViewProps {
   motorcycles: MotorcycleWithImage[]
 }
 
-function categoryVariant(cat: string | null) {
-  switch (cat) {
-    case 'sport':
-      return 'default' as const
-    case 'naked':
-      return 'secondary' as const
-    case 'cruiser':
-      return 'outline' as const
-    case 'adventure':
-      return 'secondary' as const
-    case 'scooter':
-      return 'default' as const
-    default:
-      return 'default' as const
-  }
-}
-
 export function BikeGridView({ motorcycles }: BikeGridViewProps) {
   if (motorcycles.length === 0) {
     return (
-      <div className="rounded-[24px] border border-border bg-card p-8 text-center">
+      <div className="rounded-[20px] bg-card p-10 text-center shadow-card">
         <p className="text-lg text-muted-foreground">
           No motorcycles found matching your filters.
         </p>
@@ -39,7 +22,7 @@ export function BikeGridView({ motorcycles }: BikeGridViewProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
       {motorcycles.map((moto) => {
         const yearRange = moto.year_end
           ? `${moto.year_start}–${moto.year_end}`
@@ -52,36 +35,27 @@ export function BikeGridView({ motorcycles }: BikeGridViewProps) {
           <Link
             key={moto.id}
             href={`/bikes/${moto.id}`}
-            className="group overflow-hidden rounded-[16px] border border-border bg-card transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+            className="group block rounded-[20px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            {/* Image with gradient overlay for make/model */}
-            <div className="relative">
-              <BikeImage
-                image={moto.primaryImage ?? null}
-                make={moto.make}
-                model={moto.model}
-                className="rounded-none"
-              />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-2.5 pt-8">
-                <p className="truncate text-sm font-semibold text-white">
-                  {moto.make} {moto.model}
-                </p>
-              </div>
-            </div>
-
-            {/* Specs below image */}
-            <div className="space-y-1.5 p-3">
+            <BikeImage
+              image={moto.primaryImage ?? null}
+              make={moto.make}
+              model={moto.model}
+              className="transition-opacity group-hover:opacity-90"
+            />
+            <div className="mt-2.5 px-0.5">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-xs text-muted-foreground">{yearRange}</span>
+                <span className="text-[13px] text-muted-foreground">{yearRange}</span>
                 {moto.category && (
-                  <Badge variant={categoryVariant(moto.category)} className="text-[10px]">
+                  <Badge variant="secondary" className="text-[11px] font-medium">
                     {moto.category.charAt(0).toUpperCase() + moto.category.slice(1)}
                   </Badge>
                 )}
               </div>
-              {specs && (
-                <p className="truncate text-xs text-muted-foreground">{specs}</p>
-              )}
+              <p className="mt-0.5 truncate text-[17px] font-semibold tracking-[-0.01em]">
+                {moto.make} {moto.model}
+              </p>
+              {specs && <p className="truncate text-[13px] text-muted-foreground">{specs}</p>}
             </div>
           </Link>
         )

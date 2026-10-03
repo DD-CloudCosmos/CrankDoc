@@ -6,7 +6,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 
 ### Sprint 1: Ship-Blocking (Infrastructure + Data)
 - [x] Force Vercel redeploy — serve current master (✅ 2026-03-08)
-- [ ] Seed production Supabase — all 18 bikes, 119 trees, full dataset (⛔ blocked 2026-10-01: needs prod credentials, run locally)
+- [x] Seed production Supabase — data present; project was paused, restored (✅ 2026-10-03)
 - [x] Add npm seed scripts to package.json (✅ 2026-03-09)
 - [ ] Verify production — re-test all P0 findings (Priya)
 
@@ -38,7 +38,7 @@ Triggered by Priya's UX/UI audit (2026-03-08). Fixing P0–P2 findings before re
 - [ ] Mechanic tester recruitment and feedback loop
 
 ### Medium Priority
-- [ ] Landing page / onboarding flow improvements
+- [x] Landing page / onboarding flow improvements — Apple-style makeover, My Garage onboarding (✅ 2026-10-03)
 - [ ] Performance optimization (lazy loading, image optimization)
 - [ ] SEO audit (meta tags, structured data for Google)
 - [ ] Responsive design audit — test on various phone sizes

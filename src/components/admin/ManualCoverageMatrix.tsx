@@ -30,7 +30,7 @@ export function ManualCoverageMatrix({ rows }: ManualCoverageMatrixProps) {
   return (
     <>
       {/* Desktop table — hidden on mobile */}
-      <div className="hidden sm:block">
+      <div className="hidden overflow-hidden rounded-[20px] bg-card shadow-card sm:block">
         <Table>
           <TableHeader>
             <TableRow>

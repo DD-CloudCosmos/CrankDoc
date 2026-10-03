@@ -1,16 +1,22 @@
 import { DtcCodeList } from '@/components/DtcCodeList'
+import { PageContainer, PageHeader } from '@/components/PageHeader'
+import { SITE_STATS } from '@/lib/siteStats'
 
-export default function DtcPage() {
+interface PageProps {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function DtcPage({ searchParams }: PageProps) {
+  const params = (await searchParams) ?? {}
+  const initialQuery = typeof params.q === 'string' ? params.q.slice(0, 50) : ''
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">DTC Lookup</h1>
-        <p className="text-muted-foreground">
-          Search 600+ motorcycle-specific DTCs by manufacturer, code, or symptom
-        </p>
-      </div>
-
-      <DtcCodeList />
-    </div>
+    <PageContainer>
+      <PageHeader
+        title="Fault Codes"
+        subtitle={`Look up ${SITE_STATS.dtcCount} motorcycle fault codes from ${SITE_STATS.dtcManufacturerCount} manufacturers by code, system or symptom.`}
+      />
+      <DtcCodeList initialQuery={initialQuery} />
+    </PageContainer>
   )
 }

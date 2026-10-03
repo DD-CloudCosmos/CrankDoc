@@ -121,14 +121,14 @@ export function GlossaryList() {
       )}
 
       {error && (
-        <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-8 text-center" aria-live="polite">
-          <p className="text-destructive">{error}</p>
+        <div role="alert" className="rounded-[14px] bg-danger-background p-8 text-center">
+          <p className="text-danger-foreground">{error}</p>
         </div>
       )}
 
       {!loading && !error && terms.length === 0 && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
-          <p className="text-foreground">
+        <div className="rounded-[20px] bg-card p-10 text-center shadow-card">
+          <p className="text-muted-foreground">
             {searchQuery || category || letter ? 'No terms match your search' : 'No terms found'}
           </p>
         </div>
@@ -136,9 +136,10 @@ export function GlossaryList() {
 
       {!loading && !error && terms.length > 0 && (
         <>
-          <p className="text-sm text-foreground">
+          <p className="text-[15px] text-muted-foreground" aria-live="polite">
             Showing {terms.length} of {total} terms
           </p>
+          <div className="overflow-hidden rounded-[20px] bg-card shadow-card">
           <Table>
             <TableHeader>
               <TableRow>
@@ -193,10 +194,10 @@ export function GlossaryList() {
                     {isExpanded && (
                       <TableRow key={`${term.id}-detail`} data-testid="glossary-detail">
                         <TableCell />
-                        <TableCell colSpan={4} className="bg-muted/30">
+                        <TableCell colSpan={4} className="bg-background/60">
                           <div className="grid gap-6 py-2 md:grid-cols-[1fr,minmax(300px,400px)]">
                             <div className="space-y-3">
-                              <p className="text-sm text-foreground">{term.definition}</p>
+                              <p className="text-[15px] leading-relaxed text-foreground">{term.definition}</p>
 
                               {/* Mobile-only: show category and difficulty */}
                               <div className="flex gap-2 md:hidden">
@@ -238,7 +239,7 @@ export function GlossaryList() {
                             {term.illustration_url && (
                               <button
                                 type="button"
-                                className="group relative cursor-zoom-in"
+                                className="group relative cursor-zoom-in overflow-hidden rounded-[14px] bg-white p-2"
                                 onClick={(e) => {
                                   e.stopPropagation()
                                   setModalImage({ url: term.illustration_url!, term: term.term })
@@ -266,6 +267,7 @@ export function GlossaryList() {
               })}
             </TableBody>
           </Table>
+          </div>
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-4 pt-4">

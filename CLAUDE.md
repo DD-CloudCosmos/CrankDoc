@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Motorcycle and scooter diagnostic decision tree web app. Mobile-first, dark-themed, workshop-friendly. Users select a bike and symptom, then walk through interactive diagnostic flows to find root causes. Free, no-login MVP.
+Motorcycle and scooter diagnostic decision tree web app. Mobile-first, Apple-style UI (light default, automatic dark mode), workshop-friendly. Users select a bike and symptom, then walk through interactive diagnostic flows to find root causes. Free, no-login MVP.
 
 **Type:** Full-stack web application
 **Stack:** Next.js 16.1.6 (App Router) + TypeScript + TailwindCSS 4 + shadcn/ui, Supabase (PostgreSQL), Vercel
@@ -60,11 +60,12 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
 - API contracts agreed between Elena and Alex before implementation
 - All PRs require relevant reviewer approval (see git-workflow)
 - Components and tests are co-located (e.g., `BikeCard.tsx` + `BikeCard.test.tsx`)
-- `rounded-[24px]` is the standard border radius for card containers
-- Tables use `bg-card` (white) against warm beige page background
+- Design system: see `Docs/CrankDoc-Brand-Style-Guidelines.md` (Apple-style, v0.5 makeover)
+- Use semantic colour tokens only (`bg-card`, `text-muted-foreground`, `bg-safe-background`, …) — never raw hex or Tailwind palette colours, so light and dark mode both work
+- Cards: `rounded-[20px] bg-card shadow-card` on the `bg-background` (light grey) page; iOS-style lists use `GroupedList` / `ListRow`
 - shadcn components created manually (CLI doesn't work on this machine)
 - Supabase `.single()` with TypeScript can cause `never` narrowing — use helper functions
-- Dark theme is default (workshop-friendly)
+- Light theme is default; dark mode follows the OS setting (`prefers-color-scheme`)
 - Testing is mandatory — features must ship with tests
 
 ---
@@ -86,7 +87,7 @@ Next.js App Router frontend deployed on Vercel. Supabase provides PostgreSQL dat
 ### Styling
 - **TailwindCSS only** — no CSS modules, no styled-components, no inline style objects.
 - Use **shadcn/ui** components as the base. Customize via Tailwind classes, not by forking component internals.
-- Dark theme is the default and primary theme (workshop-friendly). Light theme is secondary.
+- Light theme is the default; dark mode follows the OS setting via `prefers-color-scheme`. Every screen must work in both.
 - Mobile-first: design for 320px-428px first, then scale up.
 
 ### File Naming

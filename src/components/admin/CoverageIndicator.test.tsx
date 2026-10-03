@@ -21,19 +21,19 @@ describe('CoverageIndicator', () => {
   it('applies green dot class for ingested status', () => {
     const { container } = render(<CoverageIndicator status="ingested" />)
     const dot = container.querySelector('[aria-hidden="true"]')
-    expect(dot?.className).toContain('bg-green-500')
+    expect(dot?.className).toContain('bg-safe')
   })
 
   it('applies amber dot class for local_only status', () => {
     const { container } = render(<CoverageIndicator status="local_only" />)
     const dot = container.querySelector('[aria-hidden="true"]')
-    expect(dot?.className).toContain('bg-amber-500')
+    expect(dot?.className).toContain('bg-caution')
   })
 
   it('applies gray dot class for missing status', () => {
     const { container } = render(<CoverageIndicator status="missing" />)
     const dot = container.querySelector('[aria-hidden="true"]')
-    expect(dot?.className).toContain('bg-gray-300')
+    expect(dot?.className).toContain('bg-border')
   })
 
   it('applies custom className', () => {

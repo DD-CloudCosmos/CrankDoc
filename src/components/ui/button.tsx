@@ -4,33 +4,34 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+// Apple-style buttons: rounded pills, one blue for actions, system-font sizes.
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[16px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-[15px] font-medium transition-[background-color,opacity,transform] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-border bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-primary bg-transparent text-primary hover:bg-primary/10",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/70",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground",
+          "text-primary hover:bg-accent",
         link:
-          "text-foreground underline-offset-4 hover:underline",
+          "rounded-none text-link underline-offset-4 hover:underline",
         pill:
-          "rounded-[999px] border border-border bg-card text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-border bg-card text-foreground hover:bg-accent",
         "pill-active":
-          "rounded-[999px] border-transparent bg-[#1F1F1F] text-white shadow-sm hover:bg-[#1F1F1F]/90",
+          "border border-transparent bg-inverse text-inverse-foreground hover:bg-inverse/90",
       },
       size: {
-        default: "h-12 px-4 py-2",
-        sm: "h-8 min-h-[44px] rounded-[16px] px-3 text-xs",
-        lg: "h-12 rounded-[16px] px-8",
-        icon: "h-12 w-12",
+        default: "h-12 px-6 text-[17px]",
+        sm: "h-11 min-h-[44px] px-4",
+        lg: "h-14 px-8 text-[17px]",
+        icon: "h-11 w-11",
       },
     },
     defaultVariants: {

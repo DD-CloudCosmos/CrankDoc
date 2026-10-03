@@ -1,8 +1,10 @@
 import Link from 'next/link'
-import { ChevronRight, Zap, Cog, Fuel, Thermometer, CircleStop, ArrowUpDown, Wind, Power, Settings, Wrench } from 'lucide-react'
+import { Zap, Cog, Fuel, Thermometer, CircleStop, ArrowUpDown, Wind, Power, Settings, Wrench } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { GroupedList, ListRow, IconTile } from '@/components/ui/grouped-list'
 import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
+import { TreeSkillFlag } from '@/components/SkillNotice'
 import type { Motorcycle, DiagnosticTree } from '@/types/database.types'
 import type { LucideIcon } from 'lucide-react'
 
@@ -42,75 +44,89 @@ function groupTreesByCategory(trees: DiagnosticTree[]): Record<string, Diagnosti
 }
 
 
+// iOS Settings-style coloured tiles per category (decorative; the label carries meaning)
+const CATEGORY_TILE: Record<string, string> = {
+  electrical: 'bg-[#FF9500]',
+  engine: 'bg-[#8E8E93]',
+  fuel: 'bg-[#34C759]',
+  cooling: 'bg-[#0A84FF]',
+  brakes: 'bg-[#FF3B30]',
+  suspension: 'bg-[#5856D6]',
+  exhaust: 'bg-[#636366]',
+  starting: 'bg-[#FFCC00]',
+  transmission: 'bg-[#AF52DE]',
+  general: 'bg-[#8E8E93]',
+}
+
 export function DiagnoseSymptomList({ motorcycle, trees }: DiagnoseSymptomListProps) {
   const grouped = groupTreesByCategory(trees)
 
   return (
-    <div className="space-y-4" style={{ animation: 'riseIn 0.6s ease-out both' }}>
-      {/* Bike context bar */}
-      <div className="rounded-[24px] bg-card border border-border shadow-[var(--shadow-soft)] p-4 flex items-center justify-between">
-        <div>
+    <div className="space-y-6" style={{ animation: 'riseIn 0.4s ease-out both' }}>
+      {/* Bike context */}
+      <div className="flex items-center justify-between gap-4 rounded-[20px] bg-card p-4 shadow-card">
+        <div className="min-w-0">
           {motorcycle ? (
             <>
-              <p className="font-semibold">{motorcycle.make} {motorcycle.model}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-[17px] font-semibold">{motorcycle.make} {motorcycle.model}</p>
+              <p className="text-[15px] text-muted-foreground">
                 {motorcycle.generation || `${motorcycle.year_start}${motorcycle.year_end ? `-${motorcycle.year_end}` : '-present'}`}
                 {motorcycle.category && ` · ${capitalize(motorcycle.category)}`}
               </p>
             </>
           ) : (
             <>
-              <p className="font-semibold">General Guides</p>
-              <p className="text-sm text-muted-foreground">Universal troubleshooting for all motorcycles</p>
+              <p className="text-[17px] font-semibold">General Guides</p>
+              <p className="text-[15px] text-muted-foreground">Universal troubleshooting for all motorcycles</p>
             </>
           )}
         </div>
-        <Link href="/diagnose">
-          <Button variant="ghost" size="sm">Change</Button>
-        </Link>
+        <Button asChild variant="ghost" size="sm">
+          <Link href="/diagnose">Change</Link>
+        </Button>
       </div>
 
-      {/* Main content card with grouped trees */}
-      <div className="bg-card rounded-[24px] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
-        <h2 className="text-xl font-bold mb-4">What&apos;s the problem?</h2>
+      <div>
+        <h2 className="mb-4 text-[22px] font-semibold tracking-[-0.02em]">What&apos;s the problem?</h2>
 
         {trees.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="rounded-[20px] bg-card px-6 py-10 text-center shadow-card">
             <p className="text-muted-foreground">No diagnostic guides found for this motorcycle</p>
-            <Link href="/diagnose" className="text-sm hover:underline mt-2 inline-block">&larr; Back to bike selection</Link>
+            <Link href="/diagnose" className="mt-2 inline-block text-[15px] text-link hover:underline">&larr; Back to bike selection</Link>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-7">
             {Object.entries(grouped).map(([category, categoryTrees]) => {
               const config = CATEGORY_CONFIG[category] || CATEGORY_CONFIG.general
               const Icon = config.icon
               return (
-                <div key={category}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Icon className="h-4 w-4 text-muted-foreground" />
-                    <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{config.label}</h3>
-                  </div>
-                  <div className="space-y-3">
-                    {categoryTrees.map((tree) => (
-                      <Link href={`/diagnose/${tree.id}`} key={tree.id}>
-                        <div className="rounded-[16px] border border-border bg-card px-4 py-3 flex items-center justify-between hover:bg-accent transition-colors">
-                          <div className="min-h-[3.5rem] flex flex-col justify-center">
-                            <span className="font-semibold">{tree.title}</span>
-                            {tree.description && <p className="text-sm text-muted-foreground line-clamp-1">{tree.description}</p>}
-                            <div className="mt-1 h-5">
-                              {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
-                                <Badge variant="outline" className={`${DIFFICULTY_STYLES[tree.difficulty].badgeClass} min-w-[6.5rem] text-center`}>
-                                  {DIFFICULTY_STYLES[tree.difficulty].label}
-                                </Badge>
-                              )}
-                            </div>
-                          </div>
-                          <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                <GroupedList key={category} header={config.label}>
+                  {categoryTrees.map((tree) => (
+                    <ListRow
+                      key={tree.id}
+                      href={`/diagnose/${tree.id}`}
+                      leading={
+                        <IconTile className={CATEGORY_TILE[category] ?? CATEGORY_TILE.general}>
+                          <Icon />
+                        </IconTile>
+                      }
+                      label={<span className="font-medium">{tree.title}</span>}
+                      subtitle={
+                        <span className="flex flex-col gap-1.5 pt-0.5">
+                          {tree.description && <span className="line-clamp-1">{tree.description}</span>}
+                          <span className="flex flex-wrap items-center gap-2">
+                            {tree.difficulty && DIFFICULTY_STYLES[tree.difficulty] && (
+                              <Badge variant="outline" className={DIFFICULTY_STYLES[tree.difficulty].badgeClass}>
+                                {DIFFICULTY_STYLES[tree.difficulty].label}
+                              </Badge>
+                            )}
+                            <TreeSkillFlag difficulty={tree.difficulty} />
+                          </span>
+                        </span>
+                      }
+                    />
+                  ))}
+                </GroupedList>
               )
             })}
           </div>

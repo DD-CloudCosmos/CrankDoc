@@ -3,25 +3,54 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Database, FileText, BookOpen, AlertTriangle, Wrench, Stethoscope, MoreHorizontal } from "lucide-react";
+import {
+  Home,
+  Search,
+  Bike,
+  ListChecks,
+  BookOpen,
+  AlertTriangle,
+  Wrench,
+  Activity,
+  MoreHorizontal,
+  ScanLine,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 import { DesktopSearch } from "@/components/search";
 import { SearchOverlay } from "@/components/search";
 
-const primaryNavItems = [
+/** Tabs shown in the mobile tab bar (iOS-style, max five). */
+const tabItems = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Diagnose", href: "/diagnose", icon: Stethoscope },
-  { name: "Bikes", href: "/bikes", icon: Database },
+  { name: "Diagnose", href: "/diagnose", icon: Activity },
+  { name: "Bikes", href: "/bikes", icon: Bike },
+  { name: "Codes", href: "/dtc", icon: ListChecks },
 ];
 
-const secondaryNavItems = [
-  { name: "DTC", href: "/dtc", icon: FileText },
+/** Items behind the mobile "More" tab. */
+const moreItems = [
   { name: "Glossary", href: "/glossary", icon: BookOpen },
   { name: "Recalls", href: "/recalls", icon: AlertTriangle },
+  { name: "VIN Decoder", href: "/vin", icon: ScanLine },
   { name: "Admin", href: "/admin", icon: Wrench },
 ];
 
-const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+/** Links in the desktop top bar. */
+const desktopItems = [
+  { name: "Diagnose", href: "/diagnose" },
+  { name: "Bikes", href: "/bikes" },
+  { name: "Codes", href: "/dtc" },
+  { name: "Glossary", href: "/glossary" },
+  { name: "Recalls", href: "/recalls" },
+  { name: "VIN", href: "/vin" },
+];
+
+/** A route is active for its own path and any nested path (e.g. /bikes/123). */
+function isActiveRoute(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Navigation() {
   const pathname = usePathname();
@@ -29,13 +58,12 @@ export function Navigation() {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
 
-  // Close More popover when Search overlay opens
   const handleSearchOpen = useCallback(() => {
     setMoreOpen(false);
     setSearchOpen(true);
   }, []);
 
-  // Close More popover on click outside
+  // Close the More menu on click outside or Escape
   useEffect(() => {
     if (!moreOpen) return;
 
@@ -44,114 +72,131 @@ export function Navigation() {
         setMoreOpen(false);
       }
     }
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setMoreOpen(false);
+    }
 
     document.addEventListener("mousedown", handleMouseDown);
-    return () => document.removeEventListener("mousedown", handleMouseDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [moreOpen]);
+
+  const moreActive = moreItems.some((item) => isActiveRoute(pathname, item.href));
 
   return (
     <>
-      {/* Mobile: floating bottom bar */}
-      <nav className="fixed bottom-4 left-4 right-4 z-50 flex items-center justify-around rounded-[24px] bg-[#1F1F1F] px-2 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.12)] md:hidden">
-        {primaryNavItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
+      {/* Top bar: frosted glass, sticky. Mobile shows logo + search; desktop adds links. */}
+      <header className="sticky top-0 z-40 border-b border-separator bg-nav-glass backdrop-blur-xl backdrop-saturate-[1.8]">
+        <div className="mx-auto flex h-12 max-w-[1024px] items-center gap-6 px-4 md:h-[52px] md:px-[22px]">
+          <Link href="/" aria-label="CrankDoc home" className="flex min-h-[44px] items-center">
+            <Logo />
+          </Link>
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 min-h-[44px] min-w-[44px] px-2 text-xs text-white transition-opacity",
-                isActive ? "opacity-100" : "opacity-60"
-              )}
-            >
-              <Icon className="h-5 w-5" />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
-        {/* Search button — opens overlay */}
-        <button
-          type="button"
-          onClick={handleSearchOpen}
-          className="flex flex-col items-center justify-center gap-1 min-h-[44px] min-w-[44px] px-2 text-xs text-white opacity-60 transition-opacity hover:opacity-100"
-          aria-label="Open search"
-        >
-          <Search className="h-5 w-5" />
-          <span>Search</span>
-        </button>
-        {/* More button + popover */}
-        <div ref={moreRef} className="relative">
+          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-7 md:flex">
+            {desktopItems.map((item) => {
+              const isActive = isActiveRoute(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "text-[13px] transition-colors",
+                    isActive ? "font-semibold text-foreground" : "text-foreground/75 hover:text-foreground"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="ml-auto hidden md:block">
+            <DesktopSearch />
+          </div>
+
           <button
             type="button"
-            onClick={() => setMoreOpen((prev) => !prev)}
-            className={cn(
-              "flex flex-col items-center justify-center gap-1 min-h-[44px] min-w-[44px] px-2 text-xs text-white transition-opacity",
-              moreOpen ? "opacity-100" : "opacity-60"
-            )}
-            aria-label="More navigation"
-            aria-expanded={moreOpen}
+            onClick={handleSearchOpen}
+            className="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-foreground md:hidden"
+            aria-label="Open search"
           >
-            <MoreHorizontal className="h-5 w-5" />
-            <span>More</span>
+            <Search className="h-5 w-5" />
           </button>
-          {/* More popover */}
-          {moreOpen && (
-            <div className="absolute bottom-full right-0 mb-2 w-48 rounded-[16px] bg-[#1F1F1F] p-2 shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
-              {secondaryNavItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMoreOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-[12px] px-3 py-2.5 min-h-[44px] text-sm text-white transition-opacity",
-                      isActive ? "opacity-100 bg-white/10" : "opacity-70 hover:opacity-100"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
         </div>
-      </nav>
+      </header>
 
-      {/* Mobile search overlay */}
-      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
-
-      {/* Desktop: minimal top bar */}
-      <nav className="hidden md:block">
-        <div className="flex items-center gap-2 px-6 py-4">
-          {allNavItems.map((item) => {
-            const isActive = pathname === item.href;
-
+      {/* Mobile tab bar: frosted glass, pinned to the bottom edge */}
+      <nav
+        aria-label="Tabs"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-separator bg-nav-glass pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-[1.8] md:hidden"
+      >
+        <div className="grid h-[60px] grid-cols-5">
+          {tabItems.map((item) => {
+            const isActive = isActiveRoute(pathname, item.href);
+            const Icon = item.icon;
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "flex items-center gap-2 rounded-[999px] px-4 py-2 text-sm transition-colors",
-                  isActive
-                    ? "bg-[#1F1F1F] text-white"
-                    : "text-foreground hover:text-foreground/70"
+                  "flex min-h-[44px] flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors",
+                  isActive ? "text-primary" : "text-muted-foreground"
                 )}
               >
+                <Icon className="h-6 w-6" strokeWidth={isActive ? 2.25 : 1.75} />
                 <span>{item.name}</span>
               </Link>
             );
           })}
-          {/* Desktop inline search */}
-          <div className="ml-auto">
-            <DesktopSearch />
+
+          <div ref={moreRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setMoreOpen((prev) => !prev)}
+              className={cn(
+                "flex h-full w-full min-h-[44px] flex-col items-center justify-center gap-0.5 text-[10px] font-medium transition-colors",
+                moreOpen || moreActive ? "text-primary" : "text-muted-foreground"
+              )}
+              aria-label="More navigation"
+              aria-expanded={moreOpen}
+            >
+              <MoreHorizontal className="h-6 w-6" strokeWidth={1.75} />
+              <span>More</span>
+            </button>
+
+            {moreOpen && (
+              <div className="absolute bottom-full right-2 mb-3 w-56 overflow-hidden rounded-[14px] bg-card shadow-float">
+                {moreItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = isActiveRoute(pathname, item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMoreOpen(false)}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-[48px] items-center justify-between gap-3 border-b border-separator px-4 text-[17px] last:border-b-0",
+                        isActive ? "text-primary" : "text-foreground hover:bg-accent/60"
+                      )}
+                    >
+                      <span>{item.name}</span>
+                      <Icon className="h-5 w-5 text-muted-foreground" />
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </nav>
+
+      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   );
 }

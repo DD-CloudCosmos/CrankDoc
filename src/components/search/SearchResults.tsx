@@ -64,8 +64,8 @@ export function SearchResults({ results, isLoading, hasQuery, onResultClick, id 
         if (items.length === 0) return null
 
         return (
-          <div key={category} className="border-b border-border last:border-0">
-            <p className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <div key={category} className="border-b border-separator last:border-0">
+            <p className="px-3 pb-1 pt-3 text-[13px] uppercase text-muted-foreground">
               {SEARCH_CATEGORY_LABELS[category]}
             </p>
             {items.map((item) => (

@@ -11,7 +11,7 @@ const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export function GlossaryAlphaFilter({ activeLetter, onChange }: GlossaryAlphaFilterProps) {
   return (
-    <div className="flex flex-nowrap gap-1 overflow-x-auto">
+    <div className="-mx-4 flex flex-nowrap gap-1 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
       <Button
         variant={activeLetter === '' ? 'pill-active' : 'pill'}
         size="sm"

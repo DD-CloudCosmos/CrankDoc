@@ -28,13 +28,13 @@ export function SearchResultItem({ result, onClick }: SearchResultItemProps) {
     <Link
       href={result.href}
       onClick={onClick}
-      className="flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-foreground transition-colors hover:bg-muted/50"
+      className="flex min-h-[44px] items-center gap-3 rounded-[10px] px-3 py-2 text-foreground transition-colors hover:bg-accent/60"
       data-testid="search-result-item"
     >
       <Icon className="h-4 w-4 shrink-0 text-muted-foreground" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{result.title}</p>
-        <p className="truncate text-xs text-muted-foreground">{result.subtitle}</p>
+        <p className="truncate text-[15px] font-medium">{result.title}</p>
+        <p className="truncate text-[13px] text-muted-foreground">{result.subtitle}</p>
       </div>
     </Link>
   )

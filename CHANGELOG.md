@@ -7,12 +7,27 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- Apple-style landing page with a live product window built from a real diagnostic guide (#28)
+- First-visit onboarding and "My Garage" (bikes + experience level, stored on the device) (#28)
+- Garage shortcuts in Diagnose; guides and steps above your experience level are flagged (#28)
+- "Your answers" trail in the tree walker (#28)
+- Automatic dark mode following the OS setting (#28)
+- `/dtc?q=` deep links and a KYMCO filter for fault codes (#28)
+- Branded error page with retry (#28)
 
 ### Changed
+- Complete visual redesign: Apple-style tokens, system font (SF Pro / Inter), grouped lists, segmented controls, frosted navigation (#28)
+- Mobile tab bar: Home, Diagnose, Bikes, Codes, More; VIN decoder added to navigation (#28)
+- Safety labels: Beginner-safe, Care required, Pro recommended (#28)
 
 ### Fixed
+- Inter font never loaded (body font resolved to Tailwind's default stack) (#28)
+- Installed PWAs kept serving stale pages: navigations are now network-first and the cache version is bumped (#28)
+- Nested link/button markup on back buttons and not-found pages; unlabeled glossary search and VIN fields (#28)
+- Severity/difficulty colours unreadable in dark mode (#28)
 
 ### Removed
+- Warm-beige "Lumière" theme and the HowItWorks component (#28)
 
 ## [0.4.0] — 2026-03-04
 

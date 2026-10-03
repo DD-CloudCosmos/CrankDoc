@@ -11,13 +11,14 @@ interface DtcSearchProps {
 export function DtcSearch({ onSearch, defaultValue = '' }: DtcSearchProps) {
   return (
     <div className="relative">
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
-        type="text"
+        type="search"
+        aria-label="Search fault codes"
         placeholder="Search DTC codes (e.g., P0301)"
         defaultValue={defaultValue}
         onChange={(e) => onSearch(e.target.value)}
-        className="pl-10"
+        className="rounded-[10px] pl-9"
       />
     </div>
   )

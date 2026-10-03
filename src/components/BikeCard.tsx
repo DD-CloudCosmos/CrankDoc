@@ -48,7 +48,7 @@ export function BikeCard({ motorcycle }: BikeCardProps) {
 
   return (
     <Link href={`/bikes/${id}`} className="block transition-transform duration-200 hover:-translate-y-1">
-      <Card className="h-full rounded-[24px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+      <Card className="h-full rounded-[20px]">
         <CardHeader>
           <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
             <CardTitle className="min-w-0 break-words text-xl">{make} {model}</CardTitle>

@@ -46,15 +46,13 @@
 
 ## Blocked
 
-### TODO-009: Seed production Supabase with all data
-- **Agent:** Marcus (DBA)
-- **Branch:** N/A (data operation)
-- **Acceptance criteria:** Production shows 18 motorcycles, 119 diagnostic trees, 664 DTCs, 205 service intervals, 205 glossary terms. Run all import scripts against production env.
-- **Dependencies:** None
-- **Complexity:** S
-- **Status:** ⛔ Blocked 2026-10-01 — requires production Supabase credentials (service role key), which are not available in cloud agent sessions. Must be run locally by David (`npm run seed:all` against prod env). Stalled since 2026-03-08.
-
 ## Done (this iteration)
+
+### TODO-009: Seed production Supabase with all data (✅ 2026-10-03)
+- Data was already seeded; the site was down because the free-tier Supabase project had auto-paused after months of inactivity. Restored by David. Verified live: 18 motorcycles, 664 DTCs, 220 glossary terms, guides per bike.
+
+### TODO-027: v0.5 makeover — Apple-style UI, landing page, onboarding (✅ 2026-10-03)
+- New design system (light + automatic dark mode), landing page, My Garage onboarding, reskin of every page. PR #28. Fixed Inter never loading and stale PWA pages. Server-rendered data pages (bikes, diagnose) need a visual check on the Vercel preview — no Supabase in the build container.
 
 ### TODO-026: Dependency security refresh (✅ 2026-10-01)
 - Next 16.1.6 → 16.3.8 (critical advisory), React 19.2.3 → 19.3.0, lockfile refreshed within semver ranges. `npm audit`: 28 → 0 vulnerabilities. Migrated deprecated `middleware.ts` → `proxy.ts` (Node runtime, fixes Edge `crypto` warning). Admin auth smoke-tested on `next start`.

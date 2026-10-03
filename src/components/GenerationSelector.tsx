@@ -36,7 +36,7 @@ export function GenerationSelector({ generations, activeGenerationId, onSelect }
           size="sm"
           className={
             activeGenerationId === gen.id
-              ? 'rounded-[999px] bg-[#1F1F1F] text-white'
+              ? 'rounded-full bg-inverse text-inverse-foreground'
               : 'rounded-[999px] bg-background text-foreground'
           }
           onClick={() => onSelect(gen.id)}
