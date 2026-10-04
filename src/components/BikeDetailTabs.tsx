@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { cb1000rFluids, supportsBrakeLesson } from '@/lib/cb1000r'
+import { CB1000RFluids } from '@/components/CB1000RFluids'
 import { CB1000RReference } from '@/components/CB1000RReference'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
@@ -171,7 +172,7 @@ export function BikeDetailTabs({
       <div className="overflow-hidden rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
       {displayTab === 'service' && (supportsBrakeLesson(motorcycle) ? <CB1000RReference intervals={serviceIntervals} /> : <ServiceIntervalTable intervals={serviceIntervals} />)}
-      {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
+      {displayTab === 'fluids' && (supportsBrakeLesson(motorcycle) ? <CB1000RFluids /> : <FluidsContent items={fluidItems} />)}
       {displayTab === 'wiring' && (
         <WiringContent
           docs={wiringDocs}
