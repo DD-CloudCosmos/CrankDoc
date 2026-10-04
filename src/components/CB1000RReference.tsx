@@ -1,12 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronRight, Search } from 'lucide-react'
 import { cb1000rSpecSections } from '@/lib/cb1000r'
 import type { ServiceInterval } from '@/types/database.types'
 
 export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] }) {
   const [query, setQuery] = useState('')
+  const contentRef = useRef<HTMLDivElement>(null)
+  const setExpanded = (open: boolean) => {
+    contentRef.current?.querySelectorAll('details').forEach(details => { details.open = open })
+  }
   const [unit, setUnit] = useState<'km' | 'miles'>('km')
   const search = query.trim().toLowerCase()
   const matches = (text: string) => text.toLowerCase().includes(search)
@@ -43,11 +47,15 @@ export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] 
   const sections = cb1000rSpecSections.map(section => ({ ...section, rows: section.rows.filter(row => matches(`${section.title} ${row.label} ${row.value}`)) })).filter(section => section.rows.length)
   const seen = new Set<string>()
 
-  return <div className="space-y-5">
+  return <div ref={contentRef} className="space-y-5">
     <label className="flex items-center gap-3 rounded-[12px] bg-input px-4">
       <Search aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" />
       <input type="search" aria-label={intervals ? 'Search service' : 'Search specifications'} placeholder={intervals ? 'Search service…' : 'Search specifications…'} value={query} onChange={event => setQuery(event.target.value)} className="min-h-12 w-full min-w-0 bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
     </label>
+    <div className="flex justify-end gap-2" role="group" aria-label="Section controls">
+      <button type="button" onClick={() => setExpanded(true)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Expand all</button>
+      <button type="button" onClick={() => setExpanded(false)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Collapse all</button>
+    </div>
     {intervals ? <>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground">Distance or time, whichever comes first.</p>

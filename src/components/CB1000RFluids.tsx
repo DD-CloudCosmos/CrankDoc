@@ -1,19 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronRight, Search } from 'lucide-react'
 import { cb1000rFluids } from '@/lib/cb1000r'
 
 export function CB1000RFluids() {
   const [query, setQuery] = useState('')
+  const contentRef = useRef<HTMLDivElement>(null)
+  const setExpanded = (open: boolean) => {
+    contentRef.current?.querySelectorAll('details').forEach(details => { details.open = open })
+  }
   const search = query.trim().toLowerCase()
   const fluids = cb1000rFluids.filter(fluid => [fluid.label, fluid.capacity, fluid.spec].join(' ').toLowerCase().includes(search))
 
-  return <div className="space-y-5">
+  return <div ref={contentRef} className="space-y-5">
     <label className="flex items-center gap-3 rounded-[12px] bg-input px-4">
       <Search aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" />
       <input type="search" aria-label="Search fluids" placeholder="Search fluids…" value={query} onChange={event => setQuery(event.target.value)} className="min-h-12 w-full min-w-0 bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
     </label>
+    <div className="flex justify-end gap-2" role="group" aria-label="Section controls">
+      <button type="button" onClick={() => setExpanded(true)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Expand all</button>
+      <button type="button" onClick={() => setExpanded(false)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Collapse all</button>
+    </div>
     <div className="overflow-hidden rounded-[12px] bg-input">
       {fluids.map(fluid => <details key={`${fluid.label}-${search}`} open={search ? true : undefined} className="group border-b border-separator last:border-b-0">
         <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium [&::-webkit-details-marker]:hidden">

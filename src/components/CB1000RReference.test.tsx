@@ -4,6 +4,20 @@ import { CB1000RReference } from './CB1000RReference'
 import { cb1000rServiceIntervals, cb1000rSpecSections } from '@/lib/cb1000r'
 
 describe('CB1000R reference', () => {
+  it('expands and collapses every service and schedule notes', () => {
+    const { container } = render(<CB1000RReference intervals={cb1000rServiceIntervals} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).toHaveAttribute('open')
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).not.toHaveAttribute('open')
+  })
+  it('expands and collapses all sections, including nested details', () => {
+    const { container } = render(<CB1000RReference />)
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).toHaveAttribute('open')
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).not.toHaveAttribute('open')
+  })
   it('starts with Engine open and preserves every specification', () => {
     const { container } = render(<CB1000RReference />)
     expect(screen.getByText('Engine').closest('details')).toHaveAttribute('open')

@@ -4,6 +4,13 @@ import { CB1000RFluids } from './CB1000RFluids'
 import { cb1000rFluids } from '@/lib/cb1000r'
 
 describe('CB1000R fluids', () => {
+  it('expands and collapses all sections, including nested details', () => {
+    const { container } = render(<CB1000RFluids />)
+    fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).toHaveAttribute('open')
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
+    for (const details of container.querySelectorAll('details')) expect(details).not.toHaveAttribute('open')
+  })
   it('keeps all quantities and specifications behind collapsed rows', () => {
     render(<CB1000RFluids />)
     for (const fluid of cb1000rFluids) {
