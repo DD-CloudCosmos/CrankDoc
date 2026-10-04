@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ChevronRight, Search } from 'lucide-react'
+import { ChevronRight, Search, Expand, Minimize2 } from 'lucide-react'
 import { cb1000rSpecSections } from '@/lib/cb1000r'
 import type { ServiceInterval } from '@/types/database.types'
 
@@ -53,8 +53,8 @@ export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] 
       <input type="search" aria-label={intervals ? 'Search service' : 'Search specifications'} placeholder={intervals ? 'Search service…' : 'Search specifications…'} value={query} onChange={event => setQuery(event.target.value)} className="min-h-12 w-full min-w-0 bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
     </label>
     <div className="flex justify-end gap-2" role="group" aria-label="Section controls">
-      <button type="button" onClick={() => setExpanded(true)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Expand all</button>
-      <button type="button" onClick={() => setExpanded(false)} className="min-h-11 rounded-[10px] px-3 text-sm text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">Collapse all</button>
+      <button type="button" aria-label="Expand all" title="Expand all" onClick={() => setExpanded(true)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><Expand aria-hidden="true" className="h-4 w-4" /></button>
+      <button type="button" aria-label="Collapse all" title="Collapse all" onClick={() => setExpanded(false)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><Minimize2 aria-hidden="true" className="h-4 w-4" /></button>
     </div>
     {intervals ? <>
       <div className="flex flex-wrap items-center justify-between gap-3">
