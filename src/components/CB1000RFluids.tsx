@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ChevronRight, Search, Expand, Minimize2 } from 'lucide-react'
+import { ChevronRight, Search, ListChevronsUpDown, ListChevronsDownUp } from 'lucide-react'
 import { cb1000rFluids } from '@/lib/cb1000r'
 
 export function CB1000RFluids() {
@@ -19,8 +19,8 @@ export function CB1000RFluids() {
       <input type="search" aria-label="Search fluids" placeholder="Search fluids…" value={query} onChange={event => setQuery(event.target.value)} className="min-h-12 w-full min-w-0 bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring" />
     </label>
     <div className="flex justify-end gap-2" role="group" aria-label="Section controls">
-      <button type="button" aria-label="Expand all" title="Expand all" onClick={() => setExpanded(true)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><Expand aria-hidden="true" className="h-4 w-4" /></button>
-      <button type="button" aria-label="Collapse all" title="Collapse all" onClick={() => setExpanded(false)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><Minimize2 aria-hidden="true" className="h-4 w-4" /></button>
+      <button type="button" aria-label="Expand all" title="Expand all" onClick={() => setExpanded(true)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><ListChevronsUpDown aria-hidden="true" className="h-4 w-4" /></button>
+      <button type="button" aria-label="Collapse all" title="Collapse all" onClick={() => setExpanded(false)} className="flex h-11 w-11 items-center justify-center rounded-[10px] text-primary hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"><ListChevronsDownUp aria-hidden="true" className="h-4 w-4" /></button>
     </div>
     <div className="overflow-hidden rounded-[12px] bg-input">
       {fluids.map(fluid => <details key={`${fluid.label}-${search}`} open={search ? true : undefined} className="group border-b border-separator last:border-b-0">
