@@ -1,0 +1,241 @@
+{
+  "sections": [
+    {
+      "title": "Engine",
+      "rows": [
+        {
+          "label": "Engine type",
+          "value": "Liquid-cooled four-stroke inline-four; 16 valves; double overhead camshafts"
+        },
+        {
+          "label": "Displacement",
+          "value": "649 cc"
+        },
+        {
+          "label": "Bore × stroke",
+          "value": "67.0 × 46.0 mm"
+        },
+        {
+          "label": "Compression ratio",
+          "value": "11.6:1"
+        },
+        {
+          "label": "Fuel system",
+          "value": "Programmed Fuel Injection (PGM-FI)"
+        },
+        {
+          "label": "Unrestricted rated power",
+          "value": "70 kW (93.9 mechanical hp) at 12,000 rpm; a 35 kW A2 conversion is available"
+        },
+        {
+          "label": "Unrestricted rated torque",
+          "value": "63 N·m at 9,500 rpm"
+        },
+        {
+          "label": "Idle speed",
+          "value": "1,250 ± 100 rpm"
+        }
+      ]
+    },
+    {
+      "title": "Transmission",
+      "rows": [
+        {
+          "label": "Clutch",
+          "value": "Wet multi-plate assist/slipper; cable-operated, manual clutch"
+        },
+        {
+          "label": "Gearbox",
+          "value": "Six-speed manual"
+        },
+        {
+          "label": "Primary reduction",
+          "value": "1.690"
+        },
+        {
+          "label": "Final reduction",
+          "value": "2.800"
+        },
+        {
+          "label": "Gear ratios, 1st to 6th",
+          "value": "3.071 / 2.352 / 1.888 / 1.560 / 1.370 / 1.214"
+        },
+        {
+          "label": "Drive chain",
+          "value": "DID 525V11 or RK 525KRW; 118 links"
+        },
+        {
+          "label": "Sprockets",
+          "value": "Front 15 teeth; rear 42 teeth"
+        },
+        {
+          "label": "Chain slack",
+          "value": "25–35 mm; engine stopped, neutral, sidestand on firm level ground; check midway between sprockets at several positions; do not ride if slack exceeds 50 mm"
+        },
+        {
+          "label": "Clutch lever free play",
+          "value": "10–20 mm"
+        }
+      ]
+    },
+    {
+      "title": "Chassis and dimensions",
+      "rows": [
+        {
+          "label": "Frame",
+          "value": "Steel diamond"
+        },
+        {
+          "label": "Length × width × height",
+          "value": "2,120 × 780 × 1,075 mm"
+        },
+        {
+          "label": "Wheelbase",
+          "value": "1,450 mm"
+        },
+        {
+          "label": "Seat height",
+          "value": "810 mm"
+        },
+        {
+          "label": "Ground clearance",
+          "value": "150 mm"
+        },
+        {
+          "label": "Curb weight",
+          "value": "203 kg (European ED types); 200 kg (RU types)"
+        },
+        {
+          "label": "Maximum weight capacity",
+          "value": "168 kg; includes rider, passenger, luggage and accessories"
+        },
+        {
+          "label": "Maximum luggage weight",
+          "value": "7 kg; includes luggage and added accessories"
+        },
+        {
+          "label": "Caster / trail",
+          "value": "25° 30′ / 101 mm"
+        },
+        {
+          "label": "Front suspension",
+          "value": "41 mm Showa Separate Function Big Piston upside-down fork"
+        },
+        {
+          "label": "Rear suspension",
+          "value": "Monoshock; 10-stage spring preload"
+        }
+      ]
+    },
+    {
+      "title": "Tyres and brakes",
+      "rows": [
+        {
+          "label": "Front tyre",
+          "value": "120/70ZR17M/C (58W)"
+        },
+        {
+          "label": "Rear tyre",
+          "value": "180/55ZR17M/C (73W)"
+        },
+        {
+          "label": "Tyre type",
+          "value": "Radial, tubeless"
+        },
+        {
+          "label": "Front pressure, cold",
+          "value": "250 kPa (36 psi)"
+        },
+        {
+          "label": "Rear pressure, cold",
+          "value": "290 kPa (42 psi)"
+        },
+        {
+          "label": "Tread service limits",
+          "value": "Front 1.5 mm; rear 2.0 mm; manual service limits, check local legal requirements"
+        },
+        {
+          "label": "Brakes",
+          "value": "Two-channel Anti-lock Braking System (ABS); dual 310 mm front discs; 240 mm rear disc"
+        }
+      ]
+    },
+    {
+      "title": "Maintenance settings",
+      "rows": [
+        {
+          "label": "Spark plugs",
+          "value": "NGK IMR9E-9HES or DENSO VUH27ES"
+        },
+        {
+          "label": "Spark plug gap",
+          "value": "0.8–0.9 mm; non-adjustable"
+        },
+        {
+          "label": "Throttle grip free play",
+          "value": "2–6 mm"
+        },
+        {
+          "label": "Valve clearance values",
+          "value": "Not specified in the owner’s manual; use the model-specific workshop manual"
+        }
+      ]
+    },
+    {
+      "title": "Electrical",
+      "rows": [
+        {
+          "label": "Battery",
+          "value": "YTZ10 or FTZ10S; 12 V, 8.6 Ah (10-hour rating) / 9.1 Ah (20-hour rating)"
+        },
+        {
+          "label": "Alternator output",
+          "value": "370 W"
+        },
+        {
+          "label": "Starting",
+          "value": "Electric"
+        },
+        {
+          "label": "Lighting",
+          "value": "LED headlight, tail/brake light, indicators and licence plate light"
+        },
+        {
+          "label": "Main fuse",
+          "value": "30 A"
+        },
+        {
+          "label": "Other fuse ratings",
+          "value": "30 A, 20 A, 15 A, 10 A, 7.5 A; locations and circuit assignments are not stated in the specifications"
+        }
+      ]
+    }
+  ],
+  "fluids": [
+    {
+      "label": "Engine Oil",
+      "capacity": "2.3 L after draining; 2.6 L with filter; 3.0 L after disassembly",
+      "spec": "SAE 10W-30; API SJ or higher, excluding Energy Conserving and Resource Conserving oils; JASO T 903 MA."
+    },
+    {
+      "label": "Coolant",
+      "capacity": "2.50 L cooling system",
+      "spec": "Pro Honda HP Coolant; use the owner’s manual procedure."
+    },
+    {
+      "label": "Fuel Tank",
+      "capacity": "15.4 L",
+      "spec": "Unleaded petrol, 91 RON or higher; up to 10% ethanol."
+    },
+    {
+      "label": "Brake Fluid",
+      "capacity": null,
+      "spec": "Honda DOT 4 Brake Fluid."
+    },
+    {
+      "label": "Drive Chain Lubricant",
+      "capacity": null,
+      "spec": "O-ring-compatible chain lubricant; SAE 80 or 90 gear oil if unavailable."
+    }
+  ]
+}

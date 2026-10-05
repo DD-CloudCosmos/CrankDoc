@@ -1,25 +1,25 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { CB1000RReference } from './CB1000RReference'
-import { cb1000rServiceIntervals, cb1000rSpecSections } from '@/lib/cb1000r'
+import { BikeReference } from './BikeReference'
+import { cb1000rServiceIntervals, cb1000rSpecSections, cb1000rScheduleNotes } from '@/lib/cb1000r'
 
 describe('CB1000R reference', () => {
   it('expands and collapses every service and schedule notes', () => {
-    const { container } = render(<CB1000RReference intervals={cb1000rServiceIntervals} />)
+    const { container } = render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} intervals={cb1000rServiceIntervals} />)
     fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
     for (const details of container.querySelectorAll('details')) expect(details).toHaveAttribute('open')
     fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
     for (const details of container.querySelectorAll('details')) expect(details).not.toHaveAttribute('open')
   })
   it('expands and collapses all sections, including nested details', () => {
-    const { container } = render(<CB1000RReference />)
+    const { container } = render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} />)
     fireEvent.click(screen.getByRole('button', { name: 'Expand all' }))
     for (const details of container.querySelectorAll('details')) expect(details).toHaveAttribute('open')
     fireEvent.click(screen.getByRole('button', { name: 'Collapse all' }))
     for (const details of container.querySelectorAll('details')) expect(details).not.toHaveAttribute('open')
   })
   it('starts with Engine open and preserves every specification', () => {
-    const { container } = render(<CB1000RReference />)
+    const { container } = render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} />)
     expect(screen.getByText('Engine').closest('details')).toHaveAttribute('open')
     expect(screen.getByText('Transmission').closest('details')).not.toHaveAttribute('open')
     for (const section of cb1000rSpecSections) for (const row of section.rows) {
@@ -30,7 +30,7 @@ describe('CB1000R reference', () => {
     expect(container.textContent).toContain('1.115')
   })
   it('searches measurement conditions, opens matches and recovers after clearing', () => {
-    render(<CB1000RReference />)
+    render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} />)
     const input = screen.getByRole('searchbox')
     fireEvent.change(input, { target: { value: 'sidestand' } })
     expect(screen.getByText('Chain slack')).toBeInTheDocument()
@@ -43,7 +43,7 @@ describe('CB1000R reference', () => {
     expect(screen.getByText('Transmission').closest('details')).not.toHaveAttribute('open')
   })
   it('shows all services once and switches to the manual’s miles without converting', () => {
-    render(<CB1000RReference intervals={cb1000rServiceIntervals} />)
+    render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} intervals={cb1000rServiceIntervals} />)
     for (const item of cb1000rServiceIntervals) expect(screen.getAllByText(item.service_name)).toHaveLength(1)
     expect(screen.getByText('At 1,000 km')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Miles' }))
@@ -51,7 +51,7 @@ describe('CB1000R reference', () => {
     expect(screen.getAllByText('Every 8,000 miles or 12 months').length).toBeGreaterThan(0)
   })
   it('finds service details and retains fluids, torques and one-off timing', () => {
-    render(<CB1000RReference intervals={cb1000rServiceIntervals} />)
+    render(<BikeReference sections={cb1000rSpecSections} scheduleNotes={cb1000rScheduleNotes} intervals={cb1000rServiceIntervals} />)
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'oil and filter replacement' } })
     const item = cb1000rServiceIntervals.find(item => item.service_name === 'Engine oil and filter replacement')!
     expect(screen.getByText(item.service_name).closest('details')).toHaveAttribute('open')

@@ -2,16 +2,20 @@
 
 import { useRef, useState } from 'react'
 import { ChevronRight, Search, ListChevronsUpDown, ListChevronsDownUp } from 'lucide-react'
-import { cb1000rFluids } from '@/lib/cb1000r'
 
-export function CB1000RFluids() {
+interface BikeFluidsProps {
+  items: { label: string; capacity: string | null; spec: string | null }[]
+  note?: string
+}
+
+export function BikeFluids({ items, note = 'Quantities depend on the service being performed. Check the model-specific procedure.' }: BikeFluidsProps) {
   const [query, setQuery] = useState('')
   const contentRef = useRef<HTMLDivElement>(null)
   const setExpanded = (open: boolean) => {
     contentRef.current?.querySelectorAll('details').forEach(details => { details.open = open })
   }
   const search = query.trim().toLowerCase()
-  const fluids = cb1000rFluids.filter(fluid => [fluid.label, fluid.capacity, fluid.spec].join(' ').toLowerCase().includes(search))
+  const fluids = items.filter(fluid => [fluid.label, fluid.capacity, fluid.spec].join(' ').toLowerCase().includes(search))
 
   return <div ref={contentRef} className="space-y-5">
     <label className="flex items-center gap-3 rounded-[12px] bg-input px-4">
@@ -34,6 +38,6 @@ export function CB1000RFluids() {
       </details>)}
     </div>
     {!fluids.length && <p role="status" className="py-6 text-center text-muted-foreground">No fluids match your search.</p>}
-    <p className="text-xs leading-relaxed text-muted-foreground">Quantities depend on the service being performed. Check the CB1000R or CB1000RA procedure where values differ.</p>
+    <p className="text-xs leading-relaxed text-muted-foreground">{note}</p>
   </div>
 }

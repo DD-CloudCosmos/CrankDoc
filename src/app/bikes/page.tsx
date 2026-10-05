@@ -156,6 +156,15 @@ export default async function BikesPage({ searchParams }: PageProps) {
         </Link>
       )}
 
+      {(!category || category === 'naked') && (!make || make === 'Honda') && (!search || 'honda cb650r cb650ra 2023'.includes(search.toLowerCase())) && (
+        <Link href="/bikes/honda-cb650ra-2023" className="mb-6 block rounded-[20px] bg-card p-5 shadow-card focus-visible:ring-2 focus-visible:ring-ring">
+          <p className="text-[13px] text-muted-foreground">MODEL REFERENCE</p>
+          <h2 className="mt-1 text-[21px] font-semibold">Honda CB650RA · 2023</h2>
+          <p className="mt-2 text-[15px] text-muted-foreground">European ABS specifications, service schedule and fluids.</p>
+          <p className="mt-3 text-[15px] text-link">View bike reference →</p>
+        </Link>
+      )}
+
       <Suspense fallback={<div className="mb-6 h-11 animate-pulse rounded-[10px] bg-muted" />}>
         <BikeFilters availableMakes={availableMakes} totalCount={error ? undefined : motorcycles.length} />
       </Suspense>

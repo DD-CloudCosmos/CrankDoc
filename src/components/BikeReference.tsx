@@ -2,10 +2,15 @@
 
 import { useRef, useState } from 'react'
 import { ChevronRight, Search, ListChevronsUpDown, ListChevronsDownUp } from 'lucide-react'
-import { cb1000rSpecSections } from '@/lib/cb1000r'
 import type { ServiceInterval } from '@/types/database.types'
 
-export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] }) {
+interface BikeReferenceProps {
+  sections: { title: string; rows: { label: string; value: string }[] }[]
+  intervals?: ServiceInterval[]
+  scheduleNotes?: string
+}
+
+export function BikeReference({ intervals, sections: specSections, scheduleNotes = '' }: BikeReferenceProps) {
   const [query, setQuery] = useState('')
   const contentRef = useRef<HTMLDivElement>(null)
   const setExpanded = (open: boolean) => {
@@ -19,6 +24,7 @@ export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] 
   const chevron = <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-90" />
   const due = (item: ServiceInterval, first = false) => {
     const distance = unit === 'km' ? item.interval_km : item.interval_miles
+    if (!distance && !item.interval_months) return 'Before every ride'
     return `${first ? 'At' : 'Every'} ${[distance ? `${distance.toLocaleString('en-GB')} ${unit}` : null, item.interval_months ? `${item.interval_months} months` : null].filter(Boolean).join(' or ')}`
   }
   const serviceRow = (item: ServiceInterval, first = false) => (
@@ -33,8 +39,7 @@ export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] 
       </div>
     </details>
   )
-  const scheduleNotes = 'Honda schedule, page 3-4. The first service is one-off; other intervals repeat. Perform pre-ride checks too. Honda recommends dealer service for wheels and steering bearings; marked work requires suitable tools, service information and mechanical qualifications.'
-  const notesMatch = matches(scheduleNotes)
+  const notesMatch = Boolean(scheduleNotes) && matches(scheduleNotes)
   const filtered = intervals?.filter(item => matches([item.service_name, item.description, item.fluid_spec, item.torque_spec].join(' ')))
   const first = filtered?.find(item => item.service_name === 'First service (one-off)')
   const recurring = filtered?.filter(item => item.service_name !== 'First service (one-off)') ?? []
@@ -44,7 +49,7 @@ export function CB1000RReference({ intervals }: { intervals?: ServiceInterval[] 
     { title: 'Brakes', test: /brake/ },
     { title: 'Chassis and controls', test: /./ },
   ]
-  const sections = cb1000rSpecSections.map(section => ({ ...section, rows: section.rows.filter(row => matches(`${section.title} ${row.label} ${row.value}`)) })).filter(section => section.rows.length)
+  const sections = specSections.map(section => ({ ...section, rows: section.rows.filter(row => matches(`${section.title} ${row.label} ${row.value}`)) })).filter(section => section.rows.length)
   const seen = new Set<string>()
 
   return <div ref={contentRef} className="space-y-5">

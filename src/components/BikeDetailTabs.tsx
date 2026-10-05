@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { cb1000rFluids, supportsBrakeLesson } from '@/lib/cb1000r'
-import { CB1000RFluids } from '@/components/CB1000RFluids'
-import { CB1000RReference } from '@/components/CB1000RReference'
+import { cb1000rFluids, cb1000rSpecSections, cb1000rScheduleNotes, supportsBrakeLesson } from '@/lib/cb1000r'
+import { cb650rFluids, cb650rSpecSections, cb650rScheduleNotes, supportsCB650RReference } from '@/lib/cb650r'
+import { BikeFluids } from '@/components/BikeFluids'
+import { BikeReference } from '@/components/BikeReference'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
@@ -41,6 +42,7 @@ function getFluidItems(
   serviceIntervals: ServiceInterval[]
 ): FluidItem[] {
   if (supportsBrakeLesson(motorcycle)) return cb1000rFluids
+  if (supportsCB650RReference(motorcycle)) return cb650rFluids
   const items: FluidItem[] = []
 
   if (motorcycle.oil_capacity_liters) {
@@ -171,8 +173,8 @@ export function BikeDetailTabs({
       {/* Tab content */}
       <div className="overflow-hidden rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
-      {displayTab === 'service' && (supportsBrakeLesson(motorcycle) ? <CB1000RReference intervals={serviceIntervals} /> : <ServiceIntervalTable intervals={serviceIntervals} />)}
-      {displayTab === 'fluids' && (supportsBrakeLesson(motorcycle) ? <CB1000RFluids /> : <FluidsContent items={fluidItems} />)}
+      {displayTab === 'service' && (supportsBrakeLesson(motorcycle) ? <BikeReference sections={cb1000rSpecSections} intervals={serviceIntervals} scheduleNotes={cb1000rScheduleNotes} /> : supportsCB650RReference(motorcycle) ? <BikeReference sections={cb650rSpecSections} intervals={serviceIntervals} scheduleNotes={cb650rScheduleNotes} /> : <ServiceIntervalTable intervals={serviceIntervals} />)}
+      {displayTab === 'fluids' && (supportsBrakeLesson(motorcycle) ? <BikeFluids items={cb1000rFluids} note="Quantities depend on the service being performed. Check the CB1000R or CB1000RA procedure where values differ." /> : supportsCB650RReference(motorcycle) ? <BikeFluids items={cb650rFluids} /> : <FluidsContent items={fluidItems} />)}
       {displayTab === 'wiring' && (
         <WiringContent
           docs={wiringDocs}
