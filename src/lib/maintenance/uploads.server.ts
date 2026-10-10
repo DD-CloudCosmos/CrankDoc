@@ -1,6 +1,5 @@
 import sharp from 'sharp'
 import {Worker} from 'node:worker_threads'
-import {createRequire} from 'node:module'
 import type {SupabaseClient} from '@supabase/supabase-js'
 import {createServiceClient} from '@/lib/supabase/server'
 import type { AccountContext } from '@/lib/account'
@@ -48,17 +47,17 @@ export async function validateReceipt(buffer:Buffer,extension:string):Promise<st
  return `image/${format}`
 }
 async function structuralPdf(buffer:Buffer):Promise<void> {
- const modulePath=createRequire(import.meta.url).resolve('pdf-lib')
  await new Promise<void>((resolve,reject)=>{
   const worker=new Worker(`
    const {parentPort,workerData}=require('node:worker_threads');
-   const {PDFDocument}=require(workerData.modulePath);
+   const {createRequire}=require('node:module');
+   const {PDFDocument}=createRequire(workerData.root+'/package.json')('pdf-lib');
    PDFDocument.load(workerData.bytes,{ignoreEncryption:false,throwOnInvalidObject:true,updateMetadata:false}).then(pdf=>{
     if(pdf.getPageCount()<1) throw new Error('Missing pages');
     for(const page of pdf.getPages()) {const size=page.getSize();if(!Number.isFinite(size.width)||!Number.isFinite(size.height)||size.width<=0||size.height<=0)throw new Error('Invalid page');}
     parentPort.postMessage(true);
    }).catch(()=>parentPort.postMessage(false));
-  `,{eval:true,workerData:{modulePath,bytes:new Uint8Array(buffer)},resourceLimits:{maxOldGenerationSizeMb:128,maxYoungGenerationSizeMb:16}})
+  `,{eval:true,workerData:{root:process.cwd(),bytes:new Uint8Array(buffer)},resourceLimits:{maxOldGenerationSizeMb:128,maxYoungGenerationSizeMb:16}})
   const finish=(valid:boolean)=>{clearTimeout(timer);void worker.terminate();if(valid)resolve();else reject(new FileError(415,'The PDF is corrupt, encrypted or too complex.'))}
   const timer=setTimeout(()=>finish(false),5000)
   worker.once('message',finish);worker.once('error',()=>finish(false));worker.once('exit',code=>{if(code!==0)finish(false)})
