@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, useRef, useCallback, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import Link from 'next/link'
+import { clearChecklistDrafts } from '@/hooks/checklistDrafts'
 import { createAuthBrowserClient } from '@/lib/supabase/auth-browser'
 
 const Owner = createContext('')
@@ -32,6 +33,7 @@ export function PrivateGarage({ ownerId, children }: { ownerId: string; children
     let revoked = false
     const revoke = () => {
       revoked = true
+      clearChecklistDrafts(ownerId)
       generation++
       setAllowed(false)
       setInvalidated(true)
