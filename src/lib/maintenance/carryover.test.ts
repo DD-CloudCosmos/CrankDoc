@@ -24,3 +24,19 @@ it('resets a matching row to pending without changing its new specification',()=
  const result=appendCarriedTasks([taskFixture({state:'done',doneAt:'2026-10-10T00:00:00Z',notes:'Current',specification:'New'})],source,[source.tasks[0].id],()=> 'unused')
  expect(result[0]).toMatchObject({state:'todo',doneAt:null,notes:'',reason:'',specification:'New'})
 })
+
+it('keeps every selected origin when valid source rows share a stable key',()=>{
+ const source=jobFixture({tasks:[taskFixture({id:'first',notes:'First notes'}),taskFixture({id:'second',notes:'Second notes'})]})
+ const target=taskFixture({id:'target',label:'New definition',specification:'New specification'})
+ const result=appendCarriedTasks([target],source,['first','second'],()=> 'fresh')
+ expect(result).toHaveLength(2)
+ expect(result[0]).toMatchObject({id:'target',label:'New definition',specification:'New specification',origin:{taskId:'first',previousNotes:'First notes'}})
+ expect(result[1]).toMatchObject({id:'fresh',state:'todo',notes:'',doneAt:null,origin:{taskId:'second',previousNotes:'Second notes'}})
+ expect(appendCarriedTasks([],source,['first','second'],()=>crypto.randomUUID())).toHaveLength(2)
+})
+
+it('uses each unused matching target once for duplicate-key selections',()=>{
+ const source=jobFixture({tasks:[taskFixture({id:'first',notes:'One'}),taskFixture({id:'second',notes:'Two'})]})
+ const result=appendCarriedTasks([taskFixture({id:'target-one',specification:'Spec one'}),taskFixture({id:'target-two',specification:'Spec two'})],source,['first','second'],()=> 'unused')
+ expect(result.map(task=>[task.id,task.specification,task.origin?.taskId])).toEqual([['target-one','Spec one','first'],['target-two','Spec two','second']])
+})

@@ -75,7 +75,28 @@ async function main() {
   assert.ok((await startJob(account,old)).ok);const before=await getJob(account,old.id)
   assert.ok((await startJob(account,{...draft(),bikeId:noChoiceBike.id})).ok)
   assert.deepEqual(await getJob(account,old.id),before)
-  console.log('PASS: local two-owner carry transaction, retries, conflicts, counts, insert/closure rollback, latest creation order and historical facts')
+  for(const matchTarget of [false,true]) {
+   const duplicateBike=await addBike(account,input,crypto.randomUUID())
+   const duplicateTasks=[taskFixture({id:crypto.randomUUID()}),taskFixture({id:crypto.randomUUID()})]
+   const duplicateSource=jobFixture({id:crypto.randomUUID(),bikeId:duplicateBike.id,tasks:duplicateTasks})
+   assert.ok((await startJob(account,duplicateSource)).ok)
+   assert.ok((await saveTaskPatch(account,duplicateSource.id,1,duplicateTasks[0].id,{notes:'First origin notes'})).ok)
+   assert.ok((await saveTaskPatch(account,duplicateSource.id,2,duplicateTasks[1].id,{notes:'Second origin notes'})).ok)
+   const sourceBefore=await getJob(account,duplicateSource.id)
+   const newDefinition=taskFixture({id:crypto.randomUUID(),label:'New matching definition',specification:'New matching specification'})
+   const destination=jobFixture({id:crypto.randomUUID(),bikeId:duplicateBike.id,tasks:matchTarget?[newDefinition]:[taskFixture({id:crypto.randomUUID(),key:null,state:'done',doneAt:new Date().toISOString()})]})
+   const copied=await startJob(account,destination,{sourceJobId:duplicateSource.id,sourceRevision:3,taskIds:duplicateTasks.map(task=>task.id),closePrevious:false})
+   assert.ok(copied.ok)
+   const rows=copied.value.tasks.filter(task=>task.origin!==null)
+   assert.equal(rows.length,2)
+   assert.deepEqual(rows.map(task=>task.origin?.taskId),duplicateTasks.map(task=>task.id))
+   assert.deepEqual(rows.map(task=>task.origin?.previousNotes),['First origin notes','Second origin notes'])
+   assert.equal(new Set(copied.value.tasks.map(task=>task.id)).size,copied.value.tasks.length)
+   for(const row of rows) {assert.equal(row.state,'todo');assert.equal(row.notes,'');assert.equal(row.doneAt,null)}
+   if(matchTarget) {assert.equal(rows[0].id,newDefinition.id);assert.equal(rows[0].label,newDefinition.label);assert.equal(rows[0].specification,newDefinition.specification)}
+   assert.deepEqual(await getJob(account,duplicateSource.id),sourceBefore)
+  }
+  console.log('PASS: local two-owner carry transaction, retries, conflicts, counts, insert/closure rollback, latest creation order, historical facts and duplicate-key origins')
  } finally {await sql.end();await cleanup()}
 }
 main().catch(error=>{console.error(error);process.exitCode=1})

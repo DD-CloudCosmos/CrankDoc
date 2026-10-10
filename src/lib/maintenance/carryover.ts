@@ -8,7 +8,7 @@ export function appendCarriedTasks(target:JobTask[],source:JobView,selected:stri
  const result=target.map(task=>({...task}))
  for(const task of carryCandidates(source).filter(task=>selected.includes(task.id))) {
   const origin={jobId:source.id,taskId:task.id,previousNotes:task.notes}
-  const index=task.key===null?-1:result.findIndex(row=>row.key===task.key)
+  const index=task.key===null?-1:result.findIndex(row=>row.key===task.key && row.origin===null)
   if(index>=0) result[index]={...result[index],state:'todo',reason:'',notes:'',doneAt:null,origin}
   else result.push({...task,id:newId(),state:'todo',reason:'',notes:'',doneAt:null,origin})
  }
