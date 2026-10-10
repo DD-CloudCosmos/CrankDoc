@@ -42,7 +42,7 @@ Time-based work belongs in the checklist only when applicable to the selected se
 
 ## Working through a checklist
 
-Starting a template creates an independent job for that motorcycle. Copy the template version and task text into the job so later template edits do not rewrite an existing checklist or service history.
+Starting a template creates an independent job for that motorcycle, with its own date and mileage. Copy the template version and task text into the job so later template edits do not rewrite an existing checklist or service history. The job remains In progress until every task is marked Done or the user explicitly selects Complete job. Leaving the page, printing, or passing a scheduled date or mileage never closes it.
 
 The tablet view shows the bike, service title, job mileage and a quiet progress count such as 4 of 12 tasks done. Rows have a large checkbox, the task action and an expandable notes area. Keep supporting reference, relevant specifications and any task warning inside the expanded row. Essential warnings must remain visible before starting the affected task. Do not invent missing procedure or specification details.
 
@@ -50,7 +50,9 @@ Tasks begin To do. Ticking a checkbox changes a task to Done and records when it
 
 Save progress while working and allow the user to leave and resume the job. Show whether changes have been saved. If saving fails, retain the unsaved form, show a retry action, and never claim the work is stored. Offline synchronisation is outside the first version.
 
-Finish and log asks for the date and mileage and shows unfinished or skipped tasks before confirmation. Users can finish with remaining work, but the history then says Partially completed and preserves every task's state and notes. Completed means all applicable tasks were done; skipped and unfinished tasks prevent that label. Not applicable tasks require a recorded reason.
+Marking the last task Done automatically closes the job as Completed and adds it to the bike's maintenance history using the job's recorded date and mileage. Show the saved result and allow those details to be corrected. Closing is saved together with the final task update; a save failure must not show the job as successfully closed.
+
+Complete job is also available while work remains. It shows the date, mileage and unfinished or skipped tasks before confirmation. Explicitly closing a job with unfinished or skipped work creates a Partially completed history entry and preserves every task's state and notes. It does not tick outstanding tasks. Completed means all applicable tasks were done; Not applicable tasks require a recorded reason and may be excluded only through explicit completion. Costs and receipts remain optional and do not keep an otherwise finished job open.
 
 Quick entries can be saved as custom templates using their task descriptions. New jobs always start with fresh task states, empty completion dates, and empty work notes; costs and receipts are not copied into a template.
 
@@ -72,7 +74,7 @@ Retain existing selected-model shortcuts when introducing individual bike record
 
 Verify adding duplicate models creates independent bikes and histories. Verify quick entries work without optional fields; historical mileage does not lower the latest reading; searching finds jobs and notes; and archiving retains history.
 
-Verify starting a template copies the version, starts fresh states, and isolates each job. Verify per-line notes survive progress saves, failed saves remain visible, skipped tasks do not count as done, and partial jobs are labelled accurately. Verify later template changes leave existing jobs unchanged.
+Verify starting a template copies the version, starts fresh states, and isolates each job. Verify leaving and returning, printing, or passing an interval keeps an unfinished job active. Verify marking every task Done closes it once and creates one history entry. Verify explicit completion preserves outstanding task states and labels partial jobs accurately. Verify optional costs and receipts do not block completion, per-line notes survive progress saves, failed saves remain visible, and skipped tasks do not count as done. Verify later template changes leave existing jobs unchanged.
 
 Verify private records and receipts cannot be accessed through another account. Check upload failures and exports. Verify scheduled template content against the stated source before release, including first-service and variant conditions.
 
