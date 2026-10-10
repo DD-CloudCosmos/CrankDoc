@@ -31,6 +31,7 @@ describe('GarageStrip', () => {
     store({ bikeIds: ['a', 'b'], skill: null, onboarded: true })
     render(<GarageStrip bikes={bikes} />)
     expect(screen.getByRole('link', { name: 'Diagnose BMW R 1250 GS' })).toHaveAttribute('href', '/diagnose?bike=a')
+    expect(screen.getByRole('link', { name: 'Open My Garage' })).toHaveAttribute('href', '/garage')
     expect(screen.getByText('8 guides')).toBeInTheDocument()
     expect(screen.getByText('1 guide')).toBeInTheDocument()
   })

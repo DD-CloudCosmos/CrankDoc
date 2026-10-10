@@ -13,14 +13,14 @@ async function catalogue(account: AccountContext, id: string): Promise<Motorcycl
 async function view(account: AccountContext, row: BikeRow): Promise<BikeView> {
   let libraryImageUrl: string | null = null
   let modelReferenceUrl: string | null = null
-  if (row.motorcycle_id && row.year !== null) {
+  if (row.motorcycle_id) {
     const model = await catalogue(account, row.motorcycle_id)
     // Catalogue changes must never attach a reference for a different year/model.
-    if (model.make === row.make && model.model === row.model && row.year >= model.year_start && (model.year_end === null || row.year <= model.year_end)) {
+    if (model.make === row.make && model.model === row.model && (row.year === null || (row.year >= model.year_start && (model.year_end === null || row.year <= model.year_end)))) {
       const { data, error } = await account.client.from('motorcycle_images').select('image_url').eq('motorcycle_id', model.id).eq('is_primary', true).limit(1)
       if (error) throw new Error('Catalogue image unavailable')
       libraryImageUrl = data?.[0]?.image_url ?? model.image_url
-      modelReferenceUrl = `/bikes/${model.id}`
+      if (row.year !== null) modelReferenceUrl = `/bikes/${model.id}`
       if (model.make === 'Honda' && ['CB650R', 'CB650RA'].includes(model.model) && row.year === 2023 && model.year_start === 2023 && model.year_end === 2023) modelReferenceUrl = '/bikes/honda-cb650ra-2023'
       if (model.make === 'Honda' && ['CB1000R', 'CB1000RA'].includes(model.model) && row.year === 2008 && model.year_start === 2008 && model.year_end === 2008) modelReferenceUrl = '/bikes/honda-cb1000r-sc60'
     }
@@ -81,7 +81,7 @@ export async function importSelectedModels(account: AccountContext, modelIds: st
   const result: BikeView[] = []
   for (const modelId of new Set(modelIds)) {
     const model = await catalogue(account, requireBikeId(modelId))
-    const importKey = `browser-selection:${model.id}`
+    const importKey = `local-v1:${model.id}`
     const { error } = await account.client.from('garage_bikes').upsert({ id: crypto.randomUUID(), owner_id: account.userId,
       import_key: importKey, motorcycle_id: model.id, make: model.make, model: model.model }, { onConflict: 'owner_id,import_key', ignoreDuplicates: true })
     if (error) throw new Error('Could not import bike')

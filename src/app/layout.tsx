@@ -71,7 +71,7 @@ export default function RootLayout({
         <OfflineIndicator />
         <div className="flex min-h-screen flex-col">
           <Navigation />
-          <main id="main-content" className="flex-1 pb-[calc(84px+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
+          <main id="main-content" className="flex-1 pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-0">{children}</main>
         </div>
         <InstallPrompt />
         <ServiceWorkerRegistration />

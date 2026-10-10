@@ -30,6 +30,7 @@ const tabItems = [
 
 /** Items behind the mobile "More" tab. */
 const moreItems = [
+  { name: "My Garage", href: "/garage", icon: Bike },
   { name: "Glossary", href: "/glossary", icon: BookOpen },
   { name: "Recalls", href: "/recalls", icon: AlertTriangle },
   { name: "VIN Decoder", href: "/vin", icon: ScanLine },
@@ -38,6 +39,7 @@ const moreItems = [
 
 /** Links in the desktop top bar. */
 const desktopItems = [
+  { name: "My Garage", href: "/garage" },
   { name: "Diagnose", href: "/diagnose" },
   { name: "Bikes", href: "/bikes" },
   { name: "Codes", href: "/dtc" },
@@ -95,7 +97,7 @@ export function Navigation() {
             <Logo />
           </Link>
 
-          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-7 md:flex">
+          <nav aria-label="Primary" className="hidden flex-1 items-center justify-center gap-4 lg:flex">
             {desktopItems.map((item) => {
               const isActive = isActiveRoute(pathname, item.href);
               return (
@@ -104,7 +106,7 @@ export function Navigation() {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "text-[13px] transition-colors",
+                    "flex min-h-[44px] items-center whitespace-nowrap text-[13px] transition-colors",
                     isActive ? "font-semibold text-foreground" : "text-foreground/75 hover:text-foreground"
                   )}
                 >
@@ -114,14 +116,14 @@ export function Navigation() {
             })}
           </nav>
 
-          <div className="ml-auto hidden md:block">
+          <div className="ml-auto hidden lg:block">
             <DesktopSearch />
           </div>
 
           <button
             type="button"
             onClick={handleSearchOpen}
-            className="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-foreground md:hidden"
+            className="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-foreground lg:hidden"
             aria-label="Open search"
           >
             <Search className="h-5 w-5" />
@@ -132,7 +134,7 @@ export function Navigation() {
       {/* Mobile tab bar: frosted glass, pinned to the bottom edge */}
       <nav
         aria-label="Tabs"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-separator bg-nav-glass pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-[1.8] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-separator bg-nav-glass pb-[env(safe-area-inset-bottom)] backdrop-blur-xl backdrop-saturate-[1.8] lg:hidden"
       >
         <div className="grid h-[60px] grid-cols-5">
           {tabItems.map((item) => {

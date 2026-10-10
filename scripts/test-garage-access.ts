@@ -39,7 +39,7 @@ async function main() {
     await assert.rejects(addBike(accountA, { ...input, year: 2024 }, crypto.randomUUID()))
     await assert.rejects(editBike(accountA, id, { ...input, year: 2022 }))
     const unknown = await addBike(accountA, { ...input, year: null }, crypto.randomUUID())
-    assert.equal(unknown.libraryImageUrl, null)
+    assert.ok(unknown.libraryImageUrl)
     assert.equal(unknown.modelReferenceUrl, null)
     await addBike(accountA, input, crypto.randomUUID())
     assert.equal((await listBikes(accountA)).length, 3)

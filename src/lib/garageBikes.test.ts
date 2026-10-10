@@ -27,3 +27,12 @@ describe('catalogue scope', () => {
     expect(() => validateCatalogueScope({ ...input, model: 'Different' }, model)).toThrow()
   })
 })
+
+describe('bike mileage display', () => {
+  it('keeps unknown and zero distinct, and offers miles without altering stored kilometres', async () => {
+    const { formatBikeMileage } = await import('./garageBikes')
+    expect(formatBikeMileage(null, 'mi')).toBe('Mileage not recorded')
+    expect(formatBikeMileage(0)).toBe('0 km')
+    expect(formatBikeMileage(1.609344, 'mi')).toBe('1 mi')
+  })
+})

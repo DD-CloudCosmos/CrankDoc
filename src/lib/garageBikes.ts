@@ -35,3 +35,9 @@ export function validateCatalogueScope(input: BikeInput, model: { make: string; 
   if (input.make !== model.make || input.model !== model.model) throw new Error('Bike does not match catalogue model')
   if (input.year !== null && (input.year < model.year_start || (model.year_end !== null && input.year > model.year_end))) throw new Error('Year outside catalogue model range')
 }
+
+export function formatBikeMileage(km: number | null, unit: 'km' | 'mi' = 'km'): string {
+  if (km === null) return 'Mileage not recorded'
+  const distance = unit === 'mi' ? km / 1.609344 : km
+  return `${distance.toLocaleString(undefined, { maximumFractionDigits: 3 })} ${unit}`
+}

@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs'
+import cb1000rRecord from '../../data/motorcycles/honda-cb1000r-2008.json'
+import cb650raRecord from '../../data/motorcycles/honda-cb650ra-2023.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { AccountContext } from './account'
 import { addBike, archiveBike, editBike, getBike, importSelectedModels, listBikes, removeBike } from './garageRepository.server'
@@ -87,9 +90,9 @@ describe('owner-scoped repository', () => {
     await expect(getBike(account, id)).rejects.toThrow('Catalogue image')
   })
   it('imports unique catalogue IDs with a per-owner retry key and unknown year', async () => {
-    responses = [ok(model), ok(null), ok({ ...row, motorcycle_id: modelId, model: model.model })]
+    responses = [ok(model), ok(null), ok({ ...row, motorcycle_id: modelId, model: model.model }), ok(model), ok([])]
     expect(await importSelectedModels(account, [modelId, modelId])).toHaveLength(1)
-    expect(queries[1].upsert).toHaveBeenCalledWith(expect.objectContaining({ owner_id: 'owner', import_key: `browser-selection:${modelId}` }), { onConflict: 'owner_id,import_key', ignoreDuplicates: true })
+    expect(queries[1].upsert).toHaveBeenCalledWith(expect.objectContaining({ owner_id: 'owner', import_key: `local-v1:${modelId}` }), { onConflict: 'owner_id,import_key', ignoreDuplicates: true })
     expect(queries[2].eq).toHaveBeenCalledWith('owner_id', 'owner')
   })
   it('reports failed import write or read', async () => {
@@ -97,5 +100,25 @@ describe('owner-scoped repository', () => {
     await expect(importSelectedModels(account, [modelId])).rejects.toThrow('Could not import')
     responses = [ok(model), ok(null), failure]
     await expect(importSelectedModels(account, [modelId])).rejects.toThrow('Could not load imported')
+  })
+})
+
+describe('garage catalogue mapping and browser imports', () => {
+  it('uses library art for a linked unknown-year model without claiming reference coverage', async () => {
+    responses = [ok({ ...row, motorcycle_id: modelId, model: model.model }), ok(model), ok([])]
+    expect(await getBike(account, id)).toMatchObject({ libraryImageUrl: '/fallback.webp', modelReferenceUrl: null, year: null })
+  })
+  it('uses the specified import key', async () => {
+    responses = [ok(model), ok(null), ok({ ...row, motorcycle_id: null })]
+    await importSelectedModels(account, [modelId])
+    expect(queries[1].upsert).toHaveBeenCalledWith(expect.objectContaining({ import_key: `local-v1:${modelId}` }), expect.anything())
+  })
+})
+
+describe('actual Honda catalogue records', () => {
+  it.each([[cb1000rRecord, '/bikes/honda-cb1000r-sc60'], [cb650raRecord, '/bikes/honda-cb650ra-2023']] as const)('maps the checked-in record to an existing route', async (record, route) => {
+    responses = [ok({ ...row, motorcycle_id: record.id, make: record.make, model: record.model, year: record.year_start }), ok(record), ok([])]
+    expect((await getBike(account, id))?.modelReferenceUrl).toBe(route)
+    expect(existsSync(`src/app${route}/page.tsx`)).toBe(true)
   })
 })
