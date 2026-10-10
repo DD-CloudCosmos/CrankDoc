@@ -16,7 +16,7 @@ export const revalidate = 3600
 const GARAGE_FEATURES = [
   { icon: WifiOff, title: 'Works offline.', body: "Pages you've opened keep working without signal." },
   { icon: Smartphone, title: 'Add to Home Screen.', body: 'Installs like an app. No app store, no updates to wait for.' },
-  { icon: Lock, title: 'No account. Ever.', body: 'Your garage lives on your device. Nothing to sign up for.' },
+  { icon: Lock, title: 'Browse without an account.', body: 'Sign in to save your garage.' },
 ]
 
 export default async function Home() {

@@ -73,7 +73,7 @@ async function getTreesForBike(bikeId: string): Promise<DiagnosticTree[]> {
     return []
   }
 
-  return data ?? []
+  return (data ?? []) as DiagnosticTree[]
 }
 
 async function getUniversalTrees(): Promise<DiagnosticTree[]> {
@@ -90,7 +90,7 @@ async function getUniversalTrees(): Promise<DiagnosticTree[]> {
     return []
   }
 
-  return data ?? []
+  return (data ?? []) as DiagnosticTree[]
 }
 
 export default async function DiagnosePage({ searchParams }: PageProps) {

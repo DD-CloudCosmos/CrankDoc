@@ -62,3 +62,6 @@ data/manuals/
 .claude/HANDOFF.md
 .claude/settings.local.json
 CLAUDE.local.md
+
+# Local garage database and mailbox credentials
+.env.garage.local

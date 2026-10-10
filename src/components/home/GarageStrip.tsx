@@ -68,6 +68,7 @@ export function GarageStrip({ bikes }: GarageStripProps) {
             ))}
           </ul>
         )}
+        <Link href="/garage" prefetch={false} className="mt-3 inline-block min-h-[44px] py-3 text-[17px] text-link hover:underline">Open My Garage</Link>
       </div>
     </section>
   )

@@ -46,7 +46,7 @@ describe('Navigation', () => {
   it('renders desktop links including VIN', () => {
     render(<Navigation />)
     const nav = getDesktopNav()
-    for (const name of ['Diagnose', 'Bikes', 'Codes', 'Glossary', 'Recalls', 'VIN']) {
+    for (const name of ['My Garage', 'Diagnose', 'Bikes', 'Codes', 'Glossary', 'Recalls', 'VIN']) {
       expect(within(nav).getByRole('link', { name })).toBeInTheDocument()
     }
   })
@@ -71,6 +71,7 @@ describe('Navigation', () => {
     render(<Navigation />)
     fireEvent.click(screen.getByLabelText('More navigation'))
     const tabs = getTabBar()
+    expect(within(tabs).getByRole('link', { name: 'My Garage' })).toHaveAttribute('href', '/garage')
     expect(within(tabs).getByRole('link', { name: 'Glossary' })).toHaveAttribute('href', '/glossary')
     expect(within(tabs).getByRole('link', { name: 'Recalls' })).toHaveAttribute('href', '/recalls')
     expect(within(tabs).getByRole('link', { name: 'VIN Decoder' })).toHaveAttribute('href', '/vin')
@@ -155,4 +156,18 @@ describe('Navigation', () => {
     fireEvent.click(screen.getByLabelText('Open search'))
     expect(more).toHaveAttribute('aria-expanded', 'false')
   })
+})
+
+it('keeps garage in More on tablets and starts desktop navigation at 1024px', () => {
+  render(<Navigation />)
+  expect(getDesktopNav()).toHaveClass('hidden', 'lg:flex')
+  expect(getTabBar()).toHaveClass('lg:hidden')
+  expect(within(getTabBar()).queryByRole('link', { name: 'My Garage' })).not.toBeInTheDocument()
+  fireEvent.click(screen.getByLabelText('More navigation'))
+  expect(within(getTabBar()).getByRole('link', { name: 'My Garage' })).toHaveAttribute('href', '/garage')
+})
+it('reserves bottom-tab space through the same tablet breakpoint', async () => {
+  const { readFileSync } = await import('node:fs')
+  const layout = readFileSync('src/app/layout.tsx', 'utf8')
+  expect(layout).toContain('pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-0')
 })

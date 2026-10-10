@@ -48,7 +48,7 @@ describe('service worker', () => {
   })
 
   it('uses a cache version newer than the pre-makeover cache', () => {
-    expect(sw.source).toContain("const CACHE_NAME = 'crankdoc-v3'")
+    expect(sw.source).toContain("const CACHE_NAME = 'crankdoc-v4'")
   })
 
   it('serves page navigations from the network first and caches them', async () => {

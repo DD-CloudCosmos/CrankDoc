@@ -66,7 +66,7 @@ async function getTree(treeId: string): Promise<DiagnosticTree | null> {
     return null
   }
 
-  return data
+  return data as DiagnosticTree
 }
 
 async function getMotorcycleName(motorcycleId: string): Promise<string | null> {

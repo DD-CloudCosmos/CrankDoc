@@ -1,3 +1,4 @@
+import { HistoryPositions } from '@/components/HistoryPositions'
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -68,10 +69,11 @@ export default function RootLayout({
           Skip to main content
         </a>
         <JsonLd data={generateWebApplicationSchema()} />
+        <HistoryPositions />
         <OfflineIndicator />
         <div className="flex min-h-screen flex-col">
           <Navigation />
-          <main id="main-content" className="flex-1 pb-[calc(84px+env(safe-area-inset-bottom))] md:pb-0">{children}</main>
+          <main id="main-content" className="flex-1 pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-0">{children}</main>
         </div>
         <InstallPrompt />
         <ServiceWorkerRegistration />

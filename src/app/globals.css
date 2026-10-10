@@ -167,3 +167,25 @@ body {
 .wire-black { stroke: #181818; }
 .wire-green { stroke: #16833c; }
 .wire-yellow { stroke: #f2cc21; }
+
+/* Workshop sheets use paper tokens independently of the screen theme. */
+.garage-print-sheet .print-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media print {
+  @page { size: auto; margin: 12mm; }
+  body:has(.garage-print-sheet) { --print-background: #fff; --print-foreground: #000; background: var(--print-background); color: var(--print-foreground); }
+  body:has(.garage-print-sheet) > a,
+  body:has(.garage-print-sheet) > .fixed,
+  body:has(.garage-print-sheet) nav,
+  body:has(.garage-print-sheet) header:not(.garage-print-sheet header),
+  body:has(.garage-print-sheet) footer,
+  body:has(.garage-print-sheet) button,
+  body:has(.garage-print-sheet) a,
+  body:has(.garage-print-sheet) .garage-print-action { display: none !important; }
+  #main-content:has(.garage-print-sheet) { padding-bottom: 0; }
+  .garage-print-page { max-width: none; margin: 0; padding: 0; }
+  .garage-print-sheet { background: var(--print-background); color: var(--print-foreground); font-size: 11pt; }
+  .garage-print-sheet .print-task { break-inside: avoid; border-color: var(--print-foreground); }
+  .garage-print-sheet .print-task-long { break-inside: auto; }
+  .garage-print-sheet .print-writing-space { min-height: 18mm; border-color: var(--print-foreground); }
+  .garage-print-sheet h2, .garage-print-sheet h3 { break-after: avoid; }
+}
