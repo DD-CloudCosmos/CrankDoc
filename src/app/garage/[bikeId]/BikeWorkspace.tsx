@@ -14,6 +14,11 @@ import type { JobView, PrivateFile, SavedResult } from '@/lib/maintenance/types'
 import { useGarageOwner, useGarageReconciliation } from '../PrivateGarage'
 import { saveBike, setArchived, deleteBike, loadBikeWorkspace, saveQuickJob, startMaintenanceJob, correctJob, removeJob } from '../actions'
 
+import { TemplatePicker } from './TemplatePicker'
+import { reviewedTemplates } from '@/lib/maintenance/templates'
+import { loadTemplates, savePersonalTemplate, startTemplateMaintenance } from '../actions'
+import type { Template } from '@/lib/maintenance/types'
+
 import { previousActivity } from '@/lib/maintenance/carryover'
 
 const emptyJobs: JobView[] = []
@@ -25,6 +30,8 @@ export function BikeWorkspace({ bike: initial, jobs: initialJobs = emptyJobs,mod
   const [jobs,setJobs]=useState(initialJobs)
   const [files,setFiles]=useState<PrivateFile[]>([])
   const [logging,setLogging]=useState(false)
+  const [templates,setTemplates]=useState<Template[]>([])
+  const [showTemplates,setShowTemplates]=useState(false)
   const generation=useRef(0)
   const props=useRef({bike:initial,jobs:initialJobs})
   const [tab, setTab] = useState<'overview' | 'maintenance' | 'details'>('overview')
@@ -109,7 +116,7 @@ export function BikeWorkspace({ bike: initial, jobs: initialJobs = emptyJobs,mod
         if(current!==generation.current || pending.current) throw new Error('The workspace changed. Try reloading the previous activity again.')
         setBike(fresh.bike);setJobs(fresh.jobs);setFiles(fresh.files??[])
         return previousActivity(fresh.jobs)
-      }} previous={previousActivity(jobs)} onStart={(draft,carry)=>mutateJob(()=>startMaintenanceJob(draft,carry,owner),rememberJob)} disabled={busy} onSave={draft=>mutateJob(()=>saveQuickJob(draft,owner),rememberJob)} /></div><MaintenanceHistory bikeId={bike.id} files={files} onFilesChanged={()=>void reconcile().catch(()=>setError('File saved. Refresh to load the latest photos and receipts.'))} jobs={jobs} disabled={busy} onEdit={(id,revision,details)=>mutateJob(()=>correctJob(id,bike.id,revision,details,owner),rememberJob)} onDelete={id=>mutateJob(()=>removeJob(id,bike.id,true,owner),()=>setJobs(current=>current.filter(job=>job.id!==id)))} /></div>
+      }} previous={previousActivity(jobs)} onStart={(draft,carry)=>mutateJob(()=>startMaintenanceJob(draft,carry,owner),rememberJob)} disabled={busy} onSave={draft=>mutateJob(()=>saveQuickJob(draft,owner),rememberJob)} /></div><Button type="button" variant="outline" className="min-h-11" disabled={busy || Boolean(bike.archivedAt)} onClick={async()=>{try{setTemplates(await loadTemplates(bike.id,owner));setShowTemplates(true)}catch(error){setError(error instanceof Error?error.message:'Could not load templates.')}}}>Choose maintenance template</Button>{showTemplates&&<TemplatePicker bike={bike} templates={templates} previous={previousActivity(jobs)} disabled={busy || Boolean(bike.archivedAt)} coverage={reviewedTemplates.filter(entry=>entry.verification==='verified'&&entry.template.motorcycleId===bike.motorcycleId).map(entry=>entry.template)} onConfirmCoverage={()=>setTab('details')} onReloadTemplates={async()=>{setTemplates(await loadTemplates(bike.id,owner))}} onSave={async template=>{const result=await savePersonalTemplate(template,owner);setTemplates(current=>[...current.filter(t=>t.id!==result.id),result]);return result}} onReloadPrevious={async()=>{const fresh=await loadBikeWorkspace(bike.id,owner);setBike(fresh.bike);setJobs(fresh.jobs);return previousActivity(fresh.jobs)}} onStart={(draft,ids,carry)=>mutateJob(()=>startTemplateMaintenance(draft,ids,carry,owner),rememberJob)} />}<MaintenanceHistory bikeId={bike.id} files={files} onFilesChanged={()=>void reconcile().catch(()=>setError('File saved. Refresh to load the latest photos and receipts.'))} jobs={jobs} disabled={busy} onEdit={(id,revision,details)=>mutateJob(()=>correctJob(id,bike.id,revision,details,owner),rememberJob)} onDelete={id=>mutateJob(()=>removeJob(id,bike.id,true,owner),()=>setJobs(current=>current.filter(job=>job.id!==id)))} /></div>
       <div hidden={tab !== 'details'} className="space-y-4"><h2 className="text-[22px] font-semibold">Bike details</h2><BikeForm models={models} initial={bike} disabled={busy} onSave={save} /><div className="flex flex-wrap gap-3 border-t border-separator pt-5"><Button variant="outline" disabled={busy} onClick={() => void archive()}>{bike.archivedAt ? 'Restore bike' : 'Archive bike'}</Button><Button ref={remove} variant="outline" disabled={busy} onClick={() => setConfirm(true)}>Remove bike</Button></div></div>
       {error && <p role="alert">{error}</p>}
     </section>

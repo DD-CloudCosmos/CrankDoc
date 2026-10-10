@@ -86,3 +86,32 @@ export async function startMaintenanceJob(draft:JobDraft,carry:import('@/lib/mai
  if(result.ok) invalidateBike(result.value.bikeId)
  return result
 }
+
+export async function loadTemplates(bikeId:string,ownerId:string) {
+ const account=await accountFor(ownerId),bike=await getBike(account,bikeId)
+ if(!bike)throw new Error('Bike not found')
+ const {listTemplates}=await import('@/lib/maintenance/templates')
+ return listTemplates(account,bike)
+}
+export async function savePersonalTemplate(template:import('@/lib/maintenance/types').Template,ownerId:string) {
+ const {saveCustomTemplate}=await import('@/lib/maintenance/templates')
+ return saveCustomTemplate(await accountFor(ownerId),template)
+}
+export async function startTemplateMaintenance(draft:JobDraft,templateIds:string[],carry:import('@/lib/maintenance/carryover').CarrySelection|null,ownerId:string):Promise<SavedResult<JobView>> {
+ const account=await accountFor(ownerId),bike=await getBike(account,draft.bikeId)
+ if(!bike)return {ok:false,error:'not_found',message:'Bike not found'}
+ const {listTemplates}=await import('@/lib/maintenance/templates')
+ const {combineTemplates}=await import('@/lib/maintenance/templateValidation')
+ const {createTasks}=await import('@/lib/maintenance/checklist')
+ const available=await listTemplates(account,bike)
+ const selected=templateIds.map(id=>available.find(template=>template.id===id))
+ if(!selected.length || selected.some(template=>!template) || new Set(templateIds).size!==templateIds.length)return {ok:false,error:'invalid',message:'Template coverage changed. Reload the templates.'}
+ const template=combineTemplates(selected as import('@/lib/maintenance/types').Template[])
+ if(template.tasks.length!==draft.tasks.length)return {ok:false,error:'invalid',message:'Template changed. Reload before starting.'}
+ // Resolve definitions on the server; never trust a client-supplied verification claim.
+ if(draft.template?.version!==template.version || JSON.stringify(draft.template)!==JSON.stringify(template))return {ok:false,error:'conflict',message:'Template changed. Reload before starting.'}
+ let index=0
+ const result=await startJob(account,{...draft,template,tasks:createTasks(template,()=>draft.tasks[index++].id)},carry)
+ if(result.ok)invalidateBike(bike.id)
+ return result
+}

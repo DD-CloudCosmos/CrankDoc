@@ -632,6 +632,37 @@ export type Database = {
                     }
                 ];
             };
+            "maintenance_templates": {
+                Row: {
+                    "created_at": string;
+                    "definition": NonNullable<Json>;
+                    "id": string;
+                    "owner_id": string;
+                    "title": string;
+                    "updated_at": string;
+                    "version": number;
+                };
+                Insert: {
+                    "created_at"?: string;
+                    "definition": NonNullable<Json>;
+                    "id": string;
+                    "owner_id": string;
+                    "title": string;
+                    "updated_at"?: string;
+                    "version": number;
+                };
+                Update: {
+                    "created_at"?: string;
+                    "definition"?: NonNullable<Json>;
+                    "id"?: string;
+                    "owner_id"?: string;
+                    "title"?: string;
+                    "updated_at"?: string;
+                    "version"?: number;
+                };
+                Relationships: [
+                ];
+            };
             "motorcycle_images": {
                 Row: {
                     "alt_text": string;
@@ -1065,81 +1096,6 @@ export type Database = {
                     isSetofReturn: false;
                 };
             };
-            "start_maintenance_job": {
-                Args: {
-                    "p_draft": Json;
-                    "p_source_job_id"?: string;
-                    "p_source_revision"?: number;
-                    "p_task_ids"?: string[];
-                    "p_close_previous"?: boolean;
-                };
-                Returns: {
-                    "bike_id": string;
-                    "close_reason": string | null;
-                    "closed_at": string | null;
-                    "cost_minor": number | null;
-                    "created_at": string;
-                    "currency": string | null;
-                    "file_cleanup_pending": boolean;
-                    "id": string;
-                    "job_date": string;
-                    "mileage_km": number;
-                    "notes": string;
-                    "owner_id": string;
-                    "parts": string;
-                    "performer": string;
-                    "revision": number;
-                    "status": string;
-                    "tasks": NonNullable<Json>;
-                    "template_id": string | null;
-                    "template_snapshot": Json | null;
-                    "template_version": number | null;
-                    "title": string;
-                };
-                SetofOptions: {
-                    from: "*";
-                    to: "maintenance_jobs";
-                    isOneToOne: true;
-                    isSetofReturn: false;
-                };
-            };
-            "save_task_patch": {
-                Args: {
-                    "p_expected_revision": number;
-                    "p_job_id": string;
-                    "p_patch": Json;
-                    "p_task_id": string;
-                };
-                Returns: {
-                    "bike_id": string;
-                    "close_reason": string | null;
-                    "closed_at": string | null;
-                    "cost_minor": number | null;
-                    "created_at": string;
-                    "currency": string | null;
-                    "file_cleanup_pending": boolean;
-                    "id": string;
-                    "job_date": string;
-                    "mileage_km": number;
-                    "notes": string;
-                    "owner_id": string;
-                    "parts": string;
-                    "performer": string;
-                    "revision": number;
-                    "status": string;
-                    "tasks": NonNullable<Json>;
-                    "template_id": string | null;
-                    "template_snapshot": Json | null;
-                    "template_version": number | null;
-                    "title": string;
-                };
-                SetofOptions: {
-                    from: "*";
-                    to: "maintenance_jobs";
-                    isOneToOne: true;
-                    isSetofReturn: false;
-                };
-            };
             "create_quick_job": {
                 Args: {
                     "p_draft": Json;
@@ -1173,6 +1129,12 @@ export type Database = {
                     isOneToOne: true;
                     isSetofReturn: false;
                 };
+            };
+            "custom_template_valid": {
+                Args: {
+                    "d": Json;
+                };
+                Returns: boolean;
             };
             "edit_job_details": {
                 Args: {
@@ -1290,6 +1252,101 @@ export type Database = {
                     "p_owner_id": string;
                 };
                 Returns: boolean;
+            };
+            "save_custom_template": {
+                Args: {
+                    "p_definition": Json;
+                };
+                Returns: {
+                    "created_at": string;
+                    "definition": NonNullable<Json>;
+                    "id": string;
+                    "owner_id": string;
+                    "title": string;
+                    "updated_at": string;
+                    "version": number;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "maintenance_templates";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            };
+            "save_task_patch": {
+                Args: {
+                    "p_expected_revision": number;
+                    "p_job_id": string;
+                    "p_patch": Json;
+                    "p_task_id": string;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "close_reason": string | null;
+                    "closed_at": string | null;
+                    "cost_minor": number | null;
+                    "created_at": string;
+                    "currency": string | null;
+                    "file_cleanup_pending": boolean;
+                    "id": string;
+                    "job_date": string;
+                    "mileage_km": number;
+                    "notes": string;
+                    "owner_id": string;
+                    "parts": string;
+                    "performer": string;
+                    "revision": number;
+                    "status": string;
+                    "tasks": NonNullable<Json>;
+                    "template_id": string | null;
+                    "template_snapshot": Json | null;
+                    "template_version": number | null;
+                    "title": string;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "maintenance_jobs";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            };
+            "start_maintenance_job": {
+                Args: {
+                    "p_close_previous"?: boolean;
+                    "p_draft": Json;
+                    "p_source_job_id"?: string;
+                    "p_source_revision"?: number;
+                    "p_task_ids"?: (string)[];
+                };
+                Returns: {
+                    "bike_id": string;
+                    "close_reason": string | null;
+                    "closed_at": string | null;
+                    "cost_minor": number | null;
+                    "created_at": string;
+                    "currency": string | null;
+                    "file_cleanup_pending": boolean;
+                    "id": string;
+                    "job_date": string;
+                    "mileage_km": number;
+                    "notes": string;
+                    "owner_id": string;
+                    "parts": string;
+                    "performer": string;
+                    "revision": number;
+                    "status": string;
+                    "tasks": NonNullable<Json>;
+                    "template_id": string | null;
+                    "template_snapshot": Json | null;
+                    "template_version": number | null;
+                    "title": string;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "maintenance_jobs";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
             };
         };
         Enums: {

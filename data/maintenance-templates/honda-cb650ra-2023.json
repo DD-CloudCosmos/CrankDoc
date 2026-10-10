@@ -1,0 +1,2386 @@
+[
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Pre-ride checks still apply. These are explicit printed service columns, not an automatic due calculation. Evaporative-system inspection is omitted from common columns and offered separately for confirmed ED types at 24,000/48,000 km. ",
+    "template": {
+      "id": "cb650ra-1000",
+      "version": 1,
+      "title": "1,000 km first service",
+      "kind": "scheduled",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": 1000,
+      "intervalMonths": null,
+      "frequency": "once",
+      "source": "Honda CB650RA European owner manual, 2023; schedule pp. 69-70. Pre-ride checks remain separate. Evaporative emission inspection at 24,000/48,000 km is omitted from common columns: add it separately only for confirmed ED, II ED, III ED or IV ED types.",
+      "tasks": [
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil-filter:replace",
+          "label": "Replace engine oil filter",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Pre-ride checks still apply. These are explicit printed service columns, not an automatic due calculation. Evaporative-system inspection is omitted from common columns and offered separately for confirmed ED types at 24,000/48,000 km. ",
+    "template": {
+      "id": "cb650ra-12000",
+      "version": 1,
+      "title": "12,000 km scheduled service",
+      "kind": "scheduled",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": 12000,
+      "intervalMonths": null,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; schedule pp. 69-70. Pre-ride checks remain separate. Evaporative emission inspection at 24,000/48,000 km is omitted from common columns: add it separately only for confirmed ED, II ED, III ED or IV ED types.",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain-slider:inspect",
+          "label": "Inspect drive chain slider",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Pre-ride checks still apply. These are explicit printed service columns, not an automatic due calculation. Evaporative-system inspection is omitted from common columns and offered separately for confirmed ED types at 24,000/48,000 km. ",
+    "template": {
+      "id": "cb650ra-24000",
+      "version": 1,
+      "title": "24,000 km scheduled service",
+      "kind": "scheduled",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": 24000,
+      "intervalMonths": null,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; schedule pp. 69-70. Pre-ride checks remain separate. Evaporative emission inspection at 24,000/48,000 km is omitted from common columns: add it separately only for confirmed ED, II ED, III ED or IV ED types.",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:air-cleaner:replace",
+          "label": "Replace air cleaner",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Service more often in unusually wet or dusty conditions.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:spark-plug:inspect",
+          "label": "Inspect spark plug",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil-filter:replace",
+          "label": "Replace engine oil filter",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:secondary-air-supply-system:inspect",
+          "label": "Inspect secondary air supply system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain-slider:inspect",
+          "label": "Inspect drive chain slider",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Pre-ride checks still apply. These are explicit printed service columns, not an automatic due calculation. Evaporative-system inspection is omitted from common columns and offered separately for confirmed ED types at 24,000/48,000 km. ",
+    "template": {
+      "id": "cb650ra-36000",
+      "version": 1,
+      "title": "36,000 km scheduled service",
+      "kind": "scheduled",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": 36000,
+      "intervalMonths": null,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; schedule pp. 69-70. Pre-ride checks remain separate. Evaporative emission inspection at 24,000/48,000 km is omitted from common columns: add it separately only for confirmed ED, II ED, III ED or IV ED types.",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:valve-clearance:inspect",
+          "label": "Inspect valve clearance",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain-slider:inspect",
+          "label": "Inspect drive chain slider",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Pre-ride checks still apply. These are explicit printed service columns, not an automatic due calculation. Evaporative-system inspection is omitted from common columns and offered separately for confirmed ED types at 24,000/48,000 km. ",
+    "template": {
+      "id": "cb650ra-48000",
+      "version": 1,
+      "title": "48,000 km scheduled service",
+      "kind": "scheduled",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": 48000,
+      "intervalMonths": null,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; schedule pp. 69-70. Pre-ride checks remain separate. Evaporative emission inspection at 24,000/48,000 km is omitted from common columns: add it separately only for confirmed ED, II ED, III ED or IV ED types.",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:air-cleaner:replace",
+          "label": "Replace air cleaner",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Service more often in unusually wet or dusty conditions.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:spark-plug:replace",
+          "label": "Replace spark plug",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil-filter:replace",
+          "label": "Replace engine oil filter",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:secondary-air-supply-system:inspect",
+          "label": "Inspect secondary air supply system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain-slider:inspect",
+          "label": "Inspect drive chain slider",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Due status unknown: anniversary and early-service reset are not established.",
+    "template": {
+      "id": "cb650ra-annual",
+      "version": 1,
+      "title": "Annual checks",
+      "kind": "time_based",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": 12,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; due status unknown without a confirmed baseline. Anniversary and early-service reset rules are not established. Select manually.",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Due status unknown without a confirmed baseline; select deliberately. ",
+    "template": {
+      "id": "cb650ra-radiator-coolant-time",
+      "version": 1,
+      "title": "Radiator coolant: 3-year replacement",
+      "kind": "time_based",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": 36,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; due status unknown without a confirmed baseline. Anniversary and early-service reset rules are not established. Select manually.",
+      "tasks": [
+        {
+          "key": "cb650ra:radiator-coolant:replace",
+          "label": "Replace radiator coolant",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69-70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Replacement requires mechanical skill.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Due status unknown without a confirmed baseline; select deliberately. ",
+    "template": {
+      "id": "cb650ra-brake-fluid-time",
+      "version": 1,
+      "title": "Brake fluid: 2-year replacement",
+      "kind": "time_based",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": 24,
+      "frequency": "recurring",
+      "source": "Honda CB650RA European owner manual, 2023; due status unknown without a confirmed baseline. Anniversary and early-service reset rules are not established. Select manually.",
+      "tasks": [
+        {
+          "key": "cb650ra:brake-fluid:replace",
+          "label": "Replace brake fluid",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Separate 1,000 km chain frequency; deliberately selected work, not a first service.",
+    "template": {
+      "id": "cb650ra-chain",
+      "version": 1,
+      "title": "Inspect and lubricate drive chain",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:drive-chain:inspect",
+          "label": "Inspect drive chain",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        },
+        {
+          "key": "cb650ra:drive-chain:other",
+          "label": "Lubricate drive chain",
+          "action": "other",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect and lubricate every 1,000 km.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Explicit conditional row; never inferred from Europe alone.",
+    "template": {
+      "id": "cb650ra-evap",
+      "version": 1,
+      "title": "Inspect evaporative emission system (24,000 / 48,000 km)",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:evaporative-emission-control-system:inspect",
+          "label": "Inspect evaporative emission control system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69-70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it. Only ED, II ED, III ED and IV ED types. Confirm the vehicle type; Europe alone is insufficient.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-engine-oil-replace",
+      "version": 1,
+      "title": "Replace engine oil",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:engine-oil:replace",
+          "label": "Replace engine oil",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-engine-oil-filter-replace",
+      "version": 1,
+      "title": "Replace engine oil filter",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:engine-oil-filter:replace",
+          "label": "Replace engine oil filter",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-fuel-line-inspect",
+      "version": 1,
+      "title": "Inspect fuel line",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:fuel-line:inspect",
+          "label": "Inspect fuel line",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-throttle-operation-inspect",
+      "version": 1,
+      "title": "Inspect throttle operation",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:throttle-operation:inspect",
+          "label": "Inspect throttle operation",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-engine-idle-speed-inspect",
+      "version": 1,
+      "title": "Inspect engine idle speed",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:engine-idle-speed:inspect",
+          "label": "Inspect engine idle speed",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-radiator-coolant-inspect",
+      "version": 1,
+      "title": "Inspect radiator coolant",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:radiator-coolant:inspect",
+          "label": "Inspect radiator coolant",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-cooling-system-inspect",
+      "version": 1,
+      "title": "Inspect cooling system",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:cooling-system:inspect",
+          "label": "Inspect cooling system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-drive-chain-slider-inspect",
+      "version": 1,
+      "title": "Inspect drive chain slider",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:drive-chain-slider:inspect",
+          "label": "Inspect drive chain slider",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-brake-fluid-inspect",
+      "version": 1,
+      "title": "Inspect brake fluid",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:brake-fluid:inspect",
+          "label": "Inspect brake fluid",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-brake-pads-wear-inspect",
+      "version": 1,
+      "title": "Inspect brake pads wear",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:brake-pads-wear:inspect",
+          "label": "Inspect brake pads wear",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-brake-system-inspect",
+      "version": 1,
+      "title": "Inspect brake system",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:brake-system:inspect",
+          "label": "Inspect brake system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-brakelight-switch-inspect",
+      "version": 1,
+      "title": "Inspect brakelight switch",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:brakelight-switch:inspect",
+          "label": "Inspect brakelight switch",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-headlight-aim-inspect",
+      "version": 1,
+      "title": "Inspect headlight aim",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:headlight-aim:inspect",
+          "label": "Inspect headlight aim",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-clutch-system-inspect",
+      "version": 1,
+      "title": "Inspect clutch system",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:clutch-system:inspect",
+          "label": "Inspect clutch system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-side-stand-inspect",
+      "version": 1,
+      "title": "Inspect side stand",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:side-stand:inspect",
+          "label": "Inspect side stand",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-suspension-inspect",
+      "version": 1,
+      "title": "Inspect suspension",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:suspension:inspect",
+          "label": "Inspect suspension",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-nuts-bolts-fasteners-inspect",
+      "version": 1,
+      "title": "Inspect nuts, bolts, fasteners",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:nuts-bolts-fasteners:inspect",
+          "label": "Inspect nuts, bolts, fasteners",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-wheels-tyres-inspect",
+      "version": 1,
+      "title": "Inspect wheels/tyres",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:wheels-tyres:inspect",
+          "label": "Inspect wheels/tyres",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-steering-head-bearings-inspect",
+      "version": 1,
+      "title": "Inspect steering head bearings",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:steering-head-bearings:inspect",
+          "label": "Inspect steering head bearings",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Honda recommends dealer service for safety. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-air-cleaner-replace",
+      "version": 1,
+      "title": "Replace air cleaner",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:air-cleaner:replace",
+          "label": "Replace air cleaner",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Service more often in unusually wet or dusty conditions.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-spark-plug-inspect",
+      "version": 1,
+      "title": "Inspect spark plug",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:spark-plug:inspect",
+          "label": "Inspect spark plug",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-secondary-air-supply-system-inspect",
+      "version": 1,
+      "title": "Inspect secondary air supply system",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:secondary-air-supply-system:inspect",
+          "label": "Inspect secondary air supply system",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-valve-clearance-inspect",
+      "version": 1,
+      "title": "Inspect valve clearance",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:valve-clearance:inspect",
+          "label": "Inspect valve clearance",
+          "action": "inspect",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills. Inspect first; clean, adjust, lubricate or replace only if inspection requires it.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-spark-plug-replace",
+      "version": 1,
+      "title": "Replace spark plug",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:spark-plug:replace",
+          "label": "Replace spark plug",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Dealer service is recommended unless you have the required tools, service information and mechanical skills.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-radiator-coolant-replace",
+      "version": 1,
+      "title": "Replace radiator coolant",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:radiator-coolant:replace",
+          "label": "Replace radiator coolant",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 69-70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required. Replacement requires mechanical skill.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  },
+  {
+    "verification": "draft",
+    "reviewedSource": "Honda CB650RA European owner manual, 2023",
+    "reviewNotes": "Independently inspected source pages; awaiting separate exact-row content review. Individual work selected on demand; does not assert that work is due.",
+    "template": {
+      "id": "cb650ra-task-brake-fluid-replace",
+      "version": 1,
+      "title": "Replace brake fluid",
+      "kind": "individual",
+      "motorcycleId": "b4660699-fb60-4f70-b5c0-2023cb650a00",
+      "years": [
+        2023
+      ],
+      "markets": [
+        "Europe"
+      ],
+      "variants": [
+        "CB650RA",
+        "CB650RA ED",
+        "CB650RA II ED",
+        "CB650RA III ED",
+        "CB650RA IV ED"
+      ],
+      "intervalKm": null,
+      "intervalMonths": null,
+      "frequency": "on_demand",
+      "source": "Honda CB650RA European owner manual, 2023",
+      "tasks": [
+        {
+          "key": "cb650ra:brake-fluid:replace",
+          "label": "Replace brake fluid",
+          "action": "replace",
+          "reference": "Honda CB650RA European owner manual, 2023, p. 70",
+          "warning": "Schedule guidance only; procedure and specifications are unassessed here. Use the correct model manual before work. Mechanical knowledge is required.  Fluid work requires mechanical skill. Keep incompatible fluids and contamination out of the system; protect painted parts.",
+          "specification": null,
+          "safety": null
+        }
+      ]
+    }
+  }
+]

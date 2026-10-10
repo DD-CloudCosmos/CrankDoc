@@ -113,3 +113,32 @@ it('dispatches carry choices and invalidates only the saved bike after success',
  await startMaintenanceJob(job,carry,'a');expect(jobs.startJob).toHaveBeenCalledWith(account,job,carry)
  expect(revalidatePath).toHaveBeenCalledWith(`/garage/${job.bikeId}`)
 })
+
+import { loadTemplates, savePersonalTemplate, startTemplateMaintenance } from './actions'
+import { templateFixture } from '@/test/garageFixtures'
+import { combineTemplates } from '@/lib/maintenance/templateValidation'
+import * as templates from '@/lib/maintenance/templates'
+vi.mock('@/lib/maintenance/templates',()=>({listTemplates:vi.fn(),saveCustomTemplate:vi.fn()}))
+it('rejects template drafts from a previous account',async()=>{
+ vi.mocked(getAccount).mockResolvedValue({userId:'b',client:{}} as typeof account)
+ await expect(loadTemplates(bikeFixture().id,'a')).rejects.toThrow('Sign in again')
+ await expect(savePersonalTemplate(templateFixture(),'a')).rejects.toThrow('Sign in again')
+ await expect(startTemplateMaintenance(jobFixture(),['template'],null,'a')).rejects.toThrow('Sign in again')
+ expect(templates.saveCustomTemplate).not.toHaveBeenCalled()
+})
+it('resolves selected definitions and additions from owned server templates and resets task state',async()=>{
+ const first=templateFixture(),addition=templateFixture({id:'time',kind:'time_based',tasks:[{...templateFixture().tasks[0],key:'fluid:replace',label:'Replace fluid',action:'replace',reference:'Source page 70'}]})
+ vi.mocked(repository.getBike).mockResolvedValue(bikeFixture());vi.mocked(templates.listTemplates).mockResolvedValue([first,addition]);vi.mocked(jobs.startJob).mockResolvedValue({ok:true,value:jobFixture()})
+ const snapshot=combineTemplates([first,addition]);const draft=jobFixture({template:snapshot,tasks:[{...jobFixture().tasks[0],state:'done',doneAt:'2026-10-10T10:00:00Z'},{...jobFixture().tasks[0],id:crypto.randomUUID(),notes:'injected'}]})
+ await startTemplateMaintenance(draft,[first.id,addition.id],null,'a')
+ const passed=vi.mocked(jobs.startJob).mock.calls[0][1]
+ expect(passed.tasks).toHaveLength(2);expect(passed.tasks.every(t=>t.state==='todo'&&t.notes===''&&t.doneAt===null)).toBe(true)
+ expect(passed.tasks[1].reference).toBe('Source page 70');expect(passed.template?.tasks[1].action).toBe('replace')
+})
+it('blocks missing coverage and changed template snapshots before creating jobs',async()=>{
+ vi.mocked(repository.getBike).mockResolvedValue(bikeFixture());vi.mocked(templates.listTemplates).mockResolvedValue([])
+ expect(await startTemplateMaintenance(jobFixture(),['missing'],null,'a')).toMatchObject({ok:false,error:'invalid'})
+ vi.mocked(templates.listTemplates).mockResolvedValue([templateFixture()])
+ expect(await startTemplateMaintenance(jobFixture({template:templateFixture({version:2})}),[templateFixture().id],null,'a')).toMatchObject({ok:false,error:'conflict'})
+ expect(jobs.startJob).not.toHaveBeenCalled()
+})
