@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import crypto from 'crypto'
+import { isPrivatePath } from '@/lib/privatePaths'
+import { updateAccountSession } from '@/lib/supabase/auth-proxy'
 
 function tokensMatch(a: string, b: string): boolean {
   const aHash = crypto.createHash('sha256').update(a).digest()
@@ -8,7 +10,7 @@ function tokensMatch(a: string, b: string): boolean {
   return crypto.timingSafeEqual(aHash, bHash)
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Only protect /admin routes (except the login page itself)
   if (
     request.nextUrl.pathname.startsWith('/admin') &&
@@ -24,9 +26,11 @@ export function proxy(request: NextRequest) {
     }
   }
 
+  if (isPrivatePath(request.nextUrl.pathname)) return updateAccountSession(request)
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/garage/:path*', '/account/:path*', '/auth/:path*', '/api/garage/:path*'],
 }

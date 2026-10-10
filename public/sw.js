@@ -1,5 +1,6 @@
 // Bump on every visual redesign so installed apps drop stale pages
-const CACHE_NAME = 'crankdoc-v3'
+const PRIVATE_PATHS = ['/garage', '/account', '/auth', '/api/garage']
+const CACHE_NAME = 'crankdoc-v4'
 const STATIC_ASSETS = [
   '/',
   '/diagnose',
@@ -24,6 +25,12 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
+
+  // Private requests never enter CacheStorage, including page prefetches.
+  if (PRIVATE_PATHS.some((path) => url.pathname === path || url.pathname.startsWith(path + '/'))) {
+    event.respondWith(fetch(event.request))
+    return
+  }
 
   // Network-first for cacheable API routes
   if (CACHEABLE_API_PATHS.some((path) => url.pathname.startsWith(path))) {
