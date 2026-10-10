@@ -1,7 +1,7 @@
 import { beforeEach, expect, it, vi } from 'vitest'
 import type { AccountContext } from '@/lib/account'
 import { jobFixture, taskFixture } from '@/test/garageFixtures'
-import { createQuickJob, deleteJob, editJobDetails, getJob, listJobs } from './jobsRepository.server'
+import { closeJob, saveTaskPatch, createQuickJob, deleteJob, editJobDetails, getJob, listJobs } from './jobsRepository.server'
 const draft = jobFixture({tasks:[taskFixture({state:'done',doneAt:'2026-10-10T10:00:00Z',origin:null,key:null})]})
 const row = {id:draft.id,owner_id:'owner',bike_id:draft.bikeId,title:draft.title,job_date:draft.date,mileage_km:draft.mileageKm,tasks:draft.tasks,template_id:null,template_version:null,template_snapshot:null,notes:'',parts:'',performer:'',cost_minor:null,currency:null,revision:1,status:'completed',close_reason:'all_done',closed_at:'2026-10-10T10:00:00Z',created_at:'2026-10-10T10:00:00Z'}
 type Response = {data:unknown;error:null|{code:string;details?:string}}
@@ -67,4 +67,24 @@ it('loads 1001 jobs beyond response caps, including caps smaller than the reques
  const rows=Array.from({length:1001},(_,i)=>({...row,id:`00000000-0000-4000-8000-${String(i).padStart(12,'0')}`}))
  const paged={from:()=>{let offset=0;const q={select:()=>q,eq:()=>q,order:()=>q,range:(start:number)=>{offset=start;return q},then:(resolve:(value:Response)=>void)=>Promise.resolve({data:rows.slice(offset,offset+400),error:null}).then(resolve)};return q}}
  expect(await listJobs({client:paged,userId:'owner'} as unknown as AccountContext,draft.bikeId)).toHaveLength(1001)
+})
+
+it('saves one task patch and closes through atomic functions',async()=>{
+ responses=[{data:{...row,revision:2},error:null},{data:{...row,revision:3,close_reason:'manual'},error:null}]
+ expect(await saveTaskPatch(account,draft.id,1,draft.tasks[0].id,{state:'done'})).toMatchObject({ok:true,value:{revision:2}})
+ expect(rpc).toHaveBeenCalledWith('save_task_patch',{p_job_id:draft.id,p_expected_revision:1,p_task_id:draft.tasks[0].id,p_patch:{state:'done'}})
+ expect(await closeJob(account,draft.id,2,draft.date,0)).toMatchObject({ok:true,value:{revision:3,closeReason:'manual'}})
+})
+it('rejects malformed patches and close details before writes',async()=>{
+ for(const patch of [{state:'fake'},{notes:null},{reason:'x'.repeat(501)},{label:'Injected'}]) expect(await saveTaskPatch(account,draft.id,1,draft.tasks[0].id,patch as never)).toMatchObject({error:'invalid'})
+ expect(await saveTaskPatch(account,draft.id,0,draft.tasks[0].id,{})).toMatchObject({error:'invalid'})
+ expect(await closeJob(account,draft.id,1,'2026-02-30',0)).toMatchObject({error:'invalid'})
+ expect(await closeJob(account,draft.id,1,draft.date,0.0001)).toMatchObject({error:'invalid'})
+ expect(rpc).not.toHaveBeenCalled()
+})
+it('returns current task conflict without retrying and hides foreign jobs',async()=>{
+ responses=[{data:null,error:{code:'PT409',details:JSON.stringify({...row,revision:4})}},{data:null,error:{code:'PT404'}}]
+ expect(await saveTaskPatch(account,draft.id,1,draft.tasks[0].id,{})).toMatchObject({error:'conflict',current:{revision:4}})
+ expect(await closeJob(account,draft.id,1,draft.date,0)).toMatchObject({error:'not_found'})
+ expect(rpc).toHaveBeenCalledTimes(2)
 })

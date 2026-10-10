@@ -1,7 +1,7 @@
 import type { AccountContext } from '@/lib/account'
 import type { Json, Tables } from '@/types/database.types'
-import type { JobDraft, JobView, SavedResult } from './types'
-import { parseJobDetails, parseJobDraft, requireJobId, type JobDetails } from './validation'
+import type { JobDraft, JobView, SavedResult, TaskPatch } from './types'
+import { parseTaskPatch, parseJobDetails, parseJobDraft, requireJobId, type JobDetails } from './validation'
 
 type JobRow = Tables<'maintenance_jobs'>
 function view(row: JobRow): JobView {
@@ -63,4 +63,28 @@ export async function deleteJob(account: AccountContext, jobId: string): Promise
   const {data,error} = await account.client.from('maintenance_jobs').delete().eq('owner_id',account.userId).eq('id',jobId).select('id').maybeSingle()
   if (error) return failure(error)
   return data ? {ok:true,value:null} : {ok:false,error:'not_found',message:'Job not found'}
+}
+
+export async function saveTaskPatch(account: AccountContext, jobId: string, revision: number, taskId: string, patch: TaskPatch): Promise<SavedResult<JobView>> {
+  let parsed: TaskPatch
+  try {
+    requireJobId(jobId); requireJobId(taskId)
+    if (!Number.isInteger(revision) || revision < 1 || revision > 2147483647) throw new Error('Invalid revision')
+    parsed = parseTaskPatch(patch)
+  } catch { return {ok:false,error:'invalid',message:'Check the maintenance details'} }
+  const {data,error} = await account.client.rpc('save_task_patch',{p_job_id:jobId,p_expected_revision:revision,p_task_id:taskId,p_patch:parsed as Json})
+  if (error?.code === 'PT409') return {ok:false,error:'conflict',message:'This job changed on another device. Reload before saving.',current:view(JSON.parse(error.details) as JobRow)}
+  if (error) return failure(error)
+  return data ? {ok:true,value:view(data)} : {ok:false,error:'save_failed',message:'Could not save maintenance record'}
+}
+export async function closeJob(account: AccountContext, jobId: string, revision: number, date: string, mileageKm: number): Promise<SavedResult<JobView>> {
+  try {
+    requireJobId(jobId)
+    if (!Number.isInteger(revision) || revision < 1 || revision > 2147483647) throw new Error('Invalid revision')
+    parseJobDetails({title:'Close',date,mileageKm,notes:'',parts:'',performer:'',costMinor:null,currency:null})
+  } catch { return {ok:false,error:'invalid',message:'Check the maintenance details'} }
+  const {data,error} = await account.client.rpc('close_maintenance_job',{p_job_id:jobId,p_expected_revision:revision,p_date:date,p_mileage:mileageKm})
+  if (error?.code === 'PT409') return {ok:false,error:'conflict',message:'This job changed on another device. Reload before saving.',current:view(JSON.parse(error.details) as JobRow)}
+  if (error) return failure(error)
+  return data ? {ok:true,value:view(data)} : {ok:false,error:'save_failed',message:'Could not save maintenance record'}
 }

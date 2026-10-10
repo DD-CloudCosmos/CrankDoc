@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createLocalTestClients, loadGarageTestEnv } from './garage-test-env'
 import type { Json, TablesInsert } from '../src/types/database.types'
 import type { JobDraft } from '../src/lib/maintenance/types'
-import { createQuickJob, deleteJob, editJobDetails, getJob, listJobs } from '../src/lib/maintenance/jobsRepository.server'
+import { closeJob, saveTaskPatch, createQuickJob, deleteJob, editJobDetails, getJob, listJobs } from '../src/lib/maintenance/jobsRepository.server'
 import { jobFixture, taskFixture, templateFixture } from '../src/test/garageFixtures'
 import { addBike, archiveBike, editBike, getBike, importSelectedModels, listBikes, removeBike } from '../src/lib/garageRepository.server'
 
@@ -135,6 +135,44 @@ async function main() {
     assert.equal((await createQuickJob(accountA,draft(1,otherBike.id))).ok,false)
     assert.ok((await deleteJob(accountA,firstDraft.id)).ok)
     assert.equal((await getBike(accountA,id))?.mileageKm,14000)
+    const checklistId=crypto.randomUUID(), taskId=crypto.randomUUID()
+    const checklistRow={...tableRow,id:checklistId,tasks:[{...todo,id:taskId}] as Json,status:'in_progress',close_reason:null,closed_at:null}
+    assert.ifError((await a.from('maintenance_jobs').insert(checklistRow)).error)
+    const completed=await saveTaskPatch(accountA,checklistId,1,taskId,{state:'done',notes:'Saved atomically'})
+    assert.ok(completed.ok);assert.equal(completed.value.status,'completed');assert.equal(completed.value.closeReason,'all_done');assert.equal(completed.value.revision,2)
+    assert.equal(completed.value.date,checklistRow.job_date)
+    const repeated=await saveTaskPatch(accountA,checklistId,2,taskId,{state:'done'})
+    assert.ok(repeated.ok);assert.equal(repeated.value.tasks[0].doneAt,completed.value.tasks[0].doneAt);assert.equal(repeated.value.closedAt,completed.value.closedAt)
+    const reopened=await saveTaskPatch(accountA,checklistId,3,taskId,{state:'todo'})
+    assert.ok(reopened.ok);assert.equal(reopened.value.status,'in_progress');assert.equal(reopened.value.closedAt,null);assert.equal(reopened.value.tasks[0].doneAt,null);assert.equal(reopened.value.tasks[0].notes,'Saved atomically')
+    assert.ok((await a.rpc('save_task_patch',{p_job_id:checklistId,p_expected_revision:4,p_task_id:taskId,p_patch:{state:'fake'}})).error)
+    assert.ok((await a.rpc('save_task_patch',{p_job_id:checklistId,p_expected_revision:4,p_task_id:taskId,p_patch:{state:'not_applicable',reason:' '}})).error)
+    assert.ok((await a.rpc('save_task_patch',{p_job_id:checklistId,p_expected_revision:4,p_task_id:taskId,p_patch:{notes:null}})).error)
+    assert.ok((await a.rpc('save_task_patch',{p_job_id:checklistId,p_expected_revision:4,p_task_id:crypto.randomUUID(),p_patch:{notes:'Unknown'}})).error)
+    assert.equal((await saveTaskPatch(accountB,checklistId,4,taskId,{})).ok,false)
+    assert.equal((await closeJob(accountB,checklistId,4,'2000-01-01',0)).ok,false)
+    for(const response of [await anonymous.rpc('save_task_patch',{p_job_id:checklistId,p_expected_revision:4,p_task_id:taskId,p_patch:{}}),await anonymous.rpc('close_maintenance_job',{p_job_id:checklistId,p_expected_revision:4,p_date:'2000-01-01',p_mileage:0})]) assert.ok(response.error)
+    const patchRace=await Promise.all([saveTaskPatch(accountA,checklistId,4,taskId,{state:'done',notes:'Device one'}),saveTaskPatch(accountA,checklistId,4,taskId,{state:'done',notes:'Device two'})])
+    assert.equal(patchRace.filter(result=>result.ok).length,1);assert.equal(patchRace.filter(result=>!result.ok && result.error==='conflict').length,1)
+    const winner=patchRace.find(result=>result.ok);assert.ok(winner?.ok)
+    const loser=patchRace.find(result=>!result.ok);assert.ok(loser && !loser.ok);assert.equal(loser.current?.tasks[0].notes,winner.value.tasks[0].notes)
+    assert.equal((await getJob(accountA,checklistId))?.closedAt,winner.value.closedAt)
+    const pending=await saveTaskPatch(accountA,checklistId,5,taskId,{state:'skipped',reason:'Waiting for parts'})
+    assert.ok(pending.ok);assert.equal(pending.value.status,'in_progress')
+    const manual=await closeJob(accountA,checklistId,6,'2000-01-01',0)
+    assert.ok(manual.ok);assert.equal(manual.value.status,'partial');assert.equal(manual.value.closeReason,'manual');assert.equal(manual.value.date,'2000-01-01');assert.equal(manual.value.mileageKm,0)
+    assert.equal((await getBike(accountA,id))?.mileageKm,14000)
+    const excludedManual=await saveTaskPatch(accountA,checklistId,7,taskId,{state:'not_applicable',reason:'No fitted part'})
+    assert.ok(excludedManual.ok);assert.equal(excludedManual.value.status,'completed');assert.equal(excludedManual.value.closedAt,manual.value.closedAt)
+    const manualUncheck=await saveTaskPatch(accountA,checklistId,8,taskId,{state:'todo',notes:'Still closed'})
+    assert.ok(manualUncheck.ok);assert.equal(manualUncheck.value.status,'partial');assert.equal(manualUncheck.value.closedAt,manual.value.closedAt)
+    const noteOnly=await saveTaskPatch(accountA,checklistId,9,taskId,{notes:'Changed notes'})
+    assert.ok(noteOnly.ok);assert.equal(noteOnly.value.closedAt,manual.value.closedAt)
+    const staleChecklist=await saveTaskPatch(accountA,checklistId,9,taskId,{notes:'Stale'})
+    assert.ok(!staleChecklist.ok && staleChecklist.error==='conflict');assert.equal(staleChecklist.current?.tasks[0].notes,'Changed notes')
+    assert.ok((await a.rpc('close_maintenance_job',{p_job_id:checklistId,p_expected_revision:10,p_date:'2000-01-01',p_mileage:0.0001})).error)
+    assert.equal((await getJob(accountA,checklistId))?.revision,10)
+    console.log('PASS: checklist atomic last Done/race, repeated timestamps, automatic reopen, manual partial/exclusions/notes, historical mileage, stale conflict and owner/anonymous denial')
     console.log('PASS: jobs owner/anonymous denial, task/template/closure direct-write validation, calendar/cost validation, atomic mileage max, historical zero/edit/delete, stable and concurrent retries, create/edit races and stale revisions')
     await removeBike(accountA, id)
     assert.equal(await getBike(accountA, id), null)

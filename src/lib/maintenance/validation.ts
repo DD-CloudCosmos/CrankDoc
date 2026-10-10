@@ -19,7 +19,7 @@ function choice<T extends string>(value: unknown, choices: readonly T[]): T {
   if (typeof value !== 'string' || !choices.includes(value as T)) invalid()
   return value as T
 }
-function timestamp(value: unknown): string {
+export function timestamp(value: unknown): string {
   const s = text(value, 40, true)
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?(Z|[+-]\d{2}:\d{2})$/.test(s) || !Number.isFinite(Date.parse(s))) invalid()
   calendarDate(s.slice(0,10))
@@ -69,7 +69,7 @@ function positive(value: unknown): number {
   if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 1 || value > 2147483647) invalid()
   return value
 }
-function template(input: unknown): Template {
+export function parseTemplate(input: unknown): Template {
   const v = object(input)
   if (!Array.isArray(v.years) || v.years.some(y => typeof y !== 'number' || !Number.isInteger(y) || y < 1885 || y > 9999)) invalid()
   const strings = (value: unknown) => {
@@ -90,5 +90,12 @@ export function parseJobDraft(input: unknown): JobDraft {
   const v = object(input)
   const tasks = list(v.tasks,task)
   if (new Set(tasks.map(t => t.id.toLowerCase())).size !== tasks.length) invalid()
-  return {...parseJobDetails(v),id:requireJobId(v.id),bikeId:requireJobId(v.bikeId),template:v.template === null ? null : template(v.template),tasks}
+  return {...parseJobDetails(v),id:requireJobId(v.id),bikeId:requireJobId(v.bikeId),template:v.template === null ? null : parseTemplate(v.template),tasks}
+}
+
+export function parseTaskPatch(input: unknown): import('./types').TaskPatch {
+  const v = object(input)
+  if (Object.keys(v).some(k => !['state','reason','notes'].includes(k))) invalid()
+  return {...('state' in v ? {state:choice(v.state,['todo','done','skipped','not_applicable'] as const)} : {}),
+    ...('reason' in v ? {reason:text(v.reason,500)} : {}), ...('notes' in v ? {notes:text(v.notes,4000)} : {})}
 }
