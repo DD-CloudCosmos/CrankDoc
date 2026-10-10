@@ -32,3 +32,5 @@ export type TaskPatch = Partial<Pick<JobTask, 'state' | 'reason' | 'notes'>>
 export type SavedResult<T> =
   | { ok: true; value: T }
   | { ok: false; error: 'invalid' | 'not_found' | 'conflict' | 'save_failed'; message: string; current?: T }
+export type FileInput = {id:string;kind:'bike_photo'|'receipt';bikeId:string;jobId:string|null;path:string;filename:string}
+export type PrivateFile = {id:string;bikeId:string;jobId:string|null;kind:'bike_photo'|'receipt';path:string;filename:string;cleanupPending:boolean}

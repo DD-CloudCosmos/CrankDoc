@@ -8,7 +8,7 @@ vi.mock('@/lib/account', () => ({ getAccount: vi.fn() }))
 vi.mock('@/lib/garageRepository.server', () => ({ addBike: vi.fn(), editBike: vi.fn(), listBikes: vi.fn(), archiveBike: vi.fn(), removeBike: vi.fn(), importSelectedModels: vi.fn(), getBike: vi.fn() }))
 const input = { motorcycleId: null, nickname: '', make: 'Honda', model: 'Custom', year: null, variant: '', market: '', registration: '', mileageKm: null }
 const account = { userId: 'a', client: {} } as Awaited<ReturnType<typeof getAccount>>
-beforeEach(() => { vi.clearAllMocks(); vi.mocked(getAccount).mockResolvedValue(account) })
+beforeEach(() => { vi.clearAllMocks(); vi.mocked(getAccount).mockResolvedValue(account);vi.mocked(listPrivateFiles).mockResolvedValue([]);vi.mocked(cleanupOwnedFiles).mockResolvedValue(undefined) })
 describe('garage authenticated actions', () => {
   it.each([null, { userId: 'b', client: {} }])('rejects stale drafts after logout or owner change', async value => {
     vi.mocked(getAccount).mockResolvedValue(value as typeof account)
@@ -82,6 +82,21 @@ it('requires a matching owned bike and explicit removal before correction or del
 })
 it('loads only the owned bike and its jobs, including the exact stored mileage',async()=>{
  const bike=bikeFixture({mileageKm:42});vi.mocked(repository.getBike).mockResolvedValue(bike);vi.mocked(jobs.listJobs).mockResolvedValue([jobFixture()])
- expect(await loadBikeWorkspace(bike.id,'a')).toEqual({bike,jobs:[jobFixture()]});expect(repository.getBike).toHaveBeenCalledWith(account,bike.id);expect(jobs.listJobs).toHaveBeenCalledWith(account,bike.id)
+ expect(await loadBikeWorkspace(bike.id,'a')).toEqual({bike,jobs:[jobFixture()],files:[]});expect(repository.getBike).toHaveBeenCalledWith(account,bike.id);expect(jobs.listJobs).toHaveBeenCalledWith(account,bike.id)
  vi.mocked(repository.getBike).mockResolvedValue(null);vi.mocked(jobs.listJobs).mockClear();await expect(loadBikeWorkspace(bike.id,'a')).rejects.toThrow('Bike not found');expect(jobs.listJobs).not.toHaveBeenCalled()
+})
+
+import {cleanupOwnedFiles,listPrivateFiles} from '@/lib/maintenance/uploads.server'
+vi.mock('@/lib/maintenance/uploads.server',()=>({cleanupOwnedFiles:vi.fn(),listPrivateFiles:vi.fn(async()=>[])}))
+it('keeps bikes and jobs when Storage cleanup fails so removal can be retried',async()=>{
+ vi.mocked(cleanupOwnedFiles).mockRejectedValueOnce(new Error('Cleanup failed; retry'))
+ await expect(deleteBike(bikeFixture().id,true,'a')).rejects.toThrow('Cleanup failed; retry')
+ expect(repository.removeBike).not.toHaveBeenCalled()
+ vi.mocked(jobs.getJob).mockResolvedValue(jobFixture());vi.mocked(cleanupOwnedFiles).mockRejectedValueOnce(new Error('Cleanup failed; retry'))
+ expect(await removeJob(jobFixture().id,bikeFixture().id,true,'a')).toMatchObject({ok:false,error:'save_failed',message:'Cleanup failed; retry'})
+ expect(jobs.deleteJob).not.toHaveBeenCalled()
+})
+it('reconciles owned photos and receipt metadata with the workspace',async()=>{
+ vi.mocked(repository.getBike).mockResolvedValue(bikeFixture({photoPath:'new.webp'}));vi.mocked(jobs.listJobs).mockResolvedValue([jobFixture()]);vi.mocked(listPrivateFiles).mockResolvedValue([{id:'receipt',bikeId:bikeFixture().id,jobId:jobFixture().id,kind:'receipt',path:'file.pdf',filename:'receipt.pdf',cleanupPending:false}])
+ const fresh=await loadBikeWorkspace(bikeFixture().id,'a');expect(fresh).toMatchObject({bike:{photoPath:'new.webp'},files:[{id:'receipt'}]})
 })

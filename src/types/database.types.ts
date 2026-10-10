@@ -336,6 +336,7 @@ export type Database = {
                 Row: {
                     "archived_at": string | null;
                     "created_at": string;
+                    "file_cleanup_pending": boolean;
                     "id": string;
                     "import_key": string | null;
                     "make": string;
@@ -353,6 +354,7 @@ export type Database = {
                 Insert: {
                     "archived_at"?: string | null;
                     "created_at"?: string;
+                    "file_cleanup_pending"?: boolean;
                     "id": string;
                     "import_key"?: string | null;
                     "make": string;
@@ -370,6 +372,7 @@ export type Database = {
                 Update: {
                     "archived_at"?: string | null;
                     "created_at"?: string;
+                    "file_cleanup_pending"?: boolean;
                     "id"?: string;
                     "import_key"?: string | null;
                     "make"?: string;
@@ -393,6 +396,74 @@ export type Database = {
                         isOneToOne: false;
                         referencedRelation: "motorcycles";
                         referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "garage_files": {
+                Row: {
+                    "bike_id": string;
+                    "cleanup_pending": boolean;
+                    "created_at": string;
+                    "filename": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending": boolean;
+                };
+                Insert: {
+                    "bike_id": string;
+                    "cleanup_pending"?: boolean;
+                    "created_at"?: string;
+                    "filename": string;
+                    "id": string;
+                    "job_id"?: string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending"?: boolean;
+                };
+                Update: {
+                    "bike_id"?: string;
+                    "cleanup_pending"?: boolean;
+                    "created_at"?: string;
+                    "filename"?: string;
+                    "id"?: string;
+                    "job_id"?: string | null;
+                    "kind"?: string;
+                    "owner_id"?: string;
+                    "path"?: string;
+                    "source_pending"?: boolean;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "garage_files_owner_id_bike_id_fkey";
+                        columns: [
+                            "owner_id",
+                            "bike_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "garage_bikes";
+                        referencedColumns: [
+                            "owner_id",
+                            "id"
+                        ];
+                    },
+                    {
+                        foreignKeyName: "garage_files_owner_id_bike_id_job_id_fkey";
+                        columns: [
+                            "owner_id",
+                            "bike_id",
+                            "job_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "maintenance_jobs";
+                        referencedColumns: [
+                            "owner_id",
+                            "bike_id",
                             "id"
                         ];
                     }
@@ -452,6 +523,7 @@ export type Database = {
                     "cost_minor": number | null;
                     "created_at": string;
                     "currency": string | null;
+                    "file_cleanup_pending": boolean;
                     "id": string;
                     "job_date": string;
                     "mileage_km": number;
@@ -474,6 +546,7 @@ export type Database = {
                     "cost_minor"?: number | null;
                     "created_at"?: string;
                     "currency"?: string | null;
+                    "file_cleanup_pending"?: boolean;
                     "id": string;
                     "job_date": string;
                     "mileage_km": number;
@@ -496,6 +569,7 @@ export type Database = {
                     "cost_minor"?: number | null;
                     "created_at"?: string;
                     "currency"?: string | null;
+                    "file_cleanup_pending"?: boolean;
                     "id"?: string;
                     "job_date"?: string;
                     "mileage_km"?: number;
@@ -810,6 +884,59 @@ export type Database = {
             [_ in never]: never;
         };
         Functions: {
+            "attach_garage_file": {
+                Args: {
+                    "p_input": Json;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "cleanup_pending": boolean;
+                    "created_at": string;
+                    "filename": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending": boolean;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "garage_files";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            };
+            "begin_file_removal": {
+                Args: {
+                    "p_file_id": string;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "cleanup_pending": boolean;
+                    "created_at": string;
+                    "filename": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending": boolean;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "garage_files";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            };
+            "begin_garage_cleanup": {
+                Args: {
+                    "p_bike_id": string;
+                    "p_job_id"?: string;
+                };
+                Returns: boolean;
+            };
             "create_quick_job": {
                 Args: {
                     "p_draft": Json;
@@ -821,6 +948,7 @@ export type Database = {
                     "cost_minor": number | null;
                     "created_at": string;
                     "currency": string | null;
+                    "file_cleanup_pending": boolean;
                     "id": string;
                     "job_date": string;
                     "mileage_km": number;
@@ -856,6 +984,7 @@ export type Database = {
                     "cost_minor": number | null;
                     "created_at": string;
                     "currency": string | null;
+                    "file_cleanup_pending": boolean;
                     "id": string;
                     "job_date": string;
                     "mileage_km": number;
@@ -877,6 +1006,13 @@ export type Database = {
                     isOneToOne: true;
                     isSetofReturn: false;
                 };
+            };
+            "garage_upload_allowed": {
+                Args: {
+                    "p_bucket": string;
+                    "p_name": string;
+                };
+                Returns: boolean;
             };
             "maintenance_details_valid": {
                 Args: {
@@ -917,6 +1053,12 @@ export type Database = {
                     "section_title": string;
                     "similarity": number;
                 }[];
+            };
+            "restore_garage_image": {
+                Args: {
+                    "p_bike_id": string;
+                };
+                Returns: boolean;
             };
         };
         Enums: {

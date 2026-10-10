@@ -93,3 +93,15 @@ it('reconciles fresh props without replacing a dirty quick draft',()=>{
 it('retains the saved record if the follow-up read fails and does not guess mileage',async()=>{
  const job=jobFixture({bikeId:bike.id,title:'Saved oil change',status:'completed'});actions.saveQuickJob.mockResolvedValue({ok:true,value:job});actions.loadBikeWorkspace.mockRejectedValue(new Error('Network unavailable'));render(<BikeWorkspace bike={{...bike,mileageKm:50}} />);fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:'Log maintenance'}));fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Oil'}});fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'12000'}});fireEvent.click(screen.getByRole('button',{name:'Save entry'}));expect(await screen.findByRole('alert')).toHaveTextContent('Record saved');expect(screen.getByRole('button',{name:'Show record: Saved oil change'})).toBeInTheDocument();fireEvent.click(screen.getByRole('radio',{name:'Overview'}));expect(screen.getByText('50 km')).toBeInTheDocument()
 })
+
+import {uploadPrivateFile} from '@/lib/maintenance/uploads'
+vi.mock('@/lib/maintenance/uploads',()=>({uploadPrivateFile:vi.fn(),privateFileRequest:vi.fn(async()=>({url:'https://local.invalid/photo',expiresIn:60}))}))
+vi.mock('@/lib/supabase/auth-browser',()=>({createAuthBrowserClient:()=>({auth:{onAuthStateChange:()=>({data:{subscription:{unsubscribe:vi.fn()}}})}})}))
+it('reconciles a saved photo and receipt list without remounting dirty details',async()=>{
+ const job=jobFixture({bikeId:bike.id,status:'completed'});const photoPath='owner/bikes/one/file.webp'
+ actions.loadBikeWorkspace.mockResolvedValue({bike:{...bike,photoPath},jobs:[job],files:[{id:'receipt',bikeId:bike.id,jobId:job.id,kind:'receipt',path:'receipt.pdf',filename:'saved receipt.pdf',cleanupPending:false}]})
+ vi.mocked(uploadPrivateFile).mockResolvedValue({id:'photo',path:photoPath});vi.stubGlobal('URL',Object.assign(URL,{createObjectURL:vi.fn(()=> 'blob:preview'),revokeObjectURL:vi.fn()}))
+ render(<BikeWorkspace bike={bike} jobs={[job]} />);fireEvent.click(screen.getByRole('radio',{name:'Bike details'}));fireEvent.change(screen.getByLabelText('Nickname'),{target:{value:'Still unsaved'}})
+ fireEvent.click(screen.getByRole('button',{name:'Edit image'}));fireEvent.change(screen.getByLabelText('Choose bike photo'),{target:{files:[new File(['jpg'],'bike.jpg',{type:'image/jpeg'})]}});fireEvent.click(screen.getByRole('button',{name:'Save image'}));await waitFor(()=>expect(actions.loadBikeWorkspace).toHaveBeenCalled())
+ expect(screen.getByLabelText('Nickname')).toHaveValue('Still unsaved');fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:`Show record: ${job.title}`}));expect(screen.getByText('saved receipt.pdf')).toBeInTheDocument()
+})

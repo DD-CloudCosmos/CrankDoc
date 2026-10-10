@@ -4,7 +4,8 @@ import { revalidatePath } from 'next/cache'
 import { getAccount } from '@/lib/account'
 import { addBike, editBike, listBikes, archiveBike, removeBike, importSelectedModels, getBike } from '@/lib/garageRepository.server'
 import { listJobs, getJob, createQuickJob, editJobDetails, deleteJob } from '@/lib/maintenance/jobsRepository.server'
-import type { JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
+import { cleanupOwnedFiles, listPrivateFiles } from '@/lib/maintenance/uploads.server'
+import type { PrivateFile, JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
 import type { JobDetails } from '@/lib/maintenance/validation'
 import type { BikeInput, BikeView } from '@/lib/garageBikes'
 
@@ -32,7 +33,9 @@ export async function setArchived(id: string, archived: boolean, ownerId: string
 }
 export async function deleteBike(id: string, confirmed: boolean, ownerId: string) {
   if (confirmed !== true) throw new Error('Confirm removal first.')
-  await removeBike(await accountFor(ownerId), id)
+  const account=await accountFor(ownerId)
+  await cleanupOwnedFiles(account,id)
+  await removeBike(account,id)
   invalidateBike(id)
 }
 export async function importModels(ids: string[], ownerId: string): Promise<{ bikes: BikeView[]; failed: string[] }> {
@@ -47,11 +50,11 @@ export async function importModels(ids: string[], ownerId: string): Promise<{ bi
   return { bikes, failed }
 }
 
-export async function loadBikeWorkspace(bikeId: string, ownerId: string): Promise<{bike:BikeView;jobs:JobView[]}> {
+export async function loadBikeWorkspace(bikeId: string, ownerId: string): Promise<{bike:BikeView;jobs:JobView[];files:PrivateFile[]}> {
   const account=await accountFor(ownerId)
   const bike=await getBike(account,bikeId)
   if(!bike) throw new Error('Bike not found')
-  return {bike,jobs:await listJobs(account,bikeId)}
+  return {bike,jobs:await listJobs(account,bikeId),files:await listPrivateFiles(account,bikeId)}
 }
 export async function saveQuickJob(draft:JobDraft,ownerId:string):Promise<SavedResult<JobView>> {
   const result=await createQuickJob(await accountFor(ownerId),draft)
@@ -71,6 +74,8 @@ export async function removeJob(id:string,bikeId:string,confirmed:boolean,ownerI
   const account=await accountFor(ownerId)
   const job=await getJob(account,id)
   if(!job || job.bikeId!==bikeId) return {ok:false,error:'not_found',message:'Job not found'}
+  try {await cleanupOwnedFiles(account,bikeId,id)}
+  catch(error) {return {ok:false,error:'save_failed',message:error instanceof Error?error.message:'File cleanup failed. Retry removal.'}}
   const result=await deleteJob(account,id)
   if(result.ok) invalidateBike(bikeId)
   return result
