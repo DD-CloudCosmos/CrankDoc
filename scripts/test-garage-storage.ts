@@ -3,7 +3,7 @@ import sharp from 'sharp'
 import {PDFDocument} from 'pdf-lib'
 import { createClient } from '@supabase/supabase-js'
 import { createLocalTestClients, loadGarageTestEnv } from './garage-test-env'
-import { finaliseFile, getPrivateFileUrl, removePrivateFile, cleanupOwnedFiles, restoreLibraryImage, retryBikePhotoCleanup, listPrivateFiles } from '../src/lib/maintenance/uploads.server'
+import { finaliseFile, getPrivateFileUrl, removePrivateFile, cleanupOwnedFiles, restoreLibraryImage, retryBikePhotoCleanup, retryReceiptSourceCleanup, listPrivateFiles } from '../src/lib/maintenance/uploads.server'
 import type { FileInput } from '../src/lib/maintenance/types'
 
 async function main() {
@@ -56,6 +56,25 @@ async function main() {
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',bike).single()).data?.photo_path,null)
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',otherBike).single()).data?.photo_path,second.path.replace('.source','.webp'))
   assert.equal((await t.admin.from('motorcycles').select('image_url').eq('id',t.modelId).single()).data?.image_url,'/images/bikes/honda-cb650ra-2023.png')
+  const sourceId=crypto.randomUUID()
+  const sourceReceipt:FileInput={id:sourceId,bikeId:bike,jobId:job,kind:'receipt',path:`${t.userA}/jobs/${job}/${sourceId}.pdf.source`,filename:'source-cleanup.pdf'}
+  await upload(sourceReceipt,pdf,'application/pdf')
+  const sourceSaved=await finaliseFile(account,sourceReceipt,()=>outageWriter)
+  assert.equal(sourceSaved.ok,true)
+  assert.equal(sourceSaved.ok && 'cleanupPending' in sourceSaved.value?sourceSaved.value.cleanupPending:false,true,'Injected source removal failure is reported without losing attachment')
+  const reloaded=(await listPrivateFiles(account,bike)).find(file=>file.id===sourceId)
+  assert.equal(reloaded?.sourcePending,true,'Reload restores durable source cleanup state')
+  assert.ok(await getPrivateFileUrl(account,sourceId),'Saved attachment remains downloadable')
+  let foreignWriters=0
+  assert.equal((await retryReceiptSourceCleanup(foreign,sourceId,()=>{foreignWriters++;return t.admin})).ok,false)
+  assert.equal(foreignWriters,0,'Foreign owner cannot create cleanup writer')
+  assert.equal((await retryReceiptSourceCleanup(account,sourceId,writer)).ok,true)
+  const cleaned=(await listPrivateFiles(account,bike)).find(file=>file.id===sourceId)
+  assert.equal(cleaned?.sourcePending,false);assert.equal(cleaned?.cleanupPending,false)
+  assert.ifError((await t.a.storage.from('garage-receipts').download(sourceReceipt.path.replace('.source',''))).error)
+  assert.ok((await t.a.storage.from('garage-receipts').download(sourceReceipt.path)).error,'Retry removes only pending source')
+  assert.equal((await removePrivateFile(account,sourceId,writer)).ok,true)
+  console.log('PASS: injected receipt source cleanup failure, durable reload, owner-only retry and retained final attachment')
   const receiptInputs:FileInput[]=[]
   for(let i=0;i<11;i++) {const id=crypto.randomUUID();const input:FileInput={id,bikeId:bike,jobId:job,kind:'receipt',path:`${t.userA}/jobs/${job}/${id}.pdf.source`,filename:'<script>receipt.pdf'};await upload(input,pdf,'application/pdf');receiptInputs.push(input)}
   // Concurrent finalisations exercise the job row lock and exact ten-file bound.

@@ -10,14 +10,14 @@ const queries: {eq:ReturnType<typeof vi.fn>;order:ReturnType<typeof vi.fn>}[]=[]
 const rpc = vi.fn(async (_name: string, _params: Record<string, unknown>) => { void _name; void _params; return responses.shift() })
 const client = {rpc,from:vi.fn(() => {
   const result = responses.shift()
-  const q = {eq:vi.fn(),order:vi.fn(),select:vi.fn(),delete:vi.fn(),maybeSingle:vi.fn(),then:(resolve:(v:Response|undefined)=>void)=>Promise.resolve(result).then(resolve)}
-  for (const key of ['eq','order','select','delete','maybeSingle'] as const) q[key].mockReturnValue(q)
+  const q = {eq:vi.fn(),order:vi.fn(),select:vi.fn(),range:vi.fn(),delete:vi.fn(),maybeSingle:vi.fn(),then:(resolve:(v:Response|undefined)=>void)=>Promise.resolve(result).then(resolve)}
+  for (const key of ['eq','order','select','range','delete','maybeSingle'] as const) q[key].mockReturnValue(q)
   queries.push(q); return q
 })}
 const account = {client,userId:'owner'} as unknown as AccountContext
 beforeEach(() => {responses=[];queries.length=0;vi.clearAllMocks()})
 it('maps stored facts and sorts/filters list reads by owner and bike',async () => {
-  responses=[{data:[row],error:null},{data:row,error:null},{data:null,error:null}]
+  responses=[{data:[row],error:null},{data:[],error:null},{data:row,error:null},{data:null,error:null}]
   expect((await listJobs(account,draft.bikeId))[0]).toMatchObject({status:'completed',costMinor:null,date:draft.date})
   expect(queries[0].eq).toHaveBeenCalledWith('owner_id','owner')
   expect(queries[0].eq).toHaveBeenCalledWith('bike_id',draft.bikeId)
@@ -62,4 +62,9 @@ it('reports read and deletion failures',async () => {
   await expect(listJobs(account,draft.bikeId)).rejects.toThrow()
   await expect(getJob(account,draft.id)).rejects.toThrow()
   expect(await deleteJob(account,draft.id)).toMatchObject({error:'save_failed'})
+})
+it('loads 1001 jobs beyond response caps, including caps smaller than the requested page',async()=>{
+ const rows=Array.from({length:1001},(_,i)=>({...row,id:`00000000-0000-4000-8000-${String(i).padStart(12,'0')}`}))
+ const paged={from:()=>{let offset=0;const q={select:()=>q,eq:()=>q,order:()=>q,range:(start:number)=>{offset=start;return q},then:(resolve:(value:Response)=>void)=>Promise.resolve({data:rows.slice(offset,offset+400),error:null}).then(resolve)};return q}}
+ expect(await listJobs({client:paged,userId:'owner'} as unknown as AccountContext,draft.bikeId)).toHaveLength(1001)
 })

@@ -8,7 +8,7 @@ vi.mock('@/lib/account', () => ({ getAccount: vi.fn() }))
 vi.mock('@/lib/garageRepository.server', () => ({ getBike: vi.fn() }))
 vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('Not found') } }))
 vi.mock('../PrivateGarage', () => ({ PrivateGarage: ({ children }: { children: React.ReactNode }) => children }))
-vi.mock('./BikeWorkspace', () => ({ BikeWorkspace: () => <p>Private bike</p> }))
+vi.mock('./BikeWorkspace', () => ({ BikeWorkspace: ({models=[]}:{models?:{model:string}[]}) => <><p>Private bike</p>{models.map(model=><p key={model.model}>{model.model}</p>)}</> }))
 const id = '00000000-0000-4000-8000-000000000001'
 beforeEach(() => vi.clearAllMocks())
 it('shows sign-in for a valid signed-out bike request', async () => {
@@ -26,8 +26,10 @@ it('uses the same not-found result for invalid and foreign IDs', async () => {
   expect(getBike).toHaveBeenCalledWith(account, id)
 })
 it('opens a verified owner bike', async () => {
-  vi.mocked(getAccount).mockResolvedValue({ userId: 'owner' } as never)
+  const query={order:()=>query,then:(resolve:(result:unknown)=>void)=>Promise.resolve({data:[{model:'Catalogue relink option'}],error:null}).then(resolve)}
+  vi.mocked(getAccount).mockResolvedValue({ userId: 'owner',client:{from:()=>({select:()=>query})} } as never)
   vi.mocked(getBike).mockResolvedValue({ id } as never)
   render(await BikePage({ params: Promise.resolve({ bikeId: id }) }))
   expect(screen.getByText('Private bike')).toBeInTheDocument()
+  expect(screen.getByText('Catalogue relink option')).toBeInTheDocument()
 })

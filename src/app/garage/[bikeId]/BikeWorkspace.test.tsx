@@ -112,3 +112,13 @@ it('exposes owner record downloads within bike maintenance, including archived b
  expect(screen.getByRole('link',{name:'Download JSON'})).toHaveAttribute('href','/api/garage/export?bikeId=one&format=json')
  expect(screen.getByRole('link',{name:'Download CSV'})).toHaveAttribute('href','/api/garage/export?bikeId=one&format=csv')
 })
+it('offers catalogue relinking in details while saving the same physical bike',async()=>{
+ const model={id:'00000000-0000-4000-8000-000000000002',make:'Yamaha',model:'MT-07',year_start:2020,year_end:2024}
+ actions.saveBike.mockResolvedValue({...bike,motorcycleId:model.id,make:model.make,model:model.model})
+ render(<BikeWorkspace bike={bike} models={[model]} />)
+ fireEvent.click(screen.getByRole('radio',{name:'Bike details'}))
+ fireEvent.click(screen.getByRole('button',{name:'Change model'}))
+ fireEvent.change(screen.getByLabelText('Model from the library'),{target:{value:model.id}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ await waitFor(()=>expect(actions.saveBike).toHaveBeenCalledWith(expect.objectContaining({motorcycleId:model.id,make:model.make,model:model.model}),bike.id,'',true))
+})

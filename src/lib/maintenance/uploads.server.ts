@@ -171,9 +171,14 @@ export async function finaliseFile(account:AccountContext,input:FileInput,create
 }
 /** Live attachments only. Removed identities remain in a separate tombstone table. */
 export async function listPrivateFiles(account:AccountContext,bikeId:string):Promise<PrivateFile[]> {
- const {data,error}=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',requireJobId(bikeId)).order('created_at')
- if(error) throw new FileError(500,'Could not load private files.')
- return (data??[]).map(row=>({id:row.id,bikeId:row.bike_id,jobId:row.job_id,kind:row.kind as FileInput['kind'],path:row.path,filename:row.filename,cleanupPending:row.cleanup_pending,sourcePending:row.source_pending}))
+ const id=requireJobId(bikeId)
+ const files:PrivateFile[]=[]
+ while(true) {
+  const {data,error}=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',id).order('created_at').order('id').range(files.length,files.length+999)
+  if(error) throw new FileError(500,'Could not load private files.')
+  if(!data?.length) return files
+  files.push(...data.map(row=>({id:row.id,bikeId:row.bike_id,jobId:row.job_id,kind:row.kind as FileInput['kind'],path:row.path,filename:row.filename,cleanupPending:row.cleanup_pending,sourcePending:row.source_pending})))
+ }
 }
 export async function getPrivateFileUrl(account:AccountContext,fileId:string):Promise<string|null> {
  const row=await fileRow(account,fileId)
@@ -250,4 +255,13 @@ export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,job
   }
  }
  for(const state of states.data??[]) await deleteStoredRow(account,state,writer)
+}
+export async function retryReceiptSourceCleanup(account:AccountContext,fileId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
+ try {
+  const row=await fileRow(account,fileId)
+  if(!row || row.kind!=='receipt' || row.cleanup_pending) throw new FileError(404,'File not found.')
+  await ownedTarget(account,{id:row.id,bikeId:row.bike_id,jobId:row.job_id,kind:'receipt',path:row.path,filename:row.filename})
+  if(row.source_pending) await tidyFile(account,row,createWriter())
+  return {ok:true,value:null}
+ } catch(error) {return savedFailure(error)}
 }

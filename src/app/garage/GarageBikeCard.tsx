@@ -10,7 +10,7 @@ export function GarageBikeCard({ bike, unit = 'km' }: { bike: BikeView; unit?: '
       <h2 className="break-words text-[22px] font-semibold">{name}</h2>
       <p className="text-[15px] text-muted-foreground">{bike.make} {bike.model} · {bike.year ?? 'Year not recorded'}</p>
       <p>{formatBikeMileage(bike.mileageKm, unit)}</p>
-      <p className="text-[13px] text-muted-foreground">No maintenance recorded</p>
+      <p className="break-words text-[13px] text-muted-foreground">{bike.latestJob?`${bike.latestJob.title} · ${bike.latestJob.date} · ${bike.latestJob.status==='in_progress'?'In progress':bike.latestJob.status==='partial'?'Partial':'Completed'}`:'No maintenance recorded'}</p>
       {bike.archivedAt && <p className="text-[13px]">Archived</p>}
     </div>
   </Link>

@@ -78,3 +78,27 @@ it('returns not-found when another account already owns a requested stable file 
  const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:null})},async()=>({data:null,error:{code:'23505'}}))
  expect(await finaliseFile(account,fileInput,()=>account.client)).toMatchObject({ok:false,error:'not_found'})
 })
+import {listPrivateFiles} from './uploads.server'
+it('loads 1001 attachment facts with deterministic ordering even under a smaller server cap',async()=>{
+ const rows=Array.from({length:1001},(_,i)=>({id:String(i),bike_id:bikeId,job_id:id,kind:'receipt',path:'private',filename:`${i}.pdf`,cleanup_pending:false,source_pending:false}))
+ const orders:string[]=[]
+ const client={from:()=>{let offset=0;const q={select:()=>q,eq:()=>q,order:(field:string)=>{orders.push(field);return q},range:(start:number)=>{offset=start;return q},then:(resolve:(value:unknown)=>void)=>Promise.resolve({data:rows.slice(offset,offset+400),error:null}).then(resolve)};return q}}
+ expect(await listPrivateFiles({client,userId:'owner'} as unknown as AccountContext,bikeId)).toHaveLength(1001)
+ expect(orders).toContain('id')
+})
+import {retryReceiptSourceCleanup} from './uploads.server'
+it('retries receipt source cleanup after owner checks and keeps the saved attachment',async()=>{
+ const row={id,bike_id:bikeId,job_id:id,kind:'receipt',path:`owner/jobs/${id}/${id}.pdf`,source_pending:true,cleanup_pending:false}
+ const removed:string[][]=[]
+ const account=clientFixture([{data:row,error:null},{data:{id:bikeId},error:null},{data:{id},error:null},{data:null,error:null},{data:null,error:null}],{remove:async(paths:string[])=>{removed.push(paths);return {error:null}}})
+ expect(await retryReceiptSourceCleanup(account,id,()=>account.client)).toEqual({ok:true,value:null})
+ expect(removed).toEqual([[`${row.path}.source`]])
+})
+it('never creates a cleanup writer for a foreign or removed receipt',async()=>{
+ let writers=0
+ for(const row of [null,{id,kind:'receipt',cleanup_pending:true}]) {
+  const account=clientFixture([{data:row,error:null}],{})
+  expect(await retryReceiptSourceCleanup(account,id,()=>{writers++;return account.client})).toMatchObject({ok:false,error:'not_found'})
+ }
+ expect(writers).toBe(0)
+})

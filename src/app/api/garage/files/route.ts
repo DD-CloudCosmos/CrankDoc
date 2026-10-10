@@ -1,5 +1,5 @@
 import { getAccount } from '@/lib/account'
-import { FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage,retryBikePhotoCleanup } from '@/lib/maintenance/uploads.server'
+import { FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage,retryBikePhotoCleanup,retryReceiptSourceCleanup } from '@/lib/maintenance/uploads.server'
 import { requireJobId } from '@/lib/maintenance/validation'
 export const dynamic='force-dynamic'
 export const runtime='nodejs'
@@ -13,6 +13,11 @@ export async function POST(request:Request) {
  const account=await getAccount();if(!account) return response({message:'Sign in to save files.'},401)
  try {
   const input=await json(request)
+  if(input?.cleanupSource===true) {
+   if(Object.keys(input).some(key=>!['fileId','cleanupSource'].includes(key))) throw new FileError(400,'Invalid file details.')
+   const result=await retryReceiptSourceCleanup(account,identifier(input.fileId))
+   return result.ok?response(result):response({message:result.message},result.error==='not_found'?404:result.error==='conflict'?409:500)
+  }
   if(input?.cleanup===true) {
    if(Object.keys(input).some(key=>!['bikeId','cleanup'].includes(key))) throw new FileError(400,'Invalid file details.')
    const result=await retryBikePhotoCleanup(account,identifier(input.bikeId))

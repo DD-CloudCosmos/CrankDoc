@@ -46,3 +46,26 @@ it('refreshes pristine details but preserves an unsaved draft when the bike chan
  rerender(<BikeForm initial={{...initial,nickname:'New remote',mileageKm:300}} onSave={vi.fn()} />)
  expect(screen.getByLabelText('Nickname')).toHaveValue('Draft');expect(screen.getByLabelText('Mileage')).toHaveValue(200)
 })
+it('changes linked identity deliberately, validates linked years and keeps the physical bike ID',async()=>{
+ const physicalId='00000000-0000-4000-8000-000000000001'
+ const models=[{id:'00000000-0000-4000-8000-000000000002',make:'Honda',model:'CB650RA',year_start:2023,year_end:2023},{id:'00000000-0000-4000-8000-000000000003',make:'Yamaha',model:'MT-07',year_start:2020,year_end:2024}]
+ const initial={...bike,id:physicalId,motorcycleId:models[0].id,make:'Honda',model:'CB650RA',year:2023}
+ const save=vi.fn(async input=>({...initial,...input}))
+ render(<BikeForm initial={initial} models={models} onSave={save} />)
+ expect(screen.getByLabelText('Make')).toHaveAttribute('readonly')
+ fireEvent.click(screen.getByRole('button',{name:'Change model'}))
+ fireEvent.change(screen.getByLabelText('Model from the library'),{target:{value:models[1].id}})
+ fireEvent.change(screen.getByLabelText('Year'),{target:{value:'2019'}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ expect(await screen.findByRole('alert')).toHaveTextContent('Year outside catalogue model range')
+ expect(save).not.toHaveBeenCalled()
+ fireEvent.change(screen.getByLabelText('Year'),{target:{value:'2022'}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ await waitFor(()=>expect(save).toHaveBeenCalledWith(expect.objectContaining({motorcycleId:models[1].id,make:'Yamaha',model:'MT-07',year:2022}),physicalId))
+ fireEvent.click(screen.getByRole('button',{name:'Change model'}))
+ fireEvent.change(screen.getByLabelText('Model from the library'),{target:{value:''}})
+ expect(screen.getByLabelText('Make')).not.toHaveAttribute('readonly')
+ fireEvent.change(screen.getByLabelText('Make'),{target:{value:'Custom make'}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ await waitFor(()=>expect(save).toHaveBeenLastCalledWith(expect.objectContaining({motorcycleId:null,make:'Custom make'}),physicalId))
+})

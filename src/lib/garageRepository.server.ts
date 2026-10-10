@@ -41,7 +41,14 @@ export async function listBikes(account: AccountContext, archived = false): Prom
   const query = account.client.from('garage_bikes').select('*').eq('owner_id', account.userId).order('created_at').order('id')
   const { data, error } = await (archived ? query.not('archived_at', 'is', null) : query.is('archived_at', null))
   if (error) throw new Error('Could not load bikes')
-  return Promise.all((data ?? []).map(row => view(account, row)))
+  return Promise.all((data ?? []).map(async row => {
+    const bike=await view(account,row)
+    const latest=await account.client.from('maintenance_jobs').select('id,title,job_date,status').eq('owner_id',account.userId).eq('bike_id',row.id)
+      .order('job_date',{ascending:false}).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(1)
+    if(latest.error) throw new Error('Could not load latest maintenance')
+    const job=latest.data?.[0]
+    return {...bike,latestJob:job?{id:job.id,title:job.title,date:job.job_date,status:job.status as NonNullable<BikeView['latestJob']>['status']}:null}
+  }))
 }
 
 export async function getBike(account: AccountContext, id: string): Promise<BikeView | null> {

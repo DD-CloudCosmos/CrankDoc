@@ -26,7 +26,7 @@ const failure: Result = { data: null, error: {} }
 beforeEach(() => { responses = []; queries = [] })
 describe('owner-scoped repository', () => {
   it('lists active and archived bikes with explicit owner filters', async () => {
-    responses = [ok([row]), ok([])]
+    responses = [ok([row]), ok([]), ok([])]
     expect(await listBikes(account)).toHaveLength(1)
     expect(await listBikes(account, true)).toEqual([])
     for (const query of queries) expect(query.eq).toHaveBeenCalledWith('owner_id', 'owner')
@@ -121,4 +121,17 @@ describe('actual Honda catalogue records', () => {
     expect((await getBike(account, id))?.modelReferenceUrl).toBe(route)
     expect(existsSync(`src/app${route}/page.tsx`)).toBe(true)
   })
+})
+it('loads latest work per owned physical bike, and falls back when the latest record was deleted',async()=>{
+ const latest={id:'job',title:'Oil changed',job_date:'2026-10-09',status:'completed'}
+ responses=[ok([row,{...row,id:modelId}]),ok([latest]),ok([])]
+ const bikes=await listBikes(account)
+ expect(bikes[0]).toMatchObject({latestJob:{id:'job',title:'Oil changed',date:'2026-10-09',status:'completed'}})
+ expect(bikes[1].latestJob).toBeNull()
+ const histories=queries.filter(query=>query.table==='maintenance_jobs')
+ expect(histories[0].eq).toHaveBeenCalledWith('bike_id',id)
+ expect(histories[1].eq).toHaveBeenCalledWith('bike_id',modelId)
+ for(const query of histories) expect(query.eq).toHaveBeenCalledWith('owner_id','owner')
+ responses=[ok([row]),ok([{...latest,id:'previous',title:'Earlier work'}])]
+ expect((await listBikes(account))[0].latestJob?.title).toBe('Earlier work')
 })

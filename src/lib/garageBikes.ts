@@ -4,6 +4,7 @@ export type BikeInput = {
   mileageKm: number | null;
 }
 export type BikeView = BikeInput & {
+  latestJob?: {id:string;title:string;date:string;status:'in_progress'|'completed'|'partial'} | null;
   id: string; archivedAt: string | null; photoPath: string | null;
   libraryImageUrl: string | null; modelReferenceUrl: string | null;
 }

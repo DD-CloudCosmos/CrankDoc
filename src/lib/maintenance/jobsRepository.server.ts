@@ -17,10 +17,15 @@ function failure<T>(error: {code?:string}): SavedResult<T> {
   return {ok:false,error:'save_failed',message:'Could not save maintenance record'}
 }
 export async function listJobs(account: AccountContext, bikeId: string): Promise<JobView[]> {
-  const {data,error} = await account.client.from('maintenance_jobs').select('*').eq('owner_id',account.userId).eq('bike_id',requireJobId(bikeId))
-    .order('job_date',{ascending:false}).order('created_at',{ascending:false}).order('id',{ascending:false})
-  if (error) throw new Error('Could not load maintenance history')
-  return (data ?? []).map(view)
+  const id=requireJobId(bikeId)
+  const jobs:JobView[]=[]
+  while(true) {
+    const {data,error}=await account.client.from('maintenance_jobs').select('*').eq('owner_id',account.userId).eq('bike_id',id)
+      .order('job_date',{ascending:false}).order('created_at',{ascending:false}).order('id',{ascending:false}).range(jobs.length,jobs.length+999)
+    if(error) throw new Error('Could not load maintenance history')
+    if(!data?.length) return jobs
+    jobs.push(...data.map(view))
+  }
 }
 export async function getJob(account: AccountContext, jobId: string): Promise<JobView | null> {
   const {data,error} = await account.client.from('maintenance_jobs').select('*').eq('owner_id',account.userId).eq('id',requireJobId(jobId)).maybeSingle()

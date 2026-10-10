@@ -1,10 +1,10 @@
 // @vitest-environment node
 import {beforeEach,it,expect,vi} from 'vitest'
 import {getAccount} from '@/lib/account'
-import {FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage,retryBikePhotoCleanup} from '@/lib/maintenance/uploads.server'
+import {FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage,retryBikePhotoCleanup,retryReceiptSourceCleanup} from '@/lib/maintenance/uploads.server'
 import {POST,GET,DELETE} from './route'
 vi.mock('@/lib/account',()=>({getAccount:vi.fn()}))
-vi.mock('@/lib/maintenance/uploads.server',async importOriginal=>({...await importOriginal<object>(),finaliseFileOrThrow:vi.fn(),getPrivateFileUrl:vi.fn(),removePrivateFile:vi.fn(),restoreLibraryImage:vi.fn(),retryBikePhotoCleanup:vi.fn()}))
+vi.mock('@/lib/maintenance/uploads.server',async importOriginal=>({...await importOriginal<object>(),finaliseFileOrThrow:vi.fn(),getPrivateFileUrl:vi.fn(),removePrivateFile:vi.fn(),restoreLibraryImage:vi.fn(),retryBikePhotoCleanup:vi.fn(),retryReceiptSourceCleanup:vi.fn()}))
 const account={client:{},userId:'owner'} as never
 const id='00000000-0000-4000-8000-000000000001'
 const request=(method:string,body:unknown)=>new Request('http://localhost/api/garage/files',{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
@@ -42,4 +42,13 @@ it('retries durable photo cleanup using only the authenticated account and bike 
  expect((await POST(request('POST',{bikeId:id,cleanup:true}))).status).toBe(200)
  expect(retryBikePhotoCleanup).toHaveBeenCalledWith(account,id)
  expect((await POST(request('POST',{bikeId:id,cleanup:true,ownerId:'other'}))).status).toBe(400)
+})
+
+it('retries owned receipt source cleanup without permitting arbitrary metadata or deleting it',async()=>{
+ vi.mocked(retryReceiptSourceCleanup).mockResolvedValue({ok:true,value:null})
+ expect((await POST(request('POST',{fileId:id,cleanupSource:true}))).status).toBe(200)
+ expect(retryReceiptSourceCleanup).toHaveBeenCalledWith(account,id)
+ expect((await POST(request('POST',{fileId:id,cleanupSource:true,ownerId:'foreign'}))).status).toBe(400)
+ vi.mocked(retryReceiptSourceCleanup).mockResolvedValue({ok:false,error:'not_found',message:'File not found.'})
+ expect((await POST(request('POST',{fileId:id,cleanupSource:true}))).status).toBe(404)
 })

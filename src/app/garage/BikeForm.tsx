@@ -4,12 +4,13 @@ import { useState, useRef, useEffect, type FormEvent } from 'react'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { parseBikeInput, type BikeInput, type BikeView } from '@/lib/garageBikes'
+import { parseBikeInput, validateCatalogueScope, type BikeInput, type BikeView } from '@/lib/garageBikes'
 
 export type CatalogueOption = { id: string; make: string; model: string; year_start: number; year_end: number | null }
 const blank: BikeInput = { motorcycleId: null, nickname: '', make: '', model: '', year: null, variant: '', market: '', registration: '', mileageKm: null }
-export function BikeForm({ initial, onSave, models = [], disabled = false }: { initial: BikeInput | null; onSave: (input: BikeInput, id: string) => Promise<BikeView>; models?: CatalogueOption[]; disabled?: boolean }) {
-  const [id] = useState(() => crypto.randomUUID())
+export function BikeForm({ initial, onSave, models = [], disabled = false }: { initial: BikeInput | BikeView | null; onSave: (input: BikeInput, id: string) => Promise<BikeView>; models?: CatalogueOption[]; disabled?: boolean }) {
+  const [id] = useState(() => initial && 'id' in initial ? initial.id : crypto.randomUUID())
+  const [changingModel,setChangingModel]=useState(false)
   const [input, setInput] = useState(initial ?? blank)
   const [year, setYear] = useState(initial?.year?.toString() ?? '')
   const [mileage, setMileage] = useState(initial?.mileageKm?.toString() ?? '')
@@ -30,19 +31,22 @@ export function BikeForm({ initial, onSave, models = [], disabled = false }: { i
     setBusy(true); setError(''); setSaved(false)
     try {
       const parsed = parseBikeInput({ ...input, year: year === '' ? null : Number(year), mileageKm: mileage === '' ? null : Number(mileage) * (unit === 'mi' ? 1.609344 : 1) })
+      const model=models.find(model=>model.id===parsed.motorcycleId)
+      if(model) validateCatalogueScope(parsed,model)
       const result = await onSave(parsed, id)
       dirty.current = false
       setInput(result); setYear(result.year?.toString() ?? ''); setMileage(result.mileageKm?.toString() ?? ''); setUnit('km')
-      setSaved(true)
+      setSaved(true);setChangingModel(false)
     } catch (error) { setError(error instanceof Error ? error.message : 'Could not save. Try again.') }
     finally { pending.current = false; setBusy(false) }
   }
   return <form onChange={() => { dirty.current = true; setSaved(false) }} onSubmit={submit} className="space-y-4" aria-describedby={error ? 'bike-error' : undefined}><fieldset disabled={busy || disabled} className="space-y-4">
-    {!initial && <div className="space-y-2"><label htmlFor="catalogue">Model from the library</label><select id="catalogue" className="min-h-11 w-full rounded-[10px] bg-input px-3" value={input.motorcycleId ?? ''} onChange={event => {
+    {initial && !changingModel && <Button type="button" variant="outline" onClick={()=>{dirty.current=true;setChangingModel(true);setSaved(false)}}>Change model</Button>}
+    {(!initial || changingModel) && <div className="space-y-2"><label htmlFor="catalogue">Model from the library</label><select id="catalogue" className="min-h-11 w-full rounded-[10px] bg-input px-3" value={input.motorcycleId ?? ''} onChange={event => {
       const model = models.find(model => model.id === event.target.value)
-      setInput({ ...input, motorcycleId: model?.id ?? null, make: model?.make ?? '', model: model?.model ?? '' })
-      setYear('')
-    }}><option value="">Unlisted model (enter details)</option>{models.map(model => <option key={model.id} value={model.id}>{model.make} {model.model} ({model.year_start}–{model.year_end ?? 'present'})</option>)}</select></div>}
+      setInput({ ...input, motorcycleId: model?.id ?? null, make: model?.make ?? input.make, model: model?.model ?? input.model })
+      if(!initial) setYear('')
+    }}><option value="">Unlisted model (enter details)</option>{input.motorcycleId && !models.some(model=>model.id===input.motorcycleId) && <option value={input.motorcycleId}>{input.make} {input.model}</option>}{models.map(model => <option key={model.id} value={model.id}>{model.make} {model.model} ({model.year_start}–{model.year_end ?? 'present'})</option>)}</select></div>}
     {(['nickname', 'make', 'model'] as const).map(field => <div key={field} className="space-y-2">
       <label htmlFor={`bike-${field}`}>{field[0].toUpperCase() + field.slice(1)}</label>
       <Input id={`bike-${field}`} className="min-h-11" maxLength={field === 'nickname' ? 80 : 120} required={field === 'make' || field === 'model'} readOnly={Boolean(input.motorcycleId) && (field === 'make' || field === 'model')} value={input[field]} onChange={event => setInput({ ...input, [field]: event.target.value })} />
