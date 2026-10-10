@@ -4,7 +4,7 @@
 
 ## CB1000R 2008
 
-Source: Honda CB1000R/RA factory service manual, April 2008. All entries are draft until independent content review. Coverage: markets E (UK, Ireland), F (France), ED (European direct sales), U (Australia, New Zealand); variants CB1000R, CB1000RA.
+Source: Honda CB1000R/RA factory service manual, April 2008. All entries passed independent exact-row content review on 10 October 2026 and are enabled locally. Coverage: markets E (UK, Ireland), F (France), ED (European direct sales), U (Australia, New Zealand); variants CB1000R, CB1000RA.
 
 | Source row | Inspect km | Replace km | Clean km | Level | Page | Condition |
 |---|---|---|---|---|---|---|
@@ -39,7 +39,7 @@ Time replacements: Radiator coolant: 24 months, Brake fluid: 24 months, Clutch f
 
 ## CB650RA 2023
 
-Source: Honda CB650RA European owner manual, 2023. All entries are draft until independent content review. Coverage: markets Europe; variants CB650RA, CB650RA ED, CB650RA II ED, CB650RA III ED, CB650RA IV ED.
+Source: Honda CB650RA European owner manual, 2023. All entries passed independent exact-row content review on 10 October 2026 and are enabled locally. Coverage: markets Europe; variants CB650RA, CB650RA ED, CB650RA II ED, CB650RA III ED, CB650RA IV ED.
 
 | Source row | Inspect km | Replace km | Clean km | Level | Page | Condition |
 |---|---|---|---|---|---|---|
@@ -81,4 +81,21 @@ Time replacements: Radiator coolant: 36 months, Brake fluid: 24 months. Chain: i
 
 Time additions start unchecked. Due status remains unknown because a reliable baseline, anniversary anchor and early-service reset are not defined here. Manual selection is required even when a job history exists. Repeated schedule choices use the actual printed columns; the application does not calculate future columns by modulo.
 
-Structural validation checks data and references, not mechanical correctness. Independent content review must confirm every included and omitted row before changing local verification flags. Live release and the parked content-rights decision are separate. No new manual page or source render is hosted.
+Structural validation checks data and references, not mechanical correctness. Independent content review confirmed every included and omitted row before local verification flags were changed. Future content changes need a new scoped review. Live release and the parked content-rights decision are separate. No new manual page or source render is hosted.
+
+## Independent approval and local promotion
+
+The independent review approved all 75 exact schedule/checklist entries on 10 October 2026: 39 CB1000R entries and 36 CB650RA entries. The approval is limited to the documented schedule guidance, with unassessed procedures and null specifications. Before promotion, both complete files were checked against the approved SHA-256 values:
+
+| Approved pre-promotion file | SHA-256 |
+|---|---|
+| honda-cb1000r-2008.json | 75e2e32f4376dfafc9700a01ae469fa7b7a8e4a9179b595f599a02e6b7e9807d |
+| honda-cb650ra-2023.json | a2de80af2e68f833f85fc12a667fae1c657c8f2c13f4348b396f47db790b1175 |
+
+Only verification flags and review notes were promoted. Template tasks, coverage, intervals, warnings and specifications remain exactly as approved. This enables choices in the local application; it is not live publication, a rights decision or certification of workshop procedures. The source ambiguities and conditional omissions documented above remain in effect.
+
+## Application and private-history trust boundary
+
+Application template starts resolve either the owner's saved personal definitions or reviewed static definitions on the server. The generic quick/carry starter accepts template-free work only. Personal template storage remains isolated from the reviewed static files and cannot claim a reviewed kind or safety rating.
+
+An owner can submit structurally valid snapshots through the database interface into their own private history. Such snapshots are owner-authored logging data, not certified source content. Ownership and structural validation still apply, but an advanced client can put source-like metadata into its own history. Shared workshops or college certification would require stronger provenance controls; this private-garage release does not claim that every raw owner-submitted snapshot has received source review.

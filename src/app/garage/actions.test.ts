@@ -8,7 +8,7 @@ vi.mock('@/lib/account', () => ({ getAccount: vi.fn() }))
 vi.mock('@/lib/garageRepository.server', () => ({ addBike: vi.fn(), editBike: vi.fn(), listBikes: vi.fn(), archiveBike: vi.fn(), removeBike: vi.fn(), importSelectedModels: vi.fn(), getBike: vi.fn() }))
 const input = { motorcycleId: null, nickname: '', make: 'Honda', model: 'Custom', year: null, variant: '', market: '', registration: '', mileageKm: null }
 const account = { userId: 'a', client: {} } as Awaited<ReturnType<typeof getAccount>>
-beforeEach(() => { vi.clearAllMocks(); vi.mocked(getAccount).mockResolvedValue(account);vi.mocked(listPrivateFiles).mockResolvedValue([]);vi.mocked(cleanupOwnedFiles).mockResolvedValue(undefined) })
+beforeEach(() => { vi.clearAllMocks();vi.mocked(jobs.getJob).mockResolvedValue(null); vi.mocked(getAccount).mockResolvedValue(account);vi.mocked(listPrivateFiles).mockResolvedValue([]);vi.mocked(cleanupOwnedFiles).mockResolvedValue(undefined) })
 describe('garage authenticated actions', () => {
   it.each([null, { userId: 'b', client: {} }])('rejects stale drafts after logout or owner change', async value => {
     vi.mocked(getAccount).mockResolvedValue(value as typeof account)
@@ -141,4 +141,22 @@ it('blocks missing coverage and changed template snapshots before creating jobs'
  vi.mocked(templates.listTemplates).mockResolvedValue([templateFixture()])
  expect(await startTemplateMaintenance(jobFixture({template:templateFixture({version:2})}),[templateFixture().id],null,'a')).toMatchObject({ok:false,error:'conflict'})
  expect(jobs.startJob).not.toHaveBeenCalled()
+})
+it('recovers a committed owned start before template version or coverage preflight',async()=>{
+ const saved=jobFixture();vi.mocked(repository.getBike).mockResolvedValue(bikeFixture());vi.mocked(jobs.getJob).mockResolvedValue(saved);vi.mocked(templates.listTemplates).mockResolvedValue([]);
+ expect(await startTemplateMaintenance(saved,['removed-after-commit'],null,'a')).toEqual({ok:true,value:saved});expect(templates.listTemplates).not.toHaveBeenCalled();expect(jobs.startJob).not.toHaveBeenCalled()
+})
+it('does not recover an identifier belonging to another bike',async()=>{
+ vi.mocked(repository.getBike).mockResolvedValue(bikeFixture());vi.mocked(jobs.getJob).mockResolvedValue(jobFixture({bikeId:crypto.randomUUID()}));expect(await startTemplateMaintenance(jobFixture(),[],null,'a')).toMatchObject({ok:false,error:'not_found'});expect(jobs.startJob).not.toHaveBeenCalled()
+})
+it('requires all generic quick/carry starts to be template free',async()=>{
+ await expect(startMaintenanceJob(jobFixture({template:templateFixture()}),null,'a')).resolves.toMatchObject({ok:false,error:'invalid'});expect(jobs.startJob).not.toHaveBeenCalled()
+})
+it('recovers a lost committed response after a template edit without a second start',async()=>{
+ const template=templateFixture(),snapshot=combineTemplates([template]);const draft=jobFixture({template:snapshot});
+ vi.mocked(repository.getBike).mockResolvedValue(bikeFixture());vi.mocked(templates.listTemplates).mockResolvedValue([template]);
+ vi.mocked(jobs.startJob).mockImplementationOnce(async()=>{vi.mocked(jobs.getJob).mockResolvedValue(draft);throw new Error('Response lost after commit')});
+ await expect(startTemplateMaintenance(draft,[template.id],null,'a')).rejects.toThrow('Response lost after commit');
+ vi.mocked(templates.listTemplates).mockResolvedValue([{...template,version:2}]);
+ expect(await startTemplateMaintenance(draft,[template.id],null,'a')).toEqual({ok:true,value:draft});expect(jobs.startJob).toHaveBeenCalledOnce();expect(templates.listTemplates).toHaveBeenCalledOnce()
 })

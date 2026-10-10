@@ -31,3 +31,12 @@ it('preserves source-specific filter, air cleaner, valve and first-service choic
  for(const entry of reviewedTemplates) {expect(()=>validateTemplate(entry.template)).not.toThrow();expect(entry.template.tasks.every(t=>t.specification===null)).toBe(true)}
  for(const id of ['cb1000r-1000','cb650ra-1000']) {expect(keys(id)).toContain(`${id.split('-')[0]}:drive-chain:inspect`);expect(keys(id)).toContain(`${id.split('-')[0]}:drive-chain:other`)}
 })
+import { rekeyChangedTasks, combineTemplates } from './templateValidation'
+it('keeps unchanged keys and changes identity for changed task meaning',()=>{
+ const original=templateFixture().tasks
+ for(const patch of [{action:'replace' as const},{label:'Different work'},{specification:'Changed specification'},{reference:'Different procedure'}]){
+  const edited=rekeyChangedTasks(original,[{...original[0],...patch}],()=> 'custom:new:task')
+  expect(edited[0].key).toBe('custom:new:task');expect(combineTemplates([templateFixture(),templateFixture({tasks:edited})]).tasks).toHaveLength(2)
+ }
+ expect(rekeyChangedTasks(original,original,()=> 'unused')[0].key).toBe(original[0].key)
+})

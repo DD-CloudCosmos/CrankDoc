@@ -82,7 +82,9 @@ export async function removeJob(id:string,bikeId:string,confirmed:boolean,ownerI
 }
 
 export async function startMaintenanceJob(draft:JobDraft,carry:import('@/lib/maintenance/carryover').CarrySelection|null,ownerId:string):Promise<SavedResult<JobView>> {
- const result=await startJob(await accountFor(ownerId),draft,carry)
+ const account=await accountFor(ownerId)
+ if(draft.template!==null)return {ok:false,error:'invalid',message:'Use the template picker to start template work.'}
+ const result=await startJob(account,draft,carry)
  if(result.ok) invalidateBike(result.value.bikeId)
  return result
 }
@@ -100,6 +102,13 @@ export async function savePersonalTemplate(template:import('@/lib/maintenance/ty
 export async function startTemplateMaintenance(draft:JobDraft,templateIds:string[],carry:import('@/lib/maintenance/carryover').CarrySelection|null,ownerId:string):Promise<SavedResult<JobView>> {
  const account=await accountFor(ownerId),bike=await getBike(account,draft.bikeId)
  if(!bike)return {ok:false,error:'not_found',message:'Bike not found'}
+ // Recover a committed start before checking definitions that may have changed since its response was lost.
+ const existing=await getJob(account,draft.id)
+ if(existing) {
+  if(existing.bikeId!==bike.id)return {ok:false,error:'not_found',message:'Job not found'}
+  invalidateBike(bike.id)
+  return {ok:true,value:existing}
+ }
  const {listTemplates}=await import('@/lib/maintenance/templates')
  const {combineTemplates}=await import('@/lib/maintenance/templateValidation')
  const {createTasks}=await import('@/lib/maintenance/checklist')

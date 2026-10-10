@@ -13,3 +13,22 @@ it('lets changed definitions be reloaded while retaining entered date and mileag
  render(<TemplatePicker bike={bikeFixture()} templates={[custom()]} previous={null} onStart={vi.fn().mockResolvedValue({ok:false,error:'conflict',message:'Template changed'})} onSave={vi.fn()} onReloadPrevious={vi.fn()} onReloadTemplates={reload} onConfirmCoverage={vi.fn()}/>);
  fireEvent.click(screen.getByRole('checkbox'));fireEvent.change(screen.getByLabelText('Checklist date'),{target:{value:'2026-10-10'}});fireEvent.change(screen.getByLabelText('Checklist mileage'),{target:{value:'12'}});fireEvent.click(screen.getByRole('button',{name:'Start checklist'}));await screen.findByText('Template changed');fireEvent.click(screen.getByRole('button',{name:'Reload templates'}));await waitFor(()=>expect(reload).toHaveBeenCalledOnce());await waitFor(()=>expect(screen.getByRole('checkbox')).not.toBeChecked());fireEvent.click(screen.getByRole('checkbox'));expect(screen.getByLabelText('Checklist date')).toHaveValue('2026-10-10');expect(screen.getByLabelText('Checklist mileage')).toHaveValue('12')
 })
+it('shows the actual month criterion beside the source distance',()=>{
+ const bike=bikeFixture({motorcycleId:'b4660699-fb60-4f70-b5c0-2008cb1000a0',year:2008,market:'ED',variant:'CB1000R'});
+ const template=templateFixture({kind:'scheduled',motorcycleId:bike.motorcycleId,years:[2008],markets:['ED'],variants:['CB1000R'],intervalKm:6000,intervalMonths:6,frequency:'recurring'});
+ render(<TemplatePicker bike={bike} templates={[template]} previous={null} onStart={vi.fn()} onSave={vi.fn()} onReloadPrevious={vi.fn()} onConfirmCoverage={vi.fn()}/>);
+ expect(screen.getByText('6,000 km or 6 months, whichever comes first.')).toBeVisible()
+})
+it('keeps the attempted identity through reload, changed coverage and recovery',async()=>{
+ const start=vi.fn().mockRejectedValueOnce(new Error('Response lost')).mockResolvedValueOnce({ok:true,value:jobFixture()});const reload=vi.fn().mockResolvedValue(undefined);
+ const props={bike:bikeFixture(),templates:[custom()],previous:null,onStart:start,onSave:vi.fn(),onReloadPrevious:vi.fn(),onReloadTemplates:reload,onConfirmCoverage:vi.fn()};const view=render(<TemplatePicker {...props}/>);
+ fireEvent.click(screen.getByRole('checkbox'));fireEvent.change(screen.getByLabelText('Checklist date'),{target:{value:'2026-10-10'}});fireEvent.change(screen.getByLabelText('Checklist mileage'),{target:{value:'12'}});fireEvent.click(screen.getByRole('button',{name:'Start checklist'}));await screen.findByText('Response lost');const first=start.mock.calls[0][0];
+ fireEvent.click(screen.getByRole('button',{name:'Reload templates'}));await waitFor(()=>expect(reload).toHaveBeenCalledOnce());view.rerender(<TemplatePicker {...props} templates={[]}/>);
+ fireEvent.click(screen.getByRole('button',{name:'Retry previous start'}));await waitFor(()=>expect(start).toHaveBeenCalledTimes(2));expect(start.mock.calls[1][0].id).toBe(first.id);expect(await screen.findByText(/Checklist started/)).toBeVisible()
+})
+it('retains the attempted job ID when a changed template is reselected after reload',async()=>{
+ const start=vi.fn().mockRejectedValueOnce(new Error('Response lost')).mockResolvedValueOnce({ok:true,value:jobFixture()}),reload=vi.fn().mockResolvedValue(undefined);
+ const props={bike:bikeFixture(),templates:[custom()],previous:null,onStart:start,onSave:vi.fn(),onReloadPrevious:vi.fn(),onReloadTemplates:reload,onConfirmCoverage:vi.fn()};const view=render(<TemplatePicker {...props}/>);
+ fireEvent.click(screen.getByRole('checkbox'));fireEvent.change(screen.getByLabelText('Checklist date'),{target:{value:'2026-10-10'}});fireEvent.change(screen.getByLabelText('Checklist mileage'),{target:{value:'12'}});fireEvent.click(screen.getByRole('button',{name:'Start checklist'}));await screen.findByText('Response lost');const id=start.mock.calls[0][0].id;
+ fireEvent.click(screen.getByRole('button',{name:'Reload templates'}));await waitFor(()=>expect(screen.getByRole('checkbox')).not.toBeChecked());view.rerender(<TemplatePicker {...props} templates={[{...custom(),version:2}]}/>);fireEvent.click(screen.getByRole('checkbox'));fireEvent.click(screen.getByRole('button',{name:'Start checklist'}));await waitFor(()=>expect(start).toHaveBeenCalledTimes(2));expect(start.mock.calls[1][0].id).toBe(id);expect(start.mock.calls[1][0].template.version).toBe(2)
+})

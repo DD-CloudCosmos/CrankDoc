@@ -1,5 +1,5 @@
 import type { BikeView } from '@/lib/garageBikes'
-import type { Template } from './types'
+import type { Template, TemplateTask } from './types'
 import { parseTemplate } from './validation'
 export type ReviewedTemplate = {verification:'draft'|'verified';reviewedSource:string;reviewNotes:string;template:Template}
 export function validateTemplate(input:unknown):Template {
@@ -30,4 +30,13 @@ export function combineTemplates(templates:Template[]):Template {
  const tasks=templates.flatMap(template=>template.tasks).filter((task,index,all)=>all.findIndex(item=>item.key===task.key)===index).map(task=>({...task}))
  if(tasks.length>100) throw new Error('Choose at most 100 tasks')
  return {...templates[0],source:templates.map(template=>`${template.title} (version ${template.version})${template.source?`: ${template.source}`:''}`).join('\n').slice(0,4000),tasks}
+}
+
+/** A changed definition is different work, even when it was copied from a source row. */
+export function rekeyChangedTasks(original:TemplateTask[],edited:TemplateTask[],newKey:()=>string):TemplateTask[] {
+ return edited.map(task=>{
+  const previous=original.find(item=>item.key===task.key)
+  const changed=previous && (['label','action','reference','warning','specification','safety'] as const).some(field=>previous[field]!==task[field])
+  return changed?{...task,key:newKey()}:{...task}
+ })
 }

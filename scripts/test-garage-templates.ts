@@ -23,7 +23,11 @@ try {
  const started=await startJob(accountA,draft);assert.equal(started.ok,true)
  const second=await saveCustomTemplate(accountA,{...first,title:'Updated',tasks:[{...first.tasks[0],label:'Changed'}]})
  assert.equal(second.version,2)
+ assert.notEqual(second.tasks[0].key,first.tasks[0].key)
  const saved=await getJob(accountA,draft.id);assert.equal(saved?.template?.version,1);assert.equal(saved?.tasks[0].label,first.tasks[0].label)
+ const recovered=await startJob(accountA,{...draft,template:second,tasks:createTasks(second,()=>crypto.randomUUID())})
+ assert.equal(recovered.ok,true);if(recovered.ok){assert.equal(recovered.value.id,draft.id);assert.equal(recovered.value.template?.version,1)}
+ assert.equal((await env.a.from('maintenance_jobs').select('id').eq('bike_id',bikeId)).data?.length,1)
  await assert.rejects(()=>saveCustomTemplate(accountA,first),/changed/)
  for(const mutation of [{tasks:[]},{tasks:[{...first.tasks[0],key:null}]},{tasks:[first.tasks[0],first.tasks[0]]},{tasks:[{...first.tasks[0],state:'done'}]},{kind:'scheduled'},{version:0}]) {
   const id=crypto.randomUUID(),definition={...first,id,...mutation}
