@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict'
 import { createClient } from '@supabase/supabase-js'
 import { createLocalTestClients, loadGarageTestEnv } from './garage-test-env'
+import type { Json, TablesInsert } from '../src/types/database.types'
+import type { JobDraft } from '../src/lib/maintenance/types'
+import { createQuickJob, deleteJob, editJobDetails, getJob, listJobs } from '../src/lib/maintenance/jobsRepository.server'
+import { jobFixture, taskFixture, templateFixture } from '../src/test/garageFixtures'
 import { addBike, archiveBike, editBike, getBike, importSelectedModels, listBikes, removeBike } from '../src/lib/garageRepository.server'
 
 async function main() {
@@ -53,6 +57,85 @@ async function main() {
     const secondImport = await importSelectedModels(accountA, [modelId])
     assert.equal(firstImport.length, 1)
     assert.equal(firstImport[0].id, secondImport[0].id)
+    const draft = (mileageKm = 12000, bikeId = id): JobDraft => ({...jobFixture(),id:crypto.randomUUID(),bikeId,mileageKm,
+      tasks:[taskFixture({id:crypto.randomUUID(),key:null,state:'done',doneAt:'2026-10-10T10:00:00Z'})]})
+    const firstDraft = draft()
+    const first = await createQuickJob(accountA,firstDraft)
+    assert.ok(first.ok)
+    assert.equal(first.value.status,'completed')
+    assert.equal(first.value.closeReason,'all_done')
+    assert.equal((await getBike(accountA,id))?.mileageKm,12000)
+    assert.deepEqual(await createQuickJob(accountA,firstDraft),first)
+    const retries = await Promise.all([createQuickJob(accountA,firstDraft),createQuickJob(accountA,firstDraft)])
+    assert.deepEqual(retries,[first,first])
+    assert.equal((await listJobs(accountA,id)).length,1)
+    assert.deepEqual(await listJobs(accountB,id),[])
+    assert.equal(await getJob(accountB,firstDraft.id),null)
+    assert.deepEqual((await b.from('maintenance_jobs').select('*').eq('id',firstDraft.id)).data,[])
+    assert.equal((await createQuickJob(accountB,draft(123,id))).ok,false)
+    assert.deepEqual(await editJobDetails(accountB,firstDraft.id,1,firstDraft),{ok:false,error:'not_found',message:'Job or bike not found'})
+    assert.equal((await deleteJob(accountB,firstDraft.id)).ok,false)
+    assert.ok((await b.from('maintenance_jobs').insert({id:crypto.randomUUID(),owner_id:userB,bike_id:id,title:'Foreign bike',job_date:'2026-10-10',mileage_km:0,tasks:firstDraft.tasks as unknown as Json,status:'completed',close_reason:'all_done',closed_at:'2026-10-10T10:00:00Z'})).error)
+    assert.ok((await a.from('maintenance_jobs').update({owner_id:userB}).eq('id',firstDraft.id)).error)
+    for (const response of [await b.from('maintenance_jobs').update({title:'Stolen'}).eq('id',firstDraft.id).select(),await b.from('maintenance_jobs').delete().eq('id',firstDraft.id).select()]) assert.deepEqual(response.data,[])
+    for (const response of [await anonymous.from('maintenance_jobs').select('*'),await anonymous.rpc('create_quick_job',{p_draft:firstDraft as unknown as Json}),await anonymous.rpc('edit_job_details',{p_job_id:firstDraft.id,p_expected_revision:1,p_details:firstDraft as unknown as Json})]) assert.ok(response.error)
+    for (const response of [await anonymous.from('maintenance_jobs').insert({id:crypto.randomUUID(),owner_id:userA,bike_id:id,title:'Anonymous',job_date:'2026-10-10',mileage_km:0,tasks:firstDraft.tasks as unknown as Json,status:'completed',close_reason:'all_done',closed_at:'2026-10-10T10:00:00Z'}),await anonymous.from('maintenance_jobs').update({title:'Anonymous'}).eq('id',firstDraft.id),await anonymous.from('maintenance_jobs').delete().eq('id',firstDraft.id)]) assert.ok(response.error)
+    const historical = {...draft(0),date:'2000-01-01',costMinor:0,currency:'EUR'}
+    assert.ok((await createQuickJob(accountA,historical)).ok)
+    assert.equal((await getBike(accountA,id))?.mileageKm,12000)
+    const changedJob = await editJobDetails(accountA,firstDraft.id,1,{...firstDraft,mileageKm:100,notes:'Edited <b>plain</b>',costMinor:0,currency:'EUR'})
+    assert.ok(changedJob.ok)
+    assert.equal(changedJob.value.revision,2)
+    assert.equal(changedJob.value.closedAt,first.value.closedAt)
+    assert.equal((await getBike(accountA,id))?.mileageKm,12000)
+    const stale = await editJobDetails(accountA,firstDraft.id,1,{...firstDraft,title:'Stale edit'})
+    assert.ok(!stale.ok && stale.error==='conflict')
+    assert.equal(stale.current?.revision,2)
+    assert.equal(stale.current?.notes,'Edited <b>plain</b>')
+    assert.deepEqual(await createQuickJob(accountA,firstDraft),changedJob)
+    const otherBike = await addBike(accountA,{...input,motorcycleId:null,model:'Other'},crypto.randomUUID())
+    assert.equal((await createQuickJob(accountA,{...firstDraft,bikeId:otherBike.id})).ok,false)
+    const races = await Promise.all([createQuickJob(accountA,draft(14000)),createQuickJob(accountA,draft(13000))])
+    assert.ok(races.every(r=>r.ok))
+    assert.equal((await getBike(accountA,id))?.mileageKm,14000)
+    const editRace = await Promise.all([editJobDetails(accountA,firstDraft.id,2,{...firstDraft,notes:'Device one'}),editJobDetails(accountA,firstDraft.id,2,{...firstDraft,notes:'Device two'})])
+    assert.equal(editRace.filter(r=>r.ok).length,1)
+    assert.equal(editRace.filter(r=>!r.ok && r.error==='conflict').length,1)
+    assert.equal((await getJob(accountA,firstDraft.id))?.revision,3)
+    const tableRow: TablesInsert<'maintenance_jobs'> = {id:crypto.randomUUID(),owner_id:userA,bike_id:id,title:'Table validation',job_date:'2026-10-10',mileage_km:1,tasks:firstDraft.tasks as unknown as Json,status:'completed',close_reason:'all_done',closed_at:'2026-10-10T10:00:00Z'}
+    const invalidTasks = [null,{},[],[{}],Array(101).fill(firstDraft.tasks[0]),[firstDraft.tasks[0],firstDraft.tasks[0]]]
+    for (const patch of [{id:'bad'},{label:''},{label:' '},{label:'x'.repeat(161)},{action:'repair'},{action:null},{state:'fake'},{state:null},{state:'todo'},{state:'skipped',reason:''},{state:'not_applicable',reason:' '},{doneAt:null},{doneAt:'nonsense'},{doneAt:'2026-02-30T10:00:00Z'},{notes:null},{notes:'x'.repeat(4001)},{reason:'x'.repeat(501)},{key:3},{warning:2},{safety:'blue'},{origin:{jobId:'bad',taskId:'bad',previousNotes:''}}]) invalidTasks.push([{...firstDraft.tasks[0],...patch}])
+    for (const tasks of invalidTasks) {
+      const rpcResult = await a.rpc('create_quick_job',{p_draft:{...draft(),tasks} as unknown as Json})
+      assert.ok(rpcResult.error,`RPC accepted invalid tasks ${JSON.stringify(tasks).slice(0,100)}`)
+      const directResult = await a.from('maintenance_jobs').insert({...tableRow,id:crypto.randomUUID(),tasks:tasks as Json})
+      assert.ok(directResult.error,`Table accepted invalid tasks ${JSON.stringify(tasks).slice(0,100)}`)
+      assert.ok((await a.from('maintenance_jobs').update({tasks:tasks as Json}).eq('id',firstDraft.id)).error)
+    }
+    assert.equal((await getBike(accountA,id))?.mileageKm,14000)
+    assert.equal((await getJob(accountA,firstDraft.id))?.revision,3)
+    for (const patch of [{status:'in_progress',close_reason:null,closed_at:null},{status:'partial',close_reason:'all_done'},{status:'partial',close_reason:'manual'},{status:'completed',close_reason:null},{template_id:'fake'},{cost_minor:9007199254740992,currency:'EUR'},{cost_minor:0,currency:null}]) assert.ok((await a.from('maintenance_jobs').insert({...tableRow,...patch,id:crypto.randomUUID()})).error)
+    const todo = {...firstDraft.tasks[0],state:'todo',doneAt:null}
+    assert.ok((await a.from('maintenance_jobs').insert({...tableRow,id:crypto.randomUUID(),tasks:[todo] as Json,status:'completed',close_reason:'manual'})).error)
+    const partialId = crypto.randomUUID()
+    assert.equal((await a.from('maintenance_jobs').insert({...tableRow,id:partialId,tasks:[todo] as Json,status:'partial',close_reason:'manual'})).error,null)
+    const excluded = {...todo,state:'not_applicable',reason:'No fitted part'}
+    assert.equal((await a.from('maintenance_jobs').insert({...tableRow,id:crypto.randomUUID(),tasks:[excluded] as Json,status:'completed',close_reason:'manual'})).error,null)
+    const template = templateFixture()
+    assert.equal((await a.from('maintenance_jobs').insert({...tableRow,id:crypto.randomUUID(),tasks:[todo] as Json,status:'in_progress',close_reason:null,closed_at:null,template_id:template.id,template_version:1,template_snapshot:template as unknown as Json})).error,null)
+    for (const templatePatch of [{version:0},{tasks:[]},{kind:'fake'},{years:[null]}]) assert.ok((await a.from('maintenance_jobs').insert({...tableRow,id:crypto.randomUUID(),template_id:template.id,template_version:1,template_snapshot:{...template,...templatePatch} as unknown as Json})).error)
+    for (const detailsPatch of [{date:'2026-02-30'},{mileageKm:'1'},{mileageKm:0.0001},{title:null},{costMinor:0,currency:null},{costMinor:1.5,currency:'EUR'},{costMinor:9007199254740992,currency:'EUR'}]) {
+      assert.ok((await a.rpc('edit_job_details',{p_job_id:firstDraft.id,p_expected_revision:3,p_details:{...firstDraft,...detailsPatch} as unknown as Json})).error)
+      assert.ok((await a.rpc('create_quick_job',{p_draft:{...draft(),...detailsPatch} as unknown as Json})).error)
+    }
+    const zeroBike = await addBike(accountA,{...input,motorcycleId:null,model:'Zero',mileageKm:null},crypto.randomUUID())
+    assert.ok((await createQuickJob(accountA,draft(0,zeroBike.id))).ok)
+    assert.equal((await getBike(accountA,zeroBike.id))?.mileageKm,0)
+    await archiveBike(accountA,otherBike.id,true)
+    assert.equal((await createQuickJob(accountA,draft(1,otherBike.id))).ok,false)
+    assert.ok((await deleteJob(accountA,firstDraft.id)).ok)
+    assert.equal((await getBike(accountA,id))?.mileageKm,14000)
+    console.log('PASS: jobs owner/anonymous denial, task/template/closure direct-write validation, calendar/cost validation, atomic mileage max, historical zero/edit/delete, stable and concurrent retries, create/edit races and stale revisions')
     await removeBike(accountA, id)
     assert.equal(await getBike(accountA, id), null)
     console.log('PASS: local ownership, anonymous denial, validation, same-model bikes, year scope, stable retries, import retries, archive/restore, delete')
