@@ -8,8 +8,8 @@ import type { JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
 import { toKilometres } from '@/lib/maintenance/distance'
 import { parseCost, parseJobDetails, type JobDetails } from '@/lib/maintenance/validation'
 
-type Fields = { title:string; date:string; mileage:string; notes:string; parts:string; performer:string; cost:string; currency:string }
-function fields(job?: JobView): Fields {
+export type Fields = { title:string; date:string; mileage:string; notes:string; parts:string; performer:string; cost:string; currency:string }
+export function fields(job?: JobView): Fields {
   const now = new Date()
   return {title:job?.title ?? '',date:job?.date ?? `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`,mileage:job?.mileageKm.toString() ?? '',notes:job?.notes ?? '',parts:job?.parts ?? '',performer:job?.performer ?? '',cost:job?.costMinor == null ? '' : `${Math.floor(job.costMinor/100)}.${String(job.costMinor%100).padStart(2,'0')}`,currency:job?.currency ?? 'EUR'}
 }
@@ -21,11 +21,14 @@ export function QuickJobForm({bike,onSave,disabled=false}:{bike:BikeView;onSave:
     return result
   }} />
 }
+export type JobDetailsFormDraft = {input:Fields;unit:'km'|'miles';expanded:boolean}
 /** Corrections change details only; task state and completion facts remain intact. */
-export function JobDetailsForm({job,onSave,disabled=false,onCancel}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void}) {
-  const [input,setInput]=useState(()=>fields(job))
-  const [unit,setUnit]=useState<'km'|'miles'>('km')
-  const [expanded,setExpanded]=useState(false)
+export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraftChange}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void;draft?:JobDetailsFormDraft;onDraftChange?:(draft:JobDetailsFormDraft)=>void}) {
+  const [localInput,setInput]=useState(()=>fields(job))
+  const [localUnit,setUnit]=useState<'km'|'miles'>('km')
+  const [localExpanded,setExpanded]=useState(false)
+  const input=draft?.input??localInput,unit=draft?.unit??localUnit,expanded=draft?.expanded??localExpanded
+  function update(next:JobDetailsFormDraft) {if(onDraftChange)onDraftChange(next);else {setInput(next.input);setUnit(next.unit);setExpanded(next.expanded)}}
   const [confirm,setConfirm]=useState(false)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
@@ -33,7 +36,7 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel}:{job?:JobVie
   const pending=useRef(false)
   const prepared=useRef<JobDetails | null>(null)
   const prefix=job ? `edit-${job.id}` : 'quick-job'
-  function change(field:keyof Fields,value:string) {setInput(current=>({...current,[field]:value}));setSaved(false);setConfirm(false)}
+  function change(field:keyof Fields,value:string) {update({input:{...input,[field]:value},unit,expanded});setSaved(false);setConfirm(false)}
   async function persist(details:JobDetails) {
     if(pending.current || disabled) return
     pending.current=true;setBusy(true);setError('');setSaved(false)
@@ -60,9 +63,9 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel}:{job?:JobVie
   return <form onSubmit={submit} className="space-y-4"><fieldset disabled={busy || disabled} className="space-y-4">
     {field('date','Job date',true,'date')}
     {field('mileage','Job mileage',true)}
-    <SegmentedControl aria-label="Job mileage unit" className="[&_button]:min-h-11 [&_button]:whitespace-nowrap" value={unit} onChange={next=>{if(next===unit) return;if(input.mileage.trim()!=='' && Number.isFinite(Number(input.mileage))) change('mileage',String(Number(input.mileage)*(next==='miles'?1/1.609344:1.609344)));setUnit(next)}} options={[{value:'km',label:'Kilometres'},{value:'miles',label:'Miles'}]} />
+    <SegmentedControl aria-label="Job mileage unit" className="[&_button]:min-h-11 [&_button]:whitespace-nowrap" value={unit} onChange={next=>{if(next===unit)return;update({input:{...input,mileage:input.mileage.trim()!=='' && Number.isFinite(Number(input.mileage))?String(Number(input.mileage)*(next==='miles'?1/1.609344:1.609344)):input.mileage},unit:next,expanded});setSaved(false);setConfirm(false)}} options={[{value:'km',label:'Kilometres'},{value:'miles',label:'Miles'}]} />
     {field('title','Work performed',true,'text',160)}
-    <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" aria-expanded={expanded} onClick={()=>setExpanded(!expanded)}>Optional details</Button>
+    <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" aria-expanded={expanded} onClick={()=>update({input,unit,expanded:!expanded})}>Optional details</Button>
     {expanded && <div className="space-y-4 rounded-[14px] bg-input p-4">{(['notes','parts'] as const).map(key=><div key={key} className="space-y-2"><label htmlFor={`${prefix}-${key}`}>{key==='notes'?'Notes':'Parts'}</label><textarea id={`${prefix}-${key}`} className="min-h-24 w-full rounded-[10px] bg-background p-3" maxLength={4000} value={input[key]} onChange={event=>change(key,event.target.value)} /></div>)}{field('performer','Performed by',false,'text',120)}{field('cost','Cost')}<label htmlFor={`${prefix}-currency`}>Currency</label><select id={`${prefix}-currency`} className="min-h-11 rounded-[10px] bg-background px-3" value={input.currency} onChange={event=>change('currency',event.target.value)}>{['EUR','GBP','USD'].map(currency=><option key={currency}>{currency}</option>)}</select><p className="text-muted-foreground">Cost is optional. Leave blank if unknown; zero means no cost.</p></div>}
     {error && <p role="alert">{error}</p>}{saved && <p role="status">Entry saved.</p>}
     <div className="flex flex-wrap gap-3"><Button className="min-h-11 whitespace-nowrap" type="submit" disabled={busy || disabled}>{busy?'Saving…':job?'Save correction':'Save entry'}</Button>{onCancel && <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" onClick={onCancel}>Cancel edit</Button>}</div>

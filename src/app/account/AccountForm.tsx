@@ -1,5 +1,6 @@
 'use client'
 
+import { announceGarageSignOut } from '@/lib/garageSession'
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -33,6 +34,7 @@ export function AccountForm({ signedIn = false, resetPassword = false, invalidLi
       else if (action === 'sign-up') result = await signUp(email, password)
       else result = await signIn(email, password)
       if (!result.ok) { setError(result.message); return }
+      if(action==='sign-out')announceGarageSignOut()
       if (action === 'sign-up') setMessage('Check your email to confirm your account, then sign in.')
       else if (action === 'recovery') setMessage('If an account uses this email, a recovery link is on its way. Check your inbox.')
       else if (action === 'password') { setPasswordValue(''); setMessage('Password saved.'); }

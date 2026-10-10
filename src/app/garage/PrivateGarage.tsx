@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, useRef, useCallback, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import Link from 'next/link'
+import { onGarageSignOut } from '@/lib/garageSession'
 import { clearChecklistDrafts } from '@/hooks/checklistDrafts'
 import { createAuthBrowserClient } from '@/lib/supabase/auth-browser'
 
@@ -56,8 +57,10 @@ export function PrivateGarage({ ownerId, children }: { ownerId: string; children
     }
     void check()
     const { data: { subscription } } = client.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' || (session && session.user.id !== ownerId)) revoke()
+      if(session && session.user.id!==ownerId)revoke()
+      else if(event==='SIGNED_OUT') {generation++;setAllowed(false);setExpired(true)}
     })
+    const stopLogout=onGarageSignOut(revoke)
     const hide = () => { generation++; flushSync(() => setAllowed(false)) }
     const resume = () => { void check() }
     const restore = () => { hide(); resume() }
@@ -70,6 +73,7 @@ export function PrivateGarage({ ownerId, children }: { ownerId: string; children
     return () => {
       active = false
       subscription.unsubscribe()
+      stopLogout()
       window.removeEventListener('pagehide', hide)
       window.removeEventListener('pageshow', resume)
       window.removeEventListener('popstate', restore)

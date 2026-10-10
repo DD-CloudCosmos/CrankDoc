@@ -1,10 +1,12 @@
+import { fields } from '@/app/garage/[bikeId]/QuickJobForm'
+import { announceGarageSignOut } from '@/lib/garageSession'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, afterEach, expect, it, vi } from 'vitest'
 import { jobFixture, taskFixture } from '@/test/garageFixtures'
 import { applyTaskPatch } from '@/lib/maintenance/checklist'
 import { useChecklist } from './useChecklist'
 import { clearChecklistDrafts, checklistDraft } from './checklistDrafts'
-import { saveTaskPatchAction, loadChecklistAction, closeJobAction } from '@/app/garage/[bikeId]/jobs/[jobId]/actions'
+import { saveTaskPatchAction, loadChecklistAction, closeJobAction, correctChecklistAction } from '@/app/garage/[bikeId]/jobs/[jobId]/actions'
 vi.mock('@/app/garage/[bikeId]/jobs/[jobId]/actions',()=>({saveTaskPatchAction:vi.fn(),loadChecklistAction:vi.fn(),closeJobAction:vi.fn(),correctChecklistAction:vi.fn()}))
 vi.mock('@/app/garage/PrivateGarage',()=>({useGarageOwner:()=> 'owner',useGarageReconciliation:()=>{}}))
 let authChange:(event:string,session:{user:{id:string}}|null)=>void
@@ -26,11 +28,11 @@ it('flushes queued notes with checkbox changes and serializes writes across task
  expect(result.current.job.tasks[0].notes).toBe('Newer notes')
  expect(result.current.job.tasks[1].state).toBe('done');expect(result.current.dirty).toBe(false)
 })
-it.each(['SIGNED_OUT','SIGNED_IN'])('clears dormant owner drafts on %s, without relying on the route remaining mounted',async event=>{
+it.each(['explicit-sign-out','SIGNED_IN'])('clears dormant owner drafts on %s, without relying on the route remaining mounted',async event=>{
  vi.mocked(saveTaskPatchAction).mockResolvedValue({ok:false,error:'save_failed',message:'Save failed'})
  const job=jobFixture();const hook=renderHook(()=>useChecklist(job))
  act(()=>hook.result.current.setTask(job.tasks[0].id,{state:'done'}));await waitFor(()=>expect(hook.result.current.error).toBe('Save failed'))
- hook.unmount();act(()=>authChange(event,event==='SIGNED_IN'?{user:{id:'different'}}:null))
+ hook.unmount();act(()=>{if(event==='explicit-sign-out')announceGarageSignOut();else authChange(event,{user:{id:'different'}})})
  const next=renderHook(()=>useChecklist(job));expect(next.result.current.job.tasks[0].state).toBe('todo');expect(next.result.current.dirty).toBe(false)
 })
 it('serializes typing during explicit completion and sends it with the new revision',async()=>{
@@ -101,4 +103,28 @@ it('allows completion details to be corrected after validation failure',async()=
  expect(result.current.dirty).toBe(false)
  await act(async()=>{expect(await result.current.complete(job.date,0)).toMatchObject({ok:true})})
  expect(closeJobAction).toHaveBeenLastCalledWith(job.id,1,job.date,0)
+})
+it('suspends an in-flight write on expiry, rejects its late acknowledgement, and reconciles it after owner verification',async()=>{
+ const job=jobFixture();let finish!:(value:Awaited<ReturnType<typeof saveTaskPatchAction>>)=>void
+ vi.mocked(saveTaskPatchAction).mockImplementation(()=>new Promise(resolve=>{finish=resolve}))
+ const {result}=renderHook(()=>useChecklist(job));act(()=>result.current.setTask(job.tasks[0].id,{state:'done'}))
+ act(()=>authChange('SIGNED_OUT',null))
+ await act(async()=>{await result.current.retry()});expect(saveTaskPatchAction).toHaveBeenCalledTimes(1)
+ const saved=applyTaskPatch(job,job.tasks[0].id,{state:'done'},'2026-10-10T12:00:00Z')
+ await act(async()=>{finish({ok:true,value:saved})})
+ expect(result.current.job.status).toBe('in_progress');expect(result.current.dirty).toBe(true)
+ vi.mocked(loadChecklistAction).mockResolvedValue(saved)
+ await act(async()=>{await checklistDraft('owner',job).reconcile();await result.current.retry()})
+ expect(result.current.job.status).toBe('completed');expect(result.current.dirty).toBe(false);expect(saveTaskPatchAction).toHaveBeenCalledTimes(1)
+})
+
+it('keeps the original revision of an open untouched correction form so newer server changes conflict',async()=>{
+ const job=jobFixture()
+ vi.mocked(correctChecklistAction).mockResolvedValue({ok:false,error:'conflict',message:'Changed',current:{...job,revision:2}})
+ const {result,rerender}=renderHook(({initial})=>useChecklist(initial),{initialProps:{initial:job}})
+ act(()=>result.current.setDetails({input:fields(job),unit:'km',expanded:false}))
+ rerender({initial:{...job,revision:2,date:'2026-10-11'}})
+ await act(async()=>{await result.current.correct({...job,date:'2026-10-12'})})
+ expect(correctChecklistAction).toHaveBeenCalledWith(job.id,1,expect.objectContaining({date:'2026-10-12'}))
+ expect(result.current.conflict).toBe(true)
 })

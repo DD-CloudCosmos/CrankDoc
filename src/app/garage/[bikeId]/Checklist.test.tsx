@@ -129,15 +129,16 @@ it('discarded owner drafts cannot be repopulated by a late successful response',
  await act(async()=>{finish({ok:true,value:applyTaskPatch(job,job.tasks[0].id,{state:'done'},'2026-10-10T12:00:00Z')})})
  render(<Checklist initialJob={job} />);expect(screen.getByRole('checkbox')).not.toBeChecked();expect(screen.getByRole('status')).toHaveTextContent('Saved')
 })
-it('warns and restores the current route when browser back or forward is cancelled',async()=>{
+it('warns for untracked history without appending entries',async()=>{
  vi.mocked(saveTaskPatchAction).mockResolvedValue({ok:false,error:'save_failed',message:'Could not save'})
- const confirm=vi.spyOn(window,'confirm').mockReturnValue(false)
+ const alert=vi.spyOn(window,'alert').mockImplementation(()=>{})
  const restore=vi.spyOn(window.history,'pushState')
  render(<Checklist initialJob={jobFixture()} />);fireEvent.click(screen.getByRole('checkbox'));await screen.findByRole('alert')
  const original=window.location.href;fireEvent(window,new PopStateEvent('popstate'))
- expect(confirm).toHaveBeenCalledWith('You have unsaved work. Leave this page?')
- expect(restore).toHaveBeenCalledWith(window.history.state,'',original)
- confirm.mockRestore();restore.mockRestore()
+ expect(alert).toHaveBeenCalledWith(expect.stringContaining('cannot be restored automatically'))
+ expect(restore).not.toHaveBeenCalled()
+ expect(window.location.href).toBe(original)
+ alert.mockRestore();restore.mockRestore()
 })
 it('warns before form navigation with dirty work',async()=>{
  vi.mocked(saveTaskPatchAction).mockResolvedValue({ok:false,error:'save_failed',message:'Could not save'})
@@ -154,4 +155,28 @@ it('shows completion and editable recorded details only after the last save succ
  fireEvent.click(screen.getByRole('button',{name:'Edit recorded date and mileage'}))
  expect(screen.getByLabelText('Job date')).toHaveValue(job.date)
  expect(screen.getByLabelText('Job mileage')).toHaveValue(String(job.mileageKm))
+})
+it.each(['reason','completion','correction'])('warns and retains a typed %s draft across route remounts',async kind=>{
+ const confirm=vi.spyOn(window,'confirm').mockReturnValue(false)
+ const job=jobFixture(kind==='correction'?{status:'completed',closeReason:'manual'}:{})
+ const view=render(<><Link href="/garage">Back to bike</Link><Checklist initialJob={job} /></>)
+ let label:string,value:string
+ if(kind==='reason') {fireEvent.change(screen.getByLabelText('Task state: Inspect chain'),{target:{value:'skipped'}});label='Reason: Inspect chain';value='Waiting for parts'}
+ else if(kind==='completion') {fireEvent.click(screen.getByRole('button',{name:'Finish job'}));label='Completion mileage (km)';value='14000'}
+ else {fireEvent.click(screen.getByRole('button',{name:'Edit recorded date and mileage'}));label='Job mileage';value='15000'}
+ fireEvent.change(screen.getByLabelText(label),{target:{value}})
+ expect(fireEvent.click(screen.getByRole('link',{name:'Back to bike'}))).toBe(false)
+ const unload=new Event('beforeunload',{cancelable:true});window.dispatchEvent(unload);expect(unload.defaultPrevented).toBe(true)
+ view.unmount();render(<Checklist initialJob={job} />)
+ expect(screen.getByLabelText(label)).toHaveValue(kind==='completion'?Number(value):value)
+ confirm.mockRestore()
+})
+it('associates completion validation with its date and mileage controls',()=>{
+ render(<Checklist initialJob={jobFixture()} />);fireEvent.click(screen.getByRole('button',{name:'Finish job'}))
+ fireEvent.change(screen.getByLabelText('Completion date'),{target:{value:''}})
+ fireEvent.change(screen.getByLabelText('Completion mileage (km)'),{target:{value:''}})
+ fireEvent.click(screen.getByRole('button',{name:'Confirm completion'}))
+ expect(screen.getByLabelText('Completion date')).toHaveAttribute('aria-invalid','true')
+ expect(screen.getByLabelText('Completion mileage (km)')).toHaveAttribute('aria-describedby','completion-error')
+ expect(screen.getByRole('alert')).toHaveAttribute('id','completion-error')
 })

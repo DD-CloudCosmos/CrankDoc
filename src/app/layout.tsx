@@ -1,3 +1,4 @@
+import { HistoryPositions } from '@/components/HistoryPositions'
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -68,6 +69,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <JsonLd data={generateWebApplicationSchema()} />
+        <HistoryPositions />
         <OfflineIndicator />
         <div className="flex min-h-screen flex-col">
           <Navigation />

@@ -1,3 +1,4 @@
+import { announceGarageSignOut } from '@/lib/garageSession'
 import { beforeEach, expect, it, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { PrivateGarage, useGarageReconciliation } from './PrivateGarage'
@@ -22,7 +23,7 @@ it('hides private content until verified, clears it on account change and blocks
 it('removes private drafts on explicit sign-out', async () => {
   render(<PrivateGarage ownerId="a"><input aria-label="Draft" defaultValue="Private" /></PrivateGarage>)
   await waitFor(() => expect(screen.getByLabelText('Draft')).toBeVisible())
-  act(() => notify('SIGNED_OUT', null))
+  act(() => announceGarageSignOut())
   expect(screen.queryByLabelText('Draft')).not.toBeInTheDocument()
 })
 it('hides back-forward snapshots before restore and checks the current account', async () => {
@@ -71,7 +72,7 @@ it('waits for record reconciliation before restoration and cannot reveal it afte
   fireEvent(window, new Event('pagehide')); fireEvent(window, new Event('pageshow'))
   await waitFor(() => expect(reconcile).toHaveBeenCalledTimes(2))
   expect(screen.getByText('Private registration')).not.toBeVisible()
-  act(() => notify('SIGNED_OUT', null))
+  act(() => announceGarageSignOut())
   await act(async () => resolve())
   expect(screen.queryByText('Private registration')).not.toBeInTheDocument()
 })

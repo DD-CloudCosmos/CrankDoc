@@ -1,5 +1,5 @@
 import { beforeEach, expect, it, vi } from 'vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { AccountForm } from './AccountForm'
 const { signIn, signUp, sendRecovery, setPassword, signOut } = vi.hoisted(() => ({ signIn: vi.fn(), signUp: vi.fn(), sendRecovery: vi.fn(), setPassword: vi.fn(), signOut: vi.fn() }))
@@ -64,4 +64,17 @@ it('removes the signed-in account view after logout before a second account sign
   await user.click(screen.getByRole('button', { name: 'Sign in' }))
   await waitFor(() => expect(signIn).toHaveBeenCalledWith('second@example.test', 'second-password'))
   expect(screen.queryByText('You are signed in.')).not.toBeInTheDocument()
+})
+
+it('announces only successful explicit logout for private draft cleanup',async()=>{
+ const notification=vi.spyOn(window,'dispatchEvent')
+ signOut.mockResolvedValueOnce({ok:false,message:'Could not sign out'})
+ render(<AccountForm signedIn />)
+ fireEvent.click(screen.getByRole('button',{name:'Sign out'}))
+ await screen.findByRole('alert')
+ expect(notification.mock.calls.some(([event])=>event.type==='garage-explicit-sign-out')).toBe(false)
+ signOut.mockResolvedValueOnce({ok:true})
+ fireEvent.click(screen.getByRole('button',{name:'Sign out'}))
+ await waitFor(()=>expect(notification.mock.calls.some(([event])=>event.type==='garage-explicit-sign-out')).toBe(true))
+ notification.mockRestore()
 })
