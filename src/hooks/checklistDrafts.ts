@@ -79,11 +79,21 @@ class ChecklistDraft {
  }
  dispose() {this.stopLogout?.();this.authSubscription?.unsubscribe();this.active=false;this.generation++;if(this.timer)clearTimeout(this.timer);this.pending.clear();this.failed=null;this.failedDetails=null;this.listeners.clear()}
  setReason=(id:string,value:ReasonDraft|null)=>{
+  if(!this.active)return
+  this.edits++
   const reasons={...this.snapshot.forms.reasons};if(value)reasons[id]=value;else delete reasons[id]
   this.publish({forms:{...this.snapshot.forms,reasons}})
  }
- setCompletion=(value:ChecklistForms['completion'])=>this.publish({forms:{...this.snapshot.forms,completion:value}})
- setDetails=(draft:JobDetailsFormDraft|null)=>this.publish({forms:{...this.snapshot.forms,details:draft?{draft,baseline:this.snapshot.forms.details?.baseline??draft}:null}})
+ setCompletion=(value:ChecklistForms['completion'])=>{
+  if(!this.active)return
+  this.edits++
+  this.publish({forms:{...this.snapshot.forms,completion:value}})
+ }
+ setDetails=(draft:JobDetailsFormDraft|null)=>{
+  if(!this.active)return
+  this.edits++
+  this.publish({forms:{...this.snapshot.forms,details:draft?{draft,baseline:this.snapshot.forms.details?.baseline??draft}:null}})
+ }
  setTask=(id:string,patch:TaskPatch)=>{
   if(!this.active)return
   this.edits++
@@ -125,17 +135,21 @@ class ChecklistDraft {
   const request=this.failed
   if(!request || this.suspended || this.snapshot.saving || this.snapshot.conflict)return
   const generation=this.generation
+  let reading=true
   this.publish({saving:true})
   try {
    // A lost response may have committed. Check the exact patch before replaying it.
    const current=await loadChecklistAction(this.saved.id)
    if(!this.active || generation!==this.generation)return
+   // A follow-on write owns its own saving flag; this read must not release it.
+   reading=false
    const task=current.tasks.find(task=>task.id===request.taskId)
    const applied=current.revision>request.revision && task && (Object.keys(request.patch) as (keyof TaskPatch)[]).every(key=>task[key]===request.patch[key])
    if(applied) {this.acknowledge(request,current);this.publish({saving:false,error:null,conflict:false});void this.flush();return}
    if(current.revision!==request.revision) {this.publish({saving:false,error:'This job changed on another device',conflict:true});return}
    this.publish({saving:false,error:null});void this.flush(request)
   } catch(error) {if(this.active && generation===this.generation)this.publish({saving:false,error:error instanceof Error?error.message:'Could not check saved version. Retry when connected.'})}
+  finally {if(reading && this.active)this.publish({saving:false})}
  }
  reload=async()=>{
   if(this.snapshot.saving)return
@@ -155,10 +169,13 @@ class ChecklistDraft {
  private async retryDetails() {
   const request=this.failedDetails
   if(!request || this.suspended || this.snapshot.saving || this.snapshot.conflict)return
+  let reading=true
   const generation=this.generation;this.publish({saving:true})
   try {
    const current=await loadChecklistAction(this.saved.id)
    if(!this.active || generation!==this.generation)return
+   // A follow-on write owns its own saving flag; this read must not release it.
+   reading=false
    if(current.revision>request.job.revision && request.matches(current)) {
     this.saved=current;this.failedDetails=null;this.publish({saving:false,error:null});void this.flush();return
    }
@@ -166,6 +183,7 @@ class ChecklistDraft {
    this.failedDetails=null;this.publish({saving:false,error:null})
    await this.saveDetails(request.write,request.matches,true)
   } catch(error) {if(this.active && generation===this.generation)this.publish({saving:false,error:error instanceof Error?error.message:'Could not check saved version.'})}
+  finally {if(reading && this.active)this.publish({saving:false})}
  }
  private async saveDetails(write:(job:JobView)=>Promise<SavedResult<JobView>>,matches:(job:JobView)=>boolean,retrying=false) {
   if(this.suspended || (!retrying && this.snapshot.queueDirty) || this.snapshot.saving) return {ok:false,error:'save_failed',message:'Save the task changes first.'} as SavedResult<JobView>

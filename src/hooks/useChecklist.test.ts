@@ -128,3 +128,40 @@ it('keeps the original revision of an open untouched correction form so newer se
  expect(correctChecklistAction).toHaveBeenCalledWith(job.id,1,expect.objectContaining({date:'2026-10-12'}))
  expect(result.current.conflict).toBe(true)
 })
+it.each([{kind:'task',settlement:'resolve'},{kind:'details',settlement:'resolve'},{kind:'task',settlement:'reject'},{kind:'details',settlement:'reject'}])('releases a stale $kind retry read after expiry when it $settlement without concurrent writes',async ({kind,settlement})=>{
+ const job=jobFixture();let finish!:(value:ReturnType<typeof jobFixture>)=>void;let fail!:(error:Error)=>void
+ vi.mocked(saveTaskPatchAction).mockReset();vi.mocked(closeJobAction).mockReset()
+ vi.mocked(saveTaskPatchAction).mockResolvedValueOnce({ok:false,error:'save_failed',message:'Could not save'}).mockResolvedValue({ok:true,value:applyTaskPatch(job,job.tasks[0].id,{state:'done'},'2026-10-10T12:00:00Z')})
+ vi.mocked(closeJobAction).mockResolvedValueOnce({ok:false,error:'save_failed',message:'Could not complete'}).mockResolvedValue({ok:true,value:{...job,revision:2,status:'partial',closeReason:'manual'}})
+ vi.mocked(loadChecklistAction).mockImplementationOnce(()=>new Promise((resolve,reject)=>{finish=resolve;fail=reject})).mockResolvedValue(job)
+ const {result}=renderHook(()=>useChecklist(job))
+ if(kind==='task') {act(()=>result.current.setTask(job.tasks[0].id,{state:'done'}));await waitFor(()=>expect(result.current.error).toBe('Could not save'))}
+ else await act(async()=>{await result.current.complete(job.date,job.mileageKm)})
+ let reading!:Promise<void>;act(()=>{reading=result.current.retry()})
+ expect(result.current.saving).toBe(true)
+ act(()=>authChange('SIGNED_OUT',null))
+ await act(async()=>{await checklistDraft('owner',job).reconcile();await result.current.retry()})
+ expect(result.current.saving).toBe(true);expect(loadChecklistAction).toHaveBeenCalledTimes(1)
+ expect(kind==='task'?saveTaskPatchAction:closeJobAction).toHaveBeenCalledTimes(1)
+ await act(async()=>{if(settlement==='resolve')finish({...job,revision:99});else fail(new Error('Stale read failed'));await reading})
+ expect(result.current.saving).toBe(false);expect(result.current.job.revision).toBe(1);expect(result.current.dirty).toBe(true)
+ await act(async()=>{await result.current.retry()})
+ await waitFor(()=>expect(result.current.dirty).toBe(false))
+ expect(result.current.job.revision).toBe(2);expect(kind==='task'?saveTaskPatchAction:closeJobAction).toHaveBeenCalledTimes(2)
+})
+it.each(['reason','completion','details'])('retains newer raw %s form input when an earlier reload response arrives',async kind=>{
+ const job=jobFixture();let finish!:(value:ReturnType<typeof jobFixture>)=>void
+ vi.mocked(loadChecklistAction).mockImplementation(()=>new Promise(resolve=>{finish=resolve}))
+ const {result}=renderHook(()=>useChecklist(job))
+ let reading!:Promise<void>;act(()=>{reading=result.current.reload()})
+ act(()=>{
+  if(kind==='reason')result.current.setReason(job.tasks[0].id,{choice:'skipped',reason:'New reason'})
+  else if(kind==='completion')result.current.setCompletion({open:true,date:'2026-10-12',mileage:'14000'})
+  else {const baseline={input:fields(job),unit:'km' as const,expanded:false};result.current.setDetails(baseline);result.current.setDetails({...baseline,input:{...baseline.input,mileage:'15000'}})}
+ })
+ await act(async()=>{finish({...job,revision:2});await expect(reading).rejects.toThrow('New changes were entered')})
+ if(kind==='reason')expect(result.current.forms.reasons[job.tasks[0].id]).toEqual({choice:'skipped',reason:'New reason'})
+ else if(kind==='completion')expect(result.current.forms.completion).toEqual({open:true,date:'2026-10-12',mileage:'14000'})
+ else expect(result.current.forms.details?.draft.input.mileage).toBe('15000')
+ expect(result.current.dirty).toBe(true);expect(result.current.job.revision).toBe(1)
+})
