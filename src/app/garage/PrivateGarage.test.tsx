@@ -1,6 +1,6 @@
 import { beforeEach, expect, it, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
-import { PrivateGarage } from './PrivateGarage'
+import { PrivateGarage, useGarageReconciliation } from './PrivateGarage'
 const auth = vi.hoisted(() => ({ getUser: vi.fn(), onAuthStateChange: vi.fn() }))
 vi.mock('@/lib/supabase/auth-browser', () => ({ createAuthBrowserClient: () => ({ auth }) }))
 let notify: (event: string, session: null | { user: { id: string } }) => void
@@ -57,4 +57,21 @@ it('keeps drafts hidden when account verification cannot reach the server', asyn
   render(<PrivateGarage ownerId="a"><input aria-label="Draft" defaultValue="Keep me" /></PrivateGarage>)
   expect(await screen.findByRole('link', { name: 'Sign in to open My Garage' })).toBeInTheDocument()
   expect(screen.getByLabelText('Draft')).not.toBeVisible()
+})
+
+it('waits for record reconciliation before restoration and cannot reveal it after sign-out', async () => {
+  let resolve!: () => void
+  const reconcile = vi.fn().mockResolvedValueOnce(undefined).mockImplementationOnce(() => new Promise<void>(done => { resolve = done }))
+  function Records() {
+    useGarageReconciliation(reconcile)
+    return <p>Private registration</p>
+  }
+  render(<PrivateGarage ownerId="a"><Records /></PrivateGarage>)
+  await waitFor(() => expect(screen.getByText('Private registration')).toBeVisible())
+  fireEvent(window, new Event('pagehide')); fireEvent(window, new Event('pageshow'))
+  await waitFor(() => expect(reconcile).toHaveBeenCalledTimes(2))
+  expect(screen.getByText('Private registration')).not.toBeVisible()
+  act(() => notify('SIGNED_OUT', null))
+  await act(async () => resolve())
+  expect(screen.queryByText('Private registration')).not.toBeInTheDocument()
 })

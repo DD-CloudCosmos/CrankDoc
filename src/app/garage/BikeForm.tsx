@@ -8,7 +8,7 @@ import { parseBikeInput, type BikeInput, type BikeView } from '@/lib/garageBikes
 
 export type CatalogueOption = { id: string; make: string; model: string; year_start: number; year_end: number | null }
 const blank: BikeInput = { motorcycleId: null, nickname: '', make: '', model: '', year: null, variant: '', market: '', registration: '', mileageKm: null }
-export function BikeForm({ initial, onSave, models = [] }: { initial: BikeInput | null; onSave: (input: BikeInput, id: string) => Promise<BikeView>; models?: CatalogueOption[] }) {
+export function BikeForm({ initial, onSave, models = [], disabled = false }: { initial: BikeInput | null; onSave: (input: BikeInput, id: string) => Promise<BikeView>; models?: CatalogueOption[]; disabled?: boolean }) {
   const [id] = useState(() => crypto.randomUUID())
   const [input, setInput] = useState(initial ?? blank)
   const [year, setYear] = useState(initial?.year?.toString() ?? '')
@@ -27,7 +27,7 @@ export function BikeForm({ initial, onSave, models = [] }: { initial: BikeInput 
     } catch (error) { setError(error instanceof Error ? error.message : 'Could not save. Try again.') }
     finally { setBusy(false) }
   }
-  return <form onSubmit={submit} className="space-y-4" aria-describedby={error ? 'bike-error' : undefined}><fieldset disabled={busy} className="space-y-4">
+  return <form onSubmit={submit} className="space-y-4" aria-describedby={error ? 'bike-error' : undefined}><fieldset disabled={busy || disabled} className="space-y-4">
     {!initial && <div className="space-y-2"><label htmlFor="catalogue">Model from the library</label><select id="catalogue" className="min-h-11 w-full rounded-[10px] bg-input px-3" value={input.motorcycleId ?? ''} onChange={event => {
       const model = models.find(model => model.id === event.target.value)
       setInput({ ...input, motorcycleId: model?.id ?? null, make: model?.make ?? '', model: model?.model ?? '' })
@@ -48,6 +48,6 @@ export function BikeForm({ initial, onSave, models = [] }: { initial: BikeInput 
     <details className="rounded-[14px] bg-input p-4"><summary className="flex min-h-11 cursor-pointer items-center">Variant, market and registration</summary><div className="mt-3 space-y-4">{(['variant', 'market', 'registration'] as const).map(field => <div key={field} className="space-y-2"><label htmlFor={`bike-${field}`}>{field[0].toUpperCase() + field.slice(1)}</label><Input id={`bike-${field}`} className="min-h-11" maxLength={field === 'registration' ? 40 : 120} value={input[field]} onChange={event => setInput({ ...input, [field]: event.target.value })} /></div>)}</div></details>
     {error && <p id="bike-error" role="alert">{error} <Link href="/account?next=/garage" target="_blank" className="text-link">Sign in in another tab</Link></p>}
     {saved && <p role="status">Bike saved.</p>}
-    <Button disabled={busy} type="submit">{busy ? 'Saving…' : 'Save bike'}</Button>
+    <Button disabled={busy || disabled} type="submit">{busy ? 'Saving…' : 'Save bike'}</Button>
   </fieldset></form>
 }

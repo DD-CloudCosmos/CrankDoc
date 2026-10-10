@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { SegmentedControl } from '@/components/ui/segmented-control'
 import { useGarage } from '@/hooks/useGarage'
@@ -7,7 +7,7 @@ import type { BikeView } from '@/lib/garageBikes'
 import { GarageBikeCard } from './GarageBikeCard'
 import { BikeForm, type CatalogueOption } from './BikeForm'
 import { ImportGarage } from './ImportGarage'
-import { useGarageOwner } from './PrivateGarage'
+import { useGarageOwner, useGarageReconciliation } from './PrivateGarage'
 import { loadBikes, saveBike, importModels } from './actions'
 
 export function GarageCollection({ initialBikes, models = [] }: { initialBikes: BikeView[]; models?: CatalogueOption[] }) {
@@ -20,13 +20,20 @@ export function GarageCollection({ initialBikes, models = [] }: { initialBikes: 
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const request = useRef(0)
-  async function changeView(next: 'active' | 'archived') {
+  const changeView = useCallback(async (next: 'active' | 'archived') => {
     const token = ++request.current
     setView(next); setBikes([]); setError(''); setLoading(true)
     try { const result = await loadBikes(next === 'archived', owner); if (token === request.current) setBikes(result) }
     catch (error) { if (token === request.current) setError(error instanceof Error ? error.message : 'Could not load bikes.') }
     finally { if (token === request.current) setLoading(false) }
-  }
+  }, [owner])
+  useGarageReconciliation(useCallback(() => changeView(view), [changeView, view]))
+  const currentView = useRef(view)
+  useEffect(() => { currentView.current = view }, [view])
+  useEffect(() => {
+    if (currentView.current === 'active') { request.current++; setBikes(initialBikes); setLoading(false); setError('') }
+    else void changeView('archived')
+  }, [initialBikes, changeView])
   return <div className="space-y-5">
     <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-[34px] font-semibold tracking-[-0.03em]">My Garage</h1><Button onClick={() => setAdding(!adding)}>{adding ? 'Cancel adding' : 'Add bike'}</Button></div>
     <ImportGarage selectedModelIds={garage?.bikeIds ?? []} onImport={async ids => {

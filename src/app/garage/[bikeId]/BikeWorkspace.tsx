@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { SegmentedControl } from '@/components/ui/segmented-control'
 import { BikeThumb } from '@/components/BikeThumb'
-import { formatBikeMileage, type BikeView } from '@/lib/garageBikes'
+import { formatBikeMileage, type BikeView, type BikeInput } from '@/lib/garageBikes'
 import { BikeForm } from '../BikeForm'
 import { useGarageOwner } from '../PrivateGarage'
 import { saveBike, setArchived, deleteBike } from '../actions'
@@ -19,20 +19,36 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
   const [confirm, setConfirm] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const pending = useRef(false)
   const cancel = useRef<HTMLButtonElement>(null)
   const remove = useRef<HTMLButtonElement>(null)
   useEffect(() => { if (confirm) cancel.current?.focus() }, [confirm])
   async function archive() {
+    if (pending.current) return
+    pending.current = true
+    const archived = !bike.archivedAt
     setBusy(true); setError('')
-    try { await setArchived(bike.id, !bike.archivedAt, owner); setBike({ ...bike, archivedAt: bike.archivedAt ? null : new Date().toISOString() }) }
+    try { await setArchived(bike.id, archived, owner); setBike(current => ({ ...current, archivedAt: archived ? new Date().toISOString() : null })) }
     catch (error) { setError(error instanceof Error ? error.message : 'Could not archive bike.') }
-    finally { setBusy(false) }
+    finally { pending.current = false; setBusy(false) }
   }
   async function removeConfirmed() {
+    if (pending.current) return
+    pending.current = true
     setBusy(true); setError('')
     try { await deleteBike(bike.id, true, owner); router.push('/garage') }
     catch (error) { setError(error instanceof Error ? error.message : 'Could not remove bike.') }
-    finally { setBusy(false) }
+    finally { pending.current = false; setBusy(false) }
+  }
+  async function save(input: BikeInput) {
+    if (pending.current) throw new Error('Another change is still saving. Try again after it finishes.')
+    pending.current = true
+    setBusy(true)
+    try {
+      const saved = await saveBike(input, bike.id, owner, true)
+      setBike(saved)
+      return saved
+    } finally { pending.current = false; setBusy(false) }
   }
   return <div className="space-y-5">
     <Link href="/garage" prefetch={false} className="inline-block min-h-11 py-3 text-link">My Garage</Link>
@@ -43,7 +59,7 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
     <section className="space-y-4 rounded-[20px] bg-card p-5 shadow-card">
       {tab === 'overview' && <><p>{bike.make} {bike.model} · {bike.year ?? 'Year not recorded'}</p><p>{formatBikeMileage(bike.mileageKm, unit)}</p><div><label htmlFor="workspace-unit" className="mr-3">Display mileage</label><select id="workspace-unit" className="min-h-11 rounded-[10px] bg-input px-3" value={unit} onChange={event => setUnit(event.target.value as 'km' | 'mi')}><option value="km">Kilometres</option><option value="mi">Miles</option></select></div><p className="text-muted-foreground">No maintenance recorded</p>{bike.modelReferenceUrl ? <Link className="block min-h-11 py-3 text-link" href={bike.modelReferenceUrl}>Model reference</Link> : <p className="text-muted-foreground">Reference unavailable until a supported model and year are confirmed.</p>}{bike.motorcycleId && <Link className="block min-h-11 py-3 text-link" href={`/diagnose?bike=${bike.motorcycleId}`}>Diagnostic guides</Link>}</>}
       {tab === 'maintenance' && <><h2 className="text-[22px] font-semibold">Maintenance</h2><p>No maintenance recorded</p><p className="text-muted-foreground">Maintenance logging is coming in the next stage. No service history or due dates have been assumed.</p></>}
-      {tab === 'details' && <><h2 className="text-[22px] font-semibold">Bike details</h2><BikeForm initial={bike} onSave={async input => { const saved = await saveBike(input, bike.id, owner, true); setBike(saved); return saved }} /><div className="flex flex-wrap gap-3 border-t border-separator pt-5"><Button variant="outline" disabled={busy} onClick={() => void archive()}>{bike.archivedAt ? 'Restore bike' : 'Archive bike'}</Button><Button ref={remove} variant="outline" disabled={busy} onClick={() => setConfirm(true)}>Remove bike</Button></div></>}
+      <div hidden={tab !== 'details'} className="space-y-4"><h2 className="text-[22px] font-semibold">Bike details</h2><BikeForm initial={bike} disabled={busy} onSave={save} /><div className="flex flex-wrap gap-3 border-t border-separator pt-5"><Button variant="outline" disabled={busy} onClick={() => void archive()}>{bike.archivedAt ? 'Restore bike' : 'Archive bike'}</Button><Button ref={remove} variant="outline" disabled={busy} onClick={() => setConfirm(true)}>Remove bike</Button></div></div>
       {error && <p role="alert">{error}</p>}
     </section>
     {confirm && <div role="alertdialog" aria-modal="true" aria-labelledby="remove-title" aria-describedby="remove-description" className="fixed inset-0 z-[60] flex items-center justify-center bg-background/90 p-5" onKeyDown={event => {
