@@ -48,6 +48,12 @@ Time-based work belongs in the checklist only when applicable to the selected se
 
 Starting a template creates an independent job for that motorcycle, with its own date and mileage. Copy the template version and task text into the job so later template edits do not rewrite an existing checklist or service history. The job remains In progress until every task is marked Done or the user explicitly selects Complete job. Leaving the page, printing, or passing a scheduled date or mileage never closes it.
 
+When creating a new maintenance activity, offer unfinished tasks from the previous activity for this physical motorcycle. Show To do and Skipped tasks so the user can select which to carry over; exclude Done and Not applicable tasks. Carry-over is optional and never crosses between bikes. Keep the offer collapsed or absent when there is no outstanding work.
+
+Selected tasks start To do in the new activity, with a link to the original task and activity. Show earlier notes and measurements as Previous activity notes, keeping them distinct from observations made during the new job. Preserve the original task's state, notes, date and mileage. If the new checklist already contains the same identified task, attach the carry-over link and previous notes to that row rather than duplicating it. Do not merge tasks solely because their names look similar.
+
+Also offer Complete previous activity, unselected by default. Apply that choice only after the new activity and its carried-over tasks have been saved successfully. If the previous activity is already closed, do not offer to close it again. Closing a previous activity with outstanding work records it as Partially completed and shows where selected tasks were carried over. Starting a new job alone never closes the old one, and moving or later completing a task in the new job does not retrospectively mark the original work Done. Cancelling or a failed save leaves the previous activity unchanged.
+
 The tablet view shows the bike, service title, job mileage and a quiet progress count such as 4 of 12 tasks done. Rows have a large checkbox, the task action and an expandable notes area. Keep supporting reference, relevant specifications and any task warning inside the expanded row. Essential warnings must remain visible before starting the affected task. Do not invent missing procedure or specification details.
 
 Tasks begin To do. Ticking a checkbox changes a task to Done and records when it was marked. Optional row actions allow Skipped or Not applicable with a reason. Those states do not count as Done. Unticking returns the task to To do; retain its notes. Notes can hold observations, measurements, parts and follow-up findings. A separate follow-up system is outside this first version.
@@ -58,7 +64,7 @@ Marking the last task Done automatically closes the job as Completed and adds it
 
 Complete job is also available while work remains. It shows the date, mileage and unfinished or skipped tasks before confirmation. Explicitly closing a job with unfinished or skipped work creates a Partially completed history entry and preserves every task's state and notes. It does not tick outstanding tasks. Completed means all applicable tasks were done; Not applicable tasks require a recorded reason and may be excluded only through explicit completion. Costs and receipts remain optional and do not keep an otherwise finished job open.
 
-Quick entries can be saved as custom templates using their task descriptions. New jobs always start with fresh task states, empty completion dates, and empty work notes; costs and receipts are not copied into a template.
+Quick entries can be saved as custom templates using their task descriptions. New jobs start with fresh task states, empty completion dates, and empty work notes. Explicitly carried-over tasks can show earlier notes separately as described above. Previous observations, costs and receipts are not copied into a reusable template.
 
 ## Paper and tablet
 
@@ -83,6 +89,8 @@ Verify adding duplicate models creates independent bikes and histories. Verify q
 Verify a new bike displays its matching library image or a placeholder. Verify saving a personal photograph updates both the card and bike page, cancelling or a failed upload keeps the existing image, and restoring the library image removes the override. Verify another bike of the same model and the shared model library remain unchanged. Verify private photos cannot be accessed through another account and embedded location metadata is removed from display images.
 
 Verify starting a template copies the version, starts fresh states, and isolates each job. Verify leaving and returning, printing, or passing an interval keeps an unfinished job active. Verify marking every task Done closes it once and creates one history entry. Verify explicit completion preserves outstanding task states and labels partial jobs accurately. Verify optional costs and receipts do not block completion, per-line notes survive progress saves, failed saves remain visible, and skipped tasks do not count as done. Verify later template changes leave existing jobs unchanged.
+
+Verify carry-over offers only unfinished tasks from the previous activity for the same bike and preserves user selection. Verify carried-over tasks start To do, retain links and clearly labelled previous notes, and do not duplicate an existing identified task. Verify the old activity stays open unless the user explicitly chooses to close it, already-closed activities are not closed again, and cancellation or a failed save does not alter the source activity. Verify completing the new task preserves the original history and closing the previous activity leaves unperformed work labelled accurately.
 
 Verify private records and receipts cannot be accessed through another account. Check upload failures and exports. Verify scheduled template content against the stated source before release, including first-service and variant conditions.
 
