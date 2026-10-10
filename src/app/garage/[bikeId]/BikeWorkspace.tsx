@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -7,13 +7,23 @@ import { SegmentedControl } from '@/components/ui/segmented-control'
 import { BikeThumb } from '@/components/BikeThumb'
 import { formatBikeMileage, type BikeView, type BikeInput } from '@/lib/garageBikes'
 import { BikeForm } from '../BikeForm'
-import { useGarageOwner } from '../PrivateGarage'
-import { saveBike, setArchived, deleteBike } from '../actions'
+import { QuickJobForm } from './QuickJobForm'
+import { MaintenanceHistory } from './MaintenanceHistory'
+import { MaintenanceRecord } from './MaintenanceRecord'
+import type { JobView, SavedResult } from '@/lib/maintenance/types'
+import { useGarageOwner, useGarageReconciliation } from '../PrivateGarage'
+import { saveBike, setArchived, deleteBike, loadBikeWorkspace, saveQuickJob, correctJob, removeJob } from '../actions'
 
-export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
+const emptyJobs: JobView[] = []
+
+export function BikeWorkspace({ bike: initial, jobs: initialJobs = emptyJobs }: { bike: BikeView; jobs?: JobView[] }) {
   const owner = useGarageOwner()
   const router = useRouter()
   const [bike, setBike] = useState(initial)
+  const [jobs,setJobs]=useState(initialJobs)
+  const [logging,setLogging]=useState(false)
+  const generation=useRef(0)
+  const props=useRef({bike:initial,jobs:initialJobs})
   const [tab, setTab] = useState<'overview' | 'maintenance' | 'details'>('overview')
   const [unit, setUnit] = useState<'km' | 'mi'>('km')
   const [confirm, setConfirm] = useState(false)
@@ -23,9 +33,37 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
   const cancel = useRef<HTMLButtonElement>(null)
   const remove = useRef<HTMLButtonElement>(null)
   useEffect(() => { if (confirm) cancel.current?.focus() }, [confirm])
+  useEffect(()=>{
+    if(props.current.bike===initial && props.current.jobs===initialJobs) return
+    props.current={bike:initial,jobs:initialJobs}
+    if(!pending.current) {generation.current++;setBike(initial);setJobs(initialJobs)}
+  },[initial,initialJobs])
+  const reconcile=useCallback(async()=>{
+    if(pending.current) return
+    const current=++generation.current
+    const fresh=await loadBikeWorkspace(initial.id,owner)
+    if(current===generation.current && !pending.current) {setBike(fresh.bike);setJobs(fresh.jobs)}
+  },[initial.id,owner])
+  useGarageReconciliation(reconcile)
+  function rememberJob(job:JobView) {setJobs(current=>[...current.filter(item=>item.id!==job.id),job])}
+  async function mutateJob<T>(write:()=>Promise<SavedResult<T>>,onSaved:(value:T)=>void):Promise<SavedResult<T>> {
+    if(pending.current) throw new Error('Another change is still saving. Try again after it finishes.')
+    pending.current=true;generation.current++;setBusy(true);setError('')
+    try {
+      const result=await write()
+      if(result.ok) {
+        onSaved(result.value)
+        try {const fresh=await loadBikeWorkspace(bike.id,owner);setBike(fresh.bike);setJobs(fresh.jobs)}
+        catch {setError('Record saved. Refresh this page to load the latest mileage and history.')}
+      }
+      return result
+    } finally {pending.current=false;setBusy(false)}
+  }
+
   async function archive() {
     if (pending.current) return
     pending.current = true
+    generation.current++
     const archived = !bike.archivedAt
     setBusy(true); setError('')
     try { await setArchived(bike.id, archived, owner); setBike(current => ({ ...current, archivedAt: archived ? new Date().toISOString() : null })) }
@@ -35,6 +73,7 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
   async function removeConfirmed() {
     if (pending.current) return
     pending.current = true
+    generation.current++
     setBusy(true); setError('')
     try { await deleteBike(bike.id, true, owner); router.push('/garage') }
     catch (error) { setError(error instanceof Error ? error.message : 'Could not remove bike.') }
@@ -43,6 +82,7 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
   async function save(input: BikeInput) {
     if (pending.current) throw new Error('Another change is still saving. Try again after it finishes.')
     pending.current = true
+    generation.current++
     setBusy(true)
     try {
       const saved = await saveBike(input, bike.id, owner, true)
@@ -57,8 +97,8 @@ export function BikeWorkspace({ bike: initial }: { bike: BikeView }) {
     <BikeThumb imageUrl={bike.libraryImageUrl} alt={`${bike.make} ${bike.model}`} className="h-52 w-full rounded-[20px]" />
     <SegmentedControl aria-label="Bike workspace" className="w-full [&_button]:min-h-11 [&_button]:whitespace-nowrap [&_button]:px-2" value={tab} onChange={setTab} options={[{ value: 'overview', label: 'Overview' }, { value: 'maintenance', label: 'Maintenance' }, { value: 'details', label: 'Bike details' }]} />
     <section className="space-y-4 rounded-[20px] bg-card p-5 shadow-card">
-      {tab === 'overview' && <><p>{bike.make} {bike.model} · {bike.year ?? 'Year not recorded'}</p><p>{formatBikeMileage(bike.mileageKm, unit)}</p><div><label htmlFor="workspace-unit" className="mr-3">Display mileage</label><select id="workspace-unit" className="min-h-11 rounded-[10px] bg-input px-3" value={unit} onChange={event => setUnit(event.target.value as 'km' | 'mi')}><option value="km">Kilometres</option><option value="mi">Miles</option></select></div><p className="text-muted-foreground">No maintenance recorded</p>{bike.modelReferenceUrl ? <Link className="block min-h-11 py-3 text-link" href={bike.modelReferenceUrl}>Model reference</Link> : <p className="text-muted-foreground">Reference unavailable until a supported model and year are confirmed.</p>}{bike.motorcycleId && <Link className="block min-h-11 py-3 text-link" href={`/diagnose?bike=${bike.motorcycleId}`}>Diagnostic guides</Link>}</>}
-      {tab === 'maintenance' && <><h2 className="text-[22px] font-semibold">Maintenance</h2><p>No maintenance recorded</p><p className="text-muted-foreground">Maintenance logging is coming in the next stage. No service history or due dates have been assumed.</p></>}
+      {tab === 'overview' && <><p>{bike.make} {bike.model} · {bike.year ?? 'Year not recorded'}</p><p>{formatBikeMileage(bike.mileageKm, unit)}</p><div><label htmlFor="workspace-unit" className="mr-3">Display mileage</label><select id="workspace-unit" className="min-h-11 rounded-[10px] bg-input px-3" value={unit} onChange={event => setUnit(event.target.value as 'km' | 'mi')}><option value="km">Kilometres</option><option value="mi">Miles</option></select></div>{jobs.length===0?<p className="text-muted-foreground">No maintenance recorded</p>:<div className="space-y-3"><h2 className="text-[22px] font-semibold">Recent work</h2>{[...jobs].sort((a,b)=>b.date.localeCompare(a.date)||b.createdAt.localeCompare(a.createdAt)).slice(0,3).map(job=><div key={job.id} className="rounded-[14px] bg-input"><p className="break-words px-4 pt-4">{job.title} · {job.date}</p><MaintenanceRecord job={job} /></div>)}</div>}{bike.modelReferenceUrl ? <Link className="block min-h-11 py-3 text-link" href={bike.modelReferenceUrl}>Model reference</Link> : <p className="text-muted-foreground">Reference unavailable until a supported model and year are confirmed.</p>}{bike.motorcycleId && <Link className="block min-h-11 py-3 text-link" href={`/diagnose?bike=${bike.motorcycleId}`}>Diagnostic guides</Link>}</>}
+      <div hidden={tab !== 'maintenance'} className="space-y-4"><h2 className="text-[22px] font-semibold">Maintenance</h2><Button className="min-h-11 whitespace-nowrap" disabled={busy || Boolean(bike.archivedAt)} onClick={()=>setLogging(!logging)} aria-expanded={logging}>Log maintenance</Button><div hidden={!logging}><QuickJobForm bike={bike} disabled={busy} onSave={draft=>mutateJob(()=>saveQuickJob(draft,owner),rememberJob)} /></div><MaintenanceHistory jobs={jobs} disabled={busy} onEdit={(id,revision,details)=>mutateJob(()=>correctJob(id,bike.id,revision,details,owner),rememberJob)} onDelete={id=>mutateJob(()=>removeJob(id,bike.id,true,owner),()=>setJobs(current=>current.filter(job=>job.id!==id)))} /></div>
       <div hidden={tab !== 'details'} className="space-y-4"><h2 className="text-[22px] font-semibold">Bike details</h2><BikeForm initial={bike} disabled={busy} onSave={save} /><div className="flex flex-wrap gap-3 border-t border-separator pt-5"><Button variant="outline" disabled={busy} onClick={() => void archive()}>{bike.archivedAt ? 'Restore bike' : 'Archive bike'}</Button><Button ref={remove} variant="outline" disabled={busy} onClick={() => setConfirm(true)}>Remove bike</Button></div></div>
       {error && <p role="alert">{error}</p>}
     </section>

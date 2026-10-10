@@ -2,7 +2,7 @@ import { it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import type { BikeView } from '@/lib/garageBikes'
 import { BikeWorkspace } from './BikeWorkspace'
-const actions = vi.hoisted(() => ({ saveBike: vi.fn(), loadBikes: vi.fn(), setArchived: vi.fn(), deleteBike: vi.fn(), importModels: vi.fn() }))
+const actions = vi.hoisted(() => ({ saveBike: vi.fn(), loadBikes: vi.fn(), setArchived: vi.fn(), deleteBike: vi.fn(), importModels: vi.fn(), loadBikeWorkspace: vi.fn(), saveQuickJob: vi.fn(), correctJob: vi.fn(), removeJob: vi.fn() }))
 vi.mock('../actions', () => actions)
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 const bike: BikeView = { id: 'one', motorcycleId: null, nickname: 'Weekend bike', make: 'Honda', model: 'Custom', year: null, variant: '', market: '', registration: 'PRIVATE', mileageKm: null, archivedAt: null, photoPath: null, libraryImageUrl: null, modelReferenceUrl: null }
@@ -23,10 +23,10 @@ beforeEach(() => vi.resetAllMocks())
 
   it('does not invent maintenance or reference for custom bikes', () => {
     render(<BikeWorkspace bike={bike} />)
-    expect(screen.getByText('No maintenance recorded')).toBeInTheDocument()
+    expect(screen.getAllByText('No maintenance recorded').some(element=>!element.closest('[hidden]'))).toBe(true)
     expect(screen.getByText(/Reference unavailable/)).toBeInTheDocument()
     fireEvent.click(screen.getByRole('radio', { name: 'Maintenance' }))
-    expect(screen.getByText(/Maintenance logging is coming/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Log maintenance' })).toBeInTheDocument()
   })
 it('restores archived bikes without removing their records', async () => {
   actions.setArchived.mockResolvedValue(undefined)
@@ -80,4 +80,16 @@ it('coordinates pending saves and archives so later completion cannot overwrite 
   fireEvent.click(screen.getByRole('radio', { name: 'Overview' }))
   expect(screen.getByText('456 km')).toBeInTheDocument()
   expect(screen.getByText('Archived bike')).toBeInTheDocument()
+})
+
+import { jobFixture } from '@/test/garageFixtures'
+it('keeps quick drafts across tabs and refreshes authoritative mileage after an idempotent save',async()=>{
+ actions.saveQuickJob.mockResolvedValue({ok:true,value:jobFixture({bikeId:bike.id,status:'completed'})});actions.loadBikeWorkspace.mockResolvedValue({bike:{...bike,mileageKm:250},jobs:[jobFixture({bikeId:bike.id,status:'completed'})]})
+ render(<BikeWorkspace bike={bike} />);fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:'Log maintenance'}));fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Oil'}});fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'12000'}});fireEvent.click(screen.getByRole('radio',{name:'Overview'}));fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));expect(screen.getByLabelText('Work performed')).toHaveValue('Oil');fireEvent.click(screen.getByRole('button',{name:'Save entry'}));await waitFor(()=>expect(actions.loadBikeWorkspace).toHaveBeenCalled());fireEvent.click(screen.getByRole('radio',{name:'Overview'}));expect(screen.getByText('250 km')).toBeInTheDocument()
+})
+it('reconciles fresh props without replacing a dirty quick draft',()=>{
+ const {rerender}=render(<BikeWorkspace bike={bike} />);fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:'Log maintenance'}));fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Unsaved'}});rerender(<BikeWorkspace bike={{...bike,mileageKm:99}} />);expect(screen.getByLabelText('Work performed')).toHaveValue('Unsaved');fireEvent.click(screen.getByRole('radio',{name:'Overview'}));expect(screen.getByText('99 km')).toBeInTheDocument()
+})
+it('retains the saved record if the follow-up read fails and does not guess mileage',async()=>{
+ const job=jobFixture({bikeId:bike.id,title:'Saved oil change',status:'completed'});actions.saveQuickJob.mockResolvedValue({ok:true,value:job});actions.loadBikeWorkspace.mockRejectedValue(new Error('Network unavailable'));render(<BikeWorkspace bike={{...bike,mileageKm:50}} />);fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:'Log maintenance'}));fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Oil'}});fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'12000'}});fireEvent.click(screen.getByRole('button',{name:'Save entry'}));expect(await screen.findByRole('alert')).toHaveTextContent('Record saved');expect(screen.getByRole('button',{name:'Show record: Saved oil change'})).toBeInTheDocument();fireEvent.click(screen.getByRole('radio',{name:'Overview'}));expect(screen.getByText('50 km')).toBeInTheDocument()
 })

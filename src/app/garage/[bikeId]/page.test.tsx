@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { getAccount } from '@/lib/account'
 import { getBike } from '@/lib/garageRepository.server'
 import BikePage, { dynamic } from './page'
+vi.mock('@/lib/maintenance/jobsRepository.server',()=>({listJobs:vi.fn().mockResolvedValue([])}))
 vi.mock('@/lib/account', () => ({ getAccount: vi.fn() }))
 vi.mock('@/lib/garageRepository.server', () => ({ getBike: vi.fn() }))
 vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('Not found') } }))

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState, useRef, useEffect, type FormEvent } from 'react'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -17,17 +17,27 @@ export function BikeForm({ initial, onSave, models = [], disabled = false }: { i
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
+  const dirty = useRef(false)
+  const pending = useRef(false)
+  useEffect(() => {
+    if (!initial || dirty.current || pending.current) return
+    setInput(initial); setYear(initial.year?.toString() ?? ''); setMileage(initial.mileageKm?.toString() ?? ''); setUnit('km')
+  }, [initial])
   async function submit(event: FormEvent) {
     event.preventDefault()
+    if (pending.current || disabled) return
+    pending.current = true
     setBusy(true); setError(''); setSaved(false)
     try {
       const parsed = parseBikeInput({ ...input, year: year === '' ? null : Number(year), mileageKm: mileage === '' ? null : Number(mileage) * (unit === 'mi' ? 1.609344 : 1) })
-      await onSave(parsed, id)
+      const result = await onSave(parsed, id)
+      dirty.current = false
+      setInput(result); setYear(result.year?.toString() ?? ''); setMileage(result.mileageKm?.toString() ?? ''); setUnit('km')
       setSaved(true)
     } catch (error) { setError(error instanceof Error ? error.message : 'Could not save. Try again.') }
-    finally { setBusy(false) }
+    finally { pending.current = false; setBusy(false) }
   }
-  return <form onSubmit={submit} className="space-y-4" aria-describedby={error ? 'bike-error' : undefined}><fieldset disabled={busy || disabled} className="space-y-4">
+  return <form onChange={() => { dirty.current = true; setSaved(false) }} onSubmit={submit} className="space-y-4" aria-describedby={error ? 'bike-error' : undefined}><fieldset disabled={busy || disabled} className="space-y-4">
     {!initial && <div className="space-y-2"><label htmlFor="catalogue">Model from the library</label><select id="catalogue" className="min-h-11 w-full rounded-[10px] bg-input px-3" value={input.motorcycleId ?? ''} onChange={event => {
       const model = models.find(model => model.id === event.target.value)
       setInput({ ...input, motorcycleId: model?.id ?? null, make: model?.make ?? '', model: model?.model ?? '' })

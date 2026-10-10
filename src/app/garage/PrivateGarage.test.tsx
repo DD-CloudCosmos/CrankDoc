@@ -75,3 +75,39 @@ it('waits for record reconciliation before restoration and cannot reveal it afte
   await act(async () => resolve())
   expect(screen.queryByText('Private registration')).not.toBeInTheDocument()
 })
+
+import { QuickJobForm } from './[bikeId]/QuickJobForm'
+import { bikeFixture } from '@/test/garageFixtures'
+it('preserves maintenance values invisibly on expiry and removes them on owner change',async()=>{
+ render(<PrivateGarage ownerId="a"><QuickJobForm bike={bikeFixture()} onSave={vi.fn()} /></PrivateGarage>)
+ await waitFor(()=>expect(screen.getByLabelText('Work performed')).toBeVisible())
+ fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Private oil change'}})
+ auth.getUser.mockResolvedValue(user(null));fireEvent.focus(window)
+ await waitFor(()=>expect(screen.getByLabelText('Work performed')).not.toBeVisible())
+ auth.getUser.mockResolvedValue(user('a'));fireEvent.focus(window)
+ await waitFor(()=>expect(screen.getByLabelText('Work performed')).toBeVisible())
+ expect(screen.getByLabelText('Work performed')).toHaveValue('Private oil change')
+ act(()=>notify('SIGNED_IN',{user:{id:'b'}}));expect(screen.queryByLabelText('Work performed')).not.toBeInTheDocument()
+})
+
+import { BikeWorkspace } from './[bikeId]/BikeWorkspace'
+import { jobFixture } from '@/test/garageFixtures'
+const workspaceActions=vi.hoisted(()=>({loadBikeWorkspace:vi.fn(),saveQuickJob:vi.fn(),correctJob:vi.fn(),removeJob:vi.fn(),saveBike:vi.fn(),setArchived:vi.fn(),deleteBike:vi.fn()}))
+vi.mock('./actions',()=>workspaceActions)
+vi.mock('next/navigation',()=>({useRouter:()=>({push:vi.fn()})}))
+it('reconciles owned mileage and history on return without overwriting either dirty form',async()=>{
+ const bike=bikeFixture({nickname:'Original',mileageKm:100,registration:'PRIVATE'})
+ workspaceActions.loadBikeWorkspace.mockResolvedValueOnce({bike,jobs:[]})
+ render(<PrivateGarage ownerId="a"><BikeWorkspace bike={bike} /></PrivateGarage>)
+ await waitFor(()=>expect(screen.getByRole('heading',{name:'Original'})).toBeVisible())
+ fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:'Log maintenance'}));fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:'Unsaved work'}})
+ fireEvent.click(screen.getByRole('radio',{name:'Bike details'}));fireEvent.change(screen.getByLabelText('Nickname'),{target:{value:'Draft nickname'}})
+ auth.getUser.mockResolvedValue(user(null));fireEvent.focus(window)
+ await waitFor(()=>expect(screen.getByLabelText('Nickname')).not.toBeVisible())
+ workspaceActions.loadBikeWorkspace.mockResolvedValue({bike:{...bike,nickname:'Remote',mileageKm:900},jobs:[jobFixture({status:'completed',title:'Remote work'})]})
+ auth.getUser.mockResolvedValue(user('a'));fireEvent.focus(window)
+ await waitFor(()=>expect(screen.getByLabelText('Nickname')).toBeVisible());expect(screen.getByLabelText('Nickname')).toHaveValue('Draft nickname')
+ fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));expect(screen.getByLabelText('Work performed')).toHaveValue('Unsaved work');expect(screen.getByRole('button',{name:'Show record: Remote work'})).toBeInTheDocument()
+ fireEvent.click(screen.getByRole('radio',{name:'Overview'}));expect(screen.getByText('900 km')).toBeInTheDocument()
+ act(()=>notify('SIGNED_IN',{user:{id:'b'}}));expect(screen.queryByText('900 km')).not.toBeInTheDocument();expect(screen.queryByLabelText('Registration')).not.toBeInTheDocument()
+})

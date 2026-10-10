@@ -2,7 +2,10 @@
 
 import { revalidatePath } from 'next/cache'
 import { getAccount } from '@/lib/account'
-import { addBike, editBike, listBikes, archiveBike, removeBike, importSelectedModels } from '@/lib/garageRepository.server'
+import { addBike, editBike, listBikes, archiveBike, removeBike, importSelectedModels, getBike } from '@/lib/garageRepository.server'
+import { listJobs, getJob, createQuickJob, editJobDetails, deleteJob } from '@/lib/maintenance/jobsRepository.server'
+import type { JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
+import type { JobDetails } from '@/lib/maintenance/validation'
 import type { BikeInput, BikeView } from '@/lib/garageBikes'
 
 async function accountFor(ownerId: string) {
@@ -42,4 +45,33 @@ export async function importModels(ids: string[], ownerId: string): Promise<{ bi
   }
   for (const bike of bikes) invalidateBike(bike.id)
   return { bikes, failed }
+}
+
+export async function loadBikeWorkspace(bikeId: string, ownerId: string): Promise<{bike:BikeView;jobs:JobView[]}> {
+  const account=await accountFor(ownerId)
+  const bike=await getBike(account,bikeId)
+  if(!bike) throw new Error('Bike not found')
+  return {bike,jobs:await listJobs(account,bikeId)}
+}
+export async function saveQuickJob(draft:JobDraft,ownerId:string):Promise<SavedResult<JobView>> {
+  const result=await createQuickJob(await accountFor(ownerId),draft)
+  if(result.ok) invalidateBike(result.value.bikeId)
+  return result
+}
+export async function correctJob(id:string,bikeId:string,revision:number,details:JobDetails,ownerId:string):Promise<SavedResult<JobView>> {
+  const account=await accountFor(ownerId)
+  const job=await getJob(account,id)
+  if(!job || job.bikeId!==bikeId) return {ok:false,error:'not_found',message:'Job not found'}
+  const result=await editJobDetails(account,id,revision,details)
+  if(result.ok) invalidateBike(bikeId)
+  return result
+}
+export async function removeJob(id:string,bikeId:string,confirmed:boolean,ownerId:string):Promise<SavedResult<null>> {
+  if(confirmed!==true) throw new Error('Confirm removal first.')
+  const account=await accountFor(ownerId)
+  const job=await getJob(account,id)
+  if(!job || job.bikeId!==bikeId) return {ok:false,error:'not_found',message:'Job not found'}
+  const result=await deleteJob(account,id)
+  if(result.ok) invalidateBike(bikeId)
+  return result
 }

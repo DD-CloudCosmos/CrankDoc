@@ -36,3 +36,13 @@ it('converts miles for storage and displays miles without changing the bike reco
   fireEvent.change(screen.getByLabelText('Display mileage'), { target: { value: 'mi' } })
   expect(screen.getByText('1 mi')).toBeInTheDocument()
 })
+
+it('refreshes pristine details but preserves an unsaved draft when the bike changes remotely',()=>{
+ const initial={motorcycleId:null,nickname:'Original',make:'Honda',model:'Custom',year:null,variant:'',market:'',registration:'',mileageKm:100}
+ const {rerender}=render(<BikeForm initial={initial} onSave={vi.fn()} />)
+ rerender(<BikeForm initial={{...initial,nickname:'Remote',mileageKm:200}} onSave={vi.fn()} />)
+ expect(screen.getByLabelText('Nickname')).toHaveValue('Remote');expect(screen.getByLabelText('Mileage')).toHaveValue(200)
+ fireEvent.change(screen.getByLabelText('Nickname'),{target:{value:'Draft'}})
+ rerender(<BikeForm initial={{...initial,nickname:'New remote',mileageKm:300}} onSave={vi.fn()} />)
+ expect(screen.getByLabelText('Nickname')).toHaveValue('Draft');expect(screen.getByLabelText('Mileage')).toHaveValue(200)
+})
