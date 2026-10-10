@@ -1,6 +1,6 @@
 # My Garage local acceptance
 
-10 October 2026. Branch `codex/my-garage`, isolated worktree `circuit-explorer`. Local implementation and automated evidence are ready for controller review. Browser appearance, actual paper output, the single scoped re-review of the final fixes, and live release are outstanding. The whole-branch/security review found F1–F10; the combined fix wave addresses them and awaits that re-review. No hosted migration, authentication setting, push or deployment was performed.
+10 October 2026. Branch `codex/my-garage`, isolated worktree `circuit-explorer`. Local implementation, task reviews, whole-branch/security review and the single scoped final-fix review are complete. The review confirms F1–F10 and the required accessibility correction are addressed, with no new critical or important breakage. One minor photo-expiry timing edge is tracked below. Browser appearance, actual paper output and live release remain outstanding. No hosted migration, authentication setting, push or deployment was performed.
 
 ## Requirements and evidence
 
@@ -80,7 +80,7 @@ These are the exact new migrations since baseline `3c59973`, in execution order.
 | Private storage | Verify migration-created private `garage-photos` and `garage-receipts` buckets, ownership policies and 60-second download renewal after migration | Local evidence only |
 | Source publication and content rights | Separately approve reviewed template publication and parked manual-content rights | Not approved for live publication |
 | Browser and paper acceptance | Execute the specification above in both themes and both page sizes | Not authorized/performed |
-| Task, whole-branch and security review | Whole-branch/security review completed; controller obtains the single scoped review of the combined final fixes before merge | Scoped re-review pending controller |
+| Task, whole-branch and security review | Task, whole-branch/security and scoped final-fix reviews completed; one minor follow-up is recorded | Local review gate passed; browser and hosted gates remain |
 | Push, preview, merge and production deploy | Obtain David's separate live release decision after all prerequisites | Not performed |
 
 No external-provider sign-in, institutional single sign-on, hosted email branding or pack enforcement is introduced. Public browsing remains available; private garage access uses a stable account identity.
@@ -93,6 +93,12 @@ A quick performed-work correction applies only to a template-free single task wi
 
 Bounded minor fixes retain valid photos during renewal, offer photo retry, clear stale photo/receipt cleanup status, attempt every local fixture cleanup while preserving setup errors, protect built-PDF/export setup and check cleanup responses, assert AccountForm replacement destinations quietly, name the blank link “Print blank base template”, and assert printing does not invoke write actions or network requests.
 
-The regression run passes 38 files and 354 tests. The added local access checks exercise another device's mileage, explicit lowering, atomic task/title correction, completion facts and matching retries. The export fixture also exercises one bike removal with 1,001 live attachment identities and 1,001 jobs, including a pending unattached source beyond the first page. All eight guarded local suites passed, including the new cleanup case. Isolated runtime checks passed for the served loopback bundle, exclusion of the live environment file, failed-child restoration and interruption restoration. The final scoped re-review remains pending.
+The regression run passes 38 files and 354 tests. The added local access checks exercise another device's mileage, explicit lowering, atomic task/title correction, completion facts and matching retries. The export fixture also exercises one bike removal with 1,001 live attachment identities and 1,001 jobs, including a pending unattached source beyond the first page. All eight guarded local suites passed, including the new cleanup case. Isolated runtime checks passed for the served loopback bundle, exclusion of the live environment file, failed-child restoration and interruption restoration. The single final scoped re-review passed for F1–F10 and the required field associations; the minor expiry edge below remains tracked.
 
-The nine accepted rulings and their costs are retained in [garage-decisions.md](garage-decisions.md). Existing five lint warnings, six previously recorded dependency audit findings, the existing match_document_chunks search-path/public-vector-extension advisor warnings, and applied-migration analyzer/whitespace noise remain separate release follow-up. No fresh broad audit is claimed. Approved static template content was not changed.
+The ten recorded rulings and their costs are retained in [garage-decisions.md](garage-decisions.md). Existing five lint warnings, six previously recorded dependency audit findings, the existing match_document_chunks search-path/public-vector-extension advisor warnings, and applied-migration analyzer/whitespace noise remain separate release follow-up. No fresh broad audit is claimed. Approved static template content was not changed.
+
+## Final controller verification and tracked follow-up
+
+Implementation commit `f340c5d` received a fresh full test run: 179 files, 1,498 tests passed. The isolated production build passed on that committed tree. Fresh built HTTP PDF checks passed valid 200, malformed 415 and dependency tracing. The runtime guard passed failed-child restoration, loopback account/garage and served-bundle wiring, live environment exclusion, and interruption restoration. The final bookkeeping commit changes documentation only.
+
+The scoped re-review found one nonblocking Minor/P3 edge at `BikePhotoEditor.tsx:27`: renewal clears the sole timer while retaining a URL that was valid when the request began. A stalled request can cross expiry without clearing it, and a later failure schedules retry without immediately clearing it. Owner checks and logout/owner-change revocation remain intact; the signed endpoint still expires. An independent expiry timer is the follow-up. This may delay photo refresh or leave a broken link until settlement/retry; it is not counted as resolved. No other final-review finding remains open.

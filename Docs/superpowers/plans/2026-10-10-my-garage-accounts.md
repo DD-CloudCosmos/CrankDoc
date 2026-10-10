@@ -229,4 +229,4 @@ try {
 - [x] Repeat the import using real local clients and assert row count remains one. Run component tests for cancelling import and failure/retry; verify archived records are retained and model reference doesn't expose registration.
 - [x] Run all stage tests and project checks. Commit `feat: add account garage cards and individual bike pages`. Stop for the stage review before starting the maintenance plan.
 
-Stage implementation and task/stage reviews completed locally. The nine accepted deviations and costs are in [garage-decisions.md](../../garage-decisions.md). Final scoped review, native browser/paper checks and hosted release remain separately pending in [garage-acceptance.md](../../garage-acceptance.md).
+Stage implementation and task/stage reviews completed locally. The ten recorded rulings and costs are in [garage-decisions.md](../../garage-decisions.md). Final scoped review passed for all blocking findings. Native browser/paper checks, the minor photo-expiry follow-up and hosted release remain tracked in [garage-acceptance.md](../../garage-acceptance.md).

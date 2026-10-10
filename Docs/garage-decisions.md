@@ -1,6 +1,6 @@
 # My Garage implementation decisions
 
-10 October 2026. These nine rulings were accepted during the staged implementation. They survive removal of the temporary review ledger. The [acceptance record](garage-acceptance.md) owns current evidence and release gates.
+10 October 2026. These ten rulings were recorded during implementation and final review. They survive removal of the temporary review ledger. The [acceptance record](garage-acceptance.md) owns current evidence and release gates.
 
 | Decision | Reason and cost |
 | --- | --- |
@@ -13,3 +13,4 @@
 | 7. Restrict finalized files and attachment metadata to a narrow server transition after owner checks. | Ordinary metadata/storage writes cannot enforce decoded-file validation. Pending uploads and normal reads remain owner-scoped. Cost: a privileged server writer limited to finalization and cleanup, with security review and race tests. |
 | 8. Track native same-document history positions at the root. | Cancelled known traversals use exact history.go compensation while preserving framework/native state. Unknown pre-existing entries warn and retain the private draft without guessing direction. No private fields enter history. Cost: root navigation integration, an explicit unknown-entry limit, and pending real-browser acceptance. |
 | 9. Resolve application template starts on the server, while treating raw private owner snapshots as untrusted history. | Personal templates cannot become reviewed shared definitions. Generic starts accept template-free work. Saved print output says “Saved template snapshot”; only a resolved static blank template can claim review. Cost: advanced clients can fabricate source-like metadata in their own logs; shared or college certification would require stronger provenance. |
+| 10. Track the nonblocking photo-expiry timing edge after the final fix wave. | A stalled renewal can retain an expired URL until settlement or retry. Signed endpoint expiry and owner/logout revocation still apply. The scoped review found no blocking breakage. Cost: delayed or broken photo refresh; an independent expiry timer remains a follow-up. |
