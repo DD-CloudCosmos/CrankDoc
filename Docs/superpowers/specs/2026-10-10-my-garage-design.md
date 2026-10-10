@@ -1,6 +1,6 @@
 # My Garage and maintenance checklists
 
-Design for review, 10 October 2026.
+Approved design, 10 October 2026. Detailed acceptance rules are in the [product requirements](../requirements/2026-10-10-my-garage-requirements.md).
 
 ## Purpose and agreed direction
 
