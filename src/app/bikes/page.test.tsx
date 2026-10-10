@@ -120,6 +120,21 @@ describe('BikesPage', () => {
     vi.clearAllMocks()
   })
 
+  it('links the 2023 CB650RA reference when searching by either model name', async () => {
+    vi.mocked(createServerClient).mockReturnValue(createMockSupabaseClient([], []) as never)
+    const { unmount } = render(await BikesPage({ searchParams: Promise.resolve({ search: 'CB650RA' }) }))
+    expect(screen.getByRole('link', { name: /Honda CB650RA · 2023/ })).toHaveAttribute('href', '/bikes/honda-cb650ra-2023')
+    unmount()
+    render(await BikesPage({ searchParams: Promise.resolve({ search: 'CB650R' }) }))
+    expect(screen.getByRole('link', { name: /Honda CB650RA · 2023/ })).toBeInTheDocument()
+  })
+
+  it('hides the CB650RA reference for other makes and categories', async () => {
+    vi.mocked(createServerClient).mockReturnValue(createMockSupabaseClient([], []) as never)
+    render(await BikesPage({ searchParams: Promise.resolve({ make: 'Yamaha', category: 'sport' }) }))
+    expect(screen.queryByRole('link', { name: /Honda CB650RA · 2023/ })).not.toBeInTheDocument()
+  })
+
   it('renders the page title and description', async () => {
     const mockClient = createMockSupabaseClient(
       mockMotorcycles,
@@ -227,4 +242,10 @@ describe('BikesPage', () => {
 
     expect(screen.getByText('Showing 2 motorcycles')).toBeInTheDocument()
   })
+})
+
+it('keeps the CB1000R reference accessible when database credentials are unavailable', async () => {
+  vi.mocked(createServerClient).mockImplementation(() => { throw new Error('Missing Supabase environment variables') })
+  render(await BikesPage({ searchParams: Promise.resolve({}) }))
+  expect(screen.getByRole('link', { name: /Honda CB1000R.*View bike/ })).toHaveAttribute('href', '/bikes/honda-cb1000r-sc60')
 })

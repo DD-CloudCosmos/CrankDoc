@@ -1,0 +1,278 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CB650RA",
+  "motorcycle_generation": null,
+  "source": "Honda 2023 European owner’s manual 32MKYH100, pages 69–70",
+  "intervals": [
+    {
+      "service_name": "First service (one-off)",
+      "interval_km": 1000,
+      "interval_miles": 600,
+      "interval_months": null,
+      "description": "Replace engine oil and oil filter at the initial 1,000 km / 600 miles. Owner’s manual page 69.",
+      "torque_spec": null,
+      "fluid_spec": "SAE 10W-30; API SJ or higher, excluding Energy Conserving and Resource Conserving oils; JASO T 903 MA. Quantity with filter: 2.6 L."
+    },
+    {
+      "service_name": "Engine oil replacement",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Replace at 12,000 km / 8,000 miles or annually, after the first service. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": "SAE 10W-30; API SJ or higher, excluding Energy Conserving and Resource Conserving oils; JASO T 903 MA. After draining: 2.3 L; with filter: 2.6 L."
+    },
+    {
+      "service_name": "Engine oil filter replacement",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "After the first service, replace at 24,000 km / 16,000 miles and every 24,000 km thereafter. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Fuel line inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect at the distance interval or annually. Owner’s manual page 69. Honda recommends dealer service for items marked intermediate unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Throttle operation inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect at the distance interval or annually. Owner’s manual page 69. Honda recommends dealer service for items marked intermediate unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Engine idle speed inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect at the distance interval or annually. Owner’s manual page 69. Honda recommends dealer service for items marked intermediate unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect at the distance interval or annually. Owner’s manual page 69. Honda recommends dealer service for items marked intermediate unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Cooling system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect at the distance interval or annually. Owner’s manual page 69. Honda recommends dealer service for items marked intermediate unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Air cleaner replacement",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "Replace every 24,000 km / 16,000 miles. Service more often in unusually wet or dusty conditions. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark plug inspection",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "Inspect at 24,000 km / 16,000 miles; replace at 48,000 km / 32,000 miles. Repeat the inspection/replacement pattern thereafter. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark plug replacement",
+      "interval_km": 48000,
+      "interval_miles": 32000,
+      "interval_months": null,
+      "description": "Replace every 48,000 km / 32,000 miles. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Valve clearance inspection",
+      "interval_km": 36000,
+      "interval_miles": 24000,
+      "interval_months": null,
+      "description": "Inspect every 36,000 km / 24,000 miles. Honda recommends dealer service unless equipped and mechanically skilled. Clearance values require the workshop manual. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant replacement",
+      "interval_km": null,
+      "interval_miles": null,
+      "interval_months": 36,
+      "description": "Replace every three years; mechanical skill required. Pages 69 and 88.",
+      "torque_spec": null,
+      "fluid_spec": "Pro Honda HP Coolant; use the owner’s manual procedure."
+    },
+    {
+      "service_name": "Secondary air supply system inspection",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "Inspect every 24,000 km / 16,000 miles. Page 69.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Evaporative emission control system inspection",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "Inspect every 24,000 km / 16,000 miles. Page 69. Applies only to ED, II ED, III ED and IV ED types.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Drive chain inspection and lubrication",
+      "interval_km": 1000,
+      "interval_miles": 600,
+      "interval_months": null,
+      "description": "Also check before riding. Slack 25–35 mm, engine stopped, neutral, sidestand on firm level ground. Check several chain positions. Do not ride if slack exceeds 50 mm. Pages 70 and 94.",
+      "torque_spec": null,
+      "fluid_spec": "O-ring-compatible chain lubricant; SAE 80 or 90 gear oil if unavailable."
+    },
+    {
+      "service_name": "Drive chain slider inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": null,
+      "description": "Inspect every 12,000 km / 8,000 miles. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake fluid inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake pad wear inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake light switch inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Headlight aim inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Clutch system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Sidestand inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Suspension inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70. Honda recommends dealer service unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Nuts, bolts and fasteners inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70. Honda recommends dealer service unless equipped and mechanically skilled.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Wheels and tyres inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70. Dealer service required (technical maintenance).",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Steering head bearing inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect every 12,000 km / 8,000 miles or annually. Owner’s manual page 70. Dealer service required (technical maintenance).",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake fluid replacement",
+      "interval_km": null,
+      "interval_miles": null,
+      "interval_months": 24,
+      "description": "Replace every two years; mechanical skill required. Pages 70 and 90.",
+      "torque_spec": null,
+      "fluid_spec": "Honda DOT 4 Brake Fluid."
+    },
+    {
+      "service_name": "Pre-ride checks",
+      "interval_km": null,
+      "interval_miles": null,
+      "interval_months": null,
+      "description": "Before every ride: fuel level, engine oil and coolant levels, drive chain, brake fluid, pads and brake operation, lights/horn, engine stop switch, clutch, sidestand and tyres. Pages 69–71.",
+      "torque_spec": null,
+      "fluid_spec": null
+    }
+  ]
+}

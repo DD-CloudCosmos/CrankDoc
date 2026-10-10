@@ -1,6 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { cb1000rFluids, cb1000rSpecSections, cb1000rScheduleNotes, supportsBrakeLesson } from '@/lib/cb1000r'
+import { cb650rFluids, cb650rSpecSections, cb650rScheduleNotes, supportsCB650RReference } from '@/lib/cb650r'
+import { BikeFluids } from '@/components/BikeFluids'
+import { BikeReference } from '@/components/BikeReference'
 import { SpecSheet } from '@/components/SpecSheet'
 import { ServiceIntervalTable } from '@/components/ServiceIntervalTable'
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from '@/components/ui/table'
@@ -35,6 +41,8 @@ function getFluidItems(
   motorcycle: Motorcycle,
   serviceIntervals: ServiceInterval[]
 ): FluidItem[] {
+  if (supportsBrakeLesson(motorcycle)) return cb1000rFluids
+  if (supportsCB650RReference(motorcycle)) return cb650rFluids
   const items: FluidItem[] = []
 
   if (motorcycle.oil_capacity_liters) {
@@ -128,7 +136,7 @@ export function BikeDetailTabs({
   const tabs: TabDef[] = [{ id: 'specs', label: 'Specs' }]
   if (serviceIntervals.length > 0) tabs.push({ id: 'service', label: 'Service' })
   if (fluidItems.length > 0) tabs.push({ id: 'fluids', label: 'Fluids' })
-  if (wiringDocs.length > 0) tabs.push({ id: 'wiring', label: 'Wiring' })
+  if (wiringDocs.length > 0 || supportsBrakeLesson(motorcycle)) tabs.push({ id: 'wiring', label: 'Wiring' })
   if (deduplicatedRecalls.length > 0) tabs.push({ id: 'recalls', label: `Recalls (${deduplicatedRecalls.length})` })
 
   const [activeTab, setActiveTab] = useState<TabId>('specs')
@@ -165,11 +173,12 @@ export function BikeDetailTabs({
       {/* Tab content */}
       <div className="overflow-hidden rounded-[20px] bg-card p-4 shadow-card sm:p-6">
       {displayTab === 'specs' && <SpecSheet motorcycle={motorcycle} />}
-      {displayTab === 'service' && <ServiceIntervalTable intervals={serviceIntervals} />}
-      {displayTab === 'fluids' && <FluidsContent items={fluidItems} />}
+      {displayTab === 'service' && (supportsBrakeLesson(motorcycle) ? <BikeReference sections={cb1000rSpecSections} intervals={serviceIntervals} scheduleNotes={cb1000rScheduleNotes} /> : supportsCB650RReference(motorcycle) ? <BikeReference sections={cb650rSpecSections} intervals={serviceIntervals} scheduleNotes={cb650rScheduleNotes} /> : <ServiceIntervalTable intervals={serviceIntervals} />)}
+      {displayTab === 'fluids' && (supportsBrakeLesson(motorcycle) ? <BikeFluids items={cb1000rFluids} note="Quantities depend on the service being performed. Check the CB1000R or CB1000RA procedure where values differ." /> : supportsCB650RReference(motorcycle) ? <BikeFluids items={cb650rFluids} /> : <FluidsContent items={fluidItems} />)}
       {displayTab === 'wiring' && (
         <WiringContent
           docs={wiringDocs}
+          hasLesson={supportsBrakeLesson(motorcycle)}
           onOpenLightbox={setLightboxDoc}
         />
       )}
@@ -177,6 +186,22 @@ export function BikeDetailTabs({
         <RecallsContent recalls={deduplicatedRecalls} />
       )}
       </div>
+
+      {supportsBrakeLesson(motorcycle) && <details className="mt-4 rounded-[14px] bg-input p-4 text-[13px] text-muted-foreground">
+        <summary className="cursor-pointer font-medium text-foreground">Sources and model notes</summary>
+        <div className="mt-3 space-y-3">
+          <p>Factory specifications: manual pages 1-5 to 1-12. Maintenance schedule: 3-4; cold valve checks: 3-11; chain measurement and adjustment: 3-21. Whole-bike dry weight is not stated; the weights shown are curb weights.</p>
+          <p>The bike image is an AI-generated reference illustration guided by the early SC60 factory drawing and a real reference photograph. Its small mechanical details are not a substitute for the manual.</p>
+          <p>The power and torque figures describe the unrestricted 2008–2017 SC60. Market-restricted motorcycles can differ. CB1000RA has Combined Anti-lock Braking System (ABS); variant-specific quantities and diagrams are labelled.</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-3">
+            <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf" target="_blank" rel="noreferrer">Factory service manual</a>
+            <a className="text-link hover:underline" href="/manuals/honda-cb1000r-2008.pdf#page=80" target="_blank" rel="noreferrer">Original maintenance schedule</a>
+            <a className="text-link hover:underline" href="https://commons.wikimedia.org/wiki/File:Honda_CB_1000R_P7040106_01.JPG" target="_blank" rel="noreferrer">Reference photo: Addvisor / Wikimedia Commons</a>
+            <a className="text-link hover:underline" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">Reference photo licence: CC BY-SA 3.0</a>
+            <a className="text-link hover:underline" href="https://hondanews.eu/gb/en/motorcycles/media/pressreleases/196743/2020-honda-cb1000r-6" target="_blank" rel="noreferrer">Honda’s SC60 power comparison</a>
+          </div>
+        </div>
+      </details>}
 
       {/* Lightbox overlay */}
       {lightboxDoc && (
@@ -219,13 +244,23 @@ export function BikeDetailTabs({
 
 function WiringContent({
   docs,
+  hasLesson,
   onOpenLightbox,
 }: {
   docs: TechnicalDocument[]
+  hasLesson: boolean
   onOpenLightbox: (doc: TechnicalDocument) => void
 }) {
   return (
     <div className="space-y-4">
+      {hasLesson && <div className="rounded-[14px] bg-input p-4 space-y-3">
+        <h3 className="text-[19px] font-semibold">Follow the brake-light circuit</h3>
+        <p className="text-[15px] text-muted-foreground">Learn what the switches and wire colours mean, or trace the connections yourself. The brake-light subset is shared by the two 2008 factory sheets. Confirm ABS equipment before using the complete diagrams.</p>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild className="max-w-full whitespace-normal h-auto min-h-12"><Link href="/bikes/honda-cb1000r-sc60/brake-light">Teach me the brake-light circuit</Link></Button>
+          <Button asChild variant="outline" className="max-w-full whitespace-normal h-auto min-h-12"><Link href="/bikes/honda-cb1000r-sc60/brake-light?mode=explore">Explore connections</Link></Button>
+        </div>
+      </div>}
       {docs.map((doc) => (
         <div key={doc.id}>
           <button

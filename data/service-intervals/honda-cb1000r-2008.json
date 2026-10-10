@@ -1,0 +1,269 @@
+{
+  "motorcycle_make": "Honda",
+  "motorcycle_model": "CB1000R",
+  "motorcycle_generation": "SC60",
+  "source": "Uploaded Honda CB1000R/RA 2008 service manual, page 3-4",
+  "intervals": [
+    {
+      "service_name": "First service (one-off)",
+      "interval_km": 1000,
+      "interval_miles": 600,
+      "interval_months": null,
+      "description": "At the first 1,000 km only: replace engine oil and filter; inspect brakes, fasteners and steering head bearings. Continue with the recurring schedule below. Honda manual 3-4.",
+      "torque_spec": "Oil drain bolt: 30 N·m; oil filter: 26 N·m",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Engine oil and filter replacement",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Recurring replacement after the first service. Whichever comes first. Manual 3-4, 1-6 and 1-12.",
+      "torque_spec": "Oil drain bolt: 30 N·m; oil filter: 26 N·m",
+      "fluid_spec": "SAE 10W-30; API SG or higher, excluding energy-conserving oils; JASO T 903 MA. 3.0 L with filter; 2.7 L after draining; 3.6 L after disassembly."
+    },
+    {
+      "service_name": "Fuel line inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Honda marks this as requiring suitable tools, service information and mechanical qualifications. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Throttle operation inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect; grip free play 2–6 mm. Requires appropriate tools and competence. Manual 3-4 and 1-6.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Air cleaner inspection",
+      "interval_km": 18000,
+      "interval_miles": 12000,
+      "interval_months": 18,
+      "description": "Inspect and replace if necessary; no fixed replacement interval stated. Service more often in unusually wet or dusty conditions. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Crankcase breather cleaning",
+      "interval_km": 6000,
+      "interval_miles": 4000,
+      "interval_months": 6,
+      "description": "Clean. Service more often in rain or at full throttle. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark plug inspection",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": null,
+      "description": "Inspect every 24,000 km. NGK IMR9E-9HES or DENSO VUH27ES. Do not adjust the iridium plug gap; replace an out-of-specification plug. Manual 3-4 and 3-10.",
+      "torque_spec": "Spark plug: 16 N·m",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Spark plug replacement",
+      "interval_km": 48000,
+      "interval_miles": 32000,
+      "interval_months": null,
+      "description": "Replace every 48,000 km. NGK IMR9E-9HES or DENSO VUH27ES; standard gap 0.80–0.90 mm. Manual 3-4, 1-10 and 3-10.",
+      "torque_spec": "Spark plug: 16 N·m",
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Valve clearance inspection",
+      "interval_km": 24000,
+      "interval_miles": 16000,
+      "interval_months": 24,
+      "description": "Cold engine below 35°C. Intake 0.16 ± 0.03 mm; exhaust 0.32 ± 0.03 mm. Requires suitable tools and mechanical qualifications. Manual 3-4, 1-7 and 3-11.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect; replacement has its own interval below. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Coolant replacement",
+      "interval_km": 36000,
+      "interval_miles": 24000,
+      "interval_months": 24,
+      "description": "Replace every 2 years or at 36,000 km, whichever comes first. Requires mechanical skill. Manual 3-4 note 4 and 1-6.",
+      "torque_spec": null,
+      "fluid_spec": "Silicate-free ethylene glycol coolant, 1:1 with distilled water. Radiator/engine 3.0 L; reserve tank 0.35 L."
+    },
+    {
+      "service_name": "Cooling system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Requires appropriate tools and competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Secondary air supply system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Requires appropriate tools and competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Drive chain inspection and lubrication",
+      "interval_km": 1000,
+      "interval_miles": 600,
+      "interval_months": null,
+      "description": "Every 1,000 km. Slack 25–35 mm, ignition off, on sidestand, transmission in neutral. Never inspect or adjust with the engine running. Manual 3-4 and 3-21.",
+      "torque_spec": "Rear axle bearing-holder pinch bolt: 74 N·m",
+      "fluid_spec": "#80–90 gear oil or lubricant designed for O-ring chains."
+    },
+    {
+      "service_name": "Drive chain slider inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and replace if necessary. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake fluid inspection",
+      "interval_km": 6000,
+      "interval_miles": 4000,
+      "interval_months": 6,
+      "description": "Inspect; replacement has its own interval below. Brake repairs require appropriate competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake fluid replacement",
+      "interval_km": 18000,
+      "interval_miles": 12000,
+      "interval_months": 24,
+      "description": "Replace every 2 years or at 18,000 km, whichever comes first. Requires mechanical skill; follow the procedure for CB1000R or CB1000RA as equipped. Manual 3-4 note 4.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid, front and rear."
+    },
+    {
+      "service_name": "Brake pad wear inspection",
+      "interval_km": 6000,
+      "interval_miles": 4000,
+      "interval_months": 6,
+      "description": "Inspect wear indicators; replace if necessary. Brake repairs require appropriate competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Also inspect at the one-off first service. Brake repairs require appropriate competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Brake light switch inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Requires appropriate tools and competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Headlight aim inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and adjust as necessary. Requires appropriate tools and competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Clutch system inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Clutch fluid inspection",
+      "interval_km": 6000,
+      "interval_miles": 4000,
+      "interval_months": 6,
+      "description": "Inspect hydraulic clutch fluid; replacement has its own interval below. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Clutch fluid replacement",
+      "interval_km": 18000,
+      "interval_miles": 12000,
+      "interval_months": 24,
+      "description": "Replace every 2 years or at 18,000 km, whichever comes first. Requires mechanical skill. Manual 3-4 note 4 and 1-7.",
+      "torque_spec": null,
+      "fluid_spec": "DOT 4 brake fluid."
+    },
+    {
+      "service_name": "Sidestand inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Suspension inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Inspect and correct as necessary. Requires appropriate tools and competence. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Nuts, bolts and fasteners inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Also inspect at the one-off first service. Use the fastener-specific torques and procedures; do not apply a general torque to every fastener. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Wheels and tyres inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Honda recommends dealer service for this scheduled check. Cold pressures: front 250 kPa (36 psi), rear 290 kPa (42 psi), with or without a passenger. This schedule does not replace pre-ride checks. Manual 3-4 and 1-9.",
+      "torque_spec": null,
+      "fluid_spec": null
+    },
+    {
+      "service_name": "Steering head bearings inspection",
+      "interval_km": 12000,
+      "interval_miles": 8000,
+      "interval_months": 12,
+      "description": "Also inspect at the one-off first service. Honda recommends dealer service. Manual 3-4.",
+      "torque_spec": null,
+      "fluid_spec": null
+    }
+  ]
+}

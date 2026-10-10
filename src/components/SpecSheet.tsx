@@ -1,5 +1,8 @@
 import React from 'react'
+import { BikeReference } from '@/components/BikeReference'
 import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
+import { cb1000rSpecSections, supportsBrakeLesson } from '@/lib/cb1000r'
+import { cb650rSpecSections, supportsCB650RReference } from '@/lib/cb650r'
 import type { Motorcycle } from '@/types/database.types'
 
 interface SpecSheetProps {
@@ -23,6 +26,7 @@ function _formatSpec(value: number | string | null, unit: string): string | null
 }
 
 function buildSections(motorcycle: Motorcycle): SpecSection[] {
+  if (supportsBrakeLesson(motorcycle)) return cb1000rSpecSections
   const sections: SpecSection[] = []
 
   // Engine section
@@ -52,6 +56,8 @@ function buildSections(motorcycle: Motorcycle): SpecSection[] {
 }
 
 export function SpecSheet({ motorcycle }: SpecSheetProps) {
+  if (supportsBrakeLesson(motorcycle)) return <BikeReference sections={cb1000rSpecSections} />
+  if (supportsCB650RReference(motorcycle)) return <BikeReference sections={cb650rSpecSections} />
   const sections = buildSections(motorcycle)
 
   if (sections.length === 0) {

@@ -15,7 +15,7 @@ export const SITE_STATS = {
   /** Manufacturers with fault codes */
   dtcManufacturerCount: 11,
   /** Service jobs with torque/fluid specs (data/service-intervals) */
-  serviceIntervalCount: 205,
+  serviceIntervalCount: 264,
   /** Motorcycle and scooter models with guides */
   modelCount: 18,
 } as const
