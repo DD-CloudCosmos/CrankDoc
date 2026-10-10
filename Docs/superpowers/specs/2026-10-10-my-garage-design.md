@@ -14,6 +14,10 @@ This document describes the proposed behaviour. It does not approve new source m
 
 The overview contains an Add bike action and one card per physical motorcycle. Each card shows an image, nickname or model name, model year, latest recorded mileage, and last logged maintenance. The entire card opens that bike. Use two columns where space allows and one column on phones.
 
+New bikes use CrankDoc's library image for the matching model and generation by default. ChatGPT-created model illustrations form part of that library and need review before publication. Where no matching image exists, show a neutral bike placeholder; adding a motorcycle never requires a photograph.
+
+Offer a discreet Edit image action on the individual bike page. It lets the owner choose a photograph from their device, preview it, and save or cancel. Saving replaces the image on that motorcycle's garage card and bike page. Keep the existing image until the replacement is successfully saved. The user can replace their photograph again or choose Restore library image to return to the model default. This edits only that physical bike's image, not the shared library image or another bike of the same model.
+
 Two motorcycles of the same model have separate mileage and histories. Both can use the same purchased model pack within its coverage. Support adding an unlisted model with a manually entered make, model and year; reference content and verified templates are available only for supported coverage. A motorcycle without a pack can still have a maintenance log.
 
 Each bike has Overview, Maintenance and Bike details tabs. Overview shows recent maintenance and links to model reference and diagnostics. Maintenance shows jobs in progress and a searchable history, newest first. Bike details stores the bike's nickname, make, model, year, variant and mileage. Registration details are optional and private. No identifying details appear on public model pages.
@@ -68,11 +72,15 @@ The existing garage stores selected catalogue model IDs in the browser. Account-
 
 Personal users can access only their own motorcycles, jobs and attachments. Receipt links must not be public. The college licensing direction remains recorded, but organisation membership, shared workshops and instructor approval are separate implementation work. Do not expose personal records to a college by default.
 
+Owner-uploaded bike photographs are private account content linked to the physical bike. They are not added to the public model library. Validate image uploads, remove embedded location metadata from the stored display image, and show upload failures without changing the saved image. Store the personal image override separately from the model's library image so restoring the default is explicit and reliable.
+
 Retain existing selected-model shortcuts when introducing individual bike records. Do not silently discard browser data or invent mileage/history while migrating it. Update the current public claim that accounts will never be required when account-backed garage features are introduced.
 
 ## Verification
 
 Verify adding duplicate models creates independent bikes and histories. Verify quick entries work without optional fields; historical mileage does not lower the latest reading; searching finds jobs and notes; and archiving retains history.
+
+Verify a new bike displays its matching library image or a placeholder. Verify saving a personal photograph updates both the card and bike page, cancelling or a failed upload keeps the existing image, and restoring the library image removes the override. Verify another bike of the same model and the shared model library remain unchanged. Verify private photos cannot be accessed through another account and embedded location metadata is removed from display images.
 
 Verify starting a template copies the version, starts fresh states, and isolates each job. Verify leaving and returning, printing, or passing an interval keeps an unfinished job active. Verify marking every task Done closes it once and creates one history entry. Verify explicit completion preserves outstanding task states and labels partial jobs accurately. Verify optional costs and receipts do not block completion, per-line notes survive progress saves, failed saves remain visible, and skipped tasks do not count as done. Verify later template changes leave existing jobs unchanged.
 
