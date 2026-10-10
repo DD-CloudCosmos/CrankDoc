@@ -92,7 +92,7 @@ For this release, source review uses the April 2008 CB1000R factory manual and t
 | Event | Required result |
 | --- | --- |
 | Start a template | Create an independent In progress job with recorded date/mileage. |
-| Mark the last task Done | Save task update and automatic Completed closure together. |
+| Mark a task Done so every task in the nonempty checklist is now Done | Save task update and automatic Completed closure together. Skipped and Not applicable prevent automatic closure. |
 | Leave, print or pass an interval | Retain job state. No automatic closure. |
 | Explicitly complete with To do or Skipped tasks | Close as Partially completed; preserve all task states and notes. |
 | Explicitly complete with all applicable tasks Done and valid Not applicable reasons | Close as Completed without pretending excluded tasks were performed. |
@@ -169,7 +169,7 @@ All rules apply on the server as well as the form. Unknown and foreign identifie
 | UX-02 | Support 320–428 px phones, tablets and desktop. | Forms and controls remain usable without horizontal overflow. Touch targets are at least 44 px. |
 | UX-03 | Support keyboard and accessible labels/status messages. | Focus is visible, controls have names, validation associates with fields and save errors can be discovered. |
 | PRINT-01 | Print the same checklist on A4 or Letter. | Include bike, service/version/source, date/mileage, states, warnings, notes and writing space. Hide navigation, buttons and upload controls. |
-| PRINT-02 | Preserve blank and filled checklist facts. | Blank sheets have empty boxes. Filled sheets show actual states, reasons and Previous activity notes. Long text wraps without clipping. Short task/notes groups stay together where practical. |
+| PRINT-02 | Preserve blank and filled checklist facts. | Unstarted sheets have empty boxes and blank date/mileage fields. Filled sheets show actual states, reasons and Previous activity notes. Long text wraps without clipping. Short task/notes groups stay together where practical. |
 | PRINT-03 | Keep printing read-only and legible in monochrome. | Print invokes no save or completion action. Paper results are entered manually later. |
 
 ## Verification and delivery
