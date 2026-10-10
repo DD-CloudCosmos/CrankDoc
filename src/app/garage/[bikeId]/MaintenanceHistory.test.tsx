@@ -20,3 +20,8 @@ it('requires explicit edit and delete confirmation and keeps failed edits',async
 it('renders HTML-looking notes as text and retains failed removals',async()=>{
  const job=jobFixture({notes:'<script>private</script>'});const onDelete=vi.fn().mockResolvedValue({ok:false,error:'save_failed',message:'Removal failed'});render(<MaintenanceHistory jobs={[job]} onEdit={vi.fn()} onDelete={onDelete} />);fireEvent.click(screen.getByRole('button',{name:/Show record/}));expect(screen.getByText('<script>private</script>')).toBeInTheDocument();expect(document.querySelector('script')).toBeNull();fireEvent.click(screen.getByRole('button',{name:'Remove record'}));fireEvent.click(screen.getByRole('button',{name:'Confirm removal'}));expect(await screen.findByRole('alert')).toHaveTextContent('Removal failed');expect(screen.getByRole('button',{name:/Show record/})).toBeInTheDocument();expect(screen.getByRole('button',{name:'Confirm removal'})).toBeEnabled()
 })
+it('offers both downloads for the current bike even with an empty or filtered history',()=>{
+ render(<MaintenanceHistory bikeId="owned-bike" jobs={[]} {...callbacks()} />)
+ expect(screen.getByText('Export records')).toBeInTheDocument()
+ for(const format of ['JSON','CSV']) expect(screen.getByRole('link',{name:`Download ${format}`})).toHaveAttribute('href',`/api/garage/export?bikeId=owned-bike&format=${format.toLowerCase()}`)
+})

@@ -105,3 +105,10 @@ it('reconciles a saved photo and receipt list without remounting dirty details',
  fireEvent.click(screen.getByRole('button',{name:'Edit image'}));fireEvent.change(screen.getByLabelText('Choose bike photo'),{target:{files:[new File(['jpg'],'bike.jpg',{type:'image/jpeg'})]}});fireEvent.click(screen.getByRole('button',{name:'Save image'}));await waitFor(()=>expect(actions.loadBikeWorkspace).toHaveBeenCalled())
  expect(screen.getByLabelText('Nickname')).toHaveValue('Still unsaved');fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}));fireEvent.click(screen.getByRole('button',{name:`Show record: ${job.title}`}));expect(screen.getByText('saved receipt.pdf')).toBeInTheDocument()
 })
+it('exposes owner record downloads within bike maintenance, including archived bikes',()=>{
+ render(<BikeWorkspace bike={{...bike,archivedAt:'2026-10-10'}} />)
+ fireEvent.click(screen.getByRole('radio',{name:'Maintenance'}))
+ expect(screen.getByText('Export records')).toBeInTheDocument()
+ expect(screen.getByRole('link',{name:'Download JSON'})).toHaveAttribute('href','/api/garage/export?bikeId=one&format=json')
+ expect(screen.getByRole('link',{name:'Download CSV'})).toHaveAttribute('href','/api/garage/export?bikeId=one&format=csv')
+})
