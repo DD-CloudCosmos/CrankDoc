@@ -42,3 +42,20 @@ it('keeps entered optional values after thrown session failure',async()=>{
 it('preserves every minor unit when editing a large valid cost',()=>{
  render(<JobDetailsForm job={jobFixture({costMinor:Number.MAX_SAFE_INTEGER-1,currency:'USD'})} onSave={vi.fn()} />);fireEvent.click(screen.getByRole('button',{name:'Optional details'}));expect(screen.getByLabelText('Cost')).toHaveValue('90071992547409.90')
 })
+
+it.each(['Kilometres','Miles'])('keeps quick-entry mileage unchanged when clicking selected %s',async unit=>{
+ const save=vi.fn(saved);render(<QuickJobForm bike={bikeFixture()} onSave={save} />);fill()
+ if(unit==='Miles') fireEvent.click(screen.getByRole('radio',{name:'Miles'}))
+ fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'100'}})
+ fireEvent.click(screen.getByRole('radio',{name:unit}));fireEvent.click(screen.getByRole('radio',{name:unit}))
+ expect(screen.getByLabelText('Job mileage')).toHaveValue('100')
+ fireEvent.click(screen.getByRole('button',{name:'Save entry'}));await waitFor(()=>expect(save).toHaveBeenCalledTimes(1));expect(save.mock.calls[0][0].mileageKm).toBe(unit==='Miles'?160.934:100)
+})
+it.each(['Kilometres','Miles'])('keeps a loaded correction unchanged when clicking selected %s',async unit=>{
+ const save=vi.fn(async details=>({ok:true as const,value:{...jobFixture(),...details}}));render(<JobDetailsForm job={jobFixture({mileageKm:100})} onSave={save} />)
+ if(unit==='Miles') fireEvent.click(screen.getByRole('radio',{name:'Miles'}))
+ const original=(screen.getByLabelText('Job mileage') as HTMLInputElement).value
+ fireEvent.click(screen.getByRole('radio',{name:unit}));fireEvent.click(screen.getByRole('radio',{name:unit}))
+ expect(screen.getByLabelText('Job mileage')).toHaveValue(original)
+ fireEvent.click(screen.getByRole('button',{name:'Save correction'}));fireEvent.click(screen.getByRole('button',{name:'Confirm correction'}));await waitFor(()=>expect(save).toHaveBeenCalledTimes(1));expect(save.mock.calls[0][0].mileageKm).toBe(100)
+})
