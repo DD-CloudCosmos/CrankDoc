@@ -1065,6 +1065,44 @@ export type Database = {
                     isSetofReturn: false;
                 };
             };
+            "start_maintenance_job": {
+                Args: {
+                    "p_draft": Json;
+                    "p_source_job_id"?: string;
+                    "p_source_revision"?: number;
+                    "p_task_ids"?: string[];
+                    "p_close_previous"?: boolean;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "close_reason": string | null;
+                    "closed_at": string | null;
+                    "cost_minor": number | null;
+                    "created_at": string;
+                    "currency": string | null;
+                    "file_cleanup_pending": boolean;
+                    "id": string;
+                    "job_date": string;
+                    "mileage_km": number;
+                    "notes": string;
+                    "owner_id": string;
+                    "parts": string;
+                    "performer": string;
+                    "revision": number;
+                    "status": string;
+                    "tasks": NonNullable<Json>;
+                    "template_id": string | null;
+                    "template_snapshot": Json | null;
+                    "template_version": number | null;
+                    "title": string;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "maintenance_jobs";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            };
             "save_task_patch": {
                 Args: {
                     "p_expected_revision": number;

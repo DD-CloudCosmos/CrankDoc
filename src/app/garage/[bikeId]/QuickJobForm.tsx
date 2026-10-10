@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { SegmentedControl } from '@/components/ui/segmented-control'
@@ -8,22 +8,29 @@ import type { JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
 import { toKilometres } from '@/lib/maintenance/distance'
 import { parseCost, parseJobDetails, type JobDetails } from '@/lib/maintenance/validation'
 
+import { CarryOverPicker } from './CarryOverPicker'
+import type { CarrySelection } from '@/lib/maintenance/carryover'
+
 export type Fields = { title:string; date:string; mileage:string; notes:string; parts:string; performer:string; cost:string; currency:string }
 export function fields(job?: JobView): Fields {
   const now = new Date()
   return {title:job?.title ?? '',date:job?.date ?? `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`,mileage:job?.mileageKm.toString() ?? '',notes:job?.notes ?? '',parts:job?.parts ?? '',performer:job?.performer ?? '',cost:job?.costMinor == null ? '' : `${Math.floor(job.costMinor/100)}.${String(job.costMinor%100).padStart(2,'0')}`,currency:job?.currency ?? 'EUR'}
 }
-export function QuickJobForm({bike,onSave,disabled=false}:{bike:BikeView;onSave:(draft:JobDraft)=>Promise<SavedResult<JobView>>;disabled?:boolean}) {
+export function QuickJobForm({bike,onSave,onStart,previous=null,disabled=false}:{bike:BikeView;onSave:(draft:JobDraft)=>Promise<SavedResult<JobView>>;onStart?:(draft:JobDraft,carry:CarrySelection)=>Promise<SavedResult<JobView>>;previous?:JobView|null;disabled?:boolean}) {
+  const [carry,setCarry]=useState<CarrySelection|null>(null)
+  const [selectedPrevious,setSelectedPrevious]=useState<JobView|null>(null)
+  const [pickerVersion,setPickerVersion]=useState(0)
   const [ids,setIds]=useState(()=>({job:crypto.randomUUID(),task:crypto.randomUUID(),doneAt:new Date().toISOString()}))
-  return <JobDetailsForm disabled={disabled || Boolean(bike.archivedAt)} onSave={async details=>{
-    const result=await onSave({...details,id:ids.job,bikeId:bike.id,template:null,tasks:[{id:ids.task,key:null,label:details.title,action:'other',state:'done',reason:'',notes:'',doneAt:ids.doneAt,origin:null,reference:null,warning:null,specification:null,safety:null}]})
-    if(result.ok) setIds({job:crypto.randomUUID(),task:crypto.randomUUID(),doneAt:new Date().toISOString()})
+  return <JobDetailsForm extra={onStart && <CarryOverPicker key={pickerVersion} previous={selectedPrevious??previous} onChange={choice=>{setCarry(choice);setSelectedPrevious(choice?(selectedPrevious??previous):null)}} />} disabled={disabled || Boolean(bike.archivedAt)} onSave={async details=>{
+    const draft:JobDraft={...details,id:ids.job,bikeId:bike.id,template:null,tasks:[{id:ids.task,key:null,label:details.title,action:'other',state:'done',reason:'',notes:'',doneAt:ids.doneAt,origin:null,reference:null,warning:null,specification:null,safety:null}]}
+    const result=await (carry && onStart?onStart(draft,carry):onSave(draft))
+    if(result.ok) {setIds({job:crypto.randomUUID(),task:crypto.randomUUID(),doneAt:new Date().toISOString()});setCarry(null);setSelectedPrevious(null);setPickerVersion(value=>value+1)}
     return result
   }} />
 }
 export type JobDetailsFormDraft = {input:Fields;unit:'km'|'miles';expanded:boolean}
 /** Corrections change details only; task state and completion facts remain intact. */
-export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraftChange}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void;draft?:JobDetailsFormDraft;onDraftChange?:(draft:JobDetailsFormDraft)=>void}) {
+export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraftChange,extra}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void;draft?:JobDetailsFormDraft;onDraftChange?:(draft:JobDetailsFormDraft)=>void;extra?:ReactNode}) {
   const [localInput,setInput]=useState(()=>fields(job))
   const [localUnit,setUnit]=useState<'km'|'miles'>('km')
   const [localExpanded,setExpanded]=useState(false)
@@ -67,6 +74,7 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraft
     {field('title','Work performed',true,'text',160)}
     <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" aria-expanded={expanded} onClick={()=>update({input,unit,expanded:!expanded})}>Optional details</Button>
     {expanded && <div className="space-y-4 rounded-[14px] bg-input p-4">{(['notes','parts'] as const).map(key=><div key={key} className="space-y-2"><label htmlFor={`${prefix}-${key}`}>{key==='notes'?'Notes':'Parts'}</label><textarea id={`${prefix}-${key}`} className="min-h-24 w-full rounded-[10px] bg-background p-3" maxLength={4000} value={input[key]} onChange={event=>change(key,event.target.value)} /></div>)}{field('performer','Performed by',false,'text',120)}{field('cost','Cost')}<label htmlFor={`${prefix}-currency`}>Currency</label><select id={`${prefix}-currency`} className="min-h-11 rounded-[10px] bg-background px-3" value={input.currency} onChange={event=>change('currency',event.target.value)}>{['EUR','GBP','USD'].map(currency=><option key={currency}>{currency}</option>)}</select><p className="text-muted-foreground">Cost is optional. Leave blank if unknown; zero means no cost.</p></div>}
+    {extra}
     {error && <p role="alert">{error}</p>}{saved && <p role="status">Entry saved.</p>}
     <div className="flex flex-wrap gap-3"><Button className="min-h-11 whitespace-nowrap" type="submit" disabled={busy || disabled}>{busy?'Saving…':job?'Save correction':'Save entry'}</Button>{onCancel && <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" onClick={onCancel}>Cancel edit</Button>}</div>
     {confirm && <div role="group" aria-label="Confirm record correction" className="space-y-3 rounded-[14px] bg-input p-4"><p>Save these corrections to this record? Task states and completion dates stay as recorded.</p><Button className="min-h-11 whitespace-nowrap" type="button" onClick={()=>prepared.current && void persist(prepared.current)}>Confirm correction</Button><Button className="min-h-11 whitespace-nowrap" variant="outline" type="button" onClick={()=>setConfirm(false)}>Keep editing</Button></div>}

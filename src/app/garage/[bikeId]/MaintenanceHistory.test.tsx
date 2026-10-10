@@ -59,3 +59,9 @@ it('keeps mixed receipt results and retry identity after collapse and search hid
  expect(uploadPrivateFile).toHaveBeenCalledTimes(3);expect(vi.mocked(uploadPrivateFile).mock.calls[2][1].id).toBe(failedId)
 })
 vi.mock('@/lib/supabase/auth-browser',()=>({createAuthBrowserClient:()=>({auth:{onAuthStateChange:()=>({data:{subscription:{unsubscribe:vi.fn()}}})}})}))
+it('finds carry destinations from task origins when opening source history',()=>{
+ const source=jobFixture({title:'Original service'}),destination=jobFixture({id:'destination',title:'Next service',tasks:[{...jobFixture().tasks[0],origin:{jobId:source.id,taskId:source.tasks[0].id,previousNotes:'Old'}}]})
+ render(<MaintenanceHistory jobs={[source,destination]} {...callbacks()} />)
+ fireEvent.click(screen.getByRole('button',{name:'Show record: Original service'}))
+ expect(screen.getByRole('link',{name:'Carried work: Next service'})).toHaveAttribute('href',`/garage/${source.bikeId}/jobs/destination`)
+})

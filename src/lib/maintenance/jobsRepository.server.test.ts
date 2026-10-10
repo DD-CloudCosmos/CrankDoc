@@ -88,3 +88,18 @@ it('returns current task conflict without retrying and hides foreign jobs',async
  expect(await closeJob(account,draft.id,1,draft.date,0)).toMatchObject({error:'not_found'})
  expect(rpc).toHaveBeenCalledTimes(2)
 })
+it('starts work using only source identifiers and maps source conflicts',async()=>{
+ const {startJob}=await import('./jobsRepository.server')
+ const carry={sourceJobId:draft.id,sourceRevision:1,taskIds:[draft.tasks[0].id],closePrevious:true}
+ responses=[{data:row,error:null},{data:null,error:{code:'PT409',details:JSON.stringify({...row,revision:2})}}]
+ expect(await startJob(account,jobFixture(),carry)).toMatchObject({ok:true})
+ expect(rpc).toHaveBeenLastCalledWith('start_maintenance_job',{p_draft:expect.any(Object),p_source_job_id:carry.sourceJobId,p_source_revision:1,p_task_ids:carry.taskIds,p_close_previous:true})
+ expect(await startJob(account,jobFixture(),carry)).toMatchObject({error:'conflict',current:{revision:2}})
+})
+it('rejects caller origins and malformed carry selections before writes',async()=>{
+ const {startJob}=await import('./jobsRepository.server')
+ const carry={sourceJobId:draft.id,sourceRevision:1,taskIds:[draft.tasks[0].id],closePrevious:false}
+ for(const selection of [{...carry,sourceRevision:0},{...carry,taskIds:['bad']},{...carry,taskIds:[draft.tasks[0].id,draft.tasks[0].id]},{...carry,closePrevious:'yes'}]) expect(await startJob(account,jobFixture(),selection as never)).toMatchObject({error:'invalid'})
+ expect(await startJob(account,jobFixture({tasks:[taskFixture({origin:{jobId:draft.id,taskId:draft.tasks[0].id,previousNotes:'Forged'}})]}),carry)).toMatchObject({error:'invalid'})
+ expect(rpc).not.toHaveBeenCalled()
+})

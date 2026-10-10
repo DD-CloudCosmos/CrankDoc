@@ -56,8 +56,8 @@ it('does not invalidate routes for a failed mutation and invalidates successful 
 
 import * as jobs from '@/lib/maintenance/jobsRepository.server'
 import { jobFixture, bikeFixture } from '@/test/garageFixtures'
-import { loadBikeWorkspace, saveQuickJob, correctJob, removeJob } from './actions'
-vi.mock('@/lib/maintenance/jobsRepository.server',()=>({listJobs:vi.fn(),getJob:vi.fn(),createQuickJob:vi.fn(),editJobDetails:vi.fn(),deleteJob:vi.fn()}))
+import { startMaintenanceJob, loadBikeWorkspace, saveQuickJob, correctJob, removeJob } from './actions'
+vi.mock('@/lib/maintenance/jobsRepository.server',()=>({startJob:vi.fn(),listJobs:vi.fn(),getJob:vi.fn(),createQuickJob:vi.fn(),editJobDetails:vi.fn(),deleteJob:vi.fn()}))
 it.each([null,{userId:'other',client:{}}])('denies maintenance reads and writes after session or owner changes',async value=>{
  vi.mocked(getAccount).mockResolvedValue(value as typeof account)
  await expect(loadBikeWorkspace(bikeFixture().id,'a')).rejects.toThrow('Sign in again')
@@ -99,4 +99,17 @@ it('keeps bikes and jobs when Storage cleanup fails so removal can be retried',a
 it('reconciles owned photos and receipt metadata with the workspace',async()=>{
  vi.mocked(repository.getBike).mockResolvedValue(bikeFixture({photoPath:'new.webp'}));vi.mocked(jobs.listJobs).mockResolvedValue([jobFixture()]);vi.mocked(listPrivateFiles).mockResolvedValue([{id:'receipt',bikeId:bikeFixture().id,jobId:jobFixture().id,kind:'receipt',path:'file.pdf',filename:'receipt.pdf',cleanupPending:false}])
  const fresh=await loadBikeWorkspace(bikeFixture().id,'a');expect(fresh).toMatchObject({bike:{photoPath:'new.webp'},files:[{id:'receipt'}]})
+})
+
+it.each([null,{userId:'other',client:{}}])('denies carry creation after owner/session changes',async value=>{
+ vi.mocked(getAccount).mockResolvedValue(value as typeof account)
+ await expect(startMaintenanceJob(jobFixture(),null,'a')).rejects.toThrow('Sign in again')
+ expect(jobs.startJob).not.toHaveBeenCalled()
+})
+it('dispatches carry choices and invalidates only the saved bike after success',async()=>{
+ const job=jobFixture(),carry={sourceJobId:job.id,sourceRevision:1,taskIds:[],closePrevious:true}
+ vi.mocked(jobs.startJob).mockResolvedValueOnce({ok:false,error:'conflict',message:'Changed'}).mockResolvedValueOnce({ok:true,value:job})
+ await startMaintenanceJob(job,carry,'a');expect(revalidatePath).not.toHaveBeenCalled()
+ await startMaintenanceJob(job,carry,'a');expect(jobs.startJob).toHaveBeenCalledWith(account,job,carry)
+ expect(revalidatePath).toHaveBeenCalledWith(`/garage/${job.bikeId}`)
 })

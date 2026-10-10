@@ -88,3 +88,20 @@ export async function closeJob(account: AccountContext, jobId: string, revision:
   if (error) return failure(error)
   return data ? {ok:true,value:view(data)} : {ok:false,error:'save_failed',message:'Could not save maintenance record'}
 }
+
+export async function startJob(account:AccountContext,draft:JobDraft,carry:import('./carryover').CarrySelection|null=null):Promise<SavedResult<JobView>> {
+ let parsed:JobDraft
+ try {
+  parsed=parseJobDraft(draft)
+  if(parsed.tasks.some(task=>task.origin!==null || !['todo','done'].includes(task.state) || (task.state==='todo' && (task.notes!=='' || task.reason!=='')))) throw new Error('Invalid new tasks')
+  if(carry) {
+   requireJobId(carry.sourceJobId)
+   if(!Number.isInteger(carry.sourceRevision)||carry.sourceRevision<1||carry.sourceRevision>2147483647||!Array.isArray(carry.taskIds)||carry.taskIds.length>100||new Set(carry.taskIds).size!==carry.taskIds.length||typeof carry.closePrevious!=='boolean') throw new Error('Invalid selection')
+   carry.taskIds.forEach(requireJobId)
+  }
+ } catch {return {ok:false,error:'invalid',message:'Check the maintenance details'}}
+ const {data,error}=await account.client.rpc('start_maintenance_job',{p_draft:json(parsed),...(carry?{p_source_job_id:carry.sourceJobId,p_source_revision:carry.sourceRevision,p_task_ids:carry.taskIds,p_close_previous:carry.closePrevious}:{})})
+ if(error?.code==='PT409') return {ok:false,error:'conflict',message:'Previous activity changed. Reload before carrying work.',current:view(JSON.parse(error.details) as JobRow)}
+ if(error) return failure(error)
+ return data?{ok:true,value:view(data)}:{ok:false,error:'save_failed',message:'Could not save maintenance record'}
+}

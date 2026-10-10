@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { getAccount } from '@/lib/account'
 import { addBike, editBike, listBikes, archiveBike, removeBike, importSelectedModels, getBike } from '@/lib/garageRepository.server'
-import { listJobs, getJob, createQuickJob, editJobDetails, deleteJob } from '@/lib/maintenance/jobsRepository.server'
+import { startJob, listJobs, getJob, createQuickJob, editJobDetails, deleteJob } from '@/lib/maintenance/jobsRepository.server'
 import { cleanupOwnedFiles, listPrivateFiles } from '@/lib/maintenance/uploads.server'
 import type { PrivateFile, JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
 import type { JobDetails } from '@/lib/maintenance/validation'
@@ -79,4 +79,10 @@ export async function removeJob(id:string,bikeId:string,confirmed:boolean,ownerI
   const result=await deleteJob(account,id)
   if(result.ok) invalidateBike(bikeId)
   return result
+}
+
+export async function startMaintenanceJob(draft:JobDraft,carry:import('@/lib/maintenance/carryover').CarrySelection|null,ownerId:string):Promise<SavedResult<JobView>> {
+ const result=await startJob(await accountFor(ownerId),draft,carry)
+ if(result.ok) invalidateBike(result.value.bikeId)
+ return result
 }
