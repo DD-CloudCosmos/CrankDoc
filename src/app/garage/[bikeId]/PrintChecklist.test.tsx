@@ -24,3 +24,33 @@ it('shows a base-template preview with blank work fields and long text',()=>{
  expect(screen.getByText(long.trim()).closest('article')).toHaveClass('print-task-long')
  expect(screen.getByText('To do')).toBeInTheDocument();expect(screen.queryByText(/2026-10-10/)).not.toBeInTheDocument()
 })
+
+import {ChecklistRow} from './ChecklistRow'
+it.each(['inspect','replace'] as const)('shows neutral custom labels with the saved %s action in work and print',action=>{
+ const task=taskFixture({label:'Air filter',action})
+ const {unmount}=render(<ChecklistRow task={task} onChange={vi.fn()} />)
+ expect(screen.getByText(`Action: ${action}`)).toBeInTheDocument();unmount()
+ render(<PrintChecklist bike={bikeFixture()} job={jobFixture({tasks:[task]})} />)
+ expect(screen.getByText(`Action: ${action}`)).toBeInTheDocument()
+})
+it('does not certify an owner-authored source-like saved snapshot',()=>{
+ const {unmount}=render(<PrintChecklist bike={bikeFixture()} job={jobFixture({template:templateFixture({kind:'scheduled'})})} />)
+ expect(screen.queryByText(/Reviewed service template/)).not.toBeInTheDocument()
+ expect(screen.getByText(/Saved template snapshot/)).toBeInTheDocument();unmount()
+ render(<BlankPrintChecklist bike={bikeFixture()} template={templateFixture({kind:'scheduled'})} />)
+ expect(screen.getByText(/Reviewed service template/)).toBeInTheDocument()
+})
+
+import {saveBike,saveQuickJob,correctJob,startMaintenanceJob} from '../actions'
+vi.mock('../actions',()=>({saveBike:vi.fn(),saveQuickJob:vi.fn(),correctJob:vi.fn(),startMaintenanceJob:vi.fn()}))
+it('opens and prints saved and blank sheets without any write action or network request',()=>{
+ const request=vi.spyOn(globalThis,'fetch').mockRejectedValue(new Error('Unexpected network write'))
+ const print=vi.spyOn(window,'print').mockImplementation(()=>{})
+ const {unmount}=render(<PrintChecklist bike={bikeFixture()} job={jobFixture()} />)
+ fireEvent.click(screen.getByRole('button',{name:'Print'}));unmount()
+ render(<BlankPrintChecklist bike={bikeFixture()} template={templateFixture()} />)
+ fireEvent.click(screen.getByRole('button',{name:'Print'}))
+ expect(print).toHaveBeenCalledTimes(2);expect(request).not.toHaveBeenCalled()
+ for(const write of [saveBike,saveQuickJob,correctJob,startMaintenanceJob])expect(write).not.toHaveBeenCalled()
+ print.mockRestore();request.mockRestore()
+})

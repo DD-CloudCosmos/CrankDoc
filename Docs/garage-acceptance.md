@@ -1,6 +1,6 @@
 # My Garage local acceptance
 
-10 October 2026. Branch `codex/my-garage`, isolated worktree `circuit-explorer`. Local implementation and automated evidence are ready for controller review. Browser appearance, actual paper output, final branch/security reviews and live release are outstanding. No hosted migration, authentication setting, push or deployment was performed.
+10 October 2026. Branch `codex/my-garage`, isolated worktree `circuit-explorer`. Local implementation and automated evidence are ready for controller review. Browser appearance, actual paper output, the single scoped re-review of the final fixes, and live release are outstanding. The whole-branch/security review found F1–F10; the combined fix wave addresses them and awaits that re-review. No hosted migration, authentication setting, push or deployment was performed.
 
 ## Requirements and evidence
 
@@ -14,14 +14,14 @@
 | CHECK-01–08 | `scripts/test-garage-access.ts`, checklist component/hook/domain tests | Atomic final task/closure, timestamp preservation, manual partial closure, reopen, serialized saves, retry, concurrent revisions and retained drafts pass. No public browser draft storage. |
 | CARRY-01–08 | `scripts/test-garage-carryover.ts`, carry picker/quick-entry/domain tests | Latest-created source only, selected unfinished tasks, stable-key merge, prior observations, rollback, retry, explicit source closure and owner isolation pass. |
 | EXPORT-01–03 | `scripts/test-garage-export.ts`, JSON/CSV domain tests | The real local API cap is 1,000 rows. Built exports preserve all 1,001 jobs and attachments, recorded facts and owner/bike scope. Comma-separated values (CSV) formula prefixes and quoted text are covered. |
-| PRINT-01–03 | `PrintChecklist.test.tsx`, saved-job and blank-template print route tests | Seven tests pass: four actual states, notes/reasons/origins, source/version, date/mileage, empty writing space, long text and foreign combinations. Print calls only `window.print()` on click and leaves input unchanged. Blank preview is read-only, owner-scoped and coverage-checked; it explicitly includes only the base template. Scoped paper rules use auto page size, 12 mm margins and monochrome labels. Actual A4/Letter pagination and printer output remain unverified. |
+| PRINT-01–03 | `PrintChecklist.test.tsx`, saved-job and blank-template print route tests | Print component and route tests cover: four actual states, notes/reasons/origins, source/version, date/mileage, empty writing space, long text and foreign combinations. Print calls only `window.print()` on click and leaves input unchanged. Explicit action/network assertions cover both renderers. Blank preview is read-only, owner-scoped and coverage-checked; it explicitly includes only the base template. Scoped paper rules use auto page size, 12 mm margins and monochrome labels. Actual A4/Letter pagination and printer output remain unverified. |
 | UX-01–03; ACC-04–05 | Component/accessibility/session tests and existing semantic styles | Labels, status errors, keyboard controls, touch-size classes, theme tokens and draft retention tested. Responsive appearance, actual touch/keyboard use and both themes require the browser specification below. |
 
 ## Engineering gates
 
 `npx tsx scripts/validate-maintenance-templates.ts`: 75 valid verified entries, zero drafts. Validation is structural, not mechanical approval.
 
-`npm run test`: 178 test files and 1,476 tests passed. `npm run test:coverage`: the same 1,476 tests passed; overall statement coverage 88.87%, branches 82.46%, functions 90.31%, lines 92.84%. The checklist hook has 94.87% statements, 84% branches and 100% lines. Existing jsdom navigation messages occur in broad test output; focused print output is quiet.
+`npm run test`: 179 test files and 1,498 tests passed. `npm run test:coverage`: the same 1,498 tests passed; overall statement coverage 89.04%, branches 82.46%, functions 90.37%, lines 93.45%. The checklist hook has 94.87% statements, 84% branches and 100% lines. Existing jsdom navigation messages occur in broad test output; focused print output is quiet.
 
 `npx tsc --noEmit`: passed. `npm run lint`: zero errors, five existing warnings in BikeDetailTabs.test.tsx, GlossaryImageModal.tsx, GlossaryList.tsx and SpecSheet.tsx. `npx tsx scripts/start-garage-local.ts build`: fully isolated production build passed, including both dynamic print routes. The helper excludes the entire live environment file rather than overriding selected keys.
 
@@ -35,7 +35,7 @@ Application starts resolve the owner's saved personal definitions or approved st
 
 ## Local setup
 
-Use this worktree with its dependencies installed. Start the local Supabase stack with `DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase start`. Store local `supabase status -o env` output in `.env.garage.local`; never use the live `.env.local` to seed or launch this preview. Do not print the keys in chat or logs. Apply the branch migrations only to this disposable local stack; do not reset a stack whose private test data must be retained.
+Use Node.js 22.22.1 or newer; `.nvmrc` and continuous integration select 22.22.1. Run `npm run check:runtime` after installing dependencies. It constructs the actual installed Supabase client with a native WebSocket and no network request. Node 20 is unsupported by the upgraded client. Use this worktree with its dependencies installed. Start the local Supabase stack with `DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase start`. Store local `supabase status -o env` output in `.env.garage.local`; never use the live `.env.local` to seed or launch this preview. Do not print the keys in chat or logs. Apply the branch migrations only to this disposable local stack; do not reset a stack whose private test data must be retained.
 
 Run `npx tsx scripts/seed-garage-local-reference.ts`. Its guard rejects non-loopback URLs. It upserts only the two public catalogue model identities from `data/motorcycles/honda-cb1000r-2008.json` and `honda-cb650ra-2023.json`, with their exact identifiers and image paths. It creates no account or private motorcycle. This is necessary because the local catalogue may otherwise lack the static template model identifiers. Sign up normally through the local application, confirm through the local mailbox, add your own physical bike and confirm exact year, market and variant in Bike details. Unlisted bikes can use personal templates.
 
@@ -68,9 +68,11 @@ These are the exact new migrations since baseline `3c59973`, in execution order.
 | `20261010183324_carried_match_pending.sql` | Separate release approval required |
 | `20261010184042_preserve_carried_origins.sql` | Separate release approval required |
 | `20261010184611_maintenance_templates.sql` | Separate release approval required |
+| `20261010192841_correct_quick_work.sql` | Separate release approval required |
 
 | Hosted setting or launch item | Required release work | Status |
 | --- | --- | --- |
+| Node.js runtime | Set the deployment runtime to Node.js 22.22.1 or newer, select Node 22 where the host offers major versions, and run `npm run check:runtime` in that environment before launch | Actual local 22.22.1 probe and build pass; deployment setting not changed |
 | Email/password authentication | Enable signup and mandatory email confirmation; minimum password length 8 | Not changed or verified hosted |
 | Site URL | Set the approved production origin and matching NEXT_PUBLIC_SITE_URL | Release origin decision required |
 | Redirect allow-list | Allow exact approved-origin `/auth/callback?next=/garage`, `/auth/callback?next=/account/reset-password` and the callback path used by the app; add approved preview origins only deliberately | Not changed hosted |
@@ -78,7 +80,19 @@ These are the exact new migrations since baseline `3c59973`, in execution order.
 | Private storage | Verify migration-created private `garage-photos` and `garage-receipts` buckets, ownership policies and 60-second download renewal after migration | Local evidence only |
 | Source publication and content rights | Separately approve reviewed template publication and parked manual-content rights | Not approved for live publication |
 | Browser and paper acceptance | Execute the specification above in both themes and both page sizes | Not authorized/performed |
-| Task, whole-branch and security review | Controller obtains fresh reviews and resolves concrete findings before merge | Pending controller |
+| Task, whole-branch and security review | Whole-branch/security review completed; controller obtains the single scoped review of the combined final fixes before merge | Scoped re-review pending controller |
 | Push, preview, merge and production deploy | Obtain David's separate live release decision after all prerequisites | Not performed |
 
 No external-provider sign-in, institutional single sign-on, hosted email branding or pack enforcement is introduced. Public browsing remains available; private garage access uses a stable account identity.
+
+## Final review corrections
+
+The combined final wave fixes F1–F10: Node runtime alignment; same-owner media recovery with permanent logout/owner-change revocation; server omission of untouched bike mileage; late Add isolation; visible saved task actions; atomic quick-work title/task correction; matching committed correction acknowledgment and draft-preserving saved-version review; stable history parents across status changes; paged/draining bike cleanup; and neutral private snapshot print wording. Quick-entry validation now links date, mileage, work/title and cost errors to the corresponding controls.
+
+A quick performed-work correction applies only to a template-free single task with no stable key or origin and action “other”, which is the quick-entry form contract. Multi-task/template records expose “Job title” and keep their task definitions. Completion state, timestamps, observations and source facts stay recorded. Untouched bike mileage is omitted from the database update, so a later reading from another device cannot be rolled back by a nickname edit; explicitly edited lower mileage remains allowed.
+
+Bounded minor fixes retain valid photos during renewal, offer photo retry, clear stale photo/receipt cleanup status, attempt every local fixture cleanup while preserving setup errors, protect built-PDF/export setup and check cleanup responses, assert AccountForm replacement destinations quietly, name the blank link “Print blank base template”, and assert printing does not invoke write actions or network requests.
+
+The regression run passes 38 files and 354 tests. The added local access checks exercise another device's mileage, explicit lowering, atomic task/title correction, completion facts and matching retries. The export fixture also exercises one bike removal with 1,001 live attachment identities and 1,001 jobs, including a pending unattached source beyond the first page. All eight guarded local suites passed, including the new cleanup case. Isolated runtime checks passed for the served loopback bundle, exclusion of the live environment file, failed-child restoration and interruption restoration. The final scoped re-review remains pending.
+
+The nine accepted rulings and their costs are retained in [garage-decisions.md](garage-decisions.md). Existing five lint warnings, six previously recorded dependency audit findings, the existing match_document_chunks search-path/public-vector-extension advisor warnings, and applied-migration analyzer/whitespace noise remain separate release follow-up. No fresh broad audit is claimed. Approved static template content was not changed.

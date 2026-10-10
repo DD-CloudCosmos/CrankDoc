@@ -5,7 +5,7 @@ import {BikePhotoEditor,PrivateBikePhoto} from './BikePhotoEditor'
 import {uploadPrivateFile,privateFileRequest} from '@/lib/maintenance/uploads'
 import {createAuthBrowserClient} from '@/lib/supabase/auth-browser'
 vi.mock('@/lib/maintenance/uploads',()=>({uploadPrivateFile:vi.fn(),privateFileRequest:vi.fn()}))
-vi.mock('../PrivateGarage',()=>({useGarageOwner:()=> 'owner'}))
+vi.mock('../PrivateGarage',()=>({useGarageOwner:()=> 'owner',useGarageReconciliation:()=>{}}))
 vi.mock('@/lib/supabase/auth-browser',()=>({createAuthBrowserClient:vi.fn()}))
 let authChange:(event:string,session:unknown)=>void
 beforeEach(()=>{
@@ -42,4 +42,10 @@ it('reconstructs cleanup retry from durable rows after reload with no personal p
  render(<BikePhotoEditor bike={bikeFixture({photoPath:null})} files={[{id:'old',bikeId:bikeFixture().id,jobId:null,kind:'bike_photo',path:'old.webp',filename:'old photo.jpg',cleanupPending:true,sourcePending:false}]} onChanged={vi.fn()} />)
  fireEvent.click(screen.getByRole('button',{name:'Retry image cleanup'}))
  await waitFor(()=>expect(privateFileRequest).toHaveBeenCalledWith('POST',{bikeId:bikeFixture().id,cleanup:true}))
+})
+it('clears an earlier cleanup error after a successful retry',async()=>{
+ vi.mocked(privateFileRequest).mockRejectedValueOnce(new Error('Cleanup unavailable')).mockResolvedValueOnce({})
+ render(<BikePhotoEditor bike={bikeFixture()} files={[{id:'old',bikeId:bikeFixture().id,jobId:null,kind:'bike_photo',path:'old.webp',filename:'old.jpg',cleanupPending:true}]} onChanged={vi.fn()} />)
+ fireEvent.click(screen.getByRole('button',{name:'Retry image cleanup'}));await screen.findByRole('alert')
+ fireEvent.click(screen.getByRole('button',{name:'Retry image cleanup'}));await waitFor(()=>expect(screen.queryByRole('alert')).not.toBeInTheDocument())
 })

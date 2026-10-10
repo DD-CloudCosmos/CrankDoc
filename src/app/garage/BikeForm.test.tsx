@@ -69,3 +69,15 @@ it('changes linked identity deliberately, validates linked years and keeps the p
  fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
  await waitFor(()=>expect(save).toHaveBeenLastCalledWith(expect.objectContaining({motorcycleId:null,make:'Custom make'}),physicalId))
 })
+
+it('marks untouched stale mileage separately from a deliberate correction',async()=>{
+ const save=vi.fn().mockResolvedValue({...bike,mileageKm:15000})
+ const {rerender}=render(<BikeForm initial={{...bike,mileageKm:12000}} onSave={save} />)
+ fireEvent.change(screen.getByLabelText('Nickname'),{target:{value:'New name'}})
+ rerender(<BikeForm initial={{...bike,mileageKm:15000}} onSave={save} />)
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ await waitFor(()=>expect(save).toHaveBeenCalledWith(expect.objectContaining({nickname:'New name',mileageEdited:false}),bike.id))
+ fireEvent.change(screen.getByLabelText('Mileage'),{target:{value:'11000'}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ await waitFor(()=>expect(save).toHaveBeenLastCalledWith(expect.objectContaining({mileageKm:11000,mileageEdited:true}),bike.id))
+})

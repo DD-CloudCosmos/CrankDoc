@@ -102,3 +102,17 @@ it('never creates a cleanup writer for a foreign or removed receipt',async()=>{
  }
  expect(writers).toBe(0)
 })
+
+it('drains all removal identities and pages job prefixes including unattached sources beyond the cap',async()=>{
+ const {cleanupOwnedFiles}=await import('./uploads.server')
+ const states=Array.from({length:5},(_,i)=>({id:`file-${i}`,kind:'receipt',path:`owner/jobs/job-${i}/file.pdf`,state:'removing'}))
+ const jobs=Array.from({length:5},(_,i)=>({id:`job-${i}`}))
+ const pending=new Set(['owner/jobs/job-4/pending.pdf.source']);const removed:string[]=[]
+ const client={from:(table:string)=>{
+  let offset=0
+  const q={select:()=>q,eq:()=>q,order:()=>q,range:(start:number)=>{offset=start;return q},limit:()=>q,maybeSingle:()=>Promise.resolve({data:{id:'bike'},error:null}),then:(resolve:(v:unknown)=>void)=>Promise.resolve({data:(table==='garage_file_states'?states:jobs).slice(offset,offset+2),error:null}).then(resolve)};return q
+ },storage:{from:()=>({list:async(path:string)=>({data:[...pending].filter(item=>item.startsWith(path+'/')).map(item=>({name:item.split('/').pop()})),error:null})})}}
+ const writer={rpc:async(name:string,args:{p_file_id?:string})=>{if(name==='finish_garage_file_removal'){const i=states.findIndex(row=>row.id===args.p_file_id);removed.push(states[i].id);states.splice(i,1)}return {error:null}},storage:{from:()=>({remove:async(paths:string[])=>{paths.forEach(path=>pending.delete(path));return {error:null}}})}}
+ await cleanupOwnedFiles({client,userId:'owner'} as never,'00000000-0000-4000-8000-000000000001',null,()=>writer as never)
+ expect(removed).toHaveLength(5);expect(pending.size).toBe(0)
+})

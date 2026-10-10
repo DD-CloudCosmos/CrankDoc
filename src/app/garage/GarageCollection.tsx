@@ -17,12 +17,13 @@ export function GarageCollection({ initialBikes, models = [] }: { initialBikes: 
   const [view, setView] = useState<'active' | 'archived'>('active')
   const [unit, setUnit] = useState<'km' | 'mi'>('km')
   const [adding, setAdding] = useState(false)
+  const addGeneration = useRef(0)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const request = useRef(0)
   const changeView = useCallback(async (next: 'active' | 'archived') => {
     const token = ++request.current
-    setView(next); setBikes([]); setError(''); setLoading(true)
+    currentView.current = next; setView(next); setBikes([]); setError(''); setLoading(true)
     try { const result = await loadBikes(next === 'archived', owner); if (token === request.current) setBikes(result) }
     catch (error) { if (token === request.current) setError(error instanceof Error ? error.message : 'Could not load bikes.') }
     finally { if (token === request.current) setLoading(false) }
@@ -35,16 +36,17 @@ export function GarageCollection({ initialBikes, models = [] }: { initialBikes: 
     else void changeView('archived')
   }, [initialBikes, changeView])
   return <div className="space-y-5">
-    <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-[34px] font-semibold tracking-[-0.03em]">My Garage</h1><Button onClick={() => setAdding(!adding)}>{adding ? 'Cancel adding' : 'Add bike'}</Button></div>
+    <div className="flex flex-wrap items-center justify-between gap-3"><h1 className="text-[34px] font-semibold tracking-[-0.03em]">My Garage</h1><Button onClick={() => { addGeneration.current++; setAdding(!adding) }}>{adding ? 'Cancel adding' : 'Add bike'}</Button></div>
     <ImportGarage selectedModelIds={garage?.bikeIds ?? []} onImport={async ids => {
       const result = await importModels(ids, owner)
       await changeView(view)
       return result
     }} />
     {adding && <section className="rounded-[20px] bg-card p-5 shadow-card"><h2 className="mb-4 text-[22px] font-semibold">Add bike</h2><BikeForm initial={null} models={models} onSave={async (input, id) => {
+      const generation = addGeneration.current
       const bike = await saveBike(input, id, owner)
-      if (view === 'active') setBikes(current => [...current.filter(item => item.id !== bike.id), bike])
-      setAdding(false)
+      if (currentView.current === 'active') setBikes(current => [...current.filter(item => item.id !== bike.id), bike])
+      if (generation === addGeneration.current) setAdding(false)
       return bike
     }} /></section>}
     <SegmentedControl aria-label="Garage view" className="[&_button]:min-h-11" value={view} onChange={next => void changeView(next)} options={[{ value: 'active', label: 'Active' }, { value: 'archived', label: 'Archived' }]} />

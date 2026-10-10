@@ -124,3 +124,9 @@ export async function startTemplateMaintenance(draft:JobDraft,templateIds:string
  if(result.ok)invalidateBike(bike.id)
  return result
 }
+
+export async function loadMaintenanceJob(id:string,bikeId:string,ownerId:string):Promise<JobView> {
+ const job=await getJob(await accountFor(ownerId),id)
+ if(!job || job.bikeId!==bikeId) throw new Error('Job not found')
+ return job
+}

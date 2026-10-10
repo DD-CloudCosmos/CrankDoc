@@ -65,3 +65,18 @@ it('fails safely before creating clients for a hosted URL', async () => {
   await expect(createLocalTestClients()).rejects.toThrow('loopback')
   expect(createClient).not.toHaveBeenCalled()
 })
+
+it('attempts all cleanup and preserves the original setup failure',async()=>{
+ const mock=setup(),original=new Error('Original setup failure')
+ mock.insert.mockResolvedValueOnce({error:original});mock.deleteUser.mockRejectedValueOnce(new Error('First cleanup failed'))
+ const warning=vi.spyOn(console,'error').mockImplementation(()=>{})
+ await expect(createLocalTestClients()).rejects.toBe(original)
+ expect(mock.deleteUser).toHaveBeenCalledWith('b');expect(mock.eq).toHaveBeenCalledOnce();expect(warning).toHaveBeenCalled()
+ warning.mockRestore()
+})
+it('reports returned and thrown cleanup errors only after attempting every step',async()=>{
+ const {cleanupLocalFixtures}=await import('./garage-test-env')
+ const last=vi.fn().mockResolvedValue({error:null})
+ await expect(cleanupLocalFixtures([async()=>({error:new Error('SDK failure')}),async()=>{throw new Error('Thrown failure')},last])).rejects.toMatchObject({errors:expect.arrayContaining([expect.objectContaining({message:'SDK failure'}),expect.objectContaining({message:'Thrown failure'})])})
+ expect(last).toHaveBeenCalledOnce()
+})

@@ -1,7 +1,7 @@
 export type BikeInput = {
   motorcycleId: string | null; nickname: string; make: string; model: string;
   year: number | null; variant: string; market: string; registration: string;
-  mileageKm: number | null;
+  mileageKm: number | null; mileageEdited?: boolean;
 }
 export type BikeView = BikeInput & {
   latestJob?: {id:string;title:string;date:string;status:'in_progress'|'completed'|'partial'} | null;

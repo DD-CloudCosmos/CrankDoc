@@ -1,0 +1,15 @@
+# My Garage implementation decisions
+
+10 October 2026. These nine rulings were accepted during the staged implementation. They survive removal of the temporary review ledger. The [acceptance record](garage-acceptance.md) owns current evidence and release gates.
+
+| Decision | Reason and cost |
+| --- | --- |
+| 1. Enforce private record structure and state rules in database constraints or write functions. | Direct table access must not bypass validation. Cost: stricter migrations and real transaction tests. |
+| 2. Reconcile ambiguous saves against current content and revision before retrying. | A committed save with a lost response must not become a false conflict. Matching changes are acknowledged; different saved values require explicit review with the draft retained. Cost: extra reads and reconciliation logic. |
+| 3. Preserve the DiagnosticTree convenience alias with its narrowed difficulty values. | Existing diagnostic components depend on it while generated SQL text columns remain strings. Cost: maintaining the alias when generating types. |
+| 4. Keep the four existing diagnostic query assertions. | The existing database CHECK supports that narrow public interface. Cost: unsafe narrowing if that constraint is later removed. |
+| 5. Allow library artwork for a linked model/generation with an unknown year. | The design requires the matching library image; year-specific reference and service coverage still require a confirmed year. Custom/unmatched bikes use a placeholder. Cost: less precise art where a catalogue generation spans variants. |
+| 6. Add an owner-checked read-only blank template print route. | An unstarted worksheet needs blank date/mileage without creating a job. Its visible contract is base-template only; saved-job print includes actual additions and carry-over. Cost: one extra route and render contract. |
+| 7. Restrict finalized files and attachment metadata to a narrow server transition after owner checks. | Ordinary metadata/storage writes cannot enforce decoded-file validation. Pending uploads and normal reads remain owner-scoped. Cost: a privileged server writer limited to finalization and cleanup, with security review and race tests. |
+| 8. Track native same-document history positions at the root. | Cancelled known traversals use exact history.go compensation while preserving framework/native state. Unknown pre-existing entries warn and retain the private draft without guessing direction. No private fields enter history. Cost: root navigation integration, an explicit unknown-entry limit, and pending real-browser acceptance. |
+| 9. Resolve application template starts on the server, while treating raw private owner snapshots as untrusted history. | Personal templates cannot become reviewed shared definitions. Generic starts accept template-free work. Saved print output says “Saved template snapshot”; only a resolved static blank template can claim review. Cost: advanced clients can fabricate source-like metadata in their own logs; shared or college certification would require stronger provenance. |

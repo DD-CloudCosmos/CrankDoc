@@ -36,7 +36,7 @@ it('rejects quick jobs with unfinished tasks, template or origins before saving'
   expect(rpc).not.toHaveBeenCalled()
 })
 it('returns current record for revision conflict without retrying edits',async () => {
-  responses=[{data:null,error:{code:'PT409',details:JSON.stringify({...row,revision:2})}}]
+  responses=[{data:null,error:{code:'PT409',details:JSON.stringify({...row,revision:2,title:'Other device'})}}]
   expect(await editJobDetails(account,draft.id,1,draft)).toMatchObject({ok:false,error:'conflict',current:{revision:2}})
   expect(rpc).toHaveBeenCalledTimes(1)
 })
@@ -102,4 +102,10 @@ it('rejects caller origins and malformed carry selections before writes',async()
  for(const selection of [{...carry,sourceRevision:0},{...carry,taskIds:['bad']},{...carry,taskIds:[draft.tasks[0].id,draft.tasks[0].id]},{...carry,closePrevious:'yes'}]) expect(await startJob(account,jobFixture(),selection as never)).toMatchObject({error:'invalid'})
  expect(await startJob(account,jobFixture({tasks:[taskFixture({origin:{jobId:draft.id,taskId:draft.tasks[0].id,previousNotes:'Forged'}})]}),carry)).toMatchObject({error:'invalid'})
  expect(rpc).not.toHaveBeenCalled()
+})
+
+it('acknowledges a matching committed correction after a lost response',async()=>{
+ responses=[{data:null,error:{code:'PT409',details:JSON.stringify({...row,revision:2,title:'Corrected',tasks:[{...row.tasks[0],label:'Corrected'}]})}}]
+ expect(await editJobDetails(account,draft.id,1,{...draft,title:'Corrected'})).toMatchObject({ok:true,value:{revision:2,title:'Corrected'}})
+ expect(rpc).toHaveBeenCalledTimes(1)
 })

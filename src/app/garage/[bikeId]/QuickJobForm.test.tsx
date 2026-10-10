@@ -13,7 +13,7 @@ it('requires date, mileage and performed work; optional fields start collapsed',
   expect(save.mock.calls[0][0]).toMatchObject({mileageKm:0,costMinor:null,currency:null,template:null,tasks:[{state:'done',label:'Oil changed'}]})
 })
 it.each(['-1','Infinity','1.234','900719925474099.99'])('rejects invalid cost %s before saving', async cost => {
-  const save=vi.fn(saved); render(<QuickJobForm bike={bikeFixture()} onSave={save} />); fill(); fireEvent.click(screen.getByRole('button',{name:'Optional details'})); fireEvent.change(screen.getByLabelText('Cost'),{target:{value:cost}}); fireEvent.submit(screen.getByRole('button',{name:'Save entry'}).closest('form')!); expect(await screen.findByRole('alert')).toBeInTheDocument(); expect(save).not.toHaveBeenCalled()
+  const save=vi.fn(saved); render(<QuickJobForm bike={bikeFixture()} onSave={save} />); fill(); fireEvent.click(screen.getByRole('button',{name:'Optional details'})); fireEvent.change(screen.getByLabelText('Cost'),{target:{value:cost}}); fireEvent.submit(screen.getByRole('button',{name:'Save entry'}).closest('form')!); expect((await screen.findAllByRole('alert')).length).toBeGreaterThan(0); expect(save).not.toHaveBeenCalled()
 })
 it('saves zero cost and converts miles once', async () => {
  const save=vi.fn(saved); render(<QuickJobForm bike={bikeFixture()} onSave={save} />); fill(); fireEvent.click(screen.getByRole('radio',{name:'Miles'})); fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'1000'}}); fireEvent.click(screen.getByRole('button',{name:'Optional details'})); fireEvent.change(screen.getByLabelText('Cost'),{target:{value:'0'}}); fireEvent.click(screen.getByRole('button',{name:'Save entry'})); await waitFor(()=>expect(save).toHaveBeenCalledTimes(1)); expect(save.mock.calls[0][0]).toMatchObject({mileageKm:1609.344,costMinor:0,currency:'EUR'})
@@ -34,7 +34,7 @@ it('uses a local calendar date by default',()=>{
 })
 it.each([{title:'',date:'2026-10-10',mileage:'0'},{title:'Work',date:'',mileage:'0'},{title:'Work',date:'2026-10-10',mileage:''},{title:'Work',date:'2026-10-10',mileage:'-1'},{title:'Work',date:'2026-10-10',mileage:'Infinity'}])('rejects missing or invalid required values %j',async values=>{
  const save=vi.fn(saved);render(<QuickJobForm bike={bikeFixture()} onSave={save} />)
- fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:values.title}});fireEvent.change(screen.getByLabelText('Job date'),{target:{value:values.date}});fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:values.mileage}});fireEvent.submit(screen.getByRole('button',{name:'Save entry'}).closest('form')!);expect(await screen.findByRole('alert')).toBeInTheDocument();expect(save).not.toHaveBeenCalled()
+ fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:values.title}});fireEvent.change(screen.getByLabelText('Job date'),{target:{value:values.date}});fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:values.mileage}});fireEvent.submit(screen.getByRole('button',{name:'Save entry'}).closest('form')!);expect((await screen.findAllByRole('alert')).length).toBeGreaterThan(0);expect(save).not.toHaveBeenCalled()
 })
 it('keeps entered optional values after thrown session failure',async()=>{
  const save=vi.fn().mockRejectedValue(new Error('Sign in again'));render(<QuickJobForm bike={bikeFixture()} onSave={save} />);fill();fireEvent.click(screen.getByRole('button',{name:'Optional details'}));fireEvent.change(screen.getByLabelText('Notes'),{target:{value:'<b>private</b>'}});fireEvent.change(screen.getByLabelText('Parts'),{target:{value:'Filter'}});fireEvent.change(screen.getByLabelText('Performed by'),{target:{value:'Owner'}});fireEvent.change(screen.getByLabelText('Cost'),{target:{value:'42.50'}});fireEvent.change(screen.getByLabelText('Currency'),{target:{value:'GBP'}});fireEvent.click(screen.getByRole('button',{name:'Save entry'}));expect(await screen.findByRole('alert')).toHaveTextContent('Sign in again');expect(screen.getByLabelText('Notes')).toHaveValue('<b>private</b>');expect(save.mock.calls[0][0]).toMatchObject({notes:'<b>private</b>',parts:'Filter',performer:'Owner',costMinor:4250,currency:'GBP'})
@@ -120,4 +120,18 @@ it('retains choices and fields when source refresh fails and blocks saves during
  expect(start).toHaveBeenCalledTimes(1);expect(save).not.toHaveBeenCalled()
  await act(async()=>finish(null))
  expect(screen.queryByRole('button',{name:'Carry unfinished work'})).toBeNull();expect(screen.queryByRole('alert')).toBeNull();expect(screen.getByLabelText('Work performed')).toHaveValue('Oil changed')
+})
+
+it('associates validation failures with the invalid fields',()=>{
+ render(<QuickJobForm bike={bikeFixture()} onSave={vi.fn()} />)
+ fireEvent.change(screen.getByLabelText('Work performed'),{target:{value:' '}})
+ fireEvent.change(screen.getByLabelText('Job mileage'),{target:{value:'bad'}})
+ fireEvent.click(screen.getByRole('button',{name:'Optional details'}))
+ fireEvent.change(screen.getByLabelText('Cost'),{target:{value:'1.234'}})
+ fireEvent.submit(screen.getByRole('button',{name:'Save entry'}).closest('form')!)
+ for(const label of ['Work performed','Job mileage','Cost']) {
+  const input=screen.getByLabelText(label)
+  expect(input).toHaveAttribute('aria-invalid','true')
+  expect(document.getElementById(input.getAttribute('aria-describedby')!)).toHaveAttribute('role','alert')
+ }
 })

@@ -19,6 +19,7 @@ export function ChecklistRow({task,onChange,draft,onDraftChange}:{task:JobTask;o
  return <article className="space-y-3 break-words rounded-[16px] bg-card p-4 shadow-card">
   <div className="flex items-start gap-3"><input id={`done-${task.id}`} type="checkbox" className="min-h-11 min-w-11 shrink-0 accent-primary" aria-label={task.label} checked={task.state==='done'} onChange={event=>{pending(null);onChange({state:event.target.checked?'done':'todo',reason:''})}} /><label htmlFor={`done-${task.id}`} className="min-h-11 py-2 text-lg font-semibold">{task.label}</label></div>
   <p>{taskStateLabels[task.state]}</p>
+  {task.action !== 'other' && <p>Action: {task.action}</p>}
   {task.safety?<SafetyBadge level={task.safety} />:<p className="text-muted-foreground">Unassessed: safety guidance has not been reviewed.</p>}
   {(!task.reference || !task.specification) && <p className="text-muted-foreground">Unassessed: procedure or specification guidance is missing.</p>}
   {task.warning && <p className="rounded-[10px] bg-caution-background p-3 text-caution-foreground"><strong>Warning: </strong>{task.warning}</p>}

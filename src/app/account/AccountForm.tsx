@@ -1,5 +1,6 @@
 'use client'
 
+import { replaceDocument } from '@/lib/documentNavigation'
 import { announceGarageSignOut } from '@/lib/garageSession'
 import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
@@ -43,7 +44,7 @@ export function AccountForm({ signedIn = false, resetPassword = false, invalidLi
         setPasswordValue('')
         setAuthenticated(false)
         // Replace the document so mounted private views and router data are discarded.
-        window.location.replace(action === 'sign-out' ? '/account' : next)
+        replaceDocument(action === 'sign-out' ? '/account' : next)
       }
     } catch {
       setError('Could not complete this request. Check your connection and try again.')

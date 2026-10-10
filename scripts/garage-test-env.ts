@@ -22,13 +22,7 @@ export async function createLocalTestClients() {
   const userIds: string[] = []
   const modelId = crypto.randomUUID()
   const cleanup = async () => {
-    await Promise.all([a.auth.signOut(), b.auth.signOut()])
-    for (const id of userIds) {
-      const { error } = await admin.auth.admin.deleteUser(id)
-      if (error) throw error
-    }
-    const { error } = await admin.from('motorcycles').delete().eq('id', modelId)
-    if (error) throw error
+    await cleanupLocalFixtures([()=>a.auth.signOut(),()=>b.auth.signOut(),...userIds.map(id=>()=>admin.auth.admin.deleteUser(id)),()=>admin.from('motorcycles').delete().eq('id',modelId)])
   }
   try {
     for (const client of [a, b]) {
@@ -44,7 +38,16 @@ export async function createLocalTestClients() {
     if (error) throw error
     return { a, b, admin, userA: userIds[0], userB: userIds[1], modelId, cleanup }
   } catch (error) {
-    await cleanup()
+    try {await cleanup()} catch(cleanupError) {console.error('Cleanup also failed:',cleanupError)}
     throw error
   }
+}
+
+/** Attempt every local teardown, including SDK responses that report rather than throw errors. */
+export async function cleanupLocalFixtures(steps:(()=>PromiseLike<unknown>)[]):Promise<void> {
+ const failures:unknown[]=[]
+ for(const step of steps) {
+  try {const result=await step();if(result && typeof result==='object' && 'error' in result && result.error)failures.push(result.error)} catch(error) {failures.push(error)}
+ }
+ if(failures.length)throw new AggregateError(failures,'Local fixture cleanup failed')
 }

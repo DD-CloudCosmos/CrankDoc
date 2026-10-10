@@ -99,3 +99,12 @@ export function parseTaskPatch(input: unknown): import('./types').TaskPatch {
   return {...('state' in v ? {state:choice(v.state,['todo','done','skipped','not_applicable'] as const)} : {}),
     ...('reason' in v ? {reason:text(v.reason,500)} : {}), ...('notes' in v ? {notes:text(v.notes,4000)} : {})}
 }
+
+/** Only the template-free single performed-work definition shares its title. */
+export function isQuickWork(job: Pick<JobDraft,'template'|'tasks'>): boolean {
+  const task=job.tasks[0]
+  return job.template===null && job.tasks.length===1 && task.key===null && task.origin===null && task.action==='other'
+}
+export function matchesJobDetails(job: import('./types').JobView,details:JobDetails):boolean {
+  return Object.entries(details).every(([key,value])=>job[key as keyof JobDetails]===value) && (!isQuickWork(job) || job.tasks[0].label===details.title)
+}

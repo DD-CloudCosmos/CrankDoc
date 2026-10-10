@@ -3,7 +3,7 @@ import {render,screen,fireEvent,waitFor} from '@testing-library/react'
 import {ReceiptUpload} from './ReceiptUpload'
 import {uploadPrivateFile,privateFileRequest} from '@/lib/maintenance/uploads'
 vi.mock('@/lib/maintenance/uploads',()=>({uploadPrivateFile:vi.fn(),privateFileRequest:vi.fn()}))
-vi.mock('../PrivateGarage',()=>({useGarageOwner:()=> 'owner'}))
+vi.mock('../PrivateGarage',()=>({useGarageOwner:()=> 'owner',useGarageReconciliation:()=>{}}))
 beforeEach(()=>vi.resetAllMocks())
 it('retains successful receipts when a later file fails and retries only that stable file',async()=>{
  vi.mocked(uploadPrivateFile).mockResolvedValueOnce({id:'first',path:'first.pdf'}).mockRejectedValueOnce(new Error('Second upload failed')).mockResolvedValueOnce({id:'second',path:'second.pdf'})
@@ -50,4 +50,15 @@ it('shows immediate and durable source cleanup warnings and retries without remo
  fireEvent.click(screen.getByRole('button',{name:'Retry receipt source cleanup'}))
  await waitFor(()=>expect(privateFileRequest).toHaveBeenCalledTimes(2))
  expect(privateFileRequest).toHaveBeenLastCalledWith('POST',{fileId:'file',cleanupSource:true})
+})
+it('clears the selected-file cleanup warning after durable source cleanup succeeds',async()=>{
+ vi.mocked(uploadPrivateFile).mockResolvedValue({id:'file',path:'receipt.pdf',cleanupPending:true})
+ vi.mocked(privateFileRequest).mockResolvedValue({})
+ const changed=vi.fn();const {rerender}=render(<ReceiptUpload bikeId="bike" jobId="job" onChanged={changed} />)
+ fireEvent.change(screen.getByLabelText('Optional receipts'),{target:{files:[new File(['pdf'],'receipt.pdf',{type:'application/pdf'})]}})
+ fireEvent.click(screen.getByRole('button',{name:'Save receipts'}));await screen.findByText(/receipt.pdf: Saved. Source cleanup needs retry/)
+ const id=vi.mocked(uploadPrivateFile).mock.calls[0][1].id
+ rerender(<ReceiptUpload bikeId="bike" jobId="job" onChanged={changed} files={[{id,bikeId:'bike',jobId:'job',kind:'receipt',path:'receipt.pdf',filename:'receipt.pdf',cleanupPending:false,sourcePending:true}]} />)
+ fireEvent.click(screen.getByRole('button',{name:'Retry receipt source cleanup'}))
+ await waitFor(()=>expect(screen.getByText('receipt.pdf: Saved')).toBeInTheDocument())
 })

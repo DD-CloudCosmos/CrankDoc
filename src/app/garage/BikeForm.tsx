@@ -19,6 +19,7 @@ export function BikeForm({ initial, onSave, models = [], disabled = false }: { i
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
   const dirty = useRef(false)
+  const mileageEdited = useRef(false)
   const pending = useRef(false)
   useEffect(() => {
     if (!initial || dirty.current || pending.current) return
@@ -33,8 +34,9 @@ export function BikeForm({ initial, onSave, models = [], disabled = false }: { i
       const parsed = parseBikeInput({ ...input, year: year === '' ? null : Number(year), mileageKm: mileage === '' ? null : Number(mileage) * (unit === 'mi' ? 1.609344 : 1) })
       const model=models.find(model=>model.id===parsed.motorcycleId)
       if(model) validateCatalogueScope(parsed,model)
-      const result = await onSave(parsed, id)
+      const result = await onSave(initial ? { ...parsed, mileageEdited: mileageEdited.current } : parsed, id)
       dirty.current = false
+      mileageEdited.current = false
       setInput(result); setYear(result.year?.toString() ?? ''); setMileage(result.mileageKm?.toString() ?? ''); setUnit('km')
       setSaved(true);setChangingModel(false)
     } catch (error) { setError(error instanceof Error ? error.message : 'Could not save. Try again.') }
@@ -52,7 +54,7 @@ export function BikeForm({ initial, onSave, models = [], disabled = false }: { i
       <Input id={`bike-${field}`} className="min-h-11" maxLength={field === 'nickname' ? 80 : 120} required={field === 'make' || field === 'model'} readOnly={Boolean(input.motorcycleId) && (field === 'make' || field === 'model')} value={input[field]} onChange={event => setInput({ ...input, [field]: event.target.value })} />
     </div>)}
     <div className="space-y-2"><label htmlFor="bike-year">Year</label><Input id="bike-year" className="min-h-11" type="number" min={1885} max={2100} step={1} value={year} onChange={event => setYear(event.target.value)} /><p className="text-[13px] text-muted-foreground">Leave blank if unknown.</p></div>
-    <div className="space-y-2"><label htmlFor="bike-mileage">Mileage</label><Input id="bike-mileage" className="min-h-11" type="number" min={0} step="any" value={mileage} onChange={event => setMileage(event.target.value)} />
+    <div className="space-y-2"><label htmlFor="bike-mileage">Mileage</label><Input id="bike-mileage" className="min-h-11" type="number" min={0} step="any" value={mileage} onChange={event => { mileageEdited.current = true; setMileage(event.target.value) }} />
       <label htmlFor="mileage-unit">Mileage unit</label><select id="mileage-unit" className="min-h-11 rounded-[10px] bg-input px-3" value={unit} onChange={event => {
         const next = event.target.value
         if (mileage !== '') setMileage(String(Math.round(Number(mileage) * (next === 'mi' ? 1 / 1.609344 : 1.609344) * 1000) / 1000))

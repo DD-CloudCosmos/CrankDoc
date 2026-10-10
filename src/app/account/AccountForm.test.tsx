@@ -1,6 +1,8 @@
 import { beforeEach, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { replaceDocument } from '@/lib/documentNavigation'
+vi.mock('@/lib/documentNavigation',()=>({replaceDocument:vi.fn()}))
 import { AccountForm } from './AccountForm'
 const { signIn, signUp, sendRecovery, setPassword, signOut } = vi.hoisted(() => ({ signIn: vi.fn(), signUp: vi.fn(), sendRecovery: vi.fn(), setPassword: vi.fn(), signOut: vi.fn() }))
 vi.mock('./actions', () => ({ signIn, signUp, sendRecovery, setPassword, signOut }))
@@ -77,4 +79,14 @@ it('announces only successful explicit logout for private draft cleanup',async()
  fireEvent.click(screen.getByRole('button',{name:'Sign out'}))
  await waitFor(()=>expect(notification.mock.calls.some(([event])=>event.type==='garage-explicit-sign-out')).toBe(true))
  notification.mockRestore()
+})
+
+it('replaces the document at the supplied safe destination and uses account after logout',async()=>{
+ signIn.mockResolvedValue({ok:true});signOut.mockResolvedValue({ok:true})
+ const {unmount}=render(<AccountForm next="/garage/owned-bike?tab=maintenance" />)
+ const user=await fill();await user.click(screen.getByRole('button',{name:'Sign in'}))
+ await waitFor(()=>expect(replaceDocument).toHaveBeenCalledWith('/garage/owned-bike?tab=maintenance'))
+ unmount();render(<AccountForm signedIn next="/garage/ignored" />)
+ fireEvent.click(screen.getByRole('button',{name:'Sign out'}))
+ await waitFor(()=>expect(replaceDocument).toHaveBeenLastCalledWith('/account'))
 })

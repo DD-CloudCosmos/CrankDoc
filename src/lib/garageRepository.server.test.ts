@@ -135,3 +135,11 @@ it('loads latest work per owned physical bike, and falls back when the latest re
  responses=[ok([row]),ok([{...latest,id:'previous',title:'Earlier work'}])]
  expect((await listBikes(account))[0].latestJob?.title).toBe('Earlier work')
 })
+
+it('omits untouched mileage from the atomic update, preserving other-device logs',async()=>{
+ responses=[ok({...row,mileage_km:15000}),ok({...row,mileage_km:11000})]
+ await editBike(account,id,{...input,mileageKm:12000,mileageEdited:false})
+ expect(queries[0].update.mock.calls[0][0]).not.toHaveProperty('mileage_km')
+ await editBike(account,id,{...input,mileageKm:11000,mileageEdited:true})
+ expect(queries[1].update.mock.calls[0][0]).toHaveProperty('mileage_km',11000)
+})

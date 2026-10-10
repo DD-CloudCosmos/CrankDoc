@@ -5,16 +5,16 @@ import {dirname} from 'node:path'
 import {tmpdir} from 'node:os'
 import {setTimeout as pause} from 'node:timers/promises'
 import {createServerClient} from '@supabase/ssr'
-import {createLocalTestClients,loadGarageTestEnv} from './garage-test-env'
+import {cleanupLocalFixtures,createLocalTestClients,loadGarageTestEnv} from './garage-test-env'
 import {listJobs} from '../src/lib/maintenance/jobsRepository.server'
-import {listPrivateFiles} from '../src/lib/maintenance/uploads.server'
+import {cleanupOwnedFiles,listPrivateFiles} from '../src/lib/maintenance/uploads.server'
 import {listBikes,editBike} from '../src/lib/garageRepository.server'
 
 async function main() {
  const env=loadGarageTestEnv();const t=await createLocalTestClients()
  const account={client:t.a,userId:t.userA};const bike=crypto.randomUUID();const otherBike=crypto.randomUUID()
  const live='.env.local';const excluded='.env.local.garage-export-excluded'
- let server:ReturnType<typeof spawn>|undefined;let before:number|undefined
+ let server:ReturnType<typeof spawn>|undefined;let before:number|undefined;let failed=false;const pendingPaths:string[]=[]
  try {
   assert.ifError((await t.admin.from('garage_bikes').insert([bike,otherBike].map(id=>({id,owner_id:t.userA,make:'Honda',model:'CB650RA',motorcycle_id:t.modelId,year:2023})))).error)
   const jobs=Array.from({length:1001},(_,i)=>({id:crypto.randomUUID(),owner_id:t.userA,bike_id:bike,title:`Recorded work ${i}`,job_date:i===1000?'2026-10-10':i===999?'2026-10-09':'2026-10-08',mileage_km:i,tasks:[{id:crypto.randomUUID(),key:null,label:'Recorded task',action:'replace',state:'done',reason:'',notes:'',doneAt:'2026-10-10T12:00:00Z',origin:null,reference:null,warning:null,specification:null,safety:null}],status:'completed',close_reason:'all_done',closed_at:'2026-10-10T12:00:00Z'}))
@@ -54,16 +54,37 @@ async function main() {
   assert.equal((await fetch(`${url}json`)).status,401)
   assert.equal((await fetch(`http://127.0.0.1:3113/api/garage/export?bikeId=${crypto.randomUUID()}&format=json`,{headers})).status,404)
   assert.ifError((await t.admin.from('garage_files').delete().eq('job_id',jobs[1000].id)).error)
+  assert.ifError((await t.admin.from('garage_file_states').update({state:'removed'}).eq('id',files[1000].id)).error)
   assert.ifError((await t.a.from('maintenance_jobs').delete().eq('id',jobs[1000].id)).error)
   cards=await listBikes(account);assert.equal(cards.find(item=>item.id===bike)?.latestJob?.title,'Recorded work 999','Deleting latest falls back to preceding recorded job')
+  // After latest-delete fallback, restore a full 1,001-job/identity set.
+  // This deterministic final job is beyond the database's first page.
+  const tailJob={...jobs[1000],id:'ffffffff-ffff-4fff-8fff-ffffffffffff'}
+  assert.ifError((await t.admin.from('maintenance_jobs').insert(tailJob)).error)
+  const tailFile={...files[1000],id:crypto.randomUUID(),job_id:tailJob.id}
+  tailFile.path=`${t.userA}/jobs/${tailJob.id}/${tailFile.id}.pdf`
+  assert.ifError((await t.admin.from('garage_file_states').insert({id:tailFile.id,owner_id:t.userA,bike_id:bike,job_id:tailJob.id,kind:'receipt',path:tailFile.path,state:'finalizing'})).error)
+  assert.ifError((await t.admin.from('garage_files').insert(tailFile)).error)
+  assert.ifError((await t.admin.from('garage_file_states').update({state:'active'}).eq('id',tailFile.id)).error)
+  const pending=`${t.userA}/jobs/${tailJob.id}/${crypto.randomUUID()}.pdf.source`;pendingPaths.push(pending)
+  assert.ifError((await t.a.storage.from('garage-receipts').upload(pending,Buffer.from('pending source'),{contentType:'application/pdf'})).error)
+  assert.equal((await t.a.from('garage_files').select('id',{count:'exact',head:true}).eq('bike_id',bike)).count,1001)
+  await cleanupOwnedFiles(account,bike,null,()=>t.admin)
+  assert.equal((await t.admin.storage.from('garage-receipts').list(`${t.userA}/jobs/${tailJob.id}`)).data?.length,0,'Pending unattached source beyond job page was removed')
+  assert.equal((await t.a.from('garage_files').select('id',{count:'exact',head:true}).eq('bike_id',bike)).count,0,'All attachment pages removed in one confirmation')
+  assert.ifError((await t.a.from('garage_bikes').delete().eq('id',bike)).error)
+  console.log('PASS: one bike cleanup drains 1,001 identities and visits 1,001 job prefixes including pending unattached source beyond cap')
   console.log('PASS: actual API 1,000 cap, complete built JSON/CSV with 1,001 jobs/files, owner scope, per-bike summaries/delete fallback, unlink/relink/history/year scope')
- } finally {
-  if(server){server.kill('SIGTERM');await new Promise<void>(resolve=>{if(server!.exitCode!==null)resolve();else server!.once('exit',()=>resolve())})}
-  if(before!==undefined){renameSync(excluded,live);assert.equal(lstatSync(live).ino,before);console.log('PASS: live environment restored unchanged')}
-  assert.ifError((await t.admin.from('garage_files').delete().in('bike_id',[bike,otherBike])).error)
-  assert.ifError((await t.admin.from('maintenance_jobs').delete().in('bike_id',[bike,otherBike])).error)
-  assert.ifError((await t.admin.from('garage_bikes').delete().in('id',[bike,otherBike])).error)
-  await t.cleanup()
+ } catch(error) {failed=true;throw error} finally {
+  await cleanupLocalFixtures([
+   async()=>{if(server){server.kill('SIGTERM');await new Promise<void>(resolve=>{if(server!.exitCode!==null)resolve();else server!.once('exit',()=>resolve())})}},
+   async()=>{if(before!==undefined){renameSync(excluded,live);assert.equal(lstatSync(live).ino,before);console.log('PASS: live environment restored unchanged')}},
+   ()=>t.admin.storage.from('garage-receipts').remove(pendingPaths),
+   ()=>t.admin.from('garage_files').delete().in('bike_id',[bike,otherBike]),
+   ()=>t.admin.from('maintenance_jobs').delete().in('bike_id',[bike,otherBike]),
+   ()=>t.admin.from('garage_bikes').delete().in('id',[bike,otherBike]),
+   ()=>t.cleanup(),
+  ]).catch(error=>{if(failed)console.error('Cleanup also failed:',error);else throw error})
  }
 }
 main().catch(error=>{console.error(error instanceof Error?error.message:'Export verification failed');process.exitCode=1})

@@ -1,20 +1,23 @@
 'use client'
-import {useEffect,useId,useRef,useState} from 'react'
+import {useEffect,useId,useRef,useState,useCallback} from 'react'
 import {createAuthBrowserClient} from '@/lib/supabase/auth-browser'
 import {Button} from '@/components/ui/button'
 import type {FileInput,PrivateFile} from '@/lib/maintenance/types'
 import {privateFileRequest,uploadPrivateFile} from '@/lib/maintenance/uploads'
-import {useGarageOwner} from '../PrivateGarage'
+import {useGarageOwner,useGarageReconciliation} from '../PrivateGarage'
+import {onGarageSignOut} from '@/lib/garageSession'
 const noFiles:PrivateFile[]=[]
 type Selected={file:File;input:FileInput;saved:boolean;cleanupPending?:boolean;error:string}
 export function ReceiptUpload({bikeId,jobId,onChanged,files=noFiles,disabled=false}:{bikeId:string;jobId:string;onChanged:()=>void;files?:PrivateFile[];disabled?:boolean}) {
- const linkGeneration=useRef(0);const revoked=useRef(false)
+ const linkGeneration=useRef(0);const revoked=useRef(false);const suspended=useRef(false)
  const owner=useGarageOwner();const inputId=useId();const [selected,setSelected]=useState<Selected[]>([]);const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [removing,setRemoving]=useState<string|null>(null);const pending=useRef(false)
+ useGarageReconciliation(useCallback(async()=>{if(!revoked.current)suspended.current=false},[]))
  useEffect(()=>{
-  revoked.current=false
+  revoked.current=false;suspended.current=false
   const revoke=()=>{revoked.current=true;linkGeneration.current++}
-  const {data:{subscription}}=createAuthBrowserClient().auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT' || (session && session.user.id!==owner))revoke()})
-  return ()=>{revoke();subscription.unsubscribe()}
+  const {data:{subscription}}=createAuthBrowserClient().auth.onAuthStateChange((event,session)=>{if(session && session.user.id!==owner)revoke();else if(event==='SIGNED_OUT'){suspended.current=true;linkGeneration.current++}})
+  const stopLogout=onGarageSignOut(revoke)
+  return ()=>{revoke();subscription.unsubscribe();stopLogout()}
  },[owner])
  function choose(files:FileList|null) {
   const next:Selected[]=Array.from(files??[]).map(file=>{
@@ -38,21 +41,21 @@ export function ReceiptUpload({bikeId,jobId,onChanged,files=noFiles,disabled=fal
   } finally {pending.current=false;setBusy(false)}
  }
  async function download(file:PrivateFile) {
-  if(revoked.current) return
+  if(revoked.current || suspended.current) return
   const current=++linkGeneration.current
   setError('')
   try {
    const result=await privateFileRequest('GET',file.id)
-   if(revoked.current || current!==linkGeneration.current) return
+   if(revoked.current || suspended.current || current!==linkGeneration.current) return
    if(!result.url) throw new Error('Download unavailable. Retry.')
    // Never inject receipt content. The signed URL sets attachment disposition.
    const link=document.createElement('a');link.href=result.url;link.download='';link.rel='noopener';link.click();link.removeAttribute('href')
-  } catch(error) {setError(error instanceof Error?error.message:'Download unavailable. Retry.')}
+  } catch(error) {if(!revoked.current && !suspended.current && current===linkGeneration.current)setError(error instanceof Error?error.message:'Download unavailable. Retry.')}
  }
  async function cleanupSource(file:PrivateFile) {
   if(pending.current || disabled) return
   pending.current=true;setBusy(true);setError('')
-  try {await privateFileRequest('POST',{fileId:file.id,cleanupSource:true});onChanged()}
+  try {await privateFileRequest('POST',{fileId:file.id,cleanupSource:true});setSelected(items=>items.map(item=>item.input.id===file.id?{...item,cleanupPending:false}:item));onChanged()}
   catch(error) {setError(error instanceof Error?error.message:'Source cleanup failed. Retry.');onChanged()}
   finally {pending.current=false;setBusy(false)}
  }

@@ -1,6 +1,6 @@
 # My Garage Accounts and Bike Collection Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Users can sign in and keep a private collection of individual motorcycles, including two of the same model.
 
@@ -71,7 +71,7 @@ export function importSelectedModels(account: AccountContext, modelIds: string[]
 
 **Interfaces:** `createAuthBrowserClient()` returns a typed Supabase browser client; `createAuthServerClient()` returns `Promise<SupabaseClient<Database>>`; `updateAccountSession(request: NextRequest)` returns `Promise<NextResponse>`. `getAccount()` validates with `auth.getUser()` and returns null on invalid/expired sessions. `isPrivatePath(pathname: string)` recognises `/garage`, `/account`, `/auth`, `/api/garage` and descendants.
 
-- [ ] Write failing redirect and cache tests. Create independent tests for signed-in, signed-out and refreshed-cookie responses. Keep every existing administrator test and await the now-async proxy. Add this concrete redirect test:
+- [x] Write failing redirect and cache tests. Create independent tests for signed-in, signed-out and refreshed-cookie responses. Keep every existing administrator test and await the now-async proxy. Add this concrete redirect test:
 
 ```ts
 import { expect, it } from 'vitest'
@@ -85,8 +85,8 @@ it('rejects external return destinations', () => {
 })
 ```
 
-- [ ] Run `npx vitest run src/lib/account.test.ts src/proxy.test.ts src/test/serviceWorkerPrivacy.test.ts`. Expect missing new utilities/tests to fail before implementation.
-- [ ] Run `npm install --save-exact @supabase/ssr@0.12.7 @supabase/supabase-js@2.114.0` and implement the separate clients using current [Supabase cookie client guidance](https://supabase.com/docs/guides/auth/server-side/creating-a-client?queryGroups=framework&framework=nextjs). Use `cookies().getAll()`/`setAll()` in the server adapter. Keep refreshed cookies/cache headers when redirecting. Add these proxy matchers alongside the existing administrator matcher:
+- [x] Run `npx vitest run src/lib/account.test.ts src/proxy.test.ts src/test/serviceWorkerPrivacy.test.ts`. Expect missing new utilities/tests to fail before implementation.
+- [x] Run `npm install --save-exact @supabase/ssr@0.12.7 @supabase/supabase-js@2.114.0` and implement the separate clients using current [Supabase cookie client guidance](https://supabase.com/docs/guides/auth/server-side/creating-a-client?queryGroups=framework&framework=nextjs). Use `cookies().getAll()`/`setAll()` in the server adapter. Keep refreshed cookies/cache headers when redirecting. Add these proxy matchers alongside the existing administrator matcher:
 
 ```ts
 export const config = {
@@ -94,7 +94,7 @@ export const config = {
 }
 ```
 
-- [ ] Implement email/password sign-up, sign-in, recovery and sign-out as Server Actions using the verified cookie client, never a service-role client. Create `AuthResult = {ok: true} | {ok: false; message: string}` and `signUp(email,password)`, `signIn(email,password)`, `sendRecovery(email)`, `setPassword(password)` and `signOut()`, all returning `Promise<AuthResult>`. Use the provider's configured password requirements with an initial minimum of eight characters in both form and local Auth configuration. Do not show whether an unknown email exists when requesting recovery. Invalid code links return an actionable account page; no token is logged.
+- [x] Implement email/password sign-up, sign-in, recovery and sign-out as Server Actions using the verified cookie client, never a service-role client. Create `AuthResult = {ok: true} | {ok: false; message: string}` and `signUp(email,password)`, `signIn(email,password)`, `sendRecovery(email)`, `setPassword(password)` and `signOut()`, all returning `Promise<AuthResult>`. Use the provider's configured password requirements with an initial minimum of eight characters in both form and local Auth configuration. Do not show whether an unknown email exists when requesting recovery. Invalid code links return an actionable account page; no token is logged.
 
 ```ts
 const { error } = await client.auth.signInWithPassword({ email, password })
@@ -108,7 +108,7 @@ const { error: callbackError } = await client.auth.exchangeCodeForSession(code)
 
 `siteOrigin` comes from `NEXT_PUBLIC_SITE_URL`, with the local origin configured explicitly; do not build email redirects from an untrusted request Host. Add that variable to the existing environment example. Recovery redirects to `/auth/callback?next=/account/reset-password`; protect the password form with `getAccount()`.
 
-- [ ] Put the private-path check before every service-worker cache strategy. Private requests pass directly to the network and never fall back to CacheStorage. Bump the cache version to discard old navigation copies. Add `Cache-Control: private, no-store` to private routes, avoid hourly revalidation for them, and clear private component state on sign-out. Keep the homepage public and cached; do not render account data into its server HTML.
+- [x] Put the private-path check before every service-worker cache strategy. Private requests pass directly to the network and never fall back to CacheStorage. Bump the cache version to discard old navigation copies. Add `Cache-Control: private, no-store` to private routes, avoid hourly revalidation for them, and clear private component state on sign-out. Keep the homepage public and cached; do not render account data into its server HTML.
 
 ```js
 // public/sw.js, before other fetch strategies; keep this list in sync with privatePaths tests.
@@ -119,8 +119,8 @@ if (PRIVATE_PATHS.some(p => url.pathname === p || url.pathname.startsWith(p + '/
 }
 ```
 
-- [ ] Exercise the actual worker script with a mocked `self`/`caches` and assert that an offline private navigation never calls `caches.match` or `cache.put`. Test both ordinary navigation and a Next.js page-prefetch request. Component tests cover wrong password, confirmation pending, failed recovery, expired link, session expiry while saving, and logout followed by a second account. Replace homepage copy with "Browse without an account. Sign in to save your garage." Keep unrelated page styling unchanged.
-- [ ] Run targeted tests, then the project checks from the umbrella plan. Commit `feat: add personal accounts and protect private page caches`.
+- [x] Exercise the actual worker script with a mocked `self`/`caches` and assert that an offline private navigation never calls `caches.match` or `cache.put`. Test both ordinary navigation and a Next.js page-prefetch request. Component tests cover wrong password, confirmation pending, failed recovery, expired link, session expiry while saving, and logout followed by a second account. Replace homepage copy with "Browse without an account. Sign in to save your garage." Keep unrelated page styling unchanged.
+- [x] Run targeted tests, then the project checks from the umbrella plan. Commit `feat: add personal accounts and protect private page caches`.
 
 ### Task 2: Private physical-bike records and tested database ownership
 
@@ -128,7 +128,7 @@ if (PRIVATE_PATHS.some(p => url.pathname === p || url.pathname.startsWith(p + '/
 
 **Interfaces:** Repository signatures in the file map. `loadGarageTestEnv()` returns `{url:string, anonKey:string, serviceKey:string}` and refuses every URL except `localhost`/`127.0.0.1`. It parses only `.env.garage.local` and reads `API_URL`, `ANON_KEY` and `SERVICE_ROLE_KEY`, never falling back to live `.env.local`. `createLocalTestClients()` returns two signed-in clients (`a`, `b`), a local setup client (`admin`), their user IDs (`userA`, `userB`), one setup catalogue model ID (`modelId`), and `cleanup():Promise<void>`; create users and that catalogue fixture only in this isolated test environment.
 
-- [ ] Write failing `parseBikeInput` tests for optional unknown mileage, zero mileage, negative/NaN values, valid custom make/model, empty make/model, unknown year, malformed UUID and lengths from the umbrella plan. Validate against a catalogue model's year range when it is linked. An unknown year can be stored, but is not eligible for a year-specific verified template.
+- [x] Write failing `parseBikeInput` tests for optional unknown mileage, zero mileage, negative/NaN values, valid custom make/model, empty make/model, unknown year, malformed UUID and lengths from the umbrella plan. Validate against a catalogue model's year range when it is linked. An unknown year can be stored, but is not eligible for a year-specific verified template.
 
 ```ts
 expect(parseBikeInput({ motorcycleId: null, nickname: '', make: 'Honda', model: 'Custom',
@@ -137,7 +137,7 @@ expect(() => parseBikeInput({ motorcycleId: null, nickname: '', make: 'Honda', m
   year: 2023, variant: '', market: '', registration: '', mileageKm: -1 })).toThrow()
 ```
 
-- [ ] Run the domain tests and confirm failure. Inspect `npx supabase init --help`/`start --help`; initialise the local config and start with `DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase start`. Capture `supabase status -o env` directly into the ignored `.env.garage.local`, set its permissions to 600, and never print the keys. Create a new migration with `npx supabase migration new garage_bikes`. Put the table and policies in the generated file:
+- [x] Run the domain tests and confirm failure. Inspect `npx supabase init --help`/`start --help`; initialise the local config and start with `DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase start`. Capture `supabase status -o env` directly into the ignored `.env.garage.local`, set its permissions to 600, and never print the keys. Create a new migration with `npx supabase migration new garage_bikes`. Put the table and policies in the generated file:
 
 ```sql
 create table public.garage_bikes (
@@ -163,8 +163,8 @@ create policy garage_bikes_owner on public.garage_bikes for all to authenticated
   with check ((select auth.uid()) = owner_id);
 ```
 
-- [ ] Implement repository functions using the authenticated client and explicit owner filters as well as policies. Derive owner ID from the verified account, never from form data. Resolve library images from `motorcycle_images` or catalogue `image_url`; match model/year and keep unknown/custom bikes on the placeholder. Use the two existing Honda slugs for their public reference routes, catalogue ID routes for other supported models, and null for unlisted models. Reuse stored UUID IDs for retryable adds. Archive is reversible; removal requires confirmation and is a distinct action.
-- [ ] Generate database types from the local stack while retaining the existing exported convenience aliases. Add this complete typed fixture factory in src/test/garageFixtures.ts, then implement two-user tests with real requests:
+- [x] Implement repository functions using the authenticated client and explicit owner filters as well as policies. Derive owner ID from the verified account, never from form data. Resolve library images from `motorcycle_images` or catalogue `image_url`; match model/year and keep unknown/custom bikes on the placeholder. Use the two existing Honda slugs for their public reference routes, catalogue ID routes for other supported models, and null for unlisted models. Reuse stored UUID IDs for retryable adds. Archive is reversible; removal requires confirmation and is a distinct action.
+- [x] Generate database types from the local stack while retaining the existing exported convenience aliases. Add this complete typed fixture factory in src/test/garageFixtures.ts, then implement two-user tests with real requests:
 
 ```ts
 import type { BikeView } from '@/lib/garageBikes'
@@ -191,7 +191,7 @@ try {
 ```
 
 Add anonymous read/write denial, second-user edit/delete denial, duplicate model creation, and failed validation tests. Do not confuse a zero-row response with a successful mutation. Regenerate types and run `npx tsx scripts/test-garage-access.ts` against local test variables only.
-- [ ] Run targeted unit tests and project checks; commit `feat: store private motorcycles independently of catalogue models`.
+- [x] Run targeted unit tests and project checks; commit `feat: store private motorcycles independently of catalogue models`.
 
 ### Task 3: Bike cards, details, navigation and explicit browser import
 
@@ -199,7 +199,7 @@ Add anonymous read/write denial, second-user edit/delete denial, duplicate model
 
 **Interfaces:** `GarageBikeCard({bike}: {bike:BikeView})`; `GarageCollection({initialBikes}: {initialBikes:BikeView[]})`; `BikeForm({initial,onSave}: {initial:BikeInput|null;onSave:(input:BikeInput,id:string)=>Promise<BikeView>})`; `BikeWorkspace({bike}: {bike:BikeView})`. Each form gets a stable generated ID before submission. `ImportGarage({selectedModelIds,onImport})` calls `importSelectedModels` only after the user chooses import.
 
-- [ ] Write failing component tests: two cards of the same model open different IDs; custom bike uses placeholder; unknown mileage says "Mileage not recorded"; add/edit errors retain values; archive appears under an explicit archived view; remove asks for confirmation; and signed-out access shows sign-in without changing public model pages.
+- [x] Write failing component tests: two cards of the same model open different IDs; custom bike uses placeholder; unknown mileage says "Mileage not recorded"; add/edit errors retain values; archive appears under an explicit archived view; remove asks for confirmation; and signed-out access shows sign-in without changing public model pages.
 
 ```tsx
 const bike: BikeView = { id:'one', motorcycleId:null, nickname:'Weekend bike', make:'Honda',
@@ -210,9 +210,9 @@ expect(screen.getByRole('link', {name:/Weekend bike/})).toHaveAttribute('href','
 expect(screen.getByText('Mileage not recorded')).toBeInTheDocument()
 ```
 
-- [ ] Run the new tests to confirm failure. Implement `/garage` and `/garage/[bikeId]` as dynamic server pages using `getAccount()` and owner-scoped repository calls. Render private client forms only beneath these pages. The card is a single accessible link; put Edit image later inside the bike page, not inside the clickable card.
-- [ ] Implement Overview/Maintenance/Bike details with the existing segmented-control and grouped-list patterns. At this stage Maintenance shows an honest empty state; stage 2 fills it. Add My Garage to the desktop navigation and mobile More menu without changing the five existing mobile tabs. Add a link from the existing homepage garage strip, while its cached server response remains public.
-- [ ] Implement explicit browser import. For each selected catalogue model, insert with `import_key = 'local-v1:' + modelId`, using the account/model pair to make retrying safe. Leave year, mileage and maintenance unknown. Do not erase localStorage or the experience preference. If already imported, return the existing record; ordinary Add bike has no import key and can create a second physical bike of that model. A missing catalogue ID is reported for that item without fabricating a model. Show a partial-import result and allow retry.
+- [x] Run the new tests to confirm failure. Implement `/garage` and `/garage/[bikeId]` as dynamic server pages using `getAccount()` and owner-scoped repository calls. Render private client forms only beneath these pages. The card is a single accessible link; put Edit image later inside the bike page, not inside the clickable card.
+- [x] Implement Overview/Maintenance/Bike details with the existing segmented-control and grouped-list patterns. At this stage Maintenance shows an honest empty state; stage 2 fills it. Add My Garage to the desktop navigation and mobile More menu without changing the five existing mobile tabs. Add a link from the existing homepage garage strip, while its cached server response remains public.
+- [x] Implement explicit browser import. For each selected catalogue model, insert with `import_key = 'local-v1:' + modelId`, using the account/model pair to make retrying safe. Leave year, mileage and maintenance unknown. Do not erase localStorage or the experience preference. If already imported, return the existing record; ordinary Add bike has no import key and can create a second physical bike of that model. A missing catalogue ID is reported for that item without fabricating a model. Show a partial-import result and allow retry.
 
 ```ts
 const {a,userA,modelId,cleanup} = await createLocalTestClients()
@@ -226,5 +226,7 @@ try {
 } finally { await cleanup() }
 ```
 
-- [ ] Repeat the import using real local clients and assert row count remains one. Run component tests for cancelling import and failure/retry; verify archived records are retained and model reference doesn't expose registration.
-- [ ] Run all stage tests and project checks. Commit `feat: add account garage cards and individual bike pages`. Stop for the stage review before starting the maintenance plan.
+- [x] Repeat the import using real local clients and assert row count remains one. Run component tests for cancelling import and failure/retry; verify archived records are retained and model reference doesn't expose registration.
+- [x] Run all stage tests and project checks. Commit `feat: add account garage cards and individual bike pages`. Stop for the stage review before starting the maintenance plan.
+
+Stage implementation and task/stage reviews completed locally. The nine accepted deviations and costs are in [garage-decisions.md](../../garage-decisions.md). Final scoped review, native browser/paper checks and hosted release remain separately pending in [garage-acceptance.md](../../garage-acceptance.md).

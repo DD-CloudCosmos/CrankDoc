@@ -72,3 +72,18 @@ it('reloads a restored archived view when fresh route props only contain active 
   expect(screen.getByRole('radio', { name: 'Archived' })).toHaveAttribute('aria-checked', 'true')
   expect(screen.getByText('No archived bikes.')).toBeInTheDocument()
 })
+
+it('keeps a reopened Add draft and does not insert a late active save into Archived',async()=>{
+ let finish!:(value:BikeView)=>void
+ actions.saveBike.mockImplementation(()=>new Promise(resolve=>{finish=resolve}));actions.loadBikes.mockResolvedValue([])
+ render(<GarageCollection initialBikes={[]} />)
+ fireEvent.click(screen.getByRole('button',{name:'Add bike'}))
+ fireEvent.change(screen.getByLabelText('Make'),{target:{value:'Honda'}});fireEvent.change(screen.getByLabelText('Model'),{target:{value:'First'}})
+ fireEvent.click(screen.getByRole('button',{name:'Save bike'}))
+ fireEvent.click(screen.getByRole('button',{name:'Cancel adding'}));fireEvent.click(screen.getByRole('button',{name:'Add bike'}))
+ fireEvent.change(screen.getByLabelText('Nickname'),{target:{value:'Second draft'}})
+ fireEvent.click(screen.getByRole('radio',{name:'Archived'}))
+ await act(async()=>finish(bike))
+ expect(screen.getByLabelText('Nickname')).toHaveValue('Second draft')
+ expect(screen.queryByText('Weekend bike')).not.toBeInTheDocument()
+})

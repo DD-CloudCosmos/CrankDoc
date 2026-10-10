@@ -125,9 +125,12 @@ async function tidyFile(account:AccountContext,row:Tables<'garage_files'>,writer
  const update=await writer.from('garage_files').update({source_pending:false}).eq('owner_id',account.userId).eq('id',row.id)
  if(update.error) throw new FileError(500,'File saved. Source cleanup needs retry.')
  if(row.kind==='bike_photo') {
-  const old=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',row.bike_id).eq('kind','bike_photo').eq('cleanup_pending',true)
-  if(old.error) throw new FileError(500,'Photo saved. Previous cleanup needs retry.')
-  for(const obsolete of old.data??[]) await deleteStoredRow(account,obsolete,writer)
+  while(true) {
+   const old=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',row.bike_id).eq('kind','bike_photo').eq('cleanup_pending',true).order('id').limit(1000)
+   if(old.error) throw new FileError(500,'Photo saved. Previous cleanup needs retry.')
+   if(!old.data?.length)break
+   for(const obsolete of old.data)await deleteStoredRow(account,obsolete,writer)
+  }
  }
 }
 // Only this transition and cleanup use a server writer. Owner checks precede its creation.
@@ -201,13 +204,15 @@ export async function removePrivateFile(account:AccountContext,fileId:string,cre
 export async function retryBikePhotoCleanup(account:AccountContext,bikeId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
  try {
   await ownedTarget(account,{id:bikeId,bikeId,jobId:null,kind:'bike_photo',path:'',filename:''})
-  const files=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo')
-  if(files.error) throw new FileError(500,'Could not load cleanup references.')
+  const files=await listPrivateFiles(account,bikeId)
   const writer=createWriter()
-  for(const file of files.data??[]) if(!file.cleanup_pending && file.source_pending) await tidyFile(account,file,writer)
-  const states=await account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo').eq('state','removing')
-  if(states.error) throw new FileError(500,'Could not load cleanup references.')
-  for(const state of states.data??[]) await deleteStoredRow(account,state,writer)
+  for(const file of files) if(file.kind==='bike_photo' && !file.cleanupPending && file.sourcePending) {const row=await fileRow(account,file.id);if(row)await tidyFile(account,row,writer)}
+  while(true) {
+   const states=await account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo').eq('state','removing').order('id').limit(1000)
+   if(states.error) throw new FileError(500,'Could not load cleanup references.')
+   if(!states.data?.length)break
+   for(const state of states.data)await deleteStoredRow(account,state,writer)
+  }
   return {ok:true,value:null}
  } catch(error) {return savedFailure(error)}
 }
@@ -232,17 +237,16 @@ export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,job
  const writer=createWriter()
  const {error}=await writer.rpc('begin_garage_cleanup',{p_owner_id:account.userId,p_bike_id:bikeId,p_job_id:jobId??undefined})
  if(error) throw rpcError(error)
- let query=account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('state','removing')
- if(jobId) query=query.eq('job_id',jobId)
- const states=await query
- if(states.error) throw new FileError(500,'Could not load cleanup references. Retry removal.')
  const prefixes:{bucket:string;path:string}[]=[]
  if(!jobId) prefixes.push({bucket:'garage-photos',path:`${account.userId}/bikes/${bikeId}`})
- let jobIds=[jobId].filter((id):id is string=>id!==null)
+ const jobIds=[jobId].filter((id):id is string=>id!==null)
  if(!jobId) {
-  const jobs=await account.client.from('maintenance_jobs').select('id').eq('owner_id',account.userId).eq('bike_id',bikeId)
-  if(jobs.error) throw new FileError(500,'Could not load cleanup references. Retry removal.')
-  jobIds=(jobs.data??[]).map(job=>job.id)
+  while(true) {
+   const jobs=await account.client.from('maintenance_jobs').select('id').eq('owner_id',account.userId).eq('bike_id',bikeId).order('id').range(jobIds.length,jobIds.length+999)
+   if(jobs.error) throw new FileError(500,'Could not load cleanup references. Retry removal.')
+   if(!jobs.data?.length)break
+   jobIds.push(...jobs.data.map(job=>job.id))
+  }
  }
  for(const id of jobIds) prefixes.push({bucket:'garage-receipts',path:`${account.userId}/jobs/${id}`})
  for(const prefix of prefixes) {
@@ -254,7 +258,15 @@ export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,job
    if(removed.error) throw new FileError(500,'File cleanup failed. The record and file references are kept. Retry removal.')
   }
  }
- for(const state of states.data??[]) await deleteStoredRow(account,state,writer)
+ // Each successful removal changes its state: drain the first page, without offsets.
+ while(true) {
+  let query=account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('state','removing').order('id').limit(1000)
+  if(jobId)query=query.eq('job_id',jobId)
+  const states=await query
+  if(states.error)throw new FileError(500,'Could not load cleanup references. Retry removal.')
+  if(!states.data?.length)break
+  for(const state of states.data)await deleteStoredRow(account,state,writer)
+ }
 }
 export async function retryReceiptSourceCleanup(account:AccountContext,fileId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
  try {

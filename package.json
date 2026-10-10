@@ -21,7 +21,8 @@
     "seed:tech-docs": "node scripts/seed-tech-docs.js",
     "seed:glossary": "node scripts/import-glossary.js",
     "seed:recalls": "node scripts/import-recalls.js",
-    "seed:all": "npm run seed:motorcycles && npm run seed:dtc && npm run seed:trees && npm run seed:intervals && npm run seed:tech-docs && npm run seed:glossary && npm run seed:recalls"
+    "seed:all": "npm run seed:motorcycles && npm run seed:dtc && npm run seed:trees && npm run seed:intervals && npm run seed:tech-docs && npm run seed:glossary && npm run seed:recalls",
+    "check:runtime": "node scripts/check-node-runtime.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.51",
@@ -67,5 +68,8 @@
     "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=22.22.1"
   }
 }

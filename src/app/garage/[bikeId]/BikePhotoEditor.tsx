@@ -1,41 +1,52 @@
 'use client'
-import {useEffect,useRef,useState,useId} from 'react'
+import {useEffect,useRef,useState,useId,useCallback} from 'react'
 import {Button} from '@/components/ui/button'
 import {BikeThumb} from '@/components/BikeThumb'
 import type {BikeView} from '@/lib/garageBikes'
 import type {FileInput,PrivateFile} from '@/lib/maintenance/types'
 import {privateFileRequest,uploadPrivateFile} from '@/lib/maintenance/uploads'
 import {createAuthBrowserClient} from '@/lib/supabase/auth-browser'
-import {useGarageOwner} from '../PrivateGarage'
+import {useGarageOwner,useGarageReconciliation} from '../PrivateGarage'
+import {onGarageSignOut} from '@/lib/garageSession'
 
 /** Private photos use a plain image, bypassing the shared Next image cache. */
 export function PrivateBikePhoto({bike,className}:{bike:BikeView;className?:string}) {
  const owner=useGarageOwner()
  const [signed,setSigned]=useState<{path:string;url:string}|null>(null)
  const [error,setError]=useState('')
+ const retry=useRef<()=>Promise<void>>(async()=>{})
+ const renew=useRef<()=>Promise<void>>(async()=>{})
+ useGarageReconciliation(useCallback(async()=>{await renew.current()},[]))
  useEffect(()=>{
   if(!bike.photoPath) return
   const path=bike.photoPath
   const fileId=path.split('/').pop()!.replace(/\.webp$/,'')
-  let active=true;let timer:ReturnType<typeof setTimeout>|undefined;let generation=0
+  let active=true;let revoked=false;let suspended=false;let timer:ReturnType<typeof setTimeout>|undefined;let generation=0;let expiresAt=0
   async function refresh() {
+   if(!active || revoked || suspended)return
+   clearTimeout(timer)
    const current=++generation
-   setSigned(null)
+   if(Date.now()>=expiresAt)setSigned(null)
    try {
     const result=await privateFileRequest('GET',fileId)
-    if(active && current===generation && result.url) {setSigned({path,url:result.url});setError('');timer=setTimeout(()=>void refresh(),(result.expiresIn??60)*1000)}
-   } catch {if(active && current===generation) setError('Photo unavailable. Refresh to retry loading the image.')}
+    if(!result.url)throw new Error('Missing photo URL')
+    if(active && !revoked && !suspended && current===generation) {expiresAt=Date.now()+(result.expiresIn??60)*1000;setSigned({path,url:result.url});setError('');timer=setTimeout(()=>void refresh(),(result.expiresIn??60)*1000)}
+   } catch {if(active && !revoked && !suspended && current===generation) {setError('Photo unavailable. Retry loading the image.');timer=setTimeout(()=>void refresh(),expiresAt>Date.now()?Math.min(15000,expiresAt-Date.now()):15000)}}
   }
+  const suspend=()=>{suspended=true;generation++;clearTimeout(timer);setSigned(null);setError('')}
+  const revoke=()=>{revoked=true;suspend()}
+  retry.current=refresh
+  renew.current=async()=>{if(!revoked && active){suspended=false;await refresh()}}
   void refresh()
-  const client=createAuthBrowserClient()
-  const {data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{
-   if(event==='SIGNED_OUT' || (session && session.user.id!==owner)) {active=false;generation++;clearTimeout(timer);setSigned(null)}
+  const {data:{subscription}}=createAuthBrowserClient().auth.onAuthStateChange((event,session)=>{
+   if(session && session.user.id!==owner)revoke()
+   else if(event==='SIGNED_OUT')suspend()
   })
-  const renew=()=>{clearTimeout(timer);if(active) void refresh()}
-  window.addEventListener('focus',renew)
-  return ()=>{active=false;generation++;clearTimeout(timer);subscription.unsubscribe();window.removeEventListener('focus',renew)}
+  const stopLogout=onGarageSignOut(revoke)
+  return ()=>{active=false;revoke();subscription.unsubscribe();stopLogout();renew.current=async()=>{}}
+
  },[bike.photoPath,owner])
- return <div><BikeThumb imageUrl={bike.photoPath?(signed?.path===bike.photoPath?signed.url:null):bike.libraryImageUrl} alt={`${bike.make} ${bike.model}`} className={className} />{bike.photoPath && error && <p role="status">{error}</p>}</div>
+ return <div><BikeThumb imageUrl={bike.photoPath?(signed?.path===bike.photoPath?signed.url:null):bike.libraryImageUrl} alt={`${bike.make} ${bike.model}`} className={className} />{bike.photoPath && error && <p role="status">{error}<Button variant="outline" type="button" onClick={()=>void retry.current()}>Retry photo</Button></p>}</div>
 }
 export function BikePhotoEditor({bike,files=[],onChanged,disabled=false}:{bike:BikeView;files?:PrivateFile[];onChanged:()=>void;disabled?:boolean}) {
  const owner=useGarageOwner();const inputId=useId()
@@ -68,7 +79,7 @@ export function BikePhotoEditor({bike,files=[],onChanged,disabled=false}:{bike:B
  }
  async function retryCleanup() {
   if(!needsCleanup || pending.current) return
-  pending.current=true;setBusy(true)
+  pending.current=true;setBusy(true);setError('')
   try {const result=await privateFileRequest('POST',{bikeId:bike.id,cleanup:true});if(!result.cleanupPending)setCleanup(false);onChanged()}
   catch(error) {setError(error instanceof Error?error.message:'Cleanup needs another retry.')}
   finally {pending.current=false;setBusy(false)}

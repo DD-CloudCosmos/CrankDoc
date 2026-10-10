@@ -68,7 +68,10 @@ export async function addBike(account: AccountContext, input: BikeInput, id: str
 
 export async function editBike(account: AccountContext, id: string, input: BikeInput): Promise<BikeView> {
   const values = await fields(account, input)
-  const { data, error } = await account.client.from('garage_bikes').update(values).eq('owner_id', account.userId).eq('id', requireBikeId(id)).select('*').single()
+  // Omit untouched mileage so concurrent job transactions keep their latest value.
+  const { mileage_km, ...otherValues } = values
+  const update = input.mileageEdited === false ? otherValues : { ...otherValues, mileage_km }
+  const { data, error } = await account.client.from('garage_bikes').update(update).eq('owner_id', account.userId).eq('id', requireBikeId(id)).select('*').single()
   if (error || !data) throw new Error('Bike not found or could not save')
   return view(account, data)
 }

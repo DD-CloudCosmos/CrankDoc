@@ -6,7 +6,7 @@ import { SegmentedControl } from '@/components/ui/segmented-control'
 import type { BikeView } from '@/lib/garageBikes'
 import type { JobDraft, JobView, SavedResult } from '@/lib/maintenance/types'
 import { toKilometres } from '@/lib/maintenance/distance'
-import { parseCost, parseJobDetails, type JobDetails } from '@/lib/maintenance/validation'
+import { isQuickWork, parseCost, parseJobDetails, type JobDetails } from '@/lib/maintenance/validation'
 
 import { CarryOverPicker } from './CarryOverPicker'
 import type { CarrySelection } from '@/lib/maintenance/carryover'
@@ -36,8 +36,8 @@ export function QuickJobForm({bike,onSave,onStart,onReloadPrevious,previous=null
   }} />
 }
 export type JobDetailsFormDraft = {input:Fields;unit:'km'|'miles';expanded:boolean}
-/** Corrections change details only; task state and completion facts remain intact. */
-export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraftChange,extra,onReloadPrevious}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void;draft?:JobDetailsFormDraft;onDraftChange?:(draft:JobDetailsFormDraft)=>void;extra?:ReactNode;onReloadPrevious?:()=>Promise<void>}) {
+/** Quick work also corrects its sole task label; state and completion facts stay intact. */
+export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraftChange,extra,onReloadPrevious,onReviewSaved,onReloadSaved}:{job?:JobView;onSave:(details:JobDetails)=>Promise<SavedResult<JobView>>;disabled?:boolean;onCancel?:()=>void;draft?:JobDetailsFormDraft;onDraftChange?:(draft:JobDetailsFormDraft)=>void;extra?:ReactNode;onReloadPrevious?:()=>Promise<void>;onReviewSaved?:(job:JobView)=>void;onReloadSaved?:()=>Promise<JobView>}) {
   const [localInput,setInput]=useState(()=>fields(job))
   const [localUnit,setUnit]=useState<'km'|'miles'>('km')
   const [localExpanded,setExpanded]=useState(false)
@@ -48,6 +48,9 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraft
   const [reloading,setReloading]=useState(false)
   const [error,setError]=useState('')
   const [saved,setSaved]=useState(false)
+  const [conflict,setConflict]=useState<JobView|null>(null)
+  const [reviewed,setReviewed]=useState<JobView|null>(null)
+  const [fieldErrors,setFieldErrors]=useState<Partial<Record<keyof Fields,string>>>({})
   const pending=useRef(false)
   const prepared=useRef<JobDetails | null>(null)
   const prefix=job ? `edit-${job.id}` : 'quick-job'
@@ -57,7 +60,7 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraft
     pending.current=true;setBusy(true);setError('');setSaved(false)
     try {
       const result=await onSave(details)
-      if(!result.ok) {setError(result.message);return}
+      if(!result.ok) {setError(result.message);if(result.error==='conflict' && result.current)setConflict(result.current);return}
       setConfirm(false);setSaved(true)
       if(!job) {setInput(fields());setUnit('km')}
     } catch(error) {setError(error instanceof Error ? error.message : 'Could not save. Try again.')}
@@ -70,26 +73,43 @@ export function JobDetailsForm({job,onSave,disabled=false,onCancel,draft,onDraft
     catch(error) {setError(error instanceof Error?error.message:'Could not reload the previous activity. Try again.')}
     finally {pending.current=false;setBusy(false);setReloading(false)}
   }
+  async function reviewSaved() {
+    if(pending.current || !conflict || !onReviewSaved) return
+    pending.current=true;setBusy(true)
+    try {const current=onReloadSaved?await onReloadSaved():conflict;onReviewSaved(current);setReviewed(current);setConflict(null);setConfirm(false);setError('')}
+    catch(error) {setError(error instanceof Error?error.message:'Could not load the saved version. Retry.')}
+    finally {pending.current=false;setBusy(false)}
+  }
   function submit(event:FormEvent) {
     event.preventDefault()
     if(pending.current || disabled) return
+    const invalid:Partial<Record<keyof Fields,string>>={}
+    const base={title:'Work',date:'2026-01-01',mileageKm:0,notes:'',parts:'',performer:'',costMinor:null,currency:null}
+    try {parseJobDetails({...base,date:input.date})} catch {invalid.date='Enter a valid job date.'}
+    try {if(!input.mileage.trim())throw new Error();parseJobDetails({...base,mileageKm:toKilometres(Number(input.mileage),unit)})} catch {invalid.mileage='Enter a valid job mileage.'}
+    try {parseJobDetails({...base,title:input.title})} catch {invalid.title='Enter work or a title, at most 160 characters.'}
+    try {parseCost(input.cost,input.currency)} catch {invalid.cost='Enter a cost with at most two decimal places.'}
+    setFieldErrors(invalid)
+    if(Object.keys(invalid).length) {setError('Check the highlighted fields.');if(invalid.cost)update({input,unit,expanded:true});return}
     try {
-      if(input.mileage.trim()==='') throw new Error('Enter the job mileage.')
       const details=parseJobDetails({title:input.title,date:input.date,mileageKm:toKilometres(Number(input.mileage),unit),notes:input.notes,parts:input.parts,performer:input.performer,...parseCost(input.cost,input.currency)})
       if(job) {prepared.current=details;setConfirm(true);setError('')} else void persist(details)
     } catch {setError('Check the date, mileage, work and cost. Cost needs at most two decimal places.')}
   }
   function field(key:keyof Fields,label:string,required=false,type='text',maxLength?:number) {
-    return <div className="space-y-2"><label htmlFor={`${prefix}-${key}`}>{label}</label><Input id={`${prefix}-${key}`} className="min-h-11" type={type} required={required} maxLength={maxLength} value={input[key]} onChange={event=>change(key,event.target.value)} /></div>
+    return <div className="space-y-2"><label htmlFor={`${prefix}-${key}`}>{label}</label><Input id={`${prefix}-${key}`} className="min-h-11" type={type} required={required} maxLength={maxLength} aria-invalid={Boolean(fieldErrors[key])} aria-describedby={fieldErrors[key]?`${prefix}-${key}-error`:undefined} value={input[key]} onChange={event=>change(key,event.target.value)} />{fieldErrors[key] && <p id={`${prefix}-${key}-error`} role="alert">{fieldErrors[key]}</p>}</div>
   }
   return <form onSubmit={submit} className="space-y-4"><fieldset disabled={busy || disabled} className="space-y-4">
     {field('date','Job date',true,'date')}
     {field('mileage','Job mileage',true)}
     <SegmentedControl aria-label="Job mileage unit" className="[&_button]:min-h-11 [&_button]:whitespace-nowrap" value={unit} onChange={next=>{if(next===unit)return;update({input:{...input,mileage:input.mileage.trim()!=='' && Number.isFinite(Number(input.mileage))?String(Number(input.mileage)*(next==='miles'?1/1.609344:1.609344)):input.mileage},unit:next,expanded});setSaved(false);setConfirm(false)}} options={[{value:'km',label:'Kilometres'},{value:'miles',label:'Miles'}]} />
-    {field('title','Work performed',true,'text',160)}
+    {field('title',!job || isQuickWork(job)?'Work performed':'Job title',true,'text',160)}
+    {job && !isQuickWork(job) && <p>Changing the job title keeps the recorded task definitions.</p>}
     <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" aria-expanded={expanded} onClick={()=>update({input,unit,expanded:!expanded})}>Optional details</Button>
     {expanded && <div className="space-y-4 rounded-[14px] bg-input p-4">{(['notes','parts'] as const).map(key=><div key={key} className="space-y-2"><label htmlFor={`${prefix}-${key}`}>{key==='notes'?'Notes':'Parts'}</label><textarea id={`${prefix}-${key}`} className="min-h-24 w-full rounded-[10px] bg-background p-3" maxLength={4000} value={input[key]} onChange={event=>change(key,event.target.value)} /></div>)}{field('performer','Performed by',false,'text',120)}{field('cost','Cost')}<label htmlFor={`${prefix}-currency`}>Currency</label><select id={`${prefix}-currency`} className="min-h-11 rounded-[10px] bg-background px-3" value={input.currency} onChange={event=>change('currency',event.target.value)}>{['EUR','GBP','USD'].map(currency=><option key={currency}>{currency}</option>)}</select><p className="text-muted-foreground">Cost is optional. Leave blank if unknown; zero means no cost.</p></div>}
     {extra}
+    {reviewed && <div role="status"><p>Saved work: {reviewed.title}</p><p>Saved date: {reviewed.date}; mileage: {reviewed.mileageKm} km</p><p>Saved notes: {reviewed.notes || 'None'}</p><p>Saved parts: {reviewed.parts || 'None'}; performer: {reviewed.performer || 'None'}</p><p>Saved cost: {reviewed.costMinor===null?'Unknown':`${fields(reviewed).cost} ${reviewed.currency}`}</p><p>Your draft is retained. Review it before confirming another correction.</p></div>}
+    {conflict && onReviewSaved && <Button type="button" variant="outline" onClick={()=>void reviewSaved()}>Review saved version</Button>}
     {error && <><p role="alert">{error}</p>{onReloadPrevious && <Button type="button" variant="outline" className="min-h-11 whitespace-nowrap" onClick={()=>void reloadPrevious()}>Reload previous activity</Button>}</>}{saved && <p role="status">Entry saved.</p>}
     <div className="flex flex-wrap gap-3"><Button className="min-h-11 whitespace-nowrap" type="submit" disabled={busy || disabled}>{reloading?'Refreshing…':busy?'Saving…':job?'Save correction':'Save entry'}</Button>{onCancel && <Button variant="outline" type="button" className="min-h-11 whitespace-nowrap" onClick={onCancel}>Cancel edit</Button>}</div>
     {confirm && <div role="group" aria-label="Confirm record correction" className="space-y-3 rounded-[14px] bg-input p-4"><p>Save these corrections to this record? Task states and completion dates stay as recorded.</p><Button className="min-h-11 whitespace-nowrap" type="button" onClick={()=>prepared.current && void persist(prepared.current)}>Confirm correction</Button><Button className="min-h-11 whitespace-nowrap" variant="outline" type="button" onClick={()=>setConfirm(false)}>Keep editing</Button></div>}
