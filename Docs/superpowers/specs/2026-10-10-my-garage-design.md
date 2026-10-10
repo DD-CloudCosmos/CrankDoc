@@ -76,6 +76,8 @@ Tablet use provides the interactive checklist. Printing does not mark anything c
 
 The existing garage stores selected catalogue model IDs in the browser. Account-backed motorcycle records and private maintenance records are new work. Keep catalogue models and personal motorcycles separate. Link jobs to physical bikes, task results to jobs, and private attachments to jobs. Link template versions to model coverage or to the owner of a custom template.
 
+OAuth-based sign-in through an external provider is a required future capability. Provider selection and implementation are outside this workload. Institutional single sign-on (SSO) is an option to assess with the college licensing work, not a committed requirement. Keep bike and maintenance ownership linked to a stable account identifier so future sign-in methods can use the same account and history.
+
 Personal users can access only their own motorcycles, jobs and attachments. Receipt links must not be public. The college licensing direction remains recorded, but organisation membership, shared workshops and instructor approval are separate implementation work. Do not expose personal records to a college by default.
 
 Owner-uploaded bike photographs are private account content linked to the physical bike. They are not added to the public model library. Validate image uploads, remove embedded location metadata from the stored display image, and show upload failures without changing the saved image. Store the personal image override separately from the model's library image so restoring the default is explicit and reliable.
