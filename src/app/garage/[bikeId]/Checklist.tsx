@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useChecklist } from '@/hooks/useChecklist'
@@ -18,6 +19,8 @@ export function Checklist({initialJob}:{initialJob:JobView}) {
   try {const result=await complete(date,Number(mileage));if(result.ok)setSummary(false);else setFormError(result.message)}catch(error){setFormError(error instanceof Error?error.message:'Could not complete the job.')}
  }
  return <div className="space-y-5">
+  <Link prefetch={false} className="inline-block min-h-11 py-3 text-link" href={`/garage/${job.bikeId}/jobs/${job.id}/print`}>Print saved checklist</Link>
+  <p className="text-muted-foreground">Printing uses saved progress. Save pending changes before opening the sheet.</p>
   <h1 className="break-words text-[34px] font-semibold">{job.title}</h1>
   <p>{job.date} · {job.mileageKm.toLocaleString()} km</p>
   <p>{job.tasks.filter(task=>task.state==='done').length} of {job.tasks.length} Done</p>
