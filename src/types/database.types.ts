@@ -401,6 +401,37 @@ export type Database = {
                     }
                 ];
             };
+            "garage_file_states": {
+                Row: {
+                    "bike_id": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "state": string;
+                };
+                Insert: {
+                    "bike_id": string;
+                    "id": string;
+                    "job_id"?: string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "state": string;
+                };
+                Update: {
+                    "bike_id"?: string;
+                    "id"?: string;
+                    "job_id"?: string | null;
+                    "kind"?: string;
+                    "owner_id"?: string;
+                    "path"?: string;
+                    "state"?: string;
+                };
+                Relationships: [
+                ];
+            };
             "garage_files": {
                 Row: {
                     "bike_id": string;
@@ -906,10 +937,56 @@ export type Database = {
                     isOneToOne: true;
                     isSetofReturn: false;
                 };
+            } | {
+                Args: {
+                    "p_input": Json;
+                    "p_owner_id": string;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "cleanup_pending": boolean;
+                    "created_at": string;
+                    "filename": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending": boolean;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "garage_files";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
             };
             "begin_file_removal": {
                 Args: {
                     "p_file_id": string;
+                };
+                Returns: {
+                    "bike_id": string;
+                    "cleanup_pending": boolean;
+                    "created_at": string;
+                    "filename": string;
+                    "id": string;
+                    "job_id": string | null;
+                    "kind": string;
+                    "owner_id": string;
+                    "path": string;
+                    "source_pending": boolean;
+                };
+                SetofOptions: {
+                    from: "*";
+                    to: "garage_files";
+                    isOneToOne: true;
+                    isSetofReturn: false;
+                };
+            } | {
+                Args: {
+                    "p_file_id": string;
+                    "p_owner_id": string;
                 };
                 Returns: {
                     "bike_id": string;
@@ -936,6 +1013,20 @@ export type Database = {
                     "p_job_id"?: string;
                 };
                 Returns: boolean;
+            } | {
+                Args: {
+                    "p_bike_id": string;
+                    "p_job_id"?: string;
+                    "p_owner_id": string;
+                };
+                Returns: boolean;
+            };
+            "begin_garage_finalisation": {
+                Args: {
+                    "p_input": Json;
+                    "p_owner_id": string;
+                };
+                Returns: string;
             };
             "create_quick_job": {
                 Args: {
@@ -1007,12 +1098,27 @@ export type Database = {
                     isSetofReturn: false;
                 };
             };
+            "finish_garage_file_removal": {
+                Args: {
+                    "p_file_id": string;
+                    "p_owner_id": string;
+                };
+                Returns: undefined;
+            };
             "garage_upload_allowed": {
                 Args: {
                     "p_bucket": string;
                     "p_name": string;
                 };
                 Returns: boolean;
+            };
+            "lock_garage_file_target": {
+                Args: {
+                    "p_bike_id": string;
+                    "p_job_id": string;
+                    "p_owner_id": string;
+                };
+                Returns: undefined;
             };
             "maintenance_details_valid": {
                 Args: {
@@ -1054,9 +1160,22 @@ export type Database = {
                     "similarity": number;
                 }[];
             };
+            "release_garage_finalisation": {
+                Args: {
+                    "p_file_id": string;
+                    "p_owner_id": string;
+                };
+                Returns: undefined;
+            };
             "restore_garage_image": {
                 Args: {
                     "p_bike_id": string;
+                };
+                Returns: boolean;
+            } | {
+                Args: {
+                    "p_bike_id": string;
+                    "p_owner_id": string;
                 };
                 Returns: boolean;
             };

@@ -1,9 +1,14 @@
 import sharp from 'sharp'
+import {Worker} from 'node:worker_threads'
+import {createRequire} from 'node:module'
+import type {SupabaseClient} from '@supabase/supabase-js'
+import {createServiceClient} from '@/lib/supabase/server'
 import type { AccountContext } from '@/lib/account'
-import type { Json, Tables } from '@/types/database.types'
+import type { Database, Json, Tables } from '@/types/database.types'
 import type { FileInput, PrivateFile, SavedResult } from './types'
 import { requireJobId } from './validation'
 
+type FileWriter=()=>SupabaseClient<Database>
 const maxBytes=10*1024*1024
 export class FileError extends Error {
  constructor(public status:number,message:string) {super(message)}
@@ -34,12 +39,30 @@ export async function validateReceipt(buffer:Buffer,extension:string):Promise<st
  limit(buffer)
  if(extension==='pdf') {
   if(!/^%PDF-1\.[0-7]|^%PDF-2\.0/.test(buffer.subarray(0,8).toString('ascii')) || !/%%EOF\s*$/.test(buffer.subarray(-1024).toString('ascii'))) throw new FileError(415,'The receipt is not a PDF.')
+  await structuralPdf(buffer)
   return 'application/pdf'
  }
  const {image,format}=await decodedImage(buffer)
  if(({jpg:'jpeg',png:'png',webp:'webp'} as Record<string,string>)[extension]!==format) throw new FileError(415,'The receipt contents do not match its type.')
  try {await image.stats()} catch {throw new FileError(415,'The receipt image is corrupt.')}
  return `image/${format}`
+}
+async function structuralPdf(buffer:Buffer):Promise<void> {
+ const modulePath=createRequire(import.meta.url).resolve('pdf-lib')
+ await new Promise<void>((resolve,reject)=>{
+  const worker=new Worker(`
+   const {parentPort,workerData}=require('node:worker_threads');
+   const {PDFDocument}=require(workerData.modulePath);
+   PDFDocument.load(workerData.bytes,{ignoreEncryption:false,throwOnInvalidObject:true,updateMetadata:false}).then(pdf=>{
+    if(pdf.getPageCount()<1) throw new Error('Missing pages');
+    for(const page of pdf.getPages()) {const size=page.getSize();if(!Number.isFinite(size.width)||!Number.isFinite(size.height)||size.width<=0||size.height<=0)throw new Error('Invalid page');}
+    parentPort.postMessage(true);
+   }).catch(()=>parentPort.postMessage(false));
+  `,{eval:true,workerData:{modulePath,bytes:new Uint8Array(buffer)},resourceLimits:{maxOldGenerationSizeMb:128,maxYoungGenerationSizeMb:16}})
+  const finish=(valid:boolean)=>{clearTimeout(timer);void worker.terminate();if(valid)resolve();else reject(new FileError(415,'The PDF is corrupt, encrypted or too complex.'))}
+  const timer=setTimeout(()=>finish(false),5000)
+  worker.once('message',finish);worker.once('error',()=>finish(false));worker.once('exit',code=>{if(code!==0)finish(false)})
+ })
 }
 export function parseFileInput(value:unknown,userId:string):FileInput {
  if(!value || typeof value!=='object' || Array.isArray(value)) throw new FileError(400,'Invalid file details.')
@@ -50,7 +73,7 @@ export function parseFileInput(value:unknown,userId:string):FileInput {
  const photo=input.kind==='bike_photo'
  if(photo ? input.jobId!==null : input.jobId===null) throw new FileError(400,'Invalid file target.')
  const expected=photo?`${userId}/bikes/${input.bikeId}/${input.id}.source`:`${userId}/jobs/${input.jobId}/${input.id}`
- if(photo ? input.path!==expected : !['jpg','png','webp','pdf'].some(ext=>input.path===`${expected}.${ext}`)) throw new FileError(400,'Invalid upload path.')
+ if(photo ? input.path!==expected : !['jpg','png','webp','pdf'].some(ext=>input.path===`${expected}.${ext}.source`)) throw new FileError(400,'Invalid upload path.')
  return input as FileInput
 }
 async function ownedTarget(account:AccountContext,input:FileInput) {
@@ -86,56 +109,72 @@ async function fileRow(account:AccountContext,id:string) {
  if(error) throw new FileError(500,'Could not load files.')
  return data
 }
-async function deleteStoredRow(account:AccountContext,row:Tables<'garage_files'>) {
- const paths=[row.path]
- if(row.kind==='bike_photo') paths.push(row.path.replace(/\.webp$/,'.source'))
- const {error}=await account.client.storage.from(bucketFor(row.kind as FileInput['kind'])).remove(paths)
+function finalPath(input:FileInput) {return input.kind==='bike_photo'?input.path.replace(/\.source$/,'.webp'):input.path.replace(/\.source$/,'')}
+function sourcePath(kind:string,path:string) {return kind==='bike_photo'?path.replace(/\.webp$/,'.source'):`${path}.source`}
+async function deleteStoredRow(account:AccountContext,row:Pick<Tables<'garage_file_states'>,'id'|'kind'|'path'>,writer:SupabaseClient<Database>) {
+ const {error}=await writer.storage.from(bucketFor(row.kind as FileInput['kind'])).remove([row.path,sourcePath(row.kind,row.path)])
  if(error) throw new FileError(500,'File cleanup failed. The record and file references are kept. Retry removal.')
- const removed=await account.client.from('garage_files').delete().eq('owner_id',account.userId).eq('id',row.id).eq('cleanup_pending',true)
- if(removed.error) throw new FileError(500,'File cleanup needs another retry. The file references are kept.')
+ const removed=await writer.rpc('finish_garage_file_removal',{p_owner_id:account.userId,p_file_id:row.id})
+ if(removed.error) throw rpcError(removed.error)
 }
-async function tidyPhoto(account:AccountContext,row:Tables<'garage_files'>) {
- if(row.source_pending) {
-  const {error}=await account.client.storage.from('garage-photos').remove([row.path.replace(/\.webp$/,'.source')])
-  if(error) throw new FileError(500,'Photo saved. Retry saving to finish source cleanup.')
-  const update=await account.client.from('garage_files').update({source_pending:false}).eq('owner_id',account.userId).eq('id',row.id)
-  if(update.error) throw new FileError(500,'Photo saved. Retry saving to finish source cleanup.')
+async function tidyFile(account:AccountContext,row:Tables<'garage_files'>,writer:SupabaseClient<Database>) {
+ // Always reconcile the deterministic source, including response-lost and concurrent retries.
+ const mark=await writer.from('garage_files').update({source_pending:true}).eq('owner_id',account.userId).eq('id',row.id)
+ if(mark.error) throw new FileError(500,'File saved. Source cleanup needs retry.')
+ const removed=await writer.storage.from(bucketFor(row.kind as FileInput['kind'])).remove([sourcePath(row.kind,row.path)])
+ if(removed.error) throw new FileError(500,'File saved. Source cleanup needs retry.')
+ const update=await writer.from('garage_files').update({source_pending:false}).eq('owner_id',account.userId).eq('id',row.id)
+ if(update.error) throw new FileError(500,'File saved. Source cleanup needs retry.')
+ if(row.kind==='bike_photo') {
+  const old=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',row.bike_id).eq('kind','bike_photo').eq('cleanup_pending',true)
+  if(old.error) throw new FileError(500,'Photo saved. Previous cleanup needs retry.')
+  for(const obsolete of old.data??[]) await deleteStoredRow(account,obsolete,writer)
  }
- const old=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',row.bike_id).eq('kind','bike_photo').eq('cleanup_pending',true)
- if(old.error) throw new FileError(500,'Photo saved. Retry to finish previous photo cleanup.')
- for(const obsolete of old.data??[]) await deleteStoredRow(account,obsolete)
 }
-// The route uses the throwing variant to preserve HTTP status for validation failures.
-export async function finaliseFileOrThrow(account:AccountContext,raw:unknown):Promise<{id:string;path:string;cleanupPending?:boolean}> {
+// Only this transition and cleanup use a server writer. Owner checks precede its creation.
+export async function finaliseFileOrThrow(account:AccountContext,raw:unknown,createWriter:FileWriter=createServiceClient):Promise<{id:string;path:string;cleanupPending?:boolean}> {
  const input=parseFileInput(raw,account.userId)
  await ownedTarget(account,input)
+ const path=finalPath(input)
+ const writer=createWriter()
+ const transition=await writer.rpc('begin_garage_finalisation',{p_owner_id:account.userId,p_input:{...input,path} as Json})
+ if(transition.error) throw rpcError(transition.error)
  const existing=await fileRow(account,input.id)
- const finalPath=input.kind==='bike_photo'?input.path.replace(/\.source$/,'.webp'):input.path
  if(existing) {
-  if(existing.bike_id!==input.bikeId || existing.job_id!==input.jobId || existing.path!==finalPath || existing.kind!==input.kind || existing.cleanup_pending) throw new FileError(409,'File identifier already used.')
+  if(existing.bike_id!==input.bikeId || existing.job_id!==input.jobId || existing.path!==path || existing.kind!==input.kind || existing.cleanup_pending) throw new FileError(404,'File target not found.')
   let cleanupPending=false
-  if(input.kind==='bike_photo') {try {await tidyPhoto(account,existing)} catch {cleanupPending=true}}
+  try {await tidyFile(account,existing,writer)} catch {cleanupPending=true}
   return {id:existing.id,path:existing.path,...(cleanupPending?{cleanupPending:true}:{})}
  }
- const bytes=await readOwnedUpload(account,input)
- if(input.kind==='bike_photo') {
-  const processed=await normaliseBikePhoto(bytes)
-  const {error}=await account.client.storage.from('garage-photos').upload(finalPath,processed,{contentType:'image/webp',upsert:true})
-  if(error) throw new FileError(500,'Could not save the photo. The previous image is kept.')
- } else await validateReceipt(bytes,input.path.split('.').pop()!)
- const {data,error}=await account.client.rpc('attach_garage_file',{p_input:{...input,path:finalPath} as Json})
- if(error || !data) throw rpcError(error??{})
- let cleanupPending=false
- if(input.kind==='bike_photo') {try {await tidyPhoto(account,data)} catch {cleanupPending=true}}
- return {id:data.id,path:data.path,...(cleanupPending?{cleanupPending:true}:{})}
+ try {
+  const bytes=await readOwnedUpload(account,input)
+  const processed=input.kind==='bike_photo'?await normaliseBikePhoto(bytes):bytes
+  const type=input.kind==='bike_photo'?'image/webp':await validateReceipt(bytes,path.split('.').pop()!)
+  const uploaded=await writer.storage.from(bucketFor(input.kind)).upload(path,processed,{contentType:type,upsert:false})
+  if(uploaded.error) {
+   // A concurrent trusted finalisation can have inserted the same immutable bytes.
+   const stored=await account.client.storage.from(bucketFor(input.kind)).download(path)
+   if(stored.error || !stored.data || !Buffer.from(await stored.data.arrayBuffer()).equals(processed)) throw new FileError(500,'Could not save the file. The previous image is kept.')
+  }
+  const {data,error}=await writer.rpc('attach_garage_file',{p_owner_id:account.userId,p_input:{...input,path} as Json})
+  if(error || !data) throw rpcError(error??{})
+  let cleanupPending=false
+  try {await tidyFile(account,data,writer)} catch {cleanupPending=true}
+  return {id:data.id,path:data.path,...(cleanupPending?{cleanupPending:true}:{})}
+ } catch(error) {
+  // Release only if no final bytes/metadata exist; the database checks under the same locks.
+  await writer.rpc('release_garage_finalisation',{p_owner_id:account.userId,p_file_id:input.id})
+  throw error
+ }
 }
-export async function finaliseFile(account:AccountContext,input:FileInput):Promise<SavedResult<{id:string;path:string}>> {
- try {return {ok:true,value:await finaliseFileOrThrow(account,input)}} catch(error) {return savedFailure(error)}
+export async function finaliseFile(account:AccountContext,input:FileInput,createWriter:FileWriter=createServiceClient):Promise<SavedResult<{id:string;path:string}>> {
+ try {return {ok:true,value:await finaliseFileOrThrow(account,input,createWriter)}} catch(error) {return savedFailure(error)}
 }
+/** Live attachments only. Removed identities remain in a separate tombstone table. */
 export async function listPrivateFiles(account:AccountContext,bikeId:string):Promise<PrivateFile[]> {
  const {data,error}=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',requireJobId(bikeId)).order('created_at')
  if(error) throw new FileError(500,'Could not load private files.')
- return (data??[]).map(row=>({id:row.id,bikeId:row.bike_id,jobId:row.job_id,kind:row.kind as FileInput['kind'],path:row.path,filename:row.filename,cleanupPending:row.cleanup_pending}))
+ return (data??[]).map(row=>({id:row.id,bikeId:row.bike_id,jobId:row.job_id,kind:row.kind as FileInput['kind'],path:row.path,filename:row.filename,cleanupPending:row.cleanup_pending,sourcePending:row.source_pending}))
 }
 export async function getPrivateFileUrl(account:AccountContext,fileId:string):Promise<string|null> {
  const row=await fileRow(account,fileId)
@@ -144,35 +183,55 @@ export async function getPrivateFileUrl(account:AccountContext,fileId:string):Pr
  if(error) throw new FileError(500,'Could not create a download link. Retry.')
  return data.signedUrl
 }
-export async function removePrivateFile(account:AccountContext,fileId:string):Promise<SavedResult<null>> {
+export async function removePrivateFile(account:AccountContext,fileId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
  try {
-  requireJobId(fileId)
-  const {data,error}=await account.client.rpc('begin_file_removal',{p_file_id:fileId})
+  const owned=await fileRow(account,fileId)
+  if(!owned) throw new FileError(404,'File not found.')
+  const writer=createWriter()
+  const {data,error}=await writer.rpc('begin_file_removal',{p_owner_id:account.userId,p_file_id:fileId})
   if(error || !data) throw rpcError(error??{})
-  await deleteStoredRow(account,data)
+  await deleteStoredRow(account,data,writer)
   return {ok:true,value:null}
  } catch(error) {return savedFailure(error)}
 }
-export async function restoreLibraryImage(account:AccountContext,bikeId:string):Promise<SavedResult<null>> {
+export async function retryBikePhotoCleanup(account:AccountContext,bikeId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
+ try {
+  await ownedTarget(account,{id:bikeId,bikeId,jobId:null,kind:'bike_photo',path:'',filename:''})
+  const files=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo')
+  if(files.error) throw new FileError(500,'Could not load cleanup references.')
+  const writer=createWriter()
+  for(const file of files.data??[]) if(!file.cleanup_pending && file.source_pending) await tidyFile(account,file,writer)
+  const states=await account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo').eq('state','removing')
+  if(states.error) throw new FileError(500,'Could not load cleanup references.')
+  for(const state of states.data??[]) await deleteStoredRow(account,state,writer)
+  return {ok:true,value:null}
+ } catch(error) {return savedFailure(error)}
+}
+export async function restoreLibraryImage(account:AccountContext,bikeId:string,createWriter:FileWriter=createServiceClient):Promise<SavedResult<null>> {
  try {
   requireJobId(bikeId)
-  const {error}=await account.client.rpc('restore_garage_image',{p_bike_id:bikeId})
+  await ownedTarget(account,{id:bikeId,bikeId,jobId:null,kind:'bike_photo',path:'',filename:''})
+  const {error}=await createWriter().rpc('restore_garage_image',{p_owner_id:account.userId,p_bike_id:bikeId})
   if(error) throw rpcError(error)
-  const files=await account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('kind','bike_photo').eq('cleanup_pending',true)
-  if(files.error) throw new FileError(500,'Library image restored. Retry to finish cleanup.')
-  for(const file of files.data??[]) await deleteStoredRow(account,file)
-  return {ok:true,value:null}
+  return await retryBikePhotoCleanup(account,bikeId,createWriter)
  } catch(error) {return savedFailure(error)}
 }
-export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,jobId:string|null=null):Promise<void> {
+export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,jobId:string|null=null,createWriter:FileWriter=createServiceClient):Promise<void> {
  requireJobId(bikeId);if(jobId) requireJobId(jobId)
- const {error}=await account.client.rpc('begin_garage_cleanup',{p_bike_id:bikeId,p_job_id:jobId??undefined})
+ // Cleanup retries must remain possible after the parent gate was already set.
+ const bike=await account.client.from('garage_bikes').select('id').eq('owner_id',account.userId).eq('id',bikeId).maybeSingle()
+ if(bike.error || !bike.data) throw new FileError(404,'File target not found.')
+ if(jobId) {
+  const job=await account.client.from('maintenance_jobs').select('id').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('id',jobId).maybeSingle()
+  if(job.error || !job.data) throw new FileError(404,'File target not found.')
+ }
+ const writer=createWriter()
+ const {error}=await writer.rpc('begin_garage_cleanup',{p_owner_id:account.userId,p_bike_id:bikeId,p_job_id:jobId??undefined})
  if(error) throw rpcError(error)
- let query=account.client.from('garage_files').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId)
+ let query=account.client.from('garage_file_states').select('*').eq('owner_id',account.userId).eq('bike_id',bikeId).eq('state','removing')
  if(jobId) query=query.eq('job_id',jobId)
- const files=await query
- if(files.error) throw new FileError(500,'Could not load cleanup references. Retry removal.')
- // Include failed/cancelled pending objects, which have no attachment row yet.
+ const states=await query
+ if(states.error) throw new FileError(500,'Could not load cleanup references. Retry removal.')
  const prefixes:{bucket:string;path:string}[]=[]
  if(!jobId) prefixes.push({bucket:'garage-photos',path:`${account.userId}/bikes/${bikeId}`})
  let jobIds=[jobId].filter((id):id is string=>id!==null)
@@ -183,15 +242,13 @@ export async function cleanupOwnedFiles(account:AccountContext,bikeId:string,job
  }
  for(const id of jobIds) prefixes.push({bucket:'garage-receipts',path:`${account.userId}/jobs/${id}`})
  for(const prefix of prefixes) {
-  // The database gate prevents new objects. Repeated first-page deletion avoids skipped rows.
   while(true) {
-   const bucket=account.client.storage.from(prefix.bucket)
-   const listed=await bucket.list(prefix.path,{limit:100})
+   const listed=await account.client.storage.from(prefix.bucket).list(prefix.path,{limit:100})
    if(listed.error) throw new FileError(500,'File cleanup failed. The record and file references are kept. Retry removal.')
    if(!listed.data.length) break
-   const removed=await bucket.remove(listed.data.map(object=>`${prefix.path}/${object.name}`))
+   const removed=await writer.storage.from(prefix.bucket).remove(listed.data.map(object=>`${prefix.path}/${object.name}`))
    if(removed.error) throw new FileError(500,'File cleanup failed. The record and file references are kept. Retry removal.')
   }
  }
- for(const file of files.data??[]) await deleteStoredRow(account,file)
+ for(const state of states.data??[]) await deleteStoredRow(account,state,writer)
 }

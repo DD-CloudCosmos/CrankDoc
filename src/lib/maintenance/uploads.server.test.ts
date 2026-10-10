@@ -1,5 +1,6 @@
 // @vitest-environment node
 import sharp from 'sharp'
+import {PDFDocument} from 'pdf-lib'
 import { describe,it,expect } from 'vitest'
 import { normaliseBikePhoto, validateReceipt, parseFileInput } from './uploads.server'
 const id='00000000-0000-4000-8000-000000000001'
@@ -23,7 +24,10 @@ describe('actual private file bytes',()=>{
   await expect(validateReceipt(png,'png')).resolves.toBe('image/png')
   await expect(validateReceipt(png,'pdf')).rejects.toMatchObject({status:415})
   await expect(validateReceipt(Buffer.from('<html/>'),'pdf')).rejects.toMatchObject({status:415})
-  await expect(validateReceipt(Buffer.from('%PDF-1.7\nreceipt\n%%EOF'),'pdf')).resolves.toBe('application/pdf')
+  await expect(validateReceipt(Buffer.from('%PDF-1.7\nreceipt\n%%EOF'),'pdf')).rejects.toMatchObject({status:415})
+  const pdf=await PDFDocument.create();pdf.addPage([200,200])
+  await expect(validateReceipt(Buffer.from(await pdf.save()),'pdf')).resolves.toBe('application/pdf')
+  await expect(validateReceipt(Buffer.from('%PDF-1.7\n1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n%%EOF'),'pdf')).rejects.toMatchObject({status:415})
  })
  it('rejects foreign and traversal paths before storage is read',()=>{
   const input={id,bikeId,kind:'bike_photo',jobId:null,path:`owner/bikes/${bikeId}/${id}.source`,filename:'bike.jpg'}
@@ -37,7 +41,7 @@ describe('actual private file bytes',()=>{
 import {readOwnedUpload,finaliseFile,removePrivateFile} from './uploads.server'
 import type {AccountContext} from '@/lib/account'
 import type {FileInput} from './types'
-function clientFixture(responses:{data:unknown;error:unknown}[],storage:Record<string,unknown>,rpc:()=>Promise<{data:unknown;error:unknown}>=async()=>({data:null,error:null})) {
+function clientFixture(responses:{data:unknown;error:unknown}[],storage:Record<string,unknown>,rpc:(name:string)=>Promise<{data:unknown;error:unknown}>=async()=>({data:null,error:null})) {
  const client={storage:{from:()=>storage},rpc,from:()=>{
   const result=responses.shift();if(!result)throw new Error('Missing response')
   const query:{[key:string]:unknown}={then:(resolve:(result:unknown)=>void)=>Promise.resolve(result).then(resolve)}
@@ -55,22 +59,22 @@ it('checks actual downloaded size and rejects an inaccessible target before down
 it('a failed processed-photo upload never changes the previous override',async()=>{
  const jpeg=await sharp({create:{width:20,height:20,channels:3,background:'#555'}}).jpeg().toBuffer()
  let attaches=0
- const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:{message:'Failed'}})},async()=>{attaches++;return {data:null,error:null}})
- expect(await finaliseFile(account,fileInput)).toMatchObject({ok:false,error:'save_failed'});expect(attaches).toBe(0)
+ const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:{message:'Failed'}})},async name=>{if(name==='attach_garage_file')attaches++;return {data:'finalizing',error:null}})
+ expect(await finaliseFile(account,fileInput,()=>account.client)).toMatchObject({ok:false,error:'save_failed'});expect(attaches).toBe(0)
 })
 it('retains attachment metadata when Storage removal fails',async()=>{
  const row={id,bike_id:bikeId,job_id:null,kind:'bike_photo',path:'owner/file.webp'}
- const account=clientFixture([],{remove:async()=>({error:{message:'Unavailable'}})},async()=>({data:row,error:null}))
- const result=await removePrivateFile(account,id);expect(result).toMatchObject({ok:false,error:'save_failed'});expect(result.ok?null:result.message).toMatch(/kept/)
+ const account=clientFixture([{data:row,error:null}],{remove:async()=>({error:{message:'Unavailable'}})},async()=>({data:row,error:null}))
+ const result=await removePrivateFile(account,id,()=>account.client);expect(result).toMatchObject({ok:false,error:'save_failed'});expect(result.ok?null:result.message).toMatch(/kept/)
 })
 it('reports a committed photo as saved if later cleanup fails, retaining retry information',async()=>{
  const jpeg=await sharp({create:{width:20,height:20,channels:3,background:'#555'}}).jpeg().toBuffer()
  const row={id,bike_id:bikeId,job_id:null,kind:'bike_photo',path:`owner/bikes/${bikeId}/${id}.webp`,source_pending:true}
- const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:null}),remove:async()=>({error:{message:'Cleanup unavailable'}})},async()=>({data:row,error:null}))
- expect(await finaliseFile(account,fileInput)).toMatchObject({ok:true,value:{id,path:row.path,cleanupPending:true}})
+ const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null},{data:null,error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:null}),remove:async()=>({error:{message:'Cleanup unavailable'}})},async name=>({data:name==='begin_garage_finalisation'?'finalizing':row,error:null}))
+ expect(await finaliseFile(account,fileInput,()=>account.client)).toMatchObject({ok:true,value:{id,path:row.path,cleanupPending:true}})
 })
 it('returns not-found when another account already owns a requested stable file ID',async()=>{
  const jpeg=await sharp({create:{width:20,height:20,channels:3,background:'#555'}}).jpeg().toBuffer()
  const account=clientFixture([{data:{id:bikeId},error:null},{data:null,error:null},{data:{id:bikeId},error:null}],{download:async()=>({data:new Blob([new Uint8Array(jpeg)]),error:null}),upload:async()=>({error:null})},async()=>({data:null,error:{code:'23505'}}))
- expect(await finaliseFile(account,fileInput)).toMatchObject({ok:false,error:'not_found'})
+ expect(await finaliseFile(account,fileInput,()=>account.client)).toMatchObject({ok:false,error:'not_found'})
 })

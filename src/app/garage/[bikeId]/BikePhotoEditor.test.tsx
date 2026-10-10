@@ -36,3 +36,10 @@ it('renews private signed URLs at expiry, clears them on sign-out, and never use
  await act(async()=>{await vi.advanceTimersByTimeAsync(60_001)});expect(screen.getByRole('img')).toHaveAttribute('src','https://local.invalid/second')
  act(()=>authChange('SIGNED_OUT',null));expect(screen.getByRole('img')).not.toHaveAttribute('src');vi.useRealTimers()
 })
+
+it('reconstructs cleanup retry from durable rows after reload with no personal photo',async()=>{
+ vi.mocked(privateFileRequest).mockResolvedValue({})
+ render(<BikePhotoEditor bike={bikeFixture({photoPath:null})} files={[{id:'old',bikeId:bikeFixture().id,jobId:null,kind:'bike_photo',path:'old.webp',filename:'old photo.jpg',cleanupPending:true,sourcePending:false}]} onChanged={vi.fn()} />)
+ fireEvent.click(screen.getByRole('button',{name:'Retry image cleanup'}))
+ await waitFor(()=>expect(privateFileRequest).toHaveBeenCalledWith('POST',{bikeId:bikeFixture().id,cleanup:true}))
+})

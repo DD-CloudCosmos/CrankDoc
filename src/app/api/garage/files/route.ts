@@ -1,5 +1,5 @@
 import { getAccount } from '@/lib/account'
-import { FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage } from '@/lib/maintenance/uploads.server'
+import { FileError,finaliseFileOrThrow,getPrivateFileUrl,removePrivateFile,restoreLibraryImage,retryBikePhotoCleanup } from '@/lib/maintenance/uploads.server'
 import { requireJobId } from '@/lib/maintenance/validation'
 export const dynamic='force-dynamic'
 export const runtime='nodejs'
@@ -11,7 +11,15 @@ async function json(request:Request) {
 function identifier(input:unknown):string {try {return requireJobId(input)} catch {throw new FileError(400,'Invalid file identifier.')}}
 export async function POST(request:Request) {
  const account=await getAccount();if(!account) return response({message:'Sign in to save files.'},401)
- try {return response(await finaliseFileOrThrow(account,await json(request)))} catch(error) {return failed(error)}
+ try {
+  const input=await json(request)
+  if(input?.cleanup===true) {
+   if(Object.keys(input).some(key=>!['bikeId','cleanup'].includes(key))) throw new FileError(400,'Invalid file details.')
+   const result=await retryBikePhotoCleanup(account,identifier(input.bikeId))
+   return result.ok?response(result):response({message:result.message},result.error==='not_found'?404:500)
+  }
+  return response(await finaliseFileOrThrow(account,input))
+ } catch(error) {return failed(error)}
 }
 export async function GET(request:Request) {
  const account=await getAccount();if(!account) return response({message:'Sign in to download files.'},401)

@@ -20,7 +20,7 @@ export function ReceiptUpload({bikeId,jobId,onChanged,files=noFiles,disabled=fal
   const next:Selected[]=Array.from(files??[]).map(file=>{
    const extension=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','application/pdf':'pdf'} as Record<string,string>)[file.type]
    const id=crypto.randomUUID()
-   return {file,saved:false,error:!extension?'Choose JPEG, PNG, WebP or PDF.':file.size>10*1024*1024?'Files must be at most 10 MiB.':'',input:{id,kind:'receipt',bikeId,jobId,path:`${owner}/jobs/${jobId}/${id}.${extension}`,filename:file.name}}
+   return {file,saved:false,error:!extension?'Choose JPEG, PNG, WebP or PDF.':file.size>10*1024*1024?'Files must be at most 10 MiB.':'',input:{id,kind:'receipt',bikeId,jobId,path:`${owner}/jobs/${jobId}/${id}.${extension}.source`,filename:file.name}}
   })
   setSelected(next);setError('')
  }

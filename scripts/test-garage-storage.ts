@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict'
 import sharp from 'sharp'
+import {PDFDocument} from 'pdf-lib'
 import { createClient } from '@supabase/supabase-js'
 import { createLocalTestClients, loadGarageTestEnv } from './garage-test-env'
-import { finaliseFile, getPrivateFileUrl, removePrivateFile, cleanupOwnedFiles, restoreLibraryImage } from '../src/lib/maintenance/uploads.server'
+import { finaliseFile, getPrivateFileUrl, removePrivateFile, cleanupOwnedFiles, restoreLibraryImage, retryBikePhotoCleanup, listPrivateFiles } from '../src/lib/maintenance/uploads.server'
 import type { FileInput } from '../src/lib/maintenance/types'
 
 async function main() {
  const t=await createLocalTestClients();const account={client:t.a,userId:t.userA};const foreign={client:t.b,userId:t.userB}
+ const writer=()=>t.admin
+ const document=await PDFDocument.create();document.addPage();const pdf=Buffer.from(await document.save())
  const bike=crypto.randomUUID();const otherBike=crypto.randomUUID();const job=crypto.randomUUID();const uploaded:{bucket:string;path:string}[]=[]
  try {
   const bikes=await t.a.from('garage_bikes').insert([bike,otherBike].map(id=>({id,owner_id:t.userA,make:'Honda',model:'CB650RA',motorcycle_id:t.modelId,year:2023})))
@@ -17,6 +20,10 @@ async function main() {
   async function upload(input:FileInput,bytes:Buffer,type:string) {const bucket=input.kind==='bike_photo'?'garage-photos':'garage-receipts';const result=await t.a.storage.from(bucket).upload(input.path,bytes,{contentType:type});assert.ifError(result.error);uploaded.push({bucket,path:input.path})}
   function photo(bikeId=bike):FileInput {const id=crypto.randomUUID();return {id,kind:'bike_photo',bikeId,jobId:null,path:`${t.userA}/bikes/${bikeId}/${id}.source`,filename:'photo.jpg'}}
   const p=photo();await upload(p,photoBytes,'image/jpeg')
+  const bypass=await t.a.storage.from('garage-photos').upload(p.path.replace('.source','.webp'),photoBytes,{contentType:'image/webp'});assert.ok(bypass.error,'Authenticated callers cannot write finalized bytes')
+  assert.ok((await t.a.from('garage_files').insert({id:p.id,owner_id:t.userA,bike_id:bike,job_id:null,kind:'bike_photo',path:p.path.replace('.source','.webp'),filename:'bypass.jpg',mime_type:'image/webp',size_bytes:photoBytes.length})).error,'Metadata inserts require trusted transition')
+  assert.ok((await t.a.rpc('begin_garage_finalisation',{p_owner_id:t.userA,p_input:{...p,path:p.path.replace('.source','.webp')}})).error,'Authenticated caller cannot invoke trusted RPC')
+  assert.ok((await t.a.from('garage_bikes').update({photo_path:p.path.replace('.source','.webp')}).eq('id',bike)).error,'Owner cannot bypass validated photo transition')
   // A cancelled edit never changes a bike or the catalogue.
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',bike).single()).data?.photo_path,null)
   assert.equal((await t.admin.from('motorcycles').select('image_url').eq('id',t.modelId).single()).data?.image_url,'/images/bikes/honda-cb650ra-2023.png')
@@ -30,24 +37,29 @@ async function main() {
   const env=loadGarageTestEnv();const anon=createClient(env.url,env.anonKey,{auth:{persistSession:false}})
   assert.ok((await anon.storage.from('garage-photos').download(p.path)).error)
   assert.ok((await anon.storage.from('garage-photos').createSignedUrl(p.path,60)).error)
-  const saved=await finaliseFile(account,p);assert.equal(saved.ok,true)
-  assert.equal((await finaliseFile(account,p)).ok,true)
+  const saved=await finaliseFile(account,p,writer);assert.equal(saved.ok,true)
+  assert.equal((await finaliseFile(account,p,writer)).ok,true)
   assert.equal((await t.a.from('garage_files').select('id').eq('id',p.id)).data?.length,1)
   assert.equal(await getPrivateFileUrl(foreign,p.id),null)
   assert.ok(await getPrivateFileUrl(account,p.id)) // legitimately issued URLs are temporary bearer links.
   const processed=await t.a.storage.from('garage-photos').download(p.path.replace('.source','.webp'));assert.ifError(processed.error)
   assert.equal((await sharp(Buffer.from(await processed.data!.arrayBuffer())).metadata()).exif,undefined)
-  const bad=photo();await upload(bad,Buffer.from('corrupt'),'image/jpeg');assert.equal((await finaliseFile(account,bad)).ok,false)
+  const bad=photo();await upload(bad,Buffer.from('corrupt'),'image/jpeg');assert.equal((await finaliseFile(account,bad,writer)).ok,false)
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',bike).single()).data?.photo_path,p.path.replace('.source','.webp'))
-  const second=photo(otherBike);await upload(second,photoBytes,'image/jpeg');assert.equal((await finaliseFile(account,second)).ok,true)
-  assert.equal((await restoreLibraryImage(account,bike)).ok,true)
+  assert.ok((await t.a.storage.from('garage-photos').upload(p.path,photoBytes,{contentType:'image/jpeg',upsert:true})).error,'Active photo cannot reupload pending source after lost response')
+  assert.ok((await t.a.storage.from('garage-photos').download(p.path)).error,'Stable retry leaves no source')
+  const second=photo(otherBike);await upload(second,photoBytes,'image/jpeg');assert.equal((await finaliseFile(account,second,writer)).ok,true)
+  const outageWriter=new Proxy(t.admin,{get(target,key){if(key==='storage') return {from:(name:string)=>new Proxy(target.storage.from(name),{get(bucket,method){if(method==='remove')return async()=>({data:null,error:{message:'Injected outage'}});return Reflect.get(bucket,method)}})};return Reflect.get(target,key)}})
+  assert.equal((await restoreLibraryImage(account,bike,()=>outageWriter)).ok,false)
+  assert.equal((await listPrivateFiles(account,bike)).some(file=>file.cleanupPending),true,'Reload reconstructs failed restoration cleanup')
+  assert.equal((await retryBikePhotoCleanup(account,bike,writer)).ok,true)
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',bike).single()).data?.photo_path,null)
   assert.equal((await t.a.from('garage_bikes').select('photo_path').eq('id',otherBike).single()).data?.photo_path,second.path.replace('.source','.webp'))
   assert.equal((await t.admin.from('motorcycles').select('image_url').eq('id',t.modelId).single()).data?.image_url,'/images/bikes/honda-cb650ra-2023.png')
   const receiptInputs:FileInput[]=[]
-  for(let i=0;i<11;i++) {const id=crypto.randomUUID();const input:FileInput={id,bikeId:bike,jobId:job,kind:'receipt',path:`${t.userA}/jobs/${job}/${id}.pdf`,filename:'<script>receipt.pdf'};await upload(input,Buffer.from('%PDF-1.7\nreceipt\n%%EOF'),'application/pdf');receiptInputs.push(input)}
+  for(let i=0;i<11;i++) {const id=crypto.randomUUID();const input:FileInput={id,bikeId:bike,jobId:job,kind:'receipt',path:`${t.userA}/jobs/${job}/${id}.pdf.source`,filename:'<script>receipt.pdf'};await upload(input,pdf,'application/pdf');receiptInputs.push(input)}
   // Concurrent finalisations exercise the job row lock and exact ten-file bound.
-  const results=await Promise.all(receiptInputs.map(input=>finaliseFile(account,input)))
+  const results=await Promise.all(receiptInputs.map(input=>finaliseFile(account,input,writer)))
   assert.equal(results.filter(r=>r.ok).length,10)
   assert.equal((await t.a.from('garage_files').select('id').eq('job_id',job)).data?.length,10)
   const attached=receiptInputs.find((_,i)=>results[i].ok)!
@@ -55,30 +67,43 @@ async function main() {
   const url=await getPrivateFileUrl(account,attached.id);assert.ok(url)
   const download=await fetch(url!);assert.match(download.headers.get('content-disposition')??'',/attachment/)
   const corruptIdentity=await t.a.from('garage_files').update({bike_id:otherBike}).eq('id',attached.id);assert.ok(corruptIdentity.error)
-  assert.equal((await removePrivateFile(foreign,attached.id)).ok,false)
-  assert.equal((await finaliseFile(foreign,attached)).ok,false)
-  assert.equal((await finaliseFile(account,attached)).ok,true,'A stable retry succeeds even at the ten-file limit')
+  assert.equal((await removePrivateFile(foreign,attached.id,writer)).ok,false)
+  assert.equal((await finaliseFile(foreign,attached,writer)).ok,false)
+  assert.equal((await finaliseFile(account,attached,writer)).ok,true,'A stable retry succeeds even at the ten-file limit')
   assert.equal((await t.a.from('garage_files').select('id').eq('job_id',job)).data?.length,10)
-  assert.equal((await removePrivateFile(account,attached.id)).ok,true)
+  let announce!:()=>void;let resume!:()=>void
+  const removing=new Promise<void>(resolve=>{announce=resolve});const proceed=new Promise<void>(resolve=>{resume=resolve})
+  const pausedWriter=new Proxy(t.admin,{get(target,key){
+   if(key==='storage') return {from:(name:string)=>new Proxy(target.storage.from(name),{get(bucket,method){if(method==='remove')return async(paths:string[])=>{announce();await proceed;return bucket.remove(paths)};return Reflect.get(bucket,method)}})}
+   return Reflect.get(target,key)
+  }})
+  const removal=removePrivateFile(account,attached.id,()=>pausedWriter)
+  await removing
+  assert.ok((await t.a.storage.from('garage-receipts').upload(attached.path,pdf,{contentType:'application/pdf',upsert:true})).error,'Removal gate denies upload before byte deletion')
+  assert.equal((await finaliseFile(account,attached,writer)).ok,false,'Removal gate denies overlapping finalize')
+  resume();assert.equal((await removal).ok,true)
+  assert.ok((await t.a.storage.from('garage-receipts').upload(attached.path,pdf,{contentType:'application/pdf',upsert:true})).error,'Removed identity refuses late source upload')
+  assert.equal((await finaliseFile(account,attached,writer)).ok,false,'Removed identity refuses re-finalization')
+  assert.equal((await t.a.from('garage_file_states').select('state').eq('id',attached.id).single()).data?.state,'removed')
   // Inject only the Storage outage; verify retained records in the real local database.
-  const failingClient=new Proxy(t.a,{get(target,key){
+  const failingClient=new Proxy(t.admin,{get(target,key){
    if(key==='storage') return {from:(name:string)=>new Proxy(target.storage.from(name),{get(bucket,method){if(method==='remove')return async()=>({data:null,error:{message:'Injected Storage outage'}});return Reflect.get(bucket,method)}})}
    return Reflect.get(target,key)
   }})
-  await assert.rejects(()=>cleanupOwnedFiles({client:failingClient,userId:t.userA},bike,job),/kept/)
+  await assert.rejects(()=>cleanupOwnedFiles(account,bike,job,()=>failingClient),/kept/)
   assert.ok((await t.a.from('maintenance_jobs').select('id').eq('id',job).single()).data)
   assert.equal((await t.a.from('garage_files').select('id').eq('job_id',job)).data?.length,9)
   // Gate cleanup before hard removal; finalisation cannot race a deleted job/bike.
-  await cleanupOwnedFiles(account,bike,job)
+  await cleanupOwnedFiles(account,bike,job,writer)
   assert.equal((await t.a.storage.from('garage-receipts').list(`${t.userA}/jobs/${job}`)).data?.length,0,'Pending unattached uploads must be removed too')
   const lateId=crypto.randomUUID()
-  assert.ok((await t.a.storage.from('garage-receipts').upload(`${t.userA}/jobs/${job}/${lateId}.pdf`,Buffer.from('%PDF-1.7\nreceipt\n%%EOF'),{contentType:'application/pdf'})).error,'Uploads must be refused after deletion begins')
-  const retry=await finaliseFile(account,receiptInputs[10]);assert.equal(retry.ok,false)
+  assert.ok((await t.a.storage.from('garage-receipts').upload(`${t.userA}/jobs/${job}/${lateId}.pdf.source`,pdf,{contentType:'application/pdf'})).error,'Uploads must be refused after deletion begins')
+  const retry=await finaliseFile(account,receiptInputs[10],writer);assert.equal(retry.ok,false)
   assert.ifError((await t.a.from('maintenance_jobs').delete().eq('id',job)).error)
   console.log('PASS: private Storage, two-account denial, bytes, stable retries, replacement/default isolation, atomic receipt limit and deletion gate')
  } finally {
   for(const entry of uploaded) await t.admin.storage.from(entry.bucket).remove([entry.path,entry.path.replace('.source','.webp')])
-  for(const bikeId of [bike,otherBike]) await cleanupOwnedFiles(account,bikeId).catch(()=>{})
+  for(const bikeId of [bike,otherBike]) await cleanupOwnedFiles(account,bikeId,null,writer).catch(()=>{})
   await t.a.from('garage_bikes').delete().in('id',[bike,otherBike])
   await t.cleanup()
  }
