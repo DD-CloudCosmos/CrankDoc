@@ -129,7 +129,7 @@ async function getDiagnosticTrees(motorcycleId: string): Promise<DiagnosticTree[
     console.error('Error fetching diagnostic trees:', error)
     return []
   }
-  return data ?? []
+  return (data ?? []) as DiagnosticTree[]
 }
 
 async function getServiceIntervals(motorcycleId: string): Promise<ServiceInterval[]> {

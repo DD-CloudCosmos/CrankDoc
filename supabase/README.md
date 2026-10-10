@@ -161,3 +161,28 @@ After running migrations:
 1. Verify schema: `node scripts/verify-schema-rest.js`
 2. Test API queries: Check if you can query motorcycles from the app
 3. View in dashboard: https://supabase.com/dashboard/project/hcpfviemzpdnrhnxrvip/editor
+
+## Isolated My Garage tests
+
+The garage scripts read only `.env.garage.local`. They reject API URLs outside `localhost` and `127.0.0.1` before creating clients. They never fall back to `.env.local`, which may point at the live project.
+
+Start the local stack using the dedicated Colima socket. Keep the default Docker context unchanged. The generated local config requires eight-character passwords, email confirmation and the app origin `http://localhost:3110` with its authentication callbacks.
+
+```sh
+(umask 077; DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase start > .env.garage.start.local 2>&1)
+(umask 077; DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase status -o env > .env.garage.local)
+npx tsx scripts/test-garage-access.ts
+npx tsx scripts/test-garage-auth.ts
+```
+
+Startup/status output contains local development keys. Do not print it or commit it. `.env.garage.local` is ignored. Access tests create two temporary confirmed users and one catalogue fixture, then remove them. They verify real database requests, including owner changes, anonymous denial, inaccessible updates/deletes, retry safety and separate motorcycles of the same catalogue model.
+
+Authentication tests create a temporary user through normal sign-up, follow confirmation and recovery emails from the local mailbox API and exchange their codes. An in-memory browser store retains the Proof Key for Code Exchange (PKCE) verifier. A different store cannot exchange the code. This exercises provider behaviour without browser automation; it does not replace a browser review of the app forms and cookies.
+
+Regenerate types against the local stack only:
+
+```sh
+DOCKER_HOST=unix:///Users/david/.colima/crankdoc/docker.sock npx supabase gen types typescript --local > /tmp/crankdoc-generated-types.ts
+```
+
+Replace the generated portion of `src/types/database.types.ts` and retain the convenience aliases and application types beneath it. `DiagnosticTree` keeps its existing difficulty union, which the text CHECK constraint enforces but the generator cannot infer. Removal confirmation belongs to the calling garage action; repository removal and reversible archive are distinct operations.

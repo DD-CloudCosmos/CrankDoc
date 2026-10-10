@@ -1,643 +1,864 @@
-/**
- * Supabase Database Types
- *
- * This file contains TypeScript types for the Supabase database schema.
- * These types are manually created based on the schema in:
- * supabase/migrations/001_initial_schema.sql
- * supabase/migrations/002_phase5_schema.sql
- * supabase/migrations/004_recalls_schema.sql
- * supabase/migrations/005_glossary_schema.sql
- * supabase/migrations/006_rag_schema.sql
- *
- * To regenerate from live database (after schema changes):
- * ```bash
- * npx supabase gen types typescript --project-id hcpfviemzpdnrhnxrvip > src/types/database.types.ts
- * ```
- *
- * @see https://supabase.com/docs/guides/api/rest/generating-types
- */
-
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
-
-export interface Database {
-  public: {
-    Tables: {
-      motorcycles: {
-        Row: {
-          id: string
-          make: string
-          model: string
-          year_start: number
-          year_end: number | null
-          engine_type: string | null
-          displacement_cc: number | null
-          category: string | null
-          image_url: string | null
-          generation: string | null
-          fuel_system: string | null
-          dry_weight_kg: number | null
-          horsepower: number | null
-          torque_nm: number | null
-          fuel_capacity_liters: number | null
-          oil_capacity_liters: number | null
-          coolant_capacity_liters: number | null
-          valve_clearance_intake: string | null
-          valve_clearance_exhaust: string | null
-          spark_plug: string | null
-          tire_front: string | null
-          tire_rear: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          make: string
-          model: string
-          year_start: number
-          year_end?: number | null
-          engine_type?: string | null
-          displacement_cc?: number | null
-          category?: string | null
-          image_url?: string | null
-          generation?: string | null
-          fuel_system?: string | null
-          dry_weight_kg?: number | null
-          horsepower?: number | null
-          torque_nm?: number | null
-          fuel_capacity_liters?: number | null
-          oil_capacity_liters?: number | null
-          coolant_capacity_liters?: number | null
-          valve_clearance_intake?: string | null
-          valve_clearance_exhaust?: string | null
-          spark_plug?: string | null
-          tire_front?: string | null
-          tire_rear?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          make?: string
-          model?: string
-          year_start?: number
-          year_end?: number | null
-          engine_type?: string | null
-          displacement_cc?: number | null
-          category?: string | null
-          image_url?: string | null
-          generation?: string | null
-          fuel_system?: string | null
-          dry_weight_kg?: number | null
-          horsepower?: number | null
-          torque_nm?: number | null
-          fuel_capacity_liters?: number | null
-          oil_capacity_liters?: number | null
-          coolant_capacity_liters?: number | null
-          valve_clearance_intake?: string | null
-          valve_clearance_exhaust?: string | null
-          spark_plug?: string | null
-          tire_front?: string | null
-          tire_rear?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      diagnostic_trees: {
-        Row: {
-          id: string
-          motorcycle_id: string | null
-          title: string
-          description: string | null
-          category: string | null
-          difficulty: 'beginner' | 'intermediate' | 'advanced' | null
-          tree_data: Json
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          motorcycle_id?: string | null
-          title: string
-          description?: string | null
-          category?: string | null
-          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
-          tree_data: Json
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          motorcycle_id?: string | null
-          title?: string
-          description?: string | null
-          category?: string | null
-          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
-          tree_data?: Json
-          created_at?: string
-        }
-        Relationships: []
-      }
-      dtc_codes: {
-        Row: {
-          id: string
-          code: string
-          description: string
-          category: string | null
-          subcategory: string | null
-          severity: 'low' | 'medium' | 'high' | 'critical' | null
-          common_causes: string[] | null
-          applies_to_makes: string[] | null
-          manufacturer: string | null
-          system: string | null
-          diagnostic_method: string | null
-          fix_reference: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          code: string
-          description: string
-          category?: string | null
-          subcategory?: string | null
-          severity?: 'low' | 'medium' | 'high' | 'critical' | null
-          common_causes?: string[] | null
-          applies_to_makes?: string[] | null
-          manufacturer?: string | null
-          system?: string | null
-          diagnostic_method?: string | null
-          fix_reference?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          code?: string
-          description?: string
-          category?: string | null
-          subcategory?: string | null
-          severity?: 'low' | 'medium' | 'high' | 'critical' | null
-          common_causes?: string[] | null
-          applies_to_makes?: string[] | null
-          manufacturer?: string | null
-          system?: string | null
-          diagnostic_method?: string | null
-          fix_reference?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      service_intervals: {
-        Row: {
-          id: string
-          motorcycle_id: string
-          service_name: string
-          interval_miles: number | null
-          interval_km: number | null
-          interval_months: number | null
-          description: string | null
-          torque_spec: string | null
-          fluid_spec: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          motorcycle_id: string
-          service_name: string
-          interval_miles?: number | null
-          interval_km?: number | null
-          interval_months?: number | null
-          description?: string | null
-          torque_spec?: string | null
-          fluid_spec?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          motorcycle_id?: string
-          service_name?: string
-          interval_miles?: number | null
-          interval_km?: number | null
-          interval_months?: number | null
-          description?: string | null
-          torque_spec?: string | null
-          fluid_spec?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      technical_documents: {
-        Row: {
-          id: string
-          motorcycle_id: string | null
-          title: string
-          doc_type: string
-          description: string | null
-          file_url: string
-          file_type: string
-          source_attribution: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          motorcycle_id?: string | null
-          title: string
-          doc_type: string
-          description?: string | null
-          file_url: string
-          file_type: string
-          source_attribution?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          motorcycle_id?: string | null
-          title?: string
-          doc_type?: string
-          description?: string | null
-          file_url?: string
-          file_type?: string
-          source_attribution?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      recalls: {
-        Row: {
-          id: string
-          nhtsa_campaign_number: string
-          data_source: string
-          manufacturer: string
-          make: string
-          model: string
-          model_year: number
-          component: string | null
-          summary: string | null
-          consequence: string | null
-          remedy: string | null
-          notes: string | null
-          report_received_date: string | null
-          park_it: boolean
-          park_outside: boolean
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          nhtsa_campaign_number: string
-          data_source?: string
-          manufacturer: string
-          make: string
-          model: string
-          model_year: number
-          component?: string | null
-          summary?: string | null
-          consequence?: string | null
-          remedy?: string | null
-          notes?: string | null
-          report_received_date?: string | null
-          park_it?: boolean
-          park_outside?: boolean
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          nhtsa_campaign_number?: string
-          data_source?: string
-          manufacturer?: string
-          make?: string
-          model?: string
-          model_year?: number
-          component?: string | null
-          summary?: string | null
-          consequence?: string | null
-          remedy?: string | null
-          notes?: string | null
-          report_received_date?: string | null
-          park_it?: boolean
-          park_outside?: boolean
-          created_at?: string
-        }
-        Relationships: []
-      }
-      glossary_terms: {
-        Row: {
-          id: string
-          term: string
-          slug: string
-          definition: string
-          category: string
-          subcategory: string | null
-          aliases: string[] | null
-          related_terms: string[] | null
-          illustration_url: string | null
-          applies_to: string[] | null
-          difficulty: 'beginner' | 'intermediate' | 'advanced' | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          term: string
-          slug: string
-          definition: string
-          category: string
-          subcategory?: string | null
-          aliases?: string[] | null
-          related_terms?: string[] | null
-          illustration_url?: string | null
-          applies_to?: string[] | null
-          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          term?: string
-          slug?: string
-          definition?: string
-          category?: string
-          subcategory?: string | null
-          aliases?: string[] | null
-          related_terms?: string[] | null
-          illustration_url?: string | null
-          applies_to?: string[] | null
-          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      motorcycle_images: {
-        Row: {
-          id: string
-          motorcycle_id: string
-          image_url: string
-          alt_text: string
-          is_primary: boolean
-          source_attribution: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          motorcycle_id: string
-          image_url: string
-          alt_text: string
-          is_primary?: boolean
-          source_attribution?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          motorcycle_id?: string
-          image_url?: string
-          alt_text?: string
-          is_primary?: boolean
-          source_attribution?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      document_sources: {
-        Row: {
-          id: string
-          title: string
-          source_type: 'pdf' | 'scan' | 'web' | 'manual_entry'
-          file_path: string | null
-          file_hash: string | null
-          motorcycle_id: string | null
-          make: string | null
-          model: string | null
-          year_start: number | null
-          year_end: number | null
-          manual_type: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
-          total_pages: number | null
-          processing_status: 'pending' | 'processing' | 'completed' | 'failed'
-          processing_error: string | null
-          processed_at: string | null
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          title: string
-          source_type: 'pdf' | 'scan' | 'web' | 'manual_entry'
-          file_path?: string | null
-          file_hash?: string | null
-          motorcycle_id?: string | null
-          make?: string | null
-          model?: string | null
-          year_start?: number | null
-          year_end?: number | null
-          manual_type?: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
-          total_pages?: number | null
-          processing_status?: 'pending' | 'processing' | 'completed' | 'failed'
-          processing_error?: string | null
-          processed_at?: string | null
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          title?: string
-          source_type?: 'pdf' | 'scan' | 'web' | 'manual_entry'
-          file_path?: string | null
-          file_hash?: string | null
-          motorcycle_id?: string | null
-          make?: string | null
-          model?: string | null
-          year_start?: number | null
-          year_end?: number | null
-          manual_type?: 'service_manual' | 'owners_manual' | 'parts_catalog' | 'tsb' | null
-          total_pages?: number | null
-          processing_status?: 'pending' | 'processing' | 'completed' | 'failed'
-          processing_error?: string | null
-          processed_at?: string | null
-          created_at?: string
-        }
-        Relationships: []
-      }
-      document_chunks: {
-        Row: {
-          id: string
-          document_source_id: string
-          chunk_index: number
-          content: string
-          content_length: number
-          embedding: number[]
-          motorcycle_id: string | null
-          make: string | null
-          model: string | null
-          section_title: string | null
-          section_hierarchy: string[] | null
-          page_numbers: number[] | null
-          content_type: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          document_source_id: string
-          chunk_index: number
-          content: string
-          content_length: number
-          embedding: number[]
-          motorcycle_id?: string | null
-          make?: string | null
-          model?: string | null
-          section_title?: string | null
-          section_hierarchy?: string[] | null
-          page_numbers?: number[] | null
-          content_type?: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          document_source_id?: string
-          chunk_index?: number
-          content?: string
-          content_length?: number
-          embedding?: number[]
-          motorcycle_id?: string | null
-          make?: string | null
-          model?: string | null
-          section_title?: string | null
-          section_hierarchy?: string[] | null
-          page_numbers?: number[] | null
-          content_type?: 'prose' | 'spec_table' | 'procedure' | 'diagram_caption' | 'torque_table' | 'wiring_info'
-          created_at?: string
-        }
-        Relationships: []
-      }
-      extraction_jobs: {
-        Row: {
-          id: string
-          document_source_id: string
-          extraction_type: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
-          target_table: string
-          status: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
-          result_data: Json | null
-          review_notes: string | null
-          error_message: string | null
-          chunks_used: string[] | null
-          llm_model: string | null
-          prompt_tokens: number | null
-          completion_tokens: number | null
-          cost_usd: number | null
-          created_at: string
-          completed_at: string | null
-        }
-        Insert: {
-          id?: string
-          document_source_id: string
-          extraction_type: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
-          target_table: string
-          status?: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
-          result_data?: Json | null
-          review_notes?: string | null
-          error_message?: string | null
-          chunks_used?: string[] | null
-          llm_model?: string | null
-          prompt_tokens?: number | null
-          completion_tokens?: number | null
-          cost_usd?: number | null
-          created_at?: string
-          completed_at?: string | null
-        }
-        Update: {
-          id?: string
-          document_source_id?: string
-          extraction_type?: 'specs' | 'service_intervals' | 'procedures' | 'dtc_codes' | 'diagnostic_trees'
-          target_table?: string
-          status?: 'pending' | 'running' | 'completed' | 'failed' | 'needs_review'
-          result_data?: Json | null
-          review_notes?: string | null
-          error_message?: string | null
-          chunks_used?: string[] | null
-          llm_model?: string | null
-          prompt_tokens?: number | null
-          completion_tokens?: number | null
-          cost_usd?: number | null
-          created_at?: string
-          completed_at?: string | null
-        }
-        Relationships: []
-      }
+export type Json = string | number | boolean | null | {
+    [key: string]: Json | undefined;
+} | Json[];
+export type Database = {
+    "graphql_public": {
+        Tables: {
+            [_ in never]: never;
+        };
+        Views: {
+            [_ in never]: never;
+        };
+        Functions: {
+            "graphql": {
+                Args: {
+                    "extensions"?: Json;
+                    "operationName"?: string;
+                    "query"?: string;
+                    "variables"?: Json;
+                };
+                Returns: Json;
+            };
+        };
+        Enums: {
+            [_ in never]: never;
+        };
+        CompositeTypes: {
+            [_ in never]: never;
+        };
+    };
+    "public": {
+        Tables: {
+            "diagnostic_trees": {
+                Row: {
+                    "category": string | null;
+                    "created_at": string | null;
+                    "description": string | null;
+                    "difficulty": string | null;
+                    "id": string;
+                    "motorcycle_id": string | null;
+                    "title": string;
+                    "tree_data": NonNullable<Json>;
+                };
+                Insert: {
+                    "category"?: string | null;
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "difficulty"?: string | null;
+                    "id"?: string;
+                    "motorcycle_id"?: string | null;
+                    "title": string;
+                    "tree_data": NonNullable<Json>;
+                };
+                Update: {
+                    "category"?: string | null;
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "difficulty"?: string | null;
+                    "id"?: string;
+                    "motorcycle_id"?: string | null;
+                    "title"?: string;
+                    "tree_data"?: NonNullable<Json>;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "diagnostic_trees_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "document_chunks": {
+                Row: {
+                    "chunk_index": number;
+                    "content": string;
+                    "content_length": number;
+                    "content_type": string;
+                    "created_at": string | null;
+                    "document_source_id": string;
+                    "embedding": string;
+                    "id": string;
+                    "make": string | null;
+                    "model": string | null;
+                    "motorcycle_id": string | null;
+                    "page_numbers": (number)[] | null;
+                    "section_hierarchy": (string)[] | null;
+                    "section_title": string | null;
+                };
+                Insert: {
+                    "chunk_index": number;
+                    "content": string;
+                    "content_length": number;
+                    "content_type"?: string;
+                    "created_at"?: string | null;
+                    "document_source_id": string;
+                    "embedding": string;
+                    "id"?: string;
+                    "make"?: string | null;
+                    "model"?: string | null;
+                    "motorcycle_id"?: string | null;
+                    "page_numbers"?: (number)[] | null;
+                    "section_hierarchy"?: (string)[] | null;
+                    "section_title"?: string | null;
+                };
+                Update: {
+                    "chunk_index"?: number;
+                    "content"?: string;
+                    "content_length"?: number;
+                    "content_type"?: string;
+                    "created_at"?: string | null;
+                    "document_source_id"?: string;
+                    "embedding"?: string;
+                    "id"?: string;
+                    "make"?: string | null;
+                    "model"?: string | null;
+                    "motorcycle_id"?: string | null;
+                    "page_numbers"?: (number)[] | null;
+                    "section_hierarchy"?: (string)[] | null;
+                    "section_title"?: string | null;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "document_chunks_document_source_id_fkey";
+                        columns: [
+                            "document_source_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "document_sources";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    },
+                    {
+                        foreignKeyName: "document_chunks_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "document_sources": {
+                Row: {
+                    "created_at": string | null;
+                    "file_hash": string | null;
+                    "file_path": string | null;
+                    "id": string;
+                    "make": string | null;
+                    "manual_type": string | null;
+                    "model": string | null;
+                    "motorcycle_id": string | null;
+                    "processed_at": string | null;
+                    "processing_error": string | null;
+                    "processing_status": string;
+                    "source_type": string;
+                    "title": string;
+                    "total_pages": number | null;
+                    "year_end": number | null;
+                    "year_start": number | null;
+                };
+                Insert: {
+                    "created_at"?: string | null;
+                    "file_hash"?: string | null;
+                    "file_path"?: string | null;
+                    "id"?: string;
+                    "make"?: string | null;
+                    "manual_type"?: string | null;
+                    "model"?: string | null;
+                    "motorcycle_id"?: string | null;
+                    "processed_at"?: string | null;
+                    "processing_error"?: string | null;
+                    "processing_status"?: string;
+                    "source_type": string;
+                    "title": string;
+                    "total_pages"?: number | null;
+                    "year_end"?: number | null;
+                    "year_start"?: number | null;
+                };
+                Update: {
+                    "created_at"?: string | null;
+                    "file_hash"?: string | null;
+                    "file_path"?: string | null;
+                    "id"?: string;
+                    "make"?: string | null;
+                    "manual_type"?: string | null;
+                    "model"?: string | null;
+                    "motorcycle_id"?: string | null;
+                    "processed_at"?: string | null;
+                    "processing_error"?: string | null;
+                    "processing_status"?: string;
+                    "source_type"?: string;
+                    "title"?: string;
+                    "total_pages"?: number | null;
+                    "year_end"?: number | null;
+                    "year_start"?: number | null;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "document_sources_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "dtc_codes": {
+                Row: {
+                    "applies_to_makes": (string)[] | null;
+                    "category": string | null;
+                    "code": string;
+                    "common_causes": (string)[] | null;
+                    "created_at": string | null;
+                    "description": string;
+                    "diagnostic_method": string | null;
+                    "fix_reference": string | null;
+                    "id": string;
+                    "manufacturer": string | null;
+                    "severity": string | null;
+                    "subcategory": string | null;
+                    "system": string | null;
+                };
+                Insert: {
+                    "applies_to_makes"?: (string)[] | null;
+                    "category"?: string | null;
+                    "code": string;
+                    "common_causes"?: (string)[] | null;
+                    "created_at"?: string | null;
+                    "description": string;
+                    "diagnostic_method"?: string | null;
+                    "fix_reference"?: string | null;
+                    "id"?: string;
+                    "manufacturer"?: string | null;
+                    "severity"?: string | null;
+                    "subcategory"?: string | null;
+                    "system"?: string | null;
+                };
+                Update: {
+                    "applies_to_makes"?: (string)[] | null;
+                    "category"?: string | null;
+                    "code"?: string;
+                    "common_causes"?: (string)[] | null;
+                    "created_at"?: string | null;
+                    "description"?: string;
+                    "diagnostic_method"?: string | null;
+                    "fix_reference"?: string | null;
+                    "id"?: string;
+                    "manufacturer"?: string | null;
+                    "severity"?: string | null;
+                    "subcategory"?: string | null;
+                    "system"?: string | null;
+                };
+                Relationships: [
+                ];
+            };
+            "extraction_jobs": {
+                Row: {
+                    "chunks_used": (string)[] | null;
+                    "completed_at": string | null;
+                    "completion_tokens": number | null;
+                    "cost_usd": number | null;
+                    "created_at": string | null;
+                    "document_source_id": string;
+                    "error_message": string | null;
+                    "extraction_type": string;
+                    "id": string;
+                    "llm_model": string | null;
+                    "prompt_tokens": number | null;
+                    "result_data": Json | null;
+                    "review_notes": string | null;
+                    "status": string;
+                    "target_table": string;
+                };
+                Insert: {
+                    "chunks_used"?: (string)[] | null;
+                    "completed_at"?: string | null;
+                    "completion_tokens"?: number | null;
+                    "cost_usd"?: number | null;
+                    "created_at"?: string | null;
+                    "document_source_id": string;
+                    "error_message"?: string | null;
+                    "extraction_type": string;
+                    "id"?: string;
+                    "llm_model"?: string | null;
+                    "prompt_tokens"?: number | null;
+                    "result_data"?: Json | null;
+                    "review_notes"?: string | null;
+                    "status"?: string;
+                    "target_table": string;
+                };
+                Update: {
+                    "chunks_used"?: (string)[] | null;
+                    "completed_at"?: string | null;
+                    "completion_tokens"?: number | null;
+                    "cost_usd"?: number | null;
+                    "created_at"?: string | null;
+                    "document_source_id"?: string;
+                    "error_message"?: string | null;
+                    "extraction_type"?: string;
+                    "id"?: string;
+                    "llm_model"?: string | null;
+                    "prompt_tokens"?: number | null;
+                    "result_data"?: Json | null;
+                    "review_notes"?: string | null;
+                    "status"?: string;
+                    "target_table"?: string;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "extraction_jobs_document_source_id_fkey";
+                        columns: [
+                            "document_source_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "document_sources";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "garage_bikes": {
+                Row: {
+                    "archived_at": string | null;
+                    "created_at": string;
+                    "id": string;
+                    "import_key": string | null;
+                    "make": string;
+                    "market": string;
+                    "mileage_km": number | null;
+                    "model": string;
+                    "motorcycle_id": string | null;
+                    "nickname": string;
+                    "owner_id": string;
+                    "photo_path": string | null;
+                    "registration": string;
+                    "variant": string;
+                    "year": number | null;
+                };
+                Insert: {
+                    "archived_at"?: string | null;
+                    "created_at"?: string;
+                    "id": string;
+                    "import_key"?: string | null;
+                    "make": string;
+                    "market"?: string;
+                    "mileage_km"?: number | null;
+                    "model": string;
+                    "motorcycle_id"?: string | null;
+                    "nickname"?: string;
+                    "owner_id": string;
+                    "photo_path"?: string | null;
+                    "registration"?: string;
+                    "variant"?: string;
+                    "year"?: number | null;
+                };
+                Update: {
+                    "archived_at"?: string | null;
+                    "created_at"?: string;
+                    "id"?: string;
+                    "import_key"?: string | null;
+                    "make"?: string;
+                    "market"?: string;
+                    "mileage_km"?: number | null;
+                    "model"?: string;
+                    "motorcycle_id"?: string | null;
+                    "nickname"?: string;
+                    "owner_id"?: string;
+                    "photo_path"?: string | null;
+                    "registration"?: string;
+                    "variant"?: string;
+                    "year"?: number | null;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "garage_bikes_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "glossary_terms": {
+                Row: {
+                    "aliases": (string)[] | null;
+                    "applies_to": (string)[] | null;
+                    "category": string;
+                    "created_at": string | null;
+                    "definition": string;
+                    "difficulty": string | null;
+                    "id": string;
+                    "illustration_url": string | null;
+                    "related_terms": (string)[] | null;
+                    "slug": string;
+                    "subcategory": string | null;
+                    "term": string;
+                };
+                Insert: {
+                    "aliases"?: (string)[] | null;
+                    "applies_to"?: (string)[] | null;
+                    "category": string;
+                    "created_at"?: string | null;
+                    "definition": string;
+                    "difficulty"?: string | null;
+                    "id"?: string;
+                    "illustration_url"?: string | null;
+                    "related_terms"?: (string)[] | null;
+                    "slug": string;
+                    "subcategory"?: string | null;
+                    "term": string;
+                };
+                Update: {
+                    "aliases"?: (string)[] | null;
+                    "applies_to"?: (string)[] | null;
+                    "category"?: string;
+                    "created_at"?: string | null;
+                    "definition"?: string;
+                    "difficulty"?: string | null;
+                    "id"?: string;
+                    "illustration_url"?: string | null;
+                    "related_terms"?: (string)[] | null;
+                    "slug"?: string;
+                    "subcategory"?: string | null;
+                    "term"?: string;
+                };
+                Relationships: [
+                ];
+            };
+            "motorcycle_images": {
+                Row: {
+                    "alt_text": string;
+                    "created_at": string | null;
+                    "id": string;
+                    "image_url": string;
+                    "is_primary": boolean | null;
+                    "motorcycle_id": string;
+                    "source_attribution": string | null;
+                };
+                Insert: {
+                    "alt_text": string;
+                    "created_at"?: string | null;
+                    "id"?: string;
+                    "image_url": string;
+                    "is_primary"?: boolean | null;
+                    "motorcycle_id": string;
+                    "source_attribution"?: string | null;
+                };
+                Update: {
+                    "alt_text"?: string;
+                    "created_at"?: string | null;
+                    "id"?: string;
+                    "image_url"?: string;
+                    "is_primary"?: boolean | null;
+                    "motorcycle_id"?: string;
+                    "source_attribution"?: string | null;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "motorcycle_images_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "motorcycles": {
+                Row: {
+                    "category": string | null;
+                    "coolant_capacity_liters": number | null;
+                    "created_at": string | null;
+                    "displacement_cc": number | null;
+                    "dry_weight_kg": number | null;
+                    "engine_type": string | null;
+                    "fuel_capacity_liters": number | null;
+                    "fuel_system": string | null;
+                    "generation": string | null;
+                    "horsepower": number | null;
+                    "id": string;
+                    "image_url": string | null;
+                    "make": string;
+                    "model": string;
+                    "oil_capacity_liters": number | null;
+                    "spark_plug": string | null;
+                    "tire_front": string | null;
+                    "tire_rear": string | null;
+                    "torque_nm": number | null;
+                    "valve_clearance_exhaust": string | null;
+                    "valve_clearance_intake": string | null;
+                    "year_end": number | null;
+                    "year_start": number;
+                };
+                Insert: {
+                    "category"?: string | null;
+                    "coolant_capacity_liters"?: number | null;
+                    "created_at"?: string | null;
+                    "displacement_cc"?: number | null;
+                    "dry_weight_kg"?: number | null;
+                    "engine_type"?: string | null;
+                    "fuel_capacity_liters"?: number | null;
+                    "fuel_system"?: string | null;
+                    "generation"?: string | null;
+                    "horsepower"?: number | null;
+                    "id"?: string;
+                    "image_url"?: string | null;
+                    "make": string;
+                    "model": string;
+                    "oil_capacity_liters"?: number | null;
+                    "spark_plug"?: string | null;
+                    "tire_front"?: string | null;
+                    "tire_rear"?: string | null;
+                    "torque_nm"?: number | null;
+                    "valve_clearance_exhaust"?: string | null;
+                    "valve_clearance_intake"?: string | null;
+                    "year_end"?: number | null;
+                    "year_start": number;
+                };
+                Update: {
+                    "category"?: string | null;
+                    "coolant_capacity_liters"?: number | null;
+                    "created_at"?: string | null;
+                    "displacement_cc"?: number | null;
+                    "dry_weight_kg"?: number | null;
+                    "engine_type"?: string | null;
+                    "fuel_capacity_liters"?: number | null;
+                    "fuel_system"?: string | null;
+                    "generation"?: string | null;
+                    "horsepower"?: number | null;
+                    "id"?: string;
+                    "image_url"?: string | null;
+                    "make"?: string;
+                    "model"?: string;
+                    "oil_capacity_liters"?: number | null;
+                    "spark_plug"?: string | null;
+                    "tire_front"?: string | null;
+                    "tire_rear"?: string | null;
+                    "torque_nm"?: number | null;
+                    "valve_clearance_exhaust"?: string | null;
+                    "valve_clearance_intake"?: string | null;
+                    "year_end"?: number | null;
+                    "year_start"?: number;
+                };
+                Relationships: [
+                ];
+            };
+            "recalls": {
+                Row: {
+                    "component": string | null;
+                    "consequence": string | null;
+                    "created_at": string | null;
+                    "data_source": string;
+                    "id": string;
+                    "make": string;
+                    "manufacturer": string;
+                    "model": string;
+                    "model_year": number;
+                    "nhtsa_campaign_number": string;
+                    "notes": string | null;
+                    "park_it": boolean | null;
+                    "park_outside": boolean | null;
+                    "remedy": string | null;
+                    "report_received_date": string | null;
+                    "summary": string | null;
+                };
+                Insert: {
+                    "component"?: string | null;
+                    "consequence"?: string | null;
+                    "created_at"?: string | null;
+                    "data_source"?: string;
+                    "id"?: string;
+                    "make": string;
+                    "manufacturer": string;
+                    "model": string;
+                    "model_year": number;
+                    "nhtsa_campaign_number": string;
+                    "notes"?: string | null;
+                    "park_it"?: boolean | null;
+                    "park_outside"?: boolean | null;
+                    "remedy"?: string | null;
+                    "report_received_date"?: string | null;
+                    "summary"?: string | null;
+                };
+                Update: {
+                    "component"?: string | null;
+                    "consequence"?: string | null;
+                    "created_at"?: string | null;
+                    "data_source"?: string;
+                    "id"?: string;
+                    "make"?: string;
+                    "manufacturer"?: string;
+                    "model"?: string;
+                    "model_year"?: number;
+                    "nhtsa_campaign_number"?: string;
+                    "notes"?: string | null;
+                    "park_it"?: boolean | null;
+                    "park_outside"?: boolean | null;
+                    "remedy"?: string | null;
+                    "report_received_date"?: string | null;
+                    "summary"?: string | null;
+                };
+                Relationships: [
+                ];
+            };
+            "service_intervals": {
+                Row: {
+                    "created_at": string | null;
+                    "description": string | null;
+                    "fluid_spec": string | null;
+                    "id": string;
+                    "interval_km": number | null;
+                    "interval_miles": number | null;
+                    "interval_months": number | null;
+                    "motorcycle_id": string;
+                    "service_name": string;
+                    "torque_spec": string | null;
+                };
+                Insert: {
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "fluid_spec"?: string | null;
+                    "id"?: string;
+                    "interval_km"?: number | null;
+                    "interval_miles"?: number | null;
+                    "interval_months"?: number | null;
+                    "motorcycle_id": string;
+                    "service_name": string;
+                    "torque_spec"?: string | null;
+                };
+                Update: {
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "fluid_spec"?: string | null;
+                    "id"?: string;
+                    "interval_km"?: number | null;
+                    "interval_miles"?: number | null;
+                    "interval_months"?: number | null;
+                    "motorcycle_id"?: string;
+                    "service_name"?: string;
+                    "torque_spec"?: string | null;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "service_intervals_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+            "technical_documents": {
+                Row: {
+                    "created_at": string | null;
+                    "description": string | null;
+                    "doc_type": string;
+                    "file_type": string;
+                    "file_url": string;
+                    "id": string;
+                    "motorcycle_id": string | null;
+                    "source_attribution": string | null;
+                    "title": string;
+                };
+                Insert: {
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "doc_type": string;
+                    "file_type": string;
+                    "file_url": string;
+                    "id"?: string;
+                    "motorcycle_id"?: string | null;
+                    "source_attribution"?: string | null;
+                    "title": string;
+                };
+                Update: {
+                    "created_at"?: string | null;
+                    "description"?: string | null;
+                    "doc_type"?: string;
+                    "file_type"?: string;
+                    "file_url"?: string;
+                    "id"?: string;
+                    "motorcycle_id"?: string | null;
+                    "source_attribution"?: string | null;
+                    "title"?: string;
+                };
+                Relationships: [
+                    {
+                        foreignKeyName: "technical_documents_motorcycle_id_fkey";
+                        columns: [
+                            "motorcycle_id"
+                        ];
+                        isOneToOne: false;
+                        referencedRelation: "motorcycles";
+                        referencedColumns: [
+                            "id"
+                        ];
+                    }
+                ];
+            };
+        };
+        Views: {
+            [_ in never]: never;
+        };
+        Functions: {
+            "match_document_chunks": {
+                Args: {
+                    "filter_content_type"?: string;
+                    "filter_make"?: string;
+                    "filter_model"?: string;
+                    "filter_motorcycle_id"?: string;
+                    "match_count"?: number;
+                    "query_embedding": string;
+                    "similarity_threshold"?: number;
+                };
+                Returns: {
+                    "content": string;
+                    "content_type": string;
+                    "id": string;
+                    "make": string;
+                    "model": string;
+                    "page_numbers": (number)[];
+                    "section_hierarchy": (string)[];
+                    "section_title": string;
+                    "similarity": number;
+                }[];
+            };
+        };
+        Enums: {
+            [_ in never]: never;
+        };
+        CompositeTypes: {
+            [_ in never]: never;
+        };
+    };
+};
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>;
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">];
+export type Tables<DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"]) | {
+    schema: keyof DatabaseWithoutInternals;
+}, TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] & DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"]) : never = never> = DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] & DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+    Row: infer R;
+} ? R : never : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"]) ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+    Row: infer R;
+} ? R : never : never;
+export type TablesInsert<DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | {
+    schema: keyof DatabaseWithoutInternals;
+}, TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] : never = never> = DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+    Insert: infer I;
+} ? I : never : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+    Insert: infer I;
+} ? I : never : never;
+export type TablesUpdate<DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | {
+    schema: keyof DatabaseWithoutInternals;
+}, TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] : never = never> = DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+    Update: infer U;
+} ? U : never : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+    Update: infer U;
+} ? U : never : never;
+export type Enums<DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"] | {
+    schema: keyof DatabaseWithoutInternals;
+}, EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"] : never = never> = DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName] : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"] ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions] : never;
+export type CompositeTypes<PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"] | {
+    schema: keyof DatabaseWithoutInternals;
+}, CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"] : never = never> = PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+} ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName] : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"] ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions] : never;
+export const Constants = {
+    "graphql_public": {
+        Enums: {}
+    }, "public": {
+        Enums: {}
     }
-    Views: Record<string, never>
-    Functions: {
-      match_document_chunks: {
-        Args: {
-          query_embedding: string
-          match_count: number
-          filter_motorcycle_id: string | null
-          filter_make: string | null
-          filter_model: string | null
-          filter_content_type: string | null
-          similarity_threshold: number
-        }
-        Returns: {
-          id: string
-          content: string
-          section_title: string | null
-          section_hierarchy: string[] | null
-          page_numbers: number[] | null
-          content_type: string
-          make: string | null
-          model: string | null
-          similarity: number
-        }[]
-      }
-    }
-    Enums: Record<string, never>
-  }
-}
-
-// Helper types for working with Supabase queries
-export type Tables<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Row']
-
-export type Enums<T extends keyof Database['public']['Enums']> =
-  Database['public']['Enums'][T]
-
+} as const;
 // Convenience types for each table
-export type Motorcycle = Tables<'motorcycles'>
-export type DiagnosticTree = Tables<'diagnostic_trees'>
-export type DtcCode = Tables<'dtc_codes'>
-export type ServiceInterval = Tables<'service_intervals'>
-export type TechnicalDocument = Tables<'technical_documents'>
-export type Recall = Tables<'recalls'>
-export type MotorcycleImage = Tables<'motorcycle_images'>
-export type GlossaryTerm = Tables<'glossary_terms'>
-export type DocumentSource = Tables<'document_sources'>
-export type DocumentChunk = Tables<'document_chunks'>
-export type ExtractionJob = Tables<'extraction_jobs'>
-
+export type Motorcycle = Tables<'motorcycles'>;
+// Preserve the application union enforced by the database's text CHECK constraint.
+export type DiagnosticTree = Omit<Tables<'diagnostic_trees'>, 'difficulty'> & {
+    difficulty: 'beginner' | 'intermediate' | 'advanced' | null;
+};
+export type DtcCode = Tables<'dtc_codes'>;
+export type ServiceInterval = Tables<'service_intervals'>;
+export type TechnicalDocument = Tables<'technical_documents'>;
+export type Recall = Tables<'recalls'>;
+export type MotorcycleImage = Tables<'motorcycle_images'>;
+export type GlossaryTerm = Tables<'glossary_terms'>;
+export type DocumentSource = Tables<'document_sources'>;
+export type DocumentChunk = Tables<'document_chunks'>;
+export type ExtractionJob = Tables<'extraction_jobs'>;
 // Decision tree node types (for tree_data JSONB structure)
 export interface DecisionTreeNode {
-  id: string
-  type: 'question' | 'check' | 'solution'
-  text: string
-  safety: 'green' | 'yellow' | 'red'
-  warning?: string
-  instructions?: string
-  options?: Array<{
-    text: string
-    next: string
-  }>
-  next?: string
-  action?: string
-  details?: string
+    id: string;
+    type: 'question' | 'check' | 'solution';
+    text: string;
+    safety: 'green' | 'yellow' | 'red';
+    warning?: string;
+    instructions?: string;
+    options?: Array<{
+        text: string;
+        next: string;
+    }>;
+    next?: string;
+    action?: string;
+    details?: string;
 }
-
 export interface DecisionTreeData {
-  nodes: DecisionTreeNode[]
+    nodes: DecisionTreeNode[];
 }
-
 // VIN decoder types (NHTSA vPIC API response)
 export interface VinDecodedResult {
-  make: string | null
-  model: string | null
-  year: number | null
-  vehicleType: string | null
-  engineSize: string | null
-  fuelType: string | null
-  displacement: string | null
-  cylinders: string | null
-  transmissionType: string | null
-  errorCode: string | null
-  errorText: string | null
+    make: string | null;
+    model: string | null;
+    year: number | null;
+    vehicleType: string | null;
+    engineSize: string | null;
+    fuelType: string | null;
+    displacement: string | null;
+    cylinders: string | null;
+    transmissionType: string | null;
+    errorCode: string | null;
+    errorText: string | null;
 }
