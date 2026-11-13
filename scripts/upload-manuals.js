@@ -92,7 +92,7 @@ async function ensureBucket() {
   const exists = buckets && buckets.some((b) => b.name === BUCKET)
   if (!exists) {
     const { error } = await supabase.storage.createBucket(BUCKET, {
-      public: true,
+      public: false, // manuals are copyrighted: readable with the service role only
       fileSizeLimit: 52428800, // 50 MB — Supabase free tier limit
     })
     if (error) {
@@ -175,11 +175,10 @@ async function main() {
       continue
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from(BUCKET)
-      .getPublicUrl(filename)
+    // The bucket is private, so store the storage path rather than a public URL
+    const storagePath = `${BUCKET}/${filename}`
 
-    console.log(`  Uploaded -> ${publicUrl}`)
+    console.log(`  Uploaded -> ${storagePath}`)
     uploaded++
 
     // Look up motorcycle_id
@@ -195,7 +194,7 @@ async function main() {
     const row = {
       title,
       source_type: 'pdf',
-      file_path: publicUrl,
+      file_path: storagePath,
       file_hash: fileHash,
       motorcycle_id: motorcycleId,
       make: parsed.make,

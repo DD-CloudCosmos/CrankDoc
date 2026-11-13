@@ -337,10 +337,11 @@ describe('buildCoverageMatrix', () => {
   })
 })
 
-// Mock Supabase server client for listStorageManuals tests
+// Mock the Supabase service client for listStorageManuals tests
+// (the manuals bucket is private, so it is listed with the service role)
 const mockStorageList = vi.fn()
 vi.mock('@/lib/supabase/server', () => ({
-  createServerClient: () => ({
+  createServiceClient: () => ({
     storage: {
       from: () => ({
         list: (...args: unknown[]) => mockStorageList(...args),

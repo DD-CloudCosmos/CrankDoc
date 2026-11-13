@@ -2,11 +2,15 @@
  * Manual Coverage — Server-Only Functions
  *
  * Supabase fetchers and Storage listing for the admin manual coverage dashboard.
- * Uses Supabase server client — only import from Server Components and API routes,
- * never from client components.
+ * Only import from Server Components and API routes, never from client components.
+ *
+ * Manuals are private (migration 007): the storage bucket and the
+ * document_sources table are readable with the service role key only,
+ * so those two readers use the service client. Only call them from
+ * pages behind the admin login.
  */
 
-import { createServerClient } from '@/lib/supabase/server'
+import { createServerClient, createServiceClient } from '@/lib/supabase/server'
 import { parseManualFilename } from '@/lib/manuals'
 import type { Motorcycle, DocumentSource } from '@/types/database.types'
 import type { StorageManualFile } from '@/lib/manuals'
@@ -22,7 +26,7 @@ const STORAGE_BUCKET = 'service-manuals'
  */
 export async function listStorageManuals(): Promise<StorageManualFile[] | null> {
   try {
-    const supabase = createServerClient()
+    const supabase = createServiceClient()
     const { data, error } = await supabase.storage
       .from(STORAGE_BUCKET)
       .list('', { limit: 1000, sortBy: { column: 'name', order: 'asc' } })
@@ -66,7 +70,7 @@ export async function fetchMotorcycles(): Promise<Motorcycle[]> {
 }
 
 export async function fetchDocumentSources(): Promise<DocumentSource[]> {
-  const supabase = createServerClient()
+  const supabase = createServiceClient()
   const { data, error } = await supabase
     .from('document_sources')
     .select('*')

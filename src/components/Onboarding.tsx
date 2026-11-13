@@ -71,12 +71,15 @@ export function Onboarding({ bikes, universalTreeCount }: OnboardingProps) {
   }
 
   function skip() {
-    setShowingDone(false)
+    close()
     completeOnboarding()
   }
 
   function close() {
     setShowingDone(false)
+    // If the garage is edited later, reopen on the bike list rather than
+    // on the step that was showing when the sheet closed
+    setStep('bikes')
   }
 
   const diagnoseHref = selected.length === 1 ? `/diagnose?bike=${selected[0].id}` : '/diagnose'

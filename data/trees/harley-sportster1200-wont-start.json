@@ -116,16 +116,18 @@
         "type": "solution",
         "text": "Kickstand safety switch engaged",
         "safety": "green",
+        "warning": "Never bypass the kickstand switch. With it defeated, the bike can be ridden away with the stand down.",
         "action": "Retract the kickstand or shift to neutral",
-        "details": "The Sportster 1200 has a kickstand safety switch that prevents starting when the stand is down and the transmission is in gear. Either retract the kickstand fully or shift to neutral. If the switch is faulty (bike won't start even with stand up), the switch can be bypassed temporarily — but replace it soon for safety."
+        "details": "The Sportster 1200 has a kickstand safety switch that prevents starting when the stand is down and the transmission is in gear. Either retract the kickstand fully or shift to neutral. If the bike won't start even with the stand up, the switch may be faulty. Unplug its connector and check the switch with a multimeter set to continuity: the reading should change when you move the stand up and down. If it does not change, replace the switch before riding."
       },
       {
         "id": "solution_clutch_switch",
         "type": "solution",
         "text": "Clutch safety switch",
         "safety": "green",
+        "warning": "Never bridge the clutch switch wires to get the bike started. With the switch defeated, the bike can lurch forward if it is started in gear.",
         "action": "Pull the clutch lever fully to the handlebar",
-        "details": "The Sportster 1200 requires the clutch lever to be pulled in to start (unless in neutral). Pull the lever all the way to the bar and try again. If the clutch switch is failing, the bike may not recognize the lever is pulled — you can try starting in neutral instead. A faulty clutch switch can be tested by bypassing the two wires at the clutch perch connector."
+        "details": "The Sportster 1200 requires the clutch lever to be pulled in to start (unless in neutral). Pull the lever all the way to the bar and try again. If the clutch switch is failing, the bike may not recognize the lever is pulled — you can try starting in neutral instead. To test the clutch switch, unplug the two-wire connector at the clutch perch and check the switch with a multimeter set to continuity: the reading should change when you pull and release the lever. If it does not change, replace the switch."
       },
       {
         "id": "check_starter_relay",

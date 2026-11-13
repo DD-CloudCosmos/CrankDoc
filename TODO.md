@@ -5,6 +5,16 @@
 
 ## Ready
 
+### TODO-029: Apply the security fixes to production
+- **Branch:** N/A (production steps, David only — needs the Supabase dashboard and Vercel)
+- **Acceptance criteria:**
+  1. Run `supabase/migrations/007_lock_down_manuals.sql` in the Supabase SQL editor. Check that a manual's old public URL now returns an error.
+  2. Set `SUPABASE_SERVICE_ROLE_KEY` on Vercel (Production and Preview), otherwise `/admin/manuals` shows an error.
+  3. Publish the corrected guides: `node scripts/import-trees.js bmw-r1250gs-wont-start.json harley-sportster1200-wont-start.json harley-sportster883-starter.json kawasaki-ninja400-wont-start.json yamaha-mt07-wont-start.json`
+  4. Remove `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` from Vercel if they are set there (the deployed app no longer uses them).
+  5. In the Supabase SQL editor, check that no `exec_sql` function exists: `select proname from pg_proc where proname = 'exec_sql';`
+- **Dependencies:** PR for TODO-028 merged
+- **Complexity:** S
 
 ### TODO-011: Verify production after deploy + seed
 - **Branch:** N/A (verification)
@@ -42,6 +52,9 @@
 ## Blocked
 
 ## Done (this iteration)
+
+### TODO-028: Review fixes — exposed manuals, open AI endpoint, safety wording (✅ 2026-11-13)
+- From the 2026-11-13 full review. Removed the open `/api/rag/*` routes and the committed Honda factory manual; migration 007 makes manuals private; Next 16.4.6; wipe guard on the seed script; five guides no longer tell users to bypass a safety switch; onboarding reopen trap fixed; PWA icons added; tree import no longer duplicates universal guides. Production steps are in TODO-029.
 
 ### TODO-009: Seed production Supabase with all data (✅ 2026-10-03)
 - Data was already seeded; the site was down because the free-tier Supabase project had auto-paused after months of inactivity. Restored by David. Verified live: 18 motorcycles, 664 DTCs, 220 glossary terms, guides per bike.

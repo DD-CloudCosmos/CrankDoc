@@ -125,8 +125,9 @@
         "type": "solution",
         "text": "Safety interlock resolved",
         "safety": "green",
+        "warning": "Never bypass the side stand switch or any other safety interlock. With it defeated, the bike can be ridden away with the stand down.",
         "action": "Correct the safety interlock condition",
-        "details": "The R1250GS safety system prevented starting. Common oversights: (1) Kill switch left on STOP — toggle to RUN. (2) Kickstand down while in gear — retract it or shift to neutral. (3) Clutch not fully pulled in — squeeze all the way to the bar. (4) The side stand switch can fail — if the bike won't start with stand up and in neutral, the switch may be faulty. Try disconnecting and jumping the side stand switch connector (2-wire plug near the stand pivot) to test."
+        "details": "The R1250GS safety system prevented starting. Common oversights: (1) Kill switch left on STOP — toggle to RUN. (2) Kickstand down while in gear — retract it or shift to neutral. (3) Clutch not fully pulled in — squeeze all the way to the bar. (4) The side stand switch can fail — if the bike won't start with stand up and in neutral, the switch may be faulty. Have it tested and replaced by a BMW workshop."
       },
       {
         "id": "solution_starter_circuit",

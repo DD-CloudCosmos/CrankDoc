@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, Fragment } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -38,8 +38,10 @@ export function RecallList() {
   const searchParams = useSearchParams()
 
   const [recalls, setRecalls] = useState<Recall[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  // Which filters the data on screen belongs to. While that differs from the
+  // current filters a request is on its way, so the list shows as loading.
+  const [loadedKey, setLoadedKey] = useState<string | null>(null)
+  const [lastError, setLastError] = useState<string | null>(null)
   const [make, setMake] = useState(searchParams.get('make') || '')
   const [model, setModel] = useState(searchParams.get('model') || '')
   const [year, setYear] = useState(searchParams.get('year') || '')
@@ -71,38 +73,48 @@ export function RecallList() {
     loadFilters()
   }, [])
 
-  const fetchRecalls = useCallback(async (mk: string, mdl: string, yr: string, p: number) => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const params = new URLSearchParams()
-      if (mk) params.set('make', mk)
-      if (mdl) params.set('model', mdl)
-      if (yr) params.set('year', yr)
-      params.set('page', String(p))
-      params.set('limit', '20')
-
-      const response = await fetch(`/api/recalls?${params.toString()}`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch recalls')
-      }
-
-      const data: RecallsApiResponse = await response.json()
-      setRecalls(data.recalls)
-      setTotal(data.total)
-      setTotalPages(data.totalPages)
-    } catch {
-      setError('Failed to load recalls. Please try again.')
-      setRecalls([])
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  const requestKey = JSON.stringify([make, model, year, page])
+  const loading = loadedKey !== requestKey
+  const error = loading ? null : lastError
 
   useEffect(() => {
-    fetchRecalls(make, model, year, page)
-  }, [make, model, year, page, fetchRecalls])
+    // Ignore a response that arrives after the filters have changed again
+    let cancelled = false
+
+    async function load() {
+      try {
+        const params = new URLSearchParams()
+        if (make) params.set('make', make)
+        if (model) params.set('model', model)
+        if (year) params.set('year', year)
+        params.set('page', String(page))
+        params.set('limit', '20')
+
+        const response = await fetch(`/api/recalls?${params.toString()}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch recalls')
+        }
+
+        const data: RecallsApiResponse = await response.json()
+        if (cancelled) return
+        setRecalls(data.recalls)
+        setTotal(data.total)
+        setTotalPages(data.totalPages)
+        setLastError(null)
+      } catch {
+        if (cancelled) return
+        setLastError('Failed to load recalls. Please try again.')
+        setRecalls([])
+      } finally {
+        if (!cancelled) setLoadedKey(requestKey)
+      }
+    }
+
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [make, model, year, page, requestKey])
 
   const toggleExpanded = (id: string) => {
     setExpandedIds((prev) => {

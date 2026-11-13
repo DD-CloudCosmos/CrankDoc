@@ -83,17 +83,18 @@
         "type": "check",
         "text": "Test the clutch safety switch",
         "safety": "green",
-        "instructions": "The MT-07 requires the clutch lever to be pulled in to engage the starter (unless in neutral). Check if the neutral light on the dash is on. If in neutral, the clutch switch is bypassed. If in gear, pull the clutch fully and try again. The clutch switch is on the left handlebar perch — you can test it by disconnecting the two-wire connector and jumping the wires together. If the starter now works with the wires jumped, the clutch switch is faulty.",
+        "warning": "Never bridge the clutch switch wires to get the bike started. With the switch defeated, the bike can lurch forward if it is started in gear.",
+        "instructions": "The MT-07 requires the clutch lever to be pulled in to engage the starter (unless in neutral). Check if the neutral light on the dash is on. In neutral the starter works without pulling the clutch. If in gear, pull the clutch fully and try again. The clutch switch is on the left handlebar perch. To test it, disconnect its two-wire connector and measure across the two switch terminals with a multimeter set to continuity: the meter should show continuity with the lever pulled and none with the lever released. If the reading does not change, the clutch switch is faulty.",
         "next": "clutch_switch_result"
       },
       {
         "id": "clutch_switch_result",
         "type": "question",
-        "text": "Did bypassing the clutch switch help?",
+        "text": "What did the clutch switch test show?",
         "safety": "green",
         "options": [
-          { "text": "Yes — starter works with switch bypassed", "next": "solution_clutch_switch" },
-          { "text": "No — still no click from starter relay", "next": "solution_starter_relay" }
+          { "text": "The meter reading does not change when I pull the lever", "next": "solution_clutch_switch" },
+          { "text": "The switch tests fine — still no click from starter relay", "next": "solution_starter_relay" }
         ]
       },
       {

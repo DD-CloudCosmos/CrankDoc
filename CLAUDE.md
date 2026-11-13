@@ -5,7 +5,7 @@
 Motorcycle and scooter diagnostic decision tree web app. Mobile-first, Apple-style UI (light default, automatic dark mode), workshop-friendly. Users select a bike and symptom, then walk through interactive diagnostic flows to find root causes. Free, no-login MVP.
 
 **Type:** Full-stack web application
-**Stack:** Next.js 16.1.6 (App Router) + TypeScript + TailwindCSS 4 + shadcn/ui, Supabase (PostgreSQL), Vercel
+**Stack:** Next.js 16.4 (App Router) + TypeScript + TailwindCSS 4 + shadcn/ui, Supabase (PostgreSQL), Vercel
 
 ## Architecture
 

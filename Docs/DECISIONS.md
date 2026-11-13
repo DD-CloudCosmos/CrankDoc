@@ -80,5 +80,5 @@ Decisions are made by David; each entry records the context and rationale.
 **Status:** Inferred
 **Context:** Needed to enrich motorcycle data from external sources (manufacturer sites, spec databases).
 **Choice:** RAG system with vector DB (pgvector via Supabase), document parsing/chunking, query API, and extraction pipeline. Web scraping with headless browser and robots.txt compliance.
-**Evidence:** `supabase/migrations/006_rag_schema.sql`, `src/lib/rag/`, `src/lib/scraper/`, `src/app/api/rag/`
+**Evidence:** `supabase/migrations/006_rag_schema.sql`, `src/lib/rag/`, `src/lib/scraper/` (the public `src/app/api/rag/` routes were removed on 2026-11-13; the pipeline runs from `scripts/` only)
 **Note:** This decision predates the agent framework.

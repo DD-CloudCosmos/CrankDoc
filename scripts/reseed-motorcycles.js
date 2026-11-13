@@ -6,11 +6,18 @@
  * Clears existing data and inserts generation-split motorcycles.
  * Run this AFTER applying 002_phase5_schema.sql migration.
  *
- * Usage: node scripts/reseed-motorcycles.js
+ * DESTRUCTIVE: it deletes every row in six tables, and the new bikes get
+ * new ids. It refuses to run unless you name the project you are wiping:
+ *
+ *   node scripts/reseed-motorcycles.js --confirm-wipe=<project-ref>
+ *   CONFIRM_WIPE=<project-ref> npm run seed:all
+ *
+ * (<project-ref> is the first part of the Supabase URL in .env.local.)
  */
 
 const path = require('path')
 const { createClient } = require('@supabase/supabase-js')
+const { checkWipeConfirmation } = require('./lib/confirmWipe')
 require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') })
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -183,9 +190,7 @@ async function main() {
   console.log('\nCrankDoc Reseed')
   console.log('===============\n')
 
-  // Step 1: Clear existing data (respect FK order)
-  console.log('Clearing existing data...')
-
+  // Tables cleared in step 1 (order respects foreign keys)
   const tables = [
     'technical_documents',
     'motorcycle_images',
@@ -194,6 +199,17 @@ async function main() {
     'dtc_codes',
     'motorcycles',
   ]
+
+  // Never wipe a database unless the caller named it explicitly
+  const confirmation = checkWipeConfirmation(process.argv.slice(2), process.env, SUPABASE_URL, tables)
+  if (!confirmation.ok) {
+    console.error(confirmation.message)
+    process.exit(1)
+  }
+  console.log(confirmation.message)
+
+  // Step 1: Clear existing data
+  console.log('\nClearing existing data...')
 
   for (const table of tables) {
     const { error } = await supabase.from(table).delete().neq('id', '00000000-0000-0000-0000-000000000000')

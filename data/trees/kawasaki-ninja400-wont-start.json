@@ -192,8 +192,9 @@
         "type": "solution",
         "text": "Replace Clutch Safety Switch",
         "safety": "green",
+        "warning": "Never bridge the clutch switch wires to get the bike started. With the switch defeated, the bike can lurch forward if it is started in gear.",
         "action": "Replace or adjust the clutch lever safety switch.",
-        "details": "The clutch switch is on the left handlebar perch. It is a simple two-wire switch that closes when the clutch lever is fully pulled. Test by disconnecting the two-wire connector and jumping the wires — if the starter works, the switch is faulty. Replace with an OEM switch."
+        "details": "The clutch switch is on the left handlebar perch. It is a simple two-wire switch that closes when the clutch lever is fully pulled. Test by disconnecting the two-wire connector and measuring across the two switch terminals with a multimeter set to continuity — the meter should show continuity only with the lever pulled. If the reading does not change, the switch is faulty. Replace with an OEM switch."
       },
       {
         "id": "solution_neutral_switch",

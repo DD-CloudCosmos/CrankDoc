@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { GlossarySearch } from '@/components/GlossarySearch'
 import { GlossaryAlphaFilter } from '@/components/GlossaryAlphaFilter'
 import { GlossaryCategoryFilter } from '@/components/GlossaryCategoryFilter'
@@ -22,8 +22,10 @@ import { DIFFICULTY_STYLES } from '@/lib/badgeStyles'
 
 export function GlossaryList() {
   const [terms, setTerms] = useState<GlossaryTerm[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  // Which filters the data on screen belongs to. While that differs from the
+  // current filters a request is on its way, so the list shows as loading.
+  const [loadedKey, setLoadedKey] = useState<string | null>(null)
+  const [lastError, setLastError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [category, setCategory] = useState('')
   const [letter, setLetter] = useState('')
@@ -34,38 +36,48 @@ export function GlossaryList() {
   const [modalImage, setModalImage] = useState<{ url: string; term: string } | null>(null)
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const fetchTerms = useCallback(async (q: string, cat: string, ltr: string, p: number) => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const params = new URLSearchParams()
-      if (q) params.set('q', q)
-      if (cat) params.set('category', cat)
-      if (ltr) params.set('letter', ltr)
-      params.set('page', String(p))
-      params.set('limit', '30')
-
-      const response = await fetch(`/api/glossary?${params.toString()}`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch glossary terms')
-      }
-
-      const data: GlossaryApiResponse = await response.json()
-      setTerms(data.terms)
-      setTotal(data.total)
-      setTotalPages(data.totalPages)
-    } catch {
-      setError('Failed to load glossary terms. Please try again.')
-      setTerms([])
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  const requestKey = JSON.stringify([searchQuery, category, letter, page])
+  const loading = loadedKey !== requestKey
+  const error = loading ? null : lastError
 
   useEffect(() => {
-    fetchTerms(searchQuery, category, letter, page)
-  }, [searchQuery, category, letter, page, fetchTerms])
+    // Ignore a response that arrives after the filters have changed again
+    let cancelled = false
+
+    async function load() {
+      try {
+        const params = new URLSearchParams()
+        if (searchQuery) params.set('q', searchQuery)
+        if (category) params.set('category', category)
+        if (letter) params.set('letter', letter)
+        params.set('page', String(page))
+        params.set('limit', '30')
+
+        const response = await fetch(`/api/glossary?${params.toString()}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch glossary terms')
+        }
+
+        const data: GlossaryApiResponse = await response.json()
+        if (cancelled) return
+        setTerms(data.terms)
+        setTotal(data.total)
+        setTotalPages(data.totalPages)
+        setLastError(null)
+      } catch {
+        if (cancelled) return
+        setLastError('Failed to load glossary terms. Please try again.')
+        setTerms([])
+      } finally {
+        if (!cancelled) setLoadedKey(requestKey)
+      }
+    }
+
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [searchQuery, category, letter, page, requestKey])
 
   const handleSearch = (query: string) => {
     if (debounceTimer.current) {

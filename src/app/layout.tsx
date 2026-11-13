@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
   },
   icons: {
-    apple: '/icons/icon-192.png',
+    apple: '/icons/apple-touch-icon.png',
   },
 };
 

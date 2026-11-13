@@ -15,6 +15,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - `/dtc?q=` deep links and a KYMCO filter for fault codes (#28)
 - Branded error page with retry (#28)
 
+### Security
+- Removed the public `/api/rag/query` and `/api/rag/ingest` routes: no page used them, the first called paid AI APIs without a login and the second listed download links for every uploaded service manual
+- Migration `007_lock_down_manuals.sql`: service-manual tables are no longer readable with the public key and the manuals storage bucket is private; the admin coverage page reads them with the service role key
+- Removed the Honda CB1000R factory service manual from `public/` (copyrighted); the bike page now cites it as a source
+- Next.js 16.3.8 → 16.4.6 (critical advisory in the image optimiser) and patched transitive dependencies; `npm audit --omit=dev` reports 0 vulnerabilities
+- `seed:motorcycles` / `seed:all` refuse to clear tables unless the project is named with `--confirm-wipe=<project-ref>` or `CONFIRM_WIPE`
+
 ### Changed
 - Complete visual redesign: Apple-style tokens, system font (SF Pro / Inter), grouped lists, segmented controls, frosted navigation (#28)
 - Mobile tab bar: Home, Diagnose, Bikes, Codes, More; VIN decoder added to navigation (#28)
@@ -22,6 +29,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - Safety labels: Beginner-safe, Care required, Pro recommended (#28)
 
 ### Fixed
+- Five won't-start guides told users to bypass or bridge a clutch, kickstand or side-stand switch; they now describe a multimeter test and warn against bypassing. A test fails if such wording returns
+- Onboarding could not be closed after reopening it with "Edit" on the home page; it now reopens on the bike list
+- PWA icons were missing from the repository (ignored by `.gitignore`), so the app could not be installed; added 192px, 512px, maskable and Apple touch icons
+- `seed:trees` inserted a duplicate of every universal guide on each run and attached guides to a missing bike as universal; it now updates guides in place and can import named files only
 - Inter font never loaded (body font resolved to Tailwind's default stack) (#28)
 - Installed PWAs kept serving stale pages: navigations are now network-first and the cache version is bumped (#28)
 - Nested link/button markup on back buttons and not-found pages; unlabeled glossary search and VIN fields (#28)
