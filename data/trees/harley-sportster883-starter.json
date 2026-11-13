@@ -136,9 +136,9 @@
         "type": "solution",
         "text": "Starter relay trigger circuit problem",
         "safety": "yellow",
-        "warning": "Trace wiring carefully. Check the wiring diagram for your specific model year.",
+        "warning": "Trace wiring carefully. Check the wiring diagram for your specific model year. Do not bypass the clutch, neutral or kickstand switches to get the bike started.",
         "action": "Diagnose the starter relay trigger circuit",
-        "details": "The starter motor works but the relay isn't sending power to it. Check: (1) Starter button — clean the contacts inside the right handlebar switch housing. (2) Clutch safety switch — the starter won't engage unless the clutch is pulled or the bike is in neutral. Test by bypassing the clutch switch. (3) Neutral safety switch — test by shifting to neutral. (4) Kickstand safety switch — ensure the kickstand is fully up. (5) Tip-over sensor (if equipped) — reset by cycling the ignition. (6) Bank angle sensor. Any of these switches in the starter circuit can prevent the relay from triggering."
+        "details": "The starter motor works but the relay isn't sending power to it. Check: (1) Starter button — clean the contacts inside the right handlebar switch housing. (2) Clutch safety switch — the starter won't engage unless the clutch is pulled or the bike is in neutral. Test the switch with a multimeter set to continuity: the reading should change when you pull and release the lever. (3) Neutral safety switch — test by shifting to neutral. (4) Kickstand safety switch — ensure the kickstand is fully up. (5) Tip-over sensor (if equipped) — reset by cycling the ignition. (6) Bank angle sensor. Any of these switches in the starter circuit can prevent the relay from triggering."
       },
       {
         "id": "solution_replace_starter",
