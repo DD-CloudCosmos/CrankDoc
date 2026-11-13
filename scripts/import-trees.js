@@ -6,7 +6,12 @@
  * Reads diagnostic tree JSON files from data/trees/ and inserts them into Supabase.
  * Each JSON file represents one diagnostic tree.
  *
- * Usage: node scripts/import-trees.js
+ * Usage:
+ *   node scripts/import-trees.js                                # every guide
+ *   node scripts/import-trees.js yamaha-mt07-wont-start.json    # only the named guides
+ *
+ * A guide that is already in the database (same title, same bike) is updated
+ * in place and keeps its id. New guides are inserted.
  *
  * JSON file format:
  * {
@@ -23,6 +28,7 @@
 const fs = require('fs')
 const path = require('path')
 const { createClient } = require('@supabase/supabase-js')
+const { selectTreeFiles, findExistingTree } = require('./lib/treeImport')
 require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') })
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -37,7 +43,8 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
 const TREES_DIR = path.join(__dirname, '..', 'data', 'trees')
 
-async function getMotorcycleId(make, model, generation) {
+/** Ids of every row for this bike (a model can have several generation rows), oldest first. */
+async function getMotorcycleIds(make, model, generation) {
   let query = supabase
     .from('motorcycles')
     .select('id')
@@ -48,14 +55,10 @@ async function getMotorcycleId(make, model, generation) {
     query = query.eq('generation', generation)
   }
 
-  const { data, error } = await query.limit(1).single()
+  const { data, error } = await query.order('year_start', { ascending: true })
 
-  if (error) {
-    const genLabel = generation ? ` [${generation}]` : ''
-    console.warn(`  Warning: Could not find motorcycle ${make} ${model}${genLabel}`)
-    return null
-  }
-  return data.id
+  if (error || !data) return []
+  return data.map((row) => row.id)
 }
 
 async function importTree(filePath) {
@@ -70,20 +73,28 @@ async function importTree(filePath) {
   }
 
   // Look up motorcycle if specified
-  let motorcycleId = null
+  let motorcycleIds = []
   if (tree.motorcycle_make && tree.motorcycle_model) {
-    motorcycleId = await getMotorcycleId(tree.motorcycle_make, tree.motorcycle_model, tree.motorcycle_generation)
+    motorcycleIds = await getMotorcycleIds(tree.motorcycle_make, tree.motorcycle_model, tree.motorcycle_generation)
+    if (motorcycleIds.length === 0) {
+      // Never fall back to a universal guide: a model-specific guide would then show for every bike
+      const genLabel = tree.motorcycle_generation ? ` [${tree.motorcycle_generation}]` : ''
+      console.error(`  FAIL ${fileName}: motorcycle ${tree.motorcycle_make} ${tree.motorcycle_model}${genLabel} is not in the database`)
+      return false
+    }
   }
+  const motorcycleId = motorcycleIds.length > 0 ? motorcycleIds[0] : null
 
   // Check for existing tree with same title and motorcycle
-  const { data: existing } = await supabase
-    .from('diagnostic_trees')
-    .select('id')
-    .eq('title', tree.title)
-    .eq('motorcycle_id', motorcycleId)
-    .limit(1)
+  let existing
+  try {
+    existing = await findExistingTree(supabase, tree.title, motorcycleIds)
+  } catch (err) {
+    console.error(`  FAIL ${fileName}: ${err.message}`)
+    return false
+  }
 
-  if (existing && existing.length > 0) {
+  if (existing) {
     // Update existing tree
     const { error } = await supabase
       .from('diagnostic_trees')
@@ -93,7 +104,7 @@ async function importTree(filePath) {
         difficulty: tree.difficulty || null,
         tree_data: tree.tree_data,
       })
-      .eq('id', existing[0].id)
+      .eq('id', existing.id)
 
     if (error) {
       console.error(`  FAIL ${fileName}: ${error.message}`)
@@ -131,14 +142,21 @@ async function main() {
     process.exit(1)
   }
 
-  const files = fs.readdirSync(TREES_DIR).filter((f) => f.endsWith('.json')).sort()
+  const allFiles = fs.readdirSync(TREES_DIR).filter((f) => f.endsWith('.json')).sort()
 
-  if (files.length === 0) {
+  if (allFiles.length === 0) {
     console.log('No JSON files found in data/trees/')
     process.exit(0)
   }
 
-  console.log(`Found ${files.length} tree files\n`)
+  // Optional file names on the command line limit the import to those guides
+  const { files, unknown } = selectTreeFiles(allFiles, process.argv.slice(2))
+  if (unknown.length > 0) {
+    console.error(`No such file in data/trees/: ${unknown.join(', ')}`)
+    process.exit(1)
+  }
+
+  console.log(`Importing ${files.length} of ${allFiles.length} tree files\n`)
 
   let success = 0
   let failed = 0
