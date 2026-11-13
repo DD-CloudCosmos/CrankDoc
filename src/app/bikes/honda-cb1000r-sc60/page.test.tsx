@@ -26,5 +26,6 @@ it('onboards the bike with a transparent illustration, schedule, precise fluids 
   await user.click(screen.getByRole('tab', { name: 'Fluids' }))
   expect(screen.getByText(/3.0 L with filter/)).toBeInTheDocument()
   expect(screen.getByText(/CB1000R 511.*CB1000RA 542/)).toBeInTheDocument()
-  expect(screen.getByRole('link', { name: 'Factory service manual' })).toHaveAttribute('href', '/manuals/honda-cb1000r-2008.pdf')
+  expect(screen.getByText(/Honda CB1000R\/RA service manual \(April 2008\)/)).toBeInTheDocument()
+  expect(screen.queryByRole('link', { name: /factory service manual/i })).not.toBeInTheDocument()
 })

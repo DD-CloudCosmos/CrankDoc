@@ -4,8 +4,9 @@
  * This file provides the Supabase client for use in Server Components,
  * Server Actions, and API routes.
  *
- * Currently uses the anon key for basic operations. When admin operations
- * are needed (bypassing RLS), we'll add a separate service role client.
+ * createServerClient() uses the anon key, with RLS enforced, for public data.
+ * createServiceClient() uses the service role key and bypasses RLS: use it
+ * only for private data (service manuals) on pages behind the admin login.
  *
  * @example Server Component
  * ```tsx
@@ -36,7 +37,7 @@ import type { Database } from '@/types/database.types'
  * Create a Supabase client for server-side use
  *
  * Uses the anon key with RLS policies enforced.
- * For admin operations that bypass RLS, use createServiceClient() (to be added).
+ * For admin operations that bypass RLS, use createServiceClient().
  *
  * @returns Supabase client instance configured with anon key
  * @throws Error if environment variables are not set

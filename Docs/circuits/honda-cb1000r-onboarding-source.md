@@ -4,7 +4,7 @@ The reference is for the supplied April 2008 CB1000R/CB1000RA manual. It does no
 
 ## Specifications and service
 
-The unchanged uploaded manual is packaged at `public/manuals/honda-cb1000r-2008.pdf` (660 pages). SHA-256: `ecd31305e2fdaa5ab2c61dfe80a0c8b6639535e0335489ff51b0b4a7bfcb4609`. It matches the upload byte for byte.
+The uploaded manual (660 pages, SHA-256 `ecd31305e2fdaa5ab2c61dfe80a0c8b6639535e0335489ff51b0b4a7bfcb4609`) is the reference for the data below. It is copyrighted Honda material, so it is not stored in this repository or served by the app; keep the PDF in the gitignored `data/manuals/` folder.
 
 | Data | Honda manual pages |
 |---|---|

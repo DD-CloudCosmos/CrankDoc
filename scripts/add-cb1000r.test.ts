@@ -4,10 +4,10 @@ import { createClient } from '@supabase/supabase-js'
 import { planCB1000RImport, runCB1000RImport } from './add-cb1000r'
 
 describe('additive CB1000R import', () => {
-  it('adds the bike, manual, diagrams, photo and service rows to an empty catalogue', () => {
+  it('adds the bike, diagrams, photo and service rows to an empty catalogue', () => {
     const plan = planCB1000RImport([], [])
     expect(plan.motorcycles).toHaveLength(1)
-    expect(plan.documents).toHaveLength(3)
+    expect(plan.documents).toHaveLength(2)
     expect(plan.images).toHaveLength(1)
     expect(plan.intervals).toHaveLength(cb1000rServiceIntervals.length)
     expect(plan.documents.every(doc => doc.motorcycle_id === plan.motorcycles[0].id)).toBe(true)
@@ -15,7 +15,7 @@ describe('additive CB1000R import', () => {
   it('reuses an existing bike and never rewrites other catalogue records', () => {
     const plan = planCB1000RImport([{ id: 'existing', make: 'Honda', model: 'CB1000R', year_start: 2008, year_end: 2008 }], [{ motorcycle_id: 'existing', file_url: '/diagrams/honda-cb1000r-2008.png' }])
     expect(plan.motorcycles).toEqual([])
-    expect(plan.documents).toHaveLength(2)
+    expect(plan.documents).toHaveLength(1)
     expect(plan.documents[0].motorcycle_id).toBe('existing')
   })
   it('is a no-op after successful import', () => {

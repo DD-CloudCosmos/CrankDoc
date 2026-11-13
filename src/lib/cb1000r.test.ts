@@ -6,7 +6,8 @@ describe('CB1000R catalogue reference', () => {
     expect(cb1000r).toMatchObject({ make: 'Honda', model: 'CB1000R', displacement_cc: 998, year_start: 2008, year_end: 2008, horsepower: 123.4, torque_nm: 99, fuel_capacity_liters: 17, oil_capacity_liters: 3, coolant_capacity_liters: 3 })
     expect(cb1000r.dry_weight_kg).toBeNull()
     expect(cb1000rDocuments.slice(0, 2).map(doc => doc.title)).toEqual(['CB1000R - non-ABS (22-3)', 'CB1000RA - ABS (22-4)'])
-    expect(cb1000rDocuments.some(doc => doc.doc_type === 'service_manual')).toBe(true)
+    // The factory manual is copyrighted, so it is cited as a source but never served as a document
+    expect(cb1000rDocuments.every(doc => doc.doc_type === 'wiring_diagram')).toBe(true)
   })
   it('never attaches this reference to a different bike or unsupported generation', () => {
     expect(supportsBrakeLesson(cb1000r)).toBe(true)
