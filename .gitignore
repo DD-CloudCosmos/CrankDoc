@@ -47,9 +47,9 @@ next-env.d.ts
 # Playwright MCP
 .playwright-mcp/
 
-# Screenshots (except public)
+# Screenshots (except anything under public/)
 *.png
-!public/*.png
+!public/**/*.png
 
 # Supabase CLI temp
 supabase/.temp/
