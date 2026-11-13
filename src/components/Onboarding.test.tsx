@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Onboarding } from './Onboarding'
+import { GarageStrip } from './home/GarageStrip'
 import { GARAGE_STORAGE_KEY, type GarageBikeOption } from '@/lib/garage'
 
 vi.mock('next/link', () => ({
@@ -95,6 +96,43 @@ describe('Onboarding', () => {
 
     await user.click(screen.getByRole('button', { name: 'Explore CrankDoc' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('reopens on the bike list when the garage is edited after finishing', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <Onboarding bikes={bikes} universalTreeCount={18} />
+        <GarageStrip bikes={bikes} />
+      </>
+    )
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+    await user.click(screen.getByRole('checkbox', { name: 'BMW R 1250 GS' }))
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+    await user.click(screen.getByRole('button', { name: 'Done' }))
+    await user.click(screen.getByRole('button', { name: 'Explore CrankDoc' }))
+
+    await user.click(screen.getByRole('button', { name: 'Edit' }))
+    expect(screen.getByRole('dialog', { name: 'Your Garage' })).toBeInTheDocument()
+
+    // The reopened sheet can be finished and closed again
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+    await user.click(screen.getByRole('button', { name: 'Done' }))
+    await user.click(screen.getByRole('button', { name: 'Explore CrankDoc' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('reopens on the bike list after onboarding was skipped', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <Onboarding bikes={bikes} universalTreeCount={18} />
+        <GarageStrip bikes={bikes} />
+      </>
+    )
+    await user.click(screen.getByRole('button', { name: 'Not now' }))
+    await user.click(screen.getByRole('button', { name: 'Add a bike' }))
+    expect(screen.getByRole('dialog', { name: 'Your Garage' })).toBeInTheDocument()
   })
 
   it('back buttons return to the previous step and Skip works mid-flow', async () => {
