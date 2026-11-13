@@ -208,6 +208,29 @@ describe('DtcCodeList', () => {
     }, { timeout: 2000 })
   })
 
+  it('ignores a slow response that arrives after the filter has changed', async () => {
+    const user = userEvent.setup()
+
+    // First request (no filter) stays pending until we resolve it by hand
+    let resolveSlow: (value: unknown) => void = () => {}
+    mockFetch.mockReturnValueOnce(new Promise((resolve) => (resolveSlow = resolve)))
+    render(<DtcCodeList />)
+
+    // Second request (BMW filter) answers straight away with the BMW code only
+    mockApiResponse([mockCodes[1]], 1)
+    const bmwButton = screen.getAllByText('BMW').find((el) => el.closest('button'))
+    await user.click(bmwButton!)
+    await waitFor(() => {
+      expect(screen.getByText('C1234')).toBeInTheDocument()
+    })
+
+    // The stale unfiltered response finally arrives: it must not replace the BMW results
+    resolveSlow({ ok: true, json: async () => ({ codes: mockCodes, total: 2, page: 1, totalPages: 1 }) })
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    expect(screen.queryByText('P0301')).not.toBeInTheDocument()
+    expect(screen.getByText('C1234')).toBeInTheDocument()
+  })
+
   it('has aria-expanded attribute on expandable rows', async () => {
     const user = userEvent.setup()
     mockApiResponse(mockCodes, 2)

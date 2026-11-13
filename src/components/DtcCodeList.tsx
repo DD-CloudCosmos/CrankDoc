@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { DtcSearch } from '@/components/DtcSearch'
 import { DtcCategoryFilter } from '@/components/DtcCategoryFilter'
 import { DtcManufacturerFilter } from '@/components/DtcManufacturerFilter'
@@ -26,8 +26,10 @@ interface DtcCodeListProps {
 
 export function DtcCodeList({ initialQuery = '' }: DtcCodeListProps) {
   const [codes, setCodes] = useState<DtcCode[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  // Which filters the data on screen belongs to. While that differs from the
+  // current filters a request is on its way, so the list shows as loading.
+  const [loadedKey, setLoadedKey] = useState<string | null>(null)
+  const [lastError, setLastError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState(initialQuery)
   const [category, setCategory] = useState('')
   const [manufacturer, setManufacturer] = useState('')
@@ -37,38 +39,48 @@ export function DtcCodeList({ initialQuery = '' }: DtcCodeListProps) {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const fetchCodes = useCallback(async (q: string, cat: string, mfr: string, p: number) => {
-    setLoading(true)
-    setError(null)
-
-    try {
-      const params = new URLSearchParams()
-      if (q) params.set('q', q)
-      if (cat) params.set('category', cat)
-      if (mfr) params.set('manufacturer', mfr)
-      params.set('page', String(p))
-      params.set('limit', '20')
-
-      const response = await fetch(`/api/dtc?${params.toString()}`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch DTC codes')
-      }
-
-      const data: DtcApiResponse = await response.json()
-      setCodes(data.codes)
-      setTotal(data.total)
-      setTotalPages(data.totalPages)
-    } catch {
-      setError('Failed to load DTC codes. Please try again.')
-      setCodes([])
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  const requestKey = JSON.stringify([searchQuery, category, manufacturer, page])
+  const loading = loadedKey !== requestKey
+  const error = loading ? null : lastError
 
   useEffect(() => {
-    fetchCodes(searchQuery, category, manufacturer, page)
-  }, [searchQuery, category, manufacturer, page, fetchCodes])
+    // Ignore a response that arrives after the filters have changed again
+    let cancelled = false
+
+    async function load() {
+      try {
+        const params = new URLSearchParams()
+        if (searchQuery) params.set('q', searchQuery)
+        if (category) params.set('category', category)
+        if (manufacturer) params.set('manufacturer', manufacturer)
+        params.set('page', String(page))
+        params.set('limit', '20')
+
+        const response = await fetch(`/api/dtc?${params.toString()}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch DTC codes')
+        }
+
+        const data: DtcApiResponse = await response.json()
+        if (cancelled) return
+        setCodes(data.codes)
+        setTotal(data.total)
+        setTotalPages(data.totalPages)
+        setLastError(null)
+      } catch {
+        if (cancelled) return
+        setLastError('Failed to load DTC codes. Please try again.')
+        setCodes([])
+      } finally {
+        if (!cancelled) setLoadedKey(requestKey)
+      }
+    }
+
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [searchQuery, category, manufacturer, page, requestKey])
 
   const handleSearch = (query: string) => {
     if (debounceTimer.current) {
